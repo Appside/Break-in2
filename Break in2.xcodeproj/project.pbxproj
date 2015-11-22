@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2510B6E31C021C24005AE520 /* TestPageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E01C021C24005AE520 /* TestPageControllerView.swift */; };
+		2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */; };
+		2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E21C021C24005AE520 /* TestTypeView.swift */; };
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
 		6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6143164E1BEF843A0047A37D /* Assets.xcassets */; };
@@ -42,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2510B6E01C021C24005AE520 /* TestPageControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPageControllerView.swift; sourceTree = "<group>"; };
+		2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSelectionViewController.swift; sourceTree = "<group>"; };
+		2510B6E21C021C24005AE520 /* TestTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTypeView.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		614316441BEF843A0047A37D /* Break in2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Break in2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316471BEF843A0047A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +140,9 @@
 				617FC6421BEF92220019AE9B /* LoginViewController.swift */,
 				617FC6441BEF92310019AE9B /* RegisterViewController.swift */,
 				617FC6461BEF92450019AE9B /* ForgotPasswordViewController.swift */,
+				2510B6E01C021C24005AE520 /* TestPageControllerView.swift */,
+				2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */,
+				2510B6E21C021C24005AE520 /* TestTypeView.swift */,
 				6143164E1BEF843A0047A37D /* Assets.xcassets */,
 				614316501BEF843A0047A37D /* LaunchScreen.storyboard */,
 				617FC64E1BF89D6C0019AE9B /* Extensions */,
@@ -365,7 +374,10 @@
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
 				617FC64B1BEF92700019AE9B /* EditProfileViewController.swift in Sources */,
+				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,
+				2510B6E31C021C24005AE520 /* TestPageControllerView.swift in Sources */,
 				617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */,
+				2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,

@@ -60,11 +60,11 @@
                                     <constraint firstAttribute="width" constant="150" id="qnT-Vb-8f7"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="whiteRect" translatesAutoresizingMaskIntoConstraints="NO" id="M7v-9m-0sk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="whiteRect" translatesAutoresizingMaskIntoConstraints="NO" id="M7v-9m-0sk">
                                 <rect key="frame" x="15" y="320.5" width="570" height="279.5"/>
                                 <animations/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlm-EU-RQh">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlm-EU-RQh">
                                 <rect key="frame" x="0.0" y="275" width="600" height="20.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
@@ -79,18 +79,7 @@
                                     <constraint firstAttribute="width" constant="100" id="aUR-D4-XIF"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-im-Zmb">
-                                <rect key="frame" x="25" y="340.5" width="550" height="65"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="Tnh-3u-z8T"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
-                                <state key="normal" title="Investment Banking" backgroundImage="buttonOL">
-                                    <color key="titleColor" red="0.32156862749999998" green="0.41960784309999999" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bv-ha-Xa9">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bv-ha-Xa9">
                                 <rect key="frame" x="25" y="415.5" width="550" height="65"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
@@ -119,7 +108,7 @@
                                     <segue destination="itC-MS-TAe" kind="custom" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="pF8-n8-slb"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="briefcase" translatesAutoresizingMaskIntoConstraints="NO" id="xA8-an-e5n">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="briefcase" translatesAutoresizingMaskIntoConstraints="NO" id="xA8-an-e5n">
                                 <rect key="frame" x="45" y="360.5" width="25" height="25"/>
                                 <animations/>
                                 <constraints>
@@ -127,10 +116,24 @@
                                     <constraint firstAttribute="width" constant="25" id="hab-xx-5IE"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="tradeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="L3H-FL-6Jx">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tradeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="L3H-FL-6Jx">
                                 <rect key="frame" x="45" y="435.5" width="25" height="25"/>
                                 <animations/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-im-Zmb">
+                                <rect key="frame" x="25" y="340" width="550" height="65"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="Tnh-3u-z8T"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" title="Investment Banking" backgroundImage="buttonOL">
+                                    <color key="titleColor" red="0.32156862749999998" green="0.41960784309999999" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Dmm-hY-T8O" kind="show" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" id="kie-VD-nV1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.062745098040000002" green="0.16078431369999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -179,6 +182,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXB-ez-UnS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1413" y="-59"/>
+        </scene>
+        <!--Test Selection View Controller-->
+        <scene sceneID="ak3-lY-ccB">
+            <objects>
+                <viewController id="Dmm-hY-T8O" customClass="TestSelectionViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fgH-7S-tz5"/>
+                        <viewControllerLayoutGuide type="bottom" id="BZX-DQ-ou3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bm5-dS-cq2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1816" y="637"/>
         </scene>
         <!--Edit Profile View Controller-->
         <scene sceneID="Au3-mY-pkB">
