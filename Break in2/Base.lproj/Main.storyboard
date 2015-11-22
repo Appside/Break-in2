@@ -6,6 +6,40 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="ZVk-RB-TlO">
+            <objects>
+                <viewController id="0io-Fj-TFQ" customClass="LoginViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VeX-AI-15z"/>
+                        <viewControllerLayoutGuide type="bottom" id="4Ih-hG-SEB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2mz-VL-sbI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MV6-OW-moO">
+                                <rect key="frame" x="250" y="164" width="100" height="100"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="3uW-TE-zNx"/>
+                                    <constraint firstAttribute="height" constant="100" id="pSH-Vb-gNj"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MV6-OW-moO" firstAttribute="centerX" secondItem="2mz-VL-sbI" secondAttribute="centerX" id="oRp-c6-pvz"/>
+                            <constraint firstItem="MV6-OW-moO" firstAttribute="top" secondItem="VeX-AI-15z" secondAttribute="bottom" constant="100" id="zfG-aa-dVW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="eYr-mg-x7Z"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zqr-Bg-PVy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1413" y="-882"/>
+        </scene>
         <!--Home View Controller-->
         <scene sceneID="a1f-d0-jcg">
             <objects>
@@ -194,6 +228,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DtD-yn-t8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2109" y="-59"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8of-O3-jEk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T98-xR-i0i" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8bS-Fd-jV4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0io-Fj-TFQ" kind="relationship" relationship="rootViewController" id="w6t-GO-vde"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GkL-ct-Xmy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="669" y="-882"/>
         </scene>
     </scenes>
     <resources>
