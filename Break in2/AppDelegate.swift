@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import Bolts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // [Optional] Parse also lets you store objects in a local datastore on the device itself
+        Parse.enableLocalDatastore()
+        
+        // Initialize Parse
+        Parse.setApplicationId("lyBSquMqLt6vuW5bL6ZB3TP37cGpDDZ3Vvqt13S5",
+            clientKey: "kMneqHnKIjyIRg9qJlgRhLkh5hrzl7eAWxl8YHGm")
+        
+        // [Optional] Track statistics around application opens.
+        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
         return true
     }
 

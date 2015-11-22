@@ -1,0 +1,6 @@
+framework module Pods_Break_in2 {
+  umbrella header "Pods-Break in2-umbrella.h"
+
+  export *
+  module * { export * }
+}
