@@ -84,12 +84,22 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-Break in2/Alamofire.framework"
   install_framework "Pods-Break in2/Bolts.framework"
   install_framework "Pods-Break in2/Charts.framework"
+  install_framework "Pods-Break in2/FBSDKCoreKit.framework"
+  install_framework "Pods-Break in2/FBSDKLoginKit.framework"
   install_framework "Pods-Break in2/Parse.framework"
+  install_framework "Pods-Break in2/ParseFacebookUtilsV4.framework"
+  install_framework "Pods-Break in2/ParseUI.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-Break in2/Alamofire.framework"
   install_framework "Pods-Break in2/Bolts.framework"
   install_framework "Pods-Break in2/Charts.framework"
+  install_framework "Pods-Break in2/FBSDKCoreKit.framework"
+  install_framework "Pods-Break in2/FBSDKLoginKit.framework"
   install_framework "Pods-Break in2/Parse.framework"
+  install_framework "Pods-Break in2/ParseFacebookUtilsV4.framework"
+  install_framework "Pods-Break in2/ParseUI.framework"
 fi

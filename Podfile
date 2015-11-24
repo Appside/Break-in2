@@ -5,6 +5,11 @@ target 'Break in2' do
 
 pod 'Parse'
 pod 'Charts'
+pod 'ParseUI'
+pod 'ParseFacebookUtilsV4'
+pod 'FBSDKCoreKit'
+pod 'FBSDKLoginKit’
+pod 'Alamofire', '~> 3.0'
 
 end
 

@@ -10,12 +10,12 @@
 		2510B6E31C021C24005AE520 /* TestPageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E01C021C24005AE520 /* TestPageControllerView.swift */; };
 		2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */; };
 		2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E21C021C24005AE520 /* TestTypeView.swift */; };
-		4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* QuizzViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		4993753B1C02573100AA0588 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* Question.swift */; settings = {ASSET_TAGS = (); }; };
-		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; settings = {ASSET_TAGS = (); }; };
-		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; settings = {ASSET_TAGS = (); }; };
-		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; settings = {ASSET_TAGS = (); }; };
-		499375401C027EAF00AA0588 /* questiondata.json in Resources */ = {isa = PBXBuildFile; fileRef = 4993753F1C027EAF00AA0588 /* questiondata.json */; settings = {ASSET_TAGS = (); }; };
+		4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* QuizzViewController.swift */; };
+		4993753B1C02573100AA0588 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* Question.swift */; };
+		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; };
+		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; };
+		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; };
+		499375401C027EAF00AA0588 /* questiondata.json in Resources */ = {isa = PBXBuildFile; fileRef = 4993753F1C027EAF00AA0588 /* questiondata.json */; };
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
 		6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6143164E1BEF843A0047A37D /* Assets.xcassets */; };
@@ -30,6 +30,8 @@
 		617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64C1BF89D560019AE9B /* Extensions.swift */; };
 		61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB11D71BF902600081123B /* segueFromLeft.swift */; };
 		61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB11D91BF904360081123B /* segueFromRight.swift */; };
+		61FCAED11C050E0C0072FDFB /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */; };
+		61FCAED31C0518740072FDFB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCAED21C0518740072FDFB /* Constants.swift */; };
 		74E9AFB1E1CE31062678B5E3 /* Pods_Break_in2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9204F15908637B8660619EE /* Pods_Break_in2.framework */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,8 @@
 		617FC64C1BF89D560019AE9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Break in2/Extensions.swift"; sourceTree = "<group>"; };
 		61DB11D71BF902600081123B /* segueFromLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromLeft.swift; sourceTree = "<group>"; };
 		61DB11D91BF904360081123B /* segueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromRight.swift; sourceTree = "<group>"; };
+		61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
+		61FCAED21C0518740072FDFB /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		86661483A51379079E2B78A1 /* Pods-Break in2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.debug.xcconfig"; sourceTree = "<group>"; };
 		E9204F15908637B8660619EE /* Pods_Break_in2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Break_in2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -146,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				6143164B1BEF843A0047A37D /* Main.storyboard */,
+				61FCAED21C0518740072FDFB /* Constants.swift */,
 				614316471BEF843A0047A37D /* AppDelegate.swift */,
 				499375351C02573100AA0588 /* QuizzViewController.swift */,
 				4993753F1C027EAF00AA0588 /* questiondata.json */,
@@ -190,6 +195,7 @@
 		617FC64E1BF89D6C0019AE9B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */,
 				617FC64C1BF89D560019AE9B /* Extensions.swift */,
 				61DB11D71BF902600081123B /* segueFromLeft.swift */,
 				61DB11D91BF904360081123B /* segueFromRight.swift */,
@@ -391,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
+				61FCAED31C0518740072FDFB /* Constants.swift in Sources */,
 				4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
 				617FC64B1BEF92700019AE9B /* EditProfileViewController.swift in Sources */,
@@ -405,6 +412,7 @@
 				4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,
+				61FCAED11C050E0C0072FDFB /* SwiftNotice.swift in Sources */,
 				617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */,
 				61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */,
 			);
