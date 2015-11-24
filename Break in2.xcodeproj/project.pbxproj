@@ -10,16 +10,12 @@
 		2510B6E31C021C24005AE520 /* TestPageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E01C021C24005AE520 /* TestPageControllerView.swift */; };
 		2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */; };
 		2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E21C021C24005AE520 /* TestTypeView.swift */; };
-<<<<<<< HEAD
 		4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* QuizzViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		4993753B1C02573100AA0588 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* Question.swift */; settings = {ASSET_TAGS = (); }; };
 		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; settings = {ASSET_TAGS = (); }; };
 		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; settings = {ASSET_TAGS = (); }; };
 		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; settings = {ASSET_TAGS = (); }; };
 		499375401C027EAF00AA0588 /* questiondata.json in Resources */ = {isa = PBXBuildFile; fileRef = 4993753F1C027EAF00AA0588 /* questiondata.json */; settings = {ASSET_TAGS = (); }; };
-=======
-		25BE8D841C04EB0100EA88D5 /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BE8D831C04EB0100EA88D5 /* CareerButton.swift */; };
->>>>>>> Layout-Constraints-Branch
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
 		6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6143164E1BEF843A0047A37D /* Assets.xcassets */; };
@@ -58,7 +54,6 @@
 		2510B6E01C021C24005AE520 /* TestPageControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPageControllerView.swift; sourceTree = "<group>"; };
 		2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSelectionViewController.swift; sourceTree = "<group>"; };
 		2510B6E21C021C24005AE520 /* TestTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTypeView.swift; sourceTree = "<group>"; };
-		25BE8D831C04EB0100EA88D5 /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* QuizzViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzViewController.swift; sourceTree = "<group>"; };
 		499375361C02573100AA0588 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -159,7 +154,6 @@
 				499375381C02573100AA0588 /* categoryButton.swift */,
 				499375391C02573100AA0588 /* paddingLabel.swift */,
 				617FC6481BEF92590019AE9B /* HomeViewController.swift */,
-				25BE8D831C04EB0100EA88D5 /* CareerButton.swift */,
 				617FC64A1BEF92700019AE9B /* EditProfileViewController.swift */,
 				617FC6421BEF92220019AE9B /* LoginViewController.swift */,
 				617FC6441BEF92310019AE9B /* RegisterViewController.swift */,
@@ -396,7 +390,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25BE8D841C04EB0100EA88D5 /* CareerButton.swift in Sources */,
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
 				4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
