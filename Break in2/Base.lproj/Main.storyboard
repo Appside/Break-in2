@@ -50,6 +50,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+<<<<<<< HEAD
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rui-io-1Hc">
                                 <rect key="frame" x="225" y="100" width="150" height="150"/>
                                 <animations/>
@@ -116,11 +117,14 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tradeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="L3H-FL-6Jx">
                                 <rect key="frame" x="45" y="436" width="25" height="25"/>
+=======
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="briefcase" translatesAutoresizingMaskIntoConstraints="NO" id="xBD-oF-8iK">
                                 <rect key="frame" x="195" y="315" width="145" height="102"/>
+>>>>>>> Layout-Constraints-Branch
                                 <animations/>
                                 <color key="backgroundColor" red="0.27843137254901962" green="0.37254901960784315" blue="0.44313725490196076" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
+<<<<<<< HEAD
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-im-Zmb">
                                 <rect key="frame" x="25" y="340" width="550" height="65"/>
                                 <animations/>
@@ -135,6 +139,8 @@
                                     <segue destination="Dmm-hY-T8O" kind="presentation" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" id="kie-VD-nV1"/>
                                 </connections>
                             </button>
+=======
+>>>>>>> Layout-Constraints-Branch
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.062745098040000002" green="0.16078431369999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -471,9 +477,12 @@
         <image name="back" width="48" height="37"/>
         <image name="background" width="213" height="378"/>
         <image name="briefcase" width="27" height="25"/>
+<<<<<<< HEAD
         <image name="buttonOL" width="324" height="65"/>
         <image name="circleTimer" width="101" height="42"/>
         <image name="settings" width="32" height="32"/>
+=======
+>>>>>>> Layout-Constraints-Branch
         <image name="textBreakIn2Small" width="114" height="19"/>
     </resources>
 </document>
