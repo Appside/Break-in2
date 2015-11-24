@@ -10,12 +10,11 @@ import UIKit
 import QuartzCore
 
 class HomeViewController: UIViewController {
-
-  //Declare all objects
   
-  @IBOutlet weak var buttonBack: UIImageView!
-  @IBOutlet weak var buttonIB: UIButton!
-  @IBOutlet weak var buttonTrading: UIButton!
+  // Declare and initialize types of careers
+  
+  let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading"]
+  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"settings", "Trading":"tradeIcon"]
   
   // Declare and initialize views
   
@@ -23,11 +22,13 @@ class HomeViewController: UIViewController {
   let profilePictureImageView:UIImageView = UIImageView()
   let backButton:UIButton = UIButton()
   let settingsButton:UIButton = UIButton()
-  let logOutButton:UIButton = UIButton()
+  let logOutButton:UIButton = UIButton(type: UIButtonType.System)
   let careersScrollView:UIScrollView = UIScrollView()
+  var careerButtons:[CareerButton] = [CareerButton]()
   
   // Declare and initialize design constants
   
+  let screenFrame:CGRect = UIScreen.mainScreen().bounds
   let statusBarFrame:CGRect = UIApplication.sharedApplication().statusBarFrame
   
   let majorMargin:CGFloat = 20
@@ -37,10 +38,6 @@ class HomeViewController: UIViewController {
     super.viewDidLoad()
       
     // Do any additional setup after loading the view.
-    
-    // Declare and initialize types of careers
-    
-    let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading"]
       
     // Add background image to HomeViewController's view
       
@@ -55,6 +52,29 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.logOutButton)
     self.view.addSubview(self.careersScrollView)
     
+    // Create testTypeViews for each testType
+    
+    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+      
+      let careerButtonAtIndex:CareerButton = CareerButton(type: UIButtonType.System)
+      
+      careerButtonAtIndex.careerTitle = self.careerTypes[index]
+      careerButtonAtIndex.careerImage = UIImage.init(named: self.careerTypeImages[self.careerTypes[index]]!)!
+      
+      careerButtonAtIndex.displayButton()
+      
+      self.careerButtons.append(careerButtonAtIndex)
+      
+    }
+    
+    // Add careerButtons to careersScrollView
+    
+    for careerButtonAtIndex:CareerButton in self.careerButtons {
+      
+      self.careersScrollView.addSubview(careerButtonAtIndex)
+      
+    }
+    
     // Customize and add content to imageViews
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit 
@@ -62,14 +82,17 @@ class HomeViewController: UIViewController {
     
     self.profilePictureImageView.backgroundColor = UIColor.whiteColor()
     
+    self.backButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.backButton.setImage(UIImage.init(named: "back"), forState: UIControlState.Normal)
     
+    self.settingsButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.settingsButton.setImage(UIImage.init(named: "settings"), forState: UIControlState.Normal)
     
-    self.logOutButton.backgroundColor = UIColor.lightGrayColor()
+    self.logOutButton.backgroundColor = UIColor.whiteColor()
     self.logOutButton.setTitle("Log Out", forState: UIControlState.Normal)
+    self.logOutButton.setTitleColor(UIColor.init(colorLiteralRed: 72/255, green: 102/255, blue: 112/255, alpha: 1), forState: UIControlState.Normal)
     
-    self.careersScrollView.backgroundColor = UIColor.whiteColor()
+    //self.careersScrollView.backgroundColor = UIColor.whiteColor()
     
     // Customize careersScrollView
     
@@ -78,7 +101,6 @@ class HomeViewController: UIViewController {
     // Set constraints
     
     self.setConstraints()
-    
     
   }
   
@@ -165,13 +187,54 @@ class HomeViewController: UIViewController {
     
     let careersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.majorMargin * -1)
+    let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: -1)
     
     let careersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
     let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
     
     self.view.addConstraints([careersScrollViewLeftConstraint, careersScrollViewBottomConstraint, careersScrollViewRightConstraint, careersScrollViewTopConstraint])
+    
+    // Create and add constraints for each careerButton and set content size for careersScrollView
+    
+    for var index:Int = 0 ; index < self.careerButtons.count ; index++ {
+      
+      self.careerButtons[index].translatesAutoresizingMaskIntoConstraints = false
+      
+      let careerButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      
+      let careerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 75)
+      
+      let careerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
+      
+      if index == 0 {
+        
+        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(careerButtonTopConstraint)
+        
+      }
+      else {
+        
+        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careerButtons[index - 1], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+        
+        self.view.addConstraint(careerButtonTopConstraint)
+        
+      }
+      
+      self.careerButtons[index].addConstraints([careerButtonWidthConstraint, careerButtonHeightConstraint])
+      self.view.addConstraint(careerButtonLeftConstraint)
+      
+      if index == self.careerButtons.count - 1 {
+        
+        let careerButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(careerButtonBottomConstraint)
+        
+      }
+      
+    }
+
     
   }
 

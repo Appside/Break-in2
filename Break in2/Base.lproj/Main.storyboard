@@ -51,73 +51,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bv-ha-Xa9">
-                                <rect key="frame" x="25" y="415.5" width="550" height="65"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="briefcase" translatesAutoresizingMaskIntoConstraints="NO" id="xBD-oF-8iK">
+                                <rect key="frame" x="195" y="315" width="145" height="102"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
-                                <state key="normal" title="Trading" backgroundImage="buttonOL">
-                                    <color key="titleColor" red="0.32156862749999998" green="0.41960784309999999" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="briefcase" translatesAutoresizingMaskIntoConstraints="NO" id="xA8-an-e5n">
-                                <rect key="frame" x="45" y="360.5" width="25" height="25"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="83A-hW-xfN"/>
-                                    <constraint firstAttribute="width" constant="25" id="hab-xx-5IE"/>
-                                </constraints>
+                                <color key="backgroundColor" red="0.27843137254901962" green="0.37254901960784315" blue="0.44313725490196076" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="tradeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="L3H-FL-6Jx">
-                                <rect key="frame" x="45" y="435.5" width="25" height="25"/>
-                                <animations/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-im-Zmb">
-                                <rect key="frame" x="25" y="340" width="550" height="65"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="Tnh-3u-z8T"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
-                                <state key="normal" title="Investment Banking" backgroundImage="buttonOL">
-                                    <color key="titleColor" red="0.32156862749999998" green="0.41960784309999999" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Dmm-hY-T8O" kind="show" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" id="kie-VD-nV1"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WT6-h9-04A">
-                                <rect key="frame" x="25" y="515" width="550" height="65"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.32156862745098036" green="0.41960784313725491" blue="0.4823529411764706" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Log Out">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.062745098040000002" green="0.16078431369999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="WT6-h9-04A" firstAttribute="leading" secondItem="mgz-im-Zmb" secondAttribute="leading" id="D6R-dn-pT6"/>
-                            <constraint firstItem="WT6-h9-04A" firstAttribute="height" secondItem="mgz-im-Zmb" secondAttribute="height" id="Gcb-sc-zZi"/>
-                            <constraint firstItem="9bv-ha-Xa9" firstAttribute="leading" secondItem="mgz-im-Zmb" secondAttribute="leading" id="GeR-DI-efK"/>
-                            <constraint firstItem="mgz-im-Zmb" firstAttribute="centerY" secondItem="xA8-an-e5n" secondAttribute="centerY" id="OKl-bk-rzu"/>
-                            <constraint firstItem="L3H-FL-6Jx" firstAttribute="width" secondItem="xA8-an-e5n" secondAttribute="width" id="RAW-8R-VZ0"/>
-                            <constraint firstItem="9bv-ha-Xa9" firstAttribute="width" secondItem="mgz-im-Zmb" secondAttribute="width" id="SWK-9r-PtQ"/>
-                            <constraint firstItem="L3H-FL-6Jx" firstAttribute="centerX" secondItem="xA8-an-e5n" secondAttribute="centerX" id="TPD-DB-E5d"/>
-                            <constraint firstItem="9bv-ha-Xa9" firstAttribute="centerY" secondItem="L3H-FL-6Jx" secondAttribute="centerY" id="Tf7-IL-aux"/>
-                            <constraint firstItem="L3H-FL-6Jx" firstAttribute="height" secondItem="xA8-an-e5n" secondAttribute="height" id="X3a-6B-exn"/>
-                            <constraint firstItem="xA8-an-e5n" firstAttribute="leading" secondItem="mgz-im-Zmb" secondAttribute="leading" constant="20" id="bPf-rI-aN7"/>
-                            <constraint firstItem="9bv-ha-Xa9" firstAttribute="top" secondItem="mgz-im-Zmb" secondAttribute="bottom" constant="10" id="be0-uL-fd1"/>
-                            <constraint firstItem="WT6-h9-04A" firstAttribute="width" secondItem="mgz-im-Zmb" secondAttribute="width" id="fvF-6k-1Ed"/>
-                            <constraint firstItem="9bv-ha-Xa9" firstAttribute="height" secondItem="mgz-im-Zmb" secondAttribute="height" id="z62-5O-rdr"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="O6e-g7-POK"/>
-                    <connections>
-                        <outlet property="buttonIB" destination="mgz-im-Zmb" id="zLc-l1-Or7"/>
-                        <outlet property="buttonTrading" destination="9bv-ha-Xa9" id="QAK-ea-ro0"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXB-ez-UnS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -214,8 +157,6 @@
     <resources>
         <image name="back" width="48" height="37"/>
         <image name="briefcase" width="27" height="25"/>
-        <image name="buttonOL" width="324" height="65"/>
         <image name="textBreakIn2Small" width="114" height="19"/>
-        <image name="tradeIcon" width="27" height="22"/>
     </resources>
 </document>
