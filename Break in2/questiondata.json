@@ -1,0 +1,32 @@
+[
+ {
+    "category": "finance",
+    "subcategory": "numerical",
+    "type": "chart",
+    "question": "In the Black-Scholes world, asset returns are assumed to follow which type of distribution ?",
+    "chart": "barChart",
+ "answers": ["Normal distribution", "Log-normal distribution", "Uniform distribution", "Geometric distribution", "Poisson distribution", "Pascal distribution", "Binomial distribution", "Chi-two distribution", "Student distribution","Exponential distribution", "I don't know", "A random distribution","We don't really care","I don't care about this question","I'll get to the second round anyway","Let's check the scrollView in extreme cases"],
+    "correctAnswer": 2,
+    "answerExplanation": "petit test a inserer ici pour expliquer"
+ },
+ {
+    "category": "finance",
+    "subcategory": "numerical",
+    "type": "chart",
+    "question": "Which theorem would you use if you were to find an equivalent measure under which all price processes are martingales ?",
+    "chart": "pieChart",
+    "answers": ["Ito's lemma", "Girsanov's theorem", "Novikov's condition", "Any theorem works :)", "I don't know what else to put, let's check large string answers to see how it behaves on multiple lines", "Just another possible answer"],
+    "correctAnswer": 2,
+    "answerExplanation": "on verra bien plus tard comment on s'en sort"
+ },
+ {
+    "category": "finance",
+    "subcategory": "numerical",
+    "type": "chart",
+    "question": "Which theorem would you use if you were to find an equivalent measure under which all price processes are martingales ?",
+    "chart": "lineChart",
+    "answers": ["Ito's lemma", "Girsanov's theorem", "Novikov's condition", "Any theorem works :)", "I don't know what else to put, let's check large string answers to see how it behaves on multiple lines", "Just another possible answer"],
+    "correctAnswer": 2,
+    "answerExplanation": "on verra bien plus tard comment on s'en sort"
+ }
+]

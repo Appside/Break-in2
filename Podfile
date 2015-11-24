@@ -1,9 +1,10 @@
-platform :ios, '9.1'
+platform :ios, '9.0'
 use_frameworks!
 
 target 'Break in2' do
 
 pod 'Parse'
+pod 'Charts'
 
 end
 
