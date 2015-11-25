@@ -23,6 +23,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   var testTypeViews:[TestTypeView] = [TestTypeView]()
   let testStartButtonView:UIView = UIView()
   let testStartButton:UIButton = UIButton(type: UIButtonType.System)
+  var backButton:UIButton = UIButton()
   
   // Declare and initialize constraints that will be animated
   
@@ -63,9 +64,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     // Do any additional setup after loading the view, typically from a nib.
     
-    // Add testSelectionView to the main view
+    // Set background image
+    
+    self.view.addHomeBG()
+    
+    // Add testSelectionView and backButton to the main view
     
     self.view.addSubview(testSelectionView)
+    self.view.addSubview(self.backButton)
     
     // Create testTypeViews for each testType
     
@@ -137,10 +143,15 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testSelectionView.backgroundColor = self.mainBackgroundColor
     
-    // Adjust testStartButton appearance
+    // Adjust testStartButton and backButton appearances
     
-    self.testStartButton.setTitle("Start", forState: UIControlState.Normal)
+    self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
     self.testStartButton.setTitleColor(self.mainLineColor, forState: UIControlState.Normal)
+    self.testStartButton.addTarget(self, action: "testStartButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    
+    self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
+    self.backButton.addTarget(self, action: "backButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.clipsToBounds = true
     
     // Display each testTypeView
     
@@ -290,6 +301,21 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     let testStartButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButtonView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
     
     self.view.addConstraints([testStartButtonTopConstraint, testStartButtonLeftConstraint, testStartButtonRightConstraint, testStartButtonBottomConstraint])
+    
+    // Create and add constraints for backButton
+    
+    self.backButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    
+    let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30)
+    
+    let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30)
+    
+    self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
+    self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
 
   }
   
@@ -336,6 +362,18 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
     self.testPageControllerView.updatePageController(pageIndex)
+    
+  }
+  
+  func backButtonClicked(sender:UIButton) {
+    
+    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+    
+  }
+  
+  func testStartButtonClicked(sender:UIButton) {
+    
+    self.performSegueWithIdentifier("testStartButtonClicked", sender: nil)
     
   }
   
