@@ -14,6 +14,8 @@ class CareerButton: UIButton {
   var careerImage:UIImage = UIImage()
   let careerImageView:UIImageView = UIImageView()
   
+  var borderWidth:CGFloat = 3
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -23,9 +25,10 @@ class CareerButton: UIButton {
     
     // Customize button properties
     
-    self.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-    self.layer.borderWidth = 2
-    self.layer.borderColor = UIColor.whiteColor().CGColor
+    self.setTitleColor(UIColor.init(red: 82/255, green: 107/255, blue: 123/255, alpha: 1), forState: UIControlState.Normal)
+    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+
+    self.layer.borderColor = UIColor.init(red: 82/255, green: 107/255, blue: 123/255, alpha: 1).CGColor
     
     self.setConstraints()
     
@@ -41,6 +44,8 @@ class CareerButton: UIButton {
     
     self.setTitle(self.careerTitle, forState: UIControlState.Normal)
     self.careerImageView.image = self.careerImage
+    
+    self.layer.borderWidth = self.borderWidth
     
   }
   

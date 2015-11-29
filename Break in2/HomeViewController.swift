@@ -15,8 +15,8 @@ class HomeViewController: UIViewController {
   
   // Declare and initialize types of careers
   
-  let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading"]
-  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"settings", "Trading":"tradeIcon"]
+  let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Sangeet"]
+  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"settings", "Trading":"tradeIcon", "Sangeet":"briefcase"]
   
   // Declare and initialize views
   
@@ -24,7 +24,7 @@ class HomeViewController: UIViewController {
   let profilePictureImageView:UIImageView = UIImageView()
   let backButton:UIButton = UIButton()
   let settingsButton:UIButton = UIButton()
-  let logOutButton:UIButton = UIButton(type: UIButtonType.System)
+  let logOutButton:UIButton = UIButton()
   let careersBackgroundView:UIView = UIView()
   let careersScrollView:UIScrollView = UIScrollView()
   var careerButtons:[CareerButton] = [CareerButton]()
@@ -36,7 +36,10 @@ class HomeViewController: UIViewController {
   
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
-  let cornerRadius:CGFloat = 8
+  
+  let borderWidth:CGFloat = 3
+  
+  let buttonHeight:CGFloat = 50
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -66,12 +69,14 @@ class HomeViewController: UIViewController {
     
     for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
       
-      let careerButtonAtIndex:CareerButton = CareerButton(type: UIButtonType.System)
+      let careerButtonAtIndex:CareerButton = CareerButton()
       
       // Set careerButton properties
       
       careerButtonAtIndex.careerTitle = self.careerTypes[index]
       careerButtonAtIndex.careerImage = UIImage.init(named: self.careerTypeImages[self.careerTypes[index]]!)!
+      
+      careerButtonAtIndex.borderWidth = self.borderWidth
       
       // Call method to display careerButton content
       
@@ -107,21 +112,22 @@ class HomeViewController: UIViewController {
     self.settingsButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.settingsButton.setImage(UIImage.init(named: "settings"), forState: UIControlState.Normal)
     
-    self.logOutButton.backgroundColor = UIColor.whiteColor()
+    self.logOutButton.backgroundColor = UIColor.init(red: 82/255, green: 107/255, blue: 123/255, alpha: 1)
+    self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
     self.logOutButton.setTitle("Log Out", forState: UIControlState.Normal)
-    self.logOutButton.setTitleColor(UIColor.init(colorLiteralRed: 82/255, green: 107/255, blue: 123/255, alpha: 1), forState: UIControlState.Normal)
+    self.logOutButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     
     // Customize careersBackgroundView
     
-    self.careersBackgroundView.backgroundColor = UIColor.redColor()
-    self.careersBackgroundView.layer.cornerRadius = self.cornerRadius
+    self.careersBackgroundView.backgroundColor = UIColor.whiteColor()
+    self.careersBackgroundView.layer.cornerRadius = self.minorMargin
     
     // Customize careersScrollView
     
     self.careersScrollView.showsVerticalScrollIndicator = false
     
     // Set constraints
-    
+  
     self.setConstraints()
     
   }
@@ -198,13 +204,13 @@ class HomeViewController: UIViewController {
     
     self.careersBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    let careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (((self.minorMargin * 5) + (self.buttonHeight * 4)) * -1))
     
     let careersBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
     let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let careersBackgroundViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.cornerRadius)
+    let careersBackgroundViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
     
     self.view.addConstraints([careersBackgroundViewTopConstraint, careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, careersBackgroundViewBottomConstraint])
     
@@ -214,11 +220,11 @@ class HomeViewController: UIViewController {
     
     let logOutButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let logOutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.majorMargin + self.cornerRadius) * -1)
+    let logOutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
     
     let logOutButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
-    let logOutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+    let logOutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight)
     
     self.logOutButton.addConstraint(logOutButtonHeightConstraint)
     self.view.addConstraints([logOutButtonLeftConstraint, logOutButtonBottomConstraint, logOutButtonRightConstraint])
@@ -229,11 +235,11 @@ class HomeViewController: UIViewController {
     
     let careersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: -1)
+    let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
     
     let careersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
-    let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.cornerRadius)
+    let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
     
     self.view.addConstraints([careersScrollViewLeftConstraint, careersScrollViewBottomConstraint, careersScrollViewRightConstraint, careersScrollViewTopConstraint])
     
