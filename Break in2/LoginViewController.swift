@@ -28,6 +28,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addHomeBG()
+      
+      
     }
 
     override func didReceiveMemoryWarning() {
