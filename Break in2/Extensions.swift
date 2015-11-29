@@ -33,5 +33,14 @@ extension UIView {
         target.presentViewController(welcomeVC, animated: true, completion: nil)
         
     }
+    
+    func setConstraintsToSuperview(top:Int, bottom:Int, left:Int, right:Int) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(top))
+        let bottomMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -CGFloat(bottom))
+        let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(left))
+        let rightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -CGFloat(right))
+        self.superview!.addConstraints([topMargin,bottomMargin,leftMargin,rightMargin])
+    }
 }
 
