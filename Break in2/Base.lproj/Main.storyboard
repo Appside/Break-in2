@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MV6-OW-moO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MV6-OW-moO">
                                 <rect key="frame" x="250" y="164" width="100" height="100"/>
                                 <animations/>
                                 <constraints>
@@ -412,6 +412,7 @@
         <!--Navigation Controller-->
         <scene sceneID="IW3-06-wd2">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nbt-6C-md7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="homeVC" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Vp9-xE-RRa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="L5t-76-7LE">
@@ -424,7 +425,6 @@
                         <segue destination="so5-KN-hxF" kind="relationship" relationship="rootViewController" id="lp0-zt-QfU"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nbt-6C-md7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1413" y="-59"/>
         </scene>
