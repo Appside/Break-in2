@@ -207,12 +207,8 @@ class LoginViewController: UIViewController {
         self.noticeTop("Welcome back, \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
         //self.dismissViewControllerAnimated(true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! UINavigationController
+        let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC")
         presentViewController(homeVC, animated: true, completion: nil)
-    }
-
-    override func prefersStatusBarHidden() -> Bool {
-        return true
     }
     
     /*

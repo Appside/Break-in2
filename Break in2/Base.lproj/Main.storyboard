@@ -7,7 +7,7 @@
         <!--Login View Controller-->
         <scene sceneID="ZVk-RB-TlO">
             <objects>
-                <viewController id="0io-Fj-TFQ" customClass="LoginViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="navigationVC" id="0io-Fj-TFQ" customClass="LoginViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VeX-AI-15z"/>
                         <viewControllerLayoutGuide type="bottom" id="4Ih-hG-SEB"/>
@@ -56,7 +56,7 @@
         <!--Home View Controller-->
         <scene sceneID="a1f-d0-jcg">
             <objects>
-                <viewController id="so5-KN-hxF" customClass="HomeViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="homeVC" id="so5-KN-hxF" customClass="HomeViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2xr-a4-lfX"/>
                         <viewControllerLayoutGuide type="bottom" id="oLC-lr-xnK"/>
@@ -106,8 +106,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="Vp9-xE-RRa" kind="show" identifier="backFromTestSelection" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="wwg-2e-UO1"/>
                         <segue destination="OuC-N4-5dz" kind="show" identifier="testStartButtonClicked" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" id="48X-2h-9s8"/>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backFromTestSelection" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="Z2O-uS-5Gc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -135,7 +135,7 @@
                                 </constraints>
                                 <state key="normal" image="back"/>
                                 <connections>
-                                    <segue destination="Vp9-xE-RRa" kind="custom" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" id="Sav-v2-TMG"/>
+                                    <segue destination="so5-KN-hxF" kind="custom" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" id="9az-EQ-hrj"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="textBreakIn2Small" translatesAutoresizingMaskIntoConstraints="NO" id="ZXh-iS-Qff">
@@ -172,25 +172,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DtD-yn-t8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2921" y="-59"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="8of-O3-jEk">
-            <objects>
-                <navigationController storyboardIdentifier="navigationVC" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="T98-xR-i0i" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8bS-Fd-jV4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="0io-Fj-TFQ" kind="relationship" relationship="rootViewController" id="w6t-GO-vde"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GkL-ct-Xmy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="669" y="-882"/>
         </scene>
         <!--Quizz View Controller-->
         <scene sceneID="BOr-eT-2Sx">
@@ -409,25 +390,6 @@
             </objects>
             <point key="canvasLocation" x="1306" y="760"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="IW3-06-wd2">
-            <objects>
-                <navigationController storyboardIdentifier="homeVC" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Vp9-xE-RRa" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="L5t-76-7LE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="so5-KN-hxF" kind="relationship" relationship="rootViewController" id="lp0-zt-QfU"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nbt-6C-md7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1413" y="-59"/>
-        </scene>
     </scenes>
     <resources>
         <image name="back" width="48" height="37"/>
@@ -436,6 +398,6 @@
         <image name="textBreakIn2Small" width="114" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wwg-2e-UO1"/>
+        <segue reference="9az-EQ-hrj"/>
     </inferredMetricsTieBreakers>
 </document>

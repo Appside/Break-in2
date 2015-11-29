@@ -41,12 +41,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 3
             // if we have a user, set the TabBarController to be the initial view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            startViewController = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! UINavigationController
+            startViewController = storyboard.instantiateViewControllerWithIdentifier("homeVC")
         } else {
             // 4
             // Otherwise set the LoginViewController to be the first
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            startViewController = storyboard.instantiateViewControllerWithIdentifier("navigationVC") as! UINavigationController
+            startViewController = storyboard.instantiateViewControllerWithIdentifier("navigationVC")
         }
         
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
