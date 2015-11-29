@@ -53,7 +53,11 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.settingsButton)
     self.view.addSubview(self.logOutButton)
     self.view.addSubview(self.careersScrollView)
+    
+    //add actions to buttons
+    
     self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
+    self.settingsButton.addTarget(self, action: "settingsBtnPressed:", forControlEvents: .TouchUpInside)
     
     // Create testTypeViews for each testType
     
@@ -283,6 +287,15 @@ class HomeViewController: UIViewController {
         
     }
     
+    func settingsBtnPressed(sender: UIButton!){
+        
+        self.performSegueWithIdentifier("settingsClicked", sender: nil)
+        
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
   
   /*

@@ -33,6 +33,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
+        let user = PFUser.currentUser()
+        
+        let startViewController: UIViewController;
+        
+        if (user != nil) {
+            // 3
+            // if we have a user, set the TabBarController to be the initial view controller
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            startViewController = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! UINavigationController
+        } else {
+            // 4
+            // Otherwise set the LoginViewController to be the first
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            startViewController = storyboard.instantiateViewControllerWithIdentifier("navigationVC") as! UINavigationController
+        }
+        
+        let screenFrame:CGRect = UIScreen.mainScreen().bounds
+        
+        self.window = UIWindow(frame: screenFrame)
+        self.window?.rootViewController = startViewController;
+        //self.window?.makeKeyAndVisible()
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         //return true

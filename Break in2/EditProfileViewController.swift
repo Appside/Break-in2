@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
+import ParseFacebookUtilsV4
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class EditProfileViewController: UIViewController {
 
@@ -22,15 +27,47 @@ class EditProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if (PFUser.currentUser() != nil) {
+            self.loadUser()
+        }
+        else {
+            self.view.loginUser(self)
+        }
     }
-    */
+    
+    @IBAction func deleteFBTapped(sender: AnyObject) {
+        
+        self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
+        
+        let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, HTTPMethod: "DELETE")
+        
+        facebookRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+            
+            if(error == nil && result != nil){
+                
+                self.noticeTop("Facebook account successfully deactivated", autoClear: true, autoClearTime: 3)
+                self.view.loginUser(self)
+                
+            } else {
+                if let error: NSError = error {
+                    if let errorString = error.userInfo["error"] as? String {
+                        self.noticeOnlyText("Please try again")
+                    }
+                } else {
+                    self.noticeOnlyText("Please try again")
+                }
+            }
+        }
+        
+    }
 
+    func loadUser() {
+        
+        let user = PFUser.currentUser()!
+        
+    }
+    
 }

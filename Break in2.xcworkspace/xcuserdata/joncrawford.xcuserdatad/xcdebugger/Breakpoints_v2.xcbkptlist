@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Break in2/LoginViewController.swift"
-            timestampString = "470486021.911147"
+            timestampString = "470494215.395226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "processFacebook(_:userData:)"
             landmarkType = "5">
          </BreakpointContent>

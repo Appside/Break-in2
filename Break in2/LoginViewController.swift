@@ -20,7 +20,6 @@ class LoginViewController: UIViewController {
     // GLOBAL VARIABLES
     //---------------------------------------------------------------
     
-    @IBOutlet weak var Test: UILabel!
 
     //---------------------------------------------------------------
     // VIEW DID LOAD
@@ -29,7 +28,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addHomeBG()
-        self.Test.text = "empty"
     }
 
     override func didReceiveMemoryWarning() {
@@ -209,6 +207,10 @@ class LoginViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     /*
     // MARK: - Navigation
 
