@@ -8,6 +8,8 @@
 
 import UIKit
 import QuartzCore
+import Parse
+import ParseUI
 
 class HomeViewController: UIViewController {
   
@@ -51,6 +53,7 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.settingsButton)
     self.view.addSubview(self.logOutButton)
     self.view.addSubview(self.careersScrollView)
+    self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
     
     // Create testTypeViews for each testType
     
@@ -255,6 +258,32 @@ class HomeViewController: UIViewController {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if (PFUser.currentUser() != nil) {
+            self.loadUser()
+        }
+        else {
+            self.view.loginUser(self)
+        }
+    }
+    
+    func loadUser() {
+
+        let user = PFUser.currentUser()!
+        
+    }
+    
+    func logoutBtnPressed(sender: UIButton!){
+        
+        PFUser.logOut()
+        self.view.loginUser(self)
+        
+    }
+    
+    
   
   /*
   // MARK: - Navigation

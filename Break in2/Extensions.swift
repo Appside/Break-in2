@@ -26,5 +26,12 @@ extension UIView {
         self.addSubview(imageViewBackground)
         self.sendSubviewToBack(imageViewBackground)
     }
+    
+    func loginUser(target: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let welcomeVC = storyboard.instantiateViewControllerWithIdentifier("navigationVC") as! UINavigationController
+        target.presentViewController(welcomeVC, animated: true, completion: nil)
+        
+    }
 }
 
