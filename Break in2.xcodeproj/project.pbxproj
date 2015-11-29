@@ -16,6 +16,7 @@
 		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; settings = {ASSET_TAGS = (); }; };
 		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; settings = {ASSET_TAGS = (); }; };
 		499375401C027EAF00AA0588 /* questiondata.json in Resources */ = {isa = PBXBuildFile; fileRef = 4993753F1C027EAF00AA0588 /* questiondata.json */; settings = {ASSET_TAGS = (); }; };
+		49A0C5371C0516BD00EEEAA9 /* quizzPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0C5361C0516BD00EEEAA9 /* quizzPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
 		6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6143164E1BEF843A0047A37D /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		499375381C02573100AA0588 /* categoryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = categoryButton.swift; sourceTree = "<group>"; };
 		499375391C02573100AA0588 /* paddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingLabel.swift; sourceTree = "<group>"; };
 		4993753F1C027EAF00AA0588 /* questiondata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = questiondata.json; sourceTree = "<group>"; };
+		49A0C5361C0516BD00EEEAA9 /* quizzPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = quizzPageViewController.swift; sourceTree = "<group>"; };
 		614316441BEF843A0047A37D /* Break in2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Break in2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316471BEF843A0047A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6143164C1BEF843A0047A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				614316471BEF843A0047A37D /* AppDelegate.swift */,
 				499375351C02573100AA0588 /* QuizzViewController.swift */,
 				4993753F1C027EAF00AA0588 /* questiondata.json */,
+				49A0C5361C0516BD00EEEAA9 /* quizzPageViewController.swift */,
 				499375361C02573100AA0588 /* Question.swift */,
 				499375371C02573100AA0588 /* QuizzModel.swift */,
 				499375381C02573100AA0588 /* categoryButton.swift */,
@@ -403,6 +406,7 @@
 				4993753D1C02573100AA0588 /* categoryButton.swift in Sources */,
 				4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */,
 				4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */,
+				49A0C5371C0516BD00EEEAA9 /* quizzPageViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,
 				617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */,
