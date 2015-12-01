@@ -16,11 +16,10 @@ class PageControllerView: UIView {
   
   // Declare and initialize drawing properties
   
-  var pageControllerCircleColors:[CGColor] = [CGColor]()
+  var pageControllerCircleColor:CGColor = UIColor.turquoiseColor().CGColor
   var pageControllerCircleRects:[CGRect] = [CGRect]()
   
   var selectedPageIndex:Int = 0
-  var randomColorsGenerated:Bool = false
   
   // Declare and initialize design constants
   
@@ -56,25 +55,10 @@ class PageControllerView: UIView {
     
     for var index:Int = 0 ; index < self.numberOfPages ; index++ {
       
-      
-      if !self.randomColorsGenerated {
-        
-        // Create a random color and save it
-        
-        let red:CGFloat = (CGFloat(arc4random_uniform(2)) * 0.5)
-        let green:CGFloat = (CGFloat(arc4random_uniform(2)) * 0.5)
-        let blue:CGFloat = (CGFloat(arc4random_uniform(2)) * 0.5)
-        
-        let randomColor:CGColor = UIColor.init(red: red , green: green, blue: blue, alpha: 1).CGColor
-        
-        self.pageControllerCircleColors.append(randomColor)
-        
-      }
-      
       // Set the fill color to randomColor
       
-      CGContextSetFillColorWithColor(pageControllerContext, self.pageControllerCircleColors[index])
-      CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerCircleColors[index])
+      CGContextSetFillColorWithColor(pageControllerContext, self.pageControllerCircleColor)
+      CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerCircleColor)
       
       // Create CGRects that surround the page controller cirlces
       
@@ -90,11 +74,9 @@ class PageControllerView: UIView {
       
     }
     
-    self.randomColorsGenerated = true
-    
     // Set the stroke color and thickness to the color of the leftmost circle
     
-    CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerCircleColors[self.selectedPageIndex])
+    CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerCircleColor)
     CGContextSetLineWidth(pageControllerContext, self.pageControllerSelectedCircleThickness)
     
     // Draw outer circle for selected circle

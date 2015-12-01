@@ -15,27 +15,8 @@
                     <view key="view" contentMode="scaleToFill" id="2mz-VL-sbI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6U-hH-sBx">
-                                <rect key="frame" x="193" y="70" width="204" height="30"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="204" id="7on-Yj-GIV"/>
-                                </constraints>
-                                <state key="normal" title="Facebook Login">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="buttonFBTapped:" destination="0io-Fj-TFQ" eventType="touchUpInside" id="Z36-7b-cbV"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="4Ih-hG-SEB" firstAttribute="top" secondItem="D6U-hH-sBx" secondAttribute="bottom" constant="500" id="e2p-eW-87B"/>
-                            <constraint firstItem="D6U-hH-sBx" firstAttribute="leading" secondItem="2mz-VL-sbI" secondAttribute="leading" constant="193" id="mgB-Ny-h5v"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eYr-mg-x7Z"/>
                 </viewController>

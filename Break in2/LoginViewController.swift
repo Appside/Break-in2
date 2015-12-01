@@ -34,6 +34,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   let loginView:UIView = UIView()
   var loginPageControllerView:PageControllerView = PageControllerView()
   var loginTutorialViews:[LoginTutorialView] = [LoginTutorialView]()
+  let facebookLoginButton:UIButton = UIButton()
+  let facebookLogoImageView:UIImageView = UIImageView()
   
   // Declare and initialize design constants
   
@@ -66,6 +68,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       self.view.addSubview(self.loginView)
       self.loginView.addSubview(self.loginScrollView)
       self.loginView.addSubview(self.loginPageControllerView)
+      self.loginView.addSubview(self.facebookLoginButton)
+      self.facebookLoginButton.addSubview(self.facebookLogoImageView)
 
       // Customize and add content to imageViews
       
@@ -85,6 +89,16 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       
       self.loginPageControllerView.numberOfPages = self.tutorialImageNames.count
       self.loginPageControllerView.minorMargin = self.minorMargin
+      self.loginPageControllerView.pageControllerCircleHeight = 10
+      self.loginPageControllerView.pageControllerSelectedCircleHeight = 18
+      self.loginPageControllerView.pageControllerSelectedCircleThickness = 2
+      
+      self.facebookLoginButton.backgroundColor = UIColor.blueColor()
+      self.facebookLoginButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+      self.facebookLoginButton.setTitle("Login With Facebook", forState: UIControlState.Normal)
+      
+      self.facebookLogoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+      self.facebookLogoImageView.image = UIImage.init(named: "facebookButtonLight")
       
       // Create loginTutorialViews for each tutorialImage
     
@@ -104,7 +118,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       self.loginScrollView.showsHorizontalScrollIndicator = true
       
       self.loginScrollView.delegate = self
-
+      
+      // Add target for facebookLoginButton
+      
+      self.facebookLoginButton.addTarget(self, action: "buttonFBTapped:", forControlEvents: UIControlEvents.TouchUpInside)
       
       // Set constraints
       
@@ -119,7 +136,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     // TAP FACEBOOK BUTTON
     //---------------------------------------------------------------
     
-    @IBAction func buttonFBTapped(sender: AnyObject) {
+    func buttonFBTapped(sender: AnyObject) {
         
         //self.pleaseWait()
         self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
@@ -368,6 +385,36 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.loginPageControllerView.addConstraint(loginPageControllerViewHeightConstraint)
     self.view.addConstraints([loginPageControllerViewTopConstraint, loginPageControllerViewLeftConstraint, loginPageControllerViewRightConstraint])
     
+    // Create and add constraints for facebookLoginButton
+    
+    self.facebookLoginButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let facebookLoginButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight)
+    
+    let facebookLoginButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let facebookLoginButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let facebookLoginButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+    
+    self.facebookLoginButton.addConstraint(facebookLoginButtonHeightConstraint)
+    self.view.addConstraints([facebookLoginButtonLeftConstraint, facebookLoginButtonRightConstraint, facebookLoginButtonBottomConstraint])
+    
+    // Create and add constraints for facebookLogoImageView
+    
+    self.facebookLogoImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let facebookLogoImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLoginButton, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    
+    let facebookLogoImageViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLoginButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
+    
+    let facebookLogoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight/2)
+    
+    let facebookLogoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight/2)
+    
+    self.facebookLogoImageView.addConstraints([facebookLogoImageViewHeightConstraint, facebookLogoImageViewWidthConstraint])
+    self.view.addConstraints([facebookLogoImageViewCenterYConstraint, facebookLogoImageViewLeftConstraint])
+    
     // Create and add constraints for loginScrollView
     
     self.loginScrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -378,10 +425,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     let loginScrollViewRightConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let loginScrollViewHeightConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.tutorialImageHeight)
+    let loginScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLoginButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
     
-    self.loginScrollView.addConstraint(loginScrollViewHeightConstraint)
-    self.view.addConstraints([loginScrollViewTopConstraint, loginScrollViewLeftConstraint, loginScrollViewRightConstraint])
+    self.view.addConstraints([loginScrollViewTopConstraint, loginScrollViewLeftConstraint, loginScrollViewRightConstraint, loginScrollViewBottomConstraint])
     
     // Create and add constraints for each testTypeView and set content size for testScrollView
     
@@ -420,8 +466,15 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         self.view.addConstraint(loginTutorialViewRightConstraint)
       }
     }
+  }
+  
+  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    
+    let pageIndex:Int = Int(self.loginScrollView.contentOffset.x / self.loginScrollView.frame.size.width)
+    self.loginPageControllerView.updatePageController(pageIndex)
     
   }
+
     
     /*
     // MARK: - Navigation

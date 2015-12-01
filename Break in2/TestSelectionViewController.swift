@@ -100,7 +100,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       
     }
     
-    // Create testPageControllerView
+    // Customize testPageControllerView
     
     self.testPageControllerView.numberOfPages = self.testTypes.count
     self.testPageControllerView.minorMargin = self.minorMargin
