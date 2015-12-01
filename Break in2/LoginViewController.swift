@@ -14,7 +14,7 @@ import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     //---------------------------------------------------------------
     // GLOBAL VARIABLES
@@ -29,9 +29,11 @@ class LoginViewController: UIViewController {
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
+  let loginScrollView:UIScrollView = UIScrollView()
   
   let loginView:UIView = UIView()
   var loginPageControllerView:PageControllerView = PageControllerView()
+  var loginTutorialViews:[LoginTutorialView] = [LoginTutorialView]()
   
   // Declare and initialize design constants
   
@@ -43,6 +45,8 @@ class LoginViewController: UIViewController {
   
   let borderWidth:CGFloat = 3
   
+  let loginPageControllerViewHeight:CGFloat = 50
+  let tutorialImageHeight:CGFloat = 200
   let buttonHeight:CGFloat = 50
 
     //---------------------------------------------------------------
@@ -60,6 +64,8 @@ class LoginViewController: UIViewController {
       self.view.addSubview(self.sloganImageView)
       
       self.view.addSubview(self.loginView)
+      self.loginView.addSubview(self.loginScrollView)
+      self.loginView.addSubview(self.loginPageControllerView)
 
       // Customize and add content to imageViews
       
@@ -76,6 +82,29 @@ class LoginViewController: UIViewController {
       
       self.loginView.layer.cornerRadius = self.minorMargin
       self.loginView.backgroundColor = UIColor.whiteColor()
+      
+      self.loginPageControllerView.numberOfPages = self.tutorialImageNames.count
+      self.loginPageControllerView.minorMargin = self.minorMargin
+      
+      // Create loginTutorialViews for each tutorialImage
+    
+      for var index = 0 ; index < self.tutorialImageNames.count ; index++ {
+        
+        let loginTutorialViewAtIndex:LoginTutorialView = LoginTutorialView()
+        
+        self.loginScrollView.addSubview(loginTutorialViewAtIndex)
+        
+        self.loginTutorialViews.append(loginTutorialViewAtIndex)
+        
+      }
+      
+      // Adjust testScrollView characteristics
+      
+      self.loginScrollView.pagingEnabled = true
+      self.loginScrollView.showsHorizontalScrollIndicator = true
+      
+      self.loginScrollView.delegate = self
+
       
       // Set constraints
       
@@ -324,6 +353,74 @@ class LoginViewController: UIViewController {
     
     self.view.addConstraints([loginViewTopConstraint, loginViewLeftConstraint, loginViewRightConstraint, loginViewBottomConstraint])
     
+    // Create and add constraints for loginPageControllerView
+    
+    self.loginPageControllerView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let loginPageControllerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let loginPageControllerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let loginPageControllerViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    
+    let loginPageControllerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.loginPageControllerViewHeight)
+    
+    self.loginPageControllerView.addConstraint(loginPageControllerViewHeightConstraint)
+    self.view.addConstraints([loginPageControllerViewTopConstraint, loginPageControllerViewLeftConstraint, loginPageControllerViewRightConstraint])
+    
+    // Create and add constraints for loginScrollView
+    
+    self.loginScrollView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let loginScrollViewTopConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    
+    let loginScrollViewLeftConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let loginScrollViewRightConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    
+    let loginScrollViewHeightConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.tutorialImageHeight)
+    
+    self.loginScrollView.addConstraint(loginScrollViewHeightConstraint)
+    self.view.addConstraints([loginScrollViewTopConstraint, loginScrollViewLeftConstraint, loginScrollViewRightConstraint])
+    
+    // Create and add constraints for each testTypeView and set content size for testScrollView
+    
+    for var index:Int = 0 ; index < self.tutorialImageNames.count ; index++ {
+      
+      self.loginTutorialViews[index].translatesAutoresizingMaskIntoConstraints = false
+      
+      let loginTutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+      
+      let loginTutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.tutorialImageHeight)
+      
+      let loginTutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
+      
+      if index == 0 {
+        
+        let loginTutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(loginTutorialViewLeftConstraint)
+        
+      }
+      else {
+        
+        let loginTutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginTutorialViews[index - 1], attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(loginTutorialViewLeftConstraint)
+        
+      }
+      
+      self.loginTutorialViews[index].addConstraints([loginTutorialViewWidthConstraint, loginTutorialViewHeightConstraint])
+      self.view.addConstraint(loginTutorialViewTopConstraint)
+      
+      if index == self.tutorialImageNames.count - 1 {
+        
+        let loginTutorialViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(loginTutorialViewRightConstraint)
+      }
+    }
+    
   }
     
     /*
@@ -336,4 +433,3 @@ class LoginViewController: UIViewController {
     }
     */
 }
-

@@ -12,7 +12,7 @@ class PageControllerView: UIView {
   
   // Declare and initialize types of tests array in super.testTypeViews
   
-  var testTypes:[String] = [String]()
+  var numberOfPages:Int = 1
   
   // Declare and initialize drawing properties
   
@@ -54,7 +54,7 @@ class PageControllerView: UIView {
     
     // Create as many page controller circles as there are types of test
     
-    for var index:Int = 0 ; index < self.testTypes.count ; index++ {
+    for var index:Int = 0 ; index < self.numberOfPages ; index++ {
       
       
       if !self.randomColorsGenerated {
@@ -78,7 +78,7 @@ class PageControllerView: UIView {
       
       // Create CGRects that surround the page controller cirlces
       
-      let leftmostCircleLeadingEdgeXCoordinate:CGFloat = (self.bounds.size.width / 2) - (self.pageControllerCircleHeight * CGFloat(self.testTypes.count) / 2) - (CGFloat(self.testTypes.count - 1) * self.minorMargin)
+      let leftmostCircleLeadingEdgeXCoordinate:CGFloat = (self.bounds.size.width / 2) - (self.pageControllerCircleHeight * CGFloat(self.numberOfPages) / 2) - (CGFloat(self.numberOfPages - 1) * self.minorMargin)
       let circleSpacing:CGFloat = (CGFloat(index) * (self.pageControllerCircleHeight + (2 * self.minorMargin)))
       
       let circleRect:CGRect = CGRectMake(leftmostCircleLeadingEdgeXCoordinate + circleSpacing, (self.bounds.size.height / 2) - (self.pageControllerCircleHeight / 2), self.pageControllerCircleHeight, self.pageControllerCircleHeight)

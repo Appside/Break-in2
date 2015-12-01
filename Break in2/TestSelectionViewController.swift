@@ -102,7 +102,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     // Create testPageControllerView
     
-    self.testPageControllerView.testTypes = self.testTypes
+    self.testPageControllerView.numberOfPages = self.testTypes.count
     self.testPageControllerView.minorMargin = self.minorMargin
     
     self.testPageControllerView.pageControllerCircleHeight = 10
@@ -238,7 +238,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testScrollView.translatesAutoresizingMaskIntoConstraints = false
     
-    let testScrollViewViewTopConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let testScrollViewTopConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
     let testScrollViewLeftConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
@@ -246,7 +246,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     let testScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButtonView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
     
-    self.view.addConstraints([testScrollViewViewTopConstraint, testScrollViewLeftConstraint, testScrollViewRightConstraint, testScrollViewBottomConstraint])
+    self.view.addConstraints([testScrollViewTopConstraint, testScrollViewLeftConstraint, testScrollViewRightConstraint, testScrollViewBottomConstraint])
     
     // Create and add constraints for each testTypeView and set content size for testScrollView
     
