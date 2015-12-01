@@ -21,7 +21,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   var testPageControllerView:PageControllerView = PageControllerView()
   let testScrollView:UIScrollView = UIScrollView()
   var testTypeViews:[TestTypeView] = [TestTypeView]()
-  let testStartButtonView:UIView = UIView()
   let testStartButton:UIButton = UIButton(type: UIButtonType.System)
   var backButton:UIButton = UIButton()
   
@@ -39,17 +38,19 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   let screenFrame:CGRect = UIScreen.mainScreen().bounds
   let statusBarFrame:CGRect = UIApplication.sharedApplication().statusBarFrame
   
-  let mainLineColor:UIColor = UIColor.blackColor()
+  let mainLineColor:UIColor = UIColor.turquoiseColor()
   let mainBackgroundColor:UIColor = UIColor.whiteColor()
-  let secondaryBackgroundColor:UIColor = UIColor.lightGrayColor()
+  let secondaryBackgroundColor:UIColor = UIColor.turquoiseColor()
   
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
   
   let testPageControllerViewHeight:CGFloat = 50
-  let testTypeTitleViewHeight:CGFloat = 80
+  let testTypeTitleLabelHeight:CGFloat = 30
+  let testTypeTimeLabelHeight:CGFloat = 20
   let testTypeDifficultyViewHeight:CGFloat = 50
-  let testStartButtonViewHeight:CGFloat = 50
+
+  let buttonHeight:CGFloat = 50
 
   let testTypeStatsViewHeightAfterSwipe:CGFloat = 100
   
@@ -91,7 +92,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       testTypeViewAtIndex.mainBackgroundColor = self.mainBackgroundColor
       testTypeViewAtIndex.secondaryBackgroundColor = self.secondaryBackgroundColor
       
-      testTypeViewAtIndex.testTypeTitleViewHeight = self.testTypeTitleViewHeight
+      testTypeViewAtIndex.testTypeTitleLabelHeight = self.testTypeTitleLabelHeight
+      testTypeViewAtIndex.testTypeTimeLabelHeight = self.testTypeTimeLabelHeight
       testTypeViewAtIndex.testTypeDifficultyViewHeight = self.testTypeDifficultyViewHeight
       testTypeViewAtIndex.testTypeDifficultyButtonHeight = testTypeDifficultyButtonHeight
       testTypeViewAtIndex.testTypeStatsViewHeightAfterSwipe = self.testTypeStatsViewHeightAfterSwipe
@@ -104,6 +106,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testPageControllerView.numberOfPages = self.testTypes.count
     self.testPageControllerView.minorMargin = self.minorMargin
+    //self.testPageControllerView.layer.borderWidth = 2
+    //self.testPageControllerView.layer.borderColor = UIColor.blackColor().CGColor
     
     self.testPageControllerView.pageControllerCircleHeight = 10
     self.testPageControllerView.pageControllerSelectedCircleHeight = 18
@@ -113,8 +117,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testSelectionView.addSubview(self.testPageControllerView)
     self.testSelectionView.addSubview(self.testScrollView)
-    self.testSelectionView.addSubview(self.testStartButtonView)
-    self.testStartButtonView.addSubview(self.testStartButton)
+    self.testSelectionView.addSubview(self.testStartButton)
     
     // Add testTypeViews to testScrollView
     
@@ -142,11 +145,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     // Adjust testSelectioView apperance
     
     self.testSelectionView.backgroundColor = self.mainBackgroundColor
+    self.testSelectionView.layer.cornerRadius = self.minorMargin
     
     // Adjust testStartButton and backButton appearances
     
+    self.testStartButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
     self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
-    self.testStartButton.setTitleColor(self.mainLineColor, forState: UIControlState.Normal)
+    self.testStartButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.testStartButton.backgroundColor = UIColor.turquoiseColor()
     self.testStartButton.addTarget(self, action: "testStartButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
@@ -193,13 +199,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testSelectionView.translatesAutoresizingMaskIntoConstraints = false
     
-    self.testSelectionViewBottomConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.testPageControllerViewHeight + self.testTypeTitleViewHeight + self.testTypeDifficultyViewHeight + self.testStartButtonViewHeight)
+    self.testSelectionViewBottomConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + self.buttonHeight + (self.minorMargin * 5))
     
     let testSelectionViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
     let testSelectionViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.testSelectionViewHeightConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testPageControllerViewHeight + self.testTypeTitleViewHeight + self.testTypeDifficultyViewHeight + self.testStartButtonViewHeight)
+    self.testSelectionViewHeightConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + self.buttonHeight + (self.minorMargin * 5))
     
     self.testSelectionView.addConstraint(self.testSelectionViewHeightConstraint)
     self.view.addConstraints([self.testSelectionViewBottomConstraint, testSelectionViewLeftConstraint, testSelectionViewRightConstraint])
@@ -219,21 +225,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.testPageControllerView.addConstraint(testPageControllerViewHeightConstraint)
     self.view.addConstraints([testPageControllerViewTopConstraint, testPageControllerViewLeftConstraint, testPageControllerViewRightConstraint])
     
-    // Create and add constraints for testStartButtonView
-    
-    self.testStartButtonView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let testStartButtonViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButtonView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-    
-    let testStartButtonViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButtonView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    
-    let testStartButtonViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButtonView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    
-    let testStartButtonViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButtonView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testStartButtonViewHeight)
-    
-    self.testStartButtonView.addConstraint(testStartButtonViewHeightConstraint)
-    self.view.addConstraints([testStartButtonViewLeftConstraint, testStartButtonViewRightConstraint, testStartButtonViewBottomConstraint])
-    
     // Create and add constraints for testScrollView
     
     self.testScrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -244,7 +235,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     let testScrollViewRightConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let testScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButtonView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let testScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * 1)
     
     self.view.addConstraints([testScrollViewTopConstraint, testScrollViewLeftConstraint, testScrollViewRightConstraint, testScrollViewBottomConstraint])
     
@@ -256,7 +247,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       
       let testTypeViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
       
-      let testTypeViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeTitleViewHeight + self.testTypeDifficultyViewHeight)
+      let testTypeViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight)
       
       let testTypeViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
     
@@ -292,15 +283,16 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testStartButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let testStartButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButtonView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    let testStartButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight)
     
-    let testStartButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButtonView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let testStartButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
-    let testStartButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButtonView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let testStartButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let testStartButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButtonView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    let testStartButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
     
-    self.view.addConstraints([testStartButtonTopConstraint, testStartButtonLeftConstraint, testStartButtonRightConstraint, testStartButtonBottomConstraint])
+    self.testStartButton.addConstraint(testStartButtonHeightConstraint)
+    self.view.addConstraints([testStartButtonLeftConstraint, testStartButtonRightConstraint, testStartButtonBottomConstraint])
     
     // Create and add constraints for backButton
     
@@ -325,7 +317,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       
       if !self.testSelectionViewVisible {
         
-        self.testSelectionViewBottomConstraint.constant = self.majorMargin * -1
+        self.testSelectionViewBottomConstraint.constant = self.minorMargin
         self.view.layoutIfNeeded()
         
         self.testSelectionViewVisible = true
@@ -340,7 +332,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     UIView.animateWithDuration(1, animations: {
       
-      self.testSelectionViewHeightConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleViewHeight + self.testTypeDifficultyViewHeight + self.testStartButtonViewHeight + self.testTypeStatsViewHeightAfterSwipe
+      self.testSelectionViewHeightConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + self.buttonHeight + (self.minorMargin * 5) + self.testTypeStatsViewHeightAfterSwipe
       self.view.layoutIfNeeded()
       
       }, completion: nil)
@@ -351,7 +343,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     UIView.animateWithDuration(1, animations: {
       
-      self.testSelectionViewHeightConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleViewHeight + self.testTypeDifficultyViewHeight + self.testStartButtonViewHeight
+      self.testSelectionViewHeightConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + self.buttonHeight + (self.minorMargin * 5)
       self.view.layoutIfNeeded()
       
       }, completion: nil)

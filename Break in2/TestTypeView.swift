@@ -18,7 +18,6 @@ class TestTypeView: UIView {
   
   // Declare and initialize subviews
   
-  let testTypeTitleView:UIView = UIView()
   let testTypeTitleLabel:UILabel = UILabel()
   let testTypeTimeLabel:UILabel = UILabel()
   
@@ -36,11 +35,11 @@ class TestTypeView: UIView {
   var mainBackgroundColor:UIColor = UIColor()
   var secondaryBackgroundColor:UIColor = UIColor()
   
-  var testTypeTitleViewHeight:CGFloat = CGFloat()
+  var testTypeTitleLabelHeight:CGFloat = CGFloat()
+  var testTypeTimeLabelHeight:CGFloat = CGFloat()
   var testTypeDifficultyViewHeight:CGFloat = CGFloat()
   var testTypeStatsViewHeight:CGFloat = CGFloat()
   
-  let testTypeTitleTimeLabelRatio:CGFloat = 0.5
   var testTypeDifficultyButtonHeight:CGFloat = CGFloat()
   var testTypeStatsViewHeightAfterSwipe:CGFloat = CGFloat()
   
@@ -50,18 +49,24 @@ class TestTypeView: UIView {
     // Add subviews to testTypeView (testTypeStatsView must be behind the other subviews)
     
     self.addSubview(self.testTypeStatsView)
-    self.addSubview(self.testTypeTitleView)
     self.addSubview(self.testTypeDifficultyView)
-    
-    // Add labels, buttons etc. as subviews to their respective superviews
-    
-    self.testTypeTitleView.addSubview(self.testTypeTitleLabel)
-    self.testTypeTitleView.addSubview(self.testTypeTimeLabel)
+    self.addSubview(self.testTypeTitleLabel)
+    self.addSubview(self.testTypeTimeLabel)
     
     // Set testTypeTitleLabel and testTypeTimeLabel characteristics
     
+    self.testTypeTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+    self.testTypeTitleLabel.textColor = UIColor.turquoiseColor()
     self.testTypeTitleLabel.textAlignment = NSTextAlignment.Center
+    //self.testTypeTitleLabel.layer.borderWidth = 2
+    //self.testTypeTitleLabel.layer.borderColor = UIColor.blueColor().CGColor
+    
+    self.testTypeTimeLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
+    self.testTypeTimeLabel.textColor = UIColor.turquoiseColor()
     self.testTypeTimeLabel.textAlignment = NSTextAlignment.Center
+    //self.testTypeTimeLabel.layer.borderWidth = 2
+    //self.testTypeTimeLabel.layer.borderColor = UIColor.redColor().CGColor
+
   
   }
 
@@ -72,10 +77,8 @@ class TestTypeView: UIView {
   func displayView() {
     
     self.testTypeTitleLabel.text = self.testTypes[testTypeViewsIndex]
-    self.testTypeTitleLabel.font = UIFont.boldSystemFontOfSize(20)
     
     self.testTypeTimeLabel.text = "30 minutes"
-    self.testTypeTimeLabel.font = UIFont.systemFontOfSize(16)
     
     // Create testTypeDifficultyButtons for each testDifficulty
     
@@ -85,6 +88,7 @@ class TestTypeView: UIView {
       
       difficultyButton.setTitle(self.testDifficulties[index], forState: UIControlState.Normal)
       
+      difficultyButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
       difficultyButton.setTitleColor(self.mainLineColor, forState: UIControlState.Normal)
       difficultyButton.layer.borderWidth = 1
       difficultyButton.layer.borderColor = self.mainLineColor.CGColor
@@ -105,26 +109,41 @@ class TestTypeView: UIView {
   
   func setConstraints() {
     
-    // Create and add constraints for testTypeTitleView
+    // Create and add constraints for testTypeTitleLabel
     
-    self.testTypeTitleView.translatesAutoresizingMaskIntoConstraints = false
+    self.testTypeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let testTypeTitleViewTopConstraint = NSLayoutConstraint.init(item: self.testTypeTitleView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let testTypeTitleLabelTopConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
     
-    let testTypeTitleViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let testTypeTitleLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
-    let testTypeTitleViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let testTypeTitleLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let testTypeTitleViewHeightConstraint = NSLayoutConstraint.init(item: self.testTypeTitleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeTitleViewHeight)
+    let testTypeTitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeTitleLabelHeight)
     
-    self.testTypeTitleView.addConstraint(testTypeTitleViewHeightConstraint)
-    self.addConstraints([testTypeTitleViewTopConstraint, testTypeTitleViewLeftConstraint, testTypeTitleViewRightConstraint])
+    self.testTypeTitleLabel.addConstraint(testTypeTitleLabelHeightConstraint)
+    self.addConstraints([testTypeTitleLabelTopConstraint, testTypeTitleLabelLeftConstraint, testTypeTitleLabelRightConstraint])
+    
+    // Create and add constraints for testTypeTimeLabel
+    
+    self.testTypeTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testTypeTimeLabelTopConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    
+    let testTypeTimeLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let testTypeTimeLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let testTypeTimeLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeTimeLabelHeight)
+    
+    self.testTypeTimeLabel.addConstraint(testTypeTimeLabelHeightConstraint)
+    self.addConstraints([testTypeTimeLabelTopConstraint, testTypeTimeLabelLeftConstraint, testTypeTimeLabelRightConstraint])
     
     // Create and add constraints for testTypeDifficultyView
     
     self.testTypeDifficultyView.translatesAutoresizingMaskIntoConstraints = false
     
-    let testTypeDifficultyViewTopConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let testTypeDifficultyViewTopConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
     
     let testTypeDifficultyViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
@@ -149,36 +168,6 @@ class TestTypeView: UIView {
     
     self.testTypeStatsView.addConstraint(testTypeStatsViewHeightConstraint)
     self.addConstraints([testTypeStatsViewTopConstraint, testTypeStatsViewLeftConstraint, testTypeStatsViewRightConstraint])
-    
-    // Create and add constraints for testTypeTitleLabel
-    
-    self.testTypeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    let testTypeTitleLabelTopConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
-    
-    let testTypeTitleLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
-    
-    let testTypeTitleLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let testTypeTitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.testTypeTitleViewHeight * self.testTypeTitleTimeLabelRatio) - (2 * self.minorMargin))
-    
-    self.testTypeTitleLabel.addConstraint(testTypeTitleLabelHeightConstraint)
-    self.testTypeTitleView.addConstraints([testTypeTitleLabelTopConstraint, testTypeTitleLabelLeftConstraint, testTypeTitleLabelRightConstraint])
-    
-    // Create and add constraints for testTypeTimeLabel
-    
-    self.testTypeTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    let testTypeTimeLabelTopConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
-    
-    let testTypeTimeLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
-    
-    let testTypeTimeLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let testTypeTimeLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.testTypeTitleViewHeight * (1 - self.testTypeTitleTimeLabelRatio)) - (2 * self.minorMargin))
-
-    self.testTypeTimeLabel.addConstraint(testTypeTimeLabelHeightConstraint)
-    self.addConstraints([testTypeTimeLabelTopConstraint, testTypeTimeLabelLeftConstraint, testTypeTimeLabelRightConstraint])
     
     // Set constraints for each testTypeDifficultyButton
     
@@ -207,7 +196,7 @@ class TestTypeView: UIView {
     
     for button:UIButton in self.testTypeDifficultyButtons {
       
-      button.backgroundColor = self.mainBackgroundColor
+      button.backgroundColor = self.backgroundColor
       button.setTitleColor(self.mainLineColor, forState: UIControlState.Normal)
       
     }
