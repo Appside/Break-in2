@@ -19,7 +19,24 @@ class LoginViewController: UIViewController {
     //---------------------------------------------------------------
     // GLOBAL VARIABLES
     //---------------------------------------------------------------
-    
+  
+  // Declare and initialize views
+  
+  let logoImageView:UIImageView = UIImageView()
+  let profilePictureImageView:UIImageView = UIImageView()
+  let sloganImageView:UIImageView = UIImageView()
+  
+  // Declare and initialize design constants
+  
+  let screenFrame:CGRect = UIScreen.mainScreen().bounds
+  let statusBarFrame:CGRect = UIApplication.sharedApplication().statusBarFrame
+  
+  let majorMargin:CGFloat = 20
+  let minorMargin:CGFloat = 10
+  
+  let borderWidth:CGFloat = 3
+  
+  let buttonHeight:CGFloat = 50
 
     //---------------------------------------------------------------
     // VIEW DID LOAD
@@ -29,7 +46,26 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         self.view.addHomeBG()
       
+      // Add logoImageView and profilePictureImageView to HomeViewController view
       
+      self.view.addSubview(self.logoImageView)
+      self.view.addSubview(self.profilePictureImageView)
+      self.view.addSubview(self.sloganImageView)
+
+      // Customize and add content to imageViews
+      
+      self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+      self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
+      
+      self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
+      self.profilePictureImageView.image = UIImage.init(named: "planeLogo")
+
+      self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
+      self.sloganImageView.image = UIImage.init(named: "asSlogan")
+      
+      // Set constraints
+      
+      self.setConstraints()
     }
 
     override func didReceiveMemoryWarning() {
@@ -212,6 +248,55 @@ class LoginViewController: UIViewController {
         let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC")
         presentViewController(homeVC, animated: true, completion: nil)
     }
+  
+  func setConstraints() {
+    
+    // Create and add constraints for logoImageView
+    
+    self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    
+    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+    
+    self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
+    self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
+    
+    // Create and add constraints for profilePictureImageView
+    
+    self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let profilePictureImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.logoImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin * 2)
+    
+    let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+    
+    let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+    
+    self.profilePictureImageView.addConstraints([profilePictureImageViewHeightConstraint, profilePictureImageViewWidthConstraint])
+    self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewTopConstraint])
+    
+    // Create and add constraints for sloganImageView
+    
+    self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    
+    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+    
+    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+    
+    self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
+    self.view.addConstraints([sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
+    
+  }
     
     /*
     // MARK: - Navigation
