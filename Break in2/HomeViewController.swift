@@ -113,7 +113,7 @@ class HomeViewController: UIViewController {
     self.settingsButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.settingsButton.setImage(UIImage.init(named: "settings"), forState: UIControlState.Normal)
     
-    self.logOutButton.backgroundColor = UIColor.init(red: 82/255, green: 107/255, blue: 123/255, alpha: 1)
+    self.logOutButton.backgroundColor = UIColor.turquoiseColor()
     self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
     self.logOutButton.setTitle("Log Out", forState: UIControlState.Normal)
     self.logOutButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)

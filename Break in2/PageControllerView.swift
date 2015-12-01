@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TestPageControllerView: UIView {
+class PageControllerView: UIView {
   
   // Declare and initialize types of tests array in super.testTypeViews
   

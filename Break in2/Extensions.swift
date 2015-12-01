@@ -44,3 +44,12 @@ extension UIView {
     }
 }
 
+extension UIColor {
+  
+  // Function that returns the App's turquoise color
+  class func  turquoiseColor() -> UIColor {
+    return UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1)
+  }
+  
+}
+

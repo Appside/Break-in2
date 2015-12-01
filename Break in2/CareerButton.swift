@@ -25,10 +25,10 @@ class CareerButton: UIButton {
     
     // Customize button properties
     
-    self.setTitleColor(UIColor.init(red: 82/255, green: 107/255, blue: 123/255, alpha: 1), forState: UIControlState.Normal)
+    self.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
     self.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
 
-    self.layer.borderColor = UIColor.init(red: 82/255, green: 107/255, blue: 123/255, alpha: 1).CGColor
+    self.layer.borderColor = UIColor.turquoiseColor().CGColor
     
     self.setConstraints()
     

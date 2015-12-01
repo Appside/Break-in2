@@ -18,7 +18,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   // Declare and intialize views
   
   let testSelectionView:UIView = UIView()
-  var testPageControllerView:TestPageControllerView = TestPageControllerView()
+  var testPageControllerView:PageControllerView = PageControllerView()
   let testScrollView:UIScrollView = UIScrollView()
   var testTypeViews:[TestTypeView] = [TestTypeView]()
   let testStartButtonView:UIView = UIView()

@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2510B6E31C021C24005AE520 /* TestPageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E01C021C24005AE520 /* TestPageControllerView.swift */; };
+		2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E01C021C24005AE520 /* PageControllerView.swift */; };
 		2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */; };
 		2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E21C021C24005AE520 /* TestTypeView.swift */; };
+		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
 		4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* QuizzViewController.swift */; };
 		4993753B1C02573100AA0588 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* Question.swift */; };
@@ -55,9 +56,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2510B6E01C021C24005AE520 /* TestPageControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPageControllerView.swift; sourceTree = "<group>"; };
+		2510B6E01C021C24005AE520 /* PageControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControllerView.swift; sourceTree = "<group>"; };
 		2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSelectionViewController.swift; sourceTree = "<group>"; };
 		2510B6E21C021C24005AE520 /* TestTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTypeView.swift; sourceTree = "<group>"; };
+		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* QuizzViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		253796A71C0DCF6000BA00F3 /* TestSelectionView */ = {
+			isa = PBXGroup;
+			children = (
+				2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */,
+				2510B6E21C021C24005AE520 /* TestTypeView.swift */,
+			);
+			name = TestSelectionView;
+			sourceTree = "<group>";
+		};
+		253796A81C0DCF7700BA00F3 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				617FC6481BEF92590019AE9B /* HomeViewController.swift */,
+				25ADC3AC1C052BA4004465FF /* CareerButton.swift */,
+			);
+			name = HomeView;
+			sourceTree = "<group>";
+		};
+		253796A91C0DCF9100BA00F3 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				617FC64A1BEF92700019AE9B /* EditProfileViewController.swift */,
+				617FC6421BEF92220019AE9B /* LoginViewController.swift */,
+				617FC6441BEF92310019AE9B /* RegisterViewController.swift */,
+				617FC6461BEF92450019AE9B /* ForgotPasswordViewController.swift */,
+				253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */,
+			);
+			name = LoginView;
+			sourceTree = "<group>";
+		};
+		253796AA1C0DCFB500BA00F3 /* QuestionView */ = {
+			isa = PBXGroup;
+			children = (
+				499375351C02573100AA0588 /* QuizzViewController.swift */,
+				4993753F1C027EAF00AA0588 /* questiondata.json */,
+				499375361C02573100AA0588 /* Question.swift */,
+				499375371C02573100AA0588 /* QuizzModel.swift */,
+			);
+			name = QuestionView;
+			sourceTree = "<group>";
+		};
 		46D9EDE37B2D4C09F0B5F901 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,21 +199,13 @@
 				6143164B1BEF843A0047A37D /* Main.storyboard */,
 				61FCAED21C0518740072FDFB /* Constants.swift */,
 				614316471BEF843A0047A37D /* AppDelegate.swift */,
-				499375351C02573100AA0588 /* QuizzViewController.swift */,
-				4993753F1C027EAF00AA0588 /* questiondata.json */,
-				499375361C02573100AA0588 /* Question.swift */,
-				499375371C02573100AA0588 /* QuizzModel.swift */,
+				253796AA1C0DCFB500BA00F3 /* QuestionView */,
 				499375381C02573100AA0588 /* categoryButton.swift */,
 				499375391C02573100AA0588 /* paddingLabel.swift */,
-				617FC6481BEF92590019AE9B /* HomeViewController.swift */,
-				25ADC3AC1C052BA4004465FF /* CareerButton.swift */,
-				617FC64A1BEF92700019AE9B /* EditProfileViewController.swift */,
-				617FC6421BEF92220019AE9B /* LoginViewController.swift */,
-				617FC6441BEF92310019AE9B /* RegisterViewController.swift */,
-				617FC6461BEF92450019AE9B /* ForgotPasswordViewController.swift */,
-				2510B6E01C021C24005AE520 /* TestPageControllerView.swift */,
-				2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */,
-				2510B6E21C021C24005AE520 /* TestTypeView.swift */,
+				2510B6E01C021C24005AE520 /* PageControllerView.swift */,
+				253796A81C0DCF7700BA00F3 /* HomeView */,
+				253796A91C0DCF9100BA00F3 /* LoginView */,
+				253796A71C0DCF6000BA00F3 /* TestSelectionView */,
 				6143164E1BEF843A0047A37D /* Assets.xcassets */,
 				614316501BEF843A0047A37D /* LaunchScreen.storyboard */,
 				617FC64E1BF89D6C0019AE9B /* Extensions */,
@@ -410,7 +445,7 @@
 				617FC64B1BEF92700019AE9B /* EditProfileViewController.swift in Sources */,
 				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,
 				61FCAED51C0672480072FDFB /* Images.swift in Sources */,
-				2510B6E31C021C24005AE520 /* TestPageControllerView.swift in Sources */,
+				2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */,
 				4993753B1C02573100AA0588 /* Question.swift in Sources */,
 				617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */,
 				2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */,
@@ -420,6 +455,7 @@
 				4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,
+				253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */,
 				61FCAED11C050E0C0072FDFB /* SwiftNotice.swift in Sources */,
 				617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */,
 				61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */,

@@ -20,11 +20,18 @@ class LoginViewController: UIViewController {
     // GLOBAL VARIABLES
     //---------------------------------------------------------------
   
+  // Declare and initialize types of tests and difficulties available for selected career
+  
+  let tutorialImageNames:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
+
   // Declare and initialize views
   
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
+  
+  let loginView:UIView = UIView()
+  var loginPageControllerView:PageControllerView = PageControllerView()
   
   // Declare and initialize design constants
   
@@ -51,6 +58,8 @@ class LoginViewController: UIViewController {
       self.view.addSubview(self.logoImageView)
       self.view.addSubview(self.profilePictureImageView)
       self.view.addSubview(self.sloganImageView)
+      
+      self.view.addSubview(self.loginView)
 
       // Customize and add content to imageViews
       
@@ -62,6 +71,11 @@ class LoginViewController: UIViewController {
 
       self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
       self.sloganImageView.image = UIImage.init(named: "asSlogan")
+      
+      // Customize loginView and it's subviews
+      
+      self.loginView.layer.cornerRadius = self.minorMargin
+      self.loginView.backgroundColor = UIColor.whiteColor()
       
       // Set constraints
       
@@ -295,6 +309,20 @@ class LoginViewController: UIViewController {
     
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
+    
+    // Create and add constraints for loginView
+    
+    self.loginView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let loginViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.sloganImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    
+    let loginViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    
+    let loginViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    
+    let loginViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    
+    self.view.addConstraints([loginViewTopConstraint, loginViewLeftConstraint, loginViewRightConstraint, loginViewBottomConstraint])
     
   }
     
