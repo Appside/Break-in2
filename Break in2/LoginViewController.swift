@@ -48,7 +48,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   let borderWidth:CGFloat = 3
   
   let loginPageControllerViewHeight:CGFloat = 50
-  let tutorialImageHeight:CGFloat = 200
+  let tutorialImageHeight:CGFloat = 150
   let buttonHeight:CGFloat = 50
 
     //---------------------------------------------------------------
@@ -93,7 +93,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       self.loginPageControllerView.pageControllerSelectedCircleHeight = 18
       self.loginPageControllerView.pageControllerSelectedCircleThickness = 2
       
-      self.facebookLoginButton.backgroundColor = UIColor.blueColor()
+      self.facebookLoginButton.backgroundColor = UIColor.init(red: 59/255, green: 89/255, blue: 152/255, alpha: 1)
+      self.facebookLoginButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
       self.facebookLoginButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
       self.facebookLoginButton.setTitle("Login With Facebook", forState: UIControlState.Normal)
       
@@ -341,26 +342,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.profilePictureImageView.addConstraints([profilePictureImageViewHeightConstraint, profilePictureImageViewWidthConstraint])
     self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewTopConstraint])
     
-    // Create and add constraints for sloganImageView
-    
-    self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-    
-    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
-    
-    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
-    
-    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
-    
-    self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
-    self.view.addConstraints([sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
-    
     // Create and add constraints for loginView
     
     self.loginView.translatesAutoresizingMaskIntoConstraints = false
     
-    let loginViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.sloganImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    let loginViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.loginPageControllerViewHeight + self.tutorialImageHeight + self.buttonHeight + (self.minorMargin * 3))
     
     let loginViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
@@ -368,7 +354,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     let loginViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
     
-    self.view.addConstraints([loginViewTopConstraint, loginViewLeftConstraint, loginViewRightConstraint, loginViewBottomConstraint])
+    self.loginView.addConstraint(loginViewHeightConstraint)
+    self.view.addConstraints([loginViewLeftConstraint, loginViewRightConstraint, loginViewBottomConstraint])
     
     // Create and add constraints for loginPageControllerView
     
@@ -466,6 +453,22 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         self.view.addConstraint(loginTutorialViewRightConstraint)
       }
     }
+    
+    // Create and add constraints for sloganImageView
+    
+    self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let sloganImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+    
+    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+    
+    self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
+    self.view.addConstraints([sloganImageViewCenterXConstraint, sloganImageViewCenterYConstraint])
+
   }
   
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
