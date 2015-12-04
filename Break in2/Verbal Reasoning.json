@@ -1,0 +1,271 @@
+[
+{
+"questionType":"Verbal Reasoning",
+"passage":"Although it was discovered in the 19th century that birds were closely related to dinosaurs, the current scientific consensus is that birds were, and always have been dinosaurs themselves. Fossil evidence demonstrates similarities between birds and other feathered dinosaurs, including hollow bones, nest building and similar brooding behaviours. Although the dinosaurian lineage of birds is largely undisputed, the evolution of powered flight in birds is still debated. Two theories of flight in birds are the “ground-up” theory, and the “trees-down” theory. Ground-up theorists suggest birds evolved powered flight from ground dwelling dinosaurs, and trees-down theorists suggest birds evolved from tree dwelling, gliding dinosaurs. Further research is required to conclusively verify the process in which birds evolved powered flight.",
+"question":"True or False: The “ground-up” and “trees-down” theories are the only theories explaining flight in birds.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"Although the “ground-up” and “trees-down” theories are stated to be theories of flight in birds, they are not stated to be the only two theories explaining flight in birds. Therefore, the correct answer is “Cannot Say”."
+},
+
+{
+"questionType":"Verbal Reasoning",
+"passage":"Although it was discovered in the 19th century that birds were closely related to dinosaurs, the current scientific consensus is that birds were, and always have been dinosaurs themselves. Fossil evidence demonstrates similarities between birds and other feathered dinosaurs, including hollow bones, nest building and similar brooding behaviours. Although the dinosaurian lineage of birds is largely undisputed, the evolution of powered flight in birds is still debated. Two theories of flight in birds are the “ground-up” theory, and the “trees-down” theory. Ground-up theorists suggest birds evolved powered flight from ground dwelling dinosaurs, and trees-down theorists suggest birds evolved from tree dwelling, gliding dinosaurs. Further research is required to conclusively verify the process in which birds evolved powered flight.",
+"question":"True or False: All dinosaurs had hollow bones.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"The passage states that other feathered dinosaurs also had hollow bones, not that all dinosaurs (non-feathered) also had hollow bones. Therefore, the correct answer is “Cannot Say”."
+},
+
+{
+"questionType":"Verbal Reasoning",
+"passage":"Although it was discovered in the 19th century that birds were closely related to dinosaurs, the current scientific consensus is that birds were, and always have been dinosaurs themselves. Fossil evidence demonstrates similarities between birds and other feathered dinosaurs, including hollow bones, nest building and similar brooding behaviours. Although the dinosaurian lineage of birds is largely undisputed, the evolution of powered flight in birds is still debated. Two theories of flight in birds are the “ground-up” theory, and the “trees-down” theory. Ground-up theorists suggest birds evolved powered flight from ground dwelling dinosaurs, and trees-down theorists suggest birds evolved from tree dwelling, gliding dinosaurs. Further research is required to conclusively verify the process in which birds evolved powered flight.",
+"question":"True or False: Q3 There is no scientific consensus regarding how birds evolved powered flight.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage states that further research is required to conclusively verify the process in which birds evolved powered flight. Similarly, it is stated that, the evolution of powered flight in birds is still debated. Therefore, the correct answer is “True”."
+},
+
+{
+"questionType":"Verbal Reasoning",
+"passage":"Although it was discovered in the 19th century that birds were closely related to dinosaurs, the current scientific consensus is that birds were, and always have been dinosaurs themselves. Fossil evidence demonstrates similarities between birds and other feathered dinosaurs, including hollow bones, nest building and similar brooding behaviours. Although the dinosaurian lineage of birds is largely undisputed, the evolution of powered flight in birds is still debated. Two theories of flight in birds are the “ground-up” theory, and the “trees-down” theory. Ground-up theorists suggest birds evolved powered flight from ground dwelling dinosaurs, and trees-down theorists suggest birds evolved from tree dwelling, gliding dinosaurs. Further research is required to conclusively verify the process in which birds evolved powered flight.",
+"question":"True or False: The dinosaurian origins of birds is widely rejected.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"It is stated that the dinosaurian origins of birds is “largely undisputed”, and is therefore the antithesis of being widely rejected. Therefore, the correct answer is “False”."
+},
+
+{
+"questionType":"Verbal Reasoning",
+"passage":"A feral cat is a domestic cat that was raised in the wild, without having experienced significant human contact. Feral cats differ from stray cats, in that strays were previously pets which became nomadic. Unlike strays, feral cats initially show hostility towards humans, particularly upon first contact. Feral cats may become invasive to ecosystems, particularly on insular islands, resulting in a decline in biodiversity. Non-indigenous feral cats often have few natural predators, and prey on local species unaccustomed to defending against cats. Ground nesting birds, small native mammals and even amphibian species are often impacted by invasive populations of feral cats, and have led to extinctions of these species in some cases.",
+"question":"True or False: Both stray and feral cats exhibit hostility when first encountering humans.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The passage states that “Unlike strays, feral cats initially show hostility towards humans”. Since this distinguishes stray cats from feral cats, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"A feral cat is a domestic cat that was raised in the wild, without having experienced significant human contact. Feral cats differ from stray cats, in that strays were previously pets which became nomadic. Unlike strays, feral cats initially show hostility towards humans, particularly upon first contact. Feral cats may become invasive to ecosystems, particularly on insular islands, resulting in a decline in biodiversity. Non-indigenous feral cats often have few natural predators, and prey on local species unaccustomed to defending against cats. Ground nesting birds, small native mammals and even amphibian species are often impacted by invasive populations of feral cats, and have led to extinctions of these species in some cases.",
+"question":"True or False: Biodiversity can be affected by feral cat populations.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage states that feral cats can become invasive, resulting in a decline in biodiversity. Therefore, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"A feral cat is a domestic cat that was raised in the wild, without having experienced significant human contact. Feral cats differ from stray cats, in that strays were previously pets which became nomadic. Unlike strays, feral cats initially show hostility towards humans, particularly upon first contact. Feral cats may become invasive to ecosystems, particularly on insular islands, resulting in a decline in biodiversity. Non-indigenous feral cats often have few natural predators, and prey on local species unaccustomed to defending against cats. Ground nesting birds, small native mammals and even amphibian species are often impacted by invasive populations of feral cats, and have led to extinctions of these species in some cases.",
+"question":"True or False: Feral cats are rarely preyed upon.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"Although non-indigenous feral cats have few predators, it is not stated whether all feral cats have few predators. Similarly, having few predators does not necessarily imply they are rarely predated upon, as feral cats could be regularly preyed upon by a single predator. Therefore, the correct answer is “Cannot Say”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"A feral cat is a domestic cat that was raised in the wild, without having experienced significant human contact. Feral cats differ from stray cats, in that strays were previously pets which became nomadic. Unlike strays, feral cats initially show hostility towards humans, particularly upon first contact. Feral cats may become invasive to ecosystems, particularly on insular islands, resulting in a decline in biodiversity. Non-indigenous feral cats often have few natural predators, and prey on local species unaccustomed to defending against cats. Ground nesting birds, small native mammals and even amphibian species are often impacted by invasive populations of feral cats, and have led to extinctions of these species in some cases.",
+"question":"True or False: Domestic cats can be raised in the wild.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"It is stated in the passage that feral cats are domestic cats, which have been raised in the wild. Since feral cats are given as an example, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The parable of the broken window, also known as the glazier’s fallacy, is a concept used to illustrate the fact that money spent due to destruction does not result in a benefit to society. It has been suggested that repairing broken windows may provide employment to tradespeople, which could positively impact the economy through job creation. However, had the window not been broken, the money spent repairing it could have contributed elsewhere to the economy. Similarly, if windows never broke, those tradespeople would be free to contribute towards the economy in other occupations. The glazier’s fallacy highlights the fact that destruction of property impacts economic activity in unseen or ignored ways, which are frequently overshadowed by more obvious economic effects.",
+"question":"True or False: The destruction of property has no effect on the economy.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The glazier’s fallacy highlights that destruction of property impacts economic activity in unseen or ignored ways, meaning the destruction of property does have an effect on the economy. Therefore, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The parable of the broken window, also known as the glazier’s fallacy, is a concept used to illustrate the fact that money spent due to destruction does not result in a benefit to society. It has been suggested that repairing broken windows may provide employment to tradespeople, which could positively impact the economy through job creation. However, had the window not been broken, the money spent repairing it could have contributed elsewhere to the economy. Similarly, if windows never broke, those tradespeople would be free to contribute towards the economy in other occupations. The glazier’s fallacy highlights the fact that destruction of property impacts economic activity in unseen or ignored ways, which are frequently overshadowed by more obvious economic effects.",
+"question":"True or False: Society does not benefit from the cost of repairing destroyed property.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage states that society does not benefit from the money spent on repairing destroyed property, and holds this as fact. Therefore, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The parable of the broken window, also known as the glazier’s fallacy, is a concept used to illustrate the fact that money spent due to destruction does not result in a benefit to society. It has been suggested that repairing broken windows may provide employment to tradespeople, which could positively impact the economy through job creation. However, had the window not been broken, the money spent repairing it could have contributed elsewhere to the economy. Similarly, if windows never broke, those tradespeople would be free to contribute towards the economy in other occupations. The glazier’s fallacy highlights the fact that destruction of property impacts economic activity in unseen or ignored ways, which are frequently overshadowed by more obvious economic effects.",
+"question":"True or False: The destruction of property negatively impacts the economy.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"The passage does not state that the mere destruction of property negatively impacts the economy, only that the money spent repairing it does not benefit society, rather than the economy. Therefore, the correct answer is “Cannot Say”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The parable of the broken window, also known as the glazier’s fallacy, is a concept used to illustrate the fact that money spent due to destruction does not result in a benefit to society. It has been suggested that repairing broken windows may provide employment to tradespeople, which could positively impact the economy through job creation. However, had the window not been broken, the money spent repairing it could have contributed elsewhere to the economy. Similarly, if windows never broke, those tradespeople would be free to contribute towards the economy in other occupations. The glazier’s fallacy highlights the fact that destruction of property impacts economic activity in unseen or ignored ways, which are frequently overshadowed by more obvious economic effects.",
+"question":"True or False: Repairing broken windows results in job creation.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"The passage states that “It has been suggested that repairing broken windows may provide employment to tradespeople”, however this is uncertain. Therefore, the correct answer is “Cannot Say”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The paradox of thrift, as popularised by John Keynes, highlights the fact that excessive saving during times of economic recession negatively impacts the economy. When spending is reduced due to excessive saving, aggregate demand falls, resulting in lowered economic growth. This excessive saving results in reduced economic growth, which in turn encourages further excessive saving, causing a vicious cycle. Reduced economic growth results in reductions in salary, job security and interest on savings, negatively impacting both savers and the economy. However, it could be argued that savings held in savings accounts represent loanable capital, which banks could use to stimulate the economy via lending and investment.",
+"question":"True or False: Excessive saving has no impact on economic growth.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The passage states that excessive saving lowers aggregate demand, resulting in lowered economic growth, which would impact economy growth. Therefore, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The paradox of thrift, as popularised by John Keynes, highlights the fact that excessive saving during times of economic recession negatively impacts the economy. When spending is reduced due to excessive saving, aggregate demand falls, resulting in lowered economic growth. This excessive saving results in reduced economic growth, which in turn encourages further excessive saving, causing a vicious cycle. Reduced economic growth results in reductions in salary, job security and interest on savings, negatively impacting both savers and the economy. However, it could be argued that savings held in savings accounts represent loanable capital, which banks could use to stimulate the economy via lending and investment.",
+"question":"True or False: Excessive saving has no impact on savers themselves.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"Excessive saving is stated to negatively impact both savers and the economy, therefore savers themselves must be impacted by excessive saving. Therefore, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The paradox of thrift, as popularised by John Keynes, highlights the fact that excessive saving during times of economic recession negatively impacts the economy. When spending is reduced due to excessive saving, aggregate demand falls, resulting in lowered economic growth. This excessive saving results in reduced economic growth, which in turn encourages further excessive saving, causing a vicious cycle. Reduced economic growth results in reductions in salary, job security and interest on savings, negatively impacting both savers and the economy. However, it could be argued that savings held in savings accounts represent loanable capital, which banks could use to stimulate the economy via lending and investment.",
+"question":"True or False: Saving money negatively impacts the economy.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"The passage states that excessive saving, not regular saving, negatively impacts the economy. It is not stated what effect, if any, regular saving could have on the economy. Therefore, the correct answer is “Cannot Say”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The paradox of thrift, as popularised by John Keynes, highlights the fact that excessive saving during times of economic recession negatively impacts the economy. When spending is reduced due to excessive saving, aggregate demand falls, resulting in lowered economic growth. This excessive saving results in reduced economic growth, which in turn encourages further excessive saving, causing a vicious cycle. Reduced economic growth results in reductions in salary, job security and interest on savings, negatively impacting both savers and the economy. However, it could be argued that savings held in savings accounts represent loanable capital, which banks could use to stimulate the economy via lending and investment.",
+"question":"True or False: Excess saving has no effect on aggregate demand.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The passage states that “When spending is reduced due to excessive saving, aggregate demand falls”. Therefore, excessive saving must have an effect on aggregate demand, making the correct answer “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The Moravec’s paradox describes the counter intuitive discovery by artificial intelligence researchers that advanced reasoning requires very little computational power, but basic sensory-motor skills are incredibly computationally complex. Activities considered complex by human standards, such as calculating statistics and playing chess are very easily accomplished by artificial intelligences. However, extremely basic activities, such as recognising faces or walking up a set of stairs requires vast computational resources, and can only be accomplished by the most advanced artificial intelligences. Although futurists predict a supersession of human workers by artificial intelligences, Moravec’s paradox implies that advanced professions will be usurped first, not the simple or routine occupations, as commonly featured in science fiction.",
+"question":"True or False: Artificial intelligences perform advanced reasoning more effectively than humans.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"It is not stated whether artificial intelligences perform advanced reasoning more effectively than humans, only that advanced reasoning requires little computational power. Therefore the correct answer is “Cannot Say”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The Moravec’s paradox describes the counter intuitive discovery by artificial intelligence researchers that advanced reasoning requires very little computational power, but basic sensory-motor skills are incredibly computationally complex. Activities considered complex by human standards, such as calculating statistics and playing chess are very easily accomplished by artificial intelligences. However, extremely basic activities, such as recognising faces or walking up a set of stairs requires vast computational resources, and can only be accomplished by the most advanced artificial intelligences. Although futurists predict a supersession of human workers by artificial intelligences, Moravec’s paradox implies that advanced professions will be usurped first, not the simple or routine occupations, as commonly featured in science fiction.",
+"question":"True or False: Playing chess is a complex activity among humans.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"It is stated that chess is an activity considered complex by human standards. Therefore, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The Moravec’s paradox describes the counter intuitive discovery by artificial intelligence researchers that advanced reasoning requires very little computational power, but basic sensory-motor skills are incredibly computationally complex. Activities considered complex by human standards, such as calculating statistics and playing chess are very easily accomplished by artificial intelligences. However, extremely basic activities, such as recognising faces or walking up a set of stairs requires vast computational resources, and can only be accomplished by the most advanced artificial intelligences. Although futurists predict a supersession of human workers by artificial intelligences, Moravec’s paradox implies that advanced professions will be usurped first, not the simple or routine occupations, as commonly featured in science fiction.",
+"question":"True or False: Simple artificial intelligences cannot recognise faces.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage states that only the most advanced artificial intelligences can recognise faces. If only the most advanced artificial intelligences are capable of this, simple artificial intelligences cannot. Therefore, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"The Moravec’s paradox describes the counter intuitive discovery by artificial intelligence researchers that advanced reasoning requires very little computational power, but basic sensory-motor skills are incredibly computationally complex. Activities considered complex by human standards, such as calculating statistics and playing chess are very easily accomplished by artificial intelligences. However, extremely basic activities, such as recognising faces or walking up a set of stairs requires vast computational resources, and can only be accomplished by the most advanced artificial intelligences. Although futurists predict a supersession of human workers by artificial intelligences, Moravec’s paradox implies that advanced professions will be usurped first, not the simple or routine occupations, as commonly featured in science fiction.",
+"question":"True or False: Science fiction does not feature artificial intelligences.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The passage states that artificial intelligences are commonly featured in science fiction. Therefore, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"Monotremes are the only living mammals that lay eggs, rather than give birth to live offspring. Despite their egg-laying reproductive strategy, like other mammals, monotremes are warm blooded, produce milk and have hair on their bodies. The most famous species of monotreme is the platypus, a duck billed, beaver tailed, and otter footed native of eastern Australia. The platypus perplexed zoologists upon their discovery, and even to this day, the evolution of the platypus is not well understood. The other 4 surviving monotreme species, the echidnas, bear almost no similarity to the platypus, and more strongly resemble other mammals. It remains a mystery why monotremes retained the ability to lay eggs, while other mammals are placental or marsupial.",
+"question":"True or False: Monotremes are the only mammals ever to have laid eggs.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"The passage states that Monotremes are the only living mammals that lay eggs, not necessarily that they are the only mammals to have ever have laid eggs. Therefore, the correct answer is “Cannot Say”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"Monotremes are the only living mammals that lay eggs, rather than give birth to live offspring. Despite their egg-laying reproductive strategy, like other mammals, monotremes are warm blooded, produce milk and have hair on their bodies. The most famous species of monotreme is the platypus, a duck billed, beaver tailed, and otter footed native of eastern Australia. The platypus perplexed zoologists upon their discovery, and even to this day, the evolution of the platypus is not well understood. The other 4 surviving monotreme species, the echidnas, bear almost no similarity to the platypus, and more strongly resemble other mammals. It remains a mystery why monotremes retained the ability to lay eggs, while other mammals are placental or marsupial.",
+"question":"True or False: The platypus appears similar to a beaver in appearance.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"Although the platypus is beaver tailed, it is also duck billed and otter footed. Also, it is not directly stated what a beaver or what a platypus looks like, hence could only be answered using prior knowledge. Therefore, the correct answer is “Cannot Say”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"Monotremes are the only living mammals that lay eggs, rather than give birth to live offspring. Despite their egg-laying reproductive strategy, like other mammals, monotremes are warm blooded, produce milk and have hair on their bodies. The most famous species of monotreme is the platypus, a duck billed, beaver tailed, and otter footed native of eastern Australia. The platypus perplexed zoologists upon their discovery, and even to this day, the evolution of the platypus is not well understood. The other 4 surviving monotreme species, the echidnas, bear almost no similarity to the platypus, and more strongly resemble other mammals. It remains a mystery why monotremes retained the ability to lay eggs, while other mammals are placental or marsupial.",
+"question":"True or False: There are currently five species of Monotremes.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage refers to the platypus singularly, and states that there are only four other species of Monotremes, the echidnas. As a result, there must only be 5 species of Monotreme. Therefore, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"Monotremes are the only living mammals that lay eggs, rather than give birth to live offspring. Despite their egg-laying reproductive strategy, like other mammals, monotremes are warm blooded, produce milk and have hair on their bodies. The most famous species of monotreme is the platypus, a duck billed, beaver tailed, and otter footed native of eastern Australia. The platypus perplexed zoologists upon their discovery, and even to this day, the evolution of the platypus is not well understood. The other 4 surviving monotreme species, the echidnas, bear almost no similarity to the platypus, and more strongly resemble other mammals. It remains a mystery why monotremes retained the ability to lay eggs, while other mammals are placental or marsupial.",
+"question":"True or False: Platypus have hair on their bodies.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage states that “despite their egg-laying reproductive strategy, like other mammals, Monotremes are warm blooded, produce milk and have hair on their bodies”. Therefore, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"A “peppercorn”, in legal speak, is a metaphor for an extremely small payment, used to meet a legal requirement for a contract. Well-known examples of peppercorn payments are the 1 dollar annual salaries of top executives or government officials. Executives may choose to forgo large annual salaries, opting instead for a symbolic payment of a single dollar, saving the company money on executive pay. Similarly, acquiring companies for a peppercorn payment frequently occurs when a company’s liabilities exceed its assets. That company’s net worth may be negative, but money must be exchanged to meet acquisition law, no matter how small a sum or how great the acquired companies liabilities.",
+"question":"True or False: ”Peppercorns” do not refer to large payments.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage states that, by definition, a pepper corn payment is an extremely small payment, and hence cannot refer to large payments. Therefore the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"A “peppercorn”, in legal speak, is a metaphor for an extremely small payment, used to meet a legal requirement for a contract. Well-known examples of peppercorn payments are the 1 dollar annual salaries of top executives or government officials. Executives may choose to forgo large annual salaries, opting instead for a symbolic payment of a single dollar, saving the company money on executive pay. Similarly, acquiring companies for a peppercorn payment frequently occurs when a company’s liabilities exceed its assets. That company’s net worth may be negative, but money must be exchanged to meet acquisition law, no matter how small a sum or how great the acquired companies liabilities.",
+"question":"True or False: Executives are the only recipients of peppercorn salaries.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The passage states that single dollar annual salaries are well known examples, applying to top executives or government officials. Therefore, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"A “peppercorn”, in legal speak, is a metaphor for an extremely small payment, used to meet a legal requirement for a contract. Well-known examples of peppercorn payments are the 1 dollar annual salaries of top executives or government officials. Executives may choose to forgo large annual salaries, opting instead for a symbolic payment of a single dollar, saving the company money on executive pay. Similarly, acquiring companies for a peppercorn payment frequently occurs when a company’s liabilities exceed its assets. That company’s net worth may be negative, but money must be exchanged to meet acquisition law, no matter how small a sum or how great the acquired companies liabilities.",
+"question":"True or False: A company’s net-worth cannot be lower than zero.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The passage states that a company’s net worth may be negative, and hence lower than zero. Therefore, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"A “peppercorn”, in legal speak, is a metaphor for an extremely small payment, used to meet a legal requirement for a contract. Well-known examples of peppercorn payments are the 1 dollar annual salaries of top executives or government officials. Executives may choose to forgo large annual salaries, opting instead for a symbolic payment of a single dollar, saving the company money on executive pay. Similarly, acquiring companies for a peppercorn payment frequently occurs when a company’s liabilities exceed its assets. That company’s net worth may be negative, but money must be exchanged to meet acquisition law, no matter how small a sum or how great the acquired companies liabilities.",
+"question":"True or False: A payment is not required in acquisition law.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":1,
+"explanation":"The passage states that money must be exchanged in order to conform to acquisition law, regardless of the size of the sum. Therefore, the correct answer is “False”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"Scientific management, also known as Taylorism, was an early attempt at applying scientific principles to management processes. Frederick Taylor championed scientific management during the late 19th and early 20th century’s within manufacturing. Scientific management principles hold that managers must strive for economic efficiency through the rigid structuring of processes. A common criticism of scientific management was the dehumanising effects these rigid structures had on workers, which were treated akin to parts of a machine. Similarly, these processes resulted in de-skilling and routinisation of jobs, both making jobs intrinsically less satisfying for workers. Although scientific management itself was abandoned by the 1930s, its principles can still be seen in many modern management theories.",
+"question":"True or False: De-skilling jobs decreases worker satisfaction.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":0,
+"explanation":"The passage states that the de-skilling and routinisation of jobs makes them intrinsically less satisfying for workers. Therefore, the correct answer is “True”."
+},
+    
+{
+"questionType":"Verbal Reasoning",
+"passage":"Scientific management, also known as Taylorism, was an early attempt at applying scientific principles to management processes. Frederick Taylor championed scientific management during the late 19th and early 20th century’s within manufacturing. Scientific management principles hold that managers must strive for economic efficiency through the rigid structuring of processes. A common criticism of scientific management was the dehumanising effects these rigid structures had on workers, which were treated akin to parts of a machine. Similarly, these processes resulted in de-skilling and routinisation of jobs, both making jobs intrinsically less satisfying for workers. Although scientific management itself was abandoned by the 1930s, its principles can still be seen in many modern management theories.",
+"question":"True or False: Fredrick Taylor coined the term scientific management.",
+"answers":["True","False","Cannot Say"],
+"correctAnswer":2,
+"explanation":"It is not stated in the passage whether Fredrick Taylor coined the term, scientific management. It is only stated that scientific management is also known as “Taylorism. Therefore, the correct answer is “Cannot Say”."
+}
+]

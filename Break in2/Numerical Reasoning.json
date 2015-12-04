@@ -1,0 +1,282 @@
+[
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month (End Of Month)","Cumululative Car Sales (000s)"],
+"lineNames":["Fryrd","Tymko","Sxti","Bernd"],
+"xAxis":["March","April","May","June","July"],
+"yAxis":[[2,3,5,5,6],[12,15,18,20,21],[5,9,11,12,14],[9,9,10,11,11]],
+"question":"How many Bernd cars were sold in May?",
+"answers":["10","1,000","5,000","10,000"],
+"correctAnswer":1,
+"explaination":"The trick to this question is to recognise that the graph gives sales figures cumulatively. Step 1 - We see from the graph that the cumulative Bernd sales at the end of April are 9,000. We see that the cumulative Bernd sales at the end of May are 10,000. Step 2 - Therefore during May (10,000 – 9,000 =) 1,000 Bernd cars must have been sold. Thus the correct answer is (B) 1,000."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month (End Of Month)","Cumululative Car Sales (000s)"],
+"lineNames":["Fryrd","Tymko","Sxti","Bernd"],
+"xAxis":["March","April","May","June","July"],
+"yAxis":[[2,3,5,5,6],[12,15,18,20,21],[5,9,11,12,14],[9,9,10,11,11]],
+"question":"What were the total sales of Tymko cars for May, June and July combined?",
+"answers":["21,000","16,000","22,000","6,000"],
+"correctAnswer":3,
+"explaination":"Don’t waste time working out the sales for each month. Since the data is cumulative, we can say combined sales for May, June and July = (cumulative sales for end of July) – (cumulative sales end of April). Step 1 - (Cumulative sales July) – (Cumulative sales April) = (21,000) – (15,000) = 6,000. Thus the correct answer is (D) 6,000."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month (End Of Month)","Cumululative Car Sales (000s)"],
+"lineNames":["Fryrd","Tymko","Sxti","Bernd"],
+"xAxis":["March","April","May","June","July"],
+"yAxis":[[2,3,5,5,6],[12,15,18,20,21],[5,9,11,12,14],[9,9,10,11,11]],
+"question":"If the number of Bernd cars sold in July had been equal to the number of Bernd cars sold in June, how many more Bernd cars would have been sold during July?",
+"answers":["1,000","1","12,000","2,000"],
+"correctAnswer":0,
+"explaination":"Step 1 - First, find out the number of Bernd cars sold in June. From the cumulative graph we see this is 1,000. Step 2 - Now, compare this with how many Bernd cars were actually sold in July. We see from the graph there were no sales 1,000 – 0 = 1,000. Thus the correct answer is (A) 1,000."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Year","£100,000s"],
+"barSegmentOrientation":"vertical",
+"barSegmentNames":["Roulette","Slot Machines","Other Table Games"],
+"xAxis":["2006","2007","2008","2009","2010 Predicted"],
+"yAxis":[[0.8,1.3,4.4],[0.6,1.4,4.2],[0.6,1.8,4.5],[0.7,1.5,4.8],[0.5,1.1,4.7]],
+"question":"How much did the combined revenue from Slot machines and Roulette differ from that of Other table games between 2006-2009 inclusive (in £millions)?",
+"answers":["0.9","9.0","9.2","0.92","None of these"],
+"correctAnswer":3,
+"explaination":"Step 1 – Calculate the totals for Slot machines, Roulette, Other table games. Slot machines = 1.3 + 1.4 + 1.8 + 1.5 = 6. Roulette = 0.8 + 0.6 + 0.6 + 0.7 = 2.7. Other table games = 4.4 + 4.2 + 4.5 + 4.8 = 17.9. Step 2 – Calculate the difference: 17.9 – 6 – 2.7 = 9.2. Step 3 – Put into £millions = 0.92. Thus the correct answer is (D) 0.92."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"pie",
+"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)"
+"pieSegmentNames":["Pacific Mixed","Pacific Rim","Southern Pacific","Northern Pacific","Central Pacific"],
+"pieSegmentPercentages":[0.12,0.2,0.35,0.18,0.15],
+"question":"What was the ratio of Pacific Rim: Southern Pacific holdings in October 2010?",
+"answers":["3:2","2:3","4:5","5:4","4:7"],
+"correctAnswer":4,
+"explaination":"The information that you need is shown in the pie-chart. Step 1 - Put these October %’s into a ratio: 20%:35% = 20:35. Step 2 – Simplify the ratio, looking at the available answers: 20:35 = 4:7. Thus the correct answer is (E) 4:7."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"pie",
+"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)"
+"pieSegmentNames":["Pacific Mixed","Pacific Rim","Southern Pacific","Northern Pacific","Central Pacific"],
+"pieSegmentPercentages":[0.12,0.2,0.35,0.18,0.15],
+"question":"In October 2010 which two Pacific Bond fund holdings when combined had the same value as Southern Pacific holdings?",
+"answers":["Northern Pacific and Central Pacific","Central Pacific and Pacific Rim","Pacific Mixed and Pacific Rim","Pacific Mixed and Northern Pacific","Pacific Rim and Northern Pacific"],
+"correctAnswer":1,
+"explaination":"The information that you need is shown in the pie-chart. Step 1 – Work out the percentages of the options listed and see which is equal to 35%: Northern Pacific + Central Pacific = 33%, Central Pacific + Pacific Rim = 35%, Pacific Rim + Pacific Mixed = 32%, Northern Pacific + Pacific Mixed = 30%, Pacific Rim + Northern Pacific = 38%. Thus the correct answer is (B) Central Pacific and Pacific Rim."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"pie",
+"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)"
+"pieSegmentNames":["Pacific Mixed","Pacific Rim","Southern Pacific","Northern Pacific","Central Pacific"],
+"pieSegmentPercentages":[0.12,0.2,0.35,0.18,0.15],
+"question":"In October 2010 what fraction of the total Pacific Bond did the Northern Pacific and Pacific Mixed fund holdings represent?",
+"answers":["1/5","1/10","1/4","3/10","2/5"],
+"correctAnswer":3,
+"explaination":"The information that you need is shown in the pie-chart. Step 1 - Add the Northern Pacific and Pacific Mixed %’s: 18% + 12% = 30%. Step 2 – Express this figure as a fraction: 30 / 100 = 3/10. Thus the correct answer is (D) 3/10."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Quarter","Consultancy Income By Sector (£1,000s)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["Telecommunications","Utilities","Manufacturing","Financial","Retail"],
+"xAxis":["1st","2nd","3rd"],
+"yAxis":[[30,35,21,25,23],[27,20,32,29,30],[25,20,30,30,25]],
+"question":"Which sector experienced the highest sales for Quarters 1, 2 and 3 combined?",
+"answers":["Telecommunications","Utilities","Manufacturing","Financial","Retail"],
+"correctAnswer":3,
+"explaination":"The information that you need is shown in the graph. Consultancy income by sector. Step 1 – Calculate each sector’s sales for Quarters 1, 2 and 3 combined: Telecommunications = 30 + 27 + 25 = 82, Utilities = 35 + 20 + 20 = 75, Manufacturing = 21 + 32 + 30 = 83, Financial = 25 + 29 + 30 = 84, Retail = 23 + 30 + 25 = 78. Thus the correct answer is (D) Financial."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Quarter","Consultancy Income By Sector (£1,000s)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["Telecommunications","Utilities","Manufacturing","Financial","Retail"],
+"xAxis":["1st","2nd","3rd"],
+"yAxis":[[30,35,21,25,23],[27,20,32,29,30],[25,20,30,30,25]],
+"question":"Which sector experienced the highest sales for Quarters 1, 2 and 3 combined?",
+"answers":["Can’t tell from the data provided","£12,000","£22,000","£25,000","£45,000"],
+"correctAnswer":2,
+"explaination":"The information that you need is shown in the graph. Consultancy income by sector. Step 1 – Find the Quarter 3 ratios: Utilities: Financial = 20:30 = 2:3. Step 2 – Apply this ratio to the Utilities sector: Utilities income = £33,000 x 2/3 = £22,000. Thus the correct answer is (C) £22,000."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Quarter","Consultancy Income By Sector (£1,000s)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["Telecommunications","Utilities","Manufacturing","Financial","Retail"],
+"xAxis":["1st","2nd","3rd"],
+"yAxis":[[30,35,21,25,23],[27,20,32,29,30],[25,20,30,30,25]],
+"question":"The total quarterly income target, starting with £115,000 for Quarter 1, increased by 20% for each subsequent Quarter. In Quarter 3 what was the difference between actual income and the target?",
+"answers":["£8,000 under-performance","£18,400 under-performance","£31,000 over-performance","£31,000 under-performance","£35,600 under-performance"],
+"correctAnswer":4,
+"explaination":"Step 1 – Calculate the target for Quarter 3, based upon the Quarter 2 target: Quarter 2 target = £115,000 x 120% = £138,000, Quarter 3 target = £138,000 x 120% = £165,600. The information that you require next is shown in the graph. Step 2 – Calculate the difference Quarter 3 income: Quarter 3 income (000’s) = 25 + 20 + 30 + 30 + 25 = 130. Step 3 - calculate the difference in Quarter 3 between income and target: 130,000 - 165,600 = 35,600 under-performance. Thus the correct answer is (E) £35,600 underperformance."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month","Client Visits (Per Month) By 3 Sales Managers"],
+"lineNames":["Simon","Jessica","Kim"],
+"xAxis":["June","July","August","September","October (Projected)"],
+"yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
+"question":"Simon and Jessica have travel allowances of 60p and 44p per mile respectively. Simon and Jessica each travel on average 25 miles and 30 miles respectively per sales visit. How much travel allowance is claimed in total by these 2 Sales Managers in August?",
+"answers":["£1,050","£1,122","£2,122","£2,172","£2,272"],
+"correctAnswer":3,
+"explaination":"Step 1 – Calculate Simon and Jessica’s total mileage in August: Simon = 60p x 70 x 25 = £1,050, Jessica = 44p x 85 x 30 = £1,122. Step 2 – Calculate Simon and Jessica’s combined travel allowance payment: £1,050 + £1,122 = £2,172. Thus the correct answer is (D) £2,172."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month","Client Visits (Per Month) By 3 Sales Managers"],
+"lineNames":["Simon","Jessica","Kim"],
+"xAxis":["June","July","August","September","October (Projected)"],
+"yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
+"question":"If the percentage change in sales visits between September and October (projected) continues for November, what will Jessica and Kim’s number of complete sales visits be in November?",
+"answers":["71 visits (Jessica); 77 visits (Kim)","71 visits (Jessica); 78 visits (Kim)","72 visits (Jessica); 78 visits (Kim)","72 visits (Jessica); 79 visits (Kim)","73 visits (Jessica); 79 visits (Kim)"],
+"correctAnswer":3,
+"explaination":"Step 1 – Calculate the % change for Jessica and Kim: Jessica = 81/90 = 10% decrease, Kim = 70/62 = 12.903% increase. Step 2 – Calculate each Sales Manager’s number of visits for November: Jessica = 81 x 90% = 72.9 visits, Kim = 70 x 112.903% = 79.03 visits. Step 3 - This step can catch out people. The question asks for “complete sales visits” and 0.9 is not a complete visit. So Jessica completed 72 visits. Don’t be tempted to round up. Thus the correct answer is (D) 72 visits (Jessica); visits 79 (Kim)."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month","Client Visits (Per Month) By 3 Sales Managers"],
+"lineNames":["Simon","Jessica","Kim"],
+"xAxis":["June","July","August","September","October (Projected)"],
+"yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
+"question":"If the margin of error on October’s projected client visits is +/- 15%, what are the ranges for each Sales Manager (rounded to the nearest whole visit)?",
+"answers":["90–100 (Simon); 77–85 (Jessica); 66–74 (Kim)","90– 107 (Simon); 74–87 (Jessica); 64–76 (Kim)","81–109 (Simon); 73–89 (Jessica); 63–77 (Kim)","81–109 (Simon); 69–93 (Jessica); 60–81 (Kim)","76–104 (Simon); 64–89 (Jessica); 56–76 (Kim)"],
+"correctAnswer":3,
+"explaination":"Step 1 - Calculate the 85% and 115% figures for each Sales Manager. Simon (to the nearest whole visit): 95 x 85% = 80.75 = 81 & 95 x 115% = 109.25 = 109. Note that already we have eliminated 3 of the possible 5 answers. Step 2 - Jessica: 81 x 85% = 68.85 = 69 & 81 x 115% = 93.15 = 93, Kim: 70 x 85% = 59.5 = 60 & 70 x 115% = 80.5 = 81. Thus the correct answer is (D) 81–109 (Simon); 69–93 (Jessica); 60–81 (Kim). Tip: note the difference between “round to the nearest whole visit” and “give the number of complete visits”. This is the difference between rounding to the nearest integer (could be up or down) and ignoring any part-complete events (will always be rounding down)."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month","Client Visits (Per Month) By 3 Sales Managers"],
+"lineNames":["Simon","Jessica","Kim"],
+"xAxis":["June","July","August","September","October (Projected)"],
+"yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
+"question":"Jessica, who travelled 3,500 miles in July, travelled an extra 10 miles per client visit compared to Simon. What was the total number of miles Simon travelled in July?",
+"answers":["2,400","£2,600","2,800","3,000","3,200"],
+"correctAnswer":1,
+"explaination":"Step 1 – Let x = Jessica’s average mileage per client visit: July visits = 70 = 3,500 / x, x = 3,500 / 70 = 50 miles per visit. Step 2 – Calculate Simon’s average mileage per client visit: 50 – 10 = 40 miles per visit. Step 3 – Calculate the total number of miles Simon travelled in July: 40 x 65 = 2,600 miles. Thus the correct answer is (B) 2,600 miles."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"line",
+"axisNames":["Month","Client Visits (Per Month) By 3 Sales Managers"],
+"lineNames":["Simon","Jessica","Kim"],
+"xAxis":["June","July","August","September","October (Projected)"],
+"yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
+"question":"The average order value per client visit is £145, £135 and £125 for Simon, Jessica and Kim respectively. Which Sales Managers generate the highest and lowest order values in June?",
+"answers":["Kim (most); Jessica (least)","Simon (most); Jessica (least)","Jessica (most); Kim (least)","Jessica (most); Simon (least)","Kim (most); Simon (least)"],
+"correctAnswer":0,
+"explaination":"Calculate each Sales Manager’s client sales for June, as follows: Simon 50 visits in June 50 x £145 = £7,250, Jessica 45 visits in June 45 x £135 = £6,075, Kim 60 visits in June 60 x £125 = £7,500. Thus the correct answer is (A) Kim (most); Jessica (least)."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["2010","2011"],
+"xAxis":["A","B","C","D","E"],
+"yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
+"question":"Between 2010 and 2011 what is the total cut in the marketing budget across the 5 Brands combined (in €10,000s)?",
+"answers":["135","400","500","1,135","1,535"],
+"correctAnswer":2,
+"explaination":"Step 1 – Calculate the 2010 total marketing budget: 300 + 410 + 260 + 300 + 365 = 1635. Step 2 – Calculate the 2011 total marketing budget: 225 + 275 + 175 + 210 + 250 = 1135. Step 3 – Calculate cut: 2010 marketing budget – 2011 marketing budget = 1635 – 1135 = 500 (in €10,000s). Thus the correct answer is (C) 500."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["2010","2011"],
+"xAxis":["A","B","C","D","E"],
+"yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
+"question":"Which Brand has suffered the largest percentage cut in its Marketing Budget?",
+"answers":["Brand A","Brand B","Brand C","Brand D","Brand E"],
+"correctAnswer":1,
+"explaination":"Step 1 - Calculate the % cut for each branch from 2010 to 2011: Brand A = 75/300 x 100% = 25%, Brand B = 135/410 x100% = 32.9%, Brand C = 85/260 x 100% = 32.7%, Brand D = 90/300 x 100% = 30%, Brand E = 115/365 x 100% = 31.5%. Thus the correct answer is (B) Brand B."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["2010","2011"],
+"xAxis":["A","B","C","D","E"],
+"yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
+"question":"Between 2010 and 2011 what has been the mean percentage Budget reduction for each of the 5 Brands (to 1 decimal place)?",
+"answers":["30.4%","30.5%","31.4%","31.5%","32.4%"],
+"correctAnswer":0,
+"explanation":"Step 1 - Calculate the % cut for each Brand. If you still have your notes from the previous question you can re-use those to save time: Brand A = 75/300 x 100 = 25%, Brand B = 135/410 x100 = 32.9%, Brand C = 85/260 x 100 = 32.7%, Brand D = 90/300 x 100 = 30%, Brand E = 115/365 x 100 = 31.5%. Step 2 – Calculate mean reduction: (25 + 32.9 + 32.7 + 30 + 31.5)/5 = 30.42%. Step 3 – Calculate answer to 1 decimal place: 30.4%. Thus the correct answer is (A) 30.4%."
+},
+
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £ = €1.2)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["2010","2011"],
+"xAxis":["A","B","C","D","E"],
+"yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
+"question":"Brand A and Brand D are to have their number of staff reduced by the same percentage reduction seen by their Marketing Budgets between 2010 and 2011. If the number of staff at Brand A was originally 120 and the number of staff at Brand D triple this, what are the new reduced staff numbers for each Brand?",
+"answers":["Can’t tell from the data","35 (Brand A); 142 (Brand D)","90 (Brand A); 252 (Brand D)","60 (Brand A); 240 (Brand D)","50 (Brand A); 360 (Brand D)"],
+"correctAnswer":3,
+"explaination":"Step 1 – Calculate the percentage reduction in Marketing Budget for each Brand: Brand A: 225 / 300 = 25% reduction, Brand D: 210 / 300 = 30% reduction. Step 2 – Calculate the new number of staff for Brand A: 120 x 0.75% = 90. Step 3 – Calculate the new number of staff for Brand D: (120 x 3) x 0.7 = 252. Thus the correct answer is (C) 90 (Brand A); 252 (Brand D)."
+},
+    
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
+"barSegmentOrientation":"horizontal",
+"barSegmentNames":["2010","2011"],
+"xAxis":["A","B","C","D","E"],
+"yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
+"question":"The total 2011 Marketing Budget for all five Brands is to be cut by a quarter in 2012. In £, what is the 2012 Marketing Budget? (to the nearest £100,000)?",
+"answers":["£3 million","£3.1 million","£5.2 million","£6.2 million","£7.1 million"],
+"correctAnswer":4,
+"explaination":"Step 1 – Calculate the 2012 marketing budget: 2011 marketing budget (from previous question) = 1135 (€10,000s), 2012 marketing budget = €11.35 million x 75% = €8.5125 million. Step 2 – Convert into £: 8,512,500 / 1.2 = £7.094 million. Step 3 – Put answer into the nearest £100,000: £7.1 million. Thus the correct answer is (E) £7.1 million."
+},
+    
+{
+"questionType":"Numerical Reasoning",
+"chartType":"bar",
+"axisNames":["Year","Beaks & Swallow Inc - % Costs By Year"],
+"barSegmentOrientation":"vertical",
+"barSegmentNames":["Labour","Supply Chain","Overheads","I.T.","Production"],
+"xAxis":["2006","2007","2008","2009"],
+"yAxis":[[25,22,12,28,23],[22,19,15,20,24],[24,20,14,21,22],[24,28,15,17,26]],
+"question":"If 2009’s total costs were £250,000, what were the Production costs?",
+"answers":["£80,000","£75,000","£70,000","£65,000","£60,000"],
+"correctAnswer":3,
+"explaination":"The information that you need is shown in the graph. Step 1 - Production costs = 26% = £250,000 x 26% = £65,000. Thus the correct answer is (D) £65,000."
+},
+]
