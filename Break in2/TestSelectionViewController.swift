@@ -80,7 +80,11 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     for var index = 0 ; index < self.testTypes.count ; index++ {
       
+      // Create each testTypeView
+      
       let testTypeViewAtIndex:TestTypeView = TestTypeView()
+      
+      // Set testTypeView properties
       
       testTypeViewAtIndex.testTypes = self.testTypes
       testTypeViewAtIndex.testDifficulties = self.testDifficulties
@@ -97,6 +101,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       testTypeViewAtIndex.testTypeDifficultyViewHeight = self.testTypeDifficultyViewHeight
       testTypeViewAtIndex.testTypeDifficultyButtonHeight = testTypeDifficultyButtonHeight
       testTypeViewAtIndex.testTypeStatsViewHeightAfterSwipe = self.testTypeStatsViewHeightAfterSwipe
+      
+      testTypeViewAtIndex.clipsToBounds = true
+      
+      // Add each testTypeView to testScrollView
+      
+      self.testScrollView.addSubview(testTypeViewAtIndex)
+      
+      // Store each testTypeView into the testTypeViews array
       
       self.testTypeViews.append(testTypeViewAtIndex)
       
@@ -118,14 +130,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.testSelectionView.addSubview(self.testPageControllerView)
     self.testSelectionView.addSubview(self.testScrollView)
     self.testSelectionView.addSubview(self.testStartButton)
-    
-    // Add testTypeViews to testScrollView
-    
-    for testTypeViewAtIndex:UIView in self.testTypeViews {
-      
-      self.testScrollView.addSubview(testTypeViewAtIndex)
-      
-    }
     
     // Set constraints
     
@@ -247,7 +251,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       
       let testTypeViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
       
-      let testTypeViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight)
+      let testTypeViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
       
       let testTypeViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
     
@@ -266,8 +270,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         
       }
       
-      self.testTypeViews[index].addConstraints([testTypeViewWidthConstraint, testTypeViewHeightConstraint])
-      self.view.addConstraint(testTypeViewTopConstraint)
+      self.testTypeViews[index].addConstraint(testTypeViewWidthConstraint)
+      self.view.addConstraints([testTypeViewTopConstraint,testTypeViewBottomConstraint])
       
       if index == self.testTypes.count - 1 {
         

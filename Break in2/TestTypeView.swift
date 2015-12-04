@@ -48,25 +48,20 @@ class TestTypeView: UIView {
     
     // Add subviews to testTypeView (testTypeStatsView must be behind the other subviews)
     
-    self.addSubview(self.testTypeStatsView)
     self.addSubview(self.testTypeDifficultyView)
     self.addSubview(self.testTypeTitleLabel)
     self.addSubview(self.testTypeTimeLabel)
+    self.addSubview(self.testTypeStatsView)
     
     // Set testTypeTitleLabel and testTypeTimeLabel characteristics
     
     self.testTypeTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
     self.testTypeTitleLabel.textColor = UIColor.turquoiseColor()
     self.testTypeTitleLabel.textAlignment = NSTextAlignment.Center
-    //self.testTypeTitleLabel.layer.borderWidth = 2
-    //self.testTypeTitleLabel.layer.borderColor = UIColor.blueColor().CGColor
     
     self.testTypeTimeLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
     self.testTypeTimeLabel.textColor = UIColor.turquoiseColor()
     self.testTypeTimeLabel.textAlignment = NSTextAlignment.Center
-    //self.testTypeTimeLabel.layer.borderWidth = 2
-    //self.testTypeTimeLabel.layer.borderColor = UIColor.redColor().CGColor
-
   
   }
 
