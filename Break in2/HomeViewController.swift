@@ -48,7 +48,7 @@ class HomeViewController: UIViewController {
     
     // Add background image to HomeViewController's view
     
-    self.view.addHomeBG()
+    self.view.addBG("homeBG")
     
     // Add logoImageView and profilePictureImageView to HomeViewController view
     

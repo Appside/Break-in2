@@ -11,14 +11,14 @@ import UIKit
 
 extension UIView {
     
-    //this function adds the home BGImage
-    func addHomeBG() {
+    //this function adds any BGImage called
+    func addBG(text: String) {
         // screen width and height:
         let width = UIScreen.mainScreen().bounds.size.width
         let height = UIScreen.mainScreen().bounds.size.height
         
         let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
-        imageViewBackground.image = UIImage(named: "homeBG")
+        imageViewBackground.image = UIImage(named: text)
         
         // you can change the content mode:
         imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
@@ -26,6 +26,7 @@ extension UIView {
         self.addSubview(imageViewBackground)
         self.sendSubviewToBack(imageViewBackground)
     }
+    
     
     func loginUser(target: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

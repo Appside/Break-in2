@@ -67,7 +67,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     // Set background image
     
-    self.view.addHomeBG()
+    self.view.addBG("homeBG")
     
     // Add testSelectionView and backButton to the main view
     
