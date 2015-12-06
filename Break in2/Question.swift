@@ -10,13 +10,20 @@ import UIKit
 
 class Question {
     
-    var questionText:String = String()
-    var answersText:[String] = [String]()
-    var correctAnswerInt:Int = 0
-    var solutionString:String = String()
-    var category:String = String()
-    var subCategory:String = String()
     var questionType:String = String()
-    var chartDescription:String = String()
+    var chartType:String = String()
+    var axisNames:[String] = [String]()
+    var lineNames:[String] = [String]()
+    var xAxis:[String] = [String]()
+    var yAxis:[[Double]] = [[Double]()]
+    var question:String = String()
+    var answers:[String] = [String]()
+    var correctAnswer:Int = Int()
+    var explaination:String = String()
+    var barSegmentOrientation:String = String()
+    var barSegmentNames:[String] = [String]()
+    var chartTitle:String = String()
+    var pieSegmentNames:[String] = [String]()
+    var pieSegmentPercentages:[Double] = [Double]()
 
 }

@@ -56,7 +56,7 @@
 {
 "questionType":"Numerical Reasoning",
 "chartType":"pie",
-"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)"
+"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)",
 "pieSegmentNames":["Pacific Mixed","Pacific Rim","Southern Pacific","Northern Pacific","Central Pacific"],
 "pieSegmentPercentages":[0.12,0.2,0.35,0.18,0.15],
 "question":"What was the ratio of Pacific Rim: Southern Pacific holdings in October 2010?",
@@ -68,7 +68,7 @@
 {
 "questionType":"Numerical Reasoning",
 "chartType":"pie",
-"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)"
+"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)",
 "pieSegmentNames":["Pacific Mixed","Pacific Rim","Southern Pacific","Northern Pacific","Central Pacific"],
 "pieSegmentPercentages":[0.12,0.2,0.35,0.18,0.15],
 "question":"In October 2010 which two Pacific Bond fund holdings when combined had the same value as Southern Pacific holdings?",
@@ -80,7 +80,7 @@
 {
 "questionType":"Numerical Reasoning",
 "chartType":"pie",
-"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)"
+"chartTitle":"Octobe 2010 Fund Holdings In Pacific Bond (Total: £37.5m)",
 "pieSegmentNames":["Pacific Mixed","Pacific Rim","Southern Pacific","Northern Pacific","Central Pacific"],
 "pieSegmentPercentages":[0.12,0.2,0.35,0.18,0.15],
 "question":"In October 2010 what fraction of the total Pacific Bond did the Northern Pacific and Pacific Mixed fund holdings represent?",
@@ -235,7 +235,7 @@
 "question":"Between 2010 and 2011 what has been the mean percentage Budget reduction for each of the 5 Brands (to 1 decimal place)?",
 "answers":["30.4%","30.5%","31.4%","31.5%","32.4%"],
 "correctAnswer":0,
-"explanation":"Step 1 - Calculate the % cut for each Brand. If you still have your notes from the previous question you can re-use those to save time: Brand A = 75/300 x 100 = 25%, Brand B = 135/410 x100 = 32.9%, Brand C = 85/260 x 100 = 32.7%, Brand D = 90/300 x 100 = 30%, Brand E = 115/365 x 100 = 31.5%. Step 2 – Calculate mean reduction: (25 + 32.9 + 32.7 + 30 + 31.5)/5 = 30.42%. Step 3 – Calculate answer to 1 decimal place: 30.4%. Thus the correct answer is (A) 30.4%."
+"explaination":"Step 1 - Calculate the % cut for each Brand. If you still have your notes from the previous question you can re-use those to save time: Brand A = 75/300 x 100 = 25%, Brand B = 135/410 x100 = 32.9%, Brand C = 85/260 x 100 = 32.7%, Brand D = 90/300 x 100 = 30%, Brand E = 115/365 x 100 = 31.5%. Step 2 – Calculate mean reduction: (25 + 32.9 + 32.7 + 30 + 31.5)/5 = 30.42%. Step 3 – Calculate answer to 1 decimal place: 30.4%. Thus the correct answer is (A) 30.4%."
 },
 
 {
@@ -278,5 +278,5 @@
 "answers":["£80,000","£75,000","£70,000","£65,000","£60,000"],
 "correctAnswer":3,
 "explaination":"The information that you need is shown in the graph. Step 1 - Production costs = 26% = £250,000 x 26% = £65,000. Thus the correct answer is (D) £65,000."
-},
+}
 ]

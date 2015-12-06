@@ -22,14 +22,33 @@ class QuizzModel: NSObject {
             let currentJsonDictionary:NSDictionary = jsonObject[index]
             let newQuestion:Question = Question()
             //Assign values to the newQuestion                                                                                                                                                                                                                                                
-            newQuestion.category = currentJsonDictionary["category"] as! String
-            newQuestion.subCategory = currentJsonDictionary["subcategory"] as! String
-            newQuestion.questionType = currentJsonDictionary["type"] as! String
-            newQuestion.questionText = currentJsonDictionary["question"] as! String
-            newQuestion.chartDescription = currentJsonDictionary["chart"] as! String
-            newQuestion.answersText = currentJsonDictionary["answers"] as! [String]
-            newQuestion.correctAnswerInt = currentJsonDictionary["correctAnswer"] as! Int
-            newQuestion.solutionString = currentJsonDictionary["answerExplanation"] as! String
+            newQuestion.questionType = currentJsonDictionary["questionType"] as! String
+            newQuestion.chartType = currentJsonDictionary["chartType"] as! String
+            
+            if newQuestion.chartType=="bar" {
+                newQuestion.axisNames = currentJsonDictionary["axisNames"] as! [String]
+                newQuestion.barSegmentOrientation = currentJsonDictionary["barSegmentOrientation"] as! String
+                newQuestion.barSegmentNames = currentJsonDictionary["barSegmentNames"] as! [String]
+                newQuestion.xAxis = currentJsonDictionary["xAxis"] as! [String]
+                newQuestion.yAxis = currentJsonDictionary["yAxis"] as! [[Double]]
+            }
+            else if newQuestion.chartType=="line" {
+                newQuestion.axisNames = currentJsonDictionary["axisNames"] as! [String]
+                newQuestion.lineNames = currentJsonDictionary["lineNames"] as! [String]
+                newQuestion.xAxis = currentJsonDictionary["xAxis"] as! [String]
+                newQuestion.yAxis = currentJsonDictionary["yAxis"] as! [[Double]]
+            }
+            else if newQuestion.chartType=="pie" {
+                newQuestion.chartTitle = currentJsonDictionary["chartTitle"] as! String
+                newQuestion.pieSegmentNames = currentJsonDictionary["pieSegmentNames"] as! [String]
+                newQuestion.pieSegmentPercentages = currentJsonDictionary["pieSegmentPercentages"] as! [Double]
+                
+            }
+            
+            newQuestion.question = currentJsonDictionary["question"] as! String
+            newQuestion.answers = currentJsonDictionary["answers"] as! [String]
+            newQuestion.correctAnswer = currentJsonDictionary["correctAnswer"] as! Int
+            newQuestion.explaination = currentJsonDictionary["explaination"] as! String
             //Add the new Question to the returned array
             arrayOfQuestions.append(newQuestion)
         }
@@ -41,7 +60,7 @@ class QuizzModel: NSObject {
     func getjsonfile() -> [NSDictionary] {
      
         //Define JSon file URL
-        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("questiondata", ofType: "json")
+        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("NumericalReasoning", ofType: "json")
         if let actualFilePath = fileBundlePath {
             //Case where the path has been found
             let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
