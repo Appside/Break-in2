@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
   
   let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Sangeet"]
   let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Sangeet":"briefcase"]
+  let careersTestTypes:[String:[String]] = ["Investment Banking":["Numerical Reasoning","Logical Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Sangeet":["Verbal Reasoning","Logical Reasoning"]]
   
   // Declare and initialize views
   
@@ -28,6 +29,7 @@ class HomeViewController: UIViewController {
   let careersBackgroundView:UIView = UIView()
   let careersScrollView:UIScrollView = UIScrollView()
   var careerButtons:[CareerButton] = [CareerButton]()
+  let scrollInfoLabel:UILabel = UILabel()
   
   // Declare and initialize design constants
   
@@ -59,6 +61,7 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.careersBackgroundView)
     self.careersBackgroundView.addSubview(self.logOutButton)
     self.careersBackgroundView.addSubview(self.careersScrollView)
+    self.careersBackgroundView.addSubview(self.scrollInfoLabel)
     
     //add actions to buttons
     
@@ -118,6 +121,11 @@ class HomeViewController: UIViewController {
     self.logOutButton.setTitle("Log Out", forState: UIControlState.Normal)
     self.logOutButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     
+    self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
+    self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
+    self.scrollInfoLabel.text = "Scroll For More Careers"
+    
     // Customize careersBackgroundView
     
     self.careersBackgroundView.backgroundColor = UIColor.whiteColor()
@@ -133,10 +141,18 @@ class HomeViewController: UIViewController {
     
   }
   
-  func careerButtonClicked(sender:UIButton) {
+  func careerButtonClicked(sender:CareerButton) {
     
-    self.performSegueWithIdentifier("careerClicked", sender: nil)
+    self.performSegueWithIdentifier("careerClicked", sender: sender)
     
+  }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+    if segue.identifier == "careerClicked" {
+      let nextViewController:TestSelectionViewController = segue.destinationViewController as! TestSelectionViewController
+      nextViewController.testTypes = self.careersTestTypes[sender!.careerTitle]!
+    }
   }
   
   func setConstraints() {
@@ -205,7 +221,7 @@ class HomeViewController: UIViewController {
     
     self.careersBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (((self.minorMargin * 5) + (self.buttonHeight * 4)) * -1))
+    let careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (((self.minorMargin * 6) + (self.buttonHeight * 4.5)) * -1))
     
     let careersBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
@@ -230,6 +246,21 @@ class HomeViewController: UIViewController {
     self.logOutButton.addConstraint(logOutButtonHeightConstraint)
     self.view.addConstraints([logOutButtonLeftConstraint, logOutButtonBottomConstraint, logOutButtonRightConstraint])
     
+    // Create and add constraints for scrollInfoLabel
+    
+    self.scrollInfoLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    
+    let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight/2)
+    
+    self.scrollInfoLabel.addConstraint(scrollInfoLabelHeightConstraint)
+    self.view.addConstraints([scrollInfoLabelLeftConstraint, scrollInfoLabelTopConstraint, scrollInfoLabelRightConstraint])
+    
     // Create and add constraints for careersScrollView
     
     self.careersScrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -240,7 +271,7 @@ class HomeViewController: UIViewController {
     
     let careersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
-    let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
     
     self.view.addConstraints([careersScrollViewLeftConstraint, careersScrollViewBottomConstraint, careersScrollViewRightConstraint, careersScrollViewTopConstraint])
     

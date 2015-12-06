@@ -12,7 +12,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   // Declare and initialize types of tests and difficulties available for selected career
   
-  let testTypes:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
+  var testTypes:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
   let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG"]
   let testDifficulties:[String] = ["E", "M", "H"]
   
@@ -363,15 +363,41 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
   }
   
+  /*func scrollViewDidScroll(scrollView: UIScrollView) {
+    self.backgroundImageView.alpha = 1 - (((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width))) * 2)
+  }
+  
+  func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+    
+    let scrollViewPosition:CGFloat = ((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)))
+    
+    if scrollViewPosition < 0.5 {
+      let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
+      self.testPageControllerView.updatePageController(pageIndex)
+      self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
+    }
+    else {
+      let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width) + 1
+      self.testPageControllerView.updatePageController(pageIndex)
+      self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
+    }
+    
+    UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      self.backgroundImageView.alpha = 1
+      }, completion: nil)
+  }*/
+  
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     
     let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
     self.testPageControllerView.updatePageController(pageIndex)
-    
     self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
     
+    UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      self.backgroundImageView.alpha = 1
+      }, completion: nil)
   }
-  
+
   func backButtonClicked(sender:UIButton) {
     
     self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
