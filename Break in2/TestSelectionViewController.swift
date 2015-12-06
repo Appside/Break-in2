@@ -13,10 +13,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   // Declare and initialize types of tests and difficulties available for selected career
   
   let testTypes:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
+  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG"]
   let testDifficulties:[String] = ["E", "M", "H"]
   
   // Declare and intialize views
   
+  var backgroundImageView:UIImageView = UIImageView()
   let testSelectionView:UIView = UIView()
   var testPageControllerView:PageControllerView = PageControllerView()
   let testScrollView:UIScrollView = UIScrollView()
@@ -67,11 +69,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     // Set background image
     
-    self.view.addBG("homeBG")
+    self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[0]]!)
     
     // Add testSelectionView and backButton to the main view
     
-    self.view.addSubview(testSelectionView)
+    self.view.addSubview(self.backgroundImageView)
+    self.view.addSubview(self.testSelectionView)
     self.view.addSubview(self.backButton)
     
     // Create testTypeViews for each testType
@@ -198,6 +201,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   }
 
   func setConstraints() {
+    
+    // Create and add constraints for backgroundImageView
+    
+    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    self.backgroundImageView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
     
     // Create and add constraints for testSelectionView
     
@@ -358,6 +367,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
     self.testPageControllerView.updatePageController(pageIndex)
+    
+    self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
     
   }
   

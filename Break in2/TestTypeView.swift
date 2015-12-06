@@ -83,11 +83,18 @@ class TestTypeView: UIView {
       
       difficultyButton.setTitle(self.testDifficulties[index], forState: UIControlState.Normal)
       
-      difficultyButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-      difficultyButton.setTitleColor(self.mainLineColor, forState: UIControlState.Normal)
       difficultyButton.layer.borderWidth = 1
       difficultyButton.layer.borderColor = self.mainLineColor.CGColor
       difficultyButton.layer.cornerRadius = self.testTypeDifficultyButtonHeight / 2
+      difficultyButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      
+      if index == 0 {
+        difficultyButton.backgroundColor = self.secondaryBackgroundColor
+        difficultyButton.setTitleColor(self.mainBackgroundColor, forState: UIControlState.Normal)
+      }
+      else {
+        difficultyButton.setTitleColor(self.mainLineColor, forState: UIControlState.Normal)
+      }
       
       difficultyButton.addTarget(self, action: Selector("difficultyButtonTapped:"), forControlEvents: UIControlEvents.TouchUpInside)
       

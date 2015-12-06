@@ -10,16 +10,16 @@ import UIKit
 
 class PageControllerView: UIView {
   
-  // Declare and initialize types of tests array in super.testTypeViews
+  // Declare and initialize types colors for page controller
   
-  var numberOfPages:Int = 1
+  var pageControllerColors:[UIColor] = [UIColor.init(red: 208/255, green: 2/255, blue: 27/255, alpha: 1),UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 1),UIColor.init(red: 126/255, green: 211/255, blue: 33/255, alpha: 1),UIColor.init(red: 248/255, green: 231/255, blue: 28/255, alpha: 1)]
   
   // Declare and initialize drawing properties
   
-  var pageControllerCircleColor:CGColor = UIColor.turquoiseColor().CGColor
   var pageControllerCircleRects:[CGRect] = [CGRect]()
   
   var selectedPageIndex:Int = 0
+  var numberOfPages:Int = 1
   
   // Declare and initialize design constants
   
@@ -57,8 +57,20 @@ class PageControllerView: UIView {
       
       // Set the fill color to randomColor
       
-      CGContextSetFillColorWithColor(pageControllerContext, self.pageControllerCircleColor)
-      CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerCircleColor)
+      if index < self.pageControllerColors.count {
+        CGContextSetFillColorWithColor(pageControllerContext, self.pageControllerColors[index].CGColor)
+        CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerColors[index].CGColor)
+        
+        CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerColors[index].CGColor)
+      }
+      else {
+        CGContextSetFillColorWithColor(pageControllerContext, UIColor.turquoiseColor().CGColor)
+        CGContextSetStrokeColorWithColor(pageControllerContext, UIColor.turquoiseColor().CGColor)
+        
+        CGContextSetStrokeColorWithColor(pageControllerContext, UIColor.turquoiseColor().CGColor)
+        
+        self.pageControllerColors.append(UIColor.turquoiseColor())
+      }
       
       // Create CGRects that surround the page controller cirlces
       
@@ -76,7 +88,7 @@ class PageControllerView: UIView {
     
     // Set the stroke color and thickness to the color of the leftmost circle
     
-    CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerCircleColor)
+    CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerColors[self.selectedPageIndex].CGColor)
     CGContextSetLineWidth(pageControllerContext, self.pageControllerSelectedCircleThickness)
     
     // Draw outer circle for selected circle

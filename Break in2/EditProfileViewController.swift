@@ -17,7 +17,7 @@ class EditProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addBG("homeBG")
+        self.view.addHomeBG()
         
         // Do any additional setup after loading the view.
     }

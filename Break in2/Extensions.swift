@@ -12,13 +12,13 @@ import UIKit
 extension UIView {
     
     //this function adds any BGImage called
-    func addBG(text: String) {
+    func addHomeBG() {
         // screen width and height:
         let width = UIScreen.mainScreen().bounds.size.width
         let height = UIScreen.mainScreen().bounds.size.height
-        
+      
         let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
-        imageViewBackground.image = UIImage(named: text)
+        imageViewBackground.image = UIImage(named: "homeBG")
         
         // you can change the content mode:
         imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill

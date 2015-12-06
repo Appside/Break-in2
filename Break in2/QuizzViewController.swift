@@ -43,7 +43,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         //Initialize backgroun UIView
         self.view.addSubview(self.backgroungUIView)
         self.backgroungUIView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        self.backgroungUIView.addBG("homeBG")
+        self.backgroungUIView.addHomeBG()
         
         //Initialize menuBackButton UIView
         self.view.addSubview(self.menuBackButton)

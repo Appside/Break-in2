@@ -57,7 +57,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addBG("homeBG")
+        self.view.addHomeBG()
       
       // Add logoImageView and profilePictureImageView to HomeViewController view
       
