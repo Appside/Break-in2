@@ -65,6 +65,9 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         //self.menuBackButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
         //self.menuBackButton.layer.borderWidth = 3.0
         menuLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("backHome:"))
+        tapGestureBackHome.numberOfTapsRequired = 1
+        self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
         
         //Initialize questionMenu UIView
         self.view.addSubview(self.questionMenu)
@@ -144,6 +147,28 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         self.mainScrollView.addConstraint(graphViewTop)
         self.view.addConstraints([graphViewLeft,graphViewRight])
         
+        //Create nextButton
+        let nextUIView:UIView = UIView()
+        self.swipeUIView.addSubview(nextUIView)
+        nextUIView.translatesAutoresizingMaskIntoConstraints = false
+        self.nextButton.translatesAutoresizingMaskIntoConstraints = false
+        self.nextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        self.nextButton.textColor = UIColor.whiteColor()
+        self.nextButton.textAlignment = NSTextAlignment.Center
+        self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+        self.nextButton.text = "Next"
+        let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 425)
+        let rightLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20))
+        let leftLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20))
+        self.swipeUIView.addConstraints([topLabelMargin,rightLabelMargin,leftLabelMargin])
+        let heightLabelConstraint:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 50)
+        nextUIView.addConstraint(heightLabelConstraint)
+        nextUIView.addSubview(self.nextButton)
+        self.nextButton.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("nextQuestion:"))
+        tapGestureNext.numberOfTapsRequired = 1
+        nextUIView.addGestureRecognizer(tapGestureNext)
+        
         //Display questions
         self.displayedQuestionIndex = 0
         self.quizzArray = self.quizzModel.selectQuestions()
@@ -152,11 +177,11 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let newChartObject = self.createChartObject()
         
         newChartObject.translatesAutoresizingMaskIntoConstraints = false
-        let newChartObjectLeftMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let newChartObjectRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let newChartObjectLeftMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
+        let newChartObjectRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20)
         let newChartObjectTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
         self.graphView.addConstraints([newChartObjectLeftMargin,newChartObjectRightMargin,newChartObjectTopMargin])
-        let graphHeight:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 450)
+        let graphHeight:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 400)
         newChartObject.addConstraint(graphHeight)
         
         //Launch timer
@@ -165,23 +190,6 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         //change scrollview contentsize
         self.mainScrollView.contentSize = CGSize(width: self.mainScrollView.frame.width, height: self.graphView.frame.height + self.questionView.frame.height + 200)
         self.mainScrollView.bringSubviewToFront(self.swipeUIView)
-        
-        //Create nextButton
-        self.swipeUIView.addSubview(self.nextButton)
-        self.nextButton.translatesAutoresizingMaskIntoConstraints = false
-        self.nextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-        self.nextButton.textColor = UIColor.whiteColor()
-        self.nextButton.textAlignment = NSTextAlignment.Center
-        self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
-        self.nextButton.text = "Next"
-        let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 425)
-        let rightLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20))
-        let leftLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20))
-        self.swipeUIView.addConstraints([topLabelMargin,rightLabelMargin,leftLabelMargin])
-        let heightLabelConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 50)
-        self.nextButton.addConstraint(heightLabelConstraint)
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "nextQuestion:")
-        self.nextButton.addGestureRecognizer(tapGesture)
         
         //Initialize swipeUIView
         self.view.addSubview(self.swipeUIView)
@@ -241,6 +249,17 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let newSec:String = String(format: "%02d", self.countSeconds)
         let newLabel:String = "\(newMin) : \(newSec)"
         timeLabel.text = newLabel
+    }
+    
+    func backHome(sender:UITapGestureRecognizer) {
+        let alertController:UIAlertController = UIAlertController(title: "Return to Menu", message: "Are you sure you want to return home? All progress will be lost!", preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "Ok", style: .Default) {(action:UIAlertAction!) in
+            self.performSegueWithIdentifier("backHomeSegue", sender: nil)}
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {(action:UIAlertAction!) in
+        }
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     
@@ -307,7 +326,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "answerIsSelected:")
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
             answerUIButton.addGestureRecognizer(tapGesture)
         }
     }
@@ -316,12 +335,21 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let buttonTapped:UIView? = gesture.view
         if let actualButton = buttonTapped {
             for singleView in self.answerView.subviews {
-                singleView.backgroundColor = UIColor.whiteColor()
+                for labelView1 in singleView.subviews {
+                    if let labelsView = labelView1 as? UILabel {
+                        labelsView.backgroundColor = UIColor.whiteColor()
+                        labelsView.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                        if labelsView.text=="1" || labelsView.text=="2" || labelsView.text=="3" || labelsView.text=="4" || labelsView.text=="5" {
+                                labelsView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                                labelsView.textColor = UIColor.whiteColor()
+                        }
+                    }
+                }
             }
-            UIView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                actualButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+            UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 for labels in actualButton.subviews {
                     if let labelView = labels as? UILabel {
+                        labelView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
                         labelView.textColor = UIColor.whiteColor()
                     }
                 }
@@ -331,8 +359,19 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
         //call next question
+        UIView.animateWithDuration(1, animations: {
+            self.swipeMenuBottomConstraint.constant = 415
+            self.view.layoutIfNeeded()
+            self.graphView.alpha = 1.0
+            self.descriptionSwipeLabel.text = "Swipe up for Answers"
+            }, completion: nil)
         self.displayedQuestionIndex++
-        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+        if self.displayedQuestionIndex>self.totalNumberOfQuestions{
+            //Go to feedback screen
+        }
+        else {
+            self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+        }
     }
     
     func createChartObject() -> UIView {
@@ -381,13 +420,19 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         chartView.data = chartData
         
         chartView.descriptionText = ""
-        //chartDataSet.colors = [UIColor(red: 230/255, green: 126/255, blue: 34/255, alpha: 1)]
-        chartDataSet.colors = ChartColorTemplates.colorful()
+        chartDataSet.colors = ChartColorTemplates.vordiplom()
         chartView.xAxis.labelPosition = .Bottom
-        chartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+        chartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
         let ll = ChartLimitLine(limit: 10.0, label: "Target")
         chartView.rightAxis.addLimitLine(ll)
         chartView.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
+        
+        chartView.gridBackgroundColor = UIColor(white: 0, alpha: 0)
+        chartData.setValueTextColor(UIColor.whiteColor())
+        chartView.xAxis.labelTextColor = UIColor.whiteColor()
+        chartView.leftAxis.labelTextColor = UIColor.whiteColor()
+        chartView.rightAxis.labelTextColor = UIColor.whiteColor()
+        
         return chartView
     }
     

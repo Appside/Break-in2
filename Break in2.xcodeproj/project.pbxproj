@@ -10,7 +10,7 @@
 		2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E01C021C24005AE520 /* PageControllerView.swift */; };
 		2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */; };
 		2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E21C021C24005AE520 /* TestTypeView.swift */; };
-		251D4BBE1C11FBD5004A6715 /* Numerical Reasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBD1C11FBD5004A6715 /* Numerical Reasoning.json */; };
+		251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */; };
 		251D4BC01C11FBEB004A6715 /* Verbal Reasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */; };
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
@@ -61,7 +61,7 @@
 		2510B6E01C021C24005AE520 /* PageControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControllerView.swift; sourceTree = "<group>"; };
 		2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSelectionViewController.swift; sourceTree = "<group>"; };
 		2510B6E21C021C24005AE520 /* TestTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTypeView.swift; sourceTree = "<group>"; };
-		251D4BBD1C11FBD5004A6715 /* Numerical Reasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Numerical Reasoning.json"; sourceTree = "<group>"; };
+		251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NumericalReasoning.json; sourceTree = "<group>"; };
 		251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Verbal Reasoning.json"; sourceTree = "<group>"; };
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 			children = (
 				499375351C02573100AA0588 /* QuizzViewController.swift */,
 				4993753F1C027EAF00AA0588 /* questiondata.json */,
-				251D4BBD1C11FBD5004A6715 /* Numerical Reasoning.json */,
+				251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */,
 				251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */,
 				499375361C02573100AA0588 /* Question.swift */,
 				499375371C02573100AA0588 /* QuizzModel.swift */,
@@ -370,7 +370,7 @@
 				614316521BEF843A0047A37D /* LaunchScreen.storyboard in Resources */,
 				6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */,
 				6143164D1BEF843A0047A37D /* Main.storyboard in Resources */,
-				251D4BBE1C11FBD5004A6715 /* Numerical Reasoning.json in Resources */,
+				251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */,
 				499375401C027EAF00AA0588 /* questiondata.json in Resources */,
 				251D4BC01C11FBEB004A6715 /* Verbal Reasoning.json in Resources */,
 			);
