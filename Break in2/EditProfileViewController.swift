@@ -48,6 +48,9 @@ class EditProfileViewController: UIViewController {
             
             if(error == nil && result != nil){
                 
+                let user = PFUser.currentUser()!
+                ParseExtensions.deleteUserFB(user)
+                
                 self.noticeTop("Facebook account successfully deactivated", autoClear: true, autoClearTime: 3)
                 self.view.loginUser(self)
                 

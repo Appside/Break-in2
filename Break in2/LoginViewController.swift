@@ -148,17 +148,15 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             
             if user != nil {
                 if user![PF_USER_FACEBOOKID] == nil {
-                    self.startFB(user!)
+                    //self.startFB(user!)
+                    self.getFBUserData(user!)
                 } else {
                     self.clearAllNotice()
                     self.userLoggedIn(user!)
                 }
             } else {
                 if error != nil {
-                    print(error)
-                    if let info = error?.userInfo {
-                        print(info)
-                    }
+                    self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
                 }
                 self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
             }
@@ -303,7 +301,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     func userLoggedIn(user: PFUser) {
         //PushNotication.parsePushUserAssign()
         //self.performSegueWithIdentifier("settingsClicked", sender: nil)
-        self.noticeTop("Welcome, \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
+        
+        self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
         //self.dismissViewControllerAnimated(true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC")
