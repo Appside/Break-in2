@@ -160,7 +160,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                         print(info)
                     }
                 }
-                self.noticeError("Facebook sign in error!")
+                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
             }
         })
         
@@ -203,7 +203,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                         } else {
                             PFUser.logOut()
                             if let info = error?.userInfo {
-                                self.noticeError("Login error")
+                                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
                                 //ProgressHUD.showError("Login error")
                                 print(info["error"] as! String)
                             }
@@ -283,7 +283,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
 //                    } else {
 //                        PFUser.logOut()
 //                        if let info = error?.userInfo {
-//                            self.noticeError("Login error")
+//                            self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
 //                            print(info["error"] as! String)
 //                        }
 //                    }
@@ -303,7 +303,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     func userLoggedIn(user: PFUser) {
         //PushNotication.parsePushUserAssign()
         //self.performSegueWithIdentifier("settingsClicked", sender: nil)
-        self.noticeTop("Welcome back, \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
+        self.noticeTop("Welcome, \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
         //self.dismissViewControllerAnimated(true, completion: nil)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC")
