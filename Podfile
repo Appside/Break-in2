@@ -10,6 +10,7 @@ pod 'ParseFacebookUtilsV4'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit’
 pod 'Alamofire', '~> 3.0'
+pod 'SCLAlertView'
 
 end
 

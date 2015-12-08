@@ -10,6 +10,7 @@ import UIKit
 import QuartzCore
 import Parse
 import ParseUI
+import SCLAlertView
 
 class HomeViewController: UIViewController {
   
@@ -341,6 +342,32 @@ class HomeViewController: UIViewController {
     }
     
     func logoutBtnPressed(sender: UIButton!){
+        
+        let alertView = SCLAlertView()
+//        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
+//        alertView.addButton("Cancel") {
+//            alertView.clearAllNotice()
+//        }
+//        alertView.showCloseButton = false
+//        alertView.showViewController(<#T##vc: UIViewController##UIViewController#>, sender: <#T##AnyObject?#>)
+//        alertView.showWarning("Logout", subTitle: "Are You Sure You Want To Exit?")
+        
+        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
+        alertView.showTitle(
+            "Logout", // Title of view
+            subTitle: "Are You Sure You Want To Exit?", // String of view
+            duration: 0.0, // Duration to show before closing automatically, default: 0.0
+            completeText: "Cancel", // Optional button value, default: ""
+            style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            colorStyle: 0x526B7B,//0xD0021B - RED
+            colorTextButton: 0xFFFFFF
+        )
+        alertView.showCloseButton = false
+        
+
+    }
+    
+    func logOut(){
         
         PFUser.logOut()
         self.view.loginUser(self)
