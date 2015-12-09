@@ -19,10 +19,13 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="eYr-mg-x7Z"/>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="show" identifier="userLoggedOn" id="lOv-b3-KiM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zqr-Bg-PVy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1265" y="-666"/>
+            <point key="canvasLocation" x="1313" y="-666"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="a1f-d0-jcg">
@@ -158,6 +161,6 @@
         <image name="textBreakIn2Small" width="114" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Z2O-uS-5Gc"/>
+        <segue reference="lOv-b3-KiM"/>
     </inferredMetricsTieBreakers>
 </document>

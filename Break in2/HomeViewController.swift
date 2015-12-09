@@ -32,6 +32,8 @@ class HomeViewController: UIViewController {
   var careerButtons:[CareerButton] = [CareerButton]()
   let scrollInfoLabel:UILabel = UILabel()
   
+  var careersBackgroundViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  
   // Declare and initialize design constants
   
   let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -43,6 +45,7 @@ class HomeViewController: UIViewController {
   let borderWidth:CGFloat = 3
   
   let buttonHeight:CGFloat = 50
+  var loginPageControllerViewHeight:CGFloat = 50
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -92,7 +95,7 @@ class HomeViewController: UIViewController {
       
       // Make each button perform a segue to the TestSelectionViewController
       
-      self.careerButtons[index].addTarget(self, action: "careerButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.careerButtons[index].addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     // Add careerButtons to careersScrollView
@@ -112,7 +115,7 @@ class HomeViewController: UIViewController {
     self.profilePictureImageView.image = UIImage.init(named: "planeLogo")!
     
     self.statsButton.contentMode = UIViewContentMode.ScaleAspectFit
-    self.statsButton.setImage(UIImage.init(named: "back"), forState: UIControlState.Normal)
+    self.statsButton.setImage(UIImage.init(named: "statistics"), forState: UIControlState.Normal)
     
     self.settingsButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.settingsButton.setImage(UIImage.init(named: "settings"), forState: UIControlState.Normal)
@@ -142,12 +145,6 @@ class HomeViewController: UIViewController {
     
   }
   
-  func careerButtonClicked(sender:CareerButton) {
-    
-    self.performSegueWithIdentifier("careerClicked", sender: sender)
-    
-  }
-  
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
     if segue.identifier == "careerClicked" {
@@ -159,6 +156,36 @@ class HomeViewController: UIViewController {
   func setConstraints() {
     
     // Create and add constraints for logoImageView
+    
+    self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    
+    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    
+    self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
+    self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewBottomConstraint])
+    
+    // Create and add constraints for profilePictureImageView
+    
+    self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    
+    let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + (self.minorMargin * 2) + (self.screenFrame.width/6) + self.screenFrame.width/12)
+    
+    let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    
+    self.profilePictureImageView.addConstraints([profilePictureImageViewWidthConstraint, profilePictureImageViewHeightConstraint])
+    self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewCenterYConstraint])
+    
+    /* Create and add constraints for logoImageView
     
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
     
@@ -186,7 +213,7 @@ class HomeViewController: UIViewController {
     let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
     
     self.profilePictureImageView.addConstraints([profilePictureImageViewHeightConstraint, profilePictureImageViewWidthConstraint])
-    self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewTopConstraint])
+    self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewTopConstraint])*/
     
     // Create and add constraints for settingsButton
     
@@ -196,9 +223,9 @@ class HomeViewController: UIViewController {
     
     let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     self.settingsButton.addConstraints([settingsButtonHeightConstraint, settingsButtonWidthConstraint])
     self.view.addConstraints([settingsButtonLeftConstraint, settingsButtonTopConstraint])
@@ -211,9 +238,9 @@ class HomeViewController: UIViewController {
     
     let statsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let statsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let statsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let statsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let statsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     self.statsButton.addConstraints([statsButtonHeightConstraint, statsButtonWidthConstraint])
     self.view.addConstraints([statsButtonRightConstraint, statsButtonTopConstraint])
@@ -222,15 +249,16 @@ class HomeViewController: UIViewController {
     
     self.careersBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (((self.minorMargin * 6) + (self.buttonHeight * 4.5)) * -1))
+    let careersBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.minorMargin * 7) + (self.buttonHeight * 4.5))
     
     let careersBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
     let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let careersBackgroundViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    self.careersBackgroundViewBottomConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 8) + (self.buttonHeight * 4.5))
     
-    self.view.addConstraints([careersBackgroundViewTopConstraint, careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, careersBackgroundViewBottomConstraint])
+    self.careersBackgroundView.addConstraint(careersBackgroundViewHeightConstraint)
+    self.view.addConstraints([careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, self.careersBackgroundViewBottomConstraint])
     
     // Create and add constraints for logOutButton
     
@@ -333,6 +361,8 @@ class HomeViewController: UIViewController {
         else {
             self.view.loginUser(self)
         }
+      
+      self.showCareersBackgroundView()
     }
     
     func loadUser() {
@@ -369,8 +399,17 @@ class HomeViewController: UIViewController {
     
     func logOut(){
         
-        PFUser.logOut()
-        self.view.loginUser(self)
+      PFUser.logOut()
+      UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        
+        self.careersBackgroundViewBottomConstraint.constant = (self.minorMargin * 8) + (self.buttonHeight * 4.5)
+        self.view.layoutIfNeeded()
+        
+        }, completion: {(Bool) in
+          
+          self.view.loginUser(self)
+          
+      })
         
     }
     
@@ -379,6 +418,32 @@ class HomeViewController: UIViewController {
         self.performSegueWithIdentifier("settingsClicked", sender: nil)
         
     }
+  
+  func showCareersBackgroundView() {
+    
+    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.careersBackgroundViewBottomConstraint.constant = self.minorMargin
+      self.view.layoutIfNeeded()
+      
+      }, completion: nil)
+    
+  }
+  
+  func hideCareersBackgroundView(sender: CareerButton) {
+  
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.careersBackgroundViewBottomConstraint.constant = (self.minorMargin * 8) + (self.buttonHeight * 4.5)
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        self.performSegueWithIdentifier("careerClicked", sender: sender)
+        
+    })
+    
+  }
     
   
   /*

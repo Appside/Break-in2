@@ -43,6 +43,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   var loginViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var loginScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var loginViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
   // Declare and initialize design constants
   
@@ -137,7 +139,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       
       // Add target for facebookLoginButton
       
-      self.facebookLoginButton.addTarget(self, action: "buttonFBTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.facebookLoginButton.addTarget(self, action: "hideLoginView", forControlEvents: UIControlEvents.TouchUpInside)
       
       // Set constraints
       
@@ -158,6 +160,15 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
 
     }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    self.profilePictureImageViewCenterYConstraint.constant = (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2
+    self.view.layoutIfNeeded()
+    self.showLoginView()
+
+  }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -337,7 +348,16 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC")
         presentViewController(homeVC, animated: true, completion: nil)
+      //performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
     }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+    if segue == "userLoggedOn" {
+      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      destinationVC.loginPageControllerViewHeight = self.loginPageControllerViewHeight
+    }
+  }
   
   func setConstraints() {
     
@@ -349,7 +369,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     let logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
     
-    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/6)
     
     let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
@@ -364,12 +384,12 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
-    let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
+    self.profilePictureImageViewCenterYConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
     
     let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.profilePictureImageView.addConstraints([profilePictureImageViewWidthConstraint, profilePictureImageViewHeightConstraint])
-    self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewCenterYConstraint])
+    self.view.addConstraints([profilePictureImageViewCenterXConstraint, self.profilePictureImageViewCenterYConstraint])
     
     // Create and add constraints for loginView
     
@@ -381,10 +401,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     let loginViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let loginViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    self.loginViewBottomConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3))
     
-    self.loginView.addConstraint(loginViewHeightConstraint)
-    self.view.addConstraints([loginViewLeftConstraint, loginViewRightConstraint, loginViewBottomConstraint])
+    self.loginView.addConstraint(self.loginViewHeightConstraint)
+    self.view.addConstraints([loginViewLeftConstraint, loginViewRightConstraint, self.loginViewBottomConstraint])
     
     // Create and add constraints for loginPageControllerView
     
@@ -540,7 +560,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     UIView.animateWithDuration(1, animations: {
       
-      self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)
+      self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 2)
       self.loginScrollViewBottomConstraint.constant = 0
       self.view.layoutIfNeeded()
       
@@ -548,6 +568,33 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       self.loginPageControllerView.alpha = 0
       
       }, completion: nil)
+  }
+  
+  func showLoginView() {
+    
+    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.loginViewBottomConstraint.constant = self.minorMargin
+      self.view.layoutIfNeeded()
+      
+      }, completion: nil)
+    
+  }
+  
+  func hideLoginView() {
+    
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.loginViewBottomConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)
+      self.profilePictureImageViewCenterYConstraint.constant = self.statusBarFrame.height + (self.minorMargin * 2) + (self.screenFrame.width/6) + self.screenFrame.width/12
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        self.buttonFBTapped(self.facebookLoginButton)
+        
+    })
+    
   }
   
     /*

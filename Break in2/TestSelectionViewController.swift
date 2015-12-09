@@ -160,10 +160,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
     self.testStartButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testStartButton.backgroundColor = UIColor.turquoiseColor()
-    self.testStartButton.addTarget(self, action: "testStartButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.testStartButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: "backButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     
     // Display each testTypeView
@@ -191,7 +191,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     // Show Test Selection screen with animation
     
-    self.animateTestSelectionView()
+    self.showTestSelectionView()
 
   }
 
@@ -324,7 +324,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
 
   }
   
-  func animateTestSelectionView() {
+  func showTestSelectionView() {
     
     UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
@@ -338,6 +338,32 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       }
       
       }, completion: nil)
+    
+  }
+  
+  func hideTestSelectionView(sender:UIButton) {
+    
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      if self.testSelectionViewVisible {
+        
+        self.testSelectionViewBottomConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + self.buttonHeight + (self.minorMargin * 5)
+        self.view.layoutIfNeeded()
+        
+        self.testSelectionViewVisible = false
+        
+      }
+      
+      }, completion: {(Bool) in
+        
+        if sender == self.backButton {
+          self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+        }
+        else if sender == self.testStartButton {
+          self.performSegueWithIdentifier("testStartButtonClicked", sender: nil)
+        }
+        
+    })
     
   }
   
@@ -396,18 +422,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       self.backgroundImageView.alpha = 1
       }, completion: nil)
-  }
-
-  func backButtonClicked(sender:UIButton) {
-    
-    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
-    
-  }
-  
-  func testStartButtonClicked(sender:UIButton) {
-    
-    self.performSegueWithIdentifier("testStartButtonClicked", sender: nil)
-    
   }
   
 }
