@@ -19,6 +19,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   // Declare and intialize views
   
   var backgroundImageView:UIImageView = UIImageView()
+  var backgroundImageView2:UIImageView = UIImageView()
   let testSelectionView:UIView = UIView()
   var testPageControllerView:PageControllerView = PageControllerView()
   let testScrollView:UIScrollView = UIScrollView()
@@ -34,6 +35,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   // Declare and initialize tracking variables
   
   var testSelectionViewVisible:Bool = false
+  var currentScrollViewPage:Int = 0
   
   // Declare and initialize design constants
   
@@ -70,10 +72,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     // Set background image
     
     self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[0]]!)
+    self.backgroundImageView2.alpha = 0
     
     // Add testSelectionView and backButton to the main view
     
     self.view.addSubview(self.backgroundImageView)
+    self.view.addSubview(self.backgroundImageView2)
     self.view.addSubview(self.testSelectionView)
     self.view.addSubview(self.backButton)
     
@@ -104,7 +108,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       testTypeViewAtIndex.testTypeDifficultyViewHeight = self.testTypeDifficultyViewHeight
       testTypeViewAtIndex.testTypeDifficultyButtonHeight = testTypeDifficultyButtonHeight
       testTypeViewAtIndex.testTypeStatsViewHeightAfterSwipe = self.testTypeStatsViewHeightAfterSwipe
-      
+  
       testTypeViewAtIndex.clipsToBounds = true
       
       // Add each testTypeView to testScrollView
@@ -202,11 +206,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
 
   func setConstraints() {
     
-    // Create and add constraints for backgroundImageView
+    // Create and add constraints for backgroundImageViews
     
     self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
     
     self.backgroundImageView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+    self.backgroundImageView2.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
     
     // Create and add constraints for testSelectionView
     
@@ -415,13 +420,41 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     
-    let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
-    self.testPageControllerView.updatePageController(pageIndex)
-    self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
+    self.currentScrollViewPage = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
+    self.testPageControllerView.updatePageController(self.currentScrollViewPage)
+    self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[self.currentScrollViewPage]]!)
+    self.backgroundImageView.alpha = 1
+    self.backgroundImageView2.alpha = 0
     
-    UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-      self.backgroundImageView.alpha = 1
-      }, completion: nil)
+  }
+  
+  func scrollViewDidScroll(scrollView: UIScrollView) {
+    
+    if self.testScrollView.contentOffset.x > (self.testScrollView.frame.size.width * CGFloat(self.currentScrollViewPage)) {
+      
+      if self.currentScrollViewPage != self.testTypes.count - 1 {
+        
+        self.backgroundImageView2.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[self.currentScrollViewPage + 1]]!)
+        self.backgroundImageView.alpha = 1 - ((self.testScrollView.contentOffset.x - (self.testScrollView.frame.width * CGFloat(self.currentScrollViewPage))) / self.testScrollView.frame.size.width)
+        self.backgroundImageView2.alpha = (self.testScrollView.contentOffset.x - (self.testScrollView.frame.width * CGFloat(self.currentScrollViewPage))) / self.testScrollView.frame.size.width
+        
+      }
+      
+      
+    }
+    else if self.testScrollView.contentOffset.x < (self.testScrollView.frame.size.width * CGFloat(self.currentScrollViewPage)) {
+      
+      if self.currentScrollViewPage != 0 {
+        
+        self.backgroundImageView2.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[self.currentScrollViewPage - 1]]!)
+        self.backgroundImageView.alpha = (self.testScrollView.contentOffset.x - (self.testScrollView.frame.width * CGFloat(self.currentScrollViewPage - 1))) / self.testScrollView.frame.size.width
+        self.backgroundImageView2.alpha = 1 - ((self.testScrollView.contentOffset.x - (self.testScrollView.frame.width * CGFloat(self.currentScrollViewPage - 1))) / self.testScrollView.frame.size.width)
+        
+      }
+      
+      
+    }
+
   }
   
 }

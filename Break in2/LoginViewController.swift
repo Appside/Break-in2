@@ -164,7 +164,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     
-    self.profilePictureImageViewCenterYConstraint.constant = (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2
+    //self.profilePictureImageViewCenterYConstraint.constant = (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2
     self.view.layoutIfNeeded()
     self.showLoginView()
 
@@ -348,12 +348,12 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC")
         presentViewController(homeVC, animated: true, completion: nil)
-      //performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
+      //self.performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
     }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
-    if segue == "userLoggedOn" {
+    if segue.identifier == "userLoggedOn" {
       let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
       destinationVC.loginPageControllerViewHeight = self.loginPageControllerViewHeight
     }
@@ -586,7 +586,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       self.loginViewBottomConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)
-      self.profilePictureImageViewCenterYConstraint.constant = self.statusBarFrame.height + (self.minorMargin * 2) + (self.screenFrame.width/6) + self.screenFrame.width/12
+      //self.profilePictureImageViewCenterYConstraint.constant = self.statusBarFrame.height + (self.minorMargin * 2) + (self.screenFrame.width/6) + self.screenFrame.width/12
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in

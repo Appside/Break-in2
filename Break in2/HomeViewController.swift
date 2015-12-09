@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
   
   let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Sangeet"]
   let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Sangeet":"briefcase"]
-  let careersTestTypes:[String:[String]] = ["Investment Banking":["Numerical Reasoning","Logical Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Sangeet":["Verbal Reasoning","Logical Reasoning"]]
+  let careersTestTypes:[String:[String]] = ["Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Sangeet":["Verbal Reasoning","Logical Reasoning"]]
   
   // Declare and initialize views
   
@@ -70,7 +70,7 @@ class HomeViewController: UIViewController {
     //add actions to buttons
     
     self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
-    self.settingsButton.addTarget(self, action: "settingsBtnPressed:", forControlEvents: .TouchUpInside)
+    self.settingsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
     
     // Create testTypeViews for each testType
     
@@ -430,7 +430,7 @@ class HomeViewController: UIViewController {
     
   }
   
-  func hideCareersBackgroundView(sender: CareerButton) {
+  func hideCareersBackgroundView(sender: UIButton) {
   
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
@@ -439,7 +439,13 @@ class HomeViewController: UIViewController {
       
       }, completion: {(Bool) in
         
-        self.performSegueWithIdentifier("careerClicked", sender: sender)
+        if sender == self.settingsButton {
+          self.performSegueWithIdentifier("settingsClicked", sender: sender)
+        }
+        else {
+          self.performSegueWithIdentifier("careerClicked", sender: sender)
+        }
+        
         
     })
     
