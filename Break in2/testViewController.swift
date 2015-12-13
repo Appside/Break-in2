@@ -8,6 +8,8 @@
 
 import UIKit
 import Charts
+import SCLAlertView
+import Parse
 
 class testViewController: UIViewController, UIScrollViewDelegate {
     
@@ -29,7 +31,7 @@ class testViewController: UIViewController, UIScrollViewDelegate {
     var quizzModel:QuizzModel = QuizzModel()
     var quizzArray:[Question] = [Question]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 2
+    var totalNumberOfQuestions:Int = 1
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 20
@@ -269,17 +271,46 @@ class testViewController: UIViewController, UIScrollViewDelegate {
         timeLabel.text = newLabel
     }
     
+    //----------------------------
+    //break
+    //----------------------------
+    
     func backHome(sender:UITapGestureRecognizer) {
-        let alertController:UIAlertController = UIAlertController(title: "Return to Menu", message: "Are you sure you want to return home? All progress will be lost!", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "Ok", style: .Default) {(action:UIAlertAction!) in
-            self.performSegueWithIdentifier("backHomeSegue", sender: nil)}
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {(action:UIAlertAction!) in
-        }
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        let backAlert = SCLAlertView()
+        backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
+        backAlert.showTitle(
+            "Return to Menu", // Title of view
+            subTitle: "Are you sure you want to return home? All progress will be lost!", // String of view
+            duration: 0.0, // Duration to show before closing automatically, default: 0.0
+            completeText: "Cancel", // Optional button value, default: ""
+            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
+            colorTextButton: 0xFFFFFF
+        )
+        backAlert.showCloseButton = false
+        
+
+        
+//        let alertController:UIAlertController = UIAlertController(title: "Return to Menu", message: "Are you sure you want to return home? All progress will be lost!", preferredStyle: .Alert)
+//        let okAction = UIAlertAction(title: "Ok", style: .Default) {(action:UIAlertAction!) in
+//            self.performSegueWithIdentifier("backHomeSegue", sender: nil)}
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {(action:UIAlertAction!) in
+//        }
+//        alertController.addAction(okAction)
+//        alertController.addAction(cancelAction)
+//        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    func goBack(){
+        
+        self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+        
+    }
+    
+    //----------------------------
+    //break
+    //----------------------------
     
     func displayQuestion(arrayOfQuestions:[Question], indexQuestion:Int) {
         
@@ -394,11 +425,25 @@ class testViewController: UIViewController, UIScrollViewDelegate {
         
         // If no answer is selected, show Alert
         if self.selectedAnswers[self.displayedQuestionIndex] == 20 {
-            let alertController:UIAlertController = UIAlertController(title: "No answer selected", message: "You don't have selected any answer", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "Go back", style: .Cancel) {(action:UIAlertAction!) in
-            }
-            alertController.addAction(okAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            //----------------------------
+            //break
+            //----------------------------
+            
+//            let alertController:UIAlertController = UIAlertController(title: "No answer selected", message: "You don't have selected any answer", preferredStyle: .Alert)
+//            let okAction = UIAlertAction(title: "Go back", style: .Cancel) {(action:UIAlertAction!) in
+//            }
+//            alertController.addAction(okAction)
+//            self.presentViewController(alertController, animated: true, completion: nil)
+                
+                let exitAlert = SCLAlertView()
+            exitAlert.showError("No Answer Selected", subTitle: "Please Select An Answer Before Proceeding")
+            
+            //----------------------------
+            //break
+            //----------------------------
+            
+            
         }
         else {
             //Else go to next question
@@ -417,11 +462,35 @@ class testViewController: UIViewController, UIScrollViewDelegate {
                     }
                 }
                 correctAnswersRatio = Float(nbCorrectAnswers / (self.selectedAnswers.count))
+                
                 //Add: test type (numerical / verbal ...)
+                
                 let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
                 
+                var waitAlert:SCLAlertViewResponder = SCLAlertView().showSuccess("Test Completed", subTitle: "Saving Results...")
+                let saveError = SCLAlertView()
+                
+                let user = PFUser.currentUser()
+                let analytics = PFObject(className: PF_ANALYTICS_CLASS_NAME)
+                analytics[PF_ANALYTICS_USER] = user
+                analytics[PF_ANALYTICS_SCORE] = correctAnswersRatio
+                analytics[PF_ANALYTICS_TIME] = timeTaken
+                
+                analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                    if error == nil {
+                        waitAlert.setTitle("Test Completed")
+                        waitAlert.setSubTitle("Continue to feedback")
+                        self.feedbackScreen()
+                        
+                    } else {
+                        
+                        saveError.showError("Error", subTitle: "Try again")
+                        
+                    }
+                            })
+        
                 //Go to Feedback Screen
-                self.feedbackScreen()
+                //self.feedbackScreen()
             }
                 //Continue to the next question
             else {

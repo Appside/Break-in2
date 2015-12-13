@@ -20,3 +20,13 @@ let PF_USER_FULLNAME_LOWER				= "fullname_lower"          //	String
 let PF_USER_FACEBOOKID					= "facebookId"              //	String
 let PF_USER_PICTURE						= "picture"                 //	File
 let PF_USER_THUMBNAIL					= "thumbnail"               //	File
+
+/* Analytics class in Parse*/
+let PF_ANALYTICS_CLASS_NAME				= "Analytics"				//	Class name
+let PF_ANALYTICS_USER					= "user"					//	Pointer to User Class
+let PF_ANALYTICS_CREATED				= "createdAt"               //	Date
+let PF_ANALYTICS_TIME                   = "time"                    //	Number
+let PF_ANALYTICS_USERNAME				= "username"				//	String
+let PF_ANALYTICS_CAREER                 = "career"                  //	String
+let PF_ANALYTICS_TEST                   = "test"                    //	String
+let PF_ANALYTICS_SCORE                  = "score"                   //	Number

@@ -101,7 +101,7 @@ class EditProfileViewController: UIViewController {
                 }
             }
         }
-        
+    
     }
 
     func loadUser() {
@@ -110,7 +110,7 @@ class EditProfileViewController: UIViewController {
         
     }
   
-  func setConstraints() {
+    func setConstraints() {
     
     // Create and add constraints for logoImageView
     
@@ -158,11 +158,7 @@ class EditProfileViewController: UIViewController {
     self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
     
   }
-  
-    @IBAction func testClicked(sender: AnyObject) {
-         self.performSegueWithIdentifier("test", sender: nil)
-        
-    }
+    
   func hideTestSelectionView(sender:UIButton) {
     
     if sender == self.backButton {
@@ -170,5 +166,11 @@ class EditProfileViewController: UIViewController {
     }
     
   }
+    
+    
+    @IBAction func testClicked(sender: AnyObject) {
+        self.performSegueWithIdentifier("test", sender: nil)
+        
+    }
     
 }
