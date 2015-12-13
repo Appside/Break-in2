@@ -89,7 +89,7 @@ public class ChartXAxis: ChartAxisBase
     /// word wrapping is done using `(value width * labelRotatedWidth)`
     ///
     /// *Note: currently supports all charts except pie/radar/horizontal-bar*
-    public var wordWrapEnabled = false
+    public var wordWrapEnabled = true
     
     /// - returns: true if word wrapping the labels is enabled
     public var isWordWrapEnabled: Bool { return wordWrapEnabled }
@@ -98,7 +98,7 @@ public class ChartXAxis: ChartAxisBase
     /// used only when isWordWrapEnabled = true.
     /// 
     /// **default**: 1.0
-    public var wordWrapWidthPercent: CGFloat = 1.0
+    public var wordWrapWidthPercent: CGFloat = 5.0
     
     public override init()
     {

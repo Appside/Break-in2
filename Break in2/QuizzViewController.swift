@@ -8,6 +8,8 @@
 
 import UIKit
 import Charts
+import SCLAlertView
+import Parse
 
 class QuizzViewController: UIViewController, UIScrollViewDelegate {
     
@@ -29,7 +31,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
     var quizzModel:QuizzModel = QuizzModel()
     var quizzArray:[Question] = [Question]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 2
+    var totalNumberOfQuestions:Int = 10
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 20
@@ -40,7 +42,10 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
     var selectedAnswers:[Int] = [Int]()
     var graphTitle:UILabel = UILabel()
     var qViewHeight:NSLayoutConstraint = NSLayoutConstraint()
-    let feebdackScreen:UIView = UIView()
+    let feebdackScreen:UIScrollView = UIScrollView()
+    var scoreRatio:Float = Float()
+    var isTestComplete:Bool = false
+    var resultsUploaded:Bool = false
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -49,6 +54,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         //Initialize timer
         self.countSeconds = self.allowedSeconds
         self.countMinutes = self.allowedMinutes
+        
         
         //Initialize backgroun UIView
         self.view.addSubview(self.backgroungUIView)
@@ -153,18 +159,19 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         
         self.mainView.addSubview(self.graphTitle)
         self.graphTitle.translatesAutoresizingMaskIntoConstraints = false
+        self.graphTitle.numberOfLines = 0
         let graphTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 90)
         let graphTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
         let graphTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
         self.mainView.addConstraints([graphTitleTop,graphTitleRight,graphTitleLeft])
-        let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+        let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35)
         self.graphTitle.addConstraint(graphTitleHeight)
         self.graphTitle.textAlignment = NSTextAlignment.Left
         self.graphTitle.font = UIFont(name: "HelveticaNeue-Italic", size: 14.0)
         self.graphTitle.textColor = UIColor.whiteColor()
         
         //Update top constraint
-        let graphViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 130)
+        let graphViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 140)
         let graphViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
         let graphViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
         let graphViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
@@ -266,18 +273,36 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let newMin:String = String(format: "%02d", self.countMinutes)
         let newSec:String = String(format: "%02d", self.countSeconds)
         let newLabel:String = "\(newMin) : \(newSec)"
-        timeLabel.text = newLabel
+        self.timeLabel.text = newLabel
     }
     
     func backHome(sender:UITapGestureRecognizer) {
-        let alertController:UIAlertController = UIAlertController(title: "Return to Menu", message: "Are you sure you want to return home? All progress will be lost!", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "Ok", style: .Default) {(action:UIAlertAction!) in
-            self.performSegueWithIdentifier("backHomeSegue", sender: nil)}
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {(action:UIAlertAction!) in
+        var alertMessage:String = String()
+        if (self.isTestComplete==false) {
+            alertMessage = "Are you sure you want to return home? All progress will be lost!"
+        } else {
+            alertMessage = "Are you sure you want to return home?"
         }
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        let backAlert = SCLAlertView()
+        backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
+        backAlert.showTitle(
+            "Return to Menu", // Title of view
+            subTitle: alertMessage, // String of view
+            duration: 0.0, // Duration to show before closing automatically, default: 0.0
+            completeText: "Cancel", // Optional button value, default: ""
+            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
+            colorTextButton: 0xFFFFFF
+        )
+        backAlert.showCloseButton = false
+    
+    }
+    
+    func goBack(){
+        
+        self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+        
     }
     
     
@@ -301,16 +326,17 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         for i=0; i<arrayAnswers.count;i++ {
             let answerUIButton:UIView = UIView()
             let answerUILabel:UILabel = UILabel()
-            let answerNumber:UILabel = UILabel()
+            let answerNumber:UIButton = UIButton()
             answerUIButton.translatesAutoresizingMaskIntoConstraints = false
             answerUILabel.translatesAutoresizingMaskIntoConstraints = false
             answerNumber.translatesAutoresizingMaskIntoConstraints = false
             self.answerView.addSubview(answerUIButton)
             answerUIButton.addSubview(answerUILabel)
             answerUIButton.addSubview(answerNumber)
-            answerNumber.text = String(i+1)
-            answerNumber.textAlignment = NSTextAlignment.Center
-            answerNumber.textColor = UIColor.whiteColor()
+            answerNumber.tag = i
+            answerNumber.setTitle(String(i+1), forState: .Normal)
+            answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            answerNumber.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             answerNumber.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
             answerUILabel.text = String(arrayAnswers[i])
             answerUILabel.textAlignment = NSTextAlignment.Center
@@ -369,10 +395,6 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
                     if let labelsView = labelView1 as? UILabel {
                         labelsView.backgroundColor = UIColor.whiteColor()
                         labelsView.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                        if labelsView.text=="1" || labelsView.text=="2" || labelsView.text=="3" || labelsView.text=="4" || labelsView.text=="5" {
-                            labelsView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                            labelsView.textColor = UIColor.whiteColor()
-                        }
                     }
                 }
             }
@@ -381,9 +403,9 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
                     if let labelView = labels as? UILabel {
                         labelView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
                         labelView.textColor = UIColor.whiteColor()
-                        if labelView.text=="1" || labelView.text=="2" || labelView.text=="3" || labelView.text=="4" || labelView.text=="5" {
-                            self.selectedAnswers[self.displayedQuestionIndex] = Int(labelView.text!)! - 1
-                        }
+                    }
+                    if let btnView = labels as? UIButton {
+                            self.selectedAnswers[self.displayedQuestionIndex] = Int(btnView.tag)
                     }
                 }
                 }, completion: nil)
@@ -394,21 +416,19 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         
         // If no answer is selected, show Alert
         if self.selectedAnswers[self.displayedQuestionIndex] == 20 {
-            let alertController:UIAlertController = UIAlertController(title: "No answer selected", message: "You don't have selected any answer", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "Go back", style: .Cancel) {(action:UIAlertAction!) in
-            }
-            alertController.addAction(okAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            let exitAlert = SCLAlertView()
+            exitAlert.showError("No Answer Selected", subTitle: "Please Select An Answer Before Proceeding")
         }
         else {
             //Else go to next question
             //Go to the feedback screen
             if self.displayedQuestionIndex + 1 > self.totalNumberOfQuestions {
+                
+                if self.resultsUploaded==false {
                 //Stop Timer
                 self.timeTimer.invalidate()
                 
                 //Upload Results to Parse
-                var correctAnswersRatio:Float = Float()
                 var i:Int = 0
                 var nbCorrectAnswers:Int = 0
                 for i=0;i<self.selectedAnswers.count;i++ {
@@ -416,12 +436,36 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
                         nbCorrectAnswers++
                     }
                 }
-                correctAnswersRatio = Float(nbCorrectAnswers / (self.selectedAnswers.count))
+                self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
                 //Add: test type (numerical / verbal ...)
                 let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
                 
-                //Go to Feedback Screen
-                self.feedbackScreen()
+                let waitAlert:SCLAlertViewResponder = SCLAlertView().showSuccess("Test Completed", subTitle: "Saving Results...")
+                let saveError = SCLAlertView()
+                
+                let user = PFUser.currentUser()
+                let analytics = PFObject(className: PF_ANALYTICS_CLASS_NAME)
+                analytics[PF_ANALYTICS_USER] = user
+                analytics[PF_ANALYTICS_SCORE] = self.scoreRatio
+                analytics[PF_ANALYTICS_TIME] = timeTaken
+                
+                analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                    if error == nil {
+                        waitAlert.setTitle("Test Completed")
+                        waitAlert.setSubTitle("Continue to feedback")
+                        self.resultsUploaded = true
+                        self.feedbackScreen()
+                        
+                    } else {
+                        
+                        saveError.showError("Error", subTitle: "Try again")
+                        
+                    }
+                })
+                }
+                else {
+                    self.feedbackScreen()
+                }
             }
                 //Continue to the next question
             else {
@@ -455,6 +499,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
             chartObject.descriptionText = ""
             chartObject.xAxis.labelPosition = .Top
+            chartObject.xAxis.setLabelsToSkip(0)
             chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
             chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
@@ -474,11 +519,19 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
             chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
             chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
+            chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
             chartObject.userInteractionEnabled = true
             chartObject.pinchZoomEnabled = true
             chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
+            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
+            chartObject.leftAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
+            chartObject.rightAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
+            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.doubleTapToZoomEnabled = false
+            chartObject.pinchZoomEnabled = true
             
             return chartObject
         }
@@ -504,10 +557,12 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
             chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
             chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
+            chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
             chartObject.userInteractionEnabled = true
             chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.legend.enabled = false
             
             return chartObject
         }
@@ -520,6 +575,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
             chartObject.descriptionText = ""
             chartObject.xAxis.labelPosition = .Top
+            chartObject.xAxis.setLabelsToSkip(0)
             chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
             chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
@@ -539,10 +595,18 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
             chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
             chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
+            chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
             chartObject.userInteractionEnabled = true
             chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
+            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
+            chartObject.leftAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
+            chartObject.rightAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
+            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.doubleTapToZoomEnabled = false
+            chartObject.pinchZoomEnabled = true
             
             return chartObject
         }
@@ -557,7 +621,13 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         chartView.noDataText = "Error while loading data."
         
         var colorsChart:[UIColor] = [UIColor]()
-        colorsChart = [UIColor.redColor(),UIColor.yellowColor(),UIColor.greenColor(),UIColor.blueColor(),UIColor.orangeColor()]
+        let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
+        let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
+        let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
+        let color4:UIColor = UIColor(red: 248/255, green: 231/255, blue: 28/255, alpha: 1.0)
+        let color5:UIColor = UIColor.blackColor()
+        let color6:UIColor = UIColor.grayColor()
+        colorsChart = [color1, color2, color3, color4,color5, color6]
         
         var dataEntries: [ChartDataEntry] = []
         var y:Int = 0
@@ -579,14 +649,23 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let chartData = BarChartData(xVals: dataPoints, dataSets: chartDataSets)
         chartView.data = chartData
         chartData.setValueTextColor(UIColor.whiteColor())
+        chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+
         return chartView
         
     }
     
     func setPieChart(chartView:PieChartView, dataPoints: [String], values: [Double]) -> PieChartView {
         
+        let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
+        let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
+        let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
+        let color4:UIColor = UIColor(red: 248/255, green: 231/255, blue: 28/255, alpha: 1.0)
+        let color5:UIColor = UIColor.blackColor()
+        let color6:UIColor = UIColor.grayColor()
+
         var colorsChart:[UIColor] = [UIColor]()
-        colorsChart = [UIColor.redColor(),UIColor.yellowColor(),UIColor.greenColor(),UIColor.blueColor(),UIColor.orangeColor()]
+        colorsChart = [color1, color2, color3, color4,color5, color6]
         var dataEntries: [ChartDataEntry] = []
         
         for i in 0..<dataPoints.count {
@@ -602,14 +681,21 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         }
         chartView.data = pieChartData
         pieChartDataSet.colors = colors
+        pieChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+
         return chartView
     }
     
     func setLineChart(chartView:LineChartView, dataPoints: [String], values: [[Double]], setLegendNames:[String]) -> LineChartView {
         
         var colorsChart:[UIColor] = [UIColor]()
-        colorsChart = [UIColor.redColor(),UIColor.yellowColor(),UIColor.greenColor(),UIColor.blueColor(),UIColor.orangeColor()]
-        
+        let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
+        let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
+        let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
+        let color4:UIColor = UIColor(red: 248/255, green: 231/255, blue: 28/255, alpha: 1.0)
+        let color5:UIColor = UIColor.blackColor()
+        let color6:UIColor = UIColor.grayColor()
+        colorsChart = [color1, color2, color3, color4,color5, color6]
         var dataEntries: [ChartDataEntry] = []
         var y:Int = 0
         var lineChartDataSets:[LineChartDataSet] = [LineChartDataSet]()
@@ -631,35 +717,39 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         
         chartView.data = lineChartData
         lineChartData.setValueTextColor(UIColor.whiteColor())
+        lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        chartView.data?.highlightEnabled = true
+
         return chartView
     }
     
     func feedbackScreen() {
         //Display feedback screen here
+        self.isTestComplete = true
+        var i:Int = 0
+        let buttonHeight:Int = 40
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
-            self.questionMenu.alpha = 0.0
+            self.questionMenuLabel.text = "Score: \(self.scoreRatio)%"
+            self.questionMenuLabel.textColor = UIColor.greenColor()
             self.mainView.alpha = 0.0
             self.swipeUIView.alpha = 0.0
+            self.feebdackScreen.alpha = 1.0
             self.view.addSubview(self.feebdackScreen)
-            self.feebdackScreen.setConstraintsToSuperview(70, bottom: 20, left: 20, right: 20)
+            self.feebdackScreen.setConstraintsToSuperview(75, bottom: 20, left: 20, right: 20)
             self.feebdackScreen.backgroundColor = UIColor(white: 0, alpha: 0.4)
             self.feebdackScreen.layer.cornerRadius = 8.0
-            self.feebdackScreen.alpha = 1.0
-            
             }, completion: nil)
-        
-        var i:Int = 0
-        var margeHaut:Int = Int()
-        
+
         for i=0; i<self.selectedAnswers.count;i++ {
-            let answerUIButton:UIView = UIView()
+            let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UILabel = UILabel()
             answerUIButton.translatesAutoresizingMaskIntoConstraints = false
             answerUILabel.translatesAutoresizingMaskIntoConstraints = false
             answerNumber.translatesAutoresizingMaskIntoConstraints = false
             self.feebdackScreen.addSubview(answerUIButton)
+            answerUIButton.tag = i
             answerUIButton.addSubview(answerUILabel)
             answerUIButton.addSubview(answerNumber)
             answerNumber.text = String(i+1)
@@ -683,23 +773,14 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
                 answerNumber.backgroundColor = UIColor.redColor()
             }
             
-            let buttonHeight:Int = 40
-            
             //Set constraints to answerViews
-            if i==0 {
-                margeHaut = 20
-            }
-            else {
-                margeHaut = i*(buttonHeight+10) + 20
-            }
-            
-            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(margeHaut))
-            let rightMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20))
-            let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20))
-            self.feebdackScreen.addConstraints([topMargin,rightMargin,leftMargin])
-            
+            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10) + 20))
+            let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
+            self.feebdackScreen.addConstraints([topMargin,leftMargin])
+
+            let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 80)
             let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: CGFloat(buttonHeight))
-            answerUIButton.addConstraint(heightConstraint)
+            answerUIButton.addConstraints([heightConstraint,widthConstraint])
             
             let topM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
             let rightM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
@@ -719,32 +800,58 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             
         }
         
+        self.feebdackScreen.scrollEnabled = true
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 30))
+        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight)
         
     }
     
     func displayAnswerWithFeedback(gesture:UITapGestureRecognizer) {
         
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.questionMenu.alpha = 1.0
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.mainView.alpha = 1.0
             self.swipeUIView.alpha = 1.0
             self.feebdackScreen.alpha = 0.0
-            
+            self.questionMenuLabel.textColor = UIColor.blackColor()
+
             var questionFeedback:Int = Int()
             let buttonTapped:UIView? = gesture.view
             if let actualButton = buttonTapped {
-                for singleView in actualButton.subviews {
-                    for labelView1 in singleView.subviews {
-                        if let labelsView = labelView1 as? UILabel {
-                            if labelsView.text=="1" || labelsView.text=="2" || labelsView.text=="3" || labelsView.text=="4" || labelsView.text=="5" {
-                                questionFeedback = Int(labelsView.text!)!
-                            }
-                        }
-                    }
-                }
+                questionFeedback = actualButton.tag
             }
-            questionFeedback--
             self.displayQuestion(self.quizzArray, indexQuestion: questionFeedback)
+            
+            for answerSubView in self.answerView.subviews {
+                answerSubView.removeFromSuperview()
+            }
+            
+            UIView.animateWithDuration(1, animations: {
+                self.swipeMenuBottomConstraint.constant = 315
+                self.view.layoutIfNeeded()
+                self.graphView.alpha = 1.0
+                self.descriptionSwipeLabel.text = "Swipe up for Explanation"
+                self.nextButton.text = "Return to Results"
+                self.graphTitle.alpha = 1.0
+                }, completion: nil)
+            
+            let feedbackLabel:UITextView = UITextView()
+            self.answerView.addSubview(feedbackLabel)
+            
+            feedbackLabel.setConstraintsToSuperview(10, bottom: 10, left: 30, right: 30)
+            feedbackLabel.text = self.quizzArray[questionFeedback].explaination
+            feedbackLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
+            
+            if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {
+                self.timeLabel.text = "Correct Answer"
+                self.timeLabel.textColor = UIColor.greenColor()
+                feedbackLabel.textColor = UIColor.greenColor()
+            }
+            else {
+                self.timeLabel.text = "Wrong Answer"
+                self.timeLabel.textColor = UIColor.redColor()
+                feedbackLabel.textColor = UIColor.redColor()
+            }
+            
             }, completion: nil)
         
     }
