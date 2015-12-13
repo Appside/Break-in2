@@ -34,7 +34,7 @@
 "xAxis":["March","April","May","June","July"],
 "yAxis":[[2,3,5,5,6],[12,15,18,20,21],[5,9,11,12,14],[9,9,10,11,11]],
 "question":"If the number of Bernd cars sold in July had been equal to the number of Bernd cars sold in June, how many more Bernd cars would have been sold during July?",
-"answers":["1,000","1","12,000","2,000"],
+"answers":["1,000","01","12,000","2,000"],
 "correctAnswer":0,
 "explaination":"Step 1 - First, find out the number of Bernd cars sold in June. From the cumulative graph we see this is 1,000. Step 2 - Now, compare this with how many Bernd cars were actually sold in July. We see from the graph there were no sales 1,000 – 0 = 1,000. Thus the correct answer is (A) 1,000."
 },

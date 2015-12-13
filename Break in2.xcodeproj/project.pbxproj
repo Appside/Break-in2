@@ -19,7 +19,6 @@
 		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; };
 		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; };
 		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; };
-		499375401C027EAF00AA0588 /* questiondata.json in Resources */ = {isa = PBXBuildFile; fileRef = 4993753F1C027EAF00AA0588 /* questiondata.json */; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
@@ -72,7 +71,6 @@
 		499375371C02573100AA0588 /* QuizzModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzModel.swift; sourceTree = "<group>"; };
 		499375381C02573100AA0588 /* categoryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = categoryButton.swift; sourceTree = "<group>"; };
 		499375391C02573100AA0588 /* paddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingLabel.swift; sourceTree = "<group>"; };
-		4993753F1C027EAF00AA0588 /* questiondata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = questiondata.json; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
 		614316441BEF843A0047A37D /* Break in2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Break in2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316471BEF843A0047A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				499375351C02573100AA0588 /* QuizzViewController.swift */,
-				4993753F1C027EAF00AA0588 /* questiondata.json */,
 				251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */,
 				251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */,
 				499375361C02573100AA0588 /* Question.swift */,
@@ -374,7 +371,6 @@
 				6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */,
 				6143164D1BEF843A0047A37D /* Main.storyboard in Resources */,
 				251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */,
-				499375401C027EAF00AA0588 /* questiondata.json in Resources */,
 				251D4BC01C11FBEB004A6715 /* Verbal Reasoning.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

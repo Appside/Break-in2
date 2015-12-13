@@ -159,6 +159,10 @@ class EditProfileViewController: UIViewController {
     
   }
   
+    @IBAction func testClicked(sender: AnyObject) {
+         self.performSegueWithIdentifier("test", sender: nil)
+        
+    }
   func hideTestSelectionView(sender:UIButton) {
     
     if sender == self.backButton {
