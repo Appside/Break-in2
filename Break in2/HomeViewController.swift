@@ -522,7 +522,12 @@ class HomeViewController: UIViewController {
             }
             else if sender == self.logOutButton {
               UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-                self.logoImageViewBottomConstraint.constant = self.minorMargin * -1
+                if self.segueFromLoginView {
+                  self.logoImageViewBottomConstraint.constant = self.minorMargin * -1
+                }
+                else {
+                  self.logoImageViewBottomConstraint.constant = self.profilePictureImageView.frame.minY - self.minorMargin
+                }
                 self.profilePictureImageViewCenterXConstraint.constant = 0
                 self.sloganImageViewCenterXConstraint.constant = 0
                 self.view.layoutIfNeeded()
