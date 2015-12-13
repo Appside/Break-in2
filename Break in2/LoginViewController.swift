@@ -35,8 +35,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   let swipeUpLabel:UILabel = UILabel()
   var loginPageControllerView:PageControllerView = PageControllerView()
   var loginTutorialViews:[LoginTutorialView] = [LoginTutorialView]()
-  let facebookLoginButton:UIButton = UIButton()
-  let facebookLogoImageView:UIImageView = UIImageView()
+  let facebookLoginButton:FacebookButton = FacebookButton()
   
   var tutorialViewSwipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
   var tutorialViewSwipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
@@ -79,7 +78,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.loginView.addSubview(self.loginPageControllerView)
     self.loginView.addSubview(self.facebookLoginButton)
     self.loginView.addSubview(self.swipeUpLabel)
-    self.facebookLoginButton.addSubview(self.facebookLogoImageView)
     
     // Customize and add content to imageViews
     
@@ -110,13 +108,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.loginPageControllerView.pageControllerSelectedCircleThickness = 2
     self.loginPageControllerView.alpha = 0
     
-    self.facebookLoginButton.backgroundColor = UIColor.init(red: 59/255, green: 89/255, blue: 152/255, alpha: 1)
-    self.facebookLoginButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-    self.facebookLoginButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-    self.facebookLoginButton.setTitle("Login With Facebook", forState: UIControlState.Normal)
-    
-    self.facebookLogoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-    self.facebookLogoImageView.image = UIImage.init(named: "facebookButtonLight")
+    self.facebookLoginButton.facebookButtonTitle = "Login With Facebook"
+    self.facebookLoginButton.displayButton()
     
     // Create loginTutorialViews for each tutorialImage
     
@@ -451,21 +444,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.facebookLoginButton.addConstraint(facebookLoginButtonHeightConstraint)
     self.view.addConstraints([facebookLoginButtonLeftConstraint, facebookLoginButtonRightConstraint, facebookLoginButtonBottomConstraint])
-    
-    // Create and add constraints for facebookLogoImageView
-    
-    self.facebookLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let facebookLogoImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLoginButton, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
-    
-    let facebookLogoImageViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLoginButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
-    
-    let facebookLogoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight/2)
-    
-    let facebookLogoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight/2)
-    
-    self.facebookLogoImageView.addConstraints([facebookLogoImageViewHeightConstraint, facebookLogoImageViewWidthConstraint])
-    self.view.addConstraints([facebookLogoImageViewCenterYConstraint, facebookLogoImageViewLeftConstraint])
     
     // Create and add constraints for loginScrollView
     

@@ -13,8 +13,9 @@
 		251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */; };
 		251D4BC01C11FBEB004A6715 /* Verbal Reasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */; };
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
+		25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25411FF51C1E14EF000118BF /* FacebookButton.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
-		496387E61C1D9A69001EC164 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496387E51C1D9A69001EC164 /* testViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		496387E61C1D9A69001EC164 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496387E51C1D9A69001EC164 /* testViewController.swift */; };
 		4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* QuizzViewController.swift */; };
 		4993753B1C02573100AA0588 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* Question.swift */; };
 		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; };
@@ -65,6 +66,7 @@
 		251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NumericalReasoning.json; sourceTree = "<group>"; };
 		251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Verbal Reasoning.json"; sourceTree = "<group>"; };
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
+		25411FF51C1E14EF000118BF /* FacebookButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookButton.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		496387E51C1D9A69001EC164 /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				499375381C02573100AA0588 /* categoryButton.swift */,
 				499375391C02573100AA0588 /* paddingLabel.swift */,
 				2510B6E01C021C24005AE520 /* PageControllerView.swift */,
+				25411FF51C1E14EF000118BF /* FacebookButton.swift */,
 				253796AA1C0DCFB500BA00F3 /* QuestionView */,
 				253796A81C0DCF7700BA00F3 /* HomeView */,
 				253796A91C0DCF9100BA00F3 /* LoginView */,
@@ -452,6 +455,7 @@
 				61FCAED31C0518740072FDFB /* Constants.swift in Sources */,
 				4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */,
 				25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */,
+				25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
 				617FC64B1BEF92700019AE9B /* EditProfileViewController.swift in Sources */,
 				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,

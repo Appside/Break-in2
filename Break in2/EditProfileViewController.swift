@@ -15,8 +15,22 @@ import FBSDKLoginKit
 
 class EditProfileViewController: UIViewController {
   
+  // Declare and initialize types of settings
+  
+  let settings:[String] = ["Help","About","Feedback", "Upgrade"]
+  
+  // Declare and initialize views
+  
   let logoImageView:UIImageView = UIImageView()
   let backButton:UIButton = UIButton()
+  let settingsMenuView:UIView = UIView()
+  let chooseCareersView:UIView = UIView()
+  let facebookLogoutButton:FacebookButton = FacebookButton()
+  let scrollInfoLabel:UILabel = UILabel()
+  let settingsScrollView:UIScrollView = UIScrollView()
+  var settingsButtons:[CareerButton] = [CareerButton]()
+  
+  var settingsMenuViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
   // Declare and initialize design constants
   
@@ -25,6 +39,12 @@ class EditProfileViewController: UIViewController {
   
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
+  
+  let borderWidth:CGFloat = 3
+  
+  let buttonHeight:CGFloat = 50
+  var loginPageControllerViewHeight:CGFloat = 50
+
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,11 +55,17 @@ class EditProfileViewController: UIViewController {
     
     self.view.addSubview(self.logoImageView)
     self.view.addSubview(self.backButton)
+    self.view.addSubview(self.settingsMenuView)
+    self.view.addSubview(self.chooseCareersView)
+    
+    self.settingsMenuView.addSubview(self.facebookLogoutButton)
+    self.settingsMenuView.addSubview(self.scrollInfoLabel)
+    self.settingsMenuView.addSubview(self.settingsScrollView)
     
     // Adjust backButton appearance
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     
     // Customize and add content to imageViews
@@ -47,6 +73,60 @@ class EditProfileViewController: UIViewController {
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
     
+    // Customize settingMenuView
+    
+    self.settingsMenuView.backgroundColor = UIColor.whiteColor()
+    self.settingsMenuView.layer.cornerRadius = self.minorMargin
+    
+    // Customize chooseCareersView
+    
+    self.chooseCareersView.backgroundColor = UIColor.whiteColor()
+    self.chooseCareersView.layer.cornerRadius = self.minorMargin
+    self.chooseCareersView.alpha = 0
+    
+    // Customize facebookLogoutButton
+    
+    self.facebookLogoutButton.facebookButtonTitle = "Log Out"
+    self.facebookLogoutButton.displayButton()
+    self.facebookLogoutButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
+    
+    // Customize scrollInfoLabel
+    
+    self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
+    self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
+    self.scrollInfoLabel.text = "Scroll For More Settings"
+    
+    // Customize settingsScrollView
+    
+    self.settingsScrollView.showsVerticalScrollIndicator = false
+    
+    // Create settingsButtons for each setting
+    
+    for var index:Int = 0 ; index < self.settings.count ; index++ {
+      
+      let settingsButtonAtIndex:CareerButton = CareerButton()
+      
+      // Set settingsButton properties
+      
+      settingsButtonAtIndex.careerTitle = self.settings[index]
+      
+      settingsButtonAtIndex.borderWidth = self.borderWidth
+      
+      // Call method to display careerButton content and add to settingsScrollView
+      
+      self.settingsScrollView.addSubview(settingsButtonAtIndex)
+      settingsButtonAtIndex.displayButton()
+      
+      // Store each button in the careerButtons array
+      
+      self.settingsButtons.append(settingsButtonAtIndex)
+      
+      // Make each button perform a segue to the TestSelectionViewController
+      
+      settingsButtonAtIndex.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+
     // Set constraints
     
     self.setConstraints()
@@ -68,6 +148,8 @@ class EditProfileViewController: UIViewController {
     else {
       self.view.loginUser(self)
     }
+    
+    self.showSettingsMenuView()
   }
   
   @IBAction func deleteFBTapped(sender: AnyObject) {
@@ -137,18 +219,171 @@ class EditProfileViewController: UIViewController {
     self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
     self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
     
+    // Create and add constraints for settingsMenuView
+    
+    self.settingsMenuView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let settingsMenuViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.minorMargin * 7) + (self.buttonHeight * 4.5))
+    
+    let settingsMenuViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    
+    let settingsMenuViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    
+    self.settingsMenuViewBottomConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 8) + (self.buttonHeight * 4.5))
+    
+    self.settingsMenuView.addConstraint(settingsMenuViewHeightConstraint)
+    self.view.addConstraints([settingsMenuViewRightConstraint, settingsMenuViewLeftConstraint, self.settingsMenuViewBottomConstraint])
+    
+    // Create and add constraints for chooseCareersView
+    
+    self.chooseCareersView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let chooseCareersViewTopConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    
+    let chooseCareersViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    
+    let chooseCareersViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    
+    let chooseCareersViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.majorMargin * -1)
+    
+    self.view.addConstraints([chooseCareersViewTopConstraint, chooseCareersViewLeftConstraint, chooseCareersViewRightConstraint, chooseCareersViewBottomConstraint])
+    
+    // Create and add constraints for facebookLogoutButton
+    
+    self.facebookLogoutButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let facebookLogoutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight)
+    
+    let facebookLogoutButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let facebookLogoutButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let facebookLogoutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+    
+    self.facebookLogoutButton.addConstraint(facebookLogoutButtonHeightConstraint)
+    self.view.addConstraints([facebookLogoutButtonLeftConstraint, facebookLogoutButtonRightConstraint, facebookLogoutButtonBottomConstraint])
+    
+    // Create and add constraints for scrollInfoLabel
+    
+    self.scrollInfoLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    
+    let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight/2)
+    
+    self.scrollInfoLabel.addConstraint(scrollInfoLabelHeightConstraint)
+    self.view.addConstraints([scrollInfoLabelLeftConstraint, scrollInfoLabelTopConstraint, scrollInfoLabelRightConstraint])
+    
+    // Create and add constraints for settingsScrollView
+    
+    self.settingsScrollView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let settingsScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let settingsScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLogoutButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let settingsScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let settingsScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    
+    self.view.addConstraints([settingsScrollViewLeftConstraint, settingsScrollViewBottomConstraint, settingsScrollViewRightConstraint, settingsScrollViewTopConstraint])
+    
+    // Create and add constraints for each settingsButton and set content size for settingsScrollView
+    
+    for var index:Int = 0 ; index < self.settingsButtons.count ; index++ {
+      
+      self.settingsButtons[index].translatesAutoresizingMaskIntoConstraints = false
+      
+      let settingsButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      
+      let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+      
+      let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
+      
+      if index == 0 {
+        
+        let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(settingsButtonTopConstraint)
+        
+      }
+      else {
+        
+        let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsButtons[index - 1], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+        
+        self.view.addConstraint(settingsButtonTopConstraint)
+        
+      }
+      
+      self.settingsButtons[index].addConstraints([settingsButtonWidthConstraint, settingsButtonHeightConstraint])
+      self.view.addConstraint(settingsButtonLeftConstraint)
+      
+      if index == self.settingsButtons.count - 1 {
+        
+        let settingsButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(settingsButtonBottomConstraint)
+        
+      }
+      
+    }
+
   }
   
   @IBAction func testClicked(sender: AnyObject) {
     self.performSegueWithIdentifier("test", sender: nil)
     
   }
-
-  func hideTestSelectionView(sender:UIButton) {
+  
+  func showSettingsMenuView() {
     
-    if sender == self.backButton {
-      self.performSegueWithIdentifier("backFromEditProfile", sender: self.backButton)
-    }
+    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.settingsMenuViewBottomConstraint.constant = self.minorMargin
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+          
+          self.chooseCareersView.alpha = 1
+          
+          }, completion: nil)
+        
+    })
+    
+  }
+
+  func hideSettingsMenuView(sender:UIButton) {
+    
+    UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+      
+      self.chooseCareersView.alpha = 0
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+          
+          self.settingsMenuViewBottomConstraint.constant = (self.minorMargin * 8) + (self.buttonHeight * 4.5)
+          self.view.layoutIfNeeded()
+          
+          }, completion: {(Bool) in
+            
+            if sender == self.backButton {
+              self.performSegueWithIdentifier("backFromEditProfile", sender: self.backButton)
+            }
+            else if sender == self.facebookLogoutButton {
+              self.deleteFBTapped(self.facebookLogoutButton)
+            }
+            
+        })
+        
+    })
     
   }
   
