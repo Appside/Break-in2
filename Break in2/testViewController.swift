@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 
-class QuizzViewController: UIViewController, UIScrollViewDelegate {
+class testViewController: UIViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()

@@ -14,6 +14,7 @@
 		251D4BC01C11FBEB004A6715 /* Verbal Reasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */; };
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
+		496387E61C1D9A69001EC164 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496387E51C1D9A69001EC164 /* testViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* QuizzViewController.swift */; };
 		4993753B1C02573100AA0588 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* Question.swift */; };
 		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; };
@@ -66,6 +67,7 @@
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
+		496387E51C1D9A69001EC164 /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* QuizzViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzViewController.swift; sourceTree = "<group>"; };
 		499375361C02573100AA0588 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		499375371C02573100AA0588 /* QuizzModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzModel.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				251D4BBF1C11FBEB004A6715 /* Verbal Reasoning.json */,
 				499375361C02573100AA0588 /* Question.swift */,
 				499375371C02573100AA0588 /* QuizzModel.swift */,
+				496387E51C1D9A69001EC164 /* testViewController.swift */,
 			);
 			name = QuestionView;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */,
 				4993753A1C02573100AA0588 /* QuizzViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
+				496387E61C1D9A69001EC164 /* testViewController.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,
 				253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */,
 				61FCAED11C050E0C0072FDFB /* SwiftNotice.swift in Sources */,

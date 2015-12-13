@@ -96,7 +96,7 @@
                                 <connections>
                                     <action selector="deleteFBTapped:" destination="itC-MS-TAe" eventType="touchUpInside" id="Sdc-ig-rrc"/>
                                     <action selector="testClicked:" destination="itC-MS-TAe" eventType="touchUpInside" id="rjn-1O-9oS"/>
-                                    <segue destination="OuC-N4-5dz" kind="custom" identifier="test" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="2kg-qG-aDh"/>
+                                    <segue destination="fZ7-Rg-Fdw" kind="custom" identifier="test" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="EXe-3F-US6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -126,16 +126,36 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="sNB-b8-ORl"/>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="nwt-rq-Xag"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="laz-pe-1fE" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2009" y="858"/>
         </scene>
+        <!--Test View Controller-->
+        <scene sceneID="cVY-Lx-KUB">
+            <objects>
+                <viewController id="fZ7-Rg-Fdw" customClass="testViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cOk-u8-ekp"/>
+                        <viewControllerLayoutGuide type="bottom" id="1mV-qc-6ch"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aTz-Jo-b7R">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="pcd-Cg-v08"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t42-qu-IdC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2721" y="858"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="F0f-T8-cql"/>
-        <segue reference="2kg-qG-aDh"/>
+        <segue reference="pcd-Cg-v08"/>
     </inferredMetricsTieBreakers>
 </document>
