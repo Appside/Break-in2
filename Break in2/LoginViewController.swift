@@ -15,15 +15,15 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 
 class LoginViewController: UIViewController, UIScrollViewDelegate {
-    
-    //---------------------------------------------------------------
-    // GLOBAL VARIABLES
-    //---------------------------------------------------------------
+  
+  //---------------------------------------------------------------
+  // GLOBAL VARIABLES
+  //---------------------------------------------------------------
   
   // Declare and initialize types of tests and difficulties available for selected career
   
   let tutorialImageNames:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
-
+  
   // Declare and initialize views
   
   let logoImageView:UIImageView = UIImageView()
@@ -59,107 +59,107 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   let loginPageControllerViewHeight:CGFloat = 50
   var tutorialImageHeight:CGFloat = 150
   let buttonHeight:CGFloat = 50
-
-    //---------------------------------------------------------------
-    // VIEW DID LOAD
-    //---------------------------------------------------------------
+  
+  //---------------------------------------------------------------
+  // VIEW DID LOAD
+  //---------------------------------------------------------------
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.view.addHomeBG()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.addHomeBG()
-      
-      // Add logoImageView and profilePictureImageView to HomeViewController view
-      
-      self.view.addSubview(self.logoImageView)
-      self.view.addSubview(self.profilePictureImageView)
-      self.view.addSubview(self.sloganImageView)
-      
-      self.view.addSubview(self.loginView)
-      self.loginView.addSubview(self.loginScrollView)
-      self.loginView.addSubview(self.loginPageControllerView)
-      self.loginView.addSubview(self.facebookLoginButton)
-      self.loginView.addSubview(self.swipeUpLabel)
-      self.facebookLoginButton.addSubview(self.facebookLogoImageView)
-
-      // Customize and add content to imageViews
-      
-      self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-      self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
-      
-      self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
-      self.profilePictureImageView.image = UIImage.init(named: "planeLogo")
-
-      self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
-      self.sloganImageView.image = UIImage.init(named: "asSlogan")
-      
-      // Customize loginView and it's subviews
-      
-      self.loginView.layer.cornerRadius = self.minorMargin
-      self.loginView.backgroundColor = UIColor.whiteColor()
-      
-      self.swipeUpLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
-      self.swipeUpLabel.textAlignment = NSTextAlignment.Center
-      self.swipeUpLabel.textColor = UIColor.lightGrayColor()
-      self.swipeUpLabel.text = "Swipe Up For Tutorial"
-      //self.swipeUpLabel.backgroundColor = UIColor.lightGrayColor()
-      
-      self.loginPageControllerView.numberOfPages = self.tutorialImageNames.count
-      self.loginPageControllerView.minorMargin = self.minorMargin
-      self.loginPageControllerView.pageControllerCircleHeight = 10
-      self.loginPageControllerView.pageControllerSelectedCircleHeight = 18
-      self.loginPageControllerView.pageControllerSelectedCircleThickness = 2
-      self.loginPageControllerView.alpha = 0
-      
-      self.facebookLoginButton.backgroundColor = UIColor.init(red: 59/255, green: 89/255, blue: 152/255, alpha: 1)
-      self.facebookLoginButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-      self.facebookLoginButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-      self.facebookLoginButton.setTitle("Login With Facebook", forState: UIControlState.Normal)
-      
-      self.facebookLogoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-      self.facebookLogoImageView.image = UIImage.init(named: "facebookButtonLight")
-      
-      // Create loginTutorialViews for each tutorialImage
+    // Add logoImageView and profilePictureImageView to HomeViewController view
     
-      for var index = 0 ; index < self.tutorialImageNames.count ; index++ {
-        
-        let loginTutorialViewAtIndex:LoginTutorialView = LoginTutorialView()
-        
-        self.loginScrollView.addSubview(loginTutorialViewAtIndex)
-        
-        self.loginTutorialViews.append(loginTutorialViewAtIndex)
-        
-      }
+    self.view.addSubview(self.logoImageView)
+    self.view.addSubview(self.profilePictureImageView)
+    self.view.addSubview(self.sloganImageView)
+    
+    self.view.addSubview(self.loginView)
+    self.loginView.addSubview(self.loginScrollView)
+    self.loginView.addSubview(self.loginPageControllerView)
+    self.loginView.addSubview(self.facebookLoginButton)
+    self.loginView.addSubview(self.swipeUpLabel)
+    self.facebookLoginButton.addSubview(self.facebookLogoImageView)
+    
+    // Customize and add content to imageViews
+    
+    self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
+    
+    self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.profilePictureImageView.image = UIImage.init(named: "planeLogo")
+    
+    self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.sloganImageView.image = UIImage.init(named: "asSlogan")
+    
+    // Customize loginView and it's subviews
+    
+    self.loginView.layer.cornerRadius = self.minorMargin
+    self.loginView.backgroundColor = UIColor.whiteColor()
+    
+    self.swipeUpLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.swipeUpLabel.textAlignment = NSTextAlignment.Center
+    self.swipeUpLabel.textColor = UIColor.lightGrayColor()
+    self.swipeUpLabel.text = "Swipe Up For Tutorial"
+    //self.swipeUpLabel.backgroundColor = UIColor.lightGrayColor()
+    
+    self.loginPageControllerView.numberOfPages = self.tutorialImageNames.count
+    self.loginPageControllerView.minorMargin = self.minorMargin
+    self.loginPageControllerView.pageControllerCircleHeight = 10
+    self.loginPageControllerView.pageControllerSelectedCircleHeight = 18
+    self.loginPageControllerView.pageControllerSelectedCircleThickness = 2
+    self.loginPageControllerView.alpha = 0
+    
+    self.facebookLoginButton.backgroundColor = UIColor.init(red: 59/255, green: 89/255, blue: 152/255, alpha: 1)
+    self.facebookLoginButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.facebookLoginButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.facebookLoginButton.setTitle("Login With Facebook", forState: UIControlState.Normal)
+    
+    self.facebookLogoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.facebookLogoImageView.image = UIImage.init(named: "facebookButtonLight")
+    
+    // Create loginTutorialViews for each tutorialImage
+    
+    for var index = 0 ; index < self.tutorialImageNames.count ; index++ {
       
-      // Adjust testScrollView characteristics
+      let loginTutorialViewAtIndex:LoginTutorialView = LoginTutorialView()
       
-      self.loginScrollView.pagingEnabled = true
-      self.loginScrollView.showsHorizontalScrollIndicator = true
+      self.loginScrollView.addSubview(loginTutorialViewAtIndex)
       
-      self.loginScrollView.delegate = self
+      self.loginTutorialViews.append(loginTutorialViewAtIndex)
       
-      // Add target for facebookLoginButton
-      
-      self.facebookLoginButton.addTarget(self, action: "hideLoginView", forControlEvents: UIControlEvents.TouchUpInside)
-      
-      // Set constraints
-      
-      self.setConstraints()
-      
-      // Set tutorialImageHeight
-      
-      self.tutorialImageHeight = self.screenFrame.height - (self.buttonHeight + (self.minorMargin * 3) + self.loginPageControllerViewHeight + self.statusBarFrame.height)
-      
-      // Set up, customise and add gestures
-      
-      self.tutorialViewSwipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showTutorial:"))
-      self.tutorialViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
-      self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
-      
-      self.tutorialViewSwipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideTutorial:"))
-      self.tutorialViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Down
-      self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
-
     }
+    
+    // Adjust testScrollView characteristics
+    
+    self.loginScrollView.pagingEnabled = true
+    self.loginScrollView.showsHorizontalScrollIndicator = true
+    
+    self.loginScrollView.delegate = self
+    
+    // Add target for facebookLoginButton
+    
+    self.facebookLoginButton.addTarget(self, action: "hideLoginView", forControlEvents: UIControlEvents.TouchUpInside)
+    
+    // Set constraints
+    
+    self.setConstraints()
+    
+    // Set tutorialImageHeight
+    
+    self.tutorialImageHeight = self.screenFrame.height - (self.buttonHeight + (self.minorMargin * 3) + self.loginPageControllerViewHeight + self.statusBarFrame.height)
+    
+    // Set up, customise and add gestures
+    
+    self.tutorialViewSwipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showTutorial:"))
+    self.tutorialViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
+    self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
+    
+    self.tutorialViewSwipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideTutorial:"))
+    self.tutorialViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Down
+    self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
+    
+  }
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
@@ -167,189 +167,190 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     //self.profilePictureImageViewCenterYConstraint.constant = (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2
     self.view.layoutIfNeeded()
     self.showLoginView()
-
+    
   }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    //---------------------------------------------------------------
-    // TAP FACEBOOK BUTTON
-    //---------------------------------------------------------------
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+  }
+  
+  //---------------------------------------------------------------
+  // TAP FACEBOOK BUTTON
+  //---------------------------------------------------------------
+  
+  func buttonFBTapped(sender: AnyObject) {
     
-    func buttonFBTapped(sender: AnyObject) {
-        
-        //self.pleaseWait()
-        self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
-        
-        PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
-            
-            self.clearAllNotice()
-            
-            if user != nil {
-                if user![PF_USER_FACEBOOKID] == nil {
-                    //self.startFB(user!)
-                    self.getFBUserData(user!)
-                } else {
-                    self.clearAllNotice()
-                    self.userLoggedIn(user!)
-                }
-            } else {
-                if error != nil {
-                    self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-                }
-                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-            }
-        })
-        
-        //check
-            }
+    //self.pleaseWait()
+    self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
     
-    func startFB(user: PFUser){
-        
-        let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
-        
-        fbLoginManager.logInWithReadPermissions(["public_profile", "email", "user_friends"], fromViewController: self.parentViewController, handler: { (result, error) -> Void in
-            
-            if (error == nil){
-                let fbloginresult:FBSDKLoginManagerLoginResult = result
-                if(fbloginresult.grantedPermissions.contains("email")){
-                    self.getFBUserData(user)
-                    fbLoginManager.logOut()
-                }else{
-                    print(error)
-                }
-            }
-        })
-
-        
-    }
-    
-    func getFBUserData(user: PFUser){
-        if((FBSDKAccessToken.currentAccessToken()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
-                if (error == nil){
-                    let userData = result as! [String: AnyObject]!
-                    user[PF_USER_EMAILCOPY] = userData["email"]
-                    user[PF_USER_FULLNAME] = userData["name"]
-                    user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
-                    user[PF_USER_FACEBOOKID] = userData["id"]
-
-                    user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
-                        if error == nil {
-                            self.userLoggedIn(user)
-                        } else {
-                            PFUser.logOut()
-                            if let info = error?.userInfo {
-                                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-                                //ProgressHUD.showError("Login error")
-                                print(info["error"] as! String)
-                            }
-                        }
-                    })
-
-                    //print(result)
-                    //self.processFacebook(user, userData: result as! [String : AnyObject])
-                }
-            })
+    PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
+      
+      self.clearAllNotice()
+      
+      if user != nil {
+        if user![PF_USER_FACEBOOKID] == nil {
+          //self.startFB(user!)
+          self.getFBUserData(user!)
+        } else {
+          self.clearAllNotice()
+          self.userLoggedIn(user!)
         }
-        
-        
-        
-            //PFFacebookUtils.logInWithPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser!, error: NSError!) -> Void in
-            
-        
-//        func requestFacebook(user: PFUser) {
-//            let request = FBRequest.requestForMe()
-//            request.startWithCompletionHandler { (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-//                if error == nil {
-//                    let userData = result as! [String: AnyObject]!
-//                    self.processFacebook(user, userData: userData)
-//                } else {
-//                    PFUser.logOut()
-//                    ProgressHUD.showError("Failed to fetch Facebook user data")
-//                }
-//            }
-//        }
-
+      } else {
+        if error != nil {
+          self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+        }
+        self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+      }
+    })
+    
+    //check
+  }
+  
+  func startFB(user: PFUser){
+    
+    let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
+    
+    fbLoginManager.logInWithReadPermissions(["public_profile", "email", "user_friends"], fromViewController: self.parentViewController, handler: { (result, error) -> Void in
+      
+      if (error == nil){
+        let fbloginresult:FBSDKLoginManagerLoginResult = result
+        if(fbloginresult.grantedPermissions.contains("email")){
+          self.getFBUserData(user)
+          fbLoginManager.logOut()
+        }else{
+          print(error)
+        }
+      }
+    })
+    
+    
+  }
+  
+  func getFBUserData(user: PFUser){
+    if((FBSDKAccessToken.currentAccessToken()) != nil){
+      FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+        if (error == nil){
+          let userData = result as! [String: AnyObject]!
+          user[PF_USER_EMAILCOPY] = userData["email"]
+          user[PF_USER_FULLNAME] = userData["name"]
+          user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
+          user[PF_USER_FACEBOOKID] = userData["id"]
+          
+          user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+            if error == nil {
+              self.userLoggedIn(user)
+            } else {
+              PFUser.logOut()
+              if let info = error?.userInfo {
+                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+                //ProgressHUD.showError("Login error")
+                print(info["error"] as! String)
+              }
+            }
+          })
+          
+          //print(result)
+          //self.processFacebook(user, userData: result as! [String : AnyObject])
+        }
+      })
     }
     
-//    func processFacebook(user: PFUser, userData: [String: AnyObject]) {
-//        
-//        let facebookUserId = userData["id"] as! String
-//        let link = "http://graph.facebook.com/\(facebookUserId)/picture"
-//        let url = NSURL(string: link)
-//        var request = NSURLRequest(URL: url!)
-//        let params = ["height": "200", "width": "200", "type": "square"]
-//        Alamofire.request(.GET, link, parameters: params).response() {
-//            (request, response, data, error) in
-//            
-//            if error == nil {
-//                var image = UIImage(data: data! )
-//                
-//                if image!.size.width > 280 {
-//                    image = Images.resizeImage(image!, width: 280, height: 280)!
-//                }
-//                
-//                let filePicture = PFFile(name: "picture.jpg", data: UIImageJPEGRepresentation(image!, 0.6)!)
-//                
-//                filePicture!.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-//                    if error != nil {
-//                        self.noticeError("Error Saving Photo!")
-//                    }
-//                })
-//                
-//                if image!.size.width > 60 {
-//                    image = Images.resizeImage(image!, width: 60, height: 60)!
-//                }
-//                let fileThumbnail = PFFile(name: "thumbnail.jpg", data: UIImageJPEGRepresentation(image!, 0.6)!)
-//                fileThumbnail!.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-//                    if error != nil {
-//                        self.noticeError("Error Saving Photo!")
-//                    }
-//                })
-//                
-//                user[PF_USER_EMAILCOPY] = userData["email"]
-//                user[PF_USER_FULLNAME] = userData["name"]
-//                user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
-//                user[PF_USER_FACEBOOKID] = userData["id"]
-//                user[PF_USER_PICTURE] = filePicture
-//                user[PF_USER_THUMBNAIL] = fileThumbnail
-//                user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
-//                    if error == nil {
-//                        self.userLoggedIn(user)
-//                    } else {
-//                        PFUser.logOut()
-//                        if let info = error?.userInfo {
-//                            self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-//                            print(info["error"] as! String)
-//                        }
-//                    }
-//                })
-//            } else {
-//                PFUser.logOut()
-//                
-////                if let info = error?.userInfo {
-////                    self.noticeError("Failed to fetch Facebook photo")
-////                    print(info["error"] as! String)
-////                }
-//            }
-//        }
-//    }
-
     
-    func userLoggedIn(user: PFUser) {
-        //PushNotication.parsePushUserAssign()
-        //self.performSegueWithIdentifier("settingsClicked", sender: nil)
-        
-        self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
-        //self.dismissViewControllerAnimated(true, completion: nil)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC")
-        presentViewController(homeVC, animated: true, completion: nil)
-      //self.performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
-    }
+    
+    //PFFacebookUtils.logInWithPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser!, error: NSError!) -> Void in
+    
+    
+    //        func requestFacebook(user: PFUser) {
+    //            let request = FBRequest.requestForMe()
+    //            request.startWithCompletionHandler { (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+    //                if error == nil {
+    //                    let userData = result as! [String: AnyObject]!
+    //                    self.processFacebook(user, userData: userData)
+    //                } else {
+    //                    PFUser.logOut()
+    //                    ProgressHUD.showError("Failed to fetch Facebook user data")
+    //                }
+    //            }
+    //        }
+    
+  }
+  
+  //    func processFacebook(user: PFUser, userData: [String: AnyObject]) {
+  //
+  //        let facebookUserId = userData["id"] as! String
+  //        let link = "http://graph.facebook.com/\(facebookUserId)/picture"
+  //        let url = NSURL(string: link)
+  //        var request = NSURLRequest(URL: url!)
+  //        let params = ["height": "200", "width": "200", "type": "square"]
+  //        Alamofire.request(.GET, link, parameters: params).response() {
+  //            (request, response, data, error) in
+  //
+  //            if error == nil {
+  //                var image = UIImage(data: data! )
+  //
+  //                if image!.size.width > 280 {
+  //                    image = Images.resizeImage(image!, width: 280, height: 280)!
+  //                }
+  //
+  //                let filePicture = PFFile(name: "picture.jpg", data: UIImageJPEGRepresentation(image!, 0.6)!)
+  //
+  //                filePicture!.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+  //                    if error != nil {
+  //                        self.noticeError("Error Saving Photo!")
+  //                    }
+  //                })
+  //
+  //                if image!.size.width > 60 {
+  //                    image = Images.resizeImage(image!, width: 60, height: 60)!
+  //                }
+  //                let fileThumbnail = PFFile(name: "thumbnail.jpg", data: UIImageJPEGRepresentation(image!, 0.6)!)
+  //                fileThumbnail!.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+  //                    if error != nil {
+  //                        self.noticeError("Error Saving Photo!")
+  //                    }
+  //                })
+  //
+  //                user[PF_USER_EMAILCOPY] = userData["email"]
+  //                user[PF_USER_FULLNAME] = userData["name"]
+  //                user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
+  //                user[PF_USER_FACEBOOKID] = userData["id"]
+  //                user[PF_USER_PICTURE] = filePicture
+  //                user[PF_USER_THUMBNAIL] = fileThumbnail
+  //                user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+  //                    if error == nil {
+  //                        self.userLoggedIn(user)
+  //                    } else {
+  //                        PFUser.logOut()
+  //                        if let info = error?.userInfo {
+  //                            self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+  //                            print(info["error"] as! String)
+  //                        }
+  //                    }
+  //                })
+  //            } else {
+  //                PFUser.logOut()
+  //
+  ////                if let info = error?.userInfo {
+  ////                    self.noticeError("Failed to fetch Facebook photo")
+  ////                    print(info["error"] as! String)
+  ////                }
+  //            }
+  //        }
+  //    }
+  
+  
+  func userLoggedIn(user: PFUser) {
+    //PushNotication.parsePushUserAssign()
+    //self.performSegueWithIdentifier("settingsClicked", sender: nil)
+    
+    self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
+    //self.dismissViewControllerAnimated(true, completion: nil)
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
+    homeVC.segueFromLoginView = true
+    presentViewController(homeVC, animated: false, completion: nil)
+    //self.performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
+  }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
@@ -367,9 +368,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
-    let logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
     
-    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/6)
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
@@ -532,7 +533,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
-
+    
   }
   
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -572,7 +573,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   func showLoginView() {
     
-    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       self.loginViewBottomConstraint.constant = self.minorMargin
       self.view.layoutIfNeeded()
@@ -586,7 +587,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       self.loginViewBottomConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)
-      //self.profilePictureImageViewCenterYConstraint.constant = self.statusBarFrame.height + (self.minorMargin * 2) + (self.screenFrame.width/6) + self.screenFrame.width/12
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in
@@ -597,13 +597,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
   }
   
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  /*
+  // MARK: - Navigation
+  
+  // In a storyboard-based application, you will often want to do a little preparation before navigation
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  // Get the new view controller using segue.destinationViewController.
+  // Pass the selected object to the new view controller.
+  }
+  */
 }

@@ -24,6 +24,8 @@ class HomeViewController: UIViewController {
   
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
+  let sloganImageView:UIImageView = UIImageView()
+  let statsView:UIView = UIView()
   let statsButton:UIButton = UIButton()
   let settingsButton:UIButton = UIButton()
   let logOutButton:UIButton = UIButton()
@@ -33,6 +35,9 @@ class HomeViewController: UIViewController {
   let scrollInfoLabel:UILabel = UILabel()
   
   var careersBackgroundViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
   // Declare and initialize design constants
   
@@ -47,6 +52,8 @@ class HomeViewController: UIViewController {
   let buttonHeight:CGFloat = 50
   var loginPageControllerViewHeight:CGFloat = 50
   
+  var segueFromLoginView:Bool = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -60,6 +67,8 @@ class HomeViewController: UIViewController {
     
     self.view.addSubview(self.logoImageView)
     self.view.addSubview(self.profilePictureImageView)
+    self.view.addSubview(self.sloganImageView)
+    self.view.addSubview(self.statsView)
     self.view.addSubview(self.statsButton)
     self.view.addSubview(self.settingsButton)
     self.view.addSubview(self.careersBackgroundView)
@@ -114,6 +123,9 @@ class HomeViewController: UIViewController {
     self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.profilePictureImageView.image = UIImage.init(named: "planeLogo")!
     
+    self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.sloganImageView.image = UIImage.init(named: "asSlogan")
+    
     self.statsButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.statsButton.setImage(UIImage.init(named: "statistics"), forState: UIControlState.Normal)
     
@@ -130,17 +142,21 @@ class HomeViewController: UIViewController {
     self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
     self.scrollInfoLabel.text = "Scroll For More Careers"
     
-    // Customize careersBackgroundView
+    // Customize careersBackgroundView and statsView
     
     self.careersBackgroundView.backgroundColor = UIColor.whiteColor()
     self.careersBackgroundView.layer.cornerRadius = self.minorMargin
+    
+    self.statsView.backgroundColor = UIColor.whiteColor()
+    self.statsView.layer.cornerRadius = self.minorMargin
+    self.statsView.alpha = 0
     
     // Customize careersScrollView
     
     self.careersScrollView.showsVerticalScrollIndicator = false
     
     // Set constraints
-  
+    
     self.setConstraints()
     
   }
@@ -148,8 +164,8 @@ class HomeViewController: UIViewController {
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
     if segue.identifier == "careerClicked" {
-      let nextViewController:TestSelectionViewController = segue.destinationViewController as! TestSelectionViewController
-      nextViewController.testTypes = self.careersTestTypes[sender!.careerTitle]!
+      let destinationVC:TestSelectionViewController = segue.destinationViewController as! TestSelectionViewController
+      destinationVC.testTypes = self.careersTestTypes[sender!.careerTitle]!
     }
   }
   
@@ -161,29 +177,39 @@ class HomeViewController: UIViewController {
     
     let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
-    let logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    if segueFromLoginView {
+      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    }
+    else {
+      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12))
+    }
     
     let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
-    self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewBottomConstraint])
+    self.view.addConstraints([logoImageViewCenterXConstraint, self.logoImageViewBottomConstraint])
     
     // Create and add constraints for profilePictureImageView
     
     self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    if self.segueFromLoginView {
+      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    }
+    else {
+      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1)
+    }
     
     let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
-    let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + (self.minorMargin * 2) + (self.screenFrame.width/6) + self.screenFrame.width/12)
+    let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
     
     let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.profilePictureImageView.addConstraints([profilePictureImageViewWidthConstraint, profilePictureImageViewHeightConstraint])
-    self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewCenterYConstraint])
+    self.view.addConstraints([self.profilePictureImageViewCenterXConstraint, profilePictureImageViewCenterYConstraint])
     
     /* Create and add constraints for logoImageView
     
@@ -214,6 +240,40 @@ class HomeViewController: UIViewController {
     
     self.profilePictureImageView.addConstraints([profilePictureImageViewHeightConstraint, profilePictureImageViewWidthConstraint])
     self.view.addConstraints([profilePictureImageViewCenterXConstraint, profilePictureImageViewTopConstraint])*/
+    
+    // Create and add constraints for sloganImageView
+    
+    self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    if self.segueFromLoginView {
+      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    }
+    else {
+      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: self.screenFrame.width + (self.logoImageView.frame.width/2))
+    }
+    
+    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    
+    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+    
+    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    
+    self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
+    self.view.addConstraints([self.sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
+    
+    // Create and add constraints for statsView
+    
+    self.statsView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let statsViewTopConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    
+    let statsViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    
+    let statsViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    
+    let statsViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.majorMargin * -1)
+    
+    self.view.addConstraints([statsViewTopConstraint, statsViewLeftConstraint, statsViewRightConstraint, statsViewBottomConstraint])
     
     // Create and add constraints for settingsButton
     
@@ -351,73 +411,75 @@ class HomeViewController: UIViewController {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if (PFUser.currentUser() != nil) {
-            self.loadUser()
-        }
-        else {
-            self.view.loginUser(self)
-        }
+    if (PFUser.currentUser() != nil) {
+      self.loadUser()
+    }
+    else {
+      self.view.loginUser(self)
+    }
+    
+    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+      
+      if self.segueFromLoginView {
+        self.logoImageViewBottomConstraint.constant = self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12) - self.profilePictureImageView.frame.minY
+        self.profilePictureImageViewCenterXConstraint.constant = (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1
+        self.sloganImageViewCenterXConstraint.constant = self.screenFrame.width + (self.logoImageView.frame.width/2)
+        self.view.layoutIfNeeded()
+      }
       
       self.showCareersBackgroundView()
-    }
+      
+      }, completion: nil)
+  }
+  
+  func loadUser() {
     
-    func loadUser() {
-
-        let user = PFUser.currentUser()!
-        
-    }
+    let user = PFUser.currentUser()!
     
-    func logoutBtnPressed(sender: UIButton!){
-        
-        let alertView = SCLAlertView()
-//        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
-//        alertView.addButton("Cancel") {
-//            alertView.clearAllNotice()
-//        }
-//        alertView.showCloseButton = false
-//        alertView.showViewController(<#T##vc: UIViewController##UIViewController#>, sender: <#T##AnyObject?#>)
-//        alertView.showWarning("Logout", subTitle: "Are You Sure You Want To Exit?")
-        
-        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
-        alertView.showTitle(
-            "Logout", // Title of view
-            subTitle: "Are You Sure You Want To Exit?", // String of view
-            duration: 0.0, // Duration to show before closing automatically, default: 0.0
-            completeText: "Cancel", // Optional button value, default: ""
-            style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
-            colorStyle: 0x526B7B,//0xD0021B - RED
-            colorTextButton: 0xFFFFFF
-        )
-        alertView.showCloseButton = false
-        
-
-    }
+  }
+  
+  func logoutBtnPressed(sender: UIButton!){
     
-    func logOut(){
-        
-      PFUser.logOut()
-      UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-        
-        self.careersBackgroundViewBottomConstraint.constant = (self.minorMargin * 8) + (self.buttonHeight * 4.5)
-        self.view.layoutIfNeeded()
-        
-        }, completion: {(Bool) in
-          
-          self.view.loginUser(self)
-          
-      })
-        
-    }
+    let alertView = SCLAlertView()
+    //        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
+    //        alertView.addButton("Cancel") {
+    //            alertView.clearAllNotice()
+    //        }
+    //        alertView.showCloseButton = false
+    //        alertView.showViewController(<#T##vc: UIViewController##UIViewController#>, sender: <#T##AnyObject?#>)
+    //        alertView.showWarning("Logout", subTitle: "Are You Sure You Want To Exit?")
     
-    func settingsBtnPressed(sender: UIButton!){
-        
-        self.performSegueWithIdentifier("settingsClicked", sender: nil)
-        
-    }
+    alertView.addButton("Ok", target:self, selector:Selector("logOut"))
+    alertView.showTitle(
+      "Logout", // Title of view
+      subTitle: "Are You Sure You Want To Exit?", // String of view
+      duration: 0.0, // Duration to show before closing automatically, default: 0.0
+      completeText: "Cancel", // Optional button value, default: ""
+      style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+      colorStyle: 0x526B7B,//0xD0021B - RED
+      colorTextButton: 0xFFFFFF
+    )
+    alertView.showCloseButton = false
+    
+    
+  }
+  
+  func logOut(){
+    
+    PFUser.logOut()
+    self.hideCareersBackgroundView(self.logOutButton)
+    
+  }
+  
+  func settingsBtnPressed(sender: UIButton!){
+    
+    self.performSegueWithIdentifier("settingsClicked", sender: nil)
+    
+  }
   
   func showCareersBackgroundView() {
     
@@ -426,31 +488,58 @@ class HomeViewController: UIViewController {
       self.careersBackgroundViewBottomConstraint.constant = self.minorMargin
       self.view.layoutIfNeeded()
       
-      }, completion: nil)
-    
-  }
-  
-  func hideCareersBackgroundView(sender: UIButton) {
-  
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-      
-      self.careersBackgroundViewBottomConstraint.constant = (self.minorMargin * 8) + (self.buttonHeight * 4.5)
-      self.view.layoutIfNeeded()
-      
       }, completion: {(Bool) in
         
-        if sender == self.settingsButton {
-          self.performSegueWithIdentifier("settingsClicked", sender: sender)
-        }
-        else {
-          self.performSegueWithIdentifier("careerClicked", sender: sender)
-        }
-        
+        UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+          
+          self.statsView.alpha = 1
+          
+          }, completion: nil)
         
     })
     
   }
+  
+  func hideCareersBackgroundView(sender: UIButton) {
     
+    
+    UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+      
+      self.statsView.alpha = 0
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+          
+          self.careersBackgroundViewBottomConstraint.constant = (self.minorMargin * 8) + (self.buttonHeight * 4.5)
+          self.view.layoutIfNeeded()
+          
+          }, completion: {(Bool) in
+            
+            if sender == self.settingsButton {
+              self.performSegueWithIdentifier("settingsClicked", sender: sender)
+            }
+            else if sender == self.logOutButton {
+              UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.logoImageViewBottomConstraint.constant = self.minorMargin * -1
+                self.profilePictureImageViewCenterXConstraint.constant = 0
+                self.sloganImageViewCenterXConstraint.constant = 0
+                self.view.layoutIfNeeded()
+                }, completion: {(Bool) in
+                  self.view.loginUser(self)
+              })
+            }
+            else {
+              self.performSegueWithIdentifier("careerClicked", sender: sender)
+            }
+            
+        })
+        
+    })
+    
+  }
+  
   
   /*
   // MARK: - Navigation

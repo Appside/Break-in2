@@ -31,7 +31,7 @@ extension UIView {
     func loginUser(target: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let welcomeVC = storyboard.instantiateViewControllerWithIdentifier("navigationVC")
-        target.presentViewController(welcomeVC, animated: true, completion: nil)
+        target.presentViewController(welcomeVC, animated: false, completion: nil)
         
     }
     

@@ -20,6 +20,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   var backgroundImageView:UIImageView = UIImageView()
   var backgroundImageView2:UIImageView = UIImageView()
+  let logoImageView:UIImageView = UIImageView()
   let testSelectionView:UIView = UIView()
   var testPageControllerView:PageControllerView = PageControllerView()
   let testScrollView:UIScrollView = UIScrollView()
@@ -53,9 +54,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   let testTypeTitleLabelHeight:CGFloat = 30
   let testTypeTimeLabelHeight:CGFloat = 20
   let testTypeDifficultyViewHeight:CGFloat = 50
-
+  
   let buttonHeight:CGFloat = 50
-
+  
   let testTypeStatsViewHeightAfterSwipe:CGFloat = 200
   
   // Declare and initialize gestures
@@ -63,21 +64,25 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   var careerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer()
   var testSelectionViewSwipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
   var testSelectionViewSwipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view, typically from a nib.
     
-    // Set background image
+    // Set background images
+    
+    self.view.addHomeBG()
     
     self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[0]]!)
+    self.backgroundImageView.alpha = 0
     self.backgroundImageView2.alpha = 0
     
     // Add testSelectionView and backButton to the main view
     
     self.view.addSubview(self.backgroundImageView)
     self.view.addSubview(self.backgroundImageView2)
+    self.view.addSubview(self.logoImageView)
     self.view.addSubview(self.testSelectionView)
     self.view.addSubview(self.backButton)
     
@@ -108,7 +113,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       testTypeViewAtIndex.testTypeDifficultyViewHeight = self.testTypeDifficultyViewHeight
       testTypeViewAtIndex.testTypeDifficultyButtonHeight = testTypeDifficultyButtonHeight
       testTypeViewAtIndex.testTypeStatsViewHeightAfterSwipe = self.testTypeStatsViewHeightAfterSwipe
-  
+      
       testTypeViewAtIndex.clipsToBounds = true
       
       // Add each testTypeView to testScrollView
@@ -170,6 +175,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     
+    self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
+    
     // Display each testTypeView
     
     for testTypeViewAtIndex in self.testTypeViews {
@@ -196,14 +204,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     // Show Test Selection screen with animation
     
     self.showTestSelectionView()
-
+    
   }
-
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
-
+  
   func setConstraints() {
     
     // Create and add constraints for backgroundImageViews
@@ -212,6 +220,21 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.backgroundImageView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
     self.backgroundImageView2.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+    
+    // Create and add constraints for logoImageView
+    
+    self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    
+    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    
+    self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
+    self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
     
     // Create and add constraints for testSelectionView
     
@@ -268,7 +291,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       let testTypeViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
       
       let testTypeViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
-    
+      
       if index == 0 {
         
         let testTypeViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
@@ -326,7 +349,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
     self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
-
+    
   }
   
   func showTestSelectionView() {
@@ -335,6 +358,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       
       if !self.testSelectionViewVisible {
         
+        self.backgroundImageView.alpha = 1
         self.testSelectionViewBottomConstraint.constant = self.minorMargin
         self.view.layoutIfNeeded()
         
@@ -395,27 +419,27 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   }
   
   /*func scrollViewDidScroll(scrollView: UIScrollView) {
-    self.backgroundImageView.alpha = 1 - (((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width))) * 2)
+  self.backgroundImageView.alpha = 1 - (((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width))) * 2)
   }
   
   func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
-    
-    let scrollViewPosition:CGFloat = ((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)))
-    
-    if scrollViewPosition < 0.5 {
-      let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
-      self.testPageControllerView.updatePageController(pageIndex)
-      self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
-    }
-    else {
-      let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width) + 1
-      self.testPageControllerView.updatePageController(pageIndex)
-      self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
-    }
-    
-    UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-      self.backgroundImageView.alpha = 1
-      }, completion: nil)
+  
+  let scrollViewPosition:CGFloat = ((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)))
+  
+  if scrollViewPosition < 0.5 {
+  let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
+  self.testPageControllerView.updatePageController(pageIndex)
+  self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
+  }
+  else {
+  let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width) + 1
+  self.testPageControllerView.updatePageController(pageIndex)
+  self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
+  }
+  
+  UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+  self.backgroundImageView.alpha = 1
+  }, completion: nil)
   }*/
   
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -454,7 +478,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       
       
     }
-
+    
   }
   
 }
