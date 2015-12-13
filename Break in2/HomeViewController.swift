@@ -12,7 +12,7 @@ import Parse
 import ParseUI
 import SCLAlertView
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, CalendarViewDelegate {
   
   // Declare and initialize types of careers
   
@@ -150,6 +150,33 @@ class HomeViewController: UIViewController {
     self.statsView.backgroundColor = UIColor.whiteColor()
     self.statsView.layer.cornerRadius = self.minorMargin
     self.statsView.alpha = 0
+    self.statsView.clipsToBounds = true
+    
+    //calendar
+    // todays date.
+    let date = NSDate()
+    
+    // create an instance of calendar view with
+    // base date (Calendar shows 12 months range from current base date)
+    // selected date (marked dated in the calendar)
+    let calendarView = CalendarView.instance(date, selectedDate: date)
+    calendarView.delegate = self
+    calendarView.translatesAutoresizingMaskIntoConstraints = false
+    statsView.addSubview(calendarView)
+    
+    let calendarViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    
+    let calendarViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let calendarViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let calendarViewBottomConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    self.view.addConstraints([calendarViewRightConstraint, calendarViewLeftConstraint, calendarViewBottomConstraint, calendarViewHeightConstraint])
+    
+    // Constraints for calendar view - Fill the parent view.
+    //statsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[calendarView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["calendarView": calendarView]))
+    //statsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[calendarView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["calendarView": calendarView]))
     
     // Customize careersScrollView
     
@@ -158,7 +185,7 @@ class HomeViewController: UIViewController {
     // Set constraints
     
     self.setConstraints()
-    
+
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -168,6 +195,10 @@ class HomeViewController: UIViewController {
       destinationVC.testTypes = self.careersTestTypes[sender!.careerTitle]!
     }
   }
+    
+    func didSelectDate(date: NSDate) {
+        //print("(date.year)-(date.month)-(date.day)")
+    }
   
   func setConstraints() {
     
