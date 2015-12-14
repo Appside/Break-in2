@@ -11,7 +11,7 @@ import Charts
 import SCLAlertView
 import Parse
 
-class QuizzViewController: UIViewController, UIScrollViewDelegate {
+class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -29,9 +29,9 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
     let questionView:UIView = UIView()
     let graphView:UIView = UIView()
     var quizzModel:QuizzModel = QuizzModel()
-    var quizzArray:[Question] = [Question]()
+    var quizzArray:[numericalQuestion] = [numericalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 10
+    var totalNumberOfQuestions:Int = 19
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 20
@@ -208,7 +208,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         
         //Display questions
         self.displayedQuestionIndex = 0
-        self.quizzArray = self.quizzModel.selectQuestions()
+        self.quizzArray = self.quizzModel.selectNumericalReasoning(self.totalNumberOfQuestions+1)
         self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
         
         //Launch timer
@@ -296,7 +296,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             colorTextButton: 0xFFFFFF
         )
         backAlert.showCloseButton = false
-    
+        
     }
     
     func goBack(){
@@ -306,7 +306,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-    func displayQuestion(arrayOfQuestions:[Question], indexQuestion:Int) {
+    func displayQuestion(arrayOfQuestions:[numericalQuestion], indexQuestion:Int) {
         
         //Initialize labels
         self.questionMenuLabel.text = "Question \(indexQuestion+1) / \(self.totalNumberOfQuestions+1)"
@@ -405,7 +405,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
                         labelView.textColor = UIColor.whiteColor()
                     }
                     if let btnView = labels as? UIButton {
-                            self.selectedAnswers[self.displayedQuestionIndex] = Int(btnView.tag)
+                        self.selectedAnswers[self.displayedQuestionIndex] = Int(btnView.tag)
                     }
                 }
                 }, completion: nil)
@@ -425,43 +425,43 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             if self.displayedQuestionIndex + 1 > self.totalNumberOfQuestions {
                 
                 if self.resultsUploaded==false {
-                //Stop Timer
-                self.timeTimer.invalidate()
-                
-                //Upload Results to Parse
-                var i:Int = 0
-                var nbCorrectAnswers:Int = 0
-                for i=0;i<self.selectedAnswers.count;i++ {
-                    if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
-                        nbCorrectAnswers++
+                    //Stop Timer
+                    self.timeTimer.invalidate()
+                    
+                    //Upload Results to Parse
+                    var i:Int = 0
+                    var nbCorrectAnswers:Int = 0
+                    for i=0;i<self.selectedAnswers.count;i++ {
+                        if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
+                            nbCorrectAnswers++
+                        }
                     }
-                }
-                self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
-                //Add: test type (numerical / verbal ...)
-                let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
-                
-                let waitAlert:SCLAlertViewResponder = SCLAlertView().showSuccess("Test Completed", subTitle: "Saving Results...")
-                let saveError = SCLAlertView()
-                
-                let user = PFUser.currentUser()
-                let analytics = PFObject(className: PF_ANALYTICS_CLASS_NAME)
-                analytics[PF_ANALYTICS_USER] = user
-                analytics[PF_ANALYTICS_SCORE] = self.scoreRatio
-                analytics[PF_ANALYTICS_TIME] = timeTaken
-                
-                analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
-                    if error == nil {
-                        waitAlert.setTitle("Test Completed")
-                        waitAlert.setSubTitle("Continue to feedback")
-                        self.resultsUploaded = true
-                        self.feedbackScreen()
-                        
-                    } else {
-                        
-                        saveError.showError("Error", subTitle: "Try again")
-                        
-                    }
-                })
+                    self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
+                    //Add: test type (numerical / verbal ...)
+                    let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
+                    
+                    let waitAlert:SCLAlertViewResponder = SCLAlertView().showSuccess("Test Completed", subTitle: "Saving Results...")
+                    let saveError = SCLAlertView()
+                    
+                    let user = PFUser.currentUser()
+                    let analytics = PFObject(className: PF_ANALYTICS_CLASS_NAME)
+                    analytics[PF_ANALYTICS_USER] = user
+                    analytics[PF_ANALYTICS_SCORE] = self.scoreRatio
+                    analytics[PF_ANALYTICS_TIME] = timeTaken
+                    
+                    analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                        if error == nil {
+                            waitAlert.setTitle("Test Completed")
+                            waitAlert.setSubTitle("Continue to feedback")
+                            self.resultsUploaded = true
+                            self.feedbackScreen()
+                            
+                        } else {
+                            
+                            saveError.showError("Error", subTitle: "Try again")
+                            
+                        }
+                    })
                 }
                 else {
                     self.feedbackScreen()
@@ -498,8 +498,11 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             chartObject.noDataText = "Error while loading data."
             self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
             chartObject.descriptionText = ""
+            
             chartObject.xAxis.labelPosition = .Top
             chartObject.xAxis.setLabelsToSkip(0)
+            chartObject.xAxis.avoidFirstLastClippingEnabled = true
+            
             chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
             chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
@@ -576,6 +579,8 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             chartObject.descriptionText = ""
             chartObject.xAxis.labelPosition = .Top
             chartObject.xAxis.setLabelsToSkip(0)
+            chartObject.xAxis.avoidFirstLastClippingEnabled = true
+            
             chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
             chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
@@ -624,7 +629,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
         let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
         let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-        let color4:UIColor = UIColor(red: 248/255, green: 231/255, blue: 28/255, alpha: 1.0)
+        let color4:UIColor = UIColor.orangeColor()
         let color5:UIColor = UIColor.blackColor()
         let color6:UIColor = UIColor.grayColor()
         colorsChart = [color1, color2, color3, color4,color5, color6]
@@ -650,7 +655,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         chartView.data = chartData
         chartData.setValueTextColor(UIColor.whiteColor())
         chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
-
+        
         return chartView
         
     }
@@ -660,10 +665,10 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
         let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
         let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-        let color4:UIColor = UIColor(red: 248/255, green: 231/255, blue: 28/255, alpha: 1.0)
+        let color4:UIColor = UIColor.orangeColor()
         let color5:UIColor = UIColor.blackColor()
         let color6:UIColor = UIColor.grayColor()
-
+        
         var colorsChart:[UIColor] = [UIColor]()
         colorsChart = [color1, color2, color3, color4,color5, color6]
         var dataEntries: [ChartDataEntry] = []
@@ -682,7 +687,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         chartView.data = pieChartData
         pieChartDataSet.colors = colors
         pieChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
-
+        
         return chartView
     }
     
@@ -692,7 +697,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
         let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
         let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-        let color4:UIColor = UIColor(red: 248/255, green: 231/255, blue: 28/255, alpha: 1.0)
+        let color4:UIColor = UIColor.orangeColor()
         let color5:UIColor = UIColor.blackColor()
         let color6:UIColor = UIColor.grayColor()
         colorsChart = [color1, color2, color3, color4,color5, color6]
@@ -719,7 +724,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         lineChartData.setValueTextColor(UIColor.whiteColor())
         lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
         chartView.data?.highlightEnabled = true
-
+        
         return chartView
     }
     
@@ -730,7 +735,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         let buttonHeight:Int = 40
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
-            self.questionMenuLabel.text = "Score: \(self.scoreRatio)%"
+            self.questionMenuLabel.text = "Score: \(round(self.scoreRatio))%"
             self.questionMenuLabel.textColor = UIColor.greenColor()
             self.mainView.alpha = 0.0
             self.swipeUIView.alpha = 0.0
@@ -740,7 +745,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             self.feebdackScreen.backgroundColor = UIColor(white: 0, alpha: 0.4)
             self.feebdackScreen.layer.cornerRadius = 8.0
             }, completion: nil)
-
+        
         for i=0; i<self.selectedAnswers.count;i++ {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
@@ -777,7 +782,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10) + 20))
             let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
             self.feebdackScreen.addConstraints([topMargin,leftMargin])
-
+            
             let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 80)
             let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: CGFloat(buttonHeight))
             answerUIButton.addConstraints([heightConstraint,widthConstraint])
@@ -801,7 +806,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 30))
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 20))
         self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight)
         
     }
@@ -813,7 +818,7 @@ class QuizzViewController: UIViewController, UIScrollViewDelegate {
             self.swipeUIView.alpha = 1.0
             self.feebdackScreen.alpha = 0.0
             self.questionMenuLabel.textColor = UIColor.blackColor()
-
+            
             var questionFeedback:Int = Int()
             let buttonTapped:UIView? = gesture.view
             if let actualButton = buttonTapped {

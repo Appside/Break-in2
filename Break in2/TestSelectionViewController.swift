@@ -13,7 +13,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   // Declare and initialize types of tests and difficulties available for selected career
   
   var testTypes:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
-  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG"]
+    let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG"]
+    let testTypeSegues:[String:String] = ["Numerical Reasoning":"numericalReasoningSelected","Verbal Reasoning":"verbalReasoningSelected","Logical Reasoning":"LRSegue"]
   let testDifficulties:[String] = ["E", "M", "H"]
   
   // Declare and intialize views
@@ -389,7 +390,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
           self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
         }
         else if sender == self.testStartButton {
-          self.performSegueWithIdentifier("testStartButtonClicked", sender: nil)
+          self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: nil)
         }
         
     })

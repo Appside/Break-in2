@@ -11,7 +11,7 @@ import Charts
 import SCLAlertView
 import Parse
 
-class testViewController: UIViewController, UIScrollViewDelegate {
+class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -27,9 +27,10 @@ class testViewController: UIViewController, UIScrollViewDelegate {
     let descriptionSwipeLabel:UILabel = UILabel()
     let mainView:UIView = UIView()
     let questionView:UIView = UIView()
-    let graphView:UIView = UIView()
+    let passageView:UIView = UIView()
+    let passageLabel:UITextView = UITextView()
     var quizzModel:QuizzModel = QuizzModel()
-    var quizzArray:[numericalQuestion] = [numericalQuestion]()
+    var quizzArray:[verbalQuestion] = [verbalQuestion]()
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19
     let questionLabel:UITextView = UITextView()
@@ -40,7 +41,6 @@ class testViewController: UIViewController, UIScrollViewDelegate {
     let answerView:UIView = UIView()
     let nextButton:UILabel = UILabel()
     var selectedAnswers:[Int] = [Int]()
-    var graphTitle:UILabel = UILabel()
     var qViewHeight:NSLayoutConstraint = NSLayoutConstraint()
     let feebdackScreen:UIScrollView = UIScrollView()
     var scoreRatio:Float = Float()
@@ -132,24 +132,34 @@ class testViewController: UIViewController, UIScrollViewDelegate {
         self.answerView.translatesAutoresizingMaskIntoConstraints = false
         self.answerView.setConstraintsToSuperview(80, bottom: 70, left: 0, right: 0)
         
-        //Initialize mainView, questionView and GraphView
+        //Initialize mainView, questionView and passageView
         self.view.addSubview(self.mainView)
         self.mainView.setConstraintsToSuperview(75, bottom: 85, left: 20, right: 20)
         self.mainView.addSubview(self.questionView)
-        self.mainView.addSubview(self.graphView)
+        self.mainView.addSubview(self.passageView)
         self.questionView.translatesAutoresizingMaskIntoConstraints = false
-        self.graphView.translatesAutoresizingMaskIntoConstraints = false
+        self.passageView.translatesAutoresizingMaskIntoConstraints = false
         
         let questionViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
         let questionViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
         let questionViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
         self.mainView.addConstraints([questionViewTop,questionViewRight,questionViewLeft])
-        self.qViewHeight = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 75)
+        self.qViewHeight = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 90)
         self.mainView.addConstraint(qViewHeight)
+        
+        //Design of passageView
+        self.passageView.addSubview(self.passageLabel)
+        self.passageLabel.setConstraintsToSuperview(40, bottom: 40, left: 40, right: 40)
+        self.passageLabel.textColor = UIColor.blackColor()
+        self.passageLabel.font = UIFont(name: "HelveticaNeue", size: 16.0)
+        self.passageView.backgroundColor = UIColor(patternImage: UIImage(named: "bgPattern")!)
+        self.passageLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
+        self.passageView.layer.cornerRadius = 10.0
+        self.passageLabel.textAlignment = NSTextAlignment.Justified
         
         //update questionView
         self.questionView.addSubview(self.questionLabel)
-        self.questionLabel.setConstraintsToSuperview(Int(round(self.questionView.frame.height-self.questionLabel.frame.height)/2), bottom: 0, left: 0, right: 0)
+        self.questionLabel.setConstraintsToSuperview(10, bottom: 0, left: 0, right: 0)
         self.questionLabel.textColor = UIColor.whiteColor()
         self.questionLabel.font = UIFont(name: "HelveticaNeue",size: 18.0)
         self.questionLabel.textAlignment = NSTextAlignment.Center
@@ -157,25 +167,12 @@ class testViewController: UIViewController, UIScrollViewDelegate {
         self.questionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
         self.questionView.layer.cornerRadius = 8.0
         
-        self.mainView.addSubview(self.graphTitle)
-        self.graphTitle.translatesAutoresizingMaskIntoConstraints = false
-        self.graphTitle.numberOfLines = 0
-        let graphTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 90)
-        let graphTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let graphTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
-        self.mainView.addConstraints([graphTitleTop,graphTitleRight,graphTitleLeft])
-        let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35)
-        self.graphTitle.addConstraint(graphTitleHeight)
-        self.graphTitle.textAlignment = NSTextAlignment.Left
-        self.graphTitle.font = UIFont(name: "HelveticaNeue-Italic", size: 14.0)
-        self.graphTitle.textColor = UIColor.whiteColor()
-        
         //Update top constraint
-        let graphViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 140)
-        let graphViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let graphViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let graphViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        self.mainView.addConstraints([graphViewTop,graphViewRight,graphViewLeft,graphViewBottom])
+        let passageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 110)
+        let passageViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let passageViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let passageViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        self.mainView.addConstraints([passageViewTop,passageViewRight,passageViewLeft,passageViewBottom])
         
         //Create nextButton
         let nextUIView:UIView = UIView()
@@ -208,7 +205,7 @@ class testViewController: UIViewController, UIScrollViewDelegate {
         
         //Display questions
         self.displayedQuestionIndex = 0
-        self.quizzArray = self.quizzModel.selectNumericalReasoning(self.totalNumberOfQuestions+1)
+        self.quizzArray = self.quizzModel.selectVerbalReasoning(self.totalNumberOfQuestions+1)
         self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
         
         //Launch timer
@@ -240,9 +237,8 @@ class testViewController: UIViewController, UIScrollViewDelegate {
         UIView.animateWithDuration(1, animations: {
             self.swipeMenuBottomConstraint.constant = -20
             self.view.layoutIfNeeded()
-            self.graphView.alpha = 0.0
+            self.passageView.alpha = 0.0
             self.descriptionSwipeLabel.text = "Swipe down for Question"
-            self.graphTitle.alpha = 0.0
             }, completion: nil)
     }
     
@@ -251,9 +247,8 @@ class testViewController: UIViewController, UIScrollViewDelegate {
         UIView.animateWithDuration(1, animations: {
             self.swipeMenuBottomConstraint.constant = 315
             self.view.layoutIfNeeded()
-            self.graphView.alpha = 1.0
+            self.passageView.alpha = 1.0
             self.descriptionSwipeLabel.text = "Swipe up for Answers"
-            self.graphTitle.alpha = 1.0
             }, completion: nil)
     }
     
@@ -306,10 +301,11 @@ class testViewController: UIViewController, UIScrollViewDelegate {
     }
     
     
-    func displayQuestion(arrayOfQuestions:[numericalQuestion], indexQuestion:Int) {
+    func displayQuestion(arrayOfQuestions:[verbalQuestion], indexQuestion:Int) {
         
         //Initialize labels
         self.questionMenuLabel.text = "Question \(indexQuestion+1) / \(self.totalNumberOfQuestions+1)"
+        self.passageLabel.text = self.quizzArray[indexQuestion].passage
         
         //Update the view with the new question
         let questionText:String = arrayOfQuestions[indexQuestion].question
@@ -372,18 +368,6 @@ class testViewController: UIViewController, UIScrollViewDelegate {
             
             let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
             answerUIButton.addGestureRecognizer(tapGesture)
-            
-            //Update graph
-            for existingView in self.graphView.subviews {
-                existingView.removeFromSuperview()
-            }
-            let newChartObject = self.createChartObject(self.displayedQuestionIndex)
-            newChartObject.translatesAutoresizingMaskIntoConstraints = false
-            let newChartObjectLeftMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-            let newChartObjectRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-            let newChartObjectTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-            let newChartObjectBottomMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-            self.graphView.addConstraints([newChartObjectLeftMargin,newChartObjectRightMargin,newChartObjectTopMargin,newChartObjectBottomMargin])
         }
     }
     
@@ -472,9 +456,8 @@ class testViewController: UIViewController, UIScrollViewDelegate {
                 UIView.animateWithDuration(1, animations: {
                     self.swipeMenuBottomConstraint.constant = 315
                     self.view.layoutIfNeeded()
-                    self.graphView.alpha = 1.0
+                    self.passageView.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Swipe up for Answers"
-                    self.graphTitle.alpha = 1.0
                     }, completion: nil)
                 self.displayedQuestionIndex++
                 if self.displayedQuestionIndex==self.totalNumberOfQuestions{
@@ -484,248 +467,6 @@ class testViewController: UIViewController, UIScrollViewDelegate {
                 self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             }
         }
-    }
-    
-    func createChartObject(questionIndex:Int) -> UIView {
-        
-        //Select and display chartType
-        let chartType:String = self.quizzArray[questionIndex].chartType
-        
-        if (chartType=="bar") {
-            let chartObject:BarChartView = BarChartView()
-            
-            //Define chart settings
-            chartObject.noDataText = "Error while loading data."
-            self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
-            chartObject.descriptionText = ""
-            
-            chartObject.xAxis.labelPosition = .Top
-            chartObject.xAxis.setLabelsToSkip(0)
-            chartObject.xAxis.avoidFirstLastClippingEnabled = true
-            
-            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
-            chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
-            chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
-            chartObject.xAxis.labelTextColor = UIColor.whiteColor()
-            chartObject.leftAxis.labelTextColor = UIColor.whiteColor()
-            chartObject.rightAxis.labelTextColor = UIColor.whiteColor()
-            
-            //Add chart bars
-            var xValues:[String]!
-            xValues = self.quizzArray[questionIndex].barSegmentNames
-            let yUnits = self.quizzArray[questionIndex].yAxis
-            let legendString:[String] = self.quizzArray[questionIndex].xAxis
-            self.setBarChart(chartObject, dataPoints: xValues, values: yUnits, setLegendNames: legendString)
-            
-            //Return chart UIView
-            chartObject.legend.textColor = UIColor.whiteColor()
-            chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
-            chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
-            chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
-            chartObject.legend.wordWrapEnabled = true
-            self.graphView.addSubview(chartObject)
-            
-            chartObject.userInteractionEnabled = true
-            chartObject.pinchZoomEnabled = true
-            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
-            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
-            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
-            chartObject.leftAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
-            chartObject.rightAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
-            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: 13.0)!
-            chartObject.doubleTapToZoomEnabled = false
-            chartObject.pinchZoomEnabled = true
-            
-            return chartObject
-        }
-            
-        else if (chartType=="pie") {
-            let chartObject:PieChartView = PieChartView()
-            
-            //Define chart settings
-            chartObject.noDataText = "Error while loading data."
-            self.graphTitle.text = self.quizzArray[questionIndex].chartTitle
-            chartObject.descriptionText = ""
-            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
-            chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
-            
-            //Add Pie Chart
-            var xValues:[String]!
-            xValues = self.quizzArray[questionIndex].pieSegmentNames
-            let yUnits = self.quizzArray[questionIndex].pieSegmentPercentages
-            self.setPieChart(chartObject, dataPoints: xValues, values: yUnits)
-            
-            //Return chart UIView
-            chartObject.legend.textColor = UIColor.whiteColor()
-            chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
-            chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
-            chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
-            chartObject.legend.wordWrapEnabled = true
-            self.graphView.addSubview(chartObject)
-            
-            chartObject.userInteractionEnabled = true
-            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
-            chartObject.legend.enabled = false
-            
-            return chartObject
-        }
-            
-        else if (chartType=="line") {
-            let chartObject:LineChartView = LineChartView()
-            
-            //Define chart settings
-            chartObject.noDataText = "Error while loading data."
-            self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
-            chartObject.descriptionText = ""
-            chartObject.xAxis.labelPosition = .Top
-            chartObject.xAxis.setLabelsToSkip(0)
-            chartObject.xAxis.avoidFirstLastClippingEnabled = true
-            
-            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
-            chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
-            chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
-            chartObject.xAxis.labelTextColor = UIColor.whiteColor()
-            chartObject.leftAxis.labelTextColor = UIColor.whiteColor()
-            chartObject.rightAxis.labelTextColor = UIColor.whiteColor()
-            
-            //Add chart lines
-            var xValues:[String]!
-            xValues = self.quizzArray[questionIndex].xAxis
-            let yUnits = self.quizzArray[questionIndex].yAxis
-            let legendString:[String] = self.quizzArray[questionIndex].lineNames
-            self.setLineChart(chartObject, dataPoints: xValues, values: yUnits, setLegendNames: legendString)
-            
-            //Return chart UIView
-            chartObject.legend.textColor = UIColor.whiteColor()
-            chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
-            chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
-            chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
-            chartObject.legend.wordWrapEnabled = true
-            self.graphView.addSubview(chartObject)
-            
-            chartObject.userInteractionEnabled = true
-            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
-            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
-            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
-            chartObject.leftAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
-            chartObject.rightAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
-            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: 13.0)!
-            chartObject.doubleTapToZoomEnabled = false
-            chartObject.pinchZoomEnabled = true
-            
-            return chartObject
-        }
-            
-        else {
-            return UIView()
-        }
-        
-    }
-    
-    func setBarChart(chartView:BarChartView, dataPoints: [String], values: [[Double]], setLegendNames:[String]) -> BarChartView {
-        chartView.noDataText = "Error while loading data."
-        
-        var colorsChart:[UIColor] = [UIColor]()
-        let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
-        let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
-        let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-        let color4:UIColor = UIColor.orangeColor()
-        let color5:UIColor = UIColor.blackColor()
-        let color6:UIColor = UIColor.grayColor()
-        colorsChart = [color1, color2, color3, color4,color5, color6]
-        
-        var dataEntries: [ChartDataEntry] = []
-        var y:Int = 0
-        var chartDataSets:[BarChartDataSet] = [BarChartDataSet]()
-        
-        for y=0;y<values.count;y++ {
-            for i in 0..<dataPoints.count {
-                let dataEntry = BarChartDataEntry(value: values[y][i], xIndex: i)
-                dataEntries.append(dataEntry)
-            }
-            let chartDataSet = BarChartDataSet(yVals: dataEntries, label: setLegendNames[y])
-            //let ll = ChartLimitLine(limit: 10.0, label: "Target")
-            //chartView.rightAxis.addLimitLine(ll)
-            chartDataSet.setColor(colorsChart[y])
-            chartDataSets.append(chartDataSet)
-            dataEntries.removeAll()
-        }
-        
-        let chartData = BarChartData(xVals: dataPoints, dataSets: chartDataSets)
-        chartView.data = chartData
-        chartData.setValueTextColor(UIColor.whiteColor())
-        chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
-        
-        return chartView
-        
-    }
-    
-    func setPieChart(chartView:PieChartView, dataPoints: [String], values: [Double]) -> PieChartView {
-        
-        let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
-        let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
-        let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-        let color4:UIColor = UIColor.orangeColor()
-        let color5:UIColor = UIColor.blackColor()
-        let color6:UIColor = UIColor.grayColor()
-        
-        var colorsChart:[UIColor] = [UIColor]()
-        colorsChart = [color1, color2, color3, color4,color5, color6]
-        var dataEntries: [ChartDataEntry] = []
-        
-        for i in 0..<dataPoints.count {
-            let dataEntry = ChartDataEntry(value: values[i], xIndex: i)
-            dataEntries.append(dataEntry)
-        }
-        
-        let pieChartDataSet = PieChartDataSet(yVals: dataEntries, label: "")
-        let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
-        var colors: [UIColor] = []
-        for y in 0..<dataPoints.count {
-            colors.append(colorsChart[y])
-        }
-        chartView.data = pieChartData
-        pieChartDataSet.colors = colors
-        pieChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
-        
-        return chartView
-    }
-    
-    func setLineChart(chartView:LineChartView, dataPoints: [String], values: [[Double]], setLegendNames:[String]) -> LineChartView {
-        
-        var colorsChart:[UIColor] = [UIColor]()
-        let color1:UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
-        let color2:UIColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
-        let color3:UIColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-        let color4:UIColor = UIColor.orangeColor()
-        let color5:UIColor = UIColor.blackColor()
-        let color6:UIColor = UIColor.grayColor()
-        colorsChart = [color1, color2, color3, color4,color5, color6]
-        var dataEntries: [ChartDataEntry] = []
-        var y:Int = 0
-        var lineChartDataSets:[LineChartDataSet] = [LineChartDataSet]()
-        
-        for y=0;y<values.count;y++ {
-            for i in 0..<dataPoints.count {
-                let dataEntry = ChartDataEntry(value: values[y][i], xIndex: i)
-                dataEntries.append(dataEntry)
-            }
-            let lineChartDataSet = LineChartDataSet(yVals: dataEntries, label: setLegendNames[y])
-            lineChartDataSet.setColor(colorsChart[y])
-            lineChartDataSet.setCircleColor(colorsChart[y])
-            lineChartDataSet.fillColor = colorsChart[y]
-            lineChartDataSets.append(lineChartDataSet)
-            dataEntries.removeAll()
-        }
-        
-        let lineChartData = LineChartData(xVals: dataPoints, dataSets: lineChartDataSets)
-        
-        chartView.data = lineChartData
-        lineChartData.setValueTextColor(UIColor.whiteColor())
-        lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
-        chartView.data?.highlightEnabled = true
-        
-        return chartView
     }
     
     func feedbackScreen() {
@@ -833,17 +574,16 @@ class testViewController: UIViewController, UIScrollViewDelegate {
             UIView.animateWithDuration(1, animations: {
                 self.swipeMenuBottomConstraint.constant = 315
                 self.view.layoutIfNeeded()
-                self.graphView.alpha = 1.0
+                self.passageView.alpha = 1.0
                 self.descriptionSwipeLabel.text = "Swipe up for Explanation"
                 self.nextButton.text = "Return to Results"
-                self.graphTitle.alpha = 1.0
                 }, completion: nil)
             
             let feedbackLabel:UITextView = UITextView()
             self.answerView.addSubview(feedbackLabel)
             
             feedbackLabel.setConstraintsToSuperview(10, bottom: 10, left: 30, right: 30)
-            feedbackLabel.text = self.quizzArray[questionFeedback].explaination
+            feedbackLabel.text = self.quizzArray[questionFeedback].explanation
             feedbackLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
             
             if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {

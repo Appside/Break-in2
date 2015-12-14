@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -63,8 +63,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="OuC-N4-5dz" kind="show" identifier="testStartButtonClicked" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" animates="NO" id="48X-2h-9s8"/>
+                        <segue destination="OuC-N4-5dz" kind="show" identifier="numericalReasoningSelected" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" animates="NO" id="48X-2h-9s8"/>
                         <segue destination="so5-KN-hxF" kind="custom" identifier="backFromTestSelection" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" animates="NO" id="Z2O-uS-5Gc"/>
+                        <segue destination="U0P-jd-SU2" kind="show" identifier="verbalReasoningSelected" id="4P1-LV-IGa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -117,7 +118,7 @@
         <!--Quizz View Controller-->
         <scene sceneID="BOr-eT-2Sx">
             <objects>
-                <viewController id="OuC-N4-5dz" userLabel="Quizz View Controller" customClass="QuizzViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="OuC-N4-5dz" userLabel="Quizz View Controller" customClass="numericalReasoningViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hei-fa-PKN"/>
                         <viewControllerLayoutGuide type="bottom" id="VIU-vf-MK7"/>
@@ -134,6 +135,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="laz-pe-1fE" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2009" y="858"/>
+        </scene>
+        <!--Verbal Reasoning View Controller-->
+        <scene sceneID="h2Z-JF-afq">
+            <objects>
+                <viewController id="U0P-jd-SU2" customClass="verbalReasoningViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yno-pJ-phU"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dbn-35-fbQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SWM-au-hz4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="Hgi-Jt-BhX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KV3-vl-ijd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2009" y="1567"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="cVY-Lx-KUB">
@@ -158,6 +180,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="nwt-rq-Xag"/>
+        <segue reference="Z2O-uS-5Gc"/>
     </inferredMetricsTieBreakers>
 </document>

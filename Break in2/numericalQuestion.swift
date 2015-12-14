@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Question {
+class numericalQuestion {
     
     var questionType:String = String()
     var chartType:String = String()
@@ -25,5 +25,5 @@ class Question {
     var chartTitle:String = String()
     var pieSegmentNames:[String] = [String]()
     var pieSegmentPercentages:[Double] = [Double]()
-
+    
 }
