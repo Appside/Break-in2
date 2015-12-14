@@ -45,6 +45,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   var loginViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
+  var loginTutorialViewVisible:Bool = false
+  
   // Declare and initialize design constants
   
   let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -124,6 +126,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.loginScrollView.pagingEnabled = true
     self.loginScrollView.showsHorizontalScrollIndicator = true
+    self.loginScrollView.backgroundColor = UIColor.lightGrayColor()
     
     self.loginScrollView.delegate = self
     
@@ -145,9 +148,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.tutorialViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
     self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
     
-    self.tutorialViewSwipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideTutorial:"))
-    self.tutorialViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Down
-    self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
+    self.tutorialViewSwipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideTutorial:"))
+    self.tutorialViewSwipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
+    self.loginView.addGestureRecognizer(self.tutorialViewSwipeDownGesture)
     
   }
   
@@ -416,11 +419,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.swipeUpLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let swipeUpLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let swipeUpLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
     
-    let swipeUpLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let swipeUpLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
-    let swipeUpLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let swipeUpLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
     let swipeUpLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.loginPageControllerViewHeight)
     
@@ -530,20 +533,24 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       self.loginPageControllerView.alpha = 1
       
       }, completion: nil)
+    
+    self.loginTutorialViewVisible = true
   }
   
   func hideTutorial(sender: UISwipeGestureRecognizer) {
     
     UIView.animateWithDuration(1, animations: {
       
-      self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 2)
       self.loginScrollViewBottomConstraint.constant = 0
+      self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 2)
       self.view.layoutIfNeeded()
       
       self.swipeUpLabel.alpha = 1
       self.loginPageControllerView.alpha = 0
       
       }, completion: nil)
+    
+    self.loginTutorialViewVisible = false
   }
   
   func showLoginView() {
@@ -558,17 +565,36 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   }
   
   func hideLoginView() {
-    
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
-      self.loginViewBottomConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)
-      self.view.layoutIfNeeded()
+      UIView.animateWithDuration(1, animations: {
+        
+        if self.loginTutorialViewVisible {
+          
+          self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 2)
+          self.loginScrollViewBottomConstraint.constant = 0
+          self.view.layoutIfNeeded()
+          
+          self.swipeUpLabel.alpha = 1
+          self.loginPageControllerView.alpha = 0
+          
+          self.loginTutorialViewVisible = false
+          
+        }
+        
+        }, completion: {(Bool) in
       
-      }, completion: {(Bool) in
-        
-        self.buttonFBTapped(self.facebookLoginButton)
-        
-    })
+          UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            
+            self.loginViewBottomConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)
+            self.view.layoutIfNeeded()
+            
+            }, completion: {(Bool) in
+              
+              self.buttonFBTapped(self.facebookLoginButton)
+              
+          })
+      
+      })
     
   }
   

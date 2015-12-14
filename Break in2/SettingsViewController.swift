@@ -13,13 +13,13 @@ import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UIScrollViewDelegate {
   
   // Declare and initialize types of settings
   
   let settings:[String] = ["Upgrade", "Help","About","Feedback"]
-  var careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Sangeet"]
-  var careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Sangeet":"briefcase"]
+  var careerTypes:[String] = [String]()
+  var careerTypeImages:[String:String] = [String:String]()
   
   // Declare and initialize views
   
@@ -50,7 +50,12 @@ class SettingsViewController: UIViewController {
   
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
-  var chooseCareersPageControllerViewHeight:CGFloat = 40
+  var chooseCareersPageControllerViewHeight:CGFloat = 50
+  
+  // Declare and initialize tracking variables
+  
+  var currentChooseCareersScrollViewPage:Int = 0
+
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -111,7 +116,7 @@ class SettingsViewController: UIViewController {
     self.chooseCareersInfoLabel.textAlignment = NSTextAlignment.Center
     self.chooseCareersInfoLabel.textColor = UIColor.lightGrayColor()
     self.chooseCareersInfoLabel.numberOfLines = 0
-    self.chooseCareersInfoLabel.text = "Select Careers You Are Interested In"
+    self.chooseCareersInfoLabel.text = "Select The Careers You Are Interested In"
     
     // Customize settingsScrollView and chooseCareersScrollView
     
@@ -119,11 +124,12 @@ class SettingsViewController: UIViewController {
     
     self.chooseCareersScrollView.pagingEnabled = true
     self.chooseCareersScrollView.showsHorizontalScrollIndicator = true
+    self.chooseCareersScrollView.delegate = self
     
     // Customize chooseCareersPageControllerView
     
     self.chooseCareersPageControllerView.minorMargin = self.minorMargin
-    self.chooseCareersPageControllerView.numberOfPages = 2
+    self.chooseCareersPageControllerView.numberOfPages = self.careerTypes.count
     
     // Create settingsButtons for each setting
     
@@ -407,13 +413,13 @@ class SettingsViewController: UIViewController {
     
     self.chooseCareersInfoLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let chooseCareersInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let chooseCareersInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
     
     let chooseCareersInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
     let chooseCareersInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let chooseCareersInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.chooseCareersPageControllerViewHeight)
+    let chooseCareersInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.chooseCareersPageControllerViewHeight - self.minorMargin)
     
     self.chooseCareersInfoLabel.addConstraint(chooseCareersInfoLabelHeightConstraint)
     self.view.addConstraints([chooseCareersInfoLabelTopConstraint, chooseCareersInfoLabelLeftConstraint, chooseCareersInfoLabelRightConstraint])
@@ -527,6 +533,13 @@ class SettingsViewController: UIViewController {
         
     })
     
+  }
+  
+  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    
+    self.currentChooseCareersScrollViewPage = Int(self.chooseCareersScrollView.contentOffset.x / self.chooseCareersScrollView.frame.size.width)
+    self.chooseCareersPageControllerView.updatePageController(self.currentChooseCareersScrollViewPage)
+
   }
   
 }

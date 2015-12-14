@@ -17,7 +17,7 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
   // Declare and initialize types of careers
   
   let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Sangeet"]
-  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Sangeet":"briefcase"]
+  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Sangeet":"laptop"]
   let careersTestTypes:[String:[String]] = ["Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Sangeet":["Verbal Reasoning","Logical Reasoning"]]
   
   // Declare and initialize views
@@ -197,11 +197,11 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
       let destinationVC:TestSelectionViewController = segue.destinationViewController as! TestSelectionViewController
       destinationVC.testTypes = self.careersTestTypes[sender!.careerTitle]!
     }
-    /*if segue.identifier == "settingsClicked" {
+    if segue.identifier == "settingsClicked" {
       let destinationVC:SettingsViewController = segue.destinationViewController as! SettingsViewController
       destinationVC.careerTypes = self.careerTypes
       destinationVC.careerTypeImages = self.careerTypeImages
-    }*/
+    }
   }
   
     func didSelectDate(date: NSDate) {
