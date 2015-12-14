@@ -103,9 +103,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.loginPageControllerView.numberOfPages = self.tutorialImageNames.count
     self.loginPageControllerView.minorMargin = self.minorMargin
-    self.loginPageControllerView.pageControllerCircleHeight = 10
-    self.loginPageControllerView.pageControllerSelectedCircleHeight = 18
-    self.loginPageControllerView.pageControllerSelectedCircleThickness = 2
     self.loginPageControllerView.alpha = 0
     
     self.facebookLoginButton.facebookButtonTitle = "Login With Facebook"

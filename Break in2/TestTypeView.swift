@@ -12,9 +12,8 @@ class TestTypeView: UIView {
   
   // Declare and initialize types of tests array and index in super.testTypeViews
   
-  var testTypes:[String] = [String]()
+  var testType:String = String()
   var testDifficulties:[String] = [String]()
-  var testTypeViewsIndex:Int = Int()
   
   // Declare and initialize subviews
   
@@ -71,7 +70,7 @@ class TestTypeView: UIView {
   
   func displayView() {
     
-    self.testTypeTitleLabel.text = self.testTypes[testTypeViewsIndex]
+    self.testTypeTitleLabel.text = self.testType
     
     self.testTypeTimeLabel.text = "30 minutes"
     

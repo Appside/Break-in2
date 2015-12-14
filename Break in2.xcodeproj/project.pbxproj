@@ -10,6 +10,7 @@
 		2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E01C021C24005AE520 /* PageControllerView.swift */; };
 		2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */; };
 		2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E21C021C24005AE520 /* TestTypeView.swift */; };
+		2514F16D1C1F13B1003E8001 /* ChooseCareerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2514F16C1C1F13B1003E8001 /* ChooseCareerView.swift */; };
 		251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */; };
 		251D4BC01C11FBEB004A6715 /* VerbalReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */; };
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
@@ -21,8 +22,8 @@
 		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; };
 		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; };
 		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; };
-		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */; settings = {ASSET_TAGS = (); }; };
+		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
+		49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
 		61133EF91C1E3D7100B2F0A2 /* CalendarLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61133EEE1C1E3D7100B2F0A2 /* CalendarLogic.swift */; };
 		61133EFA1C1E3D7100B2F0A2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61133EEF1C1E3D7100B2F0A2 /* CalendarView.swift */; };
@@ -45,7 +46,7 @@
 		617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC6441BEF92310019AE9B /* RegisterViewController.swift */; };
 		617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC6461BEF92450019AE9B /* ForgotPasswordViewController.swift */; };
 		617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC6481BEF92590019AE9B /* HomeViewController.swift */; };
-		617FC64B1BEF92700019AE9B /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64A1BEF92700019AE9B /* EditProfileViewController.swift */; };
+		617FC64B1BEF92700019AE9B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64A1BEF92700019AE9B /* SettingsViewController.swift */; };
 		617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64C1BF89D560019AE9B /* Extensions.swift */; };
 		61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB11D71BF902600081123B /* segueFromLeft.swift */; };
 		61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB11D91BF904360081123B /* segueFromRight.swift */; };
@@ -76,6 +77,7 @@
 		2510B6E01C021C24005AE520 /* PageControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControllerView.swift; sourceTree = "<group>"; };
 		2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSelectionViewController.swift; sourceTree = "<group>"; };
 		2510B6E21C021C24005AE520 /* TestTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTypeView.swift; sourceTree = "<group>"; };
+		2514F16C1C1F13B1003E8001 /* ChooseCareerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCareerView.swift; sourceTree = "<group>"; };
 		251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NumericalReasoning.json; sourceTree = "<group>"; };
 		251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VerbalReasoning.json; sourceTree = "<group>"; };
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
@@ -118,7 +120,7 @@
 		617FC6441BEF92310019AE9B /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		617FC6461BEF92450019AE9B /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		617FC6481BEF92590019AE9B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		617FC64A1BEF92700019AE9B /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		617FC64A1BEF92700019AE9B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		617FC64C1BF89D560019AE9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Break in2/Extensions.swift"; sourceTree = "<group>"; };
 		61DB11D71BF902600081123B /* segueFromLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromLeft.swift; sourceTree = "<group>"; };
 		61DB11D91BF904360081123B /* segueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromRight.swift; sourceTree = "<group>"; };
@@ -176,7 +178,6 @@
 		253796A91C0DCF9100BA00F3 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
-				617FC64A1BEF92700019AE9B /* EditProfileViewController.swift */,
 				617FC6421BEF92220019AE9B /* LoginViewController.swift */,
 				617FC6441BEF92310019AE9B /* RegisterViewController.swift */,
 				617FC6461BEF92450019AE9B /* ForgotPasswordViewController.swift */,
@@ -198,6 +199,15 @@
 				496387E51C1D9A69001EC164 /* testViewController.swift */,
 			);
 			name = QuestionView;
+			sourceTree = "<group>";
+		};
+		255264B11C1F0DA800E64D33 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				617FC64A1BEF92700019AE9B /* SettingsViewController.swift */,
+				2514F16C1C1F13B1003E8001 /* ChooseCareerView.swift */,
+			);
+			name = SettingsView;
 			sourceTree = "<group>";
 		};
 		46D9EDE37B2D4C09F0B5F901 /* Pods */ = {
@@ -259,6 +269,7 @@
 				499375391C02573100AA0588 /* paddingLabel.swift */,
 				2510B6E01C021C24005AE520 /* PageControllerView.swift */,
 				25411FF51C1E14EF000118BF /* FacebookButton.swift */,
+				255264B11C1F0DA800E64D33 /* SettingsView */,
 				253796AA1C0DCFB500BA00F3 /* QuestionView */,
 				253796A81C0DCF7700BA00F3 /* HomeView */,
 				253796A91C0DCF9100BA00F3 /* LoginView */,
@@ -510,7 +521,7 @@
 				25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */,
 				61133EFF1C1E3D7100B2F0A2 /* MonthCollectionCell.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
-				617FC64B1BEF92700019AE9B /* EditProfileViewController.swift in Sources */,
+				617FC64B1BEF92700019AE9B /* SettingsViewController.swift in Sources */,
 				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,
 				61FCAED51C0672480072FDFB /* Images.swift in Sources */,
 				2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */,
@@ -522,6 +533,7 @@
 				61133EFA1C1E3D7100B2F0A2 /* CalendarView.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
 				4993753D1C02573100AA0588 /* categoryButton.swift in Sources */,
+				2514F16D1C1F13B1003E8001 /* ChooseCareerView.swift in Sources */,
 				4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */,
 				61133F011C1E3D7100B2F0A2 /* NSDateAdditions.swift in Sources */,
 				4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */,
