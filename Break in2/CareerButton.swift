@@ -28,6 +28,8 @@ class CareerButton: UIButton {
     
     self.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
     self.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    
+    self.careerImageView.contentMode = UIViewContentMode.ScaleAspectFit
 
     self.layer.borderColor = UIColor.turquoiseColor().CGColor
     

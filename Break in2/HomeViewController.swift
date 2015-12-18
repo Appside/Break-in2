@@ -77,11 +77,6 @@ class HomeViewController: UIViewController {
     self.careersBackgroundView.addSubview(self.careersScrollView)
     self.careersBackgroundView.addSubview(self.scrollInfoLabel)
     
-    //add actions to buttons
-    
-    self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
-    self.settingsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
-    
     // Create testTypeViews for each testType
     
     for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
@@ -144,6 +139,11 @@ class HomeViewController: UIViewController {
     self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
     self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
     self.scrollInfoLabel.text = "Scroll For More Careers"
+    
+    // Add actions to buttons
+    
+    self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
+    self.settingsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
     
     // Customize careersBackgroundView and statsView
     

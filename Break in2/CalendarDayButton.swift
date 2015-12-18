@@ -10,7 +10,7 @@ import UIKit
 
 class CalendarDayButton: UIButton {
   
-  var circleColors:[UIColor] = [UIColor.init(red: 208/255, green: 2/255, blue: 27/255, alpha: 1),UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 1),UIColor.init(red: 126/255, green: 211/255, blue: 33/255, alpha: 1),UIColor.init(red: 248/255, green: 231/255, blue: 28/255, alpha: 1)]
+  var circleColors:[UIColor] = [UIColor.init(red: 208/255, green: 2/255, blue: 27/255, alpha: 0.5),UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 0.5),UIColor.init(red: 126/255, green: 211/255, blue: 33/255, alpha: 0.5),UIColor.init(red: 248/255, green: 231/255, blue: 28/255, alpha: 0.5)]
   
   var today:Bool = false
   var clicked:Bool = false
@@ -34,7 +34,7 @@ class CalendarDayButton: UIButton {
       
       let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
       
-      CGContextSetFillColorWithColor(contextRef, UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1).CGColor)
+      CGContextSetFillColorWithColor(contextRef, UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.5).CGColor)
       
       CGContextFillEllipseInRect(contextRef, CGRectMake((self.bounds.width - self.bounds.height)/2, 0, self.bounds.height, self.bounds.height))
       
@@ -51,7 +51,12 @@ class CalendarDayButton: UIButton {
         CGContextBeginPath(contextRef)
         CGContextMoveToPoint(contextRef, self.bounds.width/2, self.bounds.height/2)
         let arcSegmentAngle:Double = (2 * M_PI) / Double(self.numberOfCirlceSegments)
-        CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 4, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+        if self.today {
+          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 4, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+        }
+        else {
+          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, self.bounds.height/2, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+        }
         CGContextFillPath(contextRef)
         
       }
