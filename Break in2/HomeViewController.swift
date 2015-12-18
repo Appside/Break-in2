@@ -12,7 +12,7 @@ import Parse
 import ParseUI
 import SCLAlertView
 
-class HomeViewController: UIViewController, CalendarViewDelegate {
+class HomeViewController: UIViewController {
   
   // Declare and initialize types of careers
   
@@ -25,7 +25,7 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
-  let statsView:UIView = UIView()
+  let calendarView:CalendarView = CalendarView()
   let statsButton:UIButton = UIButton()
   let settingsButton:UIButton = UIButton()
   let logOutButton:UIButton = UIButton()
@@ -69,7 +69,7 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
     self.view.addSubview(self.logoImageView)
     self.view.addSubview(self.profilePictureImageView)
     self.view.addSubview(self.sloganImageView)
-    self.view.addSubview(self.statsView)
+    self.view.addSubview(self.calendarView)
     self.view.addSubview(self.statsButton)
     self.view.addSubview(self.settingsButton)
     self.view.addSubview(self.careersBackgroundView)
@@ -150,36 +150,10 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
     self.careersBackgroundView.backgroundColor = UIColor.whiteColor()
     self.careersBackgroundView.layer.cornerRadius = self.minorMargin
     
-    self.statsView.backgroundColor = UIColor.whiteColor()
-    self.statsView.layer.cornerRadius = self.minorMargin
-    self.statsView.alpha = 0
-    self.statsView.clipsToBounds = true
-    
-    //calendar
-    // todays date.
-    let date = NSDate()
-    
-    // create an instance of calendar view with
-    // base date (Calendar shows 12 months range from current base date)
-    // selected date (marked dated in the calendar)
-    let calendarView = CalendarView.instance(date, selectedDate: date)
-    calendarView.delegate = self
-    calendarView.translatesAutoresizingMaskIntoConstraints = false
-    statsView.addSubview(calendarView)
-    
-    let calendarViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
-    
-    let calendarViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
-    
-    let calendarViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let calendarViewBottomConstraint = NSLayoutConstraint.init(item: calendarView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.statsView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
-    
-    self.view.addConstraints([calendarViewRightConstraint, calendarViewLeftConstraint, calendarViewBottomConstraint, calendarViewHeightConstraint])
-    
-    // Constraints for calendar view - Fill the parent view.
-    //statsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[calendarView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["calendarView": calendarView]))
-    //statsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[calendarView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["calendarView": calendarView]))
+    self.calendarView.backgroundColor = UIColor.whiteColor()
+    self.calendarView.layer.cornerRadius = self.minorMargin
+    self.calendarView.alpha = 0
+    self.calendarView.clipsToBounds = true
     
     // Customize careersScrollView
     
@@ -188,6 +162,10 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
     // Set constraints
     
     self.setConstraints()
+    
+    // Display calendar
+    
+    self.calendarView.displayCalendar()
     
   }
   
@@ -300,19 +278,20 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([self.sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
     
-    // Create and add constraints for statsView
+    // Create and add constraints for calendarView
     
-    self.statsView.translatesAutoresizingMaskIntoConstraints = false
+    self.calendarView.translatesAutoresizingMaskIntoConstraints = false
     
-    let statsViewTopConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    let calendarViewTopConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
     
-    let statsViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let calendarViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
-    let statsViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let calendarViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let statsViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.majorMargin * -1)
+    let calendarViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 7) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))
     
-    self.view.addConstraints([statsViewTopConstraint, statsViewLeftConstraint, statsViewRightConstraint, statsViewBottomConstraint])
+    self.calendarView.addConstraint(calendarViewHeightConstraint)
+    self.view.addConstraints([calendarViewTopConstraint, calendarViewLeftConstraint, calendarViewRightConstraint])
     
     // Create and add constraints for settingsButton
     
@@ -533,7 +512,7 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
         
         UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
           
-          self.statsView.alpha = 1
+          self.calendarView.alpha = 1
           
           }, completion: nil)
         
@@ -546,7 +525,7 @@ class HomeViewController: UIViewController, CalendarViewDelegate {
     
     UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
-      self.statsView.alpha = 0
+      self.calendarView.alpha = 0
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in
