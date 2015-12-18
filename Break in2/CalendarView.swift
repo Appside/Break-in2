@@ -202,7 +202,7 @@ class CalendarView: UIView, UIScrollViewDelegate {
     
     self.nextMonthView.addConstraints([nextMonthViewHeightConstraint, nextMonthViewWidthConstraint])
     self.addConstraints([nextMonthViewTopConstraint, nextMonthViewLeftConstraint, calendarMonthsScrollViewRightConstraint])
-
+    
   }
   
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -261,6 +261,22 @@ class CalendarView: UIView, UIScrollViewDelegate {
       self.displayCalendar()
       
     }
+    
+  }
+  
+  func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    self.scrollViewDidEndDecelerating(scrollView)
+  }
+  
+  func nextMonthButtonClicked(sender: UIButton) {
+    
+    self.calendarMonthsScrollView.setContentOffset(self.nextMonthView.frame.origin, animated: true)
+    
+  }
+  
+  func previousMonthButtonClicked(sender: UIButton) {
+    
+    self.calendarMonthsScrollView.setContentOffset(self.previousMonthView.frame.origin, animated: true)
     
   }
     /*

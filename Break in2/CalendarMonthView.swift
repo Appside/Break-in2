@@ -134,7 +134,7 @@ class CalendarMonthView: UIView {
       if self.month == self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate) {
         
         let todaysDay:Int = self.userCalendar.component(NSCalendarUnit.Day, fromDate: self.todaysDate)
-        self.calendarDayButtons[todaysDay - 1].today = true
+        self.calendarDayButtons[todaysDay].today = true
         //self.calendarDayButtons[todaysDay - 1].setNeedsDisplay()
         
       }

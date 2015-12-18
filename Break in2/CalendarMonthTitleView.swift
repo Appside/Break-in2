@@ -36,10 +36,12 @@ class CalendarMonthTitleView: UIView {
     self.nextMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
     self.nextMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
     self.nextMonthButton.setTitle("Next", forState: UIControlState.Normal)
+    self.nextMonthButton.addTarget(self.superview, action: "nextMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
     
     self.previousMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
     self.previousMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
     self.previousMonthButton.setTitle("Previous", forState: UIControlState.Normal)
+    self.previousMonthButton.addTarget(self.superview, action: "previousMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
   }
 
   required init?(coder aDecoder: NSCoder) {
