@@ -31,6 +31,7 @@
 		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; };
 		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
 		49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */; };
+		49BF15EA1C2719DE00722698 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BF15E91C2719DE00722698 /* HomeViewModel.swift */; settings = {ASSET_TAGS = (); }; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
@@ -95,6 +96,7 @@
 		499375391C02573100AA0588 /* paddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingLabel.swift; sourceTree = "<group>"; };
 		49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = verbalReasoningViewController.swift; sourceTree = "<group>"; };
 		49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = verbalQuestion.swift; sourceTree = "<group>"; };
+		49BF15E91C2719DE00722698 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
 		614316441BEF843A0047A37D /* Break in2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Break in2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316471BEF843A0047A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				617FC6481BEF92590019AE9B /* HomeViewController.swift */,
 				25ADC3AC1C052BA4004465FF /* CareerButton.swift */,
+				49BF15E91C2719DE00722698 /* HomeViewModel.swift */,
 			);
 			name = HomeView;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */,
 				617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */,
 				2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */,
+				49BF15EA1C2719DE00722698 /* HomeViewModel.swift in Sources */,
 				49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
 				2526701B1C2378A6007D55BE /* CalendarMonthTitleView.swift in Sources */,

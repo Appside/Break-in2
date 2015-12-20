@@ -16,12 +16,14 @@ class HomeViewController: UIViewController {
   
   // Declare and initialize types of careers
   
-  let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Technology"]
-  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Technology":"laptop"]
-  let careersTestTypes:[String:[String]] = ["Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Technology":["Verbal Reasoning","Logical Reasoning"]]
+  var careerTypes:[String] = [String]()
+    var careerTypeImages:[String:String] = [String:String]()
+    var careersTestTypes:[String:[String]] = [String:[String]]()
   
   // Declare and initialize views
   
+    let homeViewModel:HomeViewModel = HomeViewModel()
+    
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
@@ -60,6 +62,12 @@ class HomeViewController: UIViewController {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
+    
+    // Get app variables
+    
+    self.careerTypes = self.homeViewModel.getAppVariables("careerTypes") as! [String]
+    self.careerTypeImages = self.homeViewModel.getAppVariables("careerTypeImages") as! [String:String]
+    self.careersTestTypes = self.homeViewModel.getAppVariables("careersTestTypes") as! [String:[String]]
     
     // Add background image to HomeViewController's view
     
