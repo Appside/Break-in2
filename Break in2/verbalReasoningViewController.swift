@@ -46,7 +46,8 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var scoreRatio:Float = Float()
     var isTestComplete:Bool = false
     var resultsUploaded:Bool = false
-    
+    var testEnded:Bool = false
+
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,16 +72,16 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
         self.menuBackButton.addConstraints([topMenuViewHeight, topMenuViewWidth])
         self.view.addConstraints([topMenuViewLeftMargin,topMenuViewTopMargin])
         self.menuBackButton.layer.cornerRadius = 8.0
-        self.menuBackButton.backgroundColor = UIColor.whiteColor()
-        let menuLabel:UILabel = UILabel()
-        menuLabel.text = "Menu"
-        self.menuBackButton.addSubview(menuLabel)
-        menuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        menuLabel.textAlignment = NSTextAlignment.Center
-        menuLabel.font = UIFont(name: "HelveticaNeue-Medium",size: 14.0)
-        //self.menuBackButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-        //self.menuBackButton.layer.borderWidth = 3.0
-        menuLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        let menuBackImageVIew:UIImageView = UIImageView()
+        menuBackImageVIew.image = UIImage(named: "back")
+        menuBackImageVIew.translatesAutoresizingMaskIntoConstraints = false
+        self.menuBackButton.addSubview(menuBackImageVIew)
+        let arrowTop:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.menuBackButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant:0)
+        let arrowLeft:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.menuBackButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant:0)
+        let arrowHeight:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant:UIScreen.mainScreen().bounds.width/14)
+        let arrowWidth:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant:UIScreen.mainScreen().bounds.width/14)
+        self.menuBackButton.addConstraints([arrowTop,arrowLeft])
+        menuBackImageVIew.addConstraints([arrowHeight,arrowWidth])
         let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("backHome:"))
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
@@ -89,21 +90,17 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(self.questionMenu)
         self.questionMenu.translatesAutoresizingMaskIntoConstraints = false
         let questionViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
-        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 135)
+        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 115)
         let questionViewTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 35)
         let questionViewRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20)
         self.questionMenu.addConstraints([questionViewHeight, questionViewWidth])
         self.view.addConstraints([questionViewRightMargin,questionViewTopMargin])
-        self.questionMenu.layer.cornerRadius = 8.0
-        self.questionMenu.backgroundColor = UIColor.whiteColor()
-        self.questionMenuLabel.text = "Question 01/20"
+        self.menuBackButton.bringSubviewToFront(self.questionMenu)
+        
         self.questionMenu.addSubview(self.questionMenuLabel)
-        self.questionMenuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+        self.questionMenuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 75)
         questionMenuLabel.textAlignment = NSTextAlignment.Center
-        questionMenuLabel.font = UIFont(name: "HelveticaNeue-Medium",size: 14.0)
-        //self.questionMenu.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-        //self.questionMenu.layer.borderWidth = 3.0
-        self.questionMenuLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        self.questionMenuLabel.textColor = UIColor.whiteColor()
         
         //Initialize swipeMenuTopBar UIView
         self.swipeUIView.addSubview(self.swipeMenuTopBar)
@@ -214,9 +211,9 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
         //Initialize swipeUIView
         self.view.addSubview(self.swipeUIView)
         self.swipeUIView.translatesAutoresizingMaskIntoConstraints = false
-        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 385)
+        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 390)
         self.swipeUIView.addConstraint(self.swipeMenuHeightConstraint)
-        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 315)
+        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 320)
         let leftMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
         let rightMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20)
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
@@ -235,7 +232,7 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     //Show Swipe Menu
     func showSwipeMenu(sender: UISwipeGestureRecognizer) {
         UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = -20
+            self.swipeMenuBottomConstraint.constant = 5
             self.view.layoutIfNeeded()
             self.passageView.alpha = 0.0
             self.descriptionSwipeLabel.text = "Swipe down for Question"
@@ -245,7 +242,7 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     //Hie Swipe Menu
     func hideSwipeMenu(sender: UISwipeGestureRecognizer) {
         UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 315
+            self.swipeMenuBottomConstraint.constant = 320
             self.view.layoutIfNeeded()
             self.passageView.alpha = 1.0
             self.descriptionSwipeLabel.text = "Swipe up for Answers"
@@ -253,22 +250,34 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func updateTimer() {
-        if (self.countSeconds-1<0) {
-            if (self.countMinutes+self.countSeconds==0) {
-                self.timeTimer.invalidate()
+        if self.testEnded {
+            self.displayedQuestionIndex = self.totalNumberOfQuestions
+            if self.selectedAnswers[self.displayedQuestionIndex]==20 {
+                self.selectedAnswers[self.displayedQuestionIndex]=19
             }
-            else {
-                self.countMinutes--
-                self.countSeconds = 59
-            }
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
         }
         else {
-            self.countSeconds--
+            if (self.countSeconds-1<0) {
+                if (self.countMinutes+self.countSeconds==0) {
+                    self.timeTimer.invalidate()
+                }
+                else {
+                    self.countMinutes--
+                    self.countSeconds = 59
+                }
+            }
+            else {
+                self.countSeconds--
+            }
+            let newMin:String = String(format: "%02d", self.countMinutes)
+            let newSec:String = String(format: "%02d", self.countSeconds)
+            let newLabel:String = "\(newMin) : \(newSec)"
+            self.timeLabel.text = newLabel
+            if (self.countMinutes==0 && self.countSeconds==0) {
+                self.testEnded = true
+            }
         }
-        let newMin:String = String(format: "%02d", self.countMinutes)
-        let newSec:String = String(format: "%02d", self.countSeconds)
-        let newLabel:String = "\(newMin) : \(newSec)"
-        self.timeLabel.text = newLabel
     }
     
     func backHome(sender:UITapGestureRecognizer) {
@@ -304,7 +313,13 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     func displayQuestion(arrayOfQuestions:[verbalQuestion], indexQuestion:Int) {
         
         //Initialize labels
-        self.questionMenuLabel.text = "Question \(indexQuestion+1) / \(self.totalNumberOfQuestions+1)"
+        let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        self.questionMenuLabel.attributedText = attributedString
+        self.questionMenuLabel.attributedText = attributedString
         self.passageLabel.text = self.quizzArray[indexQuestion].passage
         
         //Update the view with the new question
@@ -476,8 +491,19 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
         let buttonHeight:Int = 40
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
-            self.questionMenuLabel.text = "Score: \(round(self.scoreRatio))%"
-            self.questionMenuLabel.textColor = UIColor.greenColor()
+            let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
+            let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            if self.scoreRatio<70 {
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            }
+            else {
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            }
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: 6))
+            self.questionMenuLabel.attributedText = attributedString
+
             self.mainView.alpha = 0.0
             self.swipeUIView.alpha = 0.0
             self.feebdackScreen.alpha = 1.0
@@ -547,8 +573,8 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 20))
-        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight)
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 10))
+        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight+10)
         
     }
     

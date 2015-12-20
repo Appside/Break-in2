@@ -31,7 +31,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var quizzModel:QuizzModel = QuizzModel()
     var quizzArray:[numericalQuestion] = [numericalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 19
+    var totalNumberOfQuestions:Int = 4
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 20
@@ -46,6 +46,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var scoreRatio:Float = Float()
     var isTestComplete:Bool = false
     var resultsUploaded:Bool = false
+    var testEnded:Bool = false
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -71,16 +72,16 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         self.menuBackButton.addConstraints([topMenuViewHeight, topMenuViewWidth])
         self.view.addConstraints([topMenuViewLeftMargin,topMenuViewTopMargin])
         self.menuBackButton.layer.cornerRadius = 8.0
-        self.menuBackButton.backgroundColor = UIColor.whiteColor()
-        let menuLabel:UILabel = UILabel()
-        menuLabel.text = "Menu"
-        self.menuBackButton.addSubview(menuLabel)
-        menuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        menuLabel.textAlignment = NSTextAlignment.Center
-        menuLabel.font = UIFont(name: "HelveticaNeue-Medium",size: 14.0)
-        //self.menuBackButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-        //self.menuBackButton.layer.borderWidth = 3.0
-        menuLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        let menuBackImageVIew:UIImageView = UIImageView()
+        menuBackImageVIew.image = UIImage(named: "back")
+        menuBackImageVIew.translatesAutoresizingMaskIntoConstraints = false
+        self.menuBackButton.addSubview(menuBackImageVIew)
+        let arrowTop:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.menuBackButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant:0)
+        let arrowLeft:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.menuBackButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant:0)
+        let arrowHeight:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant:UIScreen.mainScreen().bounds.width/14)
+        let arrowWidth:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant:UIScreen.mainScreen().bounds.width/14)
+        self.menuBackButton.addConstraints([arrowTop,arrowLeft])
+        menuBackImageVIew.addConstraints([arrowHeight,arrowWidth])
         let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("backHome:"))
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
@@ -89,21 +90,18 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(self.questionMenu)
         self.questionMenu.translatesAutoresizingMaskIntoConstraints = false
         let questionViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
-        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 135)
+        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 115)
         let questionViewTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 35)
         let questionViewRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20)
         self.questionMenu.addConstraints([questionViewHeight, questionViewWidth])
         self.view.addConstraints([questionViewRightMargin,questionViewTopMargin])
-        self.questionMenu.layer.cornerRadius = 8.0
-        self.questionMenu.backgroundColor = UIColor.whiteColor()
-        self.questionMenuLabel.text = "Question 01/20"
+        self.menuBackButton.bringSubviewToFront(self.questionMenu)
+        
         self.questionMenu.addSubview(self.questionMenuLabel)
-        self.questionMenuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+        self.questionMenuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 75)
         questionMenuLabel.textAlignment = NSTextAlignment.Center
-        questionMenuLabel.font = UIFont(name: "HelveticaNeue-Medium",size: 14.0)
-        //self.questionMenu.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-        //self.questionMenu.layer.borderWidth = 3.0
-        self.questionMenuLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        self.questionMenuLabel.textColor = UIColor.whiteColor()
+        
         
         //Initialize swipeMenuTopBar UIView
         self.swipeUIView.addSubview(self.swipeMenuTopBar)
@@ -115,7 +113,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         let swipeMenuTopBarHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.swipeMenuTopBar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
         self.swipeMenuTopBar.addConstraint(swipeMenuTopBarHeight)
         self.swipeMenuTopBar.addSubview(self.timeLabel)
-        self.timeLabel.text = "20:00"
+        self.timeLabel.text = "--:--"
         self.timeLabel.setConstraintsToSuperview(0, bottom: 30, left: 0, right: 0)
         self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 18.0)
         self.timeLabel.textAlignment = NSTextAlignment.Center
@@ -135,10 +133,19 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         //Initialize mainView, questionView and GraphView
         self.view.addSubview(self.mainView)
         self.mainView.setConstraintsToSuperview(75, bottom: 85, left: 20, right: 20)
+        let graphContent:UIView = UIView()
         self.mainView.addSubview(self.questionView)
-        self.mainView.addSubview(self.graphView)
+        self.mainView.addSubview(graphContent)
+        graphContent.addSubview(self.graphView)
         self.questionView.translatesAutoresizingMaskIntoConstraints = false
         self.graphView.translatesAutoresizingMaskIntoConstraints = false
+        graphContent.translatesAutoresizingMaskIntoConstraints = false
+        
+        let graphContentTop:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 90)
+        let graphContentRight:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let graphContentLeft:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let graphContentBottom:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        self.mainView.addConstraints([graphContentTop,graphContentRight,graphContentLeft,graphContentBottom])
         
         let questionViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
         let questionViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
@@ -149,21 +156,23 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         
         //update questionView
         self.questionView.addSubview(self.questionLabel)
-        self.questionLabel.setConstraintsToSuperview(Int(round(self.questionView.frame.height-self.questionLabel.frame.height)/2), bottom: 0, left: 0, right: 0)
+        self.questionLabel.setConstraintsToSuperview(Int(round(self.questionView.frame.height-self.questionLabel.frame.height)/2), bottom: 0, left: 5, right: 5)
         self.questionLabel.textColor = UIColor.whiteColor()
-        self.questionLabel.font = UIFont(name: "HelveticaNeue",size: 18.0)
+        self.questionLabel.font = UIFont(name: "HelveticaNeue-Light",size: 16.0)
         self.questionLabel.textAlignment = NSTextAlignment.Center
         self.questionLabel.backgroundColor = UIColor(white: 0, alpha: 0)
         self.questionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
         self.questionView.layer.cornerRadius = 8.0
+        graphContent.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        graphContent.layer.cornerRadius = 8.0
         
-        self.mainView.addSubview(self.graphTitle)
+        graphContent.addSubview(self.graphTitle)
         self.graphTitle.translatesAutoresizingMaskIntoConstraints = false
         self.graphTitle.numberOfLines = 0
-        let graphTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 90)
-        let graphTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let graphTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
-        self.mainView.addConstraints([graphTitleTop,graphTitleRight,graphTitleLeft])
+        let graphTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+        let graphTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 10)
+        let graphTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
+        graphContent.addConstraints([graphTitleTop,graphTitleRight,graphTitleLeft])
         let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35)
         self.graphTitle.addConstraint(graphTitleHeight)
         self.graphTitle.textAlignment = NSTextAlignment.Left
@@ -171,11 +180,11 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         self.graphTitle.textColor = UIColor.whiteColor()
         
         //Update top constraint
-        let graphViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 140)
-        let graphViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let graphViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let graphViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        self.mainView.addConstraints([graphViewTop,graphViewRight,graphViewLeft,graphViewBottom])
+        let graphViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 50)
+        let graphViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let graphViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let graphViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        graphContent.addConstraints([graphViewTop,graphViewRight,graphViewLeft,graphViewBottom])
         
         //Create nextButton
         let nextUIView:UIView = UIView()
@@ -217,9 +226,9 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         //Initialize swipeUIView
         self.view.addSubview(self.swipeUIView)
         self.swipeUIView.translatesAutoresizingMaskIntoConstraints = false
-        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 385)
+        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 390)
         self.swipeUIView.addConstraint(self.swipeMenuHeightConstraint)
-        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 315)
+        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 320)
         let leftMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
         let rightMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20)
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
@@ -238,7 +247,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     //Show Swipe Menu
     func showSwipeMenu(sender: UISwipeGestureRecognizer) {
         UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = -20
+            self.swipeMenuBottomConstraint.constant = 5
             self.view.layoutIfNeeded()
             self.graphView.alpha = 0.0
             self.descriptionSwipeLabel.text = "Swipe down for Question"
@@ -249,7 +258,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     //Hie Swipe Menu
     func hideSwipeMenu(sender: UISwipeGestureRecognizer) {
         UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 315
+            self.swipeMenuBottomConstraint.constant = 320
             self.view.layoutIfNeeded()
             self.graphView.alpha = 1.0
             self.descriptionSwipeLabel.text = "Swipe up for Answers"
@@ -258,6 +267,14 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func updateTimer() {
+        if self.testEnded {
+            self.displayedQuestionIndex = self.totalNumberOfQuestions
+            if self.selectedAnswers[self.displayedQuestionIndex]==20 {
+                self.selectedAnswers[self.displayedQuestionIndex]=19
+            }
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+        }
+        else {
         if (self.countSeconds-1<0) {
             if (self.countMinutes+self.countSeconds==0) {
                 self.timeTimer.invalidate()
@@ -274,6 +291,10 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         let newSec:String = String(format: "%02d", self.countSeconds)
         let newLabel:String = "\(newMin) : \(newSec)"
         self.timeLabel.text = newLabel
+        if (self.countMinutes==0 && self.countSeconds==0) {
+            self.testEnded = true
+        }
+        }
     }
     
     func backHome(sender:UITapGestureRecognizer) {
@@ -309,8 +330,14 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     func displayQuestion(arrayOfQuestions:[numericalQuestion], indexQuestion:Int) {
         
         //Initialize labels
-        self.questionMenuLabel.text = "Question \(indexQuestion+1) / \(self.totalNumberOfQuestions+1)"
-        
+        let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        self.questionMenuLabel.attributedText = attributedString
+        self.questionMenuLabel.attributedText = attributedString
+
         //Update the view with the new question
         let questionText:String = arrayOfQuestions[indexQuestion].question
         self.questionLabel.text = questionText
@@ -377,7 +404,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
             for existingView in self.graphView.subviews {
                 existingView.removeFromSuperview()
             }
-            let newChartObject = self.createChartObject(self.displayedQuestionIndex)
+            let newChartObject = self.createChartObject(indexQuestion)
             newChartObject.translatesAutoresizingMaskIntoConstraints = false
             let newChartObjectLeftMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
             let newChartObjectRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: newChartObject, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
@@ -415,7 +442,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     func nextQuestion(gesture:UITapGestureRecognizer) {
         
         // If no answer is selected, show Alert
-        if self.selectedAnswers[self.displayedQuestionIndex] == 20 {
+        if self.selectedAnswers[self.displayedQuestionIndex]==20 {
             let exitAlert = SCLAlertView()
             exitAlert.showError("No Answer Selected", subTitle: "Please Select An Answer Before Proceeding")
         }
@@ -462,15 +489,17 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
                             
                         }
                     })
+                self.nextButton.text = "Return to Feedback Screen"
                 }
                 else {
                     self.feedbackScreen()
+                    self.nextButton.text = "Return to Feedback Screen"
                 }
             }
                 //Continue to the next question
             else {
                 UIView.animateWithDuration(1, animations: {
-                    self.swipeMenuBottomConstraint.constant = 315
+                    self.swipeMenuBottomConstraint.constant = 320
                     self.view.layoutIfNeeded()
                     self.graphView.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Swipe up for Answers"
@@ -735,8 +764,19 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         let buttonHeight:Int = 40
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
-            self.questionMenuLabel.text = "Score: \(round(self.scoreRatio))%"
-            self.questionMenuLabel.textColor = UIColor.greenColor()
+            let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
+            let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            if self.scoreRatio<70 {
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            }
+            else {
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            }
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: 6))
+            self.questionMenuLabel.attributedText = attributedString
+            
             self.mainView.alpha = 0.0
             self.swipeUIView.alpha = 0.0
             self.feebdackScreen.alpha = 1.0
@@ -806,8 +846,8 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 20))
-        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight)
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 10))
+        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight + 10)
         
     }
     
@@ -831,12 +871,11 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
             }
             
             UIView.animateWithDuration(1, animations: {
-                self.swipeMenuBottomConstraint.constant = 315
+                self.swipeMenuBottomConstraint.constant = 5
                 self.view.layoutIfNeeded()
-                self.graphView.alpha = 1.0
-                self.descriptionSwipeLabel.text = "Swipe up for Explanation"
-                self.nextButton.text = "Return to Results"
-                self.graphTitle.alpha = 1.0
+                self.graphView.alpha = 0.0
+                self.descriptionSwipeLabel.text = "Swipe down for Question"
+                self.graphTitle.alpha = 0.0
                 }, completion: nil)
             
             let feedbackLabel:UITextView = UITextView()
