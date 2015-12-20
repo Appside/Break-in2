@@ -56,7 +56,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
   
   var currentChooseCareersScrollViewPage:Int = 0
 
-
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -270,7 +269,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
     
     self.backButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
     let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
@@ -306,9 +305,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
     
     let chooseCareersViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let chooseCareersViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.majorMargin * -1)
+    let chooseCareersViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 7) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))
     
-    self.view.addConstraints([chooseCareersViewTopConstraint, chooseCareersViewLeftConstraint, chooseCareersViewRightConstraint, chooseCareersViewBottomConstraint])
+    self.chooseCareersView.addConstraint(chooseCareersViewHeightConstraint)
+    self.view.addConstraints([chooseCareersViewTopConstraint, chooseCareersViewLeftConstraint, chooseCareersViewRightConstraint])
     
     // Create and add constraints for facebookLogoutButton
     
@@ -491,17 +491,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
       
       self.backButton.alpha = 1
       self.settingsMenuViewBottomConstraint.constant = self.minorMargin
+      self.chooseCareersView.alpha = 1
       self.view.layoutIfNeeded()
       
-      }, completion: {(Bool) in
-        
-        UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-          
-          self.chooseCareersView.alpha = 1
-          
-          }, completion: nil)
-        
-    })
+      }, completion: nil)
     
   }
 
@@ -510,28 +503,29 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
     UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
       self.chooseCareersView.alpha = 0
+      self.backButton.alpha = 0
+      self.settingsMenuViewBottomConstraint.constant = (self.minorMargin * 8) + (self.menuButtonHeight * 4.5)
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in
         
-        UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-          
-          self.backButton.alpha = 0
-          self.settingsMenuViewBottomConstraint.constant = (self.minorMargin * 8) + (self.menuButtonHeight * 4.5)
-          self.view.layoutIfNeeded()
-          
-          }, completion: {(Bool) in
-            
-            if sender == self.backButton {
-              self.performSegueWithIdentifier("backFromEditProfile", sender: self.backButton)
-            }
-            else if sender == self.facebookLogoutButton {
-              self.deleteFBTapped(self.facebookLogoutButton)
-            }
-            
-        })
+        if sender == self.backButton {
+          self.performSegueWithIdentifier("backFromEditProfile", sender: self.backButton)
+        }
+        else if sender == self.facebookLogoutButton {
+          self.deleteFBTapped(self.facebookLogoutButton)
+        }
         
     })
+    
+  }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+    if segue.identifier == "backFromEditProfile" {
+      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      destinationVC.segueFromLoginView = false
+    }
     
   }
   

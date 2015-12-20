@@ -340,7 +340,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     //self.dismissViewControllerAnimated(true, completion: nil)
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
-    homeVC.segueFromLoginView = true
     presentViewController(homeVC, animated: false, completion: nil)
     //self.performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
   }

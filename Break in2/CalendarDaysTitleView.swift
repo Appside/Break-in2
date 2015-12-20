@@ -10,7 +10,7 @@ import UIKit
 
 class CalendarDaysTitleView: UIView {
 
-  var daysOfTheWeek:[String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+  var daysOfTheWeek:[String] = ["MON","TUE","WED","THU","FRI","SAT","SUN"]
   
   var daysOfTheWeekLabels:[UILabel] = [UILabel]()
   
@@ -27,6 +27,7 @@ class CalendarDaysTitleView: UIView {
       
       labelAtIndex.textAlignment = NSTextAlignment.Center
       labelAtIndex.textColor = UIColor.whiteColor()
+      labelAtIndex.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
       labelAtIndex.text = self.daysOfTheWeek[index]
       
       // Add labels as subviews

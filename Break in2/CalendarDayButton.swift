@@ -20,6 +20,7 @@ class CalendarDayButton: UIButton {
     super.init(frame: frame)
     
     self.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 14)
     
   }
 

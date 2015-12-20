@@ -8,7 +8,16 @@
 
 import UIKit
 
+protocol CalendarMonthViewDelegate {
+  
+  func getDeadlineDates() -> [Int]
+  func calendarDayButtonClicked(sender: CalendarDayButton)
+  
+}
+
 class CalendarMonthView: UIView {
+  
+  var delegate:CalendarMonthViewDelegate?
   
   let calendarDaysTitleView:CalendarDaysTitleView = CalendarDaysTitleView()
   var calendarDayButtons:[CalendarDayButton] = [CalendarDayButton]()
@@ -22,6 +31,7 @@ class CalendarMonthView: UIView {
   var startingWeekday:Int = 0
   var numberOfDaysInMonth:Int = 0
   var numberOfDaysInPreviousMonth:Int = 0
+  var deadlineDate:[Int] = [Int]()
   
   var columnWidth:CGFloat = 0
   var rowHeight:CGFloat = 0
@@ -126,7 +136,11 @@ class CalendarMonthView: UIView {
     
     self.setConstraints()
     
-    // Display views
+    // Get deadlineDate
+    
+    self.deadlineDate = (self.delegate?.getDeadlineDates())!
+    
+    // Display views and buttons
     
     self.calendarDaysTitleView.displayView(self.columnWidth * 7)
     
@@ -134,9 +148,26 @@ class CalendarMonthView: UIView {
       if self.month == self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate) {
         
         let todaysDay:Int = self.userCalendar.component(NSCalendarUnit.Day, fromDate: self.todaysDate)
-        self.calendarDayButtons[todaysDay].today = true
-        //self.calendarDayButtons[todaysDay - 1].setNeedsDisplay()
+        if self.startingWeekday == 1 {
+          self.calendarDayButtons[todaysDay + 5].today = true
+        }
+        else {
+          self.calendarDayButtons[todaysDay + self.startingWeekday - 3].today = true
+        }
         
+      }
+    }
+    
+    if self.year == self.deadlineDate[2] {
+      if self.month == self.deadlineDate[1] {
+        if self.startingWeekday == 1 {
+          self.calendarDayButtons[self.deadlineDate[0] + 5].clicked = true
+          self.calendarDayButtons[self.deadlineDate[0] + 5].drawCircle(2)
+        }
+        else {
+          self.calendarDayButtons[self.deadlineDate[0] + self.startingWeekday - 3].clicked = true
+          self.calendarDayButtons[self.deadlineDate[0] + self.startingWeekday - 3].drawCircle(2)
+        }
       }
     }
     
@@ -199,16 +230,18 @@ class CalendarMonthView: UIView {
   
   func calendarDayButtonClicked(sender:CalendarDayButton) {
     
-    if sender.clicked {
+    self.delegate?.calendarDayButtonClicked(sender)
+    
+    /*if sender.clicked {
       sender.clicked = false
       sender.setNeedsDisplay()
     }
     else {
       sender.clicked = true
       sender.drawCircle(3)
-    }
+    }*/
     
-    
+
   }
     /*
     // Only override drawRect: if you perform custom drawing.

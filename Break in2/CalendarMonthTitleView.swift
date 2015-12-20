@@ -34,13 +34,15 @@ class CalendarMonthTitleView: UIView {
     // Customize nextMonthButton and previousMonthButton
     
     self.nextMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    self.nextMonthButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
     self.nextMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
     self.nextMonthButton.setTitle("Next", forState: UIControlState.Normal)
     self.nextMonthButton.addTarget(self.superview, action: "nextMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
     
     self.previousMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    self.previousMonthButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
     self.previousMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-    self.previousMonthButton.setTitle("Previous", forState: UIControlState.Normal)
+    self.previousMonthButton.setTitle("Prev", forState: UIControlState.Normal)
     self.previousMonthButton.addTarget(self.superview, action: "previousMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
   }
 
@@ -58,7 +60,8 @@ class CalendarMonthTitleView: UIView {
     
     let dateFormatter:NSDateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "MMMM"
-    self.monthLabel.text = dateFormatter.monthSymbols[self.month - 1] + " " + String(self.year)
+    let monthTitleString:String = dateFormatter.monthSymbols[self.month - 1] + " " + String(self.year)
+    self.monthLabel.text = monthTitleString.uppercaseString
     
   }
   

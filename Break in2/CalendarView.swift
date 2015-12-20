@@ -8,13 +8,16 @@
 
 import UIKit
 
-class CalendarView: UIView, UIScrollViewDelegate {
+class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
+  
+  let deadlineDates = ["Day":4,"Month":11,"Year":2015,"Company":"Nomura","Career":"Trading","Description":"Trading Analst"]
   
   let calendarMonthTitleView:CalendarMonthTitleView = CalendarMonthTitleView()
   let calendarMonthsScrollView:UIScrollView = UIScrollView()
   var currentMonthView:CalendarMonthView = CalendarMonthView()
   var nextMonthView:CalendarMonthView = CalendarMonthView()
   var previousMonthView:CalendarMonthView = CalendarMonthView()
+  let deadlinesView:UIView = UIView()
   
   let todaysDate:NSDate = NSDate()
   let userCalendar:NSCalendar = NSCalendar.currentCalendar()
@@ -26,6 +29,8 @@ class CalendarView: UIView, UIScrollViewDelegate {
   
   var rowHeight:CGFloat = 0
   var columnWidth:CGFloat = 0
+  
+  let minorMargin:CGFloat = 10
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -39,6 +44,7 @@ class CalendarView: UIView, UIScrollViewDelegate {
     
     self.addSubview(self.calendarMonthTitleView)
     self.addSubview(self.calendarMonthsScrollView)
+    self.addSubview(self.deadlinesView)
     
     self.calendarMonthsScrollView.addSubview(self.currentMonthView)
     self.calendarMonthsScrollView.addSubview(self.nextMonthView)
@@ -52,6 +58,16 @@ class CalendarView: UIView, UIScrollViewDelegate {
     self.calendarMonthsScrollView.showsHorizontalScrollIndicator = false
     self.calendarMonthsScrollView.setContentOffset(CGPointMake(self.calendarMonthsScrollView.frame.width, 0), animated: false)
     
+    self.deadlinesView.backgroundColor = UIColor.whiteColor()
+    self.deadlinesView.layer.cornerRadius = self.minorMargin
+    self.deadlinesView.alpha = 0
+    
+    // Add tap gesture recognizer to deadlinesView
+    
+    let deadlinesViewTapRecognizer:UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: "deadlinesViewTapped:")
+    deadlinesViewTapRecognizer.numberOfTapsRequired = 1
+    self.deadlinesView.addGestureRecognizer(deadlinesViewTapRecognizer)
+    
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -61,7 +77,7 @@ class CalendarView: UIView, UIScrollViewDelegate {
   func displayCalendar() {
     
     superview?.layoutIfNeeded()
-    self.rowHeight = self.frame.height/8
+    self.rowHeight = self.frame.height/9
     self.columnWidth = self.frame.width/7
     
     // Remove calendarMonthViews from calendarMonthsScrollView
@@ -81,6 +97,12 @@ class CalendarView: UIView, UIScrollViewDelegate {
     self.calendarMonthsScrollView.addSubview(self.currentMonthView)
     self.calendarMonthsScrollView.addSubview(self.nextMonthView)
     self.calendarMonthsScrollView.addSubview(self.previousMonthView)
+    
+    // Set calendarMonthView delegates
+    
+    self.currentMonthView.delegate = self
+    self.nextMonthView.delegate = self
+    self.previousMonthView.delegate = self
     
     // Set subview properties
     
@@ -136,7 +158,7 @@ class CalendarView: UIView, UIScrollViewDelegate {
     
     let calendarMonthTitleViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarMonthTitleView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let calendarMonthTitleViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarMonthTitleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.rowHeight)
+    let calendarMonthTitleViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarMonthTitleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.rowHeight * 2)
     
     self.calendarMonthTitleView.addConstraint(calendarMonthTitleViewHeightConstraint)
     self.addConstraints([calendarMonthTitleViewTopConstraint, calendarMonthTitleViewLeftConstraint, calendarMonthTitleViewRightConstraint])
@@ -202,6 +224,20 @@ class CalendarView: UIView, UIScrollViewDelegate {
     
     self.nextMonthView.addConstraints([nextMonthViewHeightConstraint, nextMonthViewWidthConstraint])
     self.addConstraints([nextMonthViewTopConstraint, nextMonthViewLeftConstraint, calendarMonthsScrollViewRightConstraint])
+    
+    // Create and add constraints for deadlinesView
+    
+    self.deadlinesView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let deadlinesViewTopConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let deadlinesViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let deadlinesViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    
+    let deadlinesViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    
+    self.addConstraints([deadlinesViewTopConstraint, deadlinesViewLeftConstraint, deadlinesViewRightConstraint, deadlinesViewBottomConstraint])
     
   }
   
@@ -277,6 +313,41 @@ class CalendarView: UIView, UIScrollViewDelegate {
   func previousMonthButtonClicked(sender: UIButton) {
     
     self.calendarMonthsScrollView.setContentOffset(self.previousMonthView.frame.origin, animated: true)
+    
+  }
+  
+  func calendarDayButtonClicked(sender: CalendarDayButton) {
+    
+    if sender.clicked {
+      
+      UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        
+        self.calendarMonthTitleView.alpha = 0
+        self.calendarMonthsScrollView.alpha = 0
+        self.deadlinesView.alpha = 1
+        
+        }, completion: nil)
+      
+    }
+    
+  }
+  
+  func deadlinesViewTapped(sender: UITapGestureRecognizer) {
+    
+    UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+      
+      self.calendarMonthTitleView.alpha = 1
+      self.calendarMonthsScrollView.alpha = 1
+      self.deadlinesView.alpha = 0
+      
+      }, completion: nil)
+    
+  }
+  
+  func getDeadlineDates() -> [Int]{
+    
+    let deadlineDate = [4,11,2015]
+    return deadlineDate
     
   }
     /*
