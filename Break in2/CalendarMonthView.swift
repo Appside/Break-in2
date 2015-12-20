@@ -112,6 +112,9 @@ class CalendarMonthView: UIView {
       }
       for var index:Int = 6 ; index < (self.startingWeekday + self.numberOfDaysInMonth + 5) ; index++ {
         self.calendarDayButtons[index].setTitle(String(index - 5), forState: UIControlState.Normal)
+        self.calendarDayButtons[index].year = self.year
+        self.calendarDayButtons[index].month = self.month
+        self.calendarDayButtons[index].day = index - 5
       }
       for var index:Int = (self.startingWeekday + self.numberOfDaysInMonth + 5) ; index < (7 * 6) ; index++ {
         self.calendarDayButtons[index].setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
@@ -125,6 +128,9 @@ class CalendarMonthView: UIView {
       }
       for var index:Int = (self.startingWeekday - 2) ; index < (self.startingWeekday + self.numberOfDaysInMonth - 2) ; index++ {
         self.calendarDayButtons[index].setTitle(String(index - (self.startingWeekday - 3)), forState: UIControlState.Normal)
+        self.calendarDayButtons[index].year = self.year
+        self.calendarDayButtons[index].month = self.month
+        self.calendarDayButtons[index].day = index - (self.startingWeekday - 3)
       }
       for var index:Int = (self.startingWeekday + self.numberOfDaysInMonth - 2) ; index < (7 * 6) ; index++ {
         self.calendarDayButtons[index].setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
@@ -159,8 +165,7 @@ class CalendarMonthView: UIView {
           self.calendarDayButtons[todaysDay + self.startingWeekday - 3].today = true
         }
         
-        self.calendarDayButtons[todaysDay + 5].year = self.year
-        self.calendarDayButtons[todaysDay + 5].month = self.month
+        
         self.calendarDayButtons[todaysDay + 5].day = todaysDay
         
       }

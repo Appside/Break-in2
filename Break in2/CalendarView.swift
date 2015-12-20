@@ -70,12 +70,6 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     self.deadlinesView.layer.cornerRadius = self.minorMargin
     self.deadlinesView.alpha = 0
     
-    // Add tap gesture recognizer to deadlinesView
-    
-    let deadlinesViewTapRecognizer:UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: "deadlinesViewTapped:")
-    deadlinesViewTapRecognizer.numberOfTapsRequired = 1
-    self.deadlinesView.addGestureRecognizer(deadlinesViewTapRecognizer)
-    
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -328,6 +322,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     if sender.clicked {
       
+        self.deadlinesViewInitialize(sender)
+        
       UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
         
         self.calendarMonthTitleView.alpha = 0
@@ -339,6 +335,131 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     }
     
   }
+    
+    func deadlinesViewInitialize(sender: CalendarDayButton) {
+        
+        //Clean existing views
+        for singleView in self.deadlinesView.subviews {
+            singleView.removeFromSuperview()
+        }
+        
+        //Initialize Views
+        let titleView:UIView = UIView()
+        let deadlineTitle:UILabel = UILabel()
+        let deadlineScrollView:UIScrollView = UIScrollView()
+        let backButton:UIButton = UIButton()
+        
+        //Set constraints to Views
+        self.deadlinesView.addSubview(titleView)
+        self.deadlinesView.addSubview(deadlineScrollView)
+        titleView.addSubview(backButton)
+        titleView.addSubview(deadlineTitle)
+        
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        let titleViewTop:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let titleViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let titleViewRight:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        self.deadlinesView.addConstraints([titleViewTop,titleViewLeft, titleViewRight])
+        let titleViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.rowHeight*2)
+        titleView.addConstraint(titleViewHeight)
+        
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        let backButtonCenterY:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+        let backButtonLeft:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        titleView.addConstraints([backButtonLeft,backButtonCenterY])
+        let backButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 18)
+        let backButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width/10)
+        backButton.addConstraints([backButtonHeight,backButtonWidth])
+        backButton.setImage(UIImage(named: "prevButton"), forState: UIControlState.Normal)
+        backButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        backButton.addTarget(self, action: "backToCalendarView:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        deadlineTitle.translatesAutoresizingMaskIntoConstraints = false
+        let deadlineTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let deadlineTitleBottom:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        let deadlineTitleCenterX:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        titleView.addConstraints([deadlineTitleTop,deadlineTitleBottom,deadlineTitleCenterX])
+        let deadlineTitleWidth:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width*8/10)
+        deadlineTitle.addConstraint(deadlineTitleWidth)
+        deadlineTitle.textColor = UIColor.blackColor()
+        deadlineTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
+        deadlineTitle.textAlignment = NSTextAlignment.Center
+        
+        deadlineScrollView.setConstraintsToSuperview(Int(self.rowHeight*2+5), bottom: 0, left: 0, right: 0)
+        
+        //Initalize Date
+        let dateFormatter:NSDateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM"
+        let monthString:String = dateFormatter.monthSymbols[sender.month - 1]
+        deadlineTitle.text = String(sender.day) + " " + monthString.uppercaseString + " " + String(sender.year)
+        
+        //Initialize Deadline Table
+        var i:Int = 0
+        let cellHeight:Int = 70
+
+        for elementArray in sender.deadlines {
+        
+        let tableCell:UIView = UIView()
+        let companyName:UILabel = UILabel()
+        let careerName:UILabel = UILabel()
+        let positionName:UILabel = UILabel()
+        
+        deadlineScrollView.addSubview(tableCell)
+        tableCell.translatesAutoresizingMaskIntoConstraints = false
+        let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*cellHeight))
+        let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        deadlineScrollView.addConstraints([tableCellTop,tableCellLeft])
+        let tableCellWidth:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(self.deadlinesView.bounds.width))
+        let tableCellHeight:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(cellHeight))
+        tableCell.addConstraints([tableCellHeight,tableCellWidth])
+
+        if (i%2==0) {
+            tableCell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
+        }
+        else {
+            tableCell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.2)
+        }
+        
+        tableCell.addSubview(companyName)
+        tableCell.addSubview(careerName)
+        tableCell.addSubview(positionName)
+        companyName.translatesAutoresizingMaskIntoConstraints = false
+        careerName.translatesAutoresizingMaskIntoConstraints = false
+        positionName.translatesAutoresizingMaskIntoConstraints = false
+        companyName.setConstraintsToSuperview(5, bottom: 45, left: 10, right: 5)
+        careerName.setConstraintsToSuperview(25, bottom: 25, left: 10, right: 5)
+        positionName.setConstraintsToSuperview(45, bottom: 5, left: 10, right: 5)
+        companyName.numberOfLines = 0
+        careerName.numberOfLines = 0
+        positionName.numberOfLines = 0
+        companyName.font = UIFont(name: "HelveticaNeue-MediumBold", size: 15.0)
+        companyName.textAlignment = NSTextAlignment.Left
+        careerName.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15.0)
+        careerName.textAlignment = NSTextAlignment.Left
+        positionName.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15.0)
+        positionName.textAlignment = NSTextAlignment.Left
+        
+        companyName.text = elementArray[0]
+        careerName.text = elementArray[1]
+        positionName.text = elementArray[2]
+        
+        i++
+        
+        }
+        
+        //Set content size
+        deadlineScrollView.contentSize = CGSize(width: Int(self.deadlinesView.bounds.width), height: Int(i*cellHeight))
+        
+    }
+    
+    func backToCalendarView(sender: UITapGestureRecognizer) {
+        UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            
+            self.calendarMonthTitleView.alpha = 1
+            self.calendarMonthsScrollView.alpha = 1
+            self.deadlinesView.alpha = 0
+            }, completion: nil)
+    }
   
   func deadlinesViewTapped(sender: UITapGestureRecognizer) {
     

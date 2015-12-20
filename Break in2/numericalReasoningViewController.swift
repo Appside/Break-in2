@@ -31,10 +31,10 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var quizzModel:QuizzModel = QuizzModel()
     var quizzArray:[numericalQuestion] = [numericalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 4
+    var totalNumberOfQuestions:Int = 19
     let questionLabel:UITextView = UITextView()
-    var allowedSeconds:Int = 00
-    var allowedMinutes:Int = 20
+    var allowedSeconds:Int = 10
+    var allowedMinutes:Int = 00
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let answerView:UIView = UIView()
@@ -113,7 +113,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         let swipeMenuTopBarHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.swipeMenuTopBar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
         self.swipeMenuTopBar.addConstraint(swipeMenuTopBarHeight)
         self.swipeMenuTopBar.addSubview(self.timeLabel)
-        self.timeLabel.text = "--:--"
+        self.timeLabel.text = "\(self.countMinutes):\(self.countSeconds)"
         self.timeLabel.setConstraintsToSuperview(0, bottom: 30, left: 0, right: 0)
         self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 18.0)
         self.timeLabel.textAlignment = NSTextAlignment.Center
@@ -272,6 +272,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
                 self.selectedAnswers[self.displayedQuestionIndex]=19
             }
+            self.timeTimer.invalidate()
             self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
         }
         else {
@@ -321,11 +322,18 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func goBack(){
-        
         self.performSegueWithIdentifier("backHomeSegue", sender: nil)
-        
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "backHomeSegue" {
+            self.timeTimer.invalidate()
+            let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+            destinationVC.segueFromLoginView = false
+        }
+        
+    }
     
     func displayQuestion(arrayOfQuestions:[numericalQuestion], indexQuestion:Int) {
         

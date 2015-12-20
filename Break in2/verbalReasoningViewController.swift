@@ -112,7 +112,7 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
         let swipeMenuTopBarHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.swipeMenuTopBar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
         self.swipeMenuTopBar.addConstraint(swipeMenuTopBarHeight)
         self.swipeMenuTopBar.addSubview(self.timeLabel)
-        self.timeLabel.text = "20:00"
+        self.timeLabel.text = "\(self.countMinutes):\(self.countSeconds)"
         self.timeLabel.setConstraintsToSuperview(0, bottom: 30, left: 0, right: 0)
         self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 18.0)
         self.timeLabel.textAlignment = NSTextAlignment.Center
@@ -256,6 +256,7 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
                 self.selectedAnswers[self.displayedQuestionIndex]=19
             }
             self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+            self.timeTimer.invalidate()
         }
         else {
             if (self.countSeconds-1<0) {
@@ -309,6 +310,15 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "backHomeSegue" {
+            self.timeTimer.invalidate()
+            let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+            destinationVC.segueFromLoginView = false
+        }
+        
+    }
     
     func displayQuestion(arrayOfQuestions:[verbalQuestion], indexQuestion:Int) {
         
