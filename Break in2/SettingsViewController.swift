@@ -20,6 +20,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
   let settings:[String] = ["Upgrade", "Help","About","Feedback"]
   var careerTypes:[String] = [String]()
   var careerTypeImages:[String:String] = [String:String]()
+  var chosenCareers:[String] = ["Investment Banking", "Sangeet"]
   
   // Declare and initialize views
   
@@ -165,6 +166,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
       
       chooseCareerViewAtIndex.careerTitle = self.careerTypes[index]
       chooseCareerViewAtIndex.careerImage = UIImage.init(named: self.careerTypeImages[self.careerTypes[index]]!)!
+      if self.chosenCareers.contains(self.careerTypes[index]) {
+        chooseCareerViewAtIndex.careerChosen = true
+      }
       
       chooseCareerViewAtIndex.majorMargin = self.majorMargin
       chooseCareerViewAtIndex.minorMargin = self.minorMargin

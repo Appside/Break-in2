@@ -18,6 +18,7 @@ class CalendarMonthTitleView: UIView {
   var month:Int = 0
   
   var calendarWidth:CGFloat = 0
+  var rowHeight:CGFloat = 0
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -29,20 +30,25 @@ class CalendarMonthTitleView: UIView {
     // Customize monthLabel
     
     self.monthLabel.textAlignment = NSTextAlignment.Center
+    self.monthLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
     self.monthLabel.text = "Month"
     
     // Customize nextMonthButton and previousMonthButton
     
-    self.nextMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-    self.nextMonthButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-    self.nextMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
-    self.nextMonthButton.setTitle("Next", forState: UIControlState.Normal)
+    //self.nextMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    //self.nextMonthButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    //self.nextMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Right
+    //self.nextMonthButton.setTitle("Next", forState: UIControlState.Normal)
+    self.nextMonthButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
+    self.nextMonthButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
     self.nextMonthButton.addTarget(self.superview, action: "nextMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
     
-    self.previousMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-    self.previousMonthButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-    self.previousMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-    self.previousMonthButton.setTitle("Prev", forState: UIControlState.Normal)
+    //self.previousMonthButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    //self.previousMonthButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    //self.previousMonthButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+    //self.previousMonthButton.setTitle("Prev", forState: UIControlState.Normal)
+    self.previousMonthButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
+    self.previousMonthButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
     self.previousMonthButton.addTarget(self.superview, action: "previousMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
   }
 
@@ -75,7 +81,7 @@ class CalendarMonthTitleView: UIView {
     
     let monthLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
-    let monthLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.calendarWidth/2)
+    let monthLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.calendarWidth * 8)/10)
     
     let monthLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
@@ -86,31 +92,31 @@ class CalendarMonthTitleView: UIView {
     
     self.nextMonthButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let nextMonthButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let nextMonthButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
     
-    let nextMonthButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -10)
+    let nextMonthButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let nextMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.calendarWidth/4)
+    let nextMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.calendarWidth/10)
     
-    let nextMonthButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let nextMonthButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 18)
     
-    self.nextMonthButton.addConstraint(nextMonthButtonWidthConstraint)
-    self.addConstraints([nextMonthButtonTopConstraint, nextMonthButtonRightConstraint, nextMonthButtonBottomConstraint])
+    self.nextMonthButton.addConstraints([nextMonthButtonWidthConstraint, nextMonthButtonHeightConstraint])
+    self.addConstraints([nextMonthButtonCenterYConstraint, nextMonthButtonRightConstraint])
 
     // Create and add constraints for previousMonthButton
     
     self.previousMonthButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let previousMonthButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let previousMonthButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
     
-    let previousMonthButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
+    let previousMonthButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
-    let previousMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.calendarWidth/4)
+    let previousMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.calendarWidth/10)
     
-    let previousMonthButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let previousMonthButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 18)
     
-    self.previousMonthButton.addConstraint(previousMonthButtonWidthConstraint)
-    self.addConstraints([previousMonthButtonTopConstraint, previousMonthButtonLeftConstraint, previousMonthButtonBottomConstraint])
+    self.previousMonthButton.addConstraints([previousMonthButtonWidthConstraint, previousMonthButtonHeightConstraint])
+    self.addConstraints([previousMonthButtonCenterYConstraint, previousMonthButtonLeftConstraint])
 
   }
 

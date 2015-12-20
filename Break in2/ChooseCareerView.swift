@@ -30,7 +30,7 @@ class ChooseCareerView: UIView {
   
   // Declare and initialize tracking variables
   
-  var tickButtonSelected:Bool = false
+  var careerChosen:Bool = false
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -52,11 +52,11 @@ class ChooseCareerView: UIView {
     
     // Set properties for tickButton and crossButton
     
-    self.tickButton.setImage(UIImage.init(named: "tickUnselected"), forState: UIControlState.Normal)
     self.tickButton.addTarget(self, action: "tickButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
-    
-    self.crossButton.setImage(UIImage.init(named: "crossSelected"), forState: UIControlState.Normal)
+    self.tickButton.setImage(UIImage.init(named: "tickUnselected"), forState: UIControlState.Normal)
+
     self.crossButton.addTarget(self, action: "crossButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.crossButton.setImage(UIImage.init(named: "crossUnselected"), forState: UIControlState.Normal)
 
   }
 
@@ -138,26 +138,35 @@ class ChooseCareerView: UIView {
     
     self.setConstraints()
     
+    // Set tickButton and crossButton
+    
+    if self.careerChosen {
+      self.tickButton.setImage(UIImage.init(named: "tickSelected"), forState: UIControlState.Normal)
+    }
+    else if !self.careerChosen {
+      self.crossButton.setImage(UIImage.init(named: "crossSelected"), forState: UIControlState.Normal)
+    }
+    
   }
   
   func tickButtonClicked(sender:UIButton) {
     
-    if !self.tickButtonSelected {
+    if !self.careerChosen {
       self.tickButton.setImage(UIImage.init(named: "tickSelected"), forState: UIControlState.Normal)
       self.crossButton.setImage(UIImage.init(named: "crossUnselected"), forState: UIControlState.Normal)
       
-      self.tickButtonSelected = true
+      self.careerChosen = true
     }
     
   }
   
   func crossButtonClicked(sender:UIButton) {
     
-    if self.tickButtonSelected {
+    if self.careerChosen {
       self.tickButton.setImage(UIImage.init(named: "tickUnselected"), forState: UIControlState.Normal)
       self.crossButton.setImage(UIImage.init(named: "crossSelected"), forState: UIControlState.Normal)
       
-      self.tickButtonSelected = false
+      self.careerChosen = false
     }
     
   }
