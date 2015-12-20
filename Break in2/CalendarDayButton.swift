@@ -12,9 +12,13 @@ class CalendarDayButton: UIButton {
   
   var circleColors:[UIColor] = [UIColor.init(red: 208/255, green: 2/255, blue: 27/255, alpha: 0.5),UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 0.5),UIColor.init(red: 126/255, green: 211/255, blue: 33/255, alpha: 0.5),UIColor.init(red: 248/255, green: 231/255, blue: 28/255, alpha: 0.5)]
   
+  var year:Int = 0
+  var month:Int = 0
+  var day:Int = 0
+  var deadlines:[[String]] = [[String]]()
+  
   var today:Bool = false
   var clicked:Bool = false
-  var deadlines:[[String]] = [[String]]()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
