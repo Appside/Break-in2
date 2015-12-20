@@ -16,9 +16,9 @@ class HomeViewController: UIViewController {
   
   // Declare and initialize types of careers
   
-  let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Sangeet"]
-  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Sangeet":"laptop"]
-  let careersTestTypes:[String:[String]] = ["Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Sangeet":["Verbal Reasoning","Logical Reasoning"]]
+  let careerTypes:[String] = ["Investment Banking", "Engineering", "Trading", "Technology"]
+  let careerTypeImages:[String:String] = ["Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Technology":"laptop"]
+  let careersTestTypes:[String:[String]] = ["Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Technology":["Verbal Reasoning","Logical Reasoning"]]
   
   // Declare and initialize views
   

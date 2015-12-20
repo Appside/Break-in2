@@ -20,7 +20,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let settings:[String] = ["Upgrade", "Help","About","Feedback"]
   var careerTypes:[String] = [String]()
   var careerTypeImages:[String:String] = [String:String]()
-  var chosenCareers:[String] = ["Investment Banking", "Sangeet"]
+  var chosenCareers:[String] = ["Investment Banking", "Technology"]
   
   // Declare and initialize views
   

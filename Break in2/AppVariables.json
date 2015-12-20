@@ -1,0 +1,7 @@
+{
+"careerTypes":["Investment Banking", "Engineering", "Trading", "Technology"],
+"careerTypeImages":{"Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Technology":"laptop"},
+"careersTestTypes":{"Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Technology":["Verbal Reasoning","Logical Reasoning"]},
+"chosenCareers":["Investment Banking", "Technology"],
+"settings":["Upgrade", "Help","About","Feedback"],
+}

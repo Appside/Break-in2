@@ -19,6 +19,8 @@
 		2526701D1C2378A6007D55BE /* CalendarDaysTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */; };
 		2526701E1C2378A6007D55BE /* CalendarDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670191C2378A6007D55BE /* CalendarDayButton.swift */; };
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
+		253AC83C1C2716B700495DF5 /* AppVariables.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83A1C2716B600495DF5 /* AppVariables.json */; };
+		253AC83D1C2716B700495DF5 /* JobDeadlines.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83B1C2716B600495DF5 /* JobDeadlines.json */; };
 		25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25411FF51C1E14EF000118BF /* FacebookButton.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
 		496387E61C1D9A69001EC164 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496387E51C1D9A69001EC164 /* testViewController.swift */; };
@@ -80,6 +82,8 @@
 		252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDaysTitleView.swift; sourceTree = "<group>"; };
 		252670191C2378A6007D55BE /* CalendarDayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayButton.swift; sourceTree = "<group>"; };
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
+		253AC83A1C2716B600495DF5 /* AppVariables.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppVariables.json; sourceTree = "<group>"; };
+		253AC83B1C2716B600495DF5 /* JobDeadlines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JobDeadlines.json; sourceTree = "<group>"; };
 		25411FF51C1E14EF000118BF /* FacebookButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookButton.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
@@ -191,14 +195,23 @@
 			children = (
 				499375351C02573100AA0588 /* numericalReasoningViewController.swift */,
 				499375361C02573100AA0588 /* numericalQuestion.swift */,
-				251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */,
 				49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */,
 				49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */,
-				251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */,
 				499375371C02573100AA0588 /* QuizzModel.swift */,
 				496387E51C1D9A69001EC164 /* testViewController.swift */,
 			);
 			name = QuestionView;
+			sourceTree = "<group>";
+		};
+		253AC8391C2711DD00495DF5 /* JSON Files */ = {
+			isa = PBXGroup;
+			children = (
+				253AC83A1C2716B600495DF5 /* AppVariables.json */,
+				253AC83B1C2716B600495DF5 /* JobDeadlines.json */,
+				251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */,
+				251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */,
+			);
+			name = "JSON Files";
 			sourceTree = "<group>";
 		};
 		255264B11C1F0DA800E64D33 /* SettingsView */ = {
@@ -253,6 +266,7 @@
 				25411FF51C1E14EF000118BF /* FacebookButton.swift */,
 				252670141C23787A007D55BE /* CalendarView */,
 				255264B11C1F0DA800E64D33 /* SettingsView */,
+				253AC8391C2711DD00495DF5 /* JSON Files */,
 				253796AA1C0DCFB500BA00F3 /* QuestionView */,
 				253796A81C0DCF7700BA00F3 /* HomeView */,
 				253796A91C0DCF9100BA00F3 /* LoginView */,
@@ -413,11 +427,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				253AC83D1C2716B700495DF5 /* JobDeadlines.json in Resources */,
 				614316521BEF843A0047A37D /* LaunchScreen.storyboard in Resources */,
 				6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */,
 				6143164D1BEF843A0047A37D /* Main.storyboard in Resources */,
 				251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */,
 				251D4BC01C11FBEB004A6715 /* VerbalReasoning.json in Resources */,
+				253AC83C1C2716B700495DF5 /* AppVariables.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
