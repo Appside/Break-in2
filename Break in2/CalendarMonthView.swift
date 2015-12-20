@@ -10,7 +10,7 @@ import UIKit
 
 protocol CalendarMonthViewDelegate {
   
-  func getDeadlineDates() -> [Int]
+  func getJobDeadlinesForMonth(month:Int, year:Int) -> [[String:AnyObject]]
   func calendarDayButtonClicked(sender: CalendarDayButton)
   
 }
@@ -31,7 +31,7 @@ class CalendarMonthView: UIView {
   var startingWeekday:Int = 0
   var numberOfDaysInMonth:Int = 0
   var numberOfDaysInPreviousMonth:Int = 0
-  var deadlineDate:[Int] = [Int]()
+  var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
   
   var columnWidth:CGFloat = 0
   var rowHeight:CGFloat = 0
@@ -138,11 +138,15 @@ class CalendarMonthView: UIView {
     
     // Get deadlineDate
     
-    self.deadlineDate = (self.delegate?.getDeadlineDates())!
+    if let unwrappedDelegate = self.delegate {
+      self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
+    }
     
-    // Display views and buttons
+    // Display views
     
     self.calendarDaysTitleView.displayView(self.columnWidth * 7)
+    
+    // Display today's date
     
     if self.year == self.userCalendar.component(NSCalendarUnit.Year, fromDate: self.todaysDate) {
       if self.month == self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate) {
@@ -158,17 +162,33 @@ class CalendarMonthView: UIView {
       }
     }
     
-    if self.year == self.deadlineDate[2] {
-      if self.month == self.deadlineDate[1] {
-        if self.startingWeekday == 1 {
-          self.calendarDayButtons[self.deadlineDate[0] + 5].clicked = true
-          self.calendarDayButtons[self.deadlineDate[0] + 5].drawCircle(2)
-        }
-        else {
-          self.calendarDayButtons[self.deadlineDate[0] + self.startingWeekday - 3].clicked = true
-          self.calendarDayButtons[self.deadlineDate[0] + self.startingWeekday - 3].drawCircle(2)
-        }
+    // Display dates with deadlines
+    
+    for var index:Int = 0 ; index < self.deadlines.count ; index++ {
+      
+      if self.startingWeekday == 1 {
+        
+        let deadline:[String:AnyObject] = self.deadlines[index]
+        self.calendarDayButtons[(deadline["day"] as! Int) + 5].clicked = true
+        
+        let company:String = deadline["company"] as! String
+        let career:String = deadline["career"] as! String
+        let position:String = deadline["position"] as! String
+        self.calendarDayButtons[(deadline["day"] as! Int) + 5].deadlines.append([company,career,position])
+        
       }
+      else {
+        
+        let deadline:[String:AnyObject] = self.deadlines[index]
+        self.calendarDayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].clicked = true
+        
+        let company:String = deadline["company"] as! String
+        let career:String = deadline["career"] as! String
+        let position:String = deadline["position"] as! String
+        self.calendarDayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].deadlines.append([company,career,position])
+
+      }
+      
     }
     
   }

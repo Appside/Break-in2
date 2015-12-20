@@ -17,12 +17,12 @@ class HomeViewController: UIViewController {
   // Declare and initialize types of careers
   
   var careerTypes:[String] = [String]()
-    var careerTypeImages:[String:String] = [String:String]()
-    var careersTestTypes:[String:[String]] = [String:[String]]()
+  var careerTypeImages:[String:String] = [String:String]()
+  var careersTestTypes:[String:[String]] = [String:[String]]()
   
-  // Declare and initialize views
+  // Declare and initialize views and models
   
-    let homeViewModel:HomeViewModel = HomeViewModel()
+  let homeViewModel:HomeViewModel = HomeViewModel()
     
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()

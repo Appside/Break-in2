@@ -14,7 +14,7 @@ class CalendarDayButton: UIButton {
   
   var today:Bool = false
   var clicked:Bool = false
-  var numberOfCirlceSegments:Int = 0
+  var deadlines:[[String]] = [[String]]()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -44,14 +44,23 @@ class CalendarDayButton: UIButton {
     if self.clicked {
       
       let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
+      var careers:[String] = [String]()
       
-      for var index:Int = 0 ; index < self.numberOfCirlceSegments ; index++ {
+      for var index:Int = 0 ; index < self.deadlines.count ; index++ {
+        
+        if !careers.contains(self.deadlines[index][1]) {
+          careers.append(self.deadlines[index][1])
+        }
+        
+      }
       
+      for var index:Int = 0 ; index < careers.count ; index++ {
+        
         CGContextSetFillColorWithColor(contextRef, self.circleColors[index].CGColor)
         
         CGContextBeginPath(contextRef)
         CGContextMoveToPoint(contextRef, self.bounds.width/2, self.bounds.height/2)
-        let arcSegmentAngle:Double = (2 * M_PI) / Double(self.numberOfCirlceSegments)
+        let arcSegmentAngle:Double = (2 * M_PI) / Double(careers.count)
         if self.today {
           CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 4, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
         }
@@ -59,7 +68,6 @@ class CalendarDayButton: UIButton {
           CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, self.bounds.height/2, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
         }
         CGContextFillPath(contextRef)
-        
       }
       
     }
@@ -72,13 +80,6 @@ class CalendarDayButton: UIButton {
       CGContextFillEllipseInRect(contextRef, CGRectMake((self.bounds.width - self.bounds.height)/2, 0, self.bounds.height, self.bounds.height))
       
     }
-    
-  }
-  
-  func drawCircle (numberOfSegments: Int) {
-    
-    self.numberOfCirlceSegments = numberOfSegments
-    self.setNeedsDisplay()
     
   }
   

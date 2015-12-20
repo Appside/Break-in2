@@ -10,7 +10,13 @@ import UIKit
 
 class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
-  let deadlineDates = ["Day":4,"Month":11,"Year":2015,"Company":"Nomura","Career":"Trading","Description":"Trading Analst"]
+  // Declare and initialize jobDeadlines
+  
+  var jobDeadlines:[[String:AnyObject]] = [[String:AnyObject]]()
+  
+  // Declare and initialize views and models
+  
+  let calendarModel:CalendarModel = CalendarModel()
   
   let calendarMonthTitleView:CalendarMonthTitleView = CalendarMonthTitleView()
   let calendarMonthsScrollView:UIScrollView = UIScrollView()
@@ -39,6 +45,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     self.currentYear = self.userCalendar.component(NSCalendarUnit.Year, fromDate: self.todaysDate)
     self.currentMonth = self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate)
+    
+    self.jobDeadlines = self.calendarModel.getJobDeadlines()
     
     // Add calendar subviews
     
@@ -344,12 +352,23 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
   }
   
-  func getDeadlineDates() -> [Int]{
+  func getJobDeadlinesForMonth(month: Int, year: Int) -> [[String:AnyObject]] {
     
-    let deadlineDate = [4,11,2015]
-    return deadlineDate
+    var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
     
+    for var index = 0 ; index < self.jobDeadlines.count ; index++ {
+      
+      if self.jobDeadlines[index]["year"] as! Int == year {
+        if self.jobDeadlines[index]["month"] as! Int == month {
+          deadlines.append(self.jobDeadlines[index])
+        }
+      }
+      
+    }
+    
+    return deadlines
   }
+  
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
