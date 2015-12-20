@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol ChooseCareerViewDelegate {
+  
+  func appendChosenCareer(career: String)
+  func removeChosenCareer(career: String)
+  
+}
+
 class ChooseCareerView: UIView {
   
   var careerTitle:String = String()
@@ -31,6 +38,7 @@ class ChooseCareerView: UIView {
   // Declare and initialize tracking variables
   
   var careerChosen:Bool = false
+  var delegate:ChooseCareerViewDelegate?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -156,6 +164,10 @@ class ChooseCareerView: UIView {
       self.crossButton.setImage(UIImage.init(named: "crossUnselected"), forState: UIControlState.Normal)
       
       self.careerChosen = true
+      
+      if let unwrappedDelegate = self.delegate {
+        unwrappedDelegate.appendChosenCareer(self.careerTitle)
+      }
     }
     
   }
@@ -167,6 +179,10 @@ class ChooseCareerView: UIView {
       self.crossButton.setImage(UIImage.init(named: "crossSelected"), forState: UIControlState.Normal)
       
       self.careerChosen = false
+      
+      if let unwrappedDelegate = self.delegate {
+        unwrappedDelegate.removeChosenCareer(self.careerTitle)
+      }
     }
     
   }

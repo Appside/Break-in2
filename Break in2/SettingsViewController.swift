@@ -13,7 +13,7 @@ import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class SettingsViewController: UIViewController, UIScrollViewDelegate {
+class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate {
   
   // Declare and initialize types of settings
   
@@ -161,6 +161,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
       // Create each chooseCareerView
       
       let chooseCareerViewAtIndex:ChooseCareerView = ChooseCareerView()
+      
+      // Set delegate
+      
+      chooseCareerViewAtIndex.delegate = self
       
       // Set chooseCareerView properties
       
@@ -538,6 +542,17 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate {
     self.currentChooseCareersScrollViewPage = Int(self.chooseCareersScrollView.contentOffset.x / self.chooseCareersScrollView.frame.size.width)
     self.chooseCareersPageControllerView.updatePageController(self.currentChooseCareersScrollViewPage)
 
+  }
+  
+  func appendChosenCareer(career: String) {
+    
+    self.chosenCareers.append(career)
+  }
+  
+  func removeChosenCareer(career: String) {
+    
+    self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(career)!)
+    
   }
   
 }
