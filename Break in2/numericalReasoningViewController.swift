@@ -33,8 +33,8 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19
     let questionLabel:UITextView = UITextView()
-    var allowedSeconds:Int = 10
-    var allowedMinutes:Int = 00
+    var allowedSeconds:Int = 00
+    var allowedMinutes:Int = 20
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let answerView:UIView = UIView()

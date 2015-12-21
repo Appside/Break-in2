@@ -13,8 +13,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   // Declare and initialize types of tests and difficulties available for selected career
   
   var testTypes:[String] = [String]()
-  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG"]
-  let testTypeSegues:[String:String] = ["Numerical Reasoning":"numericalReasoningSelected","Verbal Reasoning":"verbalReasoningSelected","Logical Reasoning":"verbalReasoningSelected"]
+  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG", "Arithmetic Reasoning":"arithmeticBG"]
+  let testTypeSegues:[String:String] = ["Numerical Reasoning":"numericalReasoningSelected","Verbal Reasoning":"verbalReasoningSelected","Logical Reasoning":"verbalReasoningSelected","Arithmetic Reasoning":"arithmeticReasoningSelected"]
   let testDifficulties:[String] = ["E", "M", "H"]
   
   // Declare and intialize views
