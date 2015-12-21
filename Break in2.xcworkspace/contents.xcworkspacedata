@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Break in2/Person+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Break in2/Person.swift">
+   </FileRef>
+   <FileRef
       location = "group:Break in2.xcodeproj">
    </FileRef>
    <FileRef

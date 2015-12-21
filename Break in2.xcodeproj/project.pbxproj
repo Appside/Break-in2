@@ -46,6 +46,10 @@
 		617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC6481BEF92590019AE9B /* HomeViewController.swift */; };
 		617FC64B1BEF92700019AE9B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64A1BEF92700019AE9B /* SettingsViewController.swift */; };
 		617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64C1BF89D560019AE9B /* Extensions.swift */; };
+		61CAD33E1C2708D200B8D887 /* LoginCredentials.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61CAD33C1C2708D200B8D887 /* LoginCredentials.xcdatamodeld */; };
+		61CAD3401C270BAE00B8D887 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CAD33F1C270BAE00B8D887 /* DataController.swift */; };
+		61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */; };
+		61CAD3481C2760B100B8D887 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CAD3461C2760B100B8D887 /* Person.swift */; };
 		61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB11D71BF902600081123B /* segueFromLeft.swift */; };
 		61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DB11D91BF904360081123B /* segueFromRight.swift */; };
 		61FCAED11C050E0C0072FDFB /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */; };
@@ -118,6 +122,10 @@
 		617FC6481BEF92590019AE9B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		617FC64A1BEF92700019AE9B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		617FC64C1BF89D560019AE9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Break in2/Extensions.swift"; sourceTree = "<group>"; };
+		61CAD33D1C2708D200B8D887 /* LoginCredentials.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoginCredentials.xcdatamodel; sourceTree = "<group>"; };
+		61CAD33F1C270BAE00B8D887 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		61CAD3461C2760B100B8D887 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		61DB11D71BF902600081123B /* segueFromLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromLeft.swift; sourceTree = "<group>"; };
 		61DB11D91BF904360081123B /* segueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromRight.swift; sourceTree = "<group>"; };
 		61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
@@ -281,6 +289,10 @@
 				614316501BEF843A0047A37D /* LaunchScreen.storyboard */,
 				617FC64E1BF89D6C0019AE9B /* Extensions */,
 				614316531BEF843A0047A37D /* Info.plist */,
+				61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */,
+				61CAD3461C2760B100B8D887 /* Person.swift */,
+				61CAD33C1C2708D200B8D887 /* LoginCredentials.xcdatamodeld */,
+				61CAD33F1C270BAE00B8D887 /* DataController.swift */,
 			);
 			path = "Break in2";
 			sourceTree = "<group>";
@@ -512,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61CAD3401C270BAE00B8D887 /* DataController.swift in Sources */,
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
 				610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */,
 				61FCAED31C0518740072FDFB /* Constants.swift in Sources */,
@@ -520,6 +533,7 @@
 				25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */,
 				25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */,
 				2526701A1C2378A6007D55BE /* CalendarView.swift in Sources */,
+				61CAD3481C2760B100B8D887 /* Person.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
 				617FC64B1BEF92700019AE9B /* SettingsViewController.swift in Sources */,
 				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,
@@ -532,6 +546,7 @@
 				49BF15EA1C2719DE00722698 /* HomeViewModel.swift in Sources */,
 				49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
+				61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */,
 				2526701B1C2378A6007D55BE /* CalendarMonthTitleView.swift in Sources */,
 				253AC83F1C27218100495DF5 /* CalendarModel.swift in Sources */,
 				4993753D1C02573100AA0588 /* categoryButton.swift in Sources */,
@@ -542,6 +557,7 @@
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				496387E61C1D9A69001EC164 /* testViewController.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,
+				61CAD33E1C2708D200B8D887 /* LoginCredentials.xcdatamodeld in Sources */,
 				253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */,
 				61FCAED11C050E0C0072FDFB /* SwiftNotice.swift in Sources */,
 				617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */,
@@ -806,6 +822,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		61CAD33C1C2708D200B8D887 /* LoginCredentials.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				61CAD33D1C2708D200B8D887 /* LoginCredentials.xcdatamodel */,
+			);
+			currentVersion = 61CAD33D1C2708D200B8D887 /* LoginCredentials.xcdatamodel */;
+			path = LoginCredentials.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6143163C1BEF843A0047A37D /* Project object */;
 }
