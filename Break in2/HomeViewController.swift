@@ -432,7 +432,7 @@ class HomeViewController: UIViewController {
     super.viewDidAppear(animated)
     
     if (PFUser.currentUser() != nil) {
-      self.loadUser()
+      self.loadUser(PFUser.currentUser()!)
     }
     else {
       self.view.loginUser(self)
@@ -462,9 +462,9 @@ class HomeViewController: UIViewController {
     
   }
   
-  func loadUser() {
+    func loadUser(user: PFUser) {
     
-    let user = PFUser.currentUser()!
+    //
     
   }
   

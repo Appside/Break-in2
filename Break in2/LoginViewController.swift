@@ -195,10 +195,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         
         if Ptoken != "" {
             
-            var set = self.Ppermissions as! NSSet //NSSet
-            var set2 = self.PdeclinedPerm as! NSSet
-            var arr = set.allObjects //Swift Array
-            var arr2 = set2.allObjects
+            let set = self.Ppermissions as! NSSet //NSSet
+            let set2 = self.PdeclinedPerm as! NSSet
+            let arr = set.allObjects //Swift Array
+            let arr2 = set2.allObjects
             
 //            let query = PFQuery(className: PF_USER_CLASS_NAME)
 //            query.includeKey(ParseFBID)
@@ -345,8 +345,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     PdeclinedPerm = item.valueForKey("declinedPermissions") as AnyObject!
                     PappId = item.valueForKey("appID") as! String
                     PuserId = item.valueForKey("userID") as! String
-                    Pexpiration = item.valueForKey("expirationDate") as! NSDate
-                    Prefresh = item.valueForKey("refreshDate") as! NSDate
+                    Pexpiration = (item.valueForKey("expirationDate") as! NSDate)
+                    Prefresh = (item.valueForKey("refreshDate") as! NSDate)
                 }
                 
             }

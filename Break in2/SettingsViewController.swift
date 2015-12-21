@@ -13,6 +13,7 @@ import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import FBSDKLoginKit
 import SCLAlertView
+import CoreData
 
 class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate {
   
@@ -39,6 +40,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   var chooseCareerViews:[ChooseCareerView] = [ChooseCareerView]()
   
   var settingsMenuViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+    
+    let moc = DataController().managedObjectContext
   
   // Declare and initialize design constants
   
@@ -235,6 +238,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         let user = PFUser.currentUser()!
         ParseExtensions.deleteUserFB(user)
         
+        //self.deleteFromCoreData()
+        var date:NSDate = NSDate()
+        self.saveToCoreData("", p: [], dP: [], aI: "", uI: "", ex: date, r: date)
+        
         self.noticeTop("Facebook account successfully deactivated", autoClear: true, autoClearTime: 3)
         self.view.loginUser(self)
         
@@ -250,6 +257,54 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     }
     
   }
+    
+    func deleteFromCoreData() {
+    
+        let PersonFetch = NSFetchRequest(entityName: "Person")
+        PersonFetch.returnsObjectsAsFaults = false
+        
+        do {
+            let details = try moc.executeFetchRequest(PersonFetch)
+            
+            if details.count > 0 {
+                
+                for item in details as! [NSManagedObject] {
+                    
+                    let itemData:NSManagedObject = item 
+                    moc.deleteObject(itemData)
+                    
+                }
+                
+            }else{
+                //do nothing
+            }
+            
+        }catch{
+            
+            let coreDataError = SCLAlertView()
+            coreDataError.showError("Local Save Error", subTitle: "Try Again")
+            
+        }
+        
+    }
+    
+    func saveToCoreData(t: String, p: AnyObject, dP: AnyObject, aI:String, uI: String, ex: NSDate, r: NSDate) {
+        
+        let entity = NSEntityDescription.insertNewObjectForEntityForName("Person", inManagedObjectContext: moc) as! Person
+        entity.setValue(t, forKey: "token")
+        entity.setValue(p, forKey: "permissions")
+        entity.setValue(dP, forKey: "declinedPermissions")
+        entity.setValue(aI, forKey: "appID")
+        entity.setValue(uI, forKey: "userID")
+        entity.setValue(ex, forKey: "expirationDate")
+        entity.setValue(r, forKey: "refreshDate")
+        do {
+            try moc.save()
+        } catch {
+            fatalError("failed to save")
+        }
+        
+    }
   
   func loadUser() {
     
