@@ -30,7 +30,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     let passageView:UIView = UIView()
     let passageLabel:UITextView = UITextView()
     var quizzModel:JSONModel = JSONModel()
-    var quizzArray:[verbalQuestion] = [verbalQuestion]()
+    var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19
     let questionLabel:UITextView = UITextView()
@@ -202,7 +202,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         
         //Display questions
         self.displayedQuestionIndex = 0
-        self.quizzArray = self.quizzModel.selectVerbalReasoning(self.totalNumberOfQuestions+1)
+        self.quizzArray = self.quizzModel.selectArithmeticReasoning(self.totalNumberOfQuestions+1)
         self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
         
         //Launch timer
@@ -320,7 +320,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         
     }
     
-    func displayQuestion(arrayOfQuestions:[verbalQuestion], indexQuestion:Int) {
+    func displayQuestion(arrayOfQuestions:[arithmeticQuestion], indexQuestion:Int) {
         
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
@@ -330,7 +330,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
-        self.passageLabel.text = self.quizzArray[indexQuestion].passage
+        self.passageLabel.text = self.quizzArray[indexQuestion].question
         
         //Update the view with the new question
         let questionText:String = arrayOfQuestions[indexQuestion].question
@@ -619,7 +619,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
             self.answerView.addSubview(feedbackLabel)
             
             feedbackLabel.setConstraintsToSuperview(10, bottom: 10, left: 30, right: 30)
-            feedbackLabel.text = self.quizzArray[questionFeedback].explanation
+            feedbackLabel.text = String(self.quizzArray[questionFeedback].correctAnswer)
             feedbackLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
             
             if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {

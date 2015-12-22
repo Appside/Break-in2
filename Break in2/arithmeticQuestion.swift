@@ -11,10 +11,8 @@ import UIKit
 class arithmeticQuestion {
     
     var questionType:String = String()
-    var passage:String = String()
     var question:String = String()
     var answers:[String] = [String]()
     var correctAnswer:Int = Int()
-    var explanation:String = String()
     
 }

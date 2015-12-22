@@ -47,6 +47,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var isTestComplete:Bool = false
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
+    var graphContent:UIView = UIView()
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -133,18 +134,17 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         //Initialize mainView, questionView and GraphView
         self.view.addSubview(self.mainView)
         self.mainView.setConstraintsToSuperview(75, bottom: 85, left: 20, right: 20)
-        let graphContent:UIView = UIView()
         self.mainView.addSubview(self.questionView)
-        self.mainView.addSubview(graphContent)
-        graphContent.addSubview(self.graphView)
+        self.mainView.addSubview(self.graphContent)
+        self.graphContent.addSubview(self.graphView)
         self.questionView.translatesAutoresizingMaskIntoConstraints = false
         self.graphView.translatesAutoresizingMaskIntoConstraints = false
-        graphContent.translatesAutoresizingMaskIntoConstraints = false
+        self.graphContent.translatesAutoresizingMaskIntoConstraints = false
         
-        let graphContentTop:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 90)
-        let graphContentRight:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let graphContentLeft:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let graphContentBottom:NSLayoutConstraint = NSLayoutConstraint(item: graphContent, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        let graphContentTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphContent, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 90)
+        let graphContentRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphContent, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let graphContentLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphContent, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let graphContentBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.graphContent, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
         self.mainView.addConstraints([graphContentTop,graphContentRight,graphContentLeft,graphContentBottom])
         
         let questionViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
@@ -163,16 +163,16 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         self.questionLabel.backgroundColor = UIColor(white: 0, alpha: 0)
         self.questionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
         self.questionView.layer.cornerRadius = 8.0
-        graphContent.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-        graphContent.layer.cornerRadius = 8.0
+        self.graphContent.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        self.graphContent.layer.cornerRadius = 8.0
         
-        graphContent.addSubview(self.graphTitle)
+        self.graphContent.addSubview(self.graphTitle)
         self.graphTitle.translatesAutoresizingMaskIntoConstraints = false
         self.graphTitle.numberOfLines = 0
-        let graphTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
-        let graphTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 10)
-        let graphTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
-        graphContent.addConstraints([graphTitleTop,graphTitleRight,graphTitleLeft])
+        let graphTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+        let graphTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 10)
+        let graphTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
+        self.graphContent.addConstraints([graphTitleTop,graphTitleRight,graphTitleLeft])
         let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35)
         self.graphTitle.addConstraint(graphTitleHeight)
         self.graphTitle.textAlignment = NSTextAlignment.Left
@@ -180,11 +180,11 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
         self.graphTitle.textColor = UIColor.whiteColor()
         
         //Update top constraint
-        let graphViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 50)
-        let graphViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let graphViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let graphViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: graphContent, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        graphContent.addConstraints([graphViewTop,graphViewRight,graphViewLeft,graphViewBottom])
+        let graphViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 50)
+        let graphViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let graphViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let graphViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        self.graphContent.addConstraints([graphViewTop,graphViewRight,graphViewLeft,graphViewBottom])
         
         //Create nextButton
         let nextUIView:UIView = UIView()
@@ -252,6 +252,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
             self.graphView.alpha = 0.0
             self.descriptionSwipeLabel.text = "Swipe down for Question"
             self.graphTitle.alpha = 0.0
+            self.graphContent.alpha = 0.0
             }, completion: nil)
     }
     
@@ -263,6 +264,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
             self.graphView.alpha = 1.0
             self.descriptionSwipeLabel.text = "Swipe up for Answers"
             self.graphTitle.alpha = 1.0
+            self.graphContent.alpha = 1.0
             }, completion: nil)
     }
     
@@ -510,6 +512,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
                     self.swipeMenuBottomConstraint.constant = 320
                     self.view.layoutIfNeeded()
                     self.graphView.alpha = 1.0
+                    self.graphContent.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Swipe up for Answers"
                     self.graphTitle.alpha = 1.0
                     }, completion: nil)
@@ -882,6 +885,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
                 self.swipeMenuBottomConstraint.constant = 5
                 self.view.layoutIfNeeded()
                 self.graphView.alpha = 0.0
+                self.graphContent.alpha = 0.0
                 self.descriptionSwipeLabel.text = "Swipe down for Question"
                 self.graphTitle.alpha = 0.0
                 }, completion: nil)

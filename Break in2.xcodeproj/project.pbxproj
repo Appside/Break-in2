@@ -24,6 +24,7 @@
 		253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253AC83E1C27218100495DF5 /* JSONModel.swift */; };
 		25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25411FF51C1E14EF000118BF /* FacebookButton.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
+		492506E21C2A0188008AD209 /* ArithmeticReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 492506E11C2A0188008AD209 /* ArithmeticReasoning.json */; settings = {ASSET_TAGS = (); }; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
 		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; };
@@ -93,6 +94,7 @@
 		25411FF51C1E14EF000118BF /* FacebookButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookButton.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
+		492506E11C2A0188008AD209 /* ArithmeticReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ArithmeticReasoning.json; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* numericalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalReasoningViewController.swift; sourceTree = "<group>"; };
 		499375361C02573100AA0588 /* numericalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalQuestion.swift; sourceTree = "<group>"; };
 		499375381C02573100AA0588 /* categoryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = categoryButton.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				253AC83B1C2716B600495DF5 /* JobDeadlines.json */,
 				251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */,
 				251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */,
+				492506E11C2A0188008AD209 /* ArithmeticReasoning.json */,
 			);
 			name = "JSON Files";
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				253AC83D1C2716B700495DF5 /* JobDeadlines.json in Resources */,
 				614316521BEF843A0047A37D /* LaunchScreen.storyboard in Resources */,
 				6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */,
+				492506E21C2A0188008AD209 /* ArithmeticReasoning.json in Resources */,
 				6143164D1BEF843A0047A37D /* Main.storyboard in Resources */,
 				251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */,
 				251D4BC01C11FBEB004A6715 /* VerbalReasoning.json in Resources */,
