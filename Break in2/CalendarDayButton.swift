@@ -10,7 +10,10 @@ import UIKit
 
 class CalendarDayButton: UIButton {
   
-  var circleColors:[UIColor] = [UIColor.init(red: 208/255, green: 2/255, blue: 27/255, alpha: 0.5),UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 0.5),UIColor.init(red: 126/255, green: 211/255, blue: 33/255, alpha: 0.5),UIColor.init(red: 248/255, green: 231/255, blue: 28/255, alpha: 0.5)]
+  let calendarModel:JSONModel = JSONModel()
+  
+  var careerTypes:[String] = [String]()
+  var circleColors:[String:UIColor] = [String:UIColor]()
   
   var year:Int = 0
   var month:Int = 0
@@ -26,6 +29,15 @@ class CalendarDayButton: UIButton {
     self.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
     self.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 14)
     
+    // Get app variables
+    
+    self.careerTypes = self.calendarModel.getAppVariables("careerTypes") as! [String]
+    
+    let appColors:[UIColor] = self.calendarModel.getAppColors()
+    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+      self.circleColors.updateValue(appColors[index], forKey: self.careerTypes[index])
+    }
+
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -60,7 +72,7 @@ class CalendarDayButton: UIButton {
       
       for var index:Int = 0 ; index < careers.count ; index++ {
         
-        CGContextSetFillColorWithColor(contextRef, self.circleColors[index].CGColor)
+        CGContextSetFillColorWithColor(contextRef, self.circleColors[careers[index]]!.CGColor)
         
         CGContextBeginPath(contextRef)
         CGContextMoveToPoint(contextRef, self.bounds.width/2, self.bounds.height/2)

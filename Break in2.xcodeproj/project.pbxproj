@@ -21,19 +21,17 @@
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
 		253AC83C1C2716B700495DF5 /* AppVariables.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83A1C2716B600495DF5 /* AppVariables.json */; };
 		253AC83D1C2716B700495DF5 /* JobDeadlines.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83B1C2716B600495DF5 /* JobDeadlines.json */; };
-		253AC83F1C27218100495DF5 /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253AC83E1C27218100495DF5 /* CalendarModel.swift */; };
+		253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253AC83E1C27218100495DF5 /* JSONModel.swift */; };
 		25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25411FF51C1E14EF000118BF /* FacebookButton.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
-		4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375371C02573100AA0588 /* QuizzModel.swift */; };
 		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; };
 		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; };
 		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
 		49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */; };
-		49BF15EA1C2719DE00722698 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BF15E91C2719DE00722698 /* HomeViewModel.swift */; };
-		49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */; settings = {ASSET_TAGS = (); }; };
+		49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */; };
+		49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
@@ -91,18 +89,16 @@
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
 		253AC83A1C2716B600495DF5 /* AppVariables.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppVariables.json; sourceTree = "<group>"; };
 		253AC83B1C2716B600495DF5 /* JobDeadlines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JobDeadlines.json; sourceTree = "<group>"; };
-		253AC83E1C27218100495DF5 /* CalendarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
+		253AC83E1C27218100495DF5 /* JSONModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONModel.swift; sourceTree = "<group>"; };
 		25411FF51C1E14EF000118BF /* FacebookButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookButton.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* numericalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalReasoningViewController.swift; sourceTree = "<group>"; };
 		499375361C02573100AA0588 /* numericalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalQuestion.swift; sourceTree = "<group>"; };
-		499375371C02573100AA0588 /* QuizzModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizzModel.swift; sourceTree = "<group>"; };
 		499375381C02573100AA0588 /* categoryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = categoryButton.swift; sourceTree = "<group>"; };
 		499375391C02573100AA0588 /* paddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingLabel.swift; sourceTree = "<group>"; };
 		49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = verbalReasoningViewController.swift; sourceTree = "<group>"; };
 		49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = verbalQuestion.swift; sourceTree = "<group>"; };
-		49BF15E91C2719DE00722698 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
 		49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticQuestion.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
@@ -171,7 +167,6 @@
 				252670171C2378A6007D55BE /* CalendarMonthView.swift */,
 				252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */,
 				252670191C2378A6007D55BE /* CalendarDayButton.swift */,
-				253AC83E1C27218100495DF5 /* CalendarModel.swift */,
 			);
 			name = CalendarView;
 			sourceTree = "<group>";
@@ -190,7 +185,6 @@
 			children = (
 				617FC6481BEF92590019AE9B /* HomeViewController.swift */,
 				25ADC3AC1C052BA4004465FF /* CareerButton.swift */,
-				49BF15E91C2719DE00722698 /* HomeViewModel.swift */,
 			);
 			name = HomeView;
 			sourceTree = "<group>";
@@ -215,7 +209,6 @@
 				49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */,
 				49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */,
 				49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */,
-				499375371C02573100AA0588 /* QuizzModel.swift */,
 			);
 			name = QuestionView;
 			sourceTree = "<group>";
@@ -281,6 +274,7 @@
 				499375391C02573100AA0588 /* paddingLabel.swift */,
 				2510B6E01C021C24005AE520 /* PageControllerView.swift */,
 				25411FF51C1E14EF000118BF /* FacebookButton.swift */,
+				253AC83E1C27218100495DF5 /* JSONModel.swift */,
 				252670141C23787A007D55BE /* CalendarView */,
 				255264B11C1F0DA800E64D33 /* SettingsView */,
 				253AC8391C2711DD00495DF5 /* JSON Files */,
@@ -547,16 +541,14 @@
 				4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */,
 				617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */,
 				2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */,
-				49BF15EA1C2719DE00722698 /* HomeViewModel.swift in Sources */,
 				49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
 				61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */,
 				2526701B1C2378A6007D55BE /* CalendarMonthTitleView.swift in Sources */,
-				253AC83F1C27218100495DF5 /* CalendarModel.swift in Sources */,
+				253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */,
 				4993753D1C02573100AA0588 /* categoryButton.swift in Sources */,
 				2526701E1C2378A6007D55BE /* CalendarDayButton.swift in Sources */,
 				2514F16D1C1F13B1003E8001 /* ChooseCareerView.swift in Sources */,
-				4993753C1C02573100AA0588 /* QuizzModel.swift in Sources */,
 				4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,

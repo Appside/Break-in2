@@ -13,6 +13,7 @@ class CareerButton: UIButton {
   var careerTitle:String = String()
   var careerImage:UIImage = UIImage()
   let careerImageView:UIImageView = UIImageView()
+  let careerColorView:UIView = UIView()
   
   var borderWidth:CGFloat = 3
   var careerImageHeight:CGFloat = 25
@@ -23,6 +24,7 @@ class CareerButton: UIButton {
     // Add careerImageView as a subview
     
     self.addSubview(self.careerImageView)
+    self.addSubview(self.careerColorView)
     
     // Customize button properties
     
@@ -68,6 +70,21 @@ class CareerButton: UIButton {
     
     self.careerImageView.addConstraints([careerImageViewHeightConstraint, careerImageViewWidthConstraint])
     self.addConstraints([careerImageViewCenterYConstraint, careerImageViewLeftConstraint])
+    
+    // Create and add constraints for careerColorView
+    
+    self.careerColorView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let careerColorViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let careerColorViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.borderWidth * -1)
+    
+    let careerColorViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    
+    let careerColorViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 10)
+    
+    self.careerColorView.addConstraints([careerColorViewWidthConstraint])
+    self.addConstraints([careerColorViewTopConstraint, careerColorViewRightConstraint, careerColorViewBottomConstraint])
     
   }
 

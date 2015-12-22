@@ -1,7 +1,9 @@
 [{
 "careerTypes":["Investment Banking", "Engineering", "Trading", "Technology"],
+"colorsRGBAlpha":[[208,2,27,1],[74,144,226,1], [126,211,33,1],[248,231,28,1]],
 "careerTypeImages":{"Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Technology":"laptop"},
 "careersTestTypes":{"Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Numerical Reasoning", "Logical Reasoning","Arithmetic Reasoning"], "Technology":["Verbal Reasoning","Logical Reasoning"]},
-"chosenCareers":["Investment Banking", "Technology"],
-"settings":["Upgrade", "Help","About","Feedback"],
-}]
+"careersTestTypes":{"Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Logical Reasoning"], "Technology":["Verbal Reasoning","Logical Reasoning"]},
+"chosenCareers":["Investment Banking", "Technology", "Engineering", "Trading"],
+"settings":["Upgrade", "Help","About","Feedback"]
+ }]

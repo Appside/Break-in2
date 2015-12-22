@@ -19,10 +19,11 @@ class HomeViewController: UIViewController {
   var careerTypes:[String] = [String]()
   var careerTypeImages:[String:String] = [String:String]()
   var careersTestTypes:[String:[String]] = [String:[String]]()
+  var careerColors:[String:UIColor] = [String:UIColor]()
   
   // Declare and initialize views and models
   
-  let homeViewModel:HomeViewModel = HomeViewModel()
+  let homeViewModel:JSONModel = JSONModel()
     
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
@@ -50,8 +51,6 @@ class HomeViewController: UIViewController {
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
   
-  let borderWidth:CGFloat = 3
-  
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   var loginPageControllerViewHeight:CGFloat = 50
@@ -68,6 +67,11 @@ class HomeViewController: UIViewController {
     self.careerTypes = self.homeViewModel.getAppVariables("careerTypes") as! [String]
     self.careerTypeImages = self.homeViewModel.getAppVariables("careerTypeImages") as! [String:String]
     self.careersTestTypes = self.homeViewModel.getAppVariables("careersTestTypes") as! [String:[String]]
+    
+    let appColors:[UIColor] = self.homeViewModel.getAppColors()
+    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+      self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
+    }
     
     // Add background image to HomeViewController's view
     
@@ -97,8 +101,7 @@ class HomeViewController: UIViewController {
       
       careerButtonAtIndex.careerTitle = self.careerTypes[index]
       careerButtonAtIndex.careerImage = UIImage.init(named: self.careerTypeImages[self.careerTypes[index]]!)!
-      
-      careerButtonAtIndex.borderWidth = self.borderWidth
+      careerButtonAtIndex.careerColorView.backgroundColor = self.careerColors[self.careerTypes[index]]
       
       // Call method to display careerButton content
       

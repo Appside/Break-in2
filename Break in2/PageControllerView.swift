@@ -10,9 +10,11 @@ import UIKit
 
 class PageControllerView: UIView {
   
+  let pageControllerModel:JSONModel = JSONModel()
+  
   // Declare and initialize types colors for page controller
   
-  var pageControllerColors:[UIColor] = [UIColor.init(red: 208/255, green: 2/255, blue: 27/255, alpha: 1),UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 1),UIColor.init(red: 126/255, green: 211/255, blue: 33/255, alpha: 1),UIColor.init(red: 248/255, green: 231/255, blue: 28/255, alpha: 1)]
+  var pageControllerColors:[UIColor] = [UIColor]()
   
   // Declare and initialize drawing properties
   
@@ -33,6 +35,10 @@ class PageControllerView: UIView {
     super.init(frame: frame)
     
     self.opaque = false
+    
+    // Get colors
+    
+    self.pageControllerColors = self.pageControllerModel.getAppColors()
     
   }
 

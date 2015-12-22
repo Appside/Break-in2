@@ -28,7 +28,7 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     let mainView:UIView = UIView()
     let questionView:UIView = UIView()
     let graphView:UIView = UIView()
-    var quizzModel:QuizzModel = QuizzModel()
+    var quizzModel:JSONModel = JSONModel()
     var quizzArray:[numericalQuestion] = [numericalQuestion]()
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19

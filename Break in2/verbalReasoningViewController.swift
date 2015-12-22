@@ -29,7 +29,7 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     let questionView:UIView = UIView()
     let passageView:UIView = UIView()
     let passageLabel:UITextView = UITextView()
-    var quizzModel:QuizzModel = QuizzModel()
+    var quizzModel:JSONModel = JSONModel()
     var quizzArray:[verbalQuestion] = [verbalQuestion]()
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19

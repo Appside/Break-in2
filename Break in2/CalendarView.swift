@@ -13,10 +13,11 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   // Declare and initialize jobDeadlines
   
   var jobDeadlines:[[String:AnyObject]] = [[String:AnyObject]]()
-  
+  var chosenCareers:[String] = [String]()
+
   // Declare and initialize views and models
   
-  let calendarModel:CalendarModel = CalendarModel()
+  let calendarModel:JSONModel = JSONModel()
   
   let calendarMonthTitleView:CalendarMonthTitleView = CalendarMonthTitleView()
   let calendarMonthsScrollView:UIScrollView = UIScrollView()
@@ -47,7 +48,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     self.currentMonth = self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate)
     
     self.jobDeadlines = self.calendarModel.getJobDeadlines()
-    
+    self.chosenCareers = self.calendarModel.getAppVariables("chosenCareers") as! [String]
+
     // Add calendar subviews
     
     self.addSubview(self.calendarMonthTitleView)
@@ -479,11 +481,15 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     for var index = 0 ; index < self.jobDeadlines.count ; index++ {
       
-      if self.jobDeadlines[index]["year"] as! Int == year {
-        if self.jobDeadlines[index]["month"] as! Int == month {
-          deadlines.append(self.jobDeadlines[index])
+      if self.chosenCareers.contains(self.jobDeadlines[index]["career"] as! String) {
+        if self.jobDeadlines[index]["year"] as! Int == year {
+          if self.jobDeadlines[index]["month"] as! Int == month {
+            deadlines.append(self.jobDeadlines[index])
+          }
         }
       }
+      
+      
       
     }
     
