@@ -38,7 +38,7 @@ class HomeViewController: UIViewController {
   var careerButtons:[CareerButton] = [CareerButton]()
   let scrollInfoLabel:UILabel = UILabel()
   
-  var careersBackgroundViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -334,10 +334,10 @@ class HomeViewController: UIViewController {
     
     let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.careersBackgroundViewBottomConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 8) + (self.menuButtonHeight * 4.5))
+    self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height)
     
     self.careersBackgroundView.addConstraint(careersBackgroundViewHeightConstraint)
-    self.view.addConstraints([careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, self.careersBackgroundViewBottomConstraint])
+    self.view.addConstraints([careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, self.careersBackgroundViewTopConstraint])
     
     // Create and add constraints for logOutButton
     
@@ -516,7 +516,7 @@ class HomeViewController: UIViewController {
       
       self.settingsButton.alpha = 1
       self.statsButton.alpha = 1
-      self.careersBackgroundViewBottomConstraint.constant = self.minorMargin
+      self.careersBackgroundViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
       if !self.segueFromLoginView {
         self.calendarBackgroundView.alpha = 1
       }
@@ -544,7 +544,7 @@ class HomeViewController: UIViewController {
       self.calendarBackgroundView.alpha = 0
       self.settingsButton.alpha = 0
       self.statsButton.alpha = 0
-      self.careersBackgroundViewBottomConstraint.constant = (self.minorMargin * 8) + (self.menuButtonHeight * 4.5)
+      self.careersBackgroundViewTopConstraint.constant = self.screenFrame.height
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in

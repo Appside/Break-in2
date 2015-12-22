@@ -17,12 +17,14 @@ import CoreData
 
 class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate {
   
+  let settingsModel:JSONModel = JSONModel()
+  
   // Declare and initialize types of settings
   
-  let settings:[String] = ["Upgrade", "Help","About","Feedback"]
+  var settings:[String] = [String]()
   var careerTypes:[String] = [String]()
   var careerTypeImages:[String:String] = [String:String]()
-  var chosenCareers:[String] = ["Investment Banking", "Technology"]
+  var chosenCareers:[String] = [String]()
   
   // Declare and initialize views
   
@@ -39,7 +41,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let chooseCareersScrollView:UIScrollView = UIScrollView()
   var chooseCareerViews:[ChooseCareerView] = [ChooseCareerView]()
   
-  var settingsMenuViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var settingsMenuViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
     
     let moc = DataController().managedObjectContext
   
@@ -65,6 +67,11 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     super.viewDidLoad()
     
     self.view.addHomeBG()
+    
+    // Get app variables
+    
+    self.settings = self.settingsModel.getAppVariables("settings") as! [String]
+    self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
     
     // Add subviews to the main view
     
@@ -354,10 +361,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     let settingsMenuViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.settingsMenuViewBottomConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 8) + (self.menuButtonHeight * 4.5))
+    self.settingsMenuViewTopConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height)
     
     self.settingsMenuView.addConstraint(settingsMenuViewHeightConstraint)
-    self.view.addConstraints([settingsMenuViewRightConstraint, settingsMenuViewLeftConstraint, self.settingsMenuViewBottomConstraint])
+    self.view.addConstraints([settingsMenuViewRightConstraint, settingsMenuViewLeftConstraint, self.settingsMenuViewTopConstraint])
     
     // Create and add constraints for chooseCareersView
     
@@ -549,7 +556,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       self.backButton.alpha = 1
-      self.settingsMenuViewBottomConstraint.constant = self.minorMargin
+      self.settingsMenuViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
       self.chooseCareersView.alpha = 1
       self.view.layoutIfNeeded()
       
@@ -563,7 +570,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       self.chooseCareersView.alpha = 0
       self.backButton.alpha = 0
-      self.settingsMenuViewBottomConstraint.constant = (self.minorMargin * 8) + (self.menuButtonHeight * 4.5)
+      self.settingsMenuViewTopConstraint.constant = self.screenFrame.height
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in

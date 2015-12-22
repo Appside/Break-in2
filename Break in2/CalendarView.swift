@@ -64,6 +64,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     self.backgroundColor = UIColor.whiteColor()
     
+    self.calendarMonthsScrollView.clipsToBounds = true
     self.calendarMonthsScrollView.pagingEnabled = true
     self.calendarMonthsScrollView.showsHorizontalScrollIndicator = false
     self.calendarMonthsScrollView.setContentOffset(CGPointMake(self.calendarMonthsScrollView.frame.width, 0), animated: false)
