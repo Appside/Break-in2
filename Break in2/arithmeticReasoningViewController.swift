@@ -24,21 +24,15 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     let swipeMenuTopBar:UIView = UIView()
     let timeLabel:UILabel = UILabel()
     var timeTimer:NSTimer = NSTimer()
-    let descriptionSwipeLabel:UILabel = UILabel()
     let mainView:UIView = UIView()
-    let questionView:UIView = UIView()
-    let passageView:UIView = UIView()
-    let passageLabel:UITextView = UITextView()
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19
-    let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 20
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
-    let answerView:UIView = UIView()
     let nextButton:UILabel = UILabel()
     var selectedAnswers:[Int] = [Int]()
     var qViewHeight:NSLayoutConstraint = NSLayoutConstraint()
@@ -47,6 +41,8 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     var isTestComplete:Bool = false
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
+    var answerView:UIView = UIView()
+    var questionRect:UIView = UIView()
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -56,13 +52,18 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         self.countSeconds = self.allowedSeconds
         self.countMinutes = self.allowedMinutes
         
-        
         //Initialize backgroun UIView
         self.view.addSubview(self.backgroungUIView)
         self.backgroungUIView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        self.backgroungUIView.addHomeBG()
+        let width = UIScreen.mainScreen().bounds.size.width
+        let height = UIScreen.mainScreen().bounds.size.height
+        let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
+        imageViewBackground.image = UIImage(named: "arithmeticBG")
+        imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
+        self.backgroungUIView.addSubview(imageViewBackground)
+        self.backgroungUIView.sendSubviewToBack(imageViewBackground)
         
-        //Initialize menuBackButton UIView
+        //Initialize back home button
         self.view.addSubview(self.menuBackButton)
         self.menuBackButton.translatesAutoresizingMaskIntoConstraints = false
         let topMenuViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.menuBackButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
@@ -86,7 +87,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
         
-        //Initialize questionMenu UIView
+        //Initialize questionNumber Label
         self.view.addSubview(self.questionMenu)
         self.questionMenu.translatesAutoresizingMaskIntoConstraints = false
         let questionViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
@@ -109,67 +110,35 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         let swipeMenuTopBarLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.swipeMenuTopBar, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
         let swipeMenuTopBarRight:NSLayoutConstraint = NSLayoutConstraint(item: self.swipeMenuTopBar, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -10)
         self.swipeUIView.addConstraints([swipeMenuTopBarTop,swipeMenuTopBarLeft,swipeMenuTopBarRight])
-        let swipeMenuTopBarHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.swipeMenuTopBar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+        let swipeMenuTopBarHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.swipeMenuTopBar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30)
+        
         self.swipeMenuTopBar.addConstraint(swipeMenuTopBarHeight)
         self.swipeMenuTopBar.addSubview(self.timeLabel)
         self.timeLabel.text = "\(self.countMinutes):\(self.countSeconds)"
-        self.timeLabel.setConstraintsToSuperview(0, bottom: 30, left: 0, right: 0)
+        self.timeLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 18.0)
         self.timeLabel.textAlignment = NSTextAlignment.Center
         self.timeLabel.textColor = UIColor.redColor()
         self.timeLabel.userInteractionEnabled = true
-        self.swipeMenuTopBar.addSubview(self.descriptionSwipeLabel)
-        self.descriptionSwipeLabel.setConstraintsToSuperview(30, bottom: 0, left: 0, right: 0)
-        self.descriptionSwipeLabel.text = "Swipe up for Answers"
-        self.descriptionSwipeLabel.font = UIFont(name: "HelveticaNeue-Medium",size: 14.0)
-        self.descriptionSwipeLabel.textAlignment = NSTextAlignment.Center
-        self.descriptionSwipeLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-        self.descriptionSwipeLabel.userInteractionEnabled = true
-        self.swipeUIView.addSubview(self.answerView)
-        self.answerView.translatesAutoresizingMaskIntoConstraints = false
-        self.answerView.setConstraintsToSuperview(80, bottom: 70, left: 0, right: 0)
         
-        //Initialize mainView, questionView and passageView
+        //Initialize mainView and answerView
         self.view.addSubview(self.mainView)
-        self.mainView.setConstraintsToSuperview(75, bottom: 85, left: 20, right: 20)
-        self.mainView.addSubview(self.questionView)
-        self.mainView.addSubview(self.passageView)
-        self.questionView.translatesAutoresizingMaskIntoConstraints = false
-        self.passageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let questionViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-        let questionViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let questionViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        self.mainView.addConstraints([questionViewTop,questionViewRight,questionViewLeft])
-        self.qViewHeight = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 90)
-        self.mainView.addConstraint(qViewHeight)
-        
-        //Design of passageView
-        self.passageView.addSubview(self.passageLabel)
-        self.passageLabel.setConstraintsToSuperview(40, bottom: 40, left: 40, right: 40)
-        self.passageLabel.textColor = UIColor.blackColor()
-        self.passageLabel.font = UIFont(name: "HelveticaNeue", size: 16.0)
-        self.passageView.backgroundColor = UIColor(patternImage: UIImage(named: "bgPattern")!)
-        self.passageLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
-        self.passageView.layer.cornerRadius = 10.0
-        self.passageLabel.textAlignment = NSTextAlignment.Justified
-        
-        //update questionView
-        self.questionView.addSubview(self.questionLabel)
-        self.questionLabel.setConstraintsToSuperview(10, bottom: 0, left: 0, right: 0)
-        self.questionLabel.textColor = UIColor.whiteColor()
-        self.questionLabel.font = UIFont(name: "HelveticaNeue",size: 18.0)
-        self.questionLabel.textAlignment = NSTextAlignment.Center
-        self.questionLabel.backgroundColor = UIColor(white: 0, alpha: 0)
-        self.questionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-        self.questionView.layer.cornerRadius = 8.0
-        
-        //Update top constraint
-        let passageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 110)
-        let passageViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let passageViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let passageViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        self.mainView.addConstraints([passageViewTop,passageViewRight,passageViewLeft,passageViewBottom])
+        self.mainView.setConstraintsToSuperview(75, bottom: 130, left: 20, right: 20)
+        self.mainView.addSubview(self.answerView)
+        self.answerView.translatesAutoresizingMaskIntoConstraints = false
+        let answerViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10)
+        let answerViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let answerViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        self.mainView.addConstraints([answerViewTop,answerViewRight,answerViewBottom])
+        let answerViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 75)
+        self.answerView.addConstraint(answerViewWidth)
+        self.mainView.addSubview(self.questionRect)
+        self.questionRect.translatesAutoresizingMaskIntoConstraints = false
+        let questionRectTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10)
+        let questionRectBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        let questionRectRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -85)
+        let questionRectLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        self.mainView.addConstraints([questionRectTop,questionRectRight,questionRectBottom,questionRectLeft])
         
         //Create nextButton
         let nextUIView:UIView = UIView()
@@ -181,7 +150,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         self.nextButton.textAlignment = NSTextAlignment.Center
         self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
         self.nextButton.text = "Next"
-        let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 320)
+        let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 50)
         let rightLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20))
         let leftLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20))
         self.swipeUIView.addConstraints([topLabelMargin,rightLabelMargin,leftLabelMargin])
@@ -211,42 +180,14 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         //Initialize swipeUIView
         self.view.addSubview(self.swipeUIView)
         self.swipeUIView.translatesAutoresizingMaskIntoConstraints = false
-        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 390)
+        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 120)
         self.swipeUIView.addConstraint(self.swipeMenuHeightConstraint)
-        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 320)
+        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 5)
         let leftMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
         let rightMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20)
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
         self.swipeUIView.backgroundColor = UIColor.whiteColor()
         self.swipeUIView.layer.cornerRadius = 8.0
-        var swipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        var swipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        swipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showSwipeMenu:"))
-        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
-        self.swipeUIView.addGestureRecognizer(swipeUpGesture)
-        swipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideSwipeMenu:"))
-        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
-        self.swipeUIView.addGestureRecognizer(swipeDownGesture)
-    }
-    
-    //Show Swipe Menu
-    func showSwipeMenu(sender: UISwipeGestureRecognizer) {
-        UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 5
-            self.view.layoutIfNeeded()
-            self.passageView.alpha = 0.0
-            self.descriptionSwipeLabel.text = "Swipe down for Question"
-            }, completion: nil)
-    }
-    
-    //Hie Swipe Menu
-    func hideSwipeMenu(sender: UISwipeGestureRecognizer) {
-        UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 320
-            self.view.layoutIfNeeded()
-            self.passageView.alpha = 1.0
-            self.descriptionSwipeLabel.text = "Swipe up for Answers"
-            }, completion: nil)
     }
     
     func updateTimer() {
@@ -330,94 +271,83 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
-        self.passageLabel.text = self.quizzArray[indexQuestion].question
-        
-        //Update the view with the new question
-        let questionText:String = arrayOfQuestions[indexQuestion].question
-        self.questionLabel.text = questionText
-        
+
         // add answers to SwipeUIVIew
         for answerSubView in self.answerView.subviews {
             answerSubView.removeFromSuperview()
         }
         let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
-        let buttonHeight:Int = 50
+        let questionAsked:String = self.quizzArray[indexQuestion].question
+        let buttonHeight:Int = 75
         var i:Int = 0
         
         for i=0; i<arrayAnswers.count;i++ {
-            let answerUIButton:UIView = UIView()
-            let answerUILabel:UILabel = UILabel()
             let answerNumber:UIButton = UIButton()
-            answerUIButton.translatesAutoresizingMaskIntoConstraints = false
-            answerUILabel.translatesAutoresizingMaskIntoConstraints = false
+            let matchingQuestionLabel:UIButton = UIButton()
             answerNumber.translatesAutoresizingMaskIntoConstraints = false
-            self.answerView.addSubview(answerUIButton)
-            answerUIButton.addSubview(answerUILabel)
-            answerUIButton.addSubview(answerNumber)
+            matchingQuestionLabel.translatesAutoresizingMaskIntoConstraints = false
+            self.answerView.addSubview(answerNumber)
+            self.questionRect.addSubview(matchingQuestionLabel)
+
             answerNumber.tag = i
-            answerNumber.setTitle(String(i+1), forState: .Normal)
+            answerNumber.setTitle(arrayAnswers[i], forState: .Normal)
             answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-            answerNumber.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            answerNumber.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-            answerUILabel.text = String(arrayAnswers[i])
-            answerUILabel.textAlignment = NSTextAlignment.Center
-            answerUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-            answerUILabel.numberOfLines = 0
-            answerUILabel.adjustsFontSizeToFitWidth = true
-            answerUIButton.backgroundColor = UIColor.whiteColor()
-            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
-            answerUIButton.layer.borderWidth = 3.0
-            answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+            answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+            answerNumber.layer.borderWidth = 2.0
+            answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 20.0)
             
-            //Set constraints to answerViews
-            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
-            let rightMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20))
-            let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20))
-            self.answerView.addConstraints([topMargin,rightMargin,leftMargin])
+            matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+            matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-LightBold", size: 20.0)
+            matchingQuestionLabel.tag = i
+            matchingQuestionLabel.setTitle(questionAsked, forState: .Normal)
+            matchingQuestionLabel.alpha = 0.0
             
-            let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: CGFloat(buttonHeight))
-            answerUIButton.addConstraint(heightConstraint)
+            let topM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.questionRect, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
+            let leftM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.questionRect, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+            let rightM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.questionRect, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+            self.questionRect.addConstraints([topM,leftM,rightM])
+            let heightM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight))
+            matchingQuestionLabel.addConstraint(heightM)
             
-            let topM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-            let rightM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-            let leftM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 50)
-            let bottomM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-            answerUIButton.addConstraints([topM,rightM,leftM,bottomM])
-            
-            let topMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-            let leftMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-            let bottomMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-            answerUIButton.addConstraints([topMM,leftMM,bottomMM])
-            let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
-            answerNumber.addConstraint(widthMM)
-            
+            let topMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
+            let leftMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+            let rightMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+            self.answerView.addConstraints([topMM,leftMM,rightMM])
+            let heightMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight))
+            answerNumber.addConstraint(heightMM)
+    
             let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
-            answerUIButton.addGestureRecognizer(tapGesture)
+            answerNumber.addGestureRecognizer(tapGesture)
         }
     }
     
     func answerIsSelected(gesture:UITapGestureRecognizer) {
+        for buttons in self.answerView.subviews {
+            if let anyButton = buttons as? UIButton {
+                anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+            }
+        }
+        for buttons in self.questionRect.subviews {
+            if let anyButton = buttons as? UIButton {
+                anyButton.alpha = 0.0
+            }
+        }
         let buttonTapped:UIView? = gesture.view
         if let actualButton = buttonTapped {
-            for singleView in self.answerView.subviews {
-                for labelView1 in singleView.subviews {
-                    if let labelsView = labelView1 as? UILabel {
-                        labelsView.backgroundColor = UIColor.whiteColor()
-                        labelsView.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                    }
-                }
-            }
             UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                for labels in actualButton.subviews {
-                    if let labelView = labels as? UILabel {
-                        labelView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                        labelView.textColor = UIColor.whiteColor()
-                    }
-                    if let btnView = labels as? UIButton {
-                        self.selectedAnswers[self.displayedQuestionIndex] = Int(btnView.tag)
+                actualButton.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+                self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag)
+                for buttons in self.questionRect.subviews {
+                    if let corrButton = buttons as? UIButton {
+                        if corrButton.tag == actualButton.tag {
+                            corrButton.alpha = 1.0
+                        }
                     }
                 }
-                }, completion: nil)
+            }, completion: nil)
         }
     }
     
@@ -478,12 +408,6 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
             }
                 //Continue to the next question
             else {
-                UIView.animateWithDuration(1, animations: {
-                    self.swipeMenuBottomConstraint.constant = 315
-                    self.view.layoutIfNeeded()
-                    self.passageView.alpha = 1.0
-                    self.descriptionSwipeLabel.text = "Swipe up for Answers"
-                    }, completion: nil)
                 self.displayedQuestionIndex++
                 if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                     //Switch Button text to "Complete"
@@ -606,14 +530,6 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
             for answerSubView in self.answerView.subviews {
                 answerSubView.removeFromSuperview()
             }
-            
-            UIView.animateWithDuration(1, animations: {
-                self.swipeMenuBottomConstraint.constant = 315
-                self.view.layoutIfNeeded()
-                self.passageView.alpha = 1.0
-                self.descriptionSwipeLabel.text = "Swipe up for Explanation"
-                self.nextButton.text = "Return to Results"
-                }, completion: nil)
             
             let feedbackLabel:UITextView = UITextView()
             self.answerView.addSubview(feedbackLabel)

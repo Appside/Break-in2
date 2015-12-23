@@ -1,8 +1,8 @@
 [
   {
   "questionType":"Arithmetic Reasoning",
-  "question":"( 6 * 30) + ( 5 / 3 )",
-  "answers":["12.2", "12.3", "12.4", "12.5", "12.6", "12.7"],
+  "question":"15 - 14",
+  "answers":["12", "13", "14", "15", "16", "17"],
   "correctAnswer":4
   },
   
