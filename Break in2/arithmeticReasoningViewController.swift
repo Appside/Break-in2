@@ -130,13 +130,13 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         let answerViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
         let answerViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
         self.mainView.addConstraints([answerViewTop,answerViewRight,answerViewBottom])
-        let answerViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 75)
+        let answerViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
         self.answerView.addConstraint(answerViewWidth)
         self.mainView.addSubview(self.questionRect)
         self.questionRect.translatesAutoresizingMaskIntoConstraints = false
         let questionRectTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10)
         let questionRectBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        let questionRectRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -85)
+        let questionRectRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -100)
         let questionRectLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
         self.mainView.addConstraints([questionRectTop,questionRectRight,questionRectBottom,questionRectLeft])
         
@@ -294,15 +294,15 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
             answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
-            answerNumber.layer.borderWidth = 2.0
-            answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 20.0)
+            //answerNumber.layer.borderWidth = 4.0
+            //answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 25.0)
             
-            matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+            matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
             matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-LightBold", size: 20.0)
+            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 35.0)
             matchingQuestionLabel.tag = i
-            matchingQuestionLabel.setTitle(questionAsked, forState: .Normal)
+            matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
             
             let topM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.questionRect, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
@@ -328,6 +328,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         for buttons in self.answerView.subviews {
             if let anyButton = buttons as? UIButton {
                 anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
+                anyButton.titleLabel?.font = UIFont(name: "Helvetica-Light", size: 25.0)
             }
         }
         for buttons in self.questionRect.subviews {
@@ -337,8 +338,10 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         }
         let buttonTapped:UIView? = gesture.view
         if let actualButton = buttonTapped {
-            UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                actualButton.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                let actButton = actualButton as? UIButton
+                actButton!.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+                actButton!.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 35.0)
                 self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag)
                 for buttons in self.questionRect.subviews {
                     if let corrButton = buttons as? UIButton {
