@@ -25,7 +25,6 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     let timeLabel:UILabel = UILabel()
     var timeTimer:NSTimer = NSTimer()
     let mainView:UIView = UIView()
-    var quizzModel:JSONModel = JSONModel()
     var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19
@@ -41,12 +40,15 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     var isTestComplete:Bool = false
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
-    var answerView:UIView = UIView()
-    var questionRect:UIView = UIView()
+    var arrayOperation:[String] = [String]()
+    var difficulty:String = "Easy"
     
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Initialize difficulty level
+        self.setDifficultyLevel()
         
         //Initialize timer
         self.countSeconds = self.allowedSeconds
@@ -58,7 +60,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         let width = UIScreen.mainScreen().bounds.size.width
         let height = UIScreen.mainScreen().bounds.size.height
         let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
-        imageViewBackground.image = UIImage(named: "arithmeticBG")
+        imageViewBackground.image = UIImage(named: "arithBG")
         imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
         self.backgroungUIView.addSubview(imageViewBackground)
         self.backgroungUIView.sendSubviewToBack(imageViewBackground)
@@ -74,7 +76,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         self.view.addConstraints([topMenuViewLeftMargin,topMenuViewTopMargin])
         self.menuBackButton.layer.cornerRadius = 8.0
         let menuBackImageVIew:UIImageView = UIImageView()
-        menuBackImageVIew.image = UIImage(named: "back")
+        menuBackImageVIew.image = UIImage(named: "prevButton")
         menuBackImageVIew.translatesAutoresizingMaskIntoConstraints = false
         self.menuBackButton.addSubview(menuBackImageVIew)
         let arrowTop:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.menuBackButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant:0)
@@ -124,21 +126,6 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         //Initialize mainView and answerView
         self.view.addSubview(self.mainView)
         self.mainView.setConstraintsToSuperview(75, bottom: 130, left: 20, right: 20)
-        self.mainView.addSubview(self.answerView)
-        self.answerView.translatesAutoresizingMaskIntoConstraints = false
-        let answerViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10)
-        let answerViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let answerViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        self.mainView.addConstraints([answerViewTop,answerViewRight,answerViewBottom])
-        let answerViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.answerView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
-        self.answerView.addConstraint(answerViewWidth)
-        self.mainView.addSubview(self.questionRect)
-        self.questionRect.translatesAutoresizingMaskIntoConstraints = false
-        let questionRectTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10)
-        let questionRectBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        let questionRectRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -100)
-        let questionRectLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.questionRect, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        self.mainView.addConstraints([questionRectTop,questionRectRight,questionRectBottom,questionRectLeft])
         
         //Create nextButton
         let nextUIView:UIView = UIView()
@@ -171,8 +158,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         
         //Display questions
         self.displayedQuestionIndex = 0
-        self.quizzArray = self.quizzModel.selectArithmeticReasoning(self.totalNumberOfQuestions+1)
-        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+        self.displayQuestion(self.displayedQuestionIndex)
         
         //Launch timer
         timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
@@ -261,19 +247,20 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         
     }
     
-    func displayQuestion(arrayOfQuestions:[arithmeticQuestion], indexQuestion:Int) {
+    func displayQuestion(indexQuestion:Int) {
+        self.addNewQuestion()
         
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
 
         // add answers to SwipeUIVIew
-        for answerSubView in self.answerView.subviews {
+        for answerSubView in self.mainView.subviews {
             answerSubView.removeFromSuperview()
         }
         let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
@@ -282,42 +269,53 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         var i:Int = 0
         
         for i=0; i<arrayAnswers.count;i++ {
+            let answerRow:UIButton = UIButton()
             let answerNumber:UIButton = UIButton()
             let matchingQuestionLabel:UIButton = UIButton()
+            answerRow.translatesAutoresizingMaskIntoConstraints = false
             answerNumber.translatesAutoresizingMaskIntoConstraints = false
             matchingQuestionLabel.translatesAutoresizingMaskIntoConstraints = false
-            self.answerView.addSubview(answerNumber)
-            self.questionRect.addSubview(matchingQuestionLabel)
+            self.mainView.addSubview(answerRow)
+            answerRow.addSubview(answerNumber)
+            answerRow.addSubview(matchingQuestionLabel)
 
-            answerNumber.tag = i
+            answerRow.tag = (i+1) * 1
+            answerNumber.tag = (i+1) * 10
+            matchingQuestionLabel.tag = (i+1) * 100
+            
             answerNumber.setTitle(arrayAnswers[i], forState: .Normal)
             answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
-            //answerNumber.layer.borderWidth = 4.0
-            //answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 25.0)
+            answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 25.0)
+            answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+            answerNumber.layer.borderWidth = 2.0
             
-            matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+            matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
             matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 35.0)
-            matchingQuestionLabel.tag = i
             matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
+
+            let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
+            let left:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
+            let right:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -10)
+            self.mainView.addConstraints([top,left,right])
+            let height:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight))
+            answerRow.addConstraint(height)
             
-            let topM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.questionRect, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
-            let leftM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.questionRect, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-            let rightM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.questionRect, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-            self.questionRect.addConstraints([topM,leftM,rightM])
-            let heightM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight))
-            matchingQuestionLabel.addConstraint(heightM)
+            let topM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let leftM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 5)
+            let rightM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -105)
+            let bottomM:NSLayoutConstraint = NSLayoutConstraint(item: matchingQuestionLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5)
+            answerRow.addConstraints([topM,leftM,rightM,bottomM])
             
-            let topMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
-            let leftMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-            let rightMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-            self.answerView.addConstraints([topMM,leftMM,rightMM])
-            let heightMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight))
-            answerNumber.addConstraint(heightMM)
+            let topMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let rightMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -5)
+            let bottomMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5)
+            answerRow.addConstraints([topMM,rightMM,bottomMM])
+            let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+            answerNumber.addConstraint(widthMM)
     
             let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
             answerNumber.addGestureRecognizer(tapGesture)
@@ -325,30 +323,50 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     }
     
     func answerIsSelected(gesture:UITapGestureRecognizer) {
-        for buttons in self.answerView.subviews {
+        for buttons in self.mainView.subviews {
             if let anyButton = buttons as? UIButton {
-                anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.6)
-                anyButton.titleLabel?.font = UIFont(name: "Helvetica-Light", size: 25.0)
+                if anyButton.tag <= 6 {
+                    anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
+                }
             }
-        }
-        for buttons in self.questionRect.subviews {
-            if let anyButton = buttons as? UIButton {
-                anyButton.alpha = 0.0
+            for vraiButton in buttons.subviews {
+                if let anyButton = vraiButton as? UIButton {
+                    if anyButton.tag >= 10 && anyButton.tag <= 60 {
+                        anyButton.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+                        anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+                        anyButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 25.0)
+                        anyButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+                        anyButton.layer.borderWidth = 3.0
+                        anyButton.titleLabel?.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                    }
+                    if anyButton.tag > 60 {
+                        anyButton.alpha = 0.0
+                    }
+                }
             }
         }
         let buttonTapped:UIView? = gesture.view
         if let actualButton = buttonTapped {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                let actButton = actualButton as? UIButton
-                actButton!.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
-                actButton!.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 35.0)
+                if let actButton = actualButton as? UIButton {
+                actButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 30.0)
+                actButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                 self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag)
-                for buttons in self.questionRect.subviews {
+                for buttons in self.mainView.subviews {
                     if let corrButton = buttons as? UIButton {
-                        if corrButton.tag == actualButton.tag {
-                            corrButton.alpha = 1.0
+                        if corrButton.tag*10 == actButton.tag {
+                            corrButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
+                        }
+                    for subButton in corrButton.subviews {
+                        if let actualSubButton = subButton as? UIButton {
+                            if actualSubButton.tag == (actButton.tag)*10 {
+                                actualSubButton.alpha = 1.0
+                            }
                         }
                     }
+                    }
+                }
                 }
             }, completion: nil)
         }
@@ -416,7 +434,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
                     //Switch Button text to "Complete"
                     self.nextButton.text = "Complete Test"
                 }
-                self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+                self.displayQuestion(self.displayedQuestionIndex)
             }
         }
     }
@@ -516,49 +534,85 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     }
     
     func displayAnswerWithFeedback(gesture:UITapGestureRecognizer) {
-        
-        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.mainView.alpha = 1.0
-            self.swipeUIView.alpha = 1.0
-            self.feebdackScreen.alpha = 0.0
-            self.questionMenuLabel.textColor = UIColor.blackColor()
-            
-            var questionFeedback:Int = Int()
-            let buttonTapped:UIView? = gesture.view
-            if let actualButton = buttonTapped {
-                questionFeedback = actualButton.tag
-            }
-            self.displayQuestion(self.quizzArray, indexQuestion: questionFeedback)
-            
-            for answerSubView in self.answerView.subviews {
-                answerSubView.removeFromSuperview()
-            }
-            
-            let feedbackLabel:UITextView = UITextView()
-            self.answerView.addSubview(feedbackLabel)
-            
-            feedbackLabel.setConstraintsToSuperview(10, bottom: 10, left: 30, right: 30)
-            feedbackLabel.text = String(self.quizzArray[questionFeedback].correctAnswer)
-            feedbackLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
-            
-            if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {
-                self.timeLabel.text = "Correct Answer"
-                self.timeLabel.textColor = UIColor.greenColor()
-                feedbackLabel.textColor = UIColor.greenColor()
-            }
-            else {
-                self.timeLabel.text = "Wrong Answer"
-                self.timeLabel.textColor = UIColor.redColor()
-                feedbackLabel.textColor = UIColor.redColor()
-            }
-            
-            }, completion: nil)
-        
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func addNewQuestion() {
+        //Add a new question to the array
+        let newQuestion:arithmeticQuestion = arithmeticQuestion()
+        var number1:Float = Float()
+        var number2:Float = Float()
+        var operation:String = String()
+        number1 = Float(arc4random_uniform(100)+1)
+        number2 = Float(arc4random_uniform(100)+1)
+        operation = self.arrayOperation[Int(arc4random_uniform(UInt32(self.arrayOperation.count)))]
+        newQuestion.question = String(format:"%g",number1) + " " + operation + " " + String(format:"%g",number2)
+        var correctAnswer:Float = Float()
+
+        if operation=="+" {
+            correctAnswer = number1 + number2
+            newQuestion.answers.append(String(correctAnswer))
+            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
+            newQuestion.answers = answers
+            newQuestion.correctAnswer = correctIndex
+        }
+        else if operation=="-" {
+            correctAnswer = number1 - number2
+            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
+            newQuestion.answers = answers
+            newQuestion.correctAnswer = correctIndex
+        }
+        else if operation=="*" {
+            correctAnswer = number1 * number2
+            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
+            newQuestion.answers = answers
+            newQuestion.correctAnswer = correctIndex
+        }
+        else if operation=="/" {
+            correctAnswer = number1 / number2
+            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
+            newQuestion.answers = answers
+            newQuestion.correctAnswer = correctIndex
+        }
+        self.quizzArray.append(newQuestion)
+    }
+    
+    func fillArrayWithRandomNumbers(number1:Float, number2:Float, operation:String) -> ([String],Int) {
+        var returnedArray:[String] = [String]()
+        var i:Int = 0
+        if operation=="+" {
+            returnedArray.append(String(format:"%g", number1+number2))
+            for i=0;i<5;i++ {
+                returnedArray.append(String(Int(number1+number2)+i+1))
+            }
+
+        }
+        if operation=="-" {
+            returnedArray.append(String(format:"%g",number1-number2))
+            for i=1;i<5;i++ {
+                returnedArray.append(String(Int(number1-number2)+i+1))
+            }
+        }
+
+        return (returnedArray,0)
+    }
+    
+    func setDifficultyLevel() {
+        if self.difficulty=="Easy" {
+            self.arrayOperation = ["+","-"]
+        }
+        else if self.difficulty=="Medium" {
+            self.arrayOperation = ["+","-","*"]
+        }
+        else if self.difficulty=="Hard" {
+            self.arrayOperation = ["+","-","*","/"]
+        }
+    
     }
     
 }
