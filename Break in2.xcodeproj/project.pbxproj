@@ -24,7 +24,7 @@
 		253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253AC83E1C27218100495DF5 /* JSONModel.swift */; };
 		25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25411FF51C1E14EF000118BF /* FacebookButton.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
-		492506E21C2A0188008AD209 /* ArithmeticReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 492506E11C2A0188008AD209 /* ArithmeticReasoning.json */; settings = {ASSET_TAGS = (); }; };
+		492506E21C2A0188008AD209 /* ArithmeticReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 492506E11C2A0188008AD209 /* ArithmeticReasoning.json */; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
 		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; };
@@ -55,6 +55,7 @@
 		61FCAED11C050E0C0072FDFB /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */; };
 		61FCAED31C0518740072FDFB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCAED21C0518740072FDFB /* Constants.swift */; };
 		61FCAED51C0672480072FDFB /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCAED41C0672480072FDFB /* Images.swift */; };
+		61FF7B8D1C2FDF6C00CD4392 /* TODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FF7B8C1C2FDF6C00CD4392 /* TODO.swift */; };
 		74E9AFB1E1CE31062678B5E3 /* Pods_Break_in2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9204F15908637B8660619EE /* Pods_Break_in2.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,14 +124,15 @@
 		617FC64A1BEF92700019AE9B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		617FC64C1BF89D560019AE9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Break in2/Extensions.swift"; sourceTree = "<group>"; };
 		61CAD33D1C2708D200B8D887 /* LoginCredentials.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoginCredentials.xcdatamodel; sourceTree = "<group>"; };
-		61CAD33F1C270BAE00B8D887 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		61CAD3461C2760B100B8D887 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		61CAD33F1C270BAE00B8D887 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataController.swift; path = "Break in2/DataController.swift"; sourceTree = "<group>"; };
+		61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Person+CoreDataProperties.swift"; path = "Break in2/Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		61CAD3461C2760B100B8D887 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = "Break in2/Person.swift"; sourceTree = "<group>"; };
 		61DB11D71BF902600081123B /* segueFromLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromLeft.swift; sourceTree = "<group>"; };
 		61DB11D91BF904360081123B /* segueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = segueFromRight.swift; sourceTree = "<group>"; };
 		61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
 		61FCAED21C0518740072FDFB /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		61FCAED41C0672480072FDFB /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		61FF7B8C1C2FDF6C00CD4392 /* TODO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TODO.swift; sourceTree = "<group>"; };
 		86661483A51379079E2B78A1 /* Pods-Break in2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.debug.xcconfig"; sourceTree = "<group>"; };
 		E9204F15908637B8660619EE /* Pods_Break_in2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Break_in2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -248,6 +250,7 @@
 		6143163B1BEF843A0047A37D = {
 			isa = PBXGroup;
 			children = (
+				61FF7B8C1C2FDF6C00CD4392 /* TODO.swift */,
 				614316461BEF843A0047A37D /* Break in2 */,
 				6143165B1BEF843A0047A37D /* Break in2Tests */,
 				614316661BEF843A0047A37D /* Break in2UITests */,
@@ -287,12 +290,9 @@
 				253796A71C0DCF6000BA00F3 /* TestSelectionView */,
 				6143164E1BEF843A0047A37D /* Assets.xcassets */,
 				614316501BEF843A0047A37D /* LaunchScreen.storyboard */,
+				61FF7B8B1C2FDF3200CD4392 /* Core Data Stuff */,
 				617FC64E1BF89D6C0019AE9B /* Extensions */,
 				614316531BEF843A0047A37D /* Info.plist */,
-				61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */,
-				61CAD3461C2760B100B8D887 /* Person.swift */,
-				61CAD33C1C2708D200B8D887 /* LoginCredentials.xcdatamodeld */,
-				61CAD33F1C270BAE00B8D887 /* DataController.swift */,
 			);
 			path = "Break in2";
 			sourceTree = "<group>";
@@ -326,6 +326,18 @@
 				610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */,
 			);
 			name = Extensions;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		61FF7B8B1C2FDF3200CD4392 /* Core Data Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */,
+				61CAD3461C2760B100B8D887 /* Person.swift */,
+				61CAD33C1C2708D200B8D887 /* LoginCredentials.xcdatamodeld */,
+				61CAD33F1C270BAE00B8D887 /* DataController.swift */,
+			);
+			name = "Core Data Stuff";
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -535,6 +547,7 @@
 				25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */,
 				25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */,
 				2526701A1C2378A6007D55BE /* CalendarView.swift in Sources */,
+				61FF7B8D1C2FDF6C00CD4392 /* TODO.swift in Sources */,
 				61CAD3481C2760B100B8D887 /* Person.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
 				617FC64B1BEF92700019AE9B /* SettingsViewController.swift in Sources */,
@@ -830,7 +843,8 @@
 				61CAD33D1C2708D200B8D887 /* LoginCredentials.xcdatamodel */,
 			);
 			currentVersion = 61CAD33D1C2708D200B8D887 /* LoginCredentials.xcdatamodel */;
-			path = LoginCredentials.xcdatamodeld;
+			name = LoginCredentials.xcdatamodeld;
+			path = "Break in2/LoginCredentials.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
