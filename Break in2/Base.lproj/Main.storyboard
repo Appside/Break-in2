@@ -43,11 +43,12 @@
                     <connections>
                         <segue destination="Dmm-hY-T8O" kind="show" identifier="careerClicked" customClass="segueFromRight" customModule="Break_in2" customModuleProvider="target" animates="NO" id="HSH-kF-Qy7"/>
                         <segue destination="itC-MS-TAe" kind="show" identifier="settingsClicked" animates="NO" id="k0J-fF-s9h"/>
+                        <segue destination="h7b-og-BSE" kind="show" identifier="statsClicked" animates="NO" id="dLG-TB-eiq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXB-ez-UnS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2009" y="-659"/>
+            <point key="canvasLocation" x="1939" y="-689"/>
         </scene>
         <!--Test Selection View Controller-->
         <scene sceneID="ak3-lY-ccB">
@@ -92,6 +93,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DtD-yn-t8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2851" y="-674"/>
+        </scene>
+        <!--Statistics View Controller-->
+        <scene sceneID="uqf-l3-6Bd">
+            <objects>
+                <viewController id="h7b-og-BSE" customClass="StatisticsViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jkm-KH-6Wv"/>
+                        <viewControllerLayoutGuide type="bottom" id="Qhd-Qf-Hzv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lZ4-bw-o0a">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="show" identifier="backFromStatistics" animates="NO" id="00Z-2O-QUO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jym-0v-2Kn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2797" y="132"/>
         </scene>
         <!--Numerical Reasoning View Controller-->
         <scene sceneID="BOr-eT-2Sx">
@@ -158,6 +180,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="0t8-5W-Jcs"/>
+        <segue reference="00Z-2O-QUO"/>
     </inferredMetricsTieBreakers>
 </document>

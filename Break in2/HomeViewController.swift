@@ -91,7 +91,7 @@ class HomeViewController: UIViewController {
     self.careersBackgroundView.addSubview(self.careersScrollView)
     self.careersBackgroundView.addSubview(self.scrollInfoLabel)
     
-    // Create testTypeViews for each testType
+    // Create careerButtons for each careerType
     
     for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
       
@@ -157,6 +157,7 @@ class HomeViewController: UIViewController {
     
     self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
     self.settingsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
+    self.statsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
     
     // Customize careersBackgroundView, deadlinesView and statsView
     
@@ -196,6 +197,24 @@ class HomeViewController: UIViewController {
       let destinationVC:SettingsViewController = segue.destinationViewController as! SettingsViewController
       destinationVC.careerTypes = self.careerTypes
       destinationVC.careerTypeImages = self.careerTypeImages
+    }
+    if segue.identifier == "statsClicked" {
+      let destinationVC:StatisticsViewController = segue.destinationViewController as! StatisticsViewController
+      var testTypes:[String] = [String]()
+      var testColors:[String:UIColor] = [String:UIColor]()
+      for career in self.careerTypes {
+        for testType in self.careersTestTypes[career]! {
+          if !testTypes.contains(testType) {
+            testTypes.append(testType)
+          }
+        }
+      }
+      let appColors:[UIColor] = self.homeViewModel.getAppColors()
+      for var index:Int = 0 ; index < testTypes.count ; index++ {
+        testColors.updateValue(appColors[index], forKey: testTypes[index])
+      }
+      destinationVC.testTypes = testTypes
+      destinationVC.testColors = testColors
     }
   }
   
@@ -551,6 +570,9 @@ class HomeViewController: UIViewController {
         
         if sender == self.settingsButton {
           self.performSegueWithIdentifier("settingsClicked", sender: sender)
+        }
+        else if sender == self.statsButton {
+          self.performSegueWithIdentifier("statsClicked", sender: sender)
         }
         else if sender == self.logOutButton {
           UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {

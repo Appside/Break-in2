@@ -61,6 +61,8 @@ class TestTypeView: UIView {
     self.testTypeTimeLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
     self.testTypeTimeLabel.textColor = UIColor.turquoiseColor()
     self.testTypeTimeLabel.textAlignment = NSTextAlignment.Center
+    
+    self.testTypeStatsView.backgroundColor = UIColor.grayColor()
   
   }
 
@@ -125,11 +127,26 @@ class TestTypeView: UIView {
     self.testTypeTitleLabel.addConstraint(testTypeTitleLabelHeightConstraint)
     self.addConstraints([testTypeTitleLabelTopConstraint, testTypeTitleLabelLeftConstraint, testTypeTitleLabelRightConstraint])
     
+    // Create and add constraints for testTypeDifficultyView
+    
+    self.testTypeDifficultyView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testTypeDifficultyViewTopConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    
+    let testTypeDifficultyViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let testTypeDifficultyViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    
+    let testTypeDifficultyViewHeightConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeDifficultyViewHeight)
+    
+    self.testTypeDifficultyView.addConstraint(testTypeDifficultyViewHeightConstraint)
+    self.addConstraints([testTypeDifficultyViewTopConstraint, testTypeDifficultyViewLeftConstraint, testTypeDifficultyViewRightConstraint])
+
     // Create and add constraints for testTypeTimeLabel
     
     self.testTypeTimeLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let testTypeTimeLabelTopConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    let testTypeTimeLabelTopConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
     
     let testTypeTimeLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
@@ -140,26 +157,11 @@ class TestTypeView: UIView {
     self.testTypeTimeLabel.addConstraint(testTypeTimeLabelHeightConstraint)
     self.addConstraints([testTypeTimeLabelTopConstraint, testTypeTimeLabelLeftConstraint, testTypeTimeLabelRightConstraint])
     
-    // Create and add constraints for testTypeDifficultyView
-    
-    self.testTypeDifficultyView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let testTypeDifficultyViewTopConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
-    
-    let testTypeDifficultyViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    
-    let testTypeDifficultyViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    
-    let testTypeDifficultyViewHeightConstraint = NSLayoutConstraint.init(item: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testTypeDifficultyViewHeight)
-    
-    self.testTypeDifficultyView.addConstraint(testTypeDifficultyViewHeightConstraint)
-    self.addConstraints([testTypeDifficultyViewTopConstraint, testTypeDifficultyViewLeftConstraint, testTypeDifficultyViewRightConstraint])
-    
     // Create and add constraints for testTypeStatsView
     
     self.testTypeStatsView.translatesAutoresizingMaskIntoConstraints = false
     
-    let testTypeStatsViewTopConstraint = NSLayoutConstraint.init(item: self.testTypeStatsView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeDifficultyView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let testTypeStatsViewTopConstraint = NSLayoutConstraint.init(item: self.testTypeStatsView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeTimeLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
     let testTypeStatsViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeStatsView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
