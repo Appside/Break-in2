@@ -297,6 +297,15 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
             matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
 
+            if i==0 {
+                answerRow.alpha = 1.0
+                answerRow.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
+                matchingQuestionLabel.alpha = 1.0
+                //answerNumber.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                //answerNumber.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 30.0)
+                //answerNumber.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            }
+            
             let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
             let left:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
             let right:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -10)
