@@ -20,6 +20,8 @@ class StatisticsViewController: UIViewController {
   let logoImageView:UIImageView = UIImageView()
   let backButton:UIButton = UIButton()
   let statisticsBackgroundView:UIView = UIView()
+  let statisticsView:UIView = UIView()
+  let statisticsTitleView:StatisticsTitleView = StatisticsTitleView()
   let testTypesBackgroundView:UIView = UIView()
   let testTypesScrollView:UIScrollView = UIScrollView()
   var testTypeButtons:[CareerButton] = [CareerButton]()
@@ -52,6 +54,8 @@ class StatisticsViewController: UIViewController {
       self.view.addSubview(self.backButton)
       self.view.addSubview(self.statisticsBackgroundView)
       self.view.addSubview(self.testTypesBackgroundView)
+      self.statisticsBackgroundView.addSubview(self.statisticsView)
+      self.statisticsView.addSubview(self.statisticsTitleView)
       self.testTypesBackgroundView.addSubview(self.scrollInfoLabel)
       self.testTypesBackgroundView.addSubview(self.testTypesScrollView)
       self.testTypesBackgroundView.addSubview(self.clearStatsButton)
@@ -98,6 +102,10 @@ class StatisticsViewController: UIViewController {
       
       self.testTypesScrollView.showsVerticalScrollIndicator = false
       
+      self.statisticsView.backgroundColor = UIColor.whiteColor()
+      self.statisticsView.layer.cornerRadius = self.minorMargin
+      self.statisticsView.clipsToBounds = true
+      
       // Customize imageViews
       
       self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -123,6 +131,10 @@ class StatisticsViewController: UIViewController {
       // Set contraints
       
       self.setConstraints()
+      
+      // Display statisticsTitleView
+      
+      self.statisticsTitleView.displayView()
 
         // Do any additional setup after loading the view.
     }
@@ -187,6 +199,35 @@ class StatisticsViewController: UIViewController {
     
     self.statisticsBackgroundView.addConstraint(statisticsBackgroundViewHeightConstraint)
     self.view.addConstraints([statisticsBackgroundViewTopConstraint, statisticsBackgroundViewLeftConstraint, statisticsBackgroundViewRightConstraint])
+    
+    // Create and add constraints for statisticsView
+    
+    self.statisticsView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let statisticsViewTopConstraint = NSLayoutConstraint.init(item: self.statisticsView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let statisticsViewRightConstraint = NSLayoutConstraint.init(item: self.statisticsView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let statisticsViewLeftConstraint = NSLayoutConstraint.init(item: self.statisticsView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    
+    let statisticsViewBottomConstraint = NSLayoutConstraint.init(item: self.statisticsView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    self.statisticsBackgroundView.addConstraints([statisticsViewTopConstraint, statisticsViewRightConstraint, statisticsViewLeftConstraint, statisticsViewBottomConstraint])
+    
+    // Create and add constraints for statisticsTitleView
+    
+    self.statisticsTitleView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let statisticsTitleViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let statisticsTitleViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let statisticsTitleViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    
+    let statisticsTitleViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: ((self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight)) * 2)/9)
+    
+    self.statisticsTitleView.addConstraint(statisticsTitleViewHeightConstraint)
+    self.view.addConstraints([statisticsTitleViewTopConstraint, statisticsTitleViewLeftConstraint, statisticsTitleViewRightConstraint])
     
     // Create and add constraints for testTypesBackgroundView
     
