@@ -22,6 +22,7 @@ class StatisticsViewController: UIViewController {
   let statisticsBackgroundView:UIView = UIView()
   let statisticsView:UIView = UIView()
   let statisticsTitleView:StatisticsTitleView = StatisticsTitleView()
+  let statisticsScrollView:UIScrollView = UIScrollView()
   let testTypesBackgroundView:UIView = UIView()
   let testTypesScrollView:UIScrollView = UIScrollView()
   var testTypeButtons:[CareerButton] = [CareerButton]()
@@ -56,6 +57,7 @@ class StatisticsViewController: UIViewController {
       self.view.addSubview(self.testTypesBackgroundView)
       self.statisticsBackgroundView.addSubview(self.statisticsView)
       self.statisticsView.addSubview(self.statisticsTitleView)
+      self.statisticsView.addSubview(self.statisticsScrollView)
       self.testTypesBackgroundView.addSubview(self.scrollInfoLabel)
       self.testTypesBackgroundView.addSubview(self.testTypesScrollView)
       self.testTypesBackgroundView.addSubview(self.clearStatsButton)
@@ -105,6 +107,8 @@ class StatisticsViewController: UIViewController {
       self.statisticsView.backgroundColor = UIColor.whiteColor()
       self.statisticsView.layer.cornerRadius = self.minorMargin
       self.statisticsView.clipsToBounds = true
+      
+      self.statisticsScrollView.backgroundColor = UIColor.grayColor()
       
       // Customize imageViews
       
@@ -243,6 +247,20 @@ class StatisticsViewController: UIViewController {
     
     self.testTypesBackgroundView.addConstraint(testTypesBackgroundViewHeightConstraint)
     self.view.addConstraints([testTypesBackgroundViewRightConstraint, testTypesBackgroundViewLeftConstraint, self.testTypesBackgroundViewTopConstraint])
+    
+    // Create and add constraints for statisticsScrollView
+    
+    self.statisticsScrollView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let statisticsScrollViewTopConstraint = NSLayoutConstraint.init(item: self.statisticsScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsTitleView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    
+    let statisticsScrollViewRightConstraint = NSLayoutConstraint.init(item: self.statisticsScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    
+    let statisticsScrollViewLeftConstraint = NSLayoutConstraint.init(item: self.statisticsScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let statisticsScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.statisticsScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    
+    self.statisticsView.addConstraints([statisticsScrollViewTopConstraint, statisticsScrollViewRightConstraint, statisticsScrollViewLeftConstraint, statisticsScrollViewBottomConstraint])
     
     // Create and add constraints for clearStatsButton
     
