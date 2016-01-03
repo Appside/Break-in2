@@ -27,9 +27,9 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     let mainView:UIView = UIView()
     var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 19
-    var allowedSeconds:Int = 00
-    var allowedMinutes:Int = 20
+    var totalNumberOfQuestions:Int = 20
+    var allowedSeconds:Int = 30
+    var allowedMinutes:Int = 00
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let nextButton:UILabel = UILabel()
@@ -151,12 +151,18 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         
         //Set answersArray
         var answerIndex:Int = 0
+        let fixedNumber:Int = 20
         for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex++ {
-            let fixedNumber:Int = 20
             self.selectedAnswers.append(fixedNumber)
         }
         
-        //Display questions
+        //Generate random questions for the test
+        var questionNew:Int = Int()
+        for questionNew=0;questionNew<=self.totalNumberOfQuestions;questionNew++ {
+            self.addNewQuestion()
+        }
+        
+        //Display first question
         self.displayedQuestionIndex = 0
         self.displayQuestion(self.displayedQuestionIndex)
         
@@ -248,7 +254,6 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     }
     
     func displayQuestion(indexQuestion:Int) {
-        self.addNewQuestion()
         
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
@@ -361,7 +366,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
                 actButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
                 actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 30.0)
                 actButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag)
+                self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag/10 - 1)
                 for buttons in self.mainView.subviews {
                     if let corrButton = buttons as? UIButton {
                         if corrButton.tag*10 == actButton.tag {
@@ -400,7 +405,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
                     //Upload Results to Parse
                     var i:Int = 0
                     var nbCorrectAnswers:Int = 0
-                    for i=0;i<self.selectedAnswers.count;i++ {
+                    for i=0;i<self.quizzArray.count;i++ {
                         if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
                             nbCorrectAnswers++
                         }
@@ -465,7 +470,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
             else {
                 attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
             }
-            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: 6))
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: 6))
             self.questionMenuLabel.attributedText = attributedString
             
             self.mainView.alpha = 0.0
@@ -504,9 +509,13 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
                 answerUILabel.text = "Correct Answer"
                 answerNumber.backgroundColor = UIColor.greenColor()
             }
-            else {
+            else if (self.selectedAnswers[i] != self.quizzArray[i].correctAnswer) && (self.selectedAnswers[i]<20) {
                 answerUILabel.text = "Wrong Answer"
                 answerNumber.backgroundColor = UIColor.redColor()
+            }
+            else {
+                answerUILabel.text = "Unanswered"
+                answerNumber.backgroundColor = UIColor.grayColor()
             }
             
             //Set constraints to answerViews
@@ -530,20 +539,12 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
             answerUIButton.addConstraints([topMM,leftMM,bottomMM])
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
             answerNumber.addConstraint(widthMM)
-            
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
-            answerUIButton.addGestureRecognizer(tapGesture)
-            
         }
         
         self.feebdackScreen.scrollEnabled = true
         let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 10))
         self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight+10)
         
-    }
-    
-    func displayAnswerWithFeedback(gesture:UITapGestureRecognizer) {
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -569,15 +570,32 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
 
     func fillArrayWithRandomNumbers(number1:Float, number2:Float, operation:String) -> ([String],Int) {
         var returnedArray:[String] = [String]()
+        var answersArray:[String] = [String]()
         var correctIndex:Int = Int()
+        var randomIndex:Int = Int()
+        var correctIndexSet:Bool = false
         var i:Int = 0
         if operation=="+" {
-            returnedArray.append(String(format:"%g", number1+number2))
+            answersArray.append(String(format:"%g", number1+number2))
             for i=0;i<5;i++ {
-                returnedArray.append(String(Int(number1+number2)+i+1))
+                answersArray.append(String(Int(number1+number2)+i+1))
             }
         }
-        correctIndex = 0
+        if operation=="-" {
+            answersArray.append(String(format:"%g", number1-number2))
+            for i=0;i<5;i++ {
+                answersArray.append(String(Int(number1-number2)+i+1))
+            }
+        }
+        for i=0;i<6;i++ {
+            randomIndex = Int(arc4random_uniform(UInt32(6-i)))
+            returnedArray.append(answersArray[randomIndex])
+            answersArray.removeAtIndex(randomIndex)
+            if randomIndex==0 && !correctIndexSet {
+                correctIndex = i
+                correctIndexSet = true
+            }
+        }
         return (returnedArray,correctIndex)
     }
     
