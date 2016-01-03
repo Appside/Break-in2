@@ -115,7 +115,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         
         self.swipeMenuTopBar.addConstraint(swipeMenuTopBarHeight)
         self.swipeMenuTopBar.addSubview(self.timeLabel)
-        self.timeLabel.text = "\(self.countMinutes):\(self.countSeconds)"
+        self.timeLabel.text = String(format: "%02d", self.countMinutes) + " : " + String(format: "%02d", self.countSeconds)
         self.timeLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 18.0)
         self.timeLabel.textAlignment = NSTextAlignment.Center
