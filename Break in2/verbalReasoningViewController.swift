@@ -11,7 +11,7 @@ import Charts
 import SCLAlertView
 import Parse
 
-class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
+class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()

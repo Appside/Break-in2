@@ -11,7 +11,7 @@ import Charts
 import SCLAlertView
 import Parse
 
-class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate {
+class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -41,7 +41,6 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
     var arrayOperation:[String] = [String]()
-    var difficulty:String = "Easy"
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -600,13 +599,13 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     }
     
     func setDifficultyLevel() {
-        if self.difficulty=="Easy" {
+        if self.difficulty=="E" {
             self.arrayOperation = ["+","-"]
         }
-        else if self.difficulty=="Medium" {
+        else if self.difficulty=="M" {
             self.arrayOperation = ["+","-","*"]
         }
-        else if self.difficulty=="Hard" {
+        else if self.difficulty=="H" {
             self.arrayOperation = ["+","-","*","/"]
         }
     

@@ -25,6 +25,8 @@ class TestTypeView: UIView {
   
   let testTypeStatsView:UIView = UIView()
   
+  var difficultySelected:String = String()
+  
   // Declare and initialize design constants to default values
   
   var majorMargin:CGFloat = CGFloat()
@@ -63,6 +65,8 @@ class TestTypeView: UIView {
     self.testTypeTimeLabel.textAlignment = NSTextAlignment.Center
     
     self.testTypeStatsView.backgroundColor = UIColor.grayColor()
+    
+    self.difficultySelected = "E"
   
   }
 
@@ -195,7 +199,7 @@ class TestTypeView: UIView {
     
   }
   
-  func difficultyButtonTapped(sender: UIButton!) {
+  func difficultyButtonTapped(sender: UIButton) {
     
     for button:UIButton in self.testTypeDifficultyButtons {
       
@@ -207,6 +211,7 @@ class TestTypeView: UIView {
     sender.backgroundColor = self.secondaryBackgroundColor
     sender.setTitleColor(self.mainBackgroundColor, forState: UIControlState.Normal)
     
+    self.difficultySelected = sender.titleLabel!.text!
   }
 
     /*

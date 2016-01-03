@@ -11,7 +11,7 @@ import Charts
 import SCLAlertView
 import Parse
 
-class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
+class numericalReasoningViewController: QuestionViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -33,8 +33,8 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 19
     let questionLabel:UITextView = UITextView()
-    var allowedSeconds:Int = 00
-    var allowedMinutes:Int = 20
+    var allowedSeconds:Int = Int()
+    var allowedMinutes:Int = Int()
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let answerView:UIView = UIView()
@@ -52,12 +52,21 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //Initialize timer
-        self.countSeconds = self.allowedSeconds
-        self.countMinutes = self.allowedMinutes
-        
-        
+      
+        //Initialize timer depending on difficulty
+      if self.difficulty == "H" {
+        self.countSeconds = 00
+        self.countMinutes = 10
+      }
+      else if self.difficulty == "M" {
+        self.countSeconds = 00
+        self.countMinutes = 20
+      }
+      else {
+        self.countSeconds = 00
+        self.countMinutes = 30
+      }
+      
         //Initialize backgroun UIView
         self.view.addSubview(self.backgroungUIView)
         self.backgroungUIView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)

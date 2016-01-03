@@ -420,7 +420,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
           self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
         }
         else if sender == self.testStartButton {
-          self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: nil)
+          self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
         }
         
     })
@@ -432,6 +432,11 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     if segue.identifier == "backFromTestSelection" {
       let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
       destinationVC.segueFromLoginView = false
+    }
+    else {
+      let destinationVC:QuestionViewController = segue.destinationViewController as! QuestionViewController
+      let currentTestTypeView:TestTypeView = self.testTypeViews[self.currentScrollViewPage]
+      destinationVC.difficulty = currentTestTypeView.difficultySelected
     }
   }
   
