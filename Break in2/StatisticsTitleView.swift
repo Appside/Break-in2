@@ -25,7 +25,7 @@ class StatisticsTitleView: UIView {
     
     self.statisticsTitleLabel.textAlignment = NSTextAlignment.Center
     self.statisticsTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
-    self.statisticsTitleLabel.text = "Stats"
+    self.statisticsTitleLabel.text = "TEST SCORES"
     
     // Customize nextStatisticButton and previousStatisticButton
     

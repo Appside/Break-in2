@@ -28,6 +28,7 @@
 		25849DC31C333D58006C8A17 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25849DC21C333D58006C8A17 /* StatisticsViewController.swift */; };
 		25A21B761C34956C00A72455 /* StatisticsTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A21B751C34956C00A72455 /* StatisticsTitleView.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
+		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; settings = {ASSET_TAGS = (); }; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
 		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
@@ -100,6 +101,7 @@
 		25A21B751C34956C00A72455 /* StatisticsTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTitleView.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
+		497A515E1C39B10C004B325C /* LabelPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPointerView.swift; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* numericalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalReasoningViewController.swift; sourceTree = "<group>"; };
 		499375361C02573100AA0588 /* numericalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalQuestion.swift; sourceTree = "<group>"; };
 		49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = verbalReasoningViewController.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			children = (
 				25849DC21C333D58006C8A17 /* StatisticsViewController.swift */,
 				25A21B751C34956C00A72455 /* StatisticsTitleView.swift */,
+				497A515E1C39B10C004B325C /* LabelPointerView.swift */,
 			);
 			name = StatisticsView;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
 				610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */,
 				61FCAED31C0518740072FDFB /* Constants.swift in Sources */,
+				497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */,
 				49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */,
 				25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */,
 				25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */,

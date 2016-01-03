@@ -704,6 +704,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         chartView.data = chartData
         chartData.setValueTextColor(UIColor.whiteColor())
         chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        chartView.autoScaleMinMaxEnabled = true
         
         return chartView
         
@@ -773,6 +774,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         lineChartData.setValueTextColor(UIColor.whiteColor())
         lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
         chartView.data?.highlightEnabled = true
+        chartView.autoScaleMinMaxEnabled = true
         
         return chartView
     }

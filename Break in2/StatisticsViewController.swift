@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Charts
 
-class StatisticsViewController: UIViewController {
+class StatisticsViewController: UIViewController, ChartViewDelegate {
   
   // Declare and initialize types of careers
   
@@ -28,6 +29,18 @@ class StatisticsViewController: UIViewController {
   var testTypeButtons:[CareerButton] = [CareerButton]()
   let scrollInfoLabel:UILabel = UILabel()
   let clearStatsButton:UIButton = UIButton()
+    
+    let pointerView1:LabelPointerView = LabelPointerView()
+    let pointerView2:LabelPointerView = LabelPointerView()
+    let graphView1:UIView = UIView()
+    let graphView2:UIView = UIView()
+    let appVariablesModel:JSONModel = JSONModel()
+    let chartObject:BarChartView = BarChartView()
+    let chartObject2:LineChartView = LineChartView()
+    let barChartDescription:UIView = UIView()
+    let barChartText:UILabel = UILabel()
+    let lineChartDescription:UIView = UIView()
+    let lineChartText:UILabel = UILabel()
 
   var testTypesBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
 
@@ -44,7 +57,7 @@ class StatisticsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
       // Add background image to HomeViewController's view
       
       self.view.addHomeBG()
@@ -61,7 +74,17 @@ class StatisticsViewController: UIViewController {
       self.testTypesBackgroundView.addSubview(self.scrollInfoLabel)
       self.testTypesBackgroundView.addSubview(self.testTypesScrollView)
       self.testTypesBackgroundView.addSubview(self.clearStatsButton)
-      
+        
+        self.statisticsScrollView.addSubview(self.graphView1)
+        self.statisticsScrollView.addSubview(self.graphView2)
+        self.graphView1.addSubview(self.barChartDescription)
+        self.barChartDescription.addSubview(self.barChartText)
+        self.graphView2.addSubview(self.lineChartDescription)
+        self.lineChartDescription.addSubview(self.lineChartText)
+
+        self.graphView1.addSubview(self.pointerView1)
+        self.graphView2.addSubview(self.pointerView2)
+
       // Create careerButtons for each testType
       
       for var index:Int = 0 ; index < self.testTypes.count ; index++ {
@@ -87,6 +110,7 @@ class StatisticsViewController: UIViewController {
         
         // Make each button perform a segue to the TestSelectionViewController
         
+        self.testTypeButtons[index].tag = index
         self.testTypeButtons[index].addTarget(self, action: "testTypeClicked:", forControlEvents: UIControlEvents.TouchUpInside)
       }
       
@@ -107,9 +131,25 @@ class StatisticsViewController: UIViewController {
       self.statisticsView.backgroundColor = UIColor.whiteColor()
       self.statisticsView.layer.cornerRadius = self.minorMargin
       self.statisticsView.clipsToBounds = true
-      
-      self.statisticsScrollView.backgroundColor = UIColor.grayColor()
-      
+        
+        //PointerViews
+        self.pointerView1.alpha = 0
+        self.pointerView2.alpha = 0
+        
+        //Graph 1 (constraints and colors)
+        self.graphView1.addSubview(chartObject)
+        self.chartObject.setConstraintsToSuperview(40, bottom: 0, left: 0, right: 0)
+        self.barChartText.setConstraintsToSuperview(5, bottom: 5, left: 0, right: 0)
+        self.chartObject.delegate = self
+        self.chartObject.noDataText = ""
+        
+        //Graph 2 (constraints and colors)
+        self.graphView2.addSubview(chartObject2)
+        self.chartObject2.setConstraintsToSuperview(40, bottom: 0, left: 0, right: 0)
+        self.lineChartText.setConstraintsToSuperview(5, bottom: 5, left: 0, right: 0)
+        self.chartObject2.delegate = self
+        self.chartObject2.noDataText = ""
+        
       // Customize imageViews
       
       self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -141,6 +181,8 @@ class StatisticsViewController: UIViewController {
       self.statisticsTitleView.displayView()
 
         // Do any additional setup after loading the view.
+        
+        
     }
   
   override func viewDidAppear(animated: Bool) {
@@ -150,6 +192,12 @@ class StatisticsViewController: UIViewController {
 
     self.showTestTypesBackgroundView()
     
+    //LabelPointerView
+    self.pointerView1.labelPointerBaseWidth = self.graphView1.frame.width/12
+    self.pointerView1.moveLabelPointer(self.graphView1.frame.width/6 * (5.5))
+    self.pointerView2.labelPointerBaseWidth = self.graphView1.frame.width/12
+    self.pointerView2.moveLabelPointer(self.graphView1.frame.width/6 * (5.5))
+
   }
 
     override func didReceiveMemoryWarning() {
@@ -346,6 +394,81 @@ class StatisticsViewController: UIViewController {
       
     }
 
+    //Create and add constraints for GraphView1
+    
+    self.graphView1.translatesAutoresizingMaskIntoConstraints = false
+    
+    let graphView1Top:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let graphView1Left:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+
+    self.statisticsScrollView.addConstraints([graphView1Top,graphView1Left])
+    
+    let graphView1Width:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 350)
+    let graphView1Height:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 250)
+
+    self.graphView1.addConstraints([graphView1Width,graphView1Height])
+    
+    //Create and add constraints for GraphView2
+    
+    self.graphView2.translatesAutoresizingMaskIntoConstraints = false
+    
+    let graphView2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    self.statisticsScrollView.addConstraint(graphView2Top)
+    
+    let graphView2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 10)
+    self.statisticsScrollView.addConstraint(graphView2Left)
+    
+    let graphView2Width:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 350)
+    let graphView2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 250)
+    
+    self.graphView2.addConstraints([graphView2Width,graphView2Height])
+    self.statisticsScrollView.contentSize = CGSize(width: 710, height: 250)
+    
+    //Create and set constraints for barChartDescription and barChartLabel
+    
+    self.barChartDescription.translatesAutoresizingMaskIntoConstraints = false
+    
+    let barChartDescriptionTop:NSLayoutConstraint = NSLayoutConstraint(item: self.barChartDescription, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let barChartDescriptionLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.barChartDescription, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let barChartDescriptionRight:NSLayoutConstraint = NSLayoutConstraint(item: self.barChartDescription, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let barChartDescriptionHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.barChartDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    self.graphView1.addConstraints([barChartDescriptionLeft,barChartDescriptionRight,barChartDescriptionTop])
+    self.barChartDescription.addConstraint(barChartDescriptionHeight)
+
+    //Create and set constraints for lineChartDescription and lineChartLabel
+    
+    self.lineChartDescription.translatesAutoresizingMaskIntoConstraints = false
+    
+    let lineChartDescriptionTop:NSLayoutConstraint = NSLayoutConstraint(item: self.lineChartDescription, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let lineChartDescriptionLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.lineChartDescription, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let lineChartDescriptionRight:NSLayoutConstraint = NSLayoutConstraint(item: self.lineChartDescription, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let lineChartDescriptionHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.lineChartDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    self.graphView2.addConstraints([lineChartDescriptionLeft,lineChartDescriptionRight,lineChartDescriptionTop])
+    self.lineChartDescription.addConstraint(lineChartDescriptionHeight)
+   
+    //Create and set constraints for pointerView1
+    
+    self.pointerView1.translatesAutoresizingMaskIntoConstraints = false
+    
+    let pointerView1Top:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 30)
+    let pointerView1Left:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let pointerView1Right:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let pointerView1Height:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 10)
+    self.graphView1.addConstraints([pointerView1Left,pointerView1Right,pointerView1Top])
+    self.pointerView1.addConstraint(pointerView1Height)
+    
+    //Create and set constraints for pointerView2
+    
+    self.pointerView2.translatesAutoresizingMaskIntoConstraints = false
+    
+    let pointerView2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 30)
+    let pointerView2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let pointerView2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let pointerView2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 10)
+    self.graphView2.addConstraints([pointerView2Left,pointerView2Right,pointerView2Top])
+    self.pointerView2.addConstraint(pointerView2Height)
+    
   }
   
   func showTestTypesBackgroundView() {
@@ -390,7 +513,123 @@ class StatisticsViewController: UIViewController {
     }
     
   }
+    
+    func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
+        self.barChartText.text = "4TH DEC, 12:53 -\(entry.value)%"
+        self.pointerView1.moveLabelPointer(self.graphView1.frame.width/6 * (CGFloat(entry.xIndex) + 0.5))
+        self.pointerView2.moveLabelPointer(self.graphView2.frame.width/6 * (CGFloat(entry.xIndex) + 0.5))
+    
+    }
 
+    func testTypeClicked(sender:UIButton) {
+        
+        //PointerViews
+        self.pointerView1.alpha = 1.0
+        self.pointerView2.alpha = 1.0
+        
+        //Graph 1 - Test Scores
+        let colors:[UIColor] = self.appVariablesModel.getAppColors()
+        let xValues = ["T1","T2","T3","T4","T5","T6"]
+        let yUnits:[Double] = [50,60,70,80,90,100]
+        var dataEntries: [ChartDataEntry] = []
+        var y:Int = 0
+        
+        for y=0;y<yUnits.count;y++ {
+            let dataEntry = BarChartDataEntry(value: yUnits[y], xIndex: y)
+            dataEntries.append(dataEntry)
+        }
+        
+        let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "Test Results")
+        let chartData = BarChartData(xVals: xValues, dataSet: chartDataSet)
+        self.chartObject.data = chartData
+        
+        self.chartObject.highlightValue(ChartHighlight(xIndex: 5, dataSetIndex: 0))
+        chartDataSet.setColor(UIColor(white: 0.5, alpha: 0.5))
+        chartDataSet.highlightColor = colors[sender.tag]
+        chartDataSet.highlightAlpha = 1.0
+        self.chartObject.descriptionText = ""
+        chartData.setValueTextColor(UIColor.blackColor())
+        chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        self.chartObject.xAxis.enabled = false
+        self.chartObject.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+        self.chartObject.legend.enabled = false
+        self.chartObject.userInteractionEnabled = true
+        self.chartObject.pinchZoomEnabled = false
+        self.chartObject.doubleTapToZoomEnabled = false
+        self.chartObject.leftAxis.enabled = false
+        self.chartObject.rightAxis.enabled = false
+        self.chartObject.gridBackgroundColor = UIColor(white: 1.0, alpha: 0.0)
+        self.chartObject.drawHighlightArrowEnabled = false
+        self.chartObject.drawValueAboveBarEnabled = true
+        self.chartObject.dragEnabled = false
+        
+        self.barChartDescription.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        self.barChartText.textColor = UIColor.whiteColor()
+        self.barChartText.font = UIFont(name: "Helvetica-NeueBold", size: 13.0)
+        self.barChartText.textAlignment = NSTextAlignment.Center
+        self.barChartText.text = "4TH DEC, 12:53 - 100%"
+        
+        //Graph 2 - Test Time
+        
+        let xValues2 = ["T1","T2","T3","T4","T5","T6"]
+        let yUnits2:[Double] = [35,28,22,12,30,21]
+        var dataEntries2: [ChartDataEntry] = []
+        var y2:Int = 0
+        
+        for y2=0;y2<yUnits2.count;y2++ {
+            let dataEntry = ChartDataEntry(value: yUnits2[y2], xIndex: y2)
+            dataEntries2.append(dataEntry)
+        }
+        
+        let chartDataSet2 = LineChartDataSet(yVals: dataEntries2, label: "Test Time")
+        let chartData2 = LineChartData(xVals: xValues2, dataSet: chartDataSet2)
+        self.chartObject2.data = chartData2
+        
+        chartDataSet2.drawCubicEnabled = true
+        chartDataSet2.cubicIntensity = 0.3
+        chartDataSet2.drawCirclesEnabled = true
+        chartDataSet2.lineWidth = 2.0
+        chartDataSet2.fillColor = colors[sender.tag]
+        chartDataSet2.drawHorizontalHighlightIndicatorEnabled = false
+        chartDataSet2.setColor(colors[sender.tag])
+        chartDataSet2.setCircleColor(colors[sender.tag])
+        chartDataSet2.drawFilledEnabled = true
+        chartDataSet2.circleRadius = 4.0
+        chartDataSet2.setCircleColor(colors[sender.tag])
+        chartDataSet2.circleHoleColor = UIColor.whiteColor()
+        
+        self.chartObject2.descriptionText = ""
+        chartData2.setValueTextColor(UIColor.blackColor())
+        chartData2.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        self.chartObject2.xAxis.enabled = false
+        self.chartObject2.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+        self.chartObject2.legend.enabled = false
+        self.chartObject2.userInteractionEnabled = true
+        self.chartObject2.pinchZoomEnabled = false
+        self.chartObject2.doubleTapToZoomEnabled = false
+        self.chartObject2.leftAxis.enabled = false
+        self.chartObject2.rightAxis.enabled = false
+        self.chartObject2.gridBackgroundColor = UIColor(white: 1.0, alpha: 0.0)
+        self.chartObject2.dragEnabled = false
+        
+        self.lineChartDescription.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        self.lineChartText.textColor = UIColor.whiteColor()
+        self.lineChartText.font = UIFont(name: "Helvetica-NeueBold", size: 13.0)
+        self.lineChartText.textAlignment = NSTextAlignment.Center
+        self.lineChartText.text = "4TH DEC, 12:53 - 100%"
+        
+        //Menu - Buttons background
+        
+        for button in self.testTypeButtons {
+            if button.tag == sender.tag {
+                self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+            }
+            else {
+                self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+            }
+        }
+
+    }
     /*
     // MARK: - Navigation
 
