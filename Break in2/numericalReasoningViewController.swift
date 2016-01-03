@@ -481,10 +481,10 @@ class numericalReasoningViewController: UIViewController, UIScrollViewDelegate {
                     let saveError = SCLAlertView()
                     
                     let user = PFUser.currentUser()
-                    let analytics = PFObject(className: PF_ANALYTICS_CLASS_NAME)
-                    analytics[PF_ANALYTICS_USER] = user
-                    analytics[PF_ANALYTICS_SCORE] = self.scoreRatio
-                    analytics[PF_ANALYTICS_TIME] = timeTaken
+                    let analytics = PFObject(className: PF_NUMREAS_CLASS_NAME)
+                    analytics[PF_NUMREAS_USER] = user
+                    analytics[PF_NUMREAS_SCORE] = self.scoreRatio
+                    analytics[PF_NUMREAS_TIME] = timeTaken
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {

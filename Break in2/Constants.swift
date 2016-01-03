@@ -30,3 +30,30 @@ let PF_ANALYTICS_USERNAME				= "username"				//	String
 let PF_ANALYTICS_CAREER                 = "career"                  //	String
 let PF_ANALYTICS_TEST                   = "test"                    //	String
 let PF_ANALYTICS_SCORE                  = "score"                   //	Number
+
+/* Numerical Reasoning class in Parse*/
+let PF_NUMREAS_CLASS_NAME				= "Numerical_Reasoning"		//	Class name
+let PF_NUMREAS_USER                     = "user"					//	Pointer to User Class
+let PF_NUMREAS_CREATED                  = "createdAt"               //	Date
+let PF_NUMREAS_TIME                     = "time"                    //	Number
+let PF_NUMREAS_USERNAME                 = "username"				//	String
+let PF_NUMREAS_TEST                     = "test"                    //	String
+let PF_NUMREAS_SCORE                    = "score"                   //	Number
+
+/* Numerical Reasoning class in Parse*/
+let PF_VERBREAS_CLASS_NAME				= "Verbal_Reasoning"		//	Class name
+let PF_VERBREAS_USER                    = "user"					//	Pointer to User Class
+let PF_VERBREAS_CREATED                 = "createdAt"               //	Date
+let PF_VERBREAS_TIME                    = "time"                    //	Number
+let PF_VERBREAS_USERNAME                = "username"				//	String
+let PF_VERBREAS_TEST                    = "test"                    //	String
+let PF_VERBREAS_SCORE                   = "score"                   //	Number
+
+/* Numerical Reasoning class in Parse*/
+let PF_ARITHMETIC_CLASS_NAME            = "Arithmetic"		//	Class name
+let PF_ARITHMETIC_USER                  = "user"					//	Pointer to User Class
+let PF_ARITHMETIC_CREATED               = "createdAt"               //	Date
+let PF_ARITHMETIC_TIME                  = "time"                    //	Number
+let PF_ARITHMETIC_USERNAME              = "username"				//	String
+let PF_ARITHMETIC_TEST                  = "test"                    //	String
+let PF_ARITHMETIC_SCORE                 = "score"                   //	Number

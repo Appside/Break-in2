@@ -27,7 +27,7 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
     let mainView:UIView = UIView()
     var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 20
+    var totalNumberOfQuestions:Int = 1
     var allowedSeconds:Int = 30
     var allowedMinutes:Int = 00
     var countSeconds:Int = Int()
@@ -418,10 +418,10 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
                     let saveError = SCLAlertView()
                     
                     let user = PFUser.currentUser()
-                    let analytics = PFObject(className: PF_ANALYTICS_CLASS_NAME)
-                    analytics[PF_ANALYTICS_USER] = user
-                    analytics[PF_ANALYTICS_SCORE] = self.scoreRatio
-                    analytics[PF_ANALYTICS_TIME] = timeTaken
+                    let analytics = PFObject(className: PF_ARITHMETIC_CLASS_NAME)
+                    analytics[PF_ARITHMETIC_USER] = user
+                    analytics[PF_ARITHMETIC_SCORE] = self.scoreRatio
+                    analytics[PF_ARITHMETIC_TIME] = timeTaken
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {

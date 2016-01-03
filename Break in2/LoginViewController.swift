@@ -473,13 +473,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   
   func userLoggedIn(user: PFUser) {
-    //PushNotication.parsePushUserAssign()
-    //self.performSegueWithIdentifier("settingsClicked", sender: nil)
-    //self.dismissViewControllerAnimated(true, completion: nil)
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
     presentViewController(homeVC, animated: false, completion: nil)
-    //self.performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
     self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 4)
   }
   

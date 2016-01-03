@@ -32,7 +32,7 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[verbalQuestion] = [verbalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 19
+    var totalNumberOfQuestions:Int = 1
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 20
@@ -453,10 +453,10 @@ class verbalReasoningViewController: UIViewController, UIScrollViewDelegate {
                     let saveError = SCLAlertView()
                     
                     let user = PFUser.currentUser()
-                    let analytics = PFObject(className: PF_ANALYTICS_CLASS_NAME)
-                    analytics[PF_ANALYTICS_USER] = user
-                    analytics[PF_ANALYTICS_SCORE] = self.scoreRatio
-                    analytics[PF_ANALYTICS_TIME] = timeTaken
+                    let analytics = PFObject(className: PF_VERBREAS_CLASS_NAME)
+                    analytics[PF_VERBREAS_USER] = user
+                    analytics[PF_VERBREAS_SCORE] = self.scoreRatio
+                    analytics[PF_VERBREAS_TIME] = timeTaken
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
