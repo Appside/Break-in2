@@ -11,6 +11,7 @@ pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit’
 pod 'Alamofire', '~> 3.0'
 pod 'SCLAlertView'
+pod "SwiftSpinner"
 
 end
 

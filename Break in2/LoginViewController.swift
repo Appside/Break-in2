@@ -14,6 +14,7 @@ import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import FBSDKLoginKit
 import CoreData
+import SwiftSpinner
 
 class LoginViewController: UIViewController, UIScrollViewDelegate {
   
@@ -187,9 +188,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     func buttonFBTapped(sender: AnyObject) {
         
         //self.pleaseWait()
-        self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
-            
-            self.clearAllNotice()
+        SwiftSpinner.show("Logging in...")
+        //self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
+            //self.clearAllNotice()
         
         fetchLoginCreds()
         
@@ -200,41 +201,14 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             let arr = set.allObjects //Swift Array
             let arr2 = set2.allObjects
             
-//            let query = PFQuery(className: PF_USER_CLASS_NAME)
-//            query.includeKey(ParseFBID)
-//            //query.includeKey(<#T##key: String##String#>)
-//            //query.whereKey(ParseFBID, matchesKey: PF_USER_FACEBOOKID, inQuery: query)
-//            //query.whereKey(ParseFBID, equalTo: PF_USER_FACEBOOKID)
-//            
-//            query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-//                
-//                
-//                if let objects = objects {
-//                    
-//                    for object in objects {
-//                        
-//                        if object["facebookId"] as! String == self.ParseFBID {
-//                        let username = object["username"]  as! String
-//                            let pass = object["facebookId"] as! String
-//                            //let user = PFUser.currentUser()
-//                        //let password =  object["password"]  as! String
-            
-            //let perm = defaults.objectForKey("permissions") as! [AnyObject!]
-            //let declPerm = defaults.objectForKey("declinedPermissions") as! [AnyObject!]
-            
                             let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
                             PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
                 
+                                SwiftSpinner.hide()
                                 self.userLoggedIn((user)!)
                             
                         })
                         }else{
-                            //ksnncdkckl
-        //}
-//                    }
-//}
-//}
-//                    }else{
         
             PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
                 
@@ -501,13 +475,12 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   func userLoggedIn(user: PFUser) {
     //PushNotication.parsePushUserAssign()
     //self.performSegueWithIdentifier("settingsClicked", sender: nil)
-    
-    self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 3)
     //self.dismissViewControllerAnimated(true, completion: nil)
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
     presentViewController(homeVC, animated: false, completion: nil)
     //self.performSegueWithIdentifier("userLoggedOn", sender: self.facebookLoginButton)
+    self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 4)
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

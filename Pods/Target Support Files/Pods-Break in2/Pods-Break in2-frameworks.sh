@@ -93,6 +93,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Break in2/ParseFacebookUtilsV4.framework"
   install_framework "Pods-Break in2/ParseUI.framework"
   install_framework "Pods-Break in2/SCLAlertView.framework"
+  install_framework "Pods-Break in2/SwiftSpinner.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Break in2/Alamofire.framework"
@@ -104,4 +105,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Break in2/ParseFacebookUtilsV4.framework"
   install_framework "Pods-Break in2/ParseUI.framework"
   install_framework "Pods-Break in2/SCLAlertView.framework"
+  install_framework "Pods-Break in2/SwiftSpinner.framework"
 fi
