@@ -163,6 +163,12 @@ class HomeViewController: UIViewController {
     
     self.careersBackgroundView.backgroundColor = UIColor.whiteColor()
     self.careersBackgroundView.layer.cornerRadius = self.minorMargin
+    if self.segueFromLoginView {
+      self.careersBackgroundView.alpha = 1
+    }
+    else {
+      self.careersBackgroundView.alpha = 0
+    }
     
     self.calendarBackgroundView.backgroundColor = UIColor.whiteColor()
     self.calendarBackgroundView.layer.cornerRadius = self.minorMargin
@@ -353,7 +359,12 @@ class HomeViewController: UIViewController {
     
     let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height)
+    if self.segueFromLoginView {
+      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height)
+    }
+    else {
+      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin)
+    }
     
     self.careersBackgroundView.addConstraint(careersBackgroundViewHeightConstraint)
     self.view.addConstraints([careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, self.careersBackgroundViewTopConstraint])
@@ -531,39 +542,54 @@ class HomeViewController: UIViewController {
   
   func showCareersBackgroundView() {
     
-    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    if self.segueFromLoginView {
       
-      self.settingsButton.alpha = 1
-      self.statsButton.alpha = 1
-      self.careersBackgroundViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
-      if !self.segueFromLoginView {
-        self.calendarBackgroundView.alpha = 1
-      }
-      self.view.layoutIfNeeded()
-      
-      }, completion: {(Bool) in
+      UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
         
-        if self.segueFromLoginView {
+        self.settingsButton.alpha = 1
+        self.statsButton.alpha = 1
+        self.careersBackgroundViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
+        self.view.layoutIfNeeded()
+        
+        }, completion: {(Bool) in
+          
           UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
             self.calendarBackgroundView.alpha = 1
             self.view.layoutIfNeeded()
             
             }, completion: nil)
-        }
+          
+      })
+      
+    }
+    else {
+      
+      UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
         
-    })
+        self.settingsButton.alpha = 1
+        self.statsButton.alpha = 1
+        self.careersBackgroundView.alpha = 1
+        self.calendarBackgroundView.alpha = 1
+        self.view.layoutIfNeeded()
+        
+        }, completion: nil)
+      
+    }
+    
+    
     
   }
   
   func hideCareersBackgroundView(sender: UIButton) {
     
-    UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
       self.calendarBackgroundView.alpha = 0
       self.settingsButton.alpha = 0
       self.statsButton.alpha = 0
-      self.careersBackgroundViewTopConstraint.constant = self.screenFrame.height
+      self.careersBackgroundView.alpha = 0
+      //self.careersBackgroundViewTopConstraint.constant = self.screenFrame.height
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in

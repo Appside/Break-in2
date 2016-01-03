@@ -111,6 +111,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.settingsMenuView.backgroundColor = UIColor.whiteColor()
     self.settingsMenuView.layer.cornerRadius = self.minorMargin
+    self.settingsMenuView.alpha = 0
     
     self.chooseCareersView.backgroundColor = UIColor.whiteColor()
     self.chooseCareersView.layer.cornerRadius = self.minorMargin
@@ -383,7 +384,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     let settingsMenuViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.settingsMenuViewTopConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height)
+    self.settingsMenuViewTopConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin)
     
     self.settingsMenuView.addConstraint(settingsMenuViewHeightConstraint)
     self.view.addConstraints([settingsMenuViewRightConstraint, settingsMenuViewLeftConstraint, self.settingsMenuViewTopConstraint])
@@ -590,10 +591,11 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   func showSettingsMenuView() {
     
-    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       self.backButton.alpha = 1
-      self.settingsMenuViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
+      self.settingsMenuView.alpha = 1
+      //self.settingsMenuViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
       self.chooseCareersView.alpha = 1
       self.view.layoutIfNeeded()
       
@@ -603,11 +605,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
 
   func hideSettingsMenuView(sender:UIButton) {
     
-    UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
       self.chooseCareersView.alpha = 0
       self.backButton.alpha = 0
-      self.settingsMenuViewTopConstraint.constant = self.screenFrame.height
+      self.settingsMenuView.alpha = 0
+      //self.settingsMenuViewTopConstraint.constant = self.screenFrame.height
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in

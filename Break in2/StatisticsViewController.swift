@@ -94,7 +94,7 @@ class StatisticsViewController: UIViewController {
       
       self.testTypesBackgroundView.backgroundColor = UIColor.whiteColor()
       self.testTypesBackgroundView.layer.cornerRadius = self.minorMargin
-      self.testTypesBackgroundView.alpha = 1
+      self.testTypesBackgroundView.alpha = 0
       self.testTypesBackgroundView.clipsToBounds = true
       
       self.statisticsBackgroundView.backgroundColor = UIColor.whiteColor()
@@ -243,7 +243,7 @@ class StatisticsViewController: UIViewController {
     
     let testTypesBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.testTypesBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height)
+    self.testTypesBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin)
     
     self.testTypesBackgroundView.addConstraint(testTypesBackgroundViewHeightConstraint)
     self.view.addConstraints([testTypesBackgroundViewRightConstraint, testTypesBackgroundViewLeftConstraint, self.testTypesBackgroundViewTopConstraint])
@@ -350,11 +350,12 @@ class StatisticsViewController: UIViewController {
   
   func showTestTypesBackgroundView() {
     
-    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       self.backButton.alpha = 1
       self.statisticsBackgroundView.alpha = 1
-      self.testTypesBackgroundViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
+      self.testTypesBackgroundView.alpha = 1
+      //self.testTypesBackgroundViewTopConstraint.constant = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin
       self.view.layoutIfNeeded()
       
     }, completion: nil)
@@ -367,7 +368,8 @@ class StatisticsViewController: UIViewController {
       
       self.backButton.alpha = 0
       self.statisticsBackgroundView.alpha = 0
-      self.testTypesBackgroundViewTopConstraint.constant = self.screenFrame.height
+      self.testTypesBackgroundView.alpha = 0
+      //self.testTypesBackgroundViewTopConstraint.constant = self.screenFrame.height
       self.view.layoutIfNeeded()
       
       }, completion:{(Bool) in

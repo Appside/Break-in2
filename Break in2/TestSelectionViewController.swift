@@ -161,6 +161,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testSelectionView.backgroundColor = self.mainBackgroundColor
     self.testSelectionView.layer.cornerRadius = self.minorMargin
+    self.testSelectionView.alpha = 0
     
     // Adjust testStartButton and backButton appearances
     
@@ -247,7 +248,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.testSelectionView.translatesAutoresizingMaskIntoConstraints = false
     
-    self.testSelectionViewBottomConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7))
+    self.testSelectionViewBottomConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: /*self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7)*/ self.minorMargin)
     
     let testSelectionViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
@@ -376,14 +377,15 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   func showTestSelectionView() {
     
-    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       if !self.testSelectionViewVisible {
         
         self.backgroundImageView.alpha = 1
         self.backgroundImageView2.alpha = 0
         self.backButton.alpha = 1
-        self.testSelectionViewBottomConstraint.constant = self.minorMargin
+        self.testSelectionView.alpha = 1
+        //self.testSelectionViewBottomConstraint.constant = self.minorMargin
         self.view.layoutIfNeeded()
         
         self.testSelectionViewVisible = true
@@ -396,18 +398,15 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   func hideTestSelectionView(sender:UIButton) {
     
-    UIView.animateWithDuration(0.5, delay: 0.1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-      
-      if self.statsViewVisible {
-        self.hideStats(self.testSelectionViewSwipeDownGesture)
-      }
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       if self.testSelectionViewVisible {
         
         self.backgroundImageView2.image = UIImage.init(named: "homeBG")
         self.backgroundImageView2.alpha = 1
         self.backgroundImageView.alpha = 0
-        self.testSelectionViewBottomConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7)
+        self.testSelectionView.alpha = 0
+        //self.testSelectionViewBottomConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7)
         self.backButton.alpha = 0
         self.view.layoutIfNeeded()
         
