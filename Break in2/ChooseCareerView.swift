@@ -10,16 +10,17 @@ import UIKit
 
 protocol ChooseCareerViewDelegate {
   
-  func appendChosenCareer()
-  func removeChosenCareer()
+  func appendChosenCareer(career: String)
+  func removeChosenCareer(career: String)
   
 }
 
 class ChooseCareerView: UIView {
   
+  var careerTitle:String = String()
+  let careerTitleLabel:UILabel = UILabel()
   let careerImageView:UIImageView = UIImageView()
   var careerImage:UIImage = UIImage()
-  let careerColorView:UIView = UIView()
   let tickButton:UIButton = UIButton()
   let crossButton:UIButton = UIButton()
   
@@ -44,13 +45,17 @@ class ChooseCareerView: UIView {
     
     // Add subviews
     
+    self.addSubview(self.careerTitleLabel)
     self.addSubview(self.careerImageView)
     self.addSubview(self.tickButton)
     self.addSubview(self.crossButton)
-    self.addSubview(self.careerColorView)
     
-    // Set properties for careerImageView
+    // Set properties for careerTitleLabel and careerImageView
     
+    self.careerTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.careerTitleLabel.textAlignment = NSTextAlignment.Center
+    self.careerTitleLabel.textColor = UIColor.turquoiseColor()
+
     self.careerImageView.contentMode = UIViewContentMode.ScaleAspectFit
     
     // Set properties for tickButton and crossButton
@@ -68,14 +73,14 @@ class ChooseCareerView: UIView {
   }
   
   func setConstraints() {
-
+    
     // Create and add constraints for careerImageView
     
     self.careerImageView.translatesAutoresizingMaskIntoConstraints = false
     
     let careerImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
-    let careerImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    let careerImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: (self.careerTitleLabelHeight / 2) * -1)
     
     let careerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
     
@@ -84,20 +89,20 @@ class ChooseCareerView: UIView {
     self.careerImageView.addConstraints([careerImageViewHeightConstraint, careerImageViewWidthConstraint])
     self.addConstraints([careerImageViewCenterXConstraint, careerImageViewCenterYConstraint])
     
-    // Create and add constraints for careerColorView
+    // Create and add constraints for careerTitleLabel
     
-    self.careerColorView.translatesAutoresizingMaskIntoConstraints = false
+    self.careerTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let careerColorViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let careerTitleLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerTitleLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
-    let careerColorViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careerImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    let careerTitleLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerTitleLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
-    let careerColorViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 5)
+    let careerTitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerTitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.careerTitleLabelHeight)
     
-    let careerColorViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
+    let careerTitleLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerTitleLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    self.careerColorView.addConstraints([careerColorViewHeightConstraint, careerColorViewWidthConstraint])
-    self.addConstraints([careerColorViewCenterXConstraint, careerColorViewTopConstraint])
+    self.careerTitleLabel.addConstraint(careerTitleLabelHeightConstraint)
+    self.addConstraints([careerTitleLabelBottomConstraint, careerTitleLabelLeftConstraint, careerTitleLabelRightConstraint])
     
     // Create and add constraints for tickButton
     
@@ -105,7 +110,7 @@ class ChooseCareerView: UIView {
     
     let tickButtonCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tickButton, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.careerImageView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: (((self.screenFrame.width/2) - self.majorMargin - (self.height/4))/2) + (self.height/4))
     
-    let tickButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tickButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    let tickButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tickButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: (self.careerTitleLabelHeight / 2) * -1)
     
     let tickButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tickButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
     
@@ -120,7 +125,7 @@ class ChooseCareerView: UIView {
     
     let crossButtonCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.crossButton, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.careerImageView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: ((((self.screenFrame.width/2) - self.majorMargin - (self.height/4))/2) + (self.height/4)) * -1)
     
-    let crossButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.crossButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    let crossButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.crossButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: (self.careerTitleLabelHeight / 2) * -1)
     
     let crossButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.crossButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
     
@@ -134,10 +139,11 @@ class ChooseCareerView: UIView {
   func displayView() {
     
     self.careerImageView.image = self.careerImage
-        
+    
+    self.careerTitleLabel.text = self.careerTitle
+    
     // Set constraints
     
-    self.superview?.layoutIfNeeded()
     self.setConstraints()
     
     // Set tickButton and crossButton
@@ -160,7 +166,7 @@ class ChooseCareerView: UIView {
       self.careerChosen = true
       
       if let unwrappedDelegate = self.delegate {
-        unwrappedDelegate.appendChosenCareer()
+        unwrappedDelegate.appendChosenCareer(self.careerTitle)
       }
     }
     
@@ -175,7 +181,7 @@ class ChooseCareerView: UIView {
       self.careerChosen = false
       
       if let unwrappedDelegate = self.delegate {
-        unwrappedDelegate.removeChosenCareer()
+        unwrappedDelegate.removeChosenCareer(self.careerTitle)
       }
     }
     

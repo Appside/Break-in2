@@ -1,5 +1,5 @@
 //
-//  PageControllerView.swift
+//  TestPageControllerView.swift
 //  TestSelectionScreen
 //
 //  Created by Sangeet on 13/11/2015.

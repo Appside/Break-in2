@@ -26,11 +26,6 @@
 		25849DC31C333D58006C8A17 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25849DC21C333D58006C8A17 /* StatisticsViewController.swift */; };
 		25A21B761C34956C00A72455 /* StatisticsTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A21B751C34956C00A72455 /* StatisticsTitleView.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
-<<<<<<< Updated upstream
-=======
-		25EE1EBD1C39677E00FAACA3 /* ChooseCareerTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EE1EBC1C39677E00FAACA3 /* ChooseCareerTitleView.swift */; };
-		492506E21C2A0188008AD209 /* ArithmeticReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 492506E11C2A0188008AD209 /* ArithmeticReasoning.json */; };
->>>>>>> Stashed changes
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
 		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
@@ -100,7 +95,6 @@
 		25849DC21C333D58006C8A17 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		25A21B751C34956C00A72455 /* StatisticsTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTitleView.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
-		25EE1EBC1C39677E00FAACA3 /* ChooseCareerTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCareerTitleView.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* numericalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalReasoningViewController.swift; sourceTree = "<group>"; };
 		499375361C02573100AA0588 /* numericalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalQuestion.swift; sourceTree = "<group>"; };
@@ -237,7 +231,6 @@
 			children = (
 				617FC64A1BEF92700019AE9B /* SettingsViewController.swift */,
 				2514F16C1C1F13B1003E8001 /* ChooseCareerView.swift */,
-				25EE1EBC1C39677E00FAACA3 /* ChooseCareerTitleView.swift */,
 			);
 			name = SettingsView;
 			sourceTree = "<group>";
@@ -565,7 +558,6 @@
 				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,
 				61FCAED51C0672480072FDFB /* Images.swift in Sources */,
 				2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */,
-				25EE1EBD1C39677E00FAACA3 /* ChooseCareerTitleView.swift in Sources */,
 				2526701C1C2378A6007D55BE /* CalendarMonthView.swift in Sources */,
 				4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */,
 				617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */,

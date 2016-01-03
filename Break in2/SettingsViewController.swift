@@ -25,7 +25,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   var careerTypes:[String] = [String]()
   var careerTypeImages:[String:String] = [String:String]()
   var chosenCareers:[String] = [String]()
-  var careerColors:[String:UIColor] = [String:UIColor]()
   
   // Declare and initialize views
   
@@ -37,8 +36,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let scrollInfoLabel:UILabel = UILabel()
   let settingsScrollView:UIScrollView = UIScrollView()
   var settingsButtons:[CareerButton] = [CareerButton]()
-  let chooseCareersTitleView:ChooseCareerTitleView = ChooseCareerTitleView()
-  let currentCareerLabel:UILabel = UILabel()
+  let chooseCareersPageControllerView:PageControllerView = PageControllerView()
   let chooseCareersInfoLabel:UILabel = UILabel()
   let chooseCareersScrollView:UIScrollView = UIScrollView()
   var chooseCareerViews:[ChooseCareerView] = [ChooseCareerView]()
@@ -59,7 +57,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
-  var chooseCareersInfoLabelHeight:CGFloat = 50
+  var chooseCareersPageControllerViewHeight:CGFloat = 50
   
   // Declare and initialize tracking variables
   
@@ -75,11 +73,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
     self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
     
-    let appColors:[UIColor] = self.settingsModel.getAppColors()
-    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
-      self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
-    }
-    
     // Add subviews to the main view
     
     self.view.addSubview(self.logoImageView)
@@ -91,9 +84,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.settingsMenuView.addSubview(self.scrollInfoLabel)
     self.settingsMenuView.addSubview(self.settingsScrollView)
     
+    self.chooseCareersView.addSubview(self.chooseCareersPageControllerView)
     self.chooseCareersView.addSubview(self.chooseCareersInfoLabel)
-    self.chooseCareersView.addSubview(self.chooseCareersTitleView)
-    self.chooseCareersView.addSubview(self.currentCareerLabel)
     self.chooseCareersView.addSubview(self.chooseCareersScrollView)
     
     // Adjust backButton appearance
@@ -142,24 +134,14 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.settingsScrollView.showsVerticalScrollIndicator = false
     
     self.chooseCareersScrollView.pagingEnabled = true
-    self.chooseCareersScrollView.showsHorizontalScrollIndicator = false
+    self.chooseCareersScrollView.showsHorizontalScrollIndicator = true
     self.chooseCareersScrollView.delegate = self
     
-    // Customize chooseCareersTitleView and currentCareerLabel
+    // Customize chooseCareersPageControllerView
     
-    self.chooseCareersTitleView.careerSelectedLabel.text = self.careerTypes[0]
+    self.chooseCareersPageControllerView.minorMargin = self.minorMargin
+    self.chooseCareersPageControllerView.numberOfPages = self.careerTypes.count
     
-    self.currentCareerLabel.backgroundColor = UIColor.turquoiseColor()
-    self.currentCareerLabel.textAlignment = NSTextAlignment.Center
-    self.currentCareerLabel.textColor = UIColor.whiteColor()
-    self.currentCareerLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-    if self.chosenCareers.contains(self.careerTypes[0]) {
-      self.currentCareerLabel.text = "Career Selected"
-    }
-    else {
-      self.currentCareerLabel.text = "Career Unselected"
-    }
-
     // Create settingsButtons for each setting
     
     for var index:Int = 0 ; index < self.settings.count ; index++ {
@@ -197,8 +179,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       // Set chooseCareerView properties
       
+      chooseCareerViewAtIndex.careerTitle = self.careerTypes[index]
       chooseCareerViewAtIndex.careerImage = UIImage.init(named: self.careerTypeImages[self.careerTypes[index]]!)!
-      chooseCareerViewAtIndex.careerColorView.backgroundColor = self.careerColors[self.careerTypes[index]]
       if self.chosenCareers.contains(self.careerTypes[index]) {
         chooseCareerViewAtIndex.careerChosen = true
       }
@@ -207,7 +189,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       chooseCareerViewAtIndex.minorMargin = self.minorMargin
       
       let chooseCareersViewHeight = self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.statusBarFrame.height + self.backButtonHeight)
-      chooseCareerViewAtIndex.height =  chooseCareersViewHeight - (self.chooseCareersInfoLabelHeight * 2)
+      chooseCareerViewAtIndex.height =  chooseCareersViewHeight - (self.chooseCareersPageControllerViewHeight * 2)
       
       chooseCareerViewAtIndex.clipsToBounds = true
       
@@ -228,10 +210,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Set constraints
     
     self.setConstraints()
-    
-    // Display chosseCareersTitleView
-    
-    self.chooseCareersTitleView.displayView()
     
     // Do any additional setup after loading the view.
   }
@@ -487,50 +465,35 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
     }
     
-    // Create and add constraints for chooseCareersTitleView
+    // Create and add constraints for chooseCareersPageControllerView
     
-    self.chooseCareersTitleView.translatesAutoresizingMaskIntoConstraints = false
+    self.chooseCareersPageControllerView.translatesAutoresizingMaskIntoConstraints = false
     
-    let chooseCareersTitleViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let chooseCareersPageControllerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersPageControllerView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
     
-    let chooseCareersTitleViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let chooseCareersPageControllerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersPageControllerView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
-    let chooseCareersTitleViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let chooseCareersPageControllerViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersPageControllerView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let chooseCareersTitleViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: ((self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight)) * 2)/9)
+    let chooseCareersPageControllerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersPageControllerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.chooseCareersPageControllerViewHeight)
     
-    self.chooseCareersTitleView.addConstraint(chooseCareersTitleViewHeightConstraint)
-    self.view.addConstraints([chooseCareersTitleViewTopConstraint, chooseCareersTitleViewLeftConstraint, chooseCareersTitleViewRightConstraint])
-    
-    // Create and add constraints for currentCareerLabel
-    
-    self.currentCareerLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    let currentCareerLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-    
-    let currentCareerLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
-    
-    let currentCareerLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let currentCareerLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))/9)
-    
-    self.currentCareerLabel.addConstraint(currentCareerLabelHeightConstraint)
-    self.view.addConstraints([currentCareerLabelTopConstraint, currentCareerLabelLeftConstraint, currentCareerLabelRightConstraint])
+    self.chooseCareersPageControllerView.addConstraint(chooseCareersPageControllerViewHeightConstraint)
+    self.view.addConstraints([chooseCareersPageControllerViewTopConstraint, chooseCareersPageControllerViewLeftConstraint, chooseCareersPageControllerViewRightConstraint])
     
     // Create and add constraints for chooseCareersInfoLabel
     
     self.chooseCareersInfoLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let chooseCareersInfoLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let chooseCareersInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
     
     let chooseCareersInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
     let chooseCareersInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let chooseCareersInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.chooseCareersInfoLabelHeight)
+    let chooseCareersInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.chooseCareersPageControllerViewHeight - self.minorMargin)
     
     self.chooseCareersInfoLabel.addConstraint(chooseCareersInfoLabelHeightConstraint)
-    self.view.addConstraints([chooseCareersInfoLabelBottomConstraint, chooseCareersInfoLabelLeftConstraint, chooseCareersInfoLabelRightConstraint])
+    self.view.addConstraints([chooseCareersInfoLabelTopConstraint, chooseCareersInfoLabelLeftConstraint, chooseCareersInfoLabelRightConstraint])
     
     // Create and add constraints for chooseCareersScrollView
     
@@ -538,11 +501,11 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     let chooseCareersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let chooseCareersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let chooseCareersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
     let chooseCareersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
-    let chooseCareersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.currentCareerLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let chooseCareersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
     self.view.addConstraints([chooseCareersScrollViewLeftConstraint, chooseCareersScrollViewBottomConstraint, chooseCareersScrollViewRightConstraint, chooseCareersScrollViewTopConstraint])
     
@@ -554,7 +517,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       let chooseCareerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
       
-      let chooseCareerViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+      let chooseCareerViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
       
       let chooseCareerViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
       
@@ -635,23 +598,18 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     
     self.currentChooseCareersScrollViewPage = Int(self.chooseCareersScrollView.contentOffset.x / self.chooseCareersScrollView.frame.size.width)
-    self.chooseCareersTitleView.careerSelectedLabel.text = self.careerTypes[self.currentChooseCareersScrollViewPage]
-    if self.chosenCareers.contains(self.careerTypes[self.currentChooseCareersScrollViewPage]) {
-      self.currentCareerLabel.text = "Career Selected"
-    }
-    else {
-      self.currentCareerLabel.text = "Career Unselected"
-    }
+    self.chooseCareersPageControllerView.updatePageController(self.currentChooseCareersScrollViewPage)
+
   }
   
-  func appendChosenCareer() {
+  func appendChosenCareer(career: String) {
     
-    self.chosenCareers.append(self.currentCareerLabel.text!)
+    self.chosenCareers.append(career)
   }
   
-  func removeChosenCareer() {
+  func removeChosenCareer(career: String) {
     
-    self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(self.currentCareerLabel.text!)!)
+    self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(career)!)
     
   }
   
