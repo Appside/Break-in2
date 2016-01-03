@@ -658,12 +658,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   func appendChosenCareer() {
     
-    self.chosenCareers.append(self.currentCareerLabel.text!)
+    self.chosenCareers.append(self.chooseCareersTitleView.careerSelectedLabel.text!)
+    
   }
   
   func removeChosenCareer() {
     
-    self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(self.currentCareerLabel.text!)!)
+    self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(self.chooseCareersTitleView.careerSelectedLabel.text!)!)
     
   }
   
