@@ -33,11 +33,11 @@ class ChooseCareerTitleView: UIView {
     
     self.nextCareerButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
     self.nextCareerButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    //self.nextStatisticButton.addTarget(self.superview, action: "nextMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.nextCareerButton.addTarget(self.superview, action: "nextCareerButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
     
     self.previousCareerButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
     self.previousCareerButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    //self.previousStatisticButton.addTarget(self.superview, action: "previousMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.previousCareerButton.addTarget(self.superview, action: "previousCareerButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
   }
   
   required init?(coder aDecoder: NSCoder) {

@@ -147,6 +147,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Customize chooseCareersTitleView and currentCareerLabel
     
     self.chooseCareersTitleView.careerSelectedLabel.text = self.careerTypes[0]
+    self.chooseCareersTitleView.previousCareerButton.alpha = 0
     
     self.currentCareerLabel.backgroundColor = UIColor.turquoiseColor()
     self.currentCareerLabel.textAlignment = NSTextAlignment.Center
@@ -635,11 +636,23 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.currentChooseCareersScrollViewPage = Int(self.chooseCareersScrollView.contentOffset.x / self.chooseCareersScrollView.frame.size.width)
     self.chooseCareersTitleView.careerSelectedLabel.text = self.careerTypes[self.currentChooseCareersScrollViewPage]
+    
     if self.chosenCareers.contains(self.careerTypes[self.currentChooseCareersScrollViewPage]) {
       self.currentCareerLabel.text = "Career Selected"
     }
     else {
       self.currentCareerLabel.text = "Career Unselected"
+    }
+    
+    if self.currentChooseCareersScrollViewPage == 0 {
+      self.chooseCareersTitleView.previousCareerButton.alpha = 0
+    }
+    else if self.currentChooseCareersScrollViewPage == self.careerTypes.count - 1 {
+      self.chooseCareersTitleView.nextCareerButton.alpha = 0
+    }
+    else {
+      self.chooseCareersTitleView.previousCareerButton.alpha = 1
+      self.chooseCareersTitleView.nextCareerButton.alpha = 1
     }
   }
   
@@ -651,6 +664,28 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   func removeChosenCareer() {
     
     self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(self.currentCareerLabel.text!)!)
+    
+  }
+  
+  func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    self.scrollViewDidEndDecelerating(scrollView)
+  }
+  
+  func nextCareerButtonClicked(sender:UIButton) {
+    
+    if self.currentChooseCareersScrollViewPage < self.careerTypes.count - 1 {
+      let nextCareerView:ChooseCareerView = self.chooseCareerViews[self.currentChooseCareersScrollViewPage + 1]
+      self.chooseCareersScrollView.setContentOffset(nextCareerView.frame.origin, animated: true)
+    }
+    
+  }
+  
+  func previousCareerButtonClicked(sender:UIButton) {
+    
+    if self.currentChooseCareersScrollViewPage > 0 {
+      let previousCareerView:ChooseCareerView = self.chooseCareerViews[self.currentChooseCareersScrollViewPage - 1]
+      self.chooseCareersScrollView.setContentOffset(previousCareerView.frame.origin, animated: true)
+    }
     
   }
   
