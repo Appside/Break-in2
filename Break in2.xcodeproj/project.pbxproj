@@ -26,11 +26,8 @@
 		25849DC31C333D58006C8A17 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25849DC21C333D58006C8A17 /* StatisticsViewController.swift */; };
 		25A21B761C34956C00A72455 /* StatisticsTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A21B751C34956C00A72455 /* StatisticsTitleView.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
-		492506E21C2A0188008AD209 /* ArithmeticReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 492506E11C2A0188008AD209 /* ArithmeticReasoning.json */; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
-		4993753D1C02573100AA0588 /* categoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375381C02573100AA0588 /* categoryButton.swift */; };
-		4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375391C02573100AA0588 /* paddingLabel.swift */; };
 		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
 		49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */; };
 		49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */; };
@@ -99,11 +96,8 @@
 		25A21B751C34956C00A72455 /* StatisticsTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTitleView.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
-		492506E11C2A0188008AD209 /* ArithmeticReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ArithmeticReasoning.json; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* numericalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalReasoningViewController.swift; sourceTree = "<group>"; };
 		499375361C02573100AA0588 /* numericalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalQuestion.swift; sourceTree = "<group>"; };
-		499375381C02573100AA0588 /* categoryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = categoryButton.swift; sourceTree = "<group>"; };
-		499375391C02573100AA0588 /* paddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paddingLabel.swift; sourceTree = "<group>"; };
 		49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = verbalReasoningViewController.swift; sourceTree = "<group>"; };
 		49A05D321C1EA4C300A50BCF /* verbalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = verbalQuestion.swift; sourceTree = "<group>"; };
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
@@ -228,7 +222,6 @@
 				253AC83B1C2716B600495DF5 /* JobDeadlines.json */,
 				251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */,
 				251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */,
-				492506E11C2A0188008AD209 /* ArithmeticReasoning.json */,
 			);
 			name = "JSON Files";
 			sourceTree = "<group>";
@@ -289,8 +282,6 @@
 				6143164B1BEF843A0047A37D /* Main.storyboard */,
 				61FCAED21C0518740072FDFB /* Constants.swift */,
 				614316471BEF843A0047A37D /* AppDelegate.swift */,
-				499375381C02573100AA0588 /* categoryButton.swift */,
-				499375391C02573100AA0588 /* paddingLabel.swift */,
 				2510B6E01C021C24005AE520 /* PageControllerView.swift */,
 				25411FF51C1E14EF000118BF /* FacebookButton.swift */,
 				253AC83E1C27218100495DF5 /* JSONModel.swift */,
@@ -474,7 +465,6 @@
 				253AC83D1C2716B700495DF5 /* JobDeadlines.json in Resources */,
 				614316521BEF843A0047A37D /* LaunchScreen.storyboard in Resources */,
 				6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */,
-				492506E21C2A0188008AD209 /* ArithmeticReasoning.json in Resources */,
 				6143164D1BEF843A0047A37D /* Main.storyboard in Resources */,
 				251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */,
 				251D4BC01C11FBEB004A6715 /* VerbalReasoning.json in Resources */,
@@ -556,7 +546,6 @@
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
 				610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */,
 				61FCAED31C0518740072FDFB /* Constants.swift in Sources */,
-				4993753E1C02573100AA0588 /* paddingLabel.swift in Sources */,
 				49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */,
 				25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */,
 				25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */,
@@ -578,7 +567,6 @@
 				61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */,
 				2526701B1C2378A6007D55BE /* CalendarMonthTitleView.swift in Sources */,
 				253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */,
-				4993753D1C02573100AA0588 /* categoryButton.swift in Sources */,
 				2526701E1C2378A6007D55BE /* CalendarDayButton.swift in Sources */,
 				2514F16D1C1F13B1003E8001 /* ChooseCareerView.swift in Sources */,
 				4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */,

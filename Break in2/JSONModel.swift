@@ -161,51 +161,6 @@ class JSONModel: NSObject {
     return arrayOfQuestions
   }
     
-    func selectArithmeticReasoning(nbOfQuestions:Int) -> [arithmeticQuestion] {
-        
-        //Initialize variables
-        var arrayOfQuestions:[arithmeticQuestion] = [arithmeticQuestion]()
-        
-        //Get JSon file
-        let jsonObject:[NSDictionary] = self.getjsonfile("ArithmeticReasoning")
-        var randomNumber:Int = Int()
-        var selectedQuestions:[Int] = [Int]()
-        var index:Int = 0
-        var y:Int = 0
-        var z:Int = 0
-        
-        for index = 0; index < nbOfQuestions; index++ {
-            
-            y = 0
-            while y==0 {
-                randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
-                if selectedQuestions.count>0 {
-                    for z=0;z<selectedQuestions.count;z++ {
-                        if selectedQuestions[z] != randomNumber {
-                            y = 1
-                        }
-                    }
-                } else {
-                    y = 1
-                }
-            }
-            selectedQuestions.append(randomNumber)
-            
-            let currentJsonDictionary:NSDictionary = jsonObject[randomNumber]
-            let newQuestion:arithmeticQuestion = arithmeticQuestion()
-            //Assign values to the newQuestion
-            newQuestion.questionType = currentJsonDictionary["questionType"] as! String
-            newQuestion.question = currentJsonDictionary["question"] as! String
-            newQuestion.answers = currentJsonDictionary["answers"] as! [String]
-            newQuestion.correctAnswer = currentJsonDictionary["correctAnswer"] as! Int
-            //Add the new Question to the returned array
-            arrayOfQuestions.append(newQuestion)
-        }
-        
-        //Return final array
-        return arrayOfQuestions
-    }
-  
   func getjsonfile(jsonFileName:String) -> [[String:AnyObject]] {
     
     //Define JSon file URL

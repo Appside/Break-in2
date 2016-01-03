@@ -557,58 +557,28 @@ class arithmeticReasoningViewController: UIViewController, UIScrollViewDelegate 
         var number1:Float = Float()
         var number2:Float = Float()
         var operation:String = String()
-        number1 = Float(arc4random_uniform(100)+1)
-        number2 = Float(arc4random_uniform(100)+1)
+        number1 = Float(arc4random_uniform(100))
+        number2 = Float(arc4random_uniform(100))
         operation = self.arrayOperation[Int(arc4random_uniform(UInt32(self.arrayOperation.count)))]
         newQuestion.question = String(format:"%g",number1) + " " + operation + " " + String(format:"%g",number2)
-        var correctAnswer:Float = Float()
-
-        if operation=="+" {
-            correctAnswer = number1 + number2
-            newQuestion.answers.append(String(correctAnswer))
-            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
-            newQuestion.answers = answers
-            newQuestion.correctAnswer = correctIndex
-        }
-        else if operation=="-" {
-            correctAnswer = number1 - number2
-            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
-            newQuestion.answers = answers
-            newQuestion.correctAnswer = correctIndex
-        }
-        else if operation=="*" {
-            correctAnswer = number1 * number2
-            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
-            newQuestion.answers = answers
-            newQuestion.correctAnswer = correctIndex
-        }
-        else if operation=="/" {
-            correctAnswer = number1 / number2
-            let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
-            newQuestion.answers = answers
-            newQuestion.correctAnswer = correctIndex
-        }
+        let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
+        newQuestion.answers = answers
+        newQuestion.correctAnswer = correctIndex
         self.quizzArray.append(newQuestion)
     }
-    
+
     func fillArrayWithRandomNumbers(number1:Float, number2:Float, operation:String) -> ([String],Int) {
         var returnedArray:[String] = [String]()
+        var correctIndex:Int = Int()
         var i:Int = 0
         if operation=="+" {
             returnedArray.append(String(format:"%g", number1+number2))
             for i=0;i<5;i++ {
                 returnedArray.append(String(Int(number1+number2)+i+1))
             }
-
         }
-        if operation=="-" {
-            returnedArray.append(String(format:"%g",number1-number2))
-            for i=1;i<5;i++ {
-                returnedArray.append(String(Int(number1-number2)+i+1))
-            }
-        }
-
-        return (returnedArray,0)
+        correctIndex = 0
+        return (returnedArray,correctIndex)
     }
     
     func setDifficultyLevel() {
