@@ -41,7 +41,7 @@ let PF_NUMREAS_USERNAME                 = "username"				//	String
 let PF_NUMREAS_TEST                     = "test"                    //	String
 let PF_NUMREAS_SCORE                    = "score"                   //	Number
 
-/* Numerical Reasoning class in Parse*/
+/* Verbal Reasoning class in Parse*/
 let PF_VERBREAS_CLASS_NAME				= "Verbal_Reasoning"		//	Class name
 let PF_VERBREAS_USER                    = "user"					//	Pointer to User Class
 let PF_VERBREAS_CREATED                 = "createdAt"               //	Date
@@ -50,11 +50,19 @@ let PF_VERBREAS_USERNAME                = "username"				//	String
 let PF_VERBREAS_TEST                    = "test"                    //	String
 let PF_VERBREAS_SCORE                   = "score"                   //	Number
 
-/* Numerical Reasoning class in Parse*/
-let PF_ARITHMETIC_CLASS_NAME            = "Arithmetic"		//	Class name
+/* Arithmetic class in Parse*/
+let PF_ARITHMETIC_CLASS_NAME            = "Arithmetic"              //	Class name
 let PF_ARITHMETIC_USER                  = "user"					//	Pointer to User Class
 let PF_ARITHMETIC_CREATED               = "createdAt"               //	Date
 let PF_ARITHMETIC_TIME                  = "time"                    //	Number
 let PF_ARITHMETIC_USERNAME              = "username"				//	String
 let PF_ARITHMETIC_TEST                  = "test"                    //	String
 let PF_ARITHMETIC_SCORE                 = "score"                   //	Number
+
+/* Arithmetic class in Parse*/
+let PF_PREFERENCES_CLASS_NAME            = "Preferences"		//	Class name
+let PF_PREFERENCES_USER                  = "user"					//	Pointer to User Class
+let PF_PREFERENCES_CREATED               = "createdAt"               //	Date
+let PF_PREFERENCES_TIME                  = "time"                    //	Number
+let PF_PREFERENCES_USERNAME              = "username"				//	String
+let PF_PREFERENCES_CAREERPREFS           = "careerPrefs"             //	Array

@@ -14,6 +14,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import SCLAlertView
 import CoreData
+import SwiftSpinner
 
 class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate {
   
@@ -73,7 +74,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Get app variables
     
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
-    self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
+    //self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
     let appColors:[UIColor] = self.settingsModel.getAppColors()
     for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
@@ -98,7 +99,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Adjust backButton appearance
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.addTarget(self, action: "savePrefsToParse:", forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
@@ -144,6 +145,24 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.chooseCareersScrollView.pagingEnabled = true
     self.chooseCareersScrollView.showsHorizontalScrollIndicator = false
     self.chooseCareersScrollView.delegate = self
+    
+    //********************************************************************************
+    // INITIATE THE CHOSEN CAREERS
+    //********************************************************************************
+    
+    if (PFUser.currentUser() != nil) {
+        self.loadUser()
+        //        for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+        //
+        //            if self.chosenCareers.contains(self.careerTypes[index]) {
+        //                chooseCareerViews[index].careerChosen = true
+        //                chooseCareerViews[index].displayView()
+        //            }
+        //        }
+    }
+    else {
+        self.view.loginUser(self)
+    }
     
     // Customize chooseCareersTitleView and currentCareerLabel
     
@@ -243,18 +262,15 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   }
   
   override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    if (PFUser.currentUser() != nil) {
-      self.loadUser()
-    }
-    else {
-      self.view.loginUser(self)
-    }
-    
+    super.viewDidAppear(animated)   
     self.showSettingsMenuView()
   }
-  
+
+    //********************************************************************************
+    // DEACTIVATE FBOOK
+    //********************************************************************************
+    
+    
   @IBAction func deleteFBTapped(sender: AnyObject) {
     
     self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
@@ -336,11 +352,166 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }
   
-  func loadUser() {
+    func loadUser() {
+        
+        //    let currentUser = PFUser.currentUser()!
+        //    let username = currentUser.username
+        //    let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
+        //    //query.whereKey(PF_PREFERENCES_USERNAME, equalTo: currentUser.username!)
+        //    query.includeKey()
+        //
+        //    query.findObjectsInBackgroundWithBlock{(objects:[PFObject]?, error:NSError?) -> Void in
+        //
+        //        if error == nil {
+        //
+        ////            for singleObject in objects! {
+        ////                if let stringData = singleObject[PF_PREFERENCES_CAREERPREFS] as? String {
+        ////                    self.chosenCareers.append(stringData)
+        ////                }
+        ////            }
+        //
+        //            for singleObject in objects! {
+        //                if let stringData = singleObject["careerPrefs"]{
+        //                    self.chosenCareers = stringData as! [String]
+        //                    //parseObjecsArrary.append(stringData as! PFObject)
+        //                }
+        //            }
+        //        //self.chosenCareers = objects?[PF_USER_CAREERPREFS] //as! [String]
+        //
+        //        }
+        //
+        //
+        //    }
+        
+        var query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
+        let currentUser = PFUser.currentUser()!
+        let username = currentUser.username
+        //let usernameString = username as! String
+        query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) scores.")
+                // Do something with the found objects
+                if let objects = objects {
+                    for object in objects {
+                        self.chosenCareers = object[PF_PREFERENCES_CAREERPREFS] as! [String]
+                        print(self.chosenCareers)
+                        for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+                            
+                            if self.chosenCareers.contains(self.careerTypes[index]) {
+                                self.chooseCareerViews[index].careerChosen = true
+                                self.chooseCareerViews[index].displayView()
+                            }
+                        }
+                        
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+        
+        
+        
+    }
     
-    let user = PFUser.currentUser()!
+    func savePrefsToParse(sender:UIButton){
+        
+        SwiftSpinner.show("Saving career preferences")
+        let currentUser = PFUser.currentUser()!
+        let objID = currentUser.objectId
+        let username = currentUser.username
+        let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
+        query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
+        //query.getObjectInBackgroundWithId(objID!)
+        query.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                user![PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
+                user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                    if error == nil {
+                        
+                        SwiftSpinner.hide()
+                        self.hideSettingsMenuView(sender)
+                        
+                    } else {
+                        
+                        let saveError = SCLAlertView()
+                        saveError.showError("Error", subTitle: "Try again")
+                        
+                    }
+                })
+                
+            }
+        })
+        
+//        SwiftSpinner.show("Saving career preferences")
+//        
+//        var query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
+//        let currentUser = PFUser.currentUser()!
+//        let username = currentUser.username
+//        //let usernameString = username as! String
+//        query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
+//        query.findObjectsInBackgroundWithBlock {
+//            (objects: [PFObject]?, error: NSError?) -> Void in
+//            
+//            if error == nil {
+//                // The find succeeded.
+//                print("Successfully retrieved \(objects!.count) scores.")
+//                // Do something with the found objects
+//                if let objects = objects {
+//                    for object in objects {
+//                        
+//                        object[PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
+//                        //self.chosenCareers = object[PF_PREFERENCES_CAREERPREFS] as! [String]
+//                        print(self.chosenCareers)
+//                        SwiftSpinner.hide()
+//                        self.hideSettingsMenuView(sender)
+//    
+//                    }
+//                }
+//            } else {
+//                // Log details of the failure
+//                let saveError = SCLAlertView()
+//                saveError.showError("Error", subTitle: "Try again")
+//            }
+//        }
+
+        
+        
+    }
     
-  }
+    func savePrefsToParse2(sender:UIButton){
+        
+        SwiftSpinner.show("Saving career preferences")
+        
+        let user = PFUser.currentUser()
+        let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
+        careerPrefs[PF_PREFERENCES_USER] = PFUser.currentUser()!
+        careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
+        
+        careerPrefs.saveInBackgroundWithBlock({ (succeeded, error: NSError?) -> Void in
+            if error == nil {
+                
+                SwiftSpinner.hide()
+                self.hideSettingsMenuView(sender)
+                
+            } else {
+                
+                let saveError = SCLAlertView()
+                saveError.showError("Error", subTitle: "Try again")
+                
+            }
+        })
+        
+    }
+
+
   
   func setConstraints() {
     

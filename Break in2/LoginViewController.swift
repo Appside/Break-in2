@@ -15,6 +15,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import CoreData
 import SwiftSpinner
+import SCLAlertView
 
 class LoginViewController: UIViewController, UIScrollViewDelegate {
   
@@ -25,7 +26,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   // Declare and initialize types of tests and difficulties available for selected career
   
   let tutorialImageNames:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
-  
+  let homeViewModel:JSONModel = JSONModel()
+    
   // Declare and initialize views
   
   let logoImageView:UIImageView = UIImageView()
@@ -167,6 +169,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.loginView.addGestureRecognizer(self.tutorialViewSwipeDownGesture)
     
   }
+
+   //---------------------------------------------------------------
+   // VIEW DID APPEAR
+   //---------------------------------------------------------------
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
@@ -190,7 +196,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         //self.pleaseWait()
         SwiftSpinner.show("Logging in...")
         //self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
-            //self.clearAllNotice()
+        //self.clearAllNotice()
         
         fetchLoginCreds()
         
@@ -201,69 +207,45 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             let arr = set.allObjects //Swift Array
             let arr2 = set2.allObjects
             
-                            let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
-                            PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
+            let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
+            PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
                 
-                                SwiftSpinner.hide()
-                                self.userLoggedIn((user)!)
-                            
-                        })
-                        }else{
-        
+                SwiftSpinner.hide()
+                self.userLoggedIn((user)!)
+                
+            })
+        }else{
+            
+            SwiftSpinner.hide()
             PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
                 
-                      self.clearAllNotice()
+                //self.clearAllNotice()
+                SwiftSpinner.show("Creating profile...")
                 
-                      if user != nil {
-                        if user![PF_USER_FACEBOOKID] == nil {
-                          //self.startFB(user!)
-                          self.getFBUserData(user!)
-                        } else {
-                          self.clearAllNotice()
-                          self.userLoggedIn(user!)
-                        }
-                      } else {
-                        if error != nil {
-                          self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-                        }
+                if user != nil {
+                    if user![PF_USER_FACEBOOKID] == nil {
+                        //self.startFB(user!)
+                        self.getFBUserData(user!)
+                    } else {
+                        self.clearAllNotice()
+                        self.userLoggedIn(user!)
+                    }
+                } else {
+                    if error != nil {
                         self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-                      }
-                    })
+                    }
+                    self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+                }
+            })
             
         }
         
     }
-                
     
-    
-//  func buttonFBTapped(sender: AnyObject) {
-//    
-//    //self.pleaseWait()
-//    self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
-//    
-//    //PFFacebookUtils
-//    PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
-//      
-//      self.clearAllNotice()
-//      
-//      if user != nil {
-//        if user![PF_USER_FACEBOOKID] == nil {
-//          //self.startFB(user!)
-//          self.getFBUserData(user!)
-//        } else {
-//          self.clearAllNotice()
-//          self.userLoggedIn(user!)
-//        }
-//      } else {
-//        if error != nil {
-//          self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-//        }
-//        self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-//      }
-//    })
-//    
-//    //check
-//  }
+    //---------------------------------------------------------------
+    // CURRENTLY UNUSED BUT WORKING
+    //---------------------------------------------------------------
+
     
   func startFB(user: PFUser){
     
@@ -281,7 +263,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         }
       }
     })
-    
+
+    //---------------------------------------------------------------
+    // CORE DATA
+    //---------------------------------------------------------------
     
   }
   
@@ -329,148 +314,82 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             fatalError()
         }
     }
-    
-  func getFBUserData(user: PFUser){
-    if((FBSDKAccessToken.currentAccessToken()) != nil){
-      FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
-        if (error == nil){
-          let userData = result as! [String: AnyObject]!
-          user[PF_USER_EMAILCOPY] = userData["email"]
-          user[PF_USER_FULLNAME] = userData["name"]
-          user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
-          user[PF_USER_FACEBOOKID] = userData["id"]
-            
-            let token = FBSDKAccessToken.currentAccessToken().tokenString
-            //self.defaults.setObject(FBSDKAccessToken.currentAccessToken().permissions, forKey: "permissions")
-            //self.defaults.setObject(FBSDKAccessToken.currentAccessToken().declinedPermissions, forKey: "declinedPermissions")
-            let permissions = FBSDKAccessToken.currentAccessToken().permissions
-            let declinedPerm = FBSDKAccessToken.currentAccessToken().declinedPermissions
-            let appId = FBSDKAccessToken.currentAccessToken().appID
-            let userId = FBSDKAccessToken.currentAccessToken().userID
-            let expiration = FBSDKAccessToken.currentAccessToken().expirationDate
-            let refresh = FBSDKAccessToken.currentAccessToken().refreshDate
-            
-            
-            self.saveToCoreData(token, p: permissions, dP: declinedPerm, aI: appId, uI: userId, ex: expiration, r: refresh)
-            
-            //self.saveToCoreData(token as! String, username: userData["name"] as! String)
-          
-          user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
-            if error == nil {
-              self.userLoggedIn(user)
-            } else {
-              PFUser.logOut()
-              if let info = error?.userInfo {
-                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-                //ProgressHUD.showError("Login error")
-                print(info["error"] as! String)
-              }
-            }
-          })
 
-//            user.signUpInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
-//                if error == nil {
-//                    self.userLoggedIn(user)
-//                } else {
-//                    PFUser.logOut()
-//                    if let info = error?.userInfo {
-//                        self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-//                        //ProgressHUD.showError("Login error")
-//                        print(info["error"] as! String)
-//                    }
-//                }
-//            })
+    //---------------------------------------------------------------
+    // FIRST LOGIN TO APP
+    //---------------------------------------------------------------
 
-            
-          //print(result)
-          //self.processFacebook(user, userData: result as! [String : AnyObject])
+    func getFBUserData(user: PFUser){
+        if((FBSDKAccessToken.currentAccessToken()) != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+                if (error == nil){
+                    let userData = result as! [String: AnyObject]!
+                    user[PF_USER_EMAILCOPY] = userData["email"]
+                    user[PF_USER_FULLNAME] = userData["name"]
+                    user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
+                    user[PF_USER_FACEBOOKID] = userData["id"]
+                    
+                    let token = FBSDKAccessToken.currentAccessToken().tokenString
+                    let permissions = FBSDKAccessToken.currentAccessToken().permissions
+                    let declinedPerm = FBSDKAccessToken.currentAccessToken().declinedPermissions
+                    let appId = FBSDKAccessToken.currentAccessToken().appID
+                    let userId = FBSDKAccessToken.currentAccessToken().userID
+                    let expiration = FBSDKAccessToken.currentAccessToken().expirationDate
+                    let refresh = FBSDKAccessToken.currentAccessToken().refreshDate
+                    
+                    
+                    self.saveToCoreData(token, p: permissions, dP: declinedPerm, aI: appId, uI: userId, ex: expiration, r: refresh)
+                    
+                    user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                        if error == nil {
+                            self.createCareerPrefs(user)
+                            //self.userLoggedIn(user)
+                        } else {
+                            PFUser.logOut()
+                            if let info = error?.userInfo {
+                                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+                                //ProgressHUD.showError("Login error")
+                                print(info["error"] as! String)
+                            }
+                        }
+                    })
+                }
+            })
         }
-      })
     }
     
-    
-    
-    //PFFacebookUtils.logInWithPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser!, error: NSError!) -> Void in
-    
-    
-    //        func requestFacebook(user: PFUser) {
-    //            let request = FBRequest.requestForMe()
-    //            request.startWithCompletionHandler { (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-    //                if error == nil {
-    //                    let userData = result as! [String: AnyObject]!
-    //                    self.processFacebook(user, userData: userData)
-    //                } else {
-    //                    PFUser.logOut()
-    //                    ProgressHUD.showError("Failed to fetch Facebook user data")
-    //                }
-    //            }
-    //        }
-    
-  }
+    //---------------------------------------------------------------
+    // CREATE ARRAY IN PARSE
+    //---------------------------------------------------------------
   
-  //    func processFacebook(user: PFUser, userData: [String: AnyObject]) {
-  //
-  //        let facebookUserId = userData["id"] as! String
-  //        let link = "http://graph.facebook.com/\(facebookUserId)/picture"
-  //        let url = NSURL(string: link)
-  //        var request = NSURLRequest(URL: url!)
-  //        let params = ["height": "200", "width": "200", "type": "square"]
-  //        Alamofire.request(.GET, link, parameters: params).response() {
-  //            (request, response, data, error) in
-  //
-  //            if error == nil {
-  //                var image = UIImage(data: data! )
-  //
-  //                if image!.size.width > 280 {
-  //                    image = Images.resizeImage(image!, width: 280, height: 280)!
-  //                }
-  //
-  //                let filePicture = PFFile(name: "picture.jpg", data: UIImageJPEGRepresentation(image!, 0.6)!)
-  //
-  //                filePicture!.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-  //                    if error != nil {
-  //                        self.noticeError("Error Saving Photo!")
-  //                    }
-  //                })
-  //
-  //                if image!.size.width > 60 {
-  //                    image = Images.resizeImage(image!, width: 60, height: 60)!
-  //                }
-  //                let fileThumbnail = PFFile(name: "thumbnail.jpg", data: UIImageJPEGRepresentation(image!, 0.6)!)
-  //                fileThumbnail!.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-  //                    if error != nil {
-  //                        self.noticeError("Error Saving Photo!")
-  //                    }
-  //                })
-  //
-  //                user[PF_USER_EMAILCOPY] = userData["email"]
-  //                user[PF_USER_FULLNAME] = userData["name"]
-  //                user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
-  //                user[PF_USER_FACEBOOKID] = userData["id"]
-  //                user[PF_USER_PICTURE] = filePicture
-  //                user[PF_USER_THUMBNAIL] = fileThumbnail
-  //                user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
-  //                    if error == nil {
-  //                        self.userLoggedIn(user)
-  //                    } else {
-  //                        PFUser.logOut()
-  //                        if let info = error?.userInfo {
-  //                            self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-  //                            print(info["error"] as! String)
-  //                        }
-  //                    }
-  //                })
-  //            } else {
-  //                PFUser.logOut()
-  //
-  ////                if let info = error?.userInfo {
-  ////                    self.noticeError("Failed to fetch Facebook photo")
-  ////                    print(info["error"] as! String)
-  ////                }
-  //            }
-  //        }
-  //    }
-  
+    func createCareerPrefs(user: PFUser){
+        
+        //let user = PFUser.currentUser()
+        let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
+        careerPrefs[PF_PREFERENCES_USER] = user
+        careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.homeViewModel.getAppVariables("careerTypes") as! [String]
+        careerPrefs[PF_PREFERENCES_USERNAME] = user[PF_USER_USERNAME]
+        
+        careerPrefs.saveInBackgroundWithBlock({ (succeeded, error: NSError?) -> Void in
+            if error == nil {
+                
+                SwiftSpinner.hide()
+                self.userLoggedIn(user)
+                
+            } else {
+                
+                let saveError = SCLAlertView()
+                saveError.showError("Error", subTitle: "Try again")
+                
+            }
+        })
+        
+        
+    }
+    
+    //---------------------------------------------------------------
+    // USER LOGGED IN
+    //---------------------------------------------------------------
   
   func userLoggedIn(user: PFUser) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -486,6 +405,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
       destinationVC.loginPageControllerViewHeight = self.loginPageControllerViewHeight
     }
   }
+    
+    
+    //---------------------------------------------------------------
+    // CONSTRAINTS
+    //---------------------------------------------------------------
   
   func setConstraints() {
     
