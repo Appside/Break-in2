@@ -165,9 +165,6 @@ class CalendarMonthView: UIView {
           self.calendarDayButtons[todaysDay + self.startingWeekday - 3].today = true
         }
         
-        
-        self.calendarDayButtons[todaysDay + 5].day = todaysDay
-        
       }
     }
     
