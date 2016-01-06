@@ -233,7 +233,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       // Call method to display chooseCareerView
       
-      chooseCareerViewAtIndex.displayView()
+      //chooseCareerViewAtIndex.displayView()
       
       // Add each chooseCareerView to chooseCareersScrollView
       
@@ -403,8 +403,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                             
                             if self.chosenCareers.contains(self.careerTypes[index]) {
                                 self.chooseCareerViews[index].careerChosen = true
-                                self.chooseCareerViews[index].displayView()
                             }
+                          
+                          self.chooseCareerViews[index].displayView()
+                          
                         }
                         
                     }
@@ -833,13 +835,15 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   func appendChosenCareer() {
     
     self.chosenCareers.append(self.chooseCareersTitleView.careerSelectedLabel.text!)
-    
+    self.currentCareerLabel.text = "Career Selected"
+
   }
   
   func removeChosenCareer() {
     
     self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(self.chooseCareersTitleView.careerSelectedLabel.text!)!)
-    
+    self.currentCareerLabel.text = "Career Unselected"
+
   }
   
   func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {

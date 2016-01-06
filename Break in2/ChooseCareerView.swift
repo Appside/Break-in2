@@ -143,9 +143,11 @@ class ChooseCareerView: UIView {
     
     if self.careerChosen {
       self.tickButton.setImage(UIImage.init(named: "tickSelected"), forState: UIControlState.Normal)
+      self.crossButton.setImage(UIImage.init(named: "crossUnselected"), forState: UIControlState.Normal)
     }
-    else if !self.careerChosen {
+    else {
       self.crossButton.setImage(UIImage.init(named: "crossSelected"), forState: UIControlState.Normal)
+      self.tickButton.setImage(UIImage.init(named: "tickUnselected"), forState: UIControlState.Normal)
     }
     
   }
