@@ -19,6 +19,7 @@ import SwiftSpinner
 class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate {
   
   let settingsModel:JSONModel = JSONModel()
+  let defaults = NSUserDefaults.standardUserDefaults()
   
   // Declare and initialize types of settings
   
@@ -123,7 +124,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.facebookLogoutButton.facebookButtonTitle = "Deactivate"
     self.facebookLogoutButton.displayButton()
-    self.facebookLogoutButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.facebookLogoutButton.addTarget(self, action: "deactivateFB:", forControlEvents: UIControlEvents.TouchUpInside)
     
     // Customize scrollInfoLabel and chooseCareersInfoLabel
     
@@ -438,6 +439,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                     if error == nil {
                         
+                        self.defaults.setObject(self.chosenCareers, forKey: "SavedCareerPreferences")
+                        let array = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
+                        print(array)
                         SwiftSpinner.hide()
                         self.hideSettingsMenuView(sender)
                         
@@ -775,6 +779,30 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       }, completion: nil)
     
   }
+    
+    func deactivateFB(sender:UIButton){
+        
+        if sender == self.facebookLogoutButton {
+            
+            let alertView = SCLAlertView()
+            
+            alertView.addButton("Ok", target:self, selector:Selector("conduit"))
+            alertView.showTitle(
+                "Deactivate", // Title of view
+                subTitle: "Are You Sure? Deactivation will delete all of your statistics, preferences and user data.", // String of view
+                duration: 0.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "Cancel", // Optional button value, default: ""
+                style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                colorStyle: 0x526B7B,//0xD0021B - RED
+                colorTextButton: 0xFFFFFF
+            )
+            alertView.showCloseButton = false
+            
+        }else{
+            
+        }
+        
+    }
 
   func hideSettingsMenuView(sender:UIButton) {
     
@@ -792,12 +820,33 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
           self.performSegueWithIdentifier("backFromEditProfile", sender: self.backButton)
         }
         else if sender == self.facebookLogoutButton {
-          self.deleteFBTapped(self.facebookLogoutButton)
+            
+            self.deleteFBTapped(self.facebookLogoutButton)
+    
         }
         
     })
     
   }
+    
+    
+    
+    func conduit(){
+        
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            
+            self.chooseCareersView.alpha = 0
+            self.backButton.alpha = 0
+            self.settingsMenuView.alpha = 0
+            //self.settingsMenuViewTopConstraint.constant = self.screenFrame.height
+            self.view.layoutIfNeeded()
+            
+            }, completion: {(Bool) in
+        
+        self.deleteFBTapped(self.facebookLogoutButton)
+        
+                })
+    }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     

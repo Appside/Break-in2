@@ -8,6 +8,10 @@
 
 import Foundation
 
+//free version only gives you a sample of each test
+//5 tests across each discipline
+//x hours free per month
+
 //-----------------------------------------------------------------------------------------
 // GENERAL
 //-----------------------------------------------------------------------------------------

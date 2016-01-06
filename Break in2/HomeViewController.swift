@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
   // Declare and initialize views and models
   
   let homeViewModel:JSONModel = JSONModel()
+  let defaults = NSUserDefaults.standardUserDefaults()
     
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
@@ -523,7 +524,6 @@ class HomeViewController: UIViewController {
       colorTextButton: 0xFFFFFF
     )
     alertView.showCloseButton = false
-    
     
   }
   

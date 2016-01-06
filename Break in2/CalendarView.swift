@@ -18,6 +18,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   // Declare and initialize views and models
   
   let calendarModel:JSONModel = JSONModel()
+  let defaults = NSUserDefaults.standardUserDefaults()
   
   let calendarMonthTitleView:CalendarMonthTitleView = CalendarMonthTitleView()
   let calendarMonthsScrollView:UIScrollView = UIScrollView()
@@ -48,7 +49,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     self.currentMonth = self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate)
     
     self.jobDeadlines = self.calendarModel.getJobDeadlines()
-    self.chosenCareers = self.calendarModel.getAppVariables("chosenCareers") as! [String]
+    self.chosenCareers = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
+        
+        //self.calendarModel.getAppVariables("chosenCareers") as! [String]
 
     // Add calendar subviews
     
