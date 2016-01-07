@@ -50,6 +50,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   var profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
   var loginTutorialViewVisible:Bool = false
+  var firstTimeUser:Bool = false
   
   let moc = DataController().managedObjectContext
     var ParseFBID:String = ""
@@ -374,6 +375,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             if error == nil {
                 
                 SwiftSpinner.hide()
+                self.firstTimeUser = true
                 self.userLoggedIn(user)
                 
             } else {
@@ -393,8 +395,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   func userLoggedIn(user: PFUser) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
-    presentViewController(homeVC, animated: false, completion: nil)
+    performSegueWithIdentifier("userLoggedOn", sender: self)
+    //let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
+    //presentViewController(homeVC, animated: false, completion: nil)
     self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 4)
   }
   
@@ -402,7 +405,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     if segue.identifier == "userLoggedOn" {
       let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
-      destinationVC.loginPageControllerViewHeight = self.loginPageControllerViewHeight
+      if self.firstTimeUser {
+        destinationVC.firstTimeUser = false
+      }
+      
     }
   }
     

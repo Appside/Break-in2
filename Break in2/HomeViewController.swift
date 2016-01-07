@@ -57,6 +57,7 @@ class HomeViewController: UIViewController {
   var loginPageControllerViewHeight:CGFloat = 50
   
   var segueFromLoginView:Bool = true
+  var firstTimeUser:Bool = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -83,10 +84,10 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.logoImageView)
     self.view.addSubview(self.profilePictureImageView)
     self.view.addSubview(self.sloganImageView)
-    self.view.addSubview(self.calendarBackgroundView)
     self.view.addSubview(self.statsButton)
     self.view.addSubview(self.settingsButton)
     self.view.addSubview(self.careersBackgroundView)
+    self.view.addSubview(self.calendarBackgroundView)
     self.calendarBackgroundView.addSubview(self.calendarView)
     self.careersBackgroundView.addSubview(self.logOutButton)
     self.careersBackgroundView.addSubview(self.careersScrollView)
@@ -191,6 +192,12 @@ class HomeViewController: UIViewController {
     // Display calendar
     
     self.calendarView.displayCalendar()
+    
+    // SHow tutorial to first time users
+    
+    if self.firstTimeUser {
+      self.showTutorial()
+    }
     
   }
   
@@ -621,6 +628,18 @@ class HomeViewController: UIViewController {
         
     })
     
+  }
+  
+  func showTutorial() {
+    
+    let fadeView:UIView = UIView()
+    self.view.addSubview(fadeView)
+    fadeView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+    
+    fadeView.alpha = 0.5
+    fadeView.backgroundColor =  UIColor.blackColor()
+    
+    self.view.insertSubview(fadeView, belowSubview: self.calendarBackgroundView)
   }
   
   
