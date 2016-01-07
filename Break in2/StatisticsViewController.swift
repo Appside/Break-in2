@@ -516,6 +516,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
         self.barChartText.text = "4TH DEC, 12:53 -\(entry.value)%"
+        self.lineChartText.text = "4TH DEC, 12:53 -\(entry.value)%"
         self.pointerView1.moveLabelPointer(self.graphView1.frame.width/6 * (CGFloat(entry.xIndex) + 0.5))
         self.pointerView2.moveLabelPointer(self.graphView2.frame.width/6 * (CGFloat(entry.xIndex) + 0.5))
     
@@ -548,7 +549,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         chartDataSet.highlightColor = colors[sender.tag]
         chartDataSet.highlightAlpha = 1.0
         self.chartObject.descriptionText = ""
-        chartData.setValueTextColor(UIColor.blackColor())
+        chartData.setValueTextColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0))
         chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
         self.chartObject.xAxis.enabled = false
         self.chartObject.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
@@ -599,8 +600,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         chartDataSet2.circleHoleColor = UIColor.whiteColor()
         
         self.chartObject2.descriptionText = ""
-        chartData2.setValueTextColor(UIColor.blackColor())
+        chartData2.setValueTextColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0))
         chartData2.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        chartDataSet2.valueFormatter = NSNumberFormatter()
+        chartDataSet2.valueFormatter?.minimumFractionDigits = 0
         self.chartObject2.xAxis.enabled = false
         self.chartObject2.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
         self.chartObject2.legend.enabled = false
@@ -630,6 +633,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         }
 
     }
+    
     /*
     // MARK: - Navigation
 

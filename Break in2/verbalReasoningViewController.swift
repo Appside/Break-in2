@@ -144,24 +144,59 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         self.qViewHeight = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 90)
         self.mainView.addConstraint(qViewHeight)
         
+        //Set passageView topMenu
+        let layer1:UIView = UIView()
+        let layer2:UIView = UIView()
+        self.passageView.addSubview(layer1)
+        self.passageView.addSubview(layer2)
+        
+        layer1.translatesAutoresizingMaskIntoConstraints = false
+        layer2.translatesAutoresizingMaskIntoConstraints = false
+        
+        let layer1top:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let layer1left:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let layer1right:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let layer1height:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 20)
+        self.passageView.addConstraints([layer1left,layer1right,layer1top])
+        layer1.addConstraint(layer1height)
+        
+        let layer2top:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+        let layer2left:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let layer2right:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let layer2height:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 30)
+        self.passageView.addConstraints([layer2left,layer2right,layer2top])
+        layer2.addConstraint(layer2height)
+        
+        layer1.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        layer2.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        layer1.layer.cornerRadius = 8.0
+        
+        let passageText:UILabel = UILabel()
+        layer2.addSubview(passageText)
+        passageText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+        passageText.textColor = UIColor.whiteColor()
+        passageText.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
+        passageText.textAlignment = NSTextAlignment.Center
+        passageText.text = "PASSAGE"
+        
         //Design of passageView
         self.passageView.addSubview(self.passageLabel)
-        self.passageLabel.setConstraintsToSuperview(40, bottom: 40, left: 40, right: 40)
+        self.passageLabel.setConstraintsToSuperview(50, bottom: 40, left: 40, right: 40)
         self.passageLabel.textColor = UIColor.blackColor()
+        self.passageView.backgroundColor = UIColor.whiteColor()
         self.passageLabel.font = UIFont(name: "HelveticaNeue", size: 16.0)
-        self.passageView.backgroundColor = UIColor(patternImage: UIImage(named: "bgPattern")!)
         self.passageLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
         self.passageView.layer.cornerRadius = 10.0
         self.passageLabel.textAlignment = NSTextAlignment.Justified
         
         //update questionView
         self.questionView.addSubview(self.questionLabel)
-        self.questionLabel.setConstraintsToSuperview(10, bottom: 0, left: 0, right: 0)
+        self.questionLabel.setConstraintsToSuperview(10, bottom: 0, left: 15, right: 15)
         self.questionLabel.textColor = UIColor.whiteColor()
-        self.questionLabel.font = UIFont(name: "HelveticaNeue",size: 18.0)
+        self.questionLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 17.0)
         self.questionLabel.textAlignment = NSTextAlignment.Center
         self.questionLabel.backgroundColor = UIColor(white: 0, alpha: 0)
-        self.questionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+        self.questionView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.questionView.layer.cornerRadius = 8.0
         
         //Update top constraint

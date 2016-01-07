@@ -62,9 +62,19 @@
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
+		<key>SwiftSpinner.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0456113D1D7FFA7E7453ABDD4CE3FC57</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>05BFD75003D879A58DADE5C2AB0951CA</key>
 		<dict>
 			<key>primary</key>
@@ -81,6 +91,11 @@
 			<true/>
 		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4808A808019E0D6C6B6A384BAAD4F8FE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -126,6 +141,11 @@
 			<true/>
 		</dict>
 		<key>F710EAB41DD6932844C4A82A87A2628F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F74B8541B45D19C171C14303BB4308A1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
