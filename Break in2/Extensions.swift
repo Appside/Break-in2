@@ -54,3 +54,31 @@ extension UIColor {
   
 }
 
+extension Int {
+    func intPlus()->Int {
+        var newInt:Int = self
+        if newInt==9 {
+            newInt = 0
+        } else {
+            newInt++
+        }
+        return newInt
+    }
+    func intMinus()->Int {
+        var newInt:Int = self
+        if newInt==0 {
+            newInt = 9
+        } else {
+            newInt--
+        }
+        return newInt
+    }
+}
+
+extension String {
+    func removeSpaces()-> String {
+        let components = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).filter { !$0.isEmpty }
+        return components.joinWithSeparator("")
+    }
+}
+

@@ -27,9 +27,9 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
     let mainView:UIView = UIView()
     var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 1
-    var allowedSeconds:Int = 30
-    var allowedMinutes:Int = 00
+    var totalNumberOfQuestions:Int = 49
+    var allowedSeconds:Int = 00
+    var allowedMinutes:Int = 10
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let nextButton:UILabel = UILabel()
@@ -554,48 +554,98 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
     func addNewQuestion() {
         //Add a new question to the array
         let newQuestion:arithmeticQuestion = arithmeticQuestion()
-        var number1:Float = Float()
-        var number2:Float = Float()
         var operation:String = String()
-        number1 = Float(arc4random_uniform(100))
-        number2 = Float(arc4random_uniform(100))
         operation = self.arrayOperation[Int(arc4random_uniform(UInt32(self.arrayOperation.count)))]
-        newQuestion.question = String(format:"%g",number1) + " " + operation + " " + String(format:"%g",number2)
-        let (answers,correctIndex) = self.fillArrayWithRandomNumbers(number1, number2: number2, operation: operation)
+        let (questionString, answers,correctIndex) = self.fillArrayWithRandomNumbers(operation)
+        newQuestion.question = questionString
         newQuestion.answers = answers
         newQuestion.correctAnswer = correctIndex
         self.quizzArray.append(newQuestion)
     }
 
-    func fillArrayWithRandomNumbers(number1:Float, number2:Float, operation:String) -> ([String],Int) {
+    func fillArrayWithRandomNumbers(operation:String) -> (String, [String],Int) {
+        var number1:Float = Float()
+        var number2:Float = Float()
         var returnedArray:[String] = [String]()
         var answersArray:[String] = [String]()
         var correctIndex:Int = Int()
         var randomIndex:Int = Int()
         var correctIndexSet:Bool = false
         var i:Int = 0
+        var newQuestion:String = String()
         if operation=="+" {
+            number1 = Float(arc4random_uniform(100))
+            number2 = Float(arc4random_uniform(100))
             answersArray.append(String(format:"%g", number1+number2))
             for i=0;i<5;i++ {
                 answersArray.append(String(Int(number1+number2)+i+1))
             }
+        i=0
         }
         if operation=="-" {
+            number1 = Float(arc4random_uniform(100))
+            number2 = Float(arc4random_uniform(100))
             answersArray.append(String(format:"%g", number1-number2))
             for i=0;i<5;i++ {
                 answersArray.append(String(Int(number1-number2)+i+1))
             }
         }
-        for i=0;i<6;i++ {
-            randomIndex = Int(arc4random_uniform(UInt32(6-i)))
-            returnedArray.append(answersArray[randomIndex])
-            answersArray.removeAtIndex(randomIndex)
-            if randomIndex==0 && !correctIndexSet {
-                correctIndex = i
-                correctIndexSet = true
+        if operation=="*" {
+            if self.difficulty=="M" {
+                number1 = Float(arc4random_uniform(31))
+                number2 = Float(arc4random_uniform(31))
+            } else {
+                number1 = Float(arc4random_uniform(100))
+                number2 = Float(arc4random_uniform(100))
+            }
+            answersArray.append(String(format:"%g", number1*number2))
+            let sizeInt:Int = String(format:"%g", number1*number2).characters.count
+            var answerSplit:[String] = [String]()
+            for character in String(format:"%g", number1*number2).characters {
+                answerSplit.append(String(character))
+            }
+            if sizeInt==1 || sizeInt==2 {
+                for i=0;i<5;i++ {
+                    answersArray.append(String(Int(number1*number2)+i+1))
+                }
+            }
+            if sizeInt==3 {
+                for i=0;i<5;i++ {
+                    answersArray.append("\(answerSplit[0]) \(i) \(answerSplit[2])".removeSpaces())
+                }
+            }
+            if sizeInt==4 {
+                    answersArray.append("\(answerSplit[0]) \(answerSplit[1]) \(Int(answerSplit[2])!.intPlus()) \(answerSplit[3])".removeSpaces())
+                    answersArray.append("\(answerSplit[0]) \(answerSplit[1]) \(Int(answerSplit[2])!.intMinus()) \(answerSplit[3])".removeSpaces())
+                    answersArray.append("\(answerSplit[0]) \(Int(answerSplit[1])!.intPlus()) \(answerSplit[2]) \(answerSplit[3])".removeSpaces())
+                    answersArray.append("\(answerSplit[0]) \(Int(answerSplit[1])!.intMinus()) \(answerSplit[2]) \(answerSplit[3])".removeSpaces())
+                    answersArray.append("\(Int(answerSplit[0])!.intPlus()) \(answerSplit[1]) \(answerSplit[2]) \(answerSplit[3])".removeSpaces())
             }
         }
-        return (returnedArray,correctIndex)
+        if operation=="/" {
+            number1 = Float(arc4random_uniform(50))
+            number1 = number1 + 51
+            number2 = Float(arc4random_uniform(30)) + 1
+            let firstAnswer:Float = round(number1/number2*10) / 10
+            answersArray.append(String(firstAnswer))
+            answersArray.append(String(firstAnswer+0.2))
+            answersArray.append(String(firstAnswer-0.2))
+            answersArray.append(String(firstAnswer+0.4))
+            answersArray.append(String(firstAnswer-0.4))
+            answersArray.append(String(firstAnswer+0.5))
+        }
+        i=0
+        for i=0;i<6;i++ {
+                randomIndex = Int(arc4random_uniform(UInt32(6-i)))
+                returnedArray.append(answersArray[randomIndex])
+                answersArray.removeAtIndex(randomIndex)
+                if randomIndex==0 && !correctIndexSet {
+                    correctIndex = i
+                    correctIndexSet = true
+                }
+        }
+        newQuestion = String(format:"%g",number1) + " " + operation + " " + String(format:"%g",number2)
+        return (newQuestion, returnedArray,correctIndex)
     }
     
     func setDifficultyLevel() {
