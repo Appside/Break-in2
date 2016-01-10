@@ -20,6 +20,7 @@
                     <navigationItem key="navigationItem" id="eYr-mg-x7Z"/>
                     <connections>
                         <segue destination="so5-KN-hxF" kind="show" identifier="userLoggedOn" animates="NO" id="lOv-b3-KiM"/>
+                        <segue destination="qPe-jy-3Ia" kind="show" identifier="showTutorial" animates="NO" id="PSf-AP-G14"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zqr-Bg-PVy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -73,6 +74,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2009" y="132"/>
+        </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="GPj-zQ-pg5">
+            <objects>
+                <viewController id="qPe-jy-3Ia" customClass="TutorialViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Trm-6b-UCc"/>
+                        <viewControllerLayoutGuide type="bottom" id="fBn-oP-G3f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cwj-Pc-KJV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="show" identifier="tutorialEnded" animates="NO" id="rjW-J2-l3e"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kpP-Rp-r92" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1797" y="-1450"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Au3-mY-pkB">
@@ -180,6 +202,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lOv-b3-KiM"/>
+        <segue reference="rjW-J2-l3e"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -27,8 +27,9 @@
 		25622B141C39B6240063C770 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25622B131C39B6240063C770 /* QuestionViewController.swift */; };
 		25849DC31C333D58006C8A17 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25849DC21C333D58006C8A17 /* StatisticsViewController.swift */; };
 		25A21B761C34956C00A72455 /* StatisticsTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A21B751C34956C00A72455 /* StatisticsTitleView.swift */; };
+		25ACFC791C42A3AA00699604 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ACFC781C42A3AA00699604 /* TutorialViewController.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
-		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; settings = {ASSET_TAGS = (); }; };
+		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
 		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
@@ -99,6 +100,7 @@
 		25622B131C39B6240063C770 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		25849DC21C333D58006C8A17 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		25A21B751C34956C00A72455 /* StatisticsTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTitleView.swift; sourceTree = "<group>"; };
+		25ACFC781C42A3AA00699604 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		497A515E1C39B10C004B325C /* LabelPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPointerView.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				255264B11C1F0DA800E64D33 /* SettingsView */,
 				253AC8391C2711DD00495DF5 /* JSON Files */,
 				253796AA1C0DCFB500BA00F3 /* QuestionView */,
+				25ACFC781C42A3AA00699604 /* TutorialViewController.swift */,
 				253796A81C0DCF7700BA00F3 /* HomeView */,
 				253796A91C0DCF9100BA00F3 /* LoginView */,
 				253796A71C0DCF6000BA00F3 /* TestSelectionView */,
@@ -580,6 +583,7 @@
 				2526701B1C2378A6007D55BE /* CalendarMonthTitleView.swift in Sources */,
 				253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */,
 				2526701E1C2378A6007D55BE /* CalendarDayButton.swift in Sources */,
+				25ACFC791C42A3AA00699604 /* TutorialViewController.swift in Sources */,
 				2514F16D1C1F13B1003E8001 /* ChooseCareerView.swift in Sources */,
 				4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,

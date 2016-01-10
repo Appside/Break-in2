@@ -174,12 +174,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.currentCareerLabel.textAlignment = NSTextAlignment.Center
     self.currentCareerLabel.textColor = UIColor.whiteColor()
     self.currentCareerLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-    if self.chosenCareers.contains(self.careerTypes[0]) {
-      self.currentCareerLabel.text = "Career Selected"
-    }
-    else {
-      self.currentCareerLabel.text = "Career Unselected"
-    }
     
     // Create settingsButtons for each setting
     
@@ -409,6 +403,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                           self.chooseCareerViews[index].displayView()
                           
                         }
+                      
+                      if self.chosenCareers.contains(self.careerTypes[0]) {
+                        self.currentCareerLabel.text = "Career Selected"
+                      }
+                      else {
+                        self.currentCareerLabel.text = "Career Unselected"
+                      }
                         
                     }
                 }

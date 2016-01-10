@@ -78,7 +78,7 @@ class TestTypeView: UIView {
     
     self.testTypeTitleLabel.text = self.testType
     
-    self.testTypeTimeLabel.text = "30 minutes"
+    //self.testTypeTimeLabel.text = "30 minutes"
     
     // Create testTypeDifficultyButtons for each testDifficulty
     
@@ -107,6 +107,8 @@ class TestTypeView: UIView {
       self.testTypeDifficultyView.addSubview(self.testTypeDifficultyButtons[index])
       
     }
+    
+    self.difficultyButtonTapped(self.testTypeDifficultyButtons[0])
     
     // Set constraints
     
@@ -213,7 +215,7 @@ class TestTypeView: UIView {
     
     self.difficultySelected = sender.titleLabel!.text!
     
-    if self.testType == "Numerical Reasoning" || self.testType == "Verbal Reasoning" {
+    if self.testType == "Numerical Reasoning" || self.testType == "Verbal Reasoning" || self.testType == "Logical Reasoning" {
       if self.difficultySelected == "E" {
         self.testTypeTimeLabel.text = "30 minutes"
       }
@@ -222,6 +224,17 @@ class TestTypeView: UIView {
       }
       if self.difficultySelected == "H" {
         self.testTypeTimeLabel.text = "20 minutes"
+      }
+    }
+    if self.testType == "Arithmetic Reasoning" {
+      if self.difficultySelected == "E" {
+        self.testTypeTimeLabel.text = "10 minutes ( +  - )"
+      }
+      if self.difficultySelected == "M" {
+        self.testTypeTimeLabel.text = "10 minutes ( +  -  * )"
+      }
+      if self.difficultySelected == "H" {
+        self.testTypeTimeLabel.text = "10 minutes ( +  -  *  / )"
       }
     }
   }

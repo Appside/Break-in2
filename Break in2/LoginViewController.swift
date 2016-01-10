@@ -50,7 +50,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   var profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
   var loginTutorialViewVisible:Bool = false
-  var firstTimeUser:Bool = false
+  var firstTimeUser:Bool = true
   
   let moc = DataController().managedObjectContext
     var ParseFBID:String = ""
@@ -395,7 +395,12 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   func userLoggedIn(user: PFUser) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    performSegueWithIdentifier("userLoggedOn", sender: self)
+    if self.firstTimeUser {
+      performSegueWithIdentifier("showTutorial", sender: nil)
+    }
+    else {
+      performSegueWithIdentifier("userLoggedOn", sender: self)
+    }
     //let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
     //presentViewController(homeVC, animated: false, completion: nil)
     self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 4)
