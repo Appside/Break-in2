@@ -988,23 +988,39 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     
     func clearStatsWarning(sender:UIButton){
         
+        let alertView = SCLAlertView()
+        
+        if self.noDataUILabel.text == "No Score available" {
+            alertView.showTitle(
+                "Don't Worry", // Title of view
+                subTitle: "Statistics already deleted.", // String of view
+                duration: 0.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "Close", // Optional button value, default: ""
+                style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                colorStyle: 0x9B9B9B,//0x526B7B,//0xD0021B - RED
+                colorTextButton: 0xFFFFFF
+            )
+            alertView.showCloseButton = false
+            
+        }else{
+        
         if sender == self.clearStatsButton {
             
-            let alertView = SCLAlertView()
-            
-            alertView.addButton("Ok", target:self, selector:Selector("clearParseStatistics"))
+            alertView.addButton("Ok", target:self, selector:Selector("clearParseStatistics:"))
             alertView.showTitle(
                 "Clear All Statistics", // Title of view
                 subTitle: "Are you sure? You will be unable to recover these.", // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "Cancel", // Optional button value, default: ""
                 style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
-                colorStyle: 0x526B7B,//0xD0021B - RED
+                colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
             alertView.showCloseButton = false
             
         }else{
+            
+            }
             
         }
         
@@ -1024,7 +1040,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                 
                 if error == nil {
                     
-                    print("About to delete \(objects!.count) scores.")
+                    print("About to delete \(objects!.count) \(self.selectedTest) scores.")
                     // Do something with the found objects
                     if let objects = objects {
                         for object in objects {
@@ -1036,9 +1052,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                     let yUnits:[Double] = []
                     let yUnits2:[Double] = []
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
                     SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                 } else {
                     // Log details of the failure
                     print("Error: \(error!) \(error!.userInfo)")
@@ -1071,8 +1086,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                     let yUnits:[Double] = []
                     let yUnits2:[Double] = []
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
                 } else {
                     // Log details of the failure
@@ -1106,8 +1121,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                     let yUnits:[Double] = []
                     let yUnits2:[Double] = []
+                    SwiftSpinner.hide()
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    SwiftSpinner.hide()                } else {
+                } else {
                     // Log details of the failure
                     print("Error: \(error!) \(error!.userInfo)")
                 }
@@ -1139,8 +1155,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                     let yUnits:[Double] = []
                     let yUnits2:[Double] = []
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                 } else {
                     // Log details of the failure
                     print("Error: \(error!) \(error!.userInfo)")
