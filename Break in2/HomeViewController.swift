@@ -61,6 +61,7 @@ class HomeViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.userLoggedIn()
     
     // Do any additional setup after loading the view.
     
@@ -540,6 +541,18 @@ class HomeViewController: UIViewController {
     self.hideCareersBackgroundView(self.logOutButton)
     
   }
+    
+    func userLoggedIn(){
+        
+        if PFUser.currentUser() == nil {
+            
+            let navigationVC = storyboard!.instantiateViewControllerWithIdentifier("navigationVC") as! LoginViewController
+            presentViewController(navigationVC, animated: false, completion: nil)
+            
+        }else{
+            
+        }
+    }
   
   func settingsBtnPressed(sender: UIButton!){
     

@@ -27,7 +27,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
     let mainView:UIView = UIView()
     var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 49
+    var totalNumberOfQuestions:Int = 2
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 10
     var countSeconds:Int = Int()
