@@ -192,7 +192,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       self.clearStatsButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
       self.clearStatsButton.setTitle("Clear Selected Test Statistics", forState: UIControlState.Normal)
       self.clearStatsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-      self.clearStatsButton.addTarget(self, action: "clearParseStatistics:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.clearStatsButton.addTarget(self, action: "clearStatsWarning:", forControlEvents: UIControlEvents.TouchUpInside)
       
       self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
       self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
@@ -985,6 +985,30 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     }
     
   }
+    
+    func clearStatsWarning(sender:UIButton){
+        
+        if sender == self.clearStatsButton {
+            
+            let alertView = SCLAlertView()
+            
+            alertView.addButton("Ok", target:self, selector:Selector("clearParseStatistics"))
+            alertView.showTitle(
+                "Clear All Statistics", // Title of view
+                subTitle: "Are you sure? You will be unable to recover these.", // String of view
+                duration: 0.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "Cancel", // Optional button value, default: ""
+                style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                colorStyle: 0x526B7B,//0xD0021B - RED
+                colorTextButton: 0xFFFFFF
+            )
+            alertView.showCloseButton = false
+            
+        }else{
+            
+        }
+        
+    }
     
     func clearParseStatistics(sender: UIButton){
         

@@ -294,7 +294,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
   @IBAction func deleteFBTapped(sender: AnyObject) {
     
-    self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
+    SwiftSpinner.show("Deactivating account", animated: true)
     
     let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, HTTPMethod: "DELETE")
     
@@ -308,9 +308,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //self.deleteFromCoreData()
         var date:NSDate = NSDate()
         self.saveToCoreData("", p: [], dP: [], aI: "", uI: "", ex: date, r: date)
-        
-        self.noticeTop("Facebook account successfully deactivated", autoClear: true, autoClearTime: 3)
         self.view.loginUser(self)
+        SwiftSpinner.hide()
         
       } else {
         if let error: NSError = error {
