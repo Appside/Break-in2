@@ -51,6 +51,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     let noDataLabel:UIView = UIView()
     let noDataUILabel:UILabel = UILabel()
     var dateTests:[String] = [String]()
+    var selectedTest:String = String()
 
   var testTypesBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
 
@@ -65,7 +66,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   let menuButtonHeight:CGFloat = 50
 
-  var firstTimeUser:Bool = true
+  var firstTimeUser:Bool = false
   var tutorialPageNumber:Int = 0
   
     override func viewDidLoad() {
@@ -191,6 +192,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       self.clearStatsButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
       self.clearStatsButton.setTitle("Clear Selected Test Statistics", forState: UIControlState.Normal)
       self.clearStatsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+      self.clearStatsButton.addTarget(self, action: "clearParseStatistics:", forControlEvents: UIControlEvents.TouchUpInside)
       
       self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
       self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
@@ -935,6 +937,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         for button in self.testTypeButtons {
             if button.tag == sender.tag {
                 self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+                self.selectedTest = sender.currentTitle!
+                print(self.selectedTest)
             }
             else {
                 self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 1.0, alpha: 1.0)
@@ -981,6 +985,147 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     }
     
   }
+    
+    func clearParseStatistics(sender: UIButton){
+        
+        if self.selectedTest == "Numerical Reasoning" {
+            
+            SwiftSpinner.show("Deleting selected statistics")
+            let query = PFQuery(className: PF_NUMREAS_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_NUMREAS_USERNAME, equalTo: username!)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    print("About to delete \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            object.deleteInBackground()
+                            
+                        }
+                    }
+                    
+                    let yUnits:[Double] = []
+                    let yUnits2:[Double] = []
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                    SwiftSpinner.hide()
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+
+            
+        }else if (self.selectedTest == "Verbal Reasoning"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_VERBREAS_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("About to delete \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            object.deleteInBackground()
+                            
+                        }
+                    }
+                    
+                    let yUnits:[Double] = []
+                    let yUnits2:[Double] = []
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    SwiftSpinner.hide()
+                    
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+            
+            
+        }else if (self.selectedTest == "Arithmetic Reasoning"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_ARITHMETIC_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_ARITHMETIC_USERNAME, equalTo: username!)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("About to delete \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            object.deleteInBackground()
+                            
+                        }
+                    }
+                    
+                    let yUnits:[Double] = []
+                    let yUnits2:[Double] = []
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    SwiftSpinner.hide()                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+            
+            
+        }else if (self.selectedTest == "Logical Reasoning"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_VERBREAS_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("About to delete \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            object.deleteInBackground()
+                            
+                        }
+                    }
+                    
+                    let yUnits:[Double] = []
+                    let yUnits2:[Double] = []
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    SwiftSpinner.hide()
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+        }
+
+        
+    }
     
     /*
     // MARK: - Navigation
