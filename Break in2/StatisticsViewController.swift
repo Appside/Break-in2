@@ -153,7 +153,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       self.statisticsView.layer.cornerRadius = self.minorMargin
       self.statisticsView.clipsToBounds = true
       
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
       self.tutorialView.alpha = 0
       
       self.statisticsScrollView.pagingEnabled = true

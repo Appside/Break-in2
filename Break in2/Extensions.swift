@@ -43,6 +43,18 @@ extension UIView {
         let rightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -CGFloat(right))
         self.superview!.addConstraints([topMargin,bottomMargin,leftMargin,rightMargin])
     }
+  
+  func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+    let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+    label.numberOfLines = 0
+    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    label.font = font
+    label.text = text
+    
+    label.sizeToFit()
+    return label.frame.height
+  }
+  
 }
 
 extension UIColor {

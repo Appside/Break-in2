@@ -18,6 +18,7 @@
 		2526701C1C2378A6007D55BE /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670171C2378A6007D55BE /* CalendarMonthView.swift */; };
 		2526701D1C2378A6007D55BE /* CalendarDaysTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */; };
 		2526701E1C2378A6007D55BE /* CalendarDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670191C2378A6007D55BE /* CalendarDayButton.swift */; };
+		252C461F1C430D11000B5B3D /* TutorialDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252C461E1C430D11000B5B3D /* TutorialDescriptionView.swift */; };
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
 		253AC83C1C2716B700495DF5 /* AppVariables.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83A1C2716B600495DF5 /* AppVariables.json */; };
 		253AC83D1C2716B700495DF5 /* JobDeadlines.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83B1C2716B600495DF5 /* JobDeadlines.json */; };
@@ -31,11 +32,11 @@
 		25ACFC7B1C42B12E00699604 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25ACFC7A1C42B12E00699604 /* Tutorial.storyboard */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
 		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
-		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		49929DA21C42E96800527929 /* sequencesQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA11C42E96800527929 /* sequencesQuestion.swift */; settings = {ASSET_TAGS = (); }; };
-		49929DA41C42ED3900527929 /* FractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA31C42ED3900527929 /* FractionView.swift */; settings = {ASSET_TAGS = (); }; };
-		49929DA61C42FDC300527929 /* fractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA51C42FDC300527929 /* fractionViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		49929DA81C42FDEA00527929 /* fractionsQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA71C42FDEA00527929 /* fractionsQuestion.swift */; settings = {ASSET_TAGS = (); }; };
+		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; };
+		49929DA21C42E96800527929 /* sequencesQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA11C42E96800527929 /* sequencesQuestion.swift */; };
+		49929DA41C42ED3900527929 /* FractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA31C42ED3900527929 /* FractionView.swift */; };
+		49929DA61C42FDC300527929 /* fractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA51C42FDC300527929 /* fractionViewController.swift */; };
+		49929DA81C42FDEA00527929 /* fractionsQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA71C42FDEA00527929 /* fractionsQuestion.swift */; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
 		4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375361C02573100AA0588 /* numericalQuestion.swift */; };
 		49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */; };
@@ -99,6 +100,7 @@
 		252670171C2378A6007D55BE /* CalendarMonthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
 		252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDaysTitleView.swift; sourceTree = "<group>"; };
 		252670191C2378A6007D55BE /* CalendarDayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayButton.swift; sourceTree = "<group>"; };
+		252C461E1C430D11000B5B3D /* TutorialDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialDescriptionView.swift; sourceTree = "<group>"; };
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
 		253AC83A1C2716B600495DF5 /* AppVariables.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppVariables.json; sourceTree = "<group>"; };
 		253AC83B1C2716B600495DF5 /* JobDeadlines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JobDeadlines.json; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				2510B6E01C021C24005AE520 /* PageControllerView.swift */,
 				25411FF51C1E14EF000118BF /* FacebookButton.swift */,
 				253AC83E1C27218100495DF5 /* JSONModel.swift */,
+				252C461E1C430D11000B5B3D /* TutorialDescriptionView.swift */,
 				25849DC11C333D2C006C8A17 /* StatisticsView */,
 				252670141C23787A007D55BE /* CalendarView */,
 				255264B11C1F0DA800E64D33 /* SettingsView */,
@@ -610,6 +613,7 @@
 				49929DA61C42FDC300527929 /* fractionViewController.swift in Sources */,
 				61FCAED51C0672480072FDFB /* Images.swift in Sources */,
 				2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */,
+				252C461F1C430D11000B5B3D /* TutorialDescriptionView.swift in Sources */,
 				2526701C1C2378A6007D55BE /* CalendarMonthView.swift in Sources */,
 				49929DA21C42E96800527929 /* sequencesQuestion.swift in Sources */,
 				4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */,

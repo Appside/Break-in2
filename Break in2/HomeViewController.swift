@@ -200,7 +200,7 @@ class HomeViewController: UIViewController {
     self.calendarView.layer.cornerRadius = self.minorMargin
     self.calendarView.clipsToBounds = true
     
-    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
     
     // Set tutorialView and tutorialNextButton alpha values
     
@@ -714,7 +714,7 @@ class HomeViewController: UIViewController {
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
       self.tutorialNextButton.alpha = 1
       self.view.layoutIfNeeded()
       

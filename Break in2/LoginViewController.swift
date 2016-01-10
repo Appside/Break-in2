@@ -396,14 +396,14 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   func userLoggedIn(user: PFUser) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     if self.firstTimeUser {
-      performSegueWithIdentifier("showTutorial", sender: nil)
+      performSegueWithIdentifier("showTutorial", sender: self)
     }
     else {
       performSegueWithIdentifier("userLoggedOn", sender: self)
     }
     //let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
     //presentViewController(homeVC, animated: false, completion: nil)
-    self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 4)
+    //self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 4)
   }
     
     

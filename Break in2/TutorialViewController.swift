@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
 
 class TutorialViewController: UIViewController {
 
@@ -16,6 +18,8 @@ class TutorialViewController: UIViewController {
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
   let tutorialNextButton:UIButton = UIButton()
+  let descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
+  let descriptionImageView:UIImageView = UIImageView()
 
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -35,6 +39,7 @@ class TutorialViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
+      let user = PFUser.currentUser()
 
         // Do any additional setup after loading the view.
       
@@ -46,6 +51,8 @@ class TutorialViewController: UIViewController {
       self.view.addSubview(self.profilePictureImageView)
       self.view.addSubview(self.sloganImageView)
       self.view.addSubview(self.tutorialNextButton)
+      self.view.addSubview(self.descriptionLabelView)
+      self.view.addSubview(self.descriptionImageView)
 
       // Customize and add content to imageViews
       
@@ -64,10 +71,19 @@ class TutorialViewController: UIViewController {
       
       self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
       self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-      self.tutorialNextButton.setTitle("Continue To Walkthrough", forState: UIControlState.Normal)
+      self.tutorialNextButton.setTitle("Let's Get Started", forState: UIControlState.Normal)
       self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
       self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
       self.tutorialNextButton.alpha = 0
+      
+      let string:String = "Welcome \(user![PF_USER_FULLNAME])"
+      self.descriptionLabelView.titleLabel.text = string.uppercaseString
+      self.descriptionLabelView.descriptionLabel.text = "BREAKIN2 is a simple app. But just to get you started, we've provided a quick introduction."
+      self.descriptionLabelView.alpha = 0
+      
+      self.descriptionImageView.image = UIImage.init(named: "fingbutton")
+      self.descriptionImageView.contentMode = UIViewContentMode.ScaleAspectFit
+      self.descriptionImageView.alpha = 0
       
       // Set constraints
       
@@ -93,7 +109,18 @@ class TutorialViewController: UIViewController {
       self.sloganImageViewCenterXConstraint.constant = self.screenFrame.width + (self.logoImageView.frame.width/2)
       self.view.layoutIfNeeded()
       
-      }, completion: nil)
+      }, completion: {(Bool) in
+        
+        
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+          
+          self.descriptionLabelView.alpha = 1
+          self.descriptionImageView.alpha = 1
+          self.view.layoutIfNeeded()
+          
+        }, completion: nil)
+        
+    })
     
   }
   
@@ -166,6 +193,36 @@ class TutorialViewController: UIViewController {
     
     self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
     self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
+    
+    // Create and add constraints for descriptionLabelView
+    
+    self.descriptionLabelView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -20)
+    
+    let descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 50)
+    
+    let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
+    
+    self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
+    self.view.addConstraints([descriptionLabelViewCenterXConstraint, descriptionLabelViewTopConstraint])
+    
+    // Create and add constraints for descriptionImageView
+    
+    self.descriptionImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let descriptionImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let descriptionImageViewBottomConstraint = NSLayoutConstraint.init(item: self.descriptionImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let descriptionImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/4)
+    
+    let descriptionImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
+    
+    self.descriptionImageView.addConstraints([descriptionImageViewHeightConstraint, descriptionImageViewWidthConstraint])
+    self.view.addConstraints([descriptionImageViewCenterXConstraint, descriptionImageViewBottomConstraint])
     
   }
   
