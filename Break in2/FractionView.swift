@@ -11,8 +11,8 @@ import UIKit
 
 class fractionView:UIView {
     
-    let topLabel:UILabel = UILabel()
-    let bottomLabel:UILabel = UILabel()
+    let topLabel:UIButton = UIButton()
+    let bottomLabel:UIButton = UIButton()
     let separatorView:UIView = UIView()
 
     override init(frame: CGRect) {
@@ -49,11 +49,11 @@ class fractionView:UIView {
     
     }
     
-    func fractionLabelDesign(fractionLabel:UILabel) {
-        fractionLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-        fractionLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20.0)
-        fractionLabel.textAlignment = NSTextAlignment.Center
-        fractionLabel.numberOfLines = 1
+    func fractionLabelDesign(fractionLabel:UIButton) {
+        fractionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+        fractionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 22.0)
+        fractionLabel.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+        fractionLabel.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
     }
     
     required init?(coder aDecoder: NSCoder) {

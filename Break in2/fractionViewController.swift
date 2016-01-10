@@ -275,8 +275,8 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         
         for i=0; i<arrayAnswers.count;i++ {
             let answerRow:UIButton = UIButton()
-            let answerNumber:UIButton = UIButton()
-            let matchingQuestionLabel:UIButton = UIButton()
+            let answerNumber:fractionView = fractionView()
+            let matchingQuestionLabel:fractionView = fractionView()
             answerRow.translatesAutoresizingMaskIntoConstraints = false
             answerNumber.translatesAutoresizingMaskIntoConstraints = false
             matchingQuestionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -289,18 +289,18 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             matchingQuestionLabel.tag = (i+1) * 100
             
             //answerNumber.setTitle(arrayAnswers[i], forState: .Normal)
-            answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-            answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
-            answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-            answerNumber.layer.borderWidth = 2.0
+            //answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            //answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            //answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+            //answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+            //answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+            //answerNumber.layer.borderWidth = 2.0
             
-            matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
-            matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
-            matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
-            matchingQuestionLabel.alpha = 0.0
+            //matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
+            //matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            //matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
+            //matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
+            //matchingQuestionLabel.alpha = 0.0
             
             if i==0 {
                 answerRow.alpha = 1.0
@@ -581,22 +581,39 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         var i:Int = 0
 
         //Randomize question numbers
-        number1 = Float(arc4random_uniform(10))+1
-        number2 = Float(arc4random_uniform(10))+1
-        number3 = Float(arc4random_uniform(10))+1
-        number4 = Float(arc4random_uniform(10))+1
+        number1 = Float(arc4random_uniform(9))+1
+        number2 = Float(arc4random_uniform(9))+1
+        number3 = Float(arc4random_uniform(9))+1
+        number4 = Float(arc4random_uniform(9))+1
         
         //Generate random answers
         if operation=="+" {
-            
+            let simplifiedFraction:[Int] = self.simplifyFraction(Int(number1*number4+number3*number2), bottom: Int(number2*number4))
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]+1])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]+1])
         }
         if operation=="-" {
-            
+            let simplifiedFraction:[Int] = self.simplifyFraction(Int(number1*number4-number3*number2), bottom: Int(number2*number4))
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]+1])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]+1])
         }
         if operation=="*" {
-            
+            let simplifiedFraction:[Int] = self.simplifyFraction(Int(number1*number3), bottom: Int(number2*number4))
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]+1])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]+1])
         }
         if operation=="/" {
+            let simplifiedFraction:[Int] = self.simplifyFraction(Int(number1*number4), bottom: Int(number2*number3))
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]])
+            answersArray.append([simplifiedFraction[0],simplifiedFraction[1]+1])
+            answersArray.append([simplifiedFraction[0]+1,simplifiedFraction[1]+1])
 
         }
         
@@ -613,6 +630,21 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
 
         //Return question info array
         return ([Int(number1), Int(number2), Int(number3), Int(number4)], returnedArray, correctIndex)
+    }
+    
+    func simplifyFraction(top:Int, bottom:Int) -> [Int] {
+        
+        var x = top
+        var y = bottom
+        while (y != 0) {
+            let buffer = y
+            y = x % y
+            x = buffer
+        }
+        let hcfVal = x
+        let newTopVal = top/hcfVal
+        let newBottomVal = bottom/hcfVal
+        return [newTopVal, newBottomVal]
     }
     
     func setDifficultyLevel() {
