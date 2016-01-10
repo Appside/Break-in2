@@ -68,7 +68,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       // Add background image to HomeViewController's view
       
       self.view.addHomeBG()
-      
+      self.statisticsTitleView.disablePrevious()
+        
       // Add subviews
       
       self.view.addSubview(self.logoImageView)
@@ -546,8 +547,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.pointerView2.alpha = 1.0
         self.barChartText.text = "\(self.dateTests[entry.xIndex]) - \(round(entry.value))%"
         self.lineChartText.text = "\(self.dateTests[entry.xIndex]) - \(round(entry.value))%"
-        self.pointerView1.moveLabelPointer((self.pointerView1.frame.width/6 * (CGFloat(entry.xIndex))) * 1.05 + self.pointerView1.labelPointerBaseWidth)
-        self.pointerView2.moveLabelPointer((self.pointerView2.frame.width/6 * (CGFloat(entry.xIndex))) * 1.05 + self.pointerView2.labelPointerBaseWidth/2)
+        self.pointerView1.moveLabelPointer((self.pointerView1.frame.width/6 * (CGFloat(entry.xIndex))) * 1.0150 + self.pointerView1.labelPointerBaseWidth)
+        self.pointerView2.moveLabelPointer((self.pointerView2.frame.width/6 * (CGFloat(entry.xIndex))) * 1.100 + self.pointerView2.labelPointerBaseWidth/2)
     
     }
     
