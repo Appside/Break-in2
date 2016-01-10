@@ -212,6 +212,18 @@ class TestTypeView: UIView {
     sender.setTitleColor(self.mainBackgroundColor, forState: UIControlState.Normal)
     
     self.difficultySelected = sender.titleLabel!.text!
+    
+    if self.testType == "Numerical Reasoning" || self.testType == "Verbal Reasoning" {
+      if self.difficultySelected == "E" {
+        self.testTypeTimeLabel.text = "30 minutes"
+      }
+      if self.difficultySelected == "M" {
+        self.testTypeTimeLabel.text = "25 minutes"
+      }
+      if self.difficultySelected == "H" {
+        self.testTypeTimeLabel.text = "20 minutes"
+      }
+    }
   }
 
     /*

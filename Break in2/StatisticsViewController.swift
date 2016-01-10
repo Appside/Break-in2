@@ -131,7 +131,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
       self.statisticsView.backgroundColor = UIColor.whiteColor()
       self.statisticsView.layer.cornerRadius = self.minorMargin
       self.statisticsView.clipsToBounds = true
-        
+      
+      self.statisticsScrollView.pagingEnabled = true
+      
         //PointerViews
         self.pointerView1.alpha = 0
         self.pointerView2.alpha = 0
@@ -451,10 +453,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     self.pointerView1.translatesAutoresizingMaskIntoConstraints = false
     
-    let pointerView1Top:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 30)
+    let pointerView1Top:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 20)
     let pointerView1Left:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     let pointerView1Right:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    let pointerView1Height:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 10)
+    let pointerView1Height:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
     self.graphView1.addConstraints([pointerView1Left,pointerView1Right,pointerView1Top])
     self.pointerView1.addConstraint(pointerView1Height)
     
@@ -462,10 +464,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     self.pointerView2.translatesAutoresizingMaskIntoConstraints = false
     
-    let pointerView2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 30)
+    let pointerView2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 20)
     let pointerView2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     let pointerView2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView2, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    let pointerView2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 10)
+    let pointerView2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
     self.graphView2.addConstraints([pointerView2Left,pointerView2Right,pointerView2Top])
     self.pointerView2.addConstraint(pointerView2Height)
     
