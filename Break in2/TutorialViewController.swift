@@ -10,6 +10,8 @@ import UIKit
 
 class TutorialViewController: UIViewController {
 
+  let backgroundImageView:UIImageView = UIImageView()
+  let backgroundView2:UIView = UIView()
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
@@ -36,12 +38,10 @@ class TutorialViewController: UIViewController {
 
         // Do any additional setup after loading the view.
       
-      // Add background color
-      
-      self.view.backgroundColor = UIColor.blackColor()
-      
       // Add logoImageView and profilePictureImageView to HomeViewController view
       
+      self.view.addSubview(self.backgroundImageView)
+      self.view.addSubview(self.backgroundView2)
       self.view.addSubview(self.logoImageView)
       self.view.addSubview(self.profilePictureImageView)
       self.view.addSubview(self.sloganImageView)
@@ -49,6 +49,10 @@ class TutorialViewController: UIViewController {
 
       // Customize and add content to imageViews
       
+      self.backgroundImageView.image = UIImage(named: "homeBG")
+      self.backgroundView2.backgroundColor = UIColor.blackColor()
+      self.backgroundView2.alpha = 0
+
       self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
       self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
       
@@ -60,9 +64,10 @@ class TutorialViewController: UIViewController {
       
       self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
       self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-      self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+      self.tutorialNextButton.setTitle("Continue To Walkthrough", forState: UIControlState.Normal)
       self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
       self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.tutorialNextButton.alpha = 0
       
       // Set constraints
       
@@ -80,6 +85,9 @@ class TutorialViewController: UIViewController {
     
     UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
       
+      self.backgroundImageView.alpha = 0
+      self.backgroundView2.alpha = 1
+      self.tutorialNextButton.alpha = 1
       self.logoImageViewBottomConstraint.constant = self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12) - self.profilePictureImageView.frame.minY
       self.profilePictureImageViewCenterXConstraint.constant = (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1
       self.sloganImageViewCenterXConstraint.constant = self.screenFrame.width + (self.logoImageView.frame.width/2)
@@ -90,6 +98,14 @@ class TutorialViewController: UIViewController {
   }
   
   func setConstraints() {
+    
+    // Create and add constraints for backgroundImageView
+    
+    self.backgroundImageView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+    
+    // Create and add constraints for backgroundView2
+    
+    self.backgroundView2.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
     
     // Create and add constraints for logoImageView
     

@@ -50,7 +50,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   var profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
   var loginTutorialViewVisible:Bool = false
-  var firstTimeUser:Bool = true
+  var firstTimeUser:Bool = false
   
   let moc = DataController().managedObjectContext
     var ParseFBID:String = ""
@@ -404,17 +404,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     //let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
     //presentViewController(homeVC, animated: false, completion: nil)
     self.noticeTop("Welcome \(user[PF_USER_FULLNAME])!", autoClear: true, autoClearTime: 4)
-  }
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    
-    if segue.identifier == "userLoggedOn" {
-      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
-      if self.firstTimeUser {
-        destinationVC.firstTimeUser = false
-      }
-      
-    }
   }
     
     
