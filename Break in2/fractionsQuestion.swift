@@ -10,8 +10,9 @@ import UIKit
 
 class fractionsQuestion {
     
-    var question:String = String()
-    var answers:[String] = [String]()
+    var question:[Int] = [Int]()
+    var operation:String = String()
+    var answers:[[Int]] = [[Int]]()
     var correctAnswer:Int = Int()
     
 }
