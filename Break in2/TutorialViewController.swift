@@ -13,7 +13,8 @@ class TutorialViewController: UIViewController {
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
-  
+  let tutorialNextButton:UIButton = UIButton()
+
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -35,16 +36,17 @@ class TutorialViewController: UIViewController {
 
         // Do any additional setup after loading the view.
       
-      // Add background image to HomeViewController's view
+      // Add background color
       
-      self.view.addHomeBG()
+      self.view.backgroundColor = UIColor.blackColor()
       
       // Add logoImageView and profilePictureImageView to HomeViewController view
       
       self.view.addSubview(self.logoImageView)
       self.view.addSubview(self.profilePictureImageView)
       self.view.addSubview(self.sloganImageView)
-      
+      self.view.addSubview(self.tutorialNextButton)
+
       // Customize and add content to imageViews
       
       self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -55,6 +57,12 @@ class TutorialViewController: UIViewController {
       
       self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
       self.sloganImageView.image = UIImage.init(named: "asSlogan")
+      
+      self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
+      self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+      self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+      self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
       
       // Set constraints
       
@@ -128,12 +136,35 @@ class TutorialViewController: UIViewController {
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([self.sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
     
+    // Create and add constraints for tutorialNextButton
+    
+    self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    
+    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    
+    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    
+    self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
+    self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
+    
   }
   
-  func showTutorial() {
+  func nextTutorialButtonClicked(sender:UIButton) {
     
+    self.performSegueWithIdentifier("tutorialEnded", sender: sender)
     
-    
+  }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "tutorialEnded" {
+      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      destinationVC.firstTimeUser = true
+      destinationVC.segueFromLoginView = false
+    }
   }
 
     /*

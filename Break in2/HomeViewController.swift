@@ -61,7 +61,7 @@ class HomeViewController: UIViewController {
   var loginPageControllerViewHeight:CGFloat = 50
   
   var segueFromLoginView:Bool = true
-  var firstTimeUser:Bool = true
+  var firstTimeUser:Bool = false
   var tutorialPageNumber:Int = 0
   
   override func viewDidLoad() {
@@ -165,9 +165,13 @@ class HomeViewController: UIViewController {
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-    self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+    if self.tutorialPageNumber == 0 {
+      self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+    }
+    else {
+      self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
+    }
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-    self.tutorialNextButton.alpha = 0
     
     // Add actions to buttons
     
@@ -197,7 +201,17 @@ class HomeViewController: UIViewController {
     self.calendarView.clipsToBounds = true
     
     self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
-    self.tutorialView.alpha = 0
+    
+    // Set tutorialView and tutorialNextButton alpha values
+    
+    if self.firstTimeUser {
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+      self.tutorialNextButton.alpha = 1
+    }
+    else {
+      self.tutorialView.alpha = 0
+      self.tutorialNextButton.alpha = 0
+    }
     
     // Customize careersScrollView
     
@@ -696,16 +710,11 @@ class HomeViewController: UIViewController {
   
   func showTutorial() {
     
-//    if self.tutorialViews[self.tutorialPageNumber] == self.settingsButton {
-//      self.tutorialNextButton.setTitle("Continue To Settings", forState: UIControlState.Normal)
-//    }
-    if self.tutorialViews[self.tutorialPageNumber] == self.statsButton {
-      self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
-    }
+    self.view.insertSubview(self.logoImageView, aboveSubview: self.tutorialView)
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
-      self.tutorialView.alpha = 1
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
       self.tutorialNextButton.alpha = 1
       self.view.layoutIfNeeded()
       
@@ -727,6 +736,7 @@ class HomeViewController: UIViewController {
       }, completion: {(Bool) in
         
         self.view.insertSubview(self.tutorialViews[self.tutorialPageNumber - 1], belowSubview: self.tutorialView)
+        self.view.insertSubview(self.logoImageView, belowSubview: self.tutorialView)
         self.tutorialViews[self.tutorialPageNumber - 1].userInteractionEnabled = true
         
     })

@@ -980,6 +980,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   func showTutorial() {
     
+    self.view.insertSubview(self.logoImageView, aboveSubview: self.tutorialView)
+
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       self.tutorialView.alpha = 1
@@ -998,13 +1000,19 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.tutorialPageNumber++
     
     if self.tutorialViews[self.tutorialPageNumber - 1] == self.backButton {
+      self.savePrefsToParse(sender)
       self.performSegueWithIdentifier("backFromEditProfile", sender: sender)
     }
     else {
       for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
         if index == self.tutorialPageNumber {
           self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
-          self.tutorialViews[index].userInteractionEnabled = false
+          if self.tutorialViews[index] == self.chooseCareersView {
+            self.tutorialViews[index].userInteractionEnabled = true
+          }
+          else {
+            self.tutorialViews[index].userInteractionEnabled = false
+          }
         }
         else {
           self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
