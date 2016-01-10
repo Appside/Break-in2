@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
   var careerTypeImages:[String:String] = [String:String]()
   var careersTestTypes:[String:[String]] = [String:[String]]()
   var careerColors:[String:UIColor] = [String:UIColor]()
+  var tutorialViews:[UIView] = [UIView]()
   
   // Declare and initialize views and models
   
@@ -38,11 +39,14 @@ class HomeViewController: UIViewController {
   let careersScrollView:UIScrollView = UIScrollView()
   var careerButtons:[CareerButton] = [CareerButton]()
   let scrollInfoLabel:UILabel = UILabel()
+  let tutorialView:UIView = UIView()
+  let tutorialNextButton:UIButton = UIButton()
   
   var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
+  var tutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
   
   // Declare and initialize design constants
   
@@ -57,7 +61,8 @@ class HomeViewController: UIViewController {
   var loginPageControllerViewHeight:CGFloat = 50
   
   var segueFromLoginView:Bool = true
-  var firstTimeUser:Bool = false
+  var firstTimeUser:Bool = true
+  var tutorialPageNumber:Int = 0
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -93,6 +98,8 @@ class HomeViewController: UIViewController {
     self.careersBackgroundView.addSubview(self.logOutButton)
     self.careersBackgroundView.addSubview(self.careersScrollView)
     self.careersBackgroundView.addSubview(self.scrollInfoLabel)
+    self.view.addSubview(self.tutorialView)
+    self.view.addSubview(self.tutorialNextButton)
     
     // Create careerButtons for each careerType
     
@@ -156,12 +163,19 @@ class HomeViewController: UIViewController {
     self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
     self.scrollInfoLabel.text = "Scroll For More Careers"
     
+    self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
+    self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+    self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.tutorialNextButton.alpha = 0
+    
     // Add actions to buttons
     
     self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
     self.settingsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
     self.statsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
-    
+    self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+
     // Customize careersBackgroundView, deadlinesView and statsView
     
     self.careersBackgroundView.backgroundColor = UIColor.whiteColor()
@@ -182,6 +196,9 @@ class HomeViewController: UIViewController {
     self.calendarView.layer.cornerRadius = self.minorMargin
     self.calendarView.clipsToBounds = true
     
+    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    self.tutorialView.alpha = 0
+    
     // Customize careersScrollView
     
     self.careersScrollView.showsVerticalScrollIndicator = false
@@ -193,12 +210,6 @@ class HomeViewController: UIViewController {
     // Display calendar
     
     self.calendarView.displayCalendar()
-    
-    // SHow tutorial to first time users
-    
-    if self.firstTimeUser {
-      self.showTutorial()
-    }
     
   }
   
@@ -212,6 +223,9 @@ class HomeViewController: UIViewController {
       let destinationVC:SettingsViewController = segue.destinationViewController as! SettingsViewController
       destinationVC.careerTypes = self.careerTypes
       destinationVC.careerTypeImages = self.careerTypeImages
+      if sender as! UIButton == self.tutorialNextButton {
+        destinationVC.firstTimeUser = true
+      }
     }
     if segue.identifier == "statsClicked" {
       let destinationVC:StatisticsViewController = segue.destinationViewController as! StatisticsViewController
@@ -462,6 +476,35 @@ class HomeViewController: UIViewController {
       
     }
     
+    // Create and add constraints for tutorialView
+    
+    self.tutorialView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    self.tutorialViewTopConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height)
+    
+    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width)
+    
+    self.tutorialView.addConstraints([tutorialViewHeightConstraint, tutorialViewWidthConstraint])
+    self.view.addConstraints([tutorialViewLeftConstraint, tutorialViewTopConstraint])
+    
+    // Create and add constraints for tutorialNextButton
+    
+    self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    
+    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    
+    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    
+    self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
+    self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
     
   }
   
@@ -492,7 +535,7 @@ class HomeViewController: UIViewController {
         }, completion: {(Bool) in
           
           self.showCareersBackgroundView()
-          
+
       })
       
     }
@@ -500,7 +543,12 @@ class HomeViewController: UIViewController {
       self.showCareersBackgroundView()
     }
     
-    self.showCareersBackgroundView()
+    // Show tutorial to first time users
+    
+    if self.firstTimeUser {
+      self.tutorialViews.appendContentsOf([self.calendarBackgroundView, self.careersBackgroundView, self.settingsButton, self.statsButton])
+      self.showTutorial()
+    }
     
   }
   
@@ -620,6 +668,9 @@ class HomeViewController: UIViewController {
         else if sender == self.statsButton {
           self.performSegueWithIdentifier("statsClicked", sender: sender)
         }
+        else if sender == self.tutorialNextButton {
+          self.performSegueWithIdentifier("settingsClicked", sender: sender)
+        }
         else if sender == self.logOutButton {
           UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             if self.segueFromLoginView {
@@ -645,14 +696,72 @@ class HomeViewController: UIViewController {
   
   func showTutorial() {
     
-    let fadeView:UIView = UIView()
-    self.view.addSubview(fadeView)
-    fadeView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+//    if self.tutorialViews[self.tutorialPageNumber] == self.settingsButton {
+//      self.tutorialNextButton.setTitle("Continue To Settings", forState: UIControlState.Normal)
+//    }
+    if self.tutorialViews[self.tutorialPageNumber] == self.statsButton {
+      self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
+    }
     
-    fadeView.alpha = 0.5
-    fadeView.backgroundColor =  UIColor.blackColor()
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.tutorialView.alpha = 1
+      self.tutorialNextButton.alpha = 1
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        self.view.insertSubview(self.tutorialViews[self.tutorialPageNumber], aboveSubview: self.tutorialView)
+        self.tutorialViews[self.tutorialPageNumber].userInteractionEnabled = false
+
+    })
+  }
+  
+  func hideTutorial() {
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.tutorialView.alpha = 0
+      self.tutorialNextButton.alpha = 0
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        self.view.insertSubview(self.tutorialViews[self.tutorialPageNumber - 1], belowSubview: self.tutorialView)
+        self.tutorialViews[self.tutorialPageNumber - 1].userInteractionEnabled = true
+        
+    })
+  }
+  
+  func nextTutorialButtonClicked(sender:UIButton) {
     
-    self.view.insertSubview(fadeView, belowSubview: self.calendarBackgroundView)
+    self.tutorialPageNumber++
+    
+    if self.tutorialViews[self.tutorialPageNumber - 1] == self.settingsButton {
+      self.performSegueWithIdentifier("settingsClicked", sender: sender)
+    }
+    else if self.tutorialViews[self.tutorialPageNumber - 1] == self.statsButton {
+      self.hideTutorial()
+    }
+    else {
+      for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+        if index == self.tutorialPageNumber {
+          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
+          self.tutorialViews[index].userInteractionEnabled = false
+        }
+        else {
+          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
+          self.tutorialViews[index].userInteractionEnabled = true
+        }
+      }
+      if self.tutorialViews[self.tutorialPageNumber] == self.settingsButton {
+        self.tutorialNextButton.setTitle("Continue To Settings", forState: UIControlState.Normal)
+      }
+//      else if self.tutorialViews[self.tutorialPageNumber] == self.statsButton {
+//        self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
+//      }
+    }
+    
+    
   }
   
   
