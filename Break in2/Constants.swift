@@ -59,7 +59,7 @@ let PF_ARITHMETIC_USERNAME              = "username"				//	String
 let PF_ARITHMETIC_TEST                  = "test"                    //	String
 let PF_ARITHMETIC_SCORE                 = "score"                   //	Number
 
-/* Arithmetic class in Parse*/
+/* Preferences class in Parse*/
 let PF_PREFERENCES_CLASS_NAME            = "Preferences"		//	Class name
 let PF_PREFERENCES_USER                  = "user"					//	Pointer to User Class
 let PF_PREFERENCES_CREATED               = "createdAt"               //	Date

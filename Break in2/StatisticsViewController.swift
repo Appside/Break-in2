@@ -8,6 +8,10 @@
 
 import UIKit
 import Charts
+import SCLAlertView
+import SwiftSpinner
+import Parse
+import ParseUI
 
 class StatisticsViewController: UIViewController, ChartViewDelegate {
   
@@ -111,7 +115,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         // Make each button perform a segue to the TestSelectionViewController
         
         self.testTypeButtons[index].tag = index
-        self.testTypeButtons[index].addTarget(self, action: "testTypeClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.testTypeButtons[index].addTarget(self, action: "dataDownload:", forControlEvents: UIControlEvents.TouchUpInside)
       }
       
       // Customize views
@@ -523,8 +527,176 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         self.pointerView2.moveLabelPointer(self.graphView2.frame.width/6 * (CGFloat(entry.xIndex) + 0.5))
     
     }
+    
+    func dataDownload(sender:UIButton){
+        
+        var yUnits:[Double] = []
+        var yUnits2:[Double] = []
+        var dateTaken:[NSDate] = []
+        
+        //parse
+        if (sender.currentTitle == "Numerical Reasoning"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_NUMREAS_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_NUMREAS_USERNAME, equalTo: username!)
+            query.limit = 6
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            yUnits.append(object[PF_NUMREAS_SCORE] as! Double)
+                            yUnits2.append(object[PF_NUMREAS_TIME] as! Double)
+                            dateTaken.append(object.createdAt as NSDate!)
+                            print(yUnits)
+                            print(yUnits2)
+                            print(dateTaken)
+                            
+                        }
+                    }
+                    
+                    SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+            
+        }else if (sender.currentTitle == "Verbal Reasoning"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_VERBREAS_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
+            query.limit = 6
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            yUnits.append(object[PF_VERBREAS_SCORE] as! Double)
+                            yUnits2.append(object[PF_VERBREAS_TIME] as! Double)
+                            dateTaken.append(object.createdAt as NSDate!)
+                            print(yUnits)
+                            print(yUnits2)
+                            print(dateTaken)
+                            
+                        }
+                    }
+                    
+                    SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
 
-    func testTypeClicked(sender:UIButton) {
+            
+        }else if (sender.currentTitle == "Arithmetic Reasoning"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_ARITHMETIC_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_ARITHMETIC_USERNAME, equalTo: username!)
+            query.limit = 6
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            yUnits.append(object[PF_ARITHMETIC_SCORE] as! Double)
+                            yUnits2.append(object[PF_ARITHMETIC_TIME] as! Double)
+                            dateTaken.append(object.createdAt as NSDate!)
+                            print(yUnits)
+                            print(yUnits2)
+                            print(dateTaken)
+                            
+                        }
+                    }
+                    
+                    SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+            
+            
+        }else if (sender.currentTitle == "Logical Reasoning"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_VERBREAS_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
+            query.limit = 6
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            yUnits.append(object[PF_VERBREAS_SCORE] as! Double)
+                            yUnits2.append(object[PF_VERBREAS_TIME] as! Double)
+                            dateTaken.append(object.createdAt as NSDate!)
+                            print(yUnits)
+                            print(yUnits2)
+                            print(dateTaken)
+                            
+                        }
+                    }
+                    
+                    SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
+            
+            
+        }
+
+
+        
+    }
+
+    func graphSetup(sender: UIButton, yUnits: [Double], yUnits2: [Double]) {
         
         //PointerViews
         self.pointerView1.alpha = 1.0
@@ -533,9 +705,13 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         //Graph 1 - Test Scores
         let colors:[UIColor] = self.appVariablesModel.getAppColors()
         let xValues = ["T1","T2","T3","T4","T5","T6"]
-        let yUnits:[Double] = [50,60,70,80,90,100]
         var dataEntries: [ChartDataEntry] = []
         var y:Int = 0
+        
+        //Graph 2 - Test Time
+        let xValues2 = ["T1","T2","T3","T4","T5","T6"]
+        var dataEntries2: [ChartDataEntry] = []
+        var y2:Int = 0
         
         for y=0;y<yUnits.count;y++ {
             let dataEntry = BarChartDataEntry(value: yUnits[y], xIndex: y)
@@ -571,13 +747,6 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         self.barChartText.font = UIFont(name: "Helvetica-NeueBold", size: 13.0)
         self.barChartText.textAlignment = NSTextAlignment.Center
         self.barChartText.text = "4TH DEC, 12:53 - 100%"
-        
-        //Graph 2 - Test Time
-        
-        let xValues2 = ["T1","T2","T3","T4","T5","T6"]
-        let yUnits2:[Double] = [35,28,22,12,30,21]
-        var dataEntries2: [ChartDataEntry] = []
-        var y2:Int = 0
         
         for y2=0;y2<yUnits2.count;y2++ {
             let dataEntry = ChartDataEntry(value: yUnits2[y2], xIndex: y2)

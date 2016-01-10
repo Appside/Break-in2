@@ -34,8 +34,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 1
     let questionLabel:UITextView = UITextView()
-    var allowedSeconds:Int = 00
-    var allowedMinutes:Int = 20
+    var allowedSeconds:Int = Int()
+    var allowedMinutes:Int = Int()
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let answerView:UIView = UIView()
@@ -51,6 +51,20 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Initialize timer depending on difficulty
+        if self.difficulty == "H" {
+            self.allowedSeconds = 00
+            self.allowedMinutes = 20
+        }
+        else if self.difficulty == "M" {
+            self.allowedSeconds = 00
+            self.allowedMinutes = 25
+        }
+        else {
+            self.allowedSeconds = 00
+            self.allowedMinutes = 30
+        }
         
         //Initialize timer
         self.countSeconds = self.allowedSeconds
@@ -492,6 +506,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
                     analytics[PF_VERBREAS_USER] = user
                     analytics[PF_VERBREAS_SCORE] = self.scoreRatio
                     analytics[PF_VERBREAS_TIME] = timeTaken
+                    analytics[PF_VERBREAS_USERNAME] = user![PF_USER_USERNAME]
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {

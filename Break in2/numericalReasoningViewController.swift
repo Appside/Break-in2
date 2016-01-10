@@ -55,17 +55,21 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
       
         //Initialize timer depending on difficulty
       if self.difficulty == "H" {
-        self.countSeconds = 00
-        self.countMinutes = 10
+        self.allowedSeconds = 00
+        self.allowedMinutes = 20
       }
       else if self.difficulty == "M" {
-        self.countSeconds = 00
-        self.countMinutes = 20
+        self.allowedSeconds = 00
+        self.allowedMinutes = 25
       }
       else {
-        self.countSeconds = 00
-        self.countMinutes = 30
+        self.allowedSeconds = 00
+        self.allowedMinutes = 30
       }
+        
+        //Initialize timer
+        self.countSeconds = self.allowedSeconds
+        self.countMinutes = self.allowedMinutes
       
         //Initialize backgroun UIView
         self.view.addSubview(self.backgroungUIView)
@@ -494,6 +498,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     analytics[PF_NUMREAS_USER] = user
                     analytics[PF_NUMREAS_SCORE] = self.scoreRatio
                     analytics[PF_NUMREAS_TIME] = timeTaken
+                    analytics[PF_NUMREAS_USERNAME] = user![PF_USER_USERNAME]
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
