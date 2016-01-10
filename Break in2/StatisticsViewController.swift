@@ -13,13 +13,14 @@ import SwiftSpinner
 import Parse
 import ParseUI
 
-class StatisticsViewController: UIViewController, ChartViewDelegate {
+class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollViewDelegate {
   
   // Declare and initialize types of careers
   
   var testTypes:[String] = [String]()
   var testColors:[String:UIColor] = [String:UIColor]()
-  
+  var tutorialViews:[UIView] = [UIView]()
+
   // Declare and initialize views and models
   
   let logoImageView:UIImageView = UIImageView()
@@ -33,6 +34,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
   var testTypeButtons:[CareerButton] = [CareerButton]()
   let scrollInfoLabel:UILabel = UILabel()
   let clearStatsButton:UIButton = UIButton()
+  let tutorialView:UIView = UIView()
+  let tutorialNextButton:UIButton = UIButton()
     
     let pointerView1:LabelPointerView = LabelPointerView()
     let pointerView2:LabelPointerView = LabelPointerView()
@@ -45,6 +48,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     let barChartText:UILabel = UILabel()
     let lineChartDescription:UIView = UIView()
     let lineChartText:UILabel = UILabel()
+    let noDataLabel:UIView = UIView()
+    let noDataUILabel:UILabel = UILabel()
+    var dateTests:[String] = [String]()
 
   var testTypesBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
 
@@ -59,13 +65,17 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   let menuButtonHeight:CGFloat = 50
 
+  var firstTimeUser:Bool = true
+  var tutorialPageNumber:Int = 0
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
       // Add background image to HomeViewController's view
       
       self.view.addHomeBG()
-      
+      self.statisticsTitleView.disablePrevious()
+        
       // Add subviews
       
       self.view.addSubview(self.logoImageView)
@@ -78,6 +88,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
       self.testTypesBackgroundView.addSubview(self.scrollInfoLabel)
       self.testTypesBackgroundView.addSubview(self.testTypesScrollView)
       self.testTypesBackgroundView.addSubview(self.clearStatsButton)
+      
         
         self.statisticsScrollView.addSubview(self.graphView1)
         self.statisticsScrollView.addSubview(self.graphView2)
@@ -88,9 +99,13 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
 
         self.graphView1.addSubview(self.pointerView1)
         self.graphView2.addSubview(self.pointerView2)
+        self.statisticsView.addSubview(self.noDataLabel)
+      
+      self.view.addSubview(self.tutorialView)
+      self.view.addSubview(self.tutorialNextButton)
 
       // Create careerButtons for each testType
-      
+
       for var index:Int = 0 ; index < self.testTypes.count ; index++ {
         
         let careerButtonAtIndex:CareerButton = CareerButton()
@@ -131,10 +146,14 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
       self.statisticsBackgroundView.clipsToBounds = true
       
       self.testTypesScrollView.showsVerticalScrollIndicator = false
-      
+      self.statisticsScrollView.delegate = self
+
       self.statisticsView.backgroundColor = UIColor.whiteColor()
       self.statisticsView.layer.cornerRadius = self.minorMargin
       self.statisticsView.clipsToBounds = true
+      
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+      self.tutorialView.alpha = 0
       
       self.statisticsScrollView.pagingEnabled = true
       
@@ -178,6 +197,13 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
       self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
       self.scrollInfoLabel.text = "Scroll For More Tests"
       
+      self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
+      self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+      self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+      self.tutorialNextButton.alpha = 0
+      self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+      
       // Set contraints
       
       self.setConstraints()
@@ -203,6 +229,13 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     self.pointerView1.moveLabelPointer(self.graphView1.frame.width/6 * (5.5))
     self.pointerView2.labelPointerBaseWidth = self.graphView1.frame.width/12
     self.pointerView2.moveLabelPointer(self.graphView1.frame.width/6 * (5.5))
+    
+    // Show tutorial to first time users
+    
+    if self.firstTimeUser {
+      self.tutorialViews.appendContentsOf([self.testTypesBackgroundView, self.backButton])
+      self.showTutorial()
+    }
 
   }
 
@@ -305,7 +338,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     // Create and add constraints for statisticsScrollView
     
     self.statisticsScrollView.translatesAutoresizingMaskIntoConstraints = false
-    
+
     let statisticsScrollViewTopConstraint = NSLayoutConstraint.init(item: self.statisticsScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsTitleView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
     let statisticsScrollViewRightConstraint = NSLayoutConstraint.init(item: self.statisticsScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
@@ -409,10 +442,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
 
     self.statisticsScrollView.addConstraints([graphView1Top,graphView1Left])
     
-    let graphView1Width:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 350)
-    let graphView1Height:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 250)
+    let graphView1Width:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: -2*(self.majorMargin) - 2*(self.minorMargin))
+    let graphView1Height:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsScrollView, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
 
-    self.graphView1.addConstraints([graphView1Width,graphView1Height])
+    self.view.addConstraints([graphView1Width,graphView1Height])
     
     //Create and add constraints for GraphView2
     
@@ -422,14 +455,15 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     
     self.statisticsScrollView.addConstraint(graphView2Top)
     
-    let graphView2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 10)
+    let graphView2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphView1, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     self.statisticsScrollView.addConstraint(graphView2Left)
     
-    let graphView2Width:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 350)
-    let graphView2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 250)
+    let graphView2Width:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: -2*(self.majorMargin) - 2*(self.minorMargin))
+    let graphView2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.graphView2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.statisticsScrollView, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
     
-    self.graphView2.addConstraints([graphView2Width,graphView2Height])
-    self.statisticsScrollView.contentSize = CGSize(width: 710, height: 250)
+    self.view.addConstraints([graphView2Width,graphView2Height])
+    
+    self.statisticsScrollView.showsHorizontalScrollIndicator = false
     
     //Create and set constraints for barChartDescription and barChartLabel
     
@@ -474,6 +508,52 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
     let pointerView2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.pointerView2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
     self.graphView2.addConstraints([pointerView2Left,pointerView2Right,pointerView2Top])
     self.pointerView2.addConstraint(pointerView2Height)
+    
+    //Create and set constraints for noData Labels
+    self.noDataLabel.setConstraintsToSuperview(Int(self.minorMargin), bottom: 0, left: 0, right: 0)
+    self.noDataLabel.backgroundColor = UIColor(white: 0.3, alpha: 0.3)
+    self.noDataLabel.addSubview(self.noDataUILabel)
+    self.noDataUILabel.setConstraintsToSuperview(25, bottom: 10, left: 5, right: 5)
+    self.noDataUILabel.text = "Select a test from the Menu"
+    self.noDataUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+    self.noDataUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 14.0)
+    self.noDataUILabel.textAlignment = NSTextAlignment.Center
+    self.noDataUILabel.numberOfLines = 0
+    self.noDataLabel.alpha = 0
+    self.statisticsTitleView.alpha = 0.0
+    self.graphView1.alpha = 0.0
+    self.graphView2.alpha = 0.0
+    self.noDataLabel.alpha = 1.0
+    
+    // Create and add constraints for tutorialView
+    
+    self.tutorialView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let tutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height)
+    
+    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width)
+    
+    self.tutorialView.addConstraints([tutorialViewHeightConstraint, tutorialViewWidthConstraint])
+    self.view.addConstraints([tutorialViewLeftConstraint, tutorialViewTopConstraint])
+    
+    // Create and add constraints for tutorialNextButton
+    
+    self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    
+    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    
+    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    
+    self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
+    self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
     
   }
   
@@ -521,19 +601,54 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
   }
     
     func chartValueSelected(chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: ChartHighlight) {
-        self.barChartText.text = "4TH DEC, 12:53 -\(entry.value)%"
-        self.lineChartText.text = "4TH DEC, 12:53 -\(entry.value)%"
-        self.pointerView1.moveLabelPointer(self.graphView1.frame.width/6 * (CGFloat(entry.xIndex) + 0.5))
-        self.pointerView2.moveLabelPointer(self.graphView2.frame.width/6 * (CGFloat(entry.xIndex) + 0.5))
+        self.pointerView1.alpha = 1.0
+        self.pointerView2.alpha = 1.0
+        self.barChartText.text = "\(self.dateTests[entry.xIndex]) - \(round(entry.value))%"
+        self.lineChartText.text = "\(self.dateTests[entry.xIndex]) - \(round(entry.value))%"
+        self.pointerView1.moveLabelPointer((self.pointerView1.frame.width/6 * (CGFloat(entry.xIndex))) * 1.0150 + self.pointerView1.labelPointerBaseWidth)
+        self.pointerView2.moveLabelPointer((self.pointerView2.frame.width/6 * (CGFloat(entry.xIndex))) * 1.100 + self.pointerView2.labelPointerBaseWidth/2)
     
     }
     
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        self.scrollViewDidEndDecelerating(scrollView)
+    }
+
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        if scrollView.contentOffset.x > 0 {
+            self.statisticsTitleView.enablePrevious()
+            self.statisticsTitleView.disableNext()
+            self.statisticsTitleView.statisticsTitleLabel.text = "TIME PER QUESTION"
+        } else {
+            self.statisticsTitleView.enableNext()
+            self.statisticsTitleView.disablePrevious()
+            self.statisticsTitleView.statisticsTitleLabel.text = "SCORES"
+        }
+    }
+    
+    func nextStatButtonClicked(sender:UIButton) {
+        self.statisticsTitleView.enablePrevious()
+        self.statisticsTitleView.disableNext()
+        self.statisticsScrollView.setContentOffset(self.graphView2.frame.origin, animated: true)
+        self.statisticsTitleView.statisticsTitleLabel.text = "TIME PER QUESTION"
+    }
+
+    func previousStatButtonClicked(sender:UIButton) {
+        self.statisticsTitleView.enableNext()
+        self.statisticsTitleView.disablePrevious()
+        self.statisticsScrollView.setContentOffset(self.graphView1.frame.origin, animated: true)
+        self.statisticsTitleView.statisticsTitleLabel.text = "SCORES"
+    }
+
     func dataDownload(sender:UIButton){
         
         var yUnits:[Double] = []
         var yUnits2:[Double] = []
         var dateTaken:[NSDate] = []
-        
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+
         //parse
         if (sender.currentTitle == "Numerical Reasoning"){
             
@@ -563,7 +678,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
                             
                         }
                     }
-                    
+                    for element in dateTaken {
+                        self.dateTests.append(formatter.stringFromDate(element))
+                    }
                     SwiftSpinner.hide()
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
@@ -601,7 +718,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
                             
                         }
                     }
-                    
+                    for element in dateTaken {
+                        self.dateTests.append(formatter.stringFromDate(element))
+                    }
                     SwiftSpinner.hide()
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
@@ -640,7 +759,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
                             
                         }
                     }
-                    
+                    for element in dateTaken {
+                        self.dateTests.append(formatter.stringFromDate(element))
+                    }
                     SwiftSpinner.hide()
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
@@ -679,7 +800,9 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
                             
                         }
                     }
-                    
+                    for element in dateTaken {
+                        self.dateTests.append(formatter.stringFromDate(element))
+                    }
                     SwiftSpinner.hide()
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
@@ -688,19 +811,34 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
                     print("Error: \(error!) \(error!.userInfo)")
                 }
             }
-            
-            
         }
-
-
-        
     }
 
     func graphSetup(sender: UIButton, yUnits: [Double], yUnits2: [Double]) {
         
         //PointerViews
-        self.pointerView1.alpha = 1.0
-        self.pointerView2.alpha = 1.0
+        self.pointerView1.alpha = 0.0
+        self.pointerView2.alpha = 0.0
+        
+        if (yUnits.count==0) {
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.noDataUILabel.text = "No Score available"
+                self.statisticsTitleView.alpha = 0.0
+                self.graphView1.alpha = 0.0
+                self.graphView2.alpha = 0.0
+                self.noDataLabel.alpha = 1.0
+                }, completion: nil)
+            
+        } else {
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.statisticsTitleView.alpha = 1.0
+                self.graphView1.alpha = 1.0
+                self.graphView2.alpha = 1.0
+                self.noDataLabel.alpha = 0
+            }, completion: nil)
+        
+        //Set constraints
+        self.statisticsScrollView.contentSize = CGSize(width: 2*self.statisticsScrollView.frame.width, height: 0)
         
         //Graph 1 - Test Scores
         let colors:[UIColor] = self.appVariablesModel.getAppColors()
@@ -714,7 +852,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         var y2:Int = 0
         
         for y=0;y<yUnits.count;y++ {
-            let dataEntry = BarChartDataEntry(value: yUnits[y], xIndex: y)
+            let dataEntry = BarChartDataEntry(value: round(yUnits[y]), xIndex: y)
             dataEntries.append(dataEntry)
         }
         
@@ -744,12 +882,12 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         
         self.barChartDescription.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.barChartText.textColor = UIColor.whiteColor()
-        self.barChartText.font = UIFont(name: "Helvetica-NeueBold", size: 13.0)
+        self.barChartText.font = UIFont(name: "Helvetica-NeueBold", size: 12.0)
         self.barChartText.textAlignment = NSTextAlignment.Center
-        self.barChartText.text = "4TH DEC, 12:53 - 100%"
+        self.barChartText.text = "Select a test from the Graph"
         
         for y2=0;y2<yUnits2.count;y2++ {
-            let dataEntry = ChartDataEntry(value: yUnits2[y2], xIndex: y2)
+            let dataEntry = ChartDataEntry(value: round(yUnits2[y2]), xIndex: y2)
             dataEntries2.append(dataEntry)
         }
         
@@ -788,10 +926,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
         
         self.lineChartDescription.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.lineChartText.textColor = UIColor.whiteColor()
-        self.lineChartText.font = UIFont(name: "Helvetica-NeueBold", size: 13.0)
+        self.lineChartText.font = UIFont(name: "Helvetica-NeueBold", size: 12.0)
         self.lineChartText.textAlignment = NSTextAlignment.Center
-        self.lineChartText.text = "4TH DEC, 12:53 - 100%"
-        
+        self.lineChartText.text = "Select a test from the Graph"
+        }
         //Menu - Buttons background
         
         for button in self.testTypeButtons {
@@ -802,8 +940,47 @@ class StatisticsViewController: UIViewController, ChartViewDelegate {
                 self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 1.0, alpha: 1.0)
             }
         }
-
     }
+  
+  func showTutorial() {
+    
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.tutorialView.alpha = 1
+      self.tutorialNextButton.alpha = 1
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        self.view.insertSubview(self.tutorialViews[0], aboveSubview: self.tutorialView)
+        
+    })
+  }
+  
+  func nextTutorialButtonClicked(sender:UIButton) {
+    
+    self.tutorialPageNumber++
+    
+    if self.tutorialViews[self.tutorialPageNumber - 1] == self.backButton {
+      self.performSegueWithIdentifier("backFromStatistics", sender: sender)
+    }
+    else {
+      for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+        if index == self.tutorialPageNumber {
+          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
+          self.tutorialViews[index].userInteractionEnabled = false
+        }
+        else {
+          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
+          self.tutorialViews[index].userInteractionEnabled = true
+        }
+      }
+      if self.tutorialPageNumber == self.tutorialViews.count - 1 {
+        self.tutorialNextButton.setTitle("Back Home", forState: UIControlState.Normal)
+      }
+    }
+    
+  }
     
     /*
     // MARK: - Navigation

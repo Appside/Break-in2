@@ -27,7 +27,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
     let mainView:UIView = UIView()
     var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 49
+    var totalNumberOfQuestions:Int = 2
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 10
     var countSeconds:Int = Int()
@@ -269,7 +269,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         }
         let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
         let questionAsked:String = self.quizzArray[indexQuestion].question
-        let buttonHeight:Int = 75
+        let buttonHeight:Int = Int((self.view.frame.height-250)/6)
         var i:Int = 0
         
         for i=0; i<arrayAnswers.count;i++ {
@@ -291,13 +291,13 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 25.0)
+            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
             answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             answerNumber.layer.borderWidth = 2.0
             
             matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 35.0)
+            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
             matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
 
@@ -347,9 +347,9 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
                     if anyButton.tag >= 10 && anyButton.tag <= 60 {
                         anyButton.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
                         anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-                        anyButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 25.0)
-                        anyButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-                        anyButton.layer.borderWidth = 3.0
+                        anyButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+                        //anyButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+                        //anyButton.layer.borderWidth = 3.0
                         anyButton.titleLabel?.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
                     }
                     if anyButton.tag > 60 {
@@ -363,7 +363,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 if let actButton = actualButton as? UIButton {
                 actButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 30.0)
+                actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
                 actButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                 self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag/10 - 1)
                 for buttons in self.mainView.subviews {

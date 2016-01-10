@@ -25,17 +25,17 @@ class StatisticsTitleView: UIView {
     
     self.statisticsTitleLabel.textAlignment = NSTextAlignment.Center
     self.statisticsTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
-    self.statisticsTitleLabel.text = "TEST SCORES"
+    self.statisticsTitleLabel.text = "SCORES"
     
     // Customize nextStatisticButton and previousStatisticButton
     
     self.nextStatisticButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
     self.nextStatisticButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    //self.nextStatisticButton.addTarget(self.superview, action: "nextMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.nextStatisticButton.addTarget(self.superview, action: "nextStatButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
     
     self.previousStatisticButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
     self.previousStatisticButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    //self.previousStatisticButton.addTarget(self.superview, action: "previousMonthButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.previousStatisticButton.addTarget(self.superview, action: "previousStatButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
 
   }
 
@@ -102,7 +102,20 @@ class StatisticsTitleView: UIView {
     
   }
 
-
+    func disableNext() {
+        self.nextStatisticButton.alpha = 0.0
+    }
+    
+    func disablePrevious() {
+        self.previousStatisticButton.alpha = 0.0
+    }
+    func enableNext() {
+        self.nextStatisticButton.alpha = 1.0
+    }
+    
+    func enablePrevious() {
+        self.previousStatisticButton.alpha = 1.0
+    }
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

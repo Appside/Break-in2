@@ -28,6 +28,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   var careerTypeImages:[String:String] = [String:String]()
   var chosenCareers:[String] = [String]()
   var careerColors:[String:UIColor] = [String:UIColor]()
+  var tutorialViews:[UIView] = [UIView]()
   
   // Declare and initialize views
   
@@ -44,6 +45,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let chooseCareersInfoLabel:UILabel = UILabel()
   let chooseCareersScrollView:UIScrollView = UIScrollView()
   var chooseCareerViews:[ChooseCareerView] = [ChooseCareerView]()
+  let tutorialView:UIView = UIView()
+  let tutorialNextButton:UIButton = UIButton()
   
   var settingsMenuViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
     
@@ -66,6 +69,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   // Declare and initialize tracking variables
   
   var currentChooseCareersScrollViewPage:Int = 0
+  var firstTimeUser:Bool = false
+  var tutorialPageNumber:Int = 0
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -97,6 +102,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.chooseCareersView.addSubview(self.chooseCareersInfoLabel)
     self.chooseCareersView.addSubview(self.chooseCareersScrollView)
     
+    self.view.addSubview(self.tutorialView)
+    self.view.addSubview(self.tutorialNextButton)
+    
     // Adjust backButton appearance
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
@@ -104,12 +112,19 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
+    self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
+    self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+    self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.tutorialNextButton.alpha = 0
+    self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    
     // Customize and add content to imageViews
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
     
-    // Customize settingMenuView and chooseCareersView
+    // Customize settingMenuView, chooseCareersView and tutorialView
     
     self.settingsMenuView.backgroundColor = UIColor.whiteColor()
     self.settingsMenuView.layer.cornerRadius = self.minorMargin
@@ -119,6 +134,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.chooseCareersView.layer.cornerRadius = self.minorMargin
     self.chooseCareersView.clipsToBounds = true
     self.chooseCareersView.alpha = 0
+    
+    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+    self.tutorialView.alpha = 0
     
     // Customize facebookLogoutButton
     
@@ -257,8 +275,16 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   }
   
   override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)   
+    super.viewDidAppear(animated)
+    
     self.showSettingsMenuView()
+    
+    // Show tutorial to first time users
+    
+    if self.firstTimeUser {
+      self.tutorialViews.appendContentsOf([self.chooseCareersView, self.backButton])
+      self.showTutorial()
+    }
   }
 
     //********************************************************************************
@@ -764,6 +790,36 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       }
       
     }
+    
+    // Create and add constraints for tutorialView
+    
+    self.tutorialView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    
+    let tutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height)
+    
+    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width)
+    
+    self.tutorialView.addConstraints([tutorialViewHeightConstraint, tutorialViewWidthConstraint])
+    self.view.addConstraints([tutorialViewLeftConstraint, tutorialViewTopConstraint])
+    
+    // Create and add constraints for tutorialNextButton
+    
+    self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    
+    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    
+    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    
+    self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
+    self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
 
   }
   
@@ -854,6 +910,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     if segue.identifier == "backFromEditProfile" {
       let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
       destinationVC.segueFromLoginView = false
+      if sender as! UIButton == self.tutorialNextButton {
+        destinationVC.firstTimeUser = true
+        destinationVC.tutorialPageNumber = 3
+      }
     }
     
   }
@@ -914,6 +974,46 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     if self.currentChooseCareersScrollViewPage > 0 {
       let previousCareerView:ChooseCareerView = self.chooseCareerViews[self.currentChooseCareersScrollViewPage - 1]
       self.chooseCareersScrollView.setContentOffset(previousCareerView.frame.origin, animated: true)
+    }
+    
+  }
+  
+  func showTutorial() {
+    
+    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      self.tutorialView.alpha = 1
+      self.tutorialNextButton.alpha = 1
+      self.view.layoutIfNeeded()
+      
+      }, completion: {(Bool) in
+        
+        self.view.insertSubview(self.tutorialViews[0], aboveSubview: self.tutorialView)
+        
+    })
+  }
+  
+  func nextTutorialButtonClicked(sender:UIButton) {
+    
+    self.tutorialPageNumber++
+    
+    if self.tutorialViews[self.tutorialPageNumber - 1] == self.backButton {
+      self.performSegueWithIdentifier("backFromEditProfile", sender: sender)
+    }
+    else {
+      for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+        if index == self.tutorialPageNumber {
+          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
+          self.tutorialViews[index].userInteractionEnabled = false
+        }
+        else {
+          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
+          self.tutorialViews[index].userInteractionEnabled = true
+        }
+      }
+      if self.tutorialPageNumber == self.tutorialViews.count - 1 {
+        self.tutorialNextButton.setTitle("Back Home", forState: UIControlState.Normal)
+      }
     }
     
   }
