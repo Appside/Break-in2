@@ -26,6 +26,10 @@ class TutorialViewController: UIViewController {
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
   
+  let menuButtonHeight:CGFloat = 50
+  let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
+  var loginPageControllerViewHeight:CGFloat = 50
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,6 +67,20 @@ class TutorialViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
   
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+      
+      self.logoImageViewBottomConstraint.constant = self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12) - self.profilePictureImageView.frame.minY
+      self.profilePictureImageViewCenterXConstraint.constant = (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1
+      self.sloganImageViewCenterXConstraint.constant = self.screenFrame.width + (self.logoImageView.frame.width/2)
+      self.view.layoutIfNeeded()
+      
+      }, completion: nil)
+    
+  }
+  
   func setConstraints() {
     
     // Create and add constraints for logoImageView
@@ -71,7 +89,7 @@ class TutorialViewController: UIViewController {
     
     let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
-    self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12))
+    self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
     
     let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
@@ -109,6 +127,12 @@ class TutorialViewController: UIViewController {
     
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([self.sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
+    
+  }
+  
+  func showTutorial() {
+    
+    
     
   }
 
