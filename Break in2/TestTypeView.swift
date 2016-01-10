@@ -217,25 +217,36 @@ class TestTypeView: UIView {
     
     if self.testType == "Numerical Reasoning" || self.testType == "Verbal Reasoning" || self.testType == "Logical Reasoning" {
       if self.difficultySelected == "E" {
-        self.testTypeTimeLabel.text = "30 minutes"
+        self.testTypeTimeLabel.text = "Easy (30 minutes)"
       }
       if self.difficultySelected == "M" {
-        self.testTypeTimeLabel.text = "25 minutes"
+        self.testTypeTimeLabel.text = "Medium (25 minutes)"
       }
       if self.difficultySelected == "H" {
-        self.testTypeTimeLabel.text = "20 minutes"
+        self.testTypeTimeLabel.text = "Hard (20 minutes)"
       }
     }
     if self.testType == "Arithmetic Reasoning" {
       if self.difficultySelected == "E" {
-        self.testTypeTimeLabel.text = "10 minutes ( +  - )"
+        self.testTypeTimeLabel.text = "Easy (10 minutes)"
       }
       if self.difficultySelected == "M" {
-        self.testTypeTimeLabel.text = "10 minutes ( +  -  * )"
+        self.testTypeTimeLabel.text = "Medium (10 minutes)"
       }
       if self.difficultySelected == "H" {
-        self.testTypeTimeLabel.text = "10 minutes ( +  -  *  / )"
+        self.testTypeTimeLabel.text = "Hard (10 minutes)"
       }
+    }
+    if self.testType == "Sequences" || self.testType == "Fractions" {
+        if self.difficultySelected == "E" {
+            self.testTypeTimeLabel.text = "Easy (10 minutes)"
+        }
+        if self.difficultySelected == "M" {
+            self.testTypeTimeLabel.text = "Medium (10 minutes)"
+        }
+        if self.difficultySelected == "H" {
+            self.testTypeTimeLabel.text = "Hard (10 minutes)"
+        }
     }
   }
 

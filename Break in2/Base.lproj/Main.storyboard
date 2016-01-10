@@ -72,6 +72,8 @@
                         <segue destination="so5-KN-hxF" kind="custom" identifier="backFromTestSelection" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" animates="NO" id="Z2O-uS-5Gc"/>
                         <segue destination="U0P-jd-SU2" kind="show" identifier="verbalReasoningSelected" id="4P1-LV-IGa"/>
                         <segue destination="dEw-t5-imH" kind="show" identifier="arithmeticReasoningSelected" id="nEU-SV-tlS"/>
+                        <segue destination="drz-ZO-mQG" kind="show" identifier="sequencesSelected" id="lCt-Yj-gSM"/>
+                        <segue destination="BGa-Dr-Nn6" kind="show" identifier="fractionsSelected" id="O30-qH-PLu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -187,6 +189,48 @@
             </objects>
             <point key="canvasLocation" x="2009" y="1567"/>
         </scene>
+        <!--Sequences View Controller-->
+        <scene sceneID="1gF-T8-eoW">
+            <objects>
+                <viewController id="drz-ZO-mQG" customClass="sequencesViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ye3-ah-4ge"/>
+                        <viewControllerLayoutGuide type="bottom" id="xil-W5-qbD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6nc-ts-Sz8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="89D-6I-s4W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vUe-pc-uhs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2736" y="859"/>
+        </scene>
+        <!--Fractions View Controller-->
+        <scene sceneID="WQm-ir-6OF">
+            <objects>
+                <viewController id="BGa-Dr-Nn6" customClass="fractionsViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jTS-Jz-do2"/>
+                        <viewControllerLayoutGuide type="bottom" id="QYt-1l-spE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="85c-o7-VN4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="mRN-or-HjI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FcC-1Z-SWl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3404" y="853"/>
+        </scene>
         <!--Arithmetic Reasoning View Controller-->
         <scene sceneID="7pB-7F-gYV">
             <objects>
@@ -211,6 +255,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rjW-J2-l3e"/>
+        <segue reference="lOv-b3-KiM"/>
     </inferredMetricsTieBreakers>
 </document>
