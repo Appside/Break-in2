@@ -421,6 +421,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
                     analytics[PF_ARITHMETIC_USER] = user
                     analytics[PF_ARITHMETIC_SCORE] = self.scoreRatio
                     analytics[PF_ARITHMETIC_TIME] = timeTaken
+                    analytics[PF_ARITHMETIC_USERNAME] = user![PF_USER_USERNAME]
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
