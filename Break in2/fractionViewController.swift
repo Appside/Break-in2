@@ -293,20 +293,25 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             answerNumber.addSubview(answerNumberText)
             answerNumberText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
             
+            let questionNumber1:fractionView = fractionView()
+            questionNumber1.setTitles(String(questionAsked[0]), labelBottom: String(questionAsked[2]))
+            matchingQuestionLabel.addSubview(questionNumber1)
+            questionNumber1.setConstraintsToSuperview(0, bottom: 0, left: 10, right: 0)
             
-            //matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
-            //matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            //matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
-            //matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
-            //matchingQuestionLabel.alpha = 0.0
+            let operationText:UILabel = UILabel()
+            operationText.text = operation
+            matchingQuestionLabel.addSubview(operationText)
+            operationText.setConstraintsToSuperview(0, bottom: 0, left: 40, right: 0)
+            
+            let questionNumber2:fractionView = fractionView()
+            questionNumber2.setTitles(String(questionAsked[1]), labelBottom: String(questionAsked[3]))
+            matchingQuestionLabel.addSubview(questionNumber2)
+            questionNumber2.setConstraintsToSuperview(0, bottom: 0, left: 70, right: 0)
             
             if i==0 {
                 answerRow.alpha = 1.0
                 answerRow.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
                 matchingQuestionLabel.alpha = 1.0
-                //answerNumber.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                //answerNumber.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 30.0)
-                //answerNumber.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
             let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
@@ -617,7 +622,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         
         //Shuffle array of answers
         for i=0;i<4;i++ {
-            randomIndex = Int(arc4random_uniform(UInt32(6-i)))
+            randomIndex = Int(arc4random_uniform(UInt32(4-i)))
             returnedArray.append(answersArray[randomIndex])
             answersArray.removeAtIndex(randomIndex)
             if randomIndex==0 && !correctIndexSet {
