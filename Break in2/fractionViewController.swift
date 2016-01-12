@@ -275,8 +275,8 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         
         for i=0; i<arrayAnswers.count;i++ {
             let answerRow:UIButton = UIButton()
-            let answerNumber:fractionView = fractionView()
-            let matchingQuestionLabel:fractionView = fractionView()
+            let answerNumber:UIButton = UIButton()
+            let matchingQuestionLabel:UIButton = UIButton()
             answerRow.translatesAutoresizingMaskIntoConstraints = false
             answerNumber.translatesAutoresizingMaskIntoConstraints = false
             matchingQuestionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -288,13 +288,11 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             answerNumber.tag = (i+1) * 10
             matchingQuestionLabel.tag = (i+1) * 100
             
-            //answerNumber.setTitle(arrayAnswers[i], forState: .Normal)
-            //answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-            //answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            //answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-            //answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
-            //answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-            //answerNumber.layer.borderWidth = 2.0
+            let answerNumberText:fractionView = fractionView()
+            answerNumberText.setTitles(String(arrayAnswers[i][0]), labelBottom: String(arrayAnswers[i][1]))
+            answerNumber.addSubview(answerNumberText)
+            answerNumberText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+            
             
             //matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             //matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)

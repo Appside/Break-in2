@@ -11,7 +11,7 @@ import UIKit
 
 class fractionView:UIView {
     
-    let topLabel:UIButton = UIButton()
+    var topLabel:UIButton = UIButton()
     let bottomLabel:UIButton = UIButton()
     let separatorView:UIView = UIView()
 
@@ -54,6 +54,11 @@ class fractionView:UIView {
         fractionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 22.0)
         fractionLabel.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
         fractionLabel.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
+    }
+    
+    func setTitles(labelTop:String, labelBottom:String) {
+        self.topLabel.setTitle(labelTop, forState: .Normal)
+        self.bottomLabel.setTitle(labelBottom, forState: .Normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
