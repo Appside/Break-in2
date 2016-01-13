@@ -50,6 +50,7 @@ extension UIView {
     label.lineBreakMode = NSLineBreakMode.ByWordWrapping
     label.font = font
     label.text = text
+    label.textAlignment = NSTextAlignment.Center
     
     label.sizeToFit()
     return label.frame.height

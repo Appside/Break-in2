@@ -29,6 +29,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   var chosenCareers:[String] = [String]()
   var careerColors:[String:UIColor] = [String:UIColor]()
   var tutorialViews:[UIView] = [UIView]()
+  var tutorialDescriptions:[UIView:[String]] = [UIView:[String]]()
   
   // Declare and initialize views
   
@@ -47,6 +48,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   var chooseCareerViews:[ChooseCareerView] = [ChooseCareerView]()
   let tutorialView:UIView = UIView()
   let tutorialNextButton:UIButton = UIButton()
+  var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
+  var tutorialFingerImageView:UIImageView = UIImageView()
   
   var settingsMenuViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
     
@@ -114,11 +117,24 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-    self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+    self.tutorialNextButton.setTitle("Back To Home Screen", forState: UIControlState.Normal)
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.tutorialNextButton.alpha = 0
     self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
     
+    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
+    
+    // Set tutorialView and tutorialNextButton alpha values
+    
+    if self.firstTimeUser {
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+      self.tutorialNextButton.alpha = 1
+    }
+    else {
+      self.tutorialView.alpha = 0
+      self.tutorialNextButton.alpha = 0
+    }
+
     // Customize and add content to imageViews
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -134,9 +150,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.chooseCareersView.layer.cornerRadius = self.minorMargin
     self.chooseCareersView.clipsToBounds = true
     self.chooseCareersView.alpha = 0
-    
-    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
-    self.tutorialView.alpha = 0
     
     // Customize facebookLogoutButton
     
@@ -282,7 +295,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Show tutorial to first time users
     
     if self.firstTimeUser {
-      self.tutorialViews.appendContentsOf([self.chooseCareersView, self.backButton])
+      self.tutorialViews.appendContentsOf([self.chooseCareersView])
+      self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "Select the careers that are most appropriate to you. Pressing the Back arrow will save your changes.\n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
       self.showTutorial()
     }
   }
@@ -980,49 +994,117 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   func showTutorial() {
     
     self.view.insertSubview(self.logoImageView, aboveSubview: self.tutorialView)
-
+    
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
-      self.tutorialView.alpha = 1
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
       self.tutorialNextButton.alpha = 1
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in
         
-        self.view.insertSubview(self.tutorialViews[0], aboveSubview: self.tutorialView)
-        
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+          self.descriptionLabelView.alpha = 0
+          }, completion: {(Bool) in
+            self.descriptionLabelView.removeFromSuperview()
+            for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+              if index == self.tutorialPageNumber {
+                self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
+                self.tutorialViews[index].userInteractionEnabled = true
+              }
+              else {
+                self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
+                self.tutorialViews[index].userInteractionEnabled = false
+              }
+            }
+            if self.tutorialViews[self.tutorialPageNumber] == self.chooseCareersView {
+              self.view.insertSubview(self.backButton, belowSubview: self.tutorialNextButton)
+              self.displayFinger(true)
+              UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.tutorialFingerImageView.alpha = 1
+                }, completion: nil)
+            }
+            self.updateDescriptionLabelView()
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+              self.descriptionLabelView.alpha = 1
+              }, completion: nil)
+            
+        })
     })
-  }
+
+}
   
   func nextTutorialButtonClicked(sender:UIButton) {
     
     self.tutorialPageNumber++
     
-    if self.tutorialViews[self.tutorialPageNumber - 1] == self.backButton {
+    if self.tutorialViews[self.tutorialPageNumber - 1] == self.chooseCareersView {
       self.savePrefsToParse(sender)
       self.performSegueWithIdentifier("backFromEditProfile", sender: sender)
     }
-    else {
-      for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
-        if index == self.tutorialPageNumber {
-          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
-          if self.tutorialViews[index] == self.chooseCareersView {
-            self.tutorialViews[index].userInteractionEnabled = true
-          }
-          else {
-            self.tutorialViews[index].userInteractionEnabled = false
-          }
-        }
-        else {
-          self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
-          self.tutorialViews[index].userInteractionEnabled = true
-        }
-      }
-      if self.tutorialPageNumber == self.tutorialViews.count - 1 {
-        self.tutorialNextButton.setTitle("Back Home", forState: UIControlState.Normal)
-      }
-    }
     
   }
+  
+  func updateDescriptionLabelView () {
+    
+    // Create and add constraints for descriptionLabelView
+    
+    self.descriptionLabelView.titleLabel.text = self.tutorialDescriptions[self.tutorialViews[self.tutorialPageNumber]]![0]
+    self.descriptionLabelView.descriptionLabel.text = self.tutorialDescriptions[self.tutorialViews[self.tutorialPageNumber]]![1]
+    //self.descriptionLabelView.alpha = 0
+    self.view.addSubview(self.descriptionLabelView)
+    
+    descriptionLabelView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    if self.tutorialViews[self.tutorialPageNumber].frame.maxY < (self.screenFrame.height) {
+      let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 20)
+      self.view.addConstraint(descriptionLabelViewTopConstraint)
+    }
+    else {
+      let descriptionLabelViewBottomConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Top, multiplier: 1, constant: -20)
+      self.view.addConstraint(descriptionLabelViewBottomConstraint)
+    }
+    
+    let descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
+    
+    let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
+    
+    self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
+    self.view.addConstraints([descriptionLabelViewCenterXConstraint])
+  }
+  
+  func displayFinger(pointingLeft:Bool) {
+    
+    self.tutorialFingerImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.tutorialFingerImageView.alpha = 0
+    self.view.addSubview(self.tutorialFingerImageView)
+    
+    tutorialFingerImageView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let tutorialFingerImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    
+    if pointingLeft {
+      self.tutorialFingerImageView.image = UIImage.init(named: "fingerSideways")
+      let tutorialFingerImageViewLeftConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+      self.view.addConstraint(tutorialFingerImageViewLeftConstraint)
+    }
+    else {
+      let image:UIImage = UIImage.init(named: "fingerSideways")!
+      self.tutorialFingerImageView.image = UIImage.init(CGImage: image.CGImage!, scale: image.scale, orientation: UIImageOrientation.UpMirrored)
+      let tutorialFingerImageViewRightConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      self.view.addConstraint(tutorialFingerImageViewRightConstraint)
+    }
+    
+    let tutorialFingerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    
+    let tutorialFingerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/6)
+    
+    self.tutorialFingerImageView.addConstraints([tutorialFingerImageViewHeightConstraint, tutorialFingerImageViewWidthConstraint])
+    self.view.addConstraints([tutorialFingerImageViewTopConstraint])
+    
+  }
+
   
 }

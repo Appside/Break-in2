@@ -25,12 +25,14 @@ class TutorialDescriptionView: UIView {
     self.titleLabel.textAlignment = NSTextAlignment.Center
     self.titleLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
     self.titleLabel.numberOfLines = 0
+    self.titleLabel.clipsToBounds = false
     
     self.descriptionLabel.textColor = UIColor.whiteColor()
     self.descriptionLabel.textAlignment = NSTextAlignment.Center
     self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
     self.descriptionLabel.numberOfLines = 0
-    
+    self.descriptionLabel.clipsToBounds = false
+        
     // Set constraints
     
     self.setConstraints()
@@ -63,7 +65,7 @@ class TutorialDescriptionView: UIView {
     
     let descriptionLabelLeftConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
     
-    let descriptionLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.titleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 10)
+    let descriptionLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.titleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
     let descriptionLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
