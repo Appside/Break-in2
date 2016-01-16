@@ -473,6 +473,11 @@
 					614316431BEF843A0047A37D = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = D68645WX3A;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					614316571BEF843A0047A37D = {
 						CreatedOnToolsVersion = 7.1;
@@ -787,9 +792,9 @@
 				INFOPLIST_FILE = "Break in2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.APPSIDE.Break-in2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e5deb052-3272-4ed9-b030-6b4379d3b70a";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -804,9 +809,9 @@
 				INFOPLIST_FILE = "Break in2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.APPSIDE.Break-in2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e5deb052-3272-4ed9-b030-6b4379d3b70a";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
