@@ -688,7 +688,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                    
+                        }, subtitle: "Tap to dismiss")
                 }
             }
             
@@ -728,7 +732,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
                 }
             }
 
@@ -769,7 +777,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
                 }
             }
             
@@ -810,7 +822,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
                 }
             }
         }
@@ -886,7 +902,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.barChartText.textColor = UIColor.whiteColor()
         self.barChartText.font = UIFont(name: "Helvetica-NeueBold", size: 12.0)
         self.barChartText.textAlignment = NSTextAlignment.Center
-        self.barChartText.text = "Select a test from the Graph"
+        self.barChartText.text = "Select a test from the graph"
         
         for y2=0;y2<yUnits2.count;y2++ {
             let dataEntry = ChartDataEntry(value: round(yUnits2[y2]), xIndex: y2)
@@ -930,7 +946,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.lineChartText.textColor = UIColor.whiteColor()
         self.lineChartText.font = UIFont(name: "Helvetica-NeueBold", size: 12.0)
         self.lineChartText.textAlignment = NSTextAlignment.Center
-        self.lineChartText.text = "Select a test from the Graph"
+        self.lineChartText.text = "Select a test from the graph"
         }
         //Menu - Buttons background
         
@@ -1056,7 +1072,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
                 }
             }
 
@@ -1091,7 +1111,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
                 }
             }
             
@@ -1125,7 +1149,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
                 }
             }
             
@@ -1159,7 +1187,11 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                 } else {
                     // Log details of the failure
-                    print("Error: \(error!) \(error!.userInfo)")
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
                 }
             }
         }

@@ -10,6 +10,7 @@ import UIKit
 import Charts
 import SCLAlertView
 import Parse
+import SwiftSpinner
 
 class numericalReasoningViewController: QuestionViewController, UIScrollViewDelegate {
     
@@ -490,8 +491,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     //Add: test type (numerical / verbal ...)
                     let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
                     
-                    let waitAlert:SCLAlertViewResponder = SCLAlertView().showSuccess("Test Completed", subTitle: "Saving Results...")
-                    let saveError = SCLAlertView()
+                    SwiftSpinner.show("Saving Results")
                     
                     let user = PFUser.currentUser()
                     let analytics = PFObject(className: PF_NUMREAS_CLASS_NAME)
@@ -502,14 +502,21 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
-                            waitAlert.setTitle("Test Completed")
-                            waitAlert.setSubTitle("Continue to feedback")
-                            self.resultsUploaded = true
-                            self.feedbackScreen()
+                            
+                            SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
+                                SwiftSpinner.hide()
+                                self.resultsUploaded = true
+                                self.feedbackScreen()
+                                }, subtitle: "Tap to proceed to feedback screen")
                             
                         } else {
                             
-                            saveError.showError("Error", subTitle: "Try again")
+                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                self.feedbackScreen()
+                                
+                                }, subtitle: "Results unsaved, tap to proceed to feedback")
                             
                         }
                     })

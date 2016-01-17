@@ -211,8 +211,16 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
             PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
                 
+                if error == nil {
+                
                 SwiftSpinner.hide()
                 self.userLoggedIn((user)!)
+                    
+                }else{
+                    
+                    self.getFBUserData(user!)
+                    
+                }
                 
             })
         }else{
@@ -228,14 +236,22 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                         //self.startFB(user!)
                         self.getFBUserData(user!)
                     } else {
-                        self.clearAllNotice()
-                        self.userLoggedIn(user!)
+                        //this will still make the "already authorised app come up"
+                        self.getFBUserData(user!)
                     }
                 } else {
                     if error != nil {
-                        self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+                        SwiftSpinner.show("Login Error", animated: false).addTapHandler({
+                            
+                            SwiftSpinner.hide()
+                            
+                            }, subtitle: "Please try again. Tap to dismiss")
                     }
-                    self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
+                    SwiftSpinner.show("Login Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Please try again. Tap to dismiss")
                 }
             })
             
@@ -284,7 +300,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         do {
             try moc.save()
         } catch {
-            fatalError("failed to save")
+            SwiftSpinner.show("Login Error STCD", animated: false).addTapHandler({
+                
+                SwiftSpinner.hide()
+                
+                }, subtitle: "Please try again. Tap to dismiss")
         }
         
     }
@@ -312,7 +332,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             }
             
         } catch {
-            fatalError()
+            SwiftSpinner.show("Login Error STCD2", animated: false).addTapHandler({
+                
+                SwiftSpinner.hide()
+                
+                }, subtitle: "Please try again. Tap to dismiss")
         }
     }
 
@@ -347,10 +371,12 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                             //self.userLoggedIn(user)
                         } else {
                             PFUser.logOut()
-                            if let info = error?.userInfo {
-                                self.noticeInfo("Facebook Sign In Error", autoClear: true, autoClearTime: 2)
-                                //ProgressHUD.showError("Login error")
-                                print(info["error"] as! String)
+                            if let _ = error?.userInfo {
+                                SwiftSpinner.show("Login Error FBKSI", animated: false).addTapHandler({
+                                    
+                                    SwiftSpinner.hide()
+                                    
+                                    }, subtitle: "Please try again. Tap to dismiss")
                             }
                         }
                     })
@@ -380,8 +406,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                 
             } else {
                 
-                let saveError = SCLAlertView()
-                saveError.showError("Error", subTitle: "Try again")
+                SwiftSpinner.show("Login Error CCP1", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                    }, subtitle: "Please try again. Tap to dismiss")
                 
             }
         })
@@ -394,7 +423,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     //---------------------------------------------------------------
   
   func userLoggedIn(user: PFUser) {
-    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //let storyboard = UIStoryboard(name: "Main", bundle: nil)
     if self.firstTimeUser {
       performSegueWithIdentifier("showTutorial", sender: self)
     }

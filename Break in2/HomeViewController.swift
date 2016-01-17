@@ -568,7 +568,7 @@ class HomeViewController: UIViewController {
     if self.firstTimeUser {
       self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton])
       self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. Hopefully, the calender we have provided will help! Deadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
-      self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there a number of mandatory tests. We've provided some practice for you across a range of industries."], forKey: self.careersBackgroundView)
+      self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries."], forKey: self.careersBackgroundView)
       self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the Settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
       self.tutorialDescriptions.updateValue(["STATISTICS", "Finally, we've added some statistics that allow you to track your progress.\n\nChoose a career and start practicing some tests.\n\n Best of luck!\nAPPSIDE"], forKey: self.statsButton)
       self.showTutorial()

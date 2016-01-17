@@ -50,6 +50,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let tutorialNextButton:UIButton = UIButton()
   var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
   var tutorialFingerImageView:UIImageView = UIImageView()
+  let noDataLabel:UIView = UIView()
+  let noDataUILabel:UILabel = UILabel()
   
   var settingsMenuViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
     
@@ -184,13 +186,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     if (PFUser.currentUser() != nil) {
         self.loadUser()
-        //        for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
-        //
-        //            if self.chosenCareers.contains(self.careerTypes[index]) {
-        //                chooseCareerViews[index].careerChosen = true
-        //                chooseCareerViews[index].displayView()
-        //            }
-        //        }
     }
     else {
         self.view.loginUser(self)
@@ -295,8 +290,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Show tutorial to first time users
     
     if self.firstTimeUser {
-      self.tutorialViews.appendContentsOf([self.chooseCareersView])
-      self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "Select the careers that are most appropriate to you. Pressing the Back arrow will save your changes.\n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
+      self.tutorialViews.appendContentsOf([self.chooseCareersView, self.backButton])
+      self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "This is where you can select the careers that are most appropriate to you. Have a go now! Pressing the Back arrow will save your changes.\n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
       self.showTutorial()
     }
   }
@@ -320,7 +315,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         ParseExtensions.deleteUserFB(user)
         
         //self.deleteFromCoreData()
-        var date:NSDate = NSDate()
+        let date:NSDate = NSDate()
         self.saveToCoreData("", p: [], dP: [], aI: "", uI: "", ex: date, r: date)
         self.view.loginUser(self)
         SwiftSpinner.hide()
@@ -328,7 +323,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       } else {
         if let error: NSError = error {
           if let errorString = error.userInfo["error"] as? String {
-            self.noticeOnlyText("Please try again")
+            self.noticeOnlyText("Please try again \(errorString)")
           }
         } else {
           self.noticeOnlyText("Please try again")
@@ -417,7 +412,21 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //
         //    }
         
-        var query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
+        self.chooseCareersView.addSubview(self.noDataLabel)
+        
+        self.noDataLabel.setConstraintsToSuperview(Int(self.minorMargin), bottom: Int(self.minorMargin), left: Int(self.minorMargin), right: Int(self.minorMargin))
+        self.noDataLabel.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1.0)
+        self.noDataLabel.addSubview(self.noDataUILabel)
+        self.noDataUILabel.setConstraintsToSuperview(25, bottom: 10, left: 5, right: 5)
+        self.noDataUILabel.text = "Loading..."
+        self.noDataUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        self.noDataUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 14.0)
+        self.noDataUILabel.textAlignment = NSTextAlignment.Center
+        self.noDataUILabel.numberOfLines = 0
+        //self.noDataLabel.alpha = 0
+        self.noDataLabel.alpha = 1.0
+        
+        let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
         let currentUser = PFUser.currentUser()!
         let username = currentUser.username
         //let usernameString = username as! String
@@ -428,6 +437,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
             if error == nil {
                 // The find succeeded.
                 print("Successfully retrieved \(objects!.count) scores.")
+                self.noDataLabel.alpha = 0
+                self.noDataUILabel.alpha = 0
                 // Do something with the found objects
                 if let objects = objects {
                     for object in objects {
@@ -454,7 +465,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 }
             } else {
                 // Log details of the failure
-                print("Error: \(error!) \(error!.userInfo)")
+                self.noDataUILabel.text = "Connection Error"
             }
         }
         
@@ -466,7 +477,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         SwiftSpinner.show("Saving career preferences")
         let currentUser = PFUser.currentUser()!
-        let objID = currentUser.objectId
+        //let objID = currentUser.objectId
         let username = currentUser.username
         let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
         query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
@@ -487,11 +498,25 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                         
                     } else {
                         
-                        let saveError = SCLAlertView()
-                        saveError.showError("Error", subTitle: "Try again")
+                        SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                            
+                            SwiftSpinner.hide()
+                            self.hideSettingsMenuView(sender)
+                            
+                            }, subtitle: "Preferences unsaved, tap to return home")
                         
                     }
+                    
                 })
+                
+            }else{
+                
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    self.hideSettingsMenuView(sender)
+                    
+                    }, subtitle: "Preferences unsaved, tap to return home")
                 
             }
         })
@@ -538,7 +563,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         let user = PFUser.currentUser()
         let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
-        careerPrefs[PF_PREFERENCES_USER] = PFUser.currentUser()!
+        careerPrefs[PF_PREFERENCES_USER] = user!
         careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
         
         careerPrefs.saveInBackgroundWithBlock({ (succeeded, error: NSError?) -> Void in
@@ -549,8 +574,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 
             } else {
                 
-                let saveError = SCLAlertView()
-                saveError.showError("Error", subTitle: "Try again")
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    self.hideSettingsMenuView(sender)
+                    
+                    }, subtitle: "Preferences unsaved, tap to return home")
                 
             }
         })
