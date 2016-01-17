@@ -10,8 +10,8 @@ import UIKit
 
 class sequencesQuestion {
     
-    var question:String = String()
-    var answers:[String] = [String]()
+    var question:[Int] = [Int]()
+    var answers:[Int] = [Int]()
     var correctAnswer:Int = Int()
     
 }

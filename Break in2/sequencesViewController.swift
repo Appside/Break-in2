@@ -10,6 +10,7 @@ import UIKit
 import Charts
 import SCLAlertView
 import Parse
+import SwiftSpinner
 
 class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     
@@ -25,9 +26,9 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     let timeLabel:UILabel = UILabel()
     var timeTimer:NSTimer = NSTimer()
     let mainView:UIView = UIView()
-    var quizzArray:[arithmeticQuestion] = [arithmeticQuestion]()
+    var quizzArray:[sequencesQuestion] = [sequencesQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 2
+    var totalNumberOfQuestions:Int = 4
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 10
     var countSeconds:Int = Int()
@@ -41,6 +42,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
     var arrayOperation:[String] = [String]()
+    var listOfSequences:sequencesList = sequencesList()
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -267,11 +269,16 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         for answerSubView in self.mainView.subviews {
             answerSubView.removeFromSuperview()
         }
-        let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
-        let questionAsked:String = self.quizzArray[indexQuestion].question
+        let arrayAnswers:[Int] = self.quizzArray[indexQuestion].answers
+        let questionAsked:[Int] = self.quizzArray[indexQuestion].question
         let buttonHeight:Int = Int((self.view.frame.height-250)/6)
         var i:Int = 0
         
+        var reshapedQuestion:String = String(questionAsked[0])
+        for i=1;i<questionAsked.count;i++ {
+            reshapedQuestion = "\(String(reshapedQuestion)), \(String(questionAsked[i]))"
+        }
+        i=0
         for i=0; i<arrayAnswers.count;i++ {
             let answerRow:UIButton = UIButton()
             let answerNumber:UIButton = UIButton()
@@ -287,27 +294,24 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             answerNumber.tag = (i+1) * 10
             matchingQuestionLabel.tag = (i+1) * 100
             
-            answerNumber.setTitle(arrayAnswers[i], forState: .Normal)
+            answerNumber.setTitle(String(arrayAnswers[i]), forState: .Normal)
             answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
             answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             answerNumber.layer.borderWidth = 2.0
             
             matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
-            matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
+            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+            matchingQuestionLabel.setTitle("\(reshapedQuestion),❓", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
             
             if i==0 {
                 answerRow.alpha = 1.0
                 answerRow.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
                 matchingQuestionLabel.alpha = 1.0
-                //answerNumber.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                //answerNumber.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 30.0)
-                //answerNumber.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
             let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
@@ -333,9 +337,11 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
             answerNumber.addGestureRecognizer(tapGesture)
         }
+        
     }
     
     func answerIsSelected(gesture:UITapGestureRecognizer) {
+        
         for buttons in self.mainView.subviews {
             if let anyButton = buttons as? UIButton {
                 if anyButton.tag <= 6 {
@@ -383,6 +389,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
                 }
                 }, completion: nil)
         }
+        
     }
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
@@ -411,28 +418,35 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
                     }
                     self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
                     //Add: test type (numerical / verbal ...)
-                    let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
+                    var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
+                    timeTaken = timeTaken/Float(self.selectedAnswers.count)
                     
-                    let waitAlert:SCLAlertViewResponder = SCLAlertView().showSuccess("Test Completed", subTitle: "Saving Results...")
-                    let saveError = SCLAlertView()
+                    SwiftSpinner.show("Saving Results")
                     
                     let user = PFUser.currentUser()
-                    let analytics = PFObject(className: PF_ARITHMETIC_CLASS_NAME)
-                    analytics[PF_ARITHMETIC_USER] = user
-                    analytics[PF_ARITHMETIC_SCORE] = self.scoreRatio
-                    analytics[PF_ARITHMETIC_TIME] = timeTaken
-                    analytics[PF_ARITHMETIC_USERNAME] = user![PF_USER_USERNAME]
+                    let analytics = PFObject(className: PF_SEQUENCE_CLASS_NAME)
+                    analytics[PF_SEQUENCE_USER] = user
+                    analytics[PF_SEQUENCE_SCORE] = self.scoreRatio
+                    analytics[PF_SEQUENCE_TIME] = timeTaken
+                    analytics[PF_SEQUENCE_USERNAME] = user![PF_USER_USERNAME]
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
-                            waitAlert.setTitle("Test Completed")
-                            waitAlert.setSubTitle("Continue to feedback")
-                            self.resultsUploaded = true
-                            self.feedbackScreen()
+                            
+                            SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
+                                SwiftSpinner.hide()
+                                self.resultsUploaded = true
+                                self.feedbackScreen()
+                                }, subtitle: "Tap to proceed to feedback screen")
                             
                         } else {
                             
-                            saveError.showError("Error", subTitle: "Try again")
+                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                self.feedbackScreen()
+                                
+                                }, subtitle: "Results unsaved, tap to proceed to feedback")
                             
                         }
                     })
@@ -454,6 +468,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     }
     
     func feedbackScreen() {
+        
         //Display feedback screen here
         self.isTestComplete = true
         var i:Int = 0
@@ -554,88 +569,39 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     
     func addNewQuestion() {
         //Add a new question to the array
-        let newQuestion:arithmeticQuestion = arithmeticQuestion()
-        var operation:String = String()
-        operation = self.arrayOperation[Int(arc4random_uniform(UInt32(self.arrayOperation.count)))]
-        let (questionString, answers,correctIndex) = self.fillArrayWithRandomNumbers(operation)
-        newQuestion.question = questionString
+        let newQuestion:sequencesQuestion = sequencesQuestion()
+        let (sequence, answers, correctIndex) = self.fillArrayWithRandomNumbers()
+        newQuestion.question = sequence
         newQuestion.answers = answers
         newQuestion.correctAnswer = correctIndex
         self.quizzArray.append(newQuestion)
     }
     
-    func fillArrayWithRandomNumbers(operation:String) -> (String, [String],Int) {
-        var number1:Float = Float()
-        var number2:Float = Float()
-        var returnedArray:[String] = [String]()
-        var answersArray:[String] = [String]()
+    func fillArrayWithRandomNumbers() -> ([Int], [Int],Int) {
+        
+        //Set function's variables
+        var initialNumber:Int = Int()
+        var sequenceNumber:Int = Int()
+        var questionArray:[Int] = [Int]()
+        var answersArray:[Int] = [Int]()
+        var returnedArray:[Int] = [Int]()
         var correctIndex:Int = Int()
         var randomIndex:Int = Int()
         var correctIndexSet:Bool = false
         var i:Int = 0
-        var newQuestion:String = String()
-        if operation=="+" {
-            number1 = Float(arc4random_uniform(100))
-            number2 = Float(arc4random_uniform(100))
-            answersArray.append(String(format:"%g", number1+number2))
-            for i=0;i<5;i++ {
-                answersArray.append(String(Int(number1+number2)+i+1))
-            }
-            i=0
+        
+        //Randomize first number
+        sequenceNumber = Int(arc4random_uniform(1) + 1)
+        initialNumber = Int(arc4random_uniform(9) + 1)
+        for i=0;i<5;i++ {
+            questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
         }
-        if operation=="-" {
-            number1 = Float(arc4random_uniform(100))
-            number2 = Float(arc4random_uniform(100))
-            answersArray.append(String(format:"%g", number1-number2))
-            for i=0;i<5;i++ {
-                answersArray.append(String(Int(number1-number2)+i+1))
-            }
+        i = 0
+        for i=5;i<11;i++ {
+            answersArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
         }
-        if operation=="*" {
-            if self.difficulty=="M" {
-                number1 = Float(arc4random_uniform(31))
-                number2 = Float(arc4random_uniform(31))
-            } else {
-                number1 = Float(arc4random_uniform(100))
-                number2 = Float(arc4random_uniform(100))
-            }
-            answersArray.append(String(format:"%g", number1*number2))
-            let sizeInt:Int = String(format:"%g", number1*number2).characters.count
-            var answerSplit:[String] = [String]()
-            for character in String(format:"%g", number1*number2).characters {
-                answerSplit.append(String(character))
-            }
-            if sizeInt==1 || sizeInt==2 {
-                for i=0;i<5;i++ {
-                    answersArray.append(String(Int(number1*number2)+i+1))
-                }
-            }
-            if sizeInt==3 {
-                for i=0;i<5;i++ {
-                    answersArray.append("\(answerSplit[0]) \(i) \(answerSplit[2])".removeSpaces())
-                }
-            }
-            if sizeInt==4 {
-                answersArray.append("\(answerSplit[0]) \(answerSplit[1]) \(Int(answerSplit[2])!.intPlus()) \(answerSplit[3])".removeSpaces())
-                answersArray.append("\(answerSplit[0]) \(answerSplit[1]) \(Int(answerSplit[2])!.intMinus()) \(answerSplit[3])".removeSpaces())
-                answersArray.append("\(answerSplit[0]) \(Int(answerSplit[1])!.intPlus()) \(answerSplit[2]) \(answerSplit[3])".removeSpaces())
-                answersArray.append("\(answerSplit[0]) \(Int(answerSplit[1])!.intMinus()) \(answerSplit[2]) \(answerSplit[3])".removeSpaces())
-                answersArray.append("\(Int(answerSplit[0])!.intPlus()) \(answerSplit[1]) \(answerSplit[2]) \(answerSplit[3])".removeSpaces())
-            }
-        }
-        if operation=="/" {
-            number1 = Float(arc4random_uniform(50))
-            number1 = number1 + 51
-            number2 = Float(arc4random_uniform(30)) + 1
-            let firstAnswer:Float = round(number1/number2*10) / 10
-            answersArray.append(String(firstAnswer))
-            answersArray.append(String(firstAnswer+0.2))
-            answersArray.append(String(firstAnswer-0.2))
-            answersArray.append(String(firstAnswer+0.4))
-            answersArray.append(String(firstAnswer-0.4))
-            answersArray.append(String(firstAnswer+0.5))
-        }
-        i=0
+        
+        //Shuffle array of answers
         for i=0;i<6;i++ {
             randomIndex = Int(arc4random_uniform(UInt32(6-i)))
             returnedArray.append(answersArray[randomIndex])
@@ -645,21 +611,21 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
                 correctIndexSet = true
             }
         }
-        newQuestion = String(format:"%g",number1) + " " + operation + " " + String(format:"%g",number2)
-        return (newQuestion, returnedArray,correctIndex)
+
+        //Return question info array
+        return (questionArray, returnedArray, correctIndex)
     }
     
     func setDifficultyLevel() {
         if self.difficulty=="E" {
-            self.arrayOperation = ["+","-"]
+            self.arrayOperation = ["*","/"]
         }
         else if self.difficulty=="M" {
-            self.arrayOperation = ["+","-","*"]
+            self.arrayOperation = ["*","/","+"]
         }
         else if self.difficulty=="H" {
-            self.arrayOperation = ["+","-","*","/"]
+            self.arrayOperation = ["*","/","+","-"]
         }
-        
     }
     
 }
