@@ -10,6 +10,7 @@ import UIKit
 import Charts
 import SCLAlertView
 import Parse
+import SwiftSpinner
 
 class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
     
@@ -492,28 +493,36 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
                     }
                     self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
                     //Add: test type (numerical / verbal ...)
-                    let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
                     
-                    let waitAlert:SCLAlertViewResponder = SCLAlertView().showSuccess("Test Completed", subTitle: "Saving Results...")
-                    let saveError = SCLAlertView()
+                    var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
+                    timeTaken = timeTaken/Float(self.selectedAnswers.count)
+                    
+                    SwiftSpinner.show("Saving Results")
                     
                     let user = PFUser.currentUser()
-                    let analytics = PFObject(className: PF_ARITHMETIC_CLASS_NAME)
-                    analytics[PF_ARITHMETIC_USER] = user
-                    analytics[PF_ARITHMETIC_SCORE] = self.scoreRatio
-                    analytics[PF_ARITHMETIC_TIME] = timeTaken
-                    analytics[PF_ARITHMETIC_USERNAME] = user![PF_USER_USERNAME]
+                    let analytics = PFObject(className: PF_FRACTIONS_CLASS_NAME)
+                    analytics[PF_FRACTIONS_USER] = user
+                    analytics[PF_FRACTIONS_SCORE] = self.scoreRatio
+                    analytics[PF_FRACTIONS_TIME] = timeTaken
+                    analytics[PF_FRACTIONS_USERNAME] = user![PF_USER_USERNAME]
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
-                            waitAlert.setTitle("Test Completed")
-                            waitAlert.setSubTitle("Continue to feedback")
-                            self.resultsUploaded = true
-                            self.feedbackScreen()
+                            
+                            SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
+                                SwiftSpinner.hide()
+                                self.resultsUploaded = true
+                                self.feedbackScreen()
+                                }, subtitle: "Tap to proceed to feedback screen")
                             
                         } else {
                             
-                            saveError.showError("Error", subTitle: "Try again")
+                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                self.feedbackScreen()
+                                
+                                }, subtitle: "Results unsaved, tap to proceed to feedback")
                             
                         }
                     })

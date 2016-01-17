@@ -489,7 +489,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     }
                     self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
                     //Add: test type (numerical / verbal ...)
-                    let timeTaken:Int = ( 60 * self.allowedMinutes + self.allowedSeconds) - (60 * self.countMinutes + self.countSeconds)
+                    
+                    var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
+                    timeTaken = timeTaken/Float(self.selectedAnswers.count)
                     
                     SwiftSpinner.show("Saving Results")
                     

@@ -59,10 +59,37 @@ let PF_ARITHMETIC_USERNAME              = "username"				//	String
 let PF_ARITHMETIC_TEST                  = "test"                    //	String
 let PF_ARITHMETIC_SCORE                 = "score"                   //	Number
 
+/* Fractions class in Parse*/
+let PF_FRACTIONS_CLASS_NAME             = "Fractions"               //	Class name
+let PF_FRACTIONS_USER                   = "user"					//	Pointer to User Class
+let PF_FRACTIONS_CREATED                = "createdAt"               //	Date
+let PF_FRACTIONS_TIME                   = "time"                    //	Number
+let PF_FRACTIONS_USERNAME               = "username"				//	String
+let PF_FRACTIONS_TEST                   = "test"                    //	String
+let PF_FRACTIONS_SCORE                  = "score"                   //	Number
+
+/* Logical class in Parse*/
+let PF_LOGICAL_CLASS_NAME             = "Logical_Reasoning"       //	Class name
+let PF_LOGICAL_USER                   = "user"					//	Pointer to User Class
+let PF_LOGICAL_CREATED                = "createdAt"               //	Date
+let PF_LOGICAL_TIME                   = "time"                    //	Number
+let PF_LOGICAL_USERNAME               = "username"				//	String
+let PF_LOGICAL_TEST                   = "test"                    //	String
+let PF_LOGICAL_SCORE                  = "score"                   //	Number
+
+/* Sequences class in Parse*/
+let PF_SEQUENCE_CLASS_NAME             = "Sequences"               //	Class name
+let PF_SEQUENCE_USER                   = "user"					//	Pointer to User Class
+let PF_SEQUENCE_CREATED                = "createdAt"               //	Date
+let PF_SEQUENCE_TIME                   = "time"                    //	Number
+let PF_SEQUENCE_USERNAME               = "username"				//	String
+let PF_SEQUENCE_TEST                   = "test"                    //	String
+let PF_SEQUENCE_SCORE                  = "score"                   //	Number
+
 /* Preferences class in Parse*/
-let PF_PREFERENCES_CLASS_NAME            = "Preferences"		//	Class name
+let PF_PREFERENCES_CLASS_NAME            = "Preferences"            //	Class name
 let PF_PREFERENCES_USER                  = "user"					//	Pointer to User Class
-let PF_PREFERENCES_CREATED               = "createdAt"               //	Date
-let PF_PREFERENCES_TIME                  = "time"                    //	Number
+let PF_PREFERENCES_CREATED               = "createdAt"              //	Date
+let PF_PREFERENCES_TIME                  = "time"                   //	Number
 let PF_PREFERENCES_USERNAME              = "username"				//	String
-let PF_PREFERENCES_CAREERPREFS           = "careerPrefs"             //	Array
+let PF_PREFERENCES_CAREERPREFS           = "careerPrefs"            //	Array
