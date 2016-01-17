@@ -28,6 +28,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   let tutorialImageNames:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
   let homeViewModel:JSONModel = JSONModel()
     
+  //set number of lives
+    var setNumberOfLivesFree:Int = 3
+    
   // Declare and initialize views
   
   let logoImageView:UIImageView = UIImageView()
@@ -353,6 +356,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     user[PF_USER_FULLNAME] = userData["name"]
                     user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
                     user[PF_USER_FACEBOOKID] = userData["id"]
+                    user[PF_USER_MEMBERSHIP] = "Free"
+                    user[PF_USER_NUMBER_LIVES] = self.setNumberOfLivesFree
+                    
+                    self.defaults.setObject("Free", forKey: "Membership")
+                    self.defaults.setInteger(self.setNumberOfLivesFree, forKey: "Lives")
                     
                     let token = FBSDKAccessToken.currentAccessToken().tokenString
                     let permissions = FBSDKAccessToken.currentAccessToken().permissions

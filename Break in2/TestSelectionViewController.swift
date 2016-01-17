@@ -9,6 +9,8 @@
 import UIKit
 
 class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
+    
+  let defaults = NSUserDefaults.standardUserDefaults()
   
   // Declare and initialize types of tests and difficulties available for selected career
   
@@ -29,6 +31,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   let testStartButton:UIButton = UIButton(type: UIButtonType.System)
   var backButton:UIButton = UIButton()
   let swipeInfoLabel:UILabel = UILabel()
+  var numberOfTestsTotal:Int = Int()
+  var testsTotal:UIButton = UIButton()
   
   // Declare and initialize constraints that will be animated
   
@@ -59,6 +63,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
+  let testsTotalHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   
   var statsViewVisible:Bool = false
   
@@ -88,6 +93,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.view.addSubview(self.logoImageView)
     self.view.addSubview(self.testSelectionView)
     self.view.addSubview(self.backButton)
+    self.view.addSubview(self.testsTotal)
     
     // Add testSelectionView subviews
     
@@ -175,6 +181,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
+    
+    numberOfTestsTotal = defaults.integerForKey("Lives")
+    self.testsTotal.addTarget(self, action: "", forControlEvents: UIControlEvents.TouchUpInside)
+    self.testsTotal.setTitle(String(numberOfTestsTotal), forState: UIControlState.Normal)
+    self.testsTotal.clipsToBounds = true
+    
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
@@ -373,6 +385,21 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
     self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
     
+    // Create and add constraints for number of tests available
+    
+    self.testsTotal.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testsTotalRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    
+    let testsTotalTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    
+    let testsTotalHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    
+    let testsTotalWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    
+    self.testsTotal.addConstraints([testsTotalHeightConstraint, testsTotalWidthConstraint])
+    self.view.addConstraints([testsTotalRightConstraint, testsTotalTopConstraint])
+    
   }
   
   func showTestSelectionView() {
@@ -385,6 +412,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         self.backgroundImageView2.alpha = 0
         self.backButton.alpha = 1
         self.testSelectionView.alpha = 1
+        self.testsTotal.alpha = 1
         //self.testSelectionViewBottomConstraint.constant = self.minorMargin
         self.view.layoutIfNeeded()
         
@@ -420,7 +448,11 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
           self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
         }
         else if sender == self.testStartButton {
-          self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+        
+            self.numberOfTestsTotal--
+            self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+            
+        self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
         }
         
     })

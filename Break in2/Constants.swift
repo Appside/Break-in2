@@ -21,6 +21,8 @@ let PF_USER_FACEBOOKID					= "facebookId"              //	String
 let PF_USER_PICTURE						= "picture"                 //	File
 let PF_USER_THUMBNAIL					= "thumbnail"               //	File
 let PF_USER_CAREERPREFS                 = "careerPrefs"             //	Array
+let PF_USER_MEMBERSHIP                  = "Membership"              //  String
+let PF_USER_NUMBER_LIVES                = "Lives"                   //  Number
 
 /* Analytics class in Parse*/
 let PF_ANALYTICS_CLASS_NAME				= "Analytics"				//	Class name
