@@ -29,7 +29,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 2
     var allowedSeconds:Int = 00
-    var allowedMinutes:Int = 10
+    var allowedMinutes:Int = 02
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let nextButton:UILabel = UILabel()
@@ -185,7 +185,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         if self.testEnded {
             self.displayedQuestionIndex = self.totalNumberOfQuestions
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
-                self.selectedAnswers[self.displayedQuestionIndex]=19
+                self.selectedAnswers[self.displayedQuestionIndex]=21
             }
             self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
             self.timeTimer.invalidate()
@@ -268,10 +268,20 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             answerSubView.removeFromSuperview()
         }
         let arrayAnswers:[[Int]] = self.quizzArray[indexQuestion].answers
-        let operation:String = self.quizzArray[indexQuestion].operation
+        var operation:String = self.quizzArray[indexQuestion].operation
         let questionAsked:[Int] = self.quizzArray[indexQuestion].question
         let buttonHeight:Int = Int((self.view.frame.height-250)/4)
         var i:Int = 0
+        
+        if operation=="+" {
+            operation = "➕"
+        } else if operation=="-" {
+            operation = "➖"
+        } else if operation=="*" {
+            operation = "✖️"
+        } else {
+            operation = "➗"
+        }
         
         for i=0; i<arrayAnswers.count;i++ {
             let answerRow:UIButton = UIButton()
@@ -287,32 +297,6 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             answerRow.tag = (i+1) * 1
             answerNumber.tag = (i+1) * 10
             matchingQuestionLabel.tag = (i+1) * 100
-            
-            let answerNumberText:fractionView = fractionView()
-            answerNumberText.setTitles(String(arrayAnswers[i][0]), labelBottom: String(arrayAnswers[i][1]))
-            answerNumber.addSubview(answerNumberText)
-            answerNumberText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-            
-            let questionNumber1:fractionView = fractionView()
-            questionNumber1.setTitles(String(questionAsked[0]), labelBottom: String(questionAsked[2]))
-            matchingQuestionLabel.addSubview(questionNumber1)
-            questionNumber1.setConstraintsToSuperview(0, bottom: 0, left: 10, right: 0)
-            
-            let operationText:UILabel = UILabel()
-            operationText.text = operation
-            matchingQuestionLabel.addSubview(operationText)
-            operationText.setConstraintsToSuperview(0, bottom: 0, left: 40, right: 0)
-            
-            let questionNumber2:fractionView = fractionView()
-            questionNumber2.setTitles(String(questionAsked[1]), labelBottom: String(questionAsked[3]))
-            matchingQuestionLabel.addSubview(questionNumber2)
-            questionNumber2.setConstraintsToSuperview(0, bottom: 0, left: 70, right: 0)
-            
-            if i==0 {
-                answerRow.alpha = 1.0
-                answerRow.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
-                matchingQuestionLabel.alpha = 1.0
-            }
             
             let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
             let left:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
@@ -334,12 +318,89 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
             answerNumber.addConstraint(widthMM)
             
+            let answerContent:UIView = UIView()
+            answerNumber.addSubview(answerContent)
+            answerContent.translatesAutoresizingMaskIntoConstraints = false
+            let answerContentTop:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let answerContentLeft:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
+            let answerContentWidth:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
+            let answerContentHeight:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10))
+            answerNumber.addConstraints([answerContentTop,answerContentLeft])
+            answerContent.addConstraints([answerContentWidth,answerContentHeight])
+            self.createFraction(answerContent, viewHeight: Int(buttonHeight-10), fontName:"HelveticaNeue-Bold", fontSize:22, topNb: arrayAnswers[i][0], bottomNb: arrayAnswers[i][1])
+            
+            answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
+            answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+            answerNumber.layer.borderWidth = 2.0
+
+            let leftOffset:Int = ((((Int(self.view.frame.width - 60) - 20) - 100) - 10) - 125)/2
+            
+            let questionContent1:UIView = UIView()
+            matchingQuestionLabel.addSubview(questionContent1)
+            questionContent1.translatesAutoresizingMaskIntoConstraints = false
+            let questionContent1Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let questionContent1Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(5 + leftOffset))
+            let questionContent1Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+            let questionContent1Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10))
+            matchingQuestionLabel.addConstraints([questionContent1Top,questionContent1Left])
+            questionContent1.addConstraints([questionContent1Width,questionContent1Height])
+            self.createFraction(questionContent1, viewHeight: Int(buttonHeight-10), fontName:"HelveticaNeue-Bold", fontSize:28, topNb: questionAsked[0], bottomNb: questionAsked[1])
+            let questionContent2:UIView = UIView()
+            matchingQuestionLabel.addSubview(questionContent2)
+            questionContent2.translatesAutoresizingMaskIntoConstraints = false
+            let questionContent2Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let questionContent2Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(85 + leftOffset))
+            let questionContent2Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+            let questionContent2Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10))
+            matchingQuestionLabel.addConstraints([questionContent2Top,questionContent2Left])
+            questionContent2.addConstraints([questionContent2Width,questionContent2Height])
+            self.createFraction(questionContent2, viewHeight: Int(buttonHeight-10), fontName:"HelveticaNeue-Bold", fontSize:28, topNb: questionAsked[2], bottomNb: questionAsked[3])
+            let questionContent3:UIButton = UIButton()
+            matchingQuestionLabel.addSubview(questionContent3)
+            questionContent3.translatesAutoresizingMaskIntoConstraints = false
+            let questionContent3Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let questionContent3Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(60 + leftOffset))
+            let questionContent3Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+            let questionContent3Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10))
+            matchingQuestionLabel.addConstraints([questionContent3Top,questionContent3Left])
+            questionContent3.addConstraints([questionContent3Width,questionContent3Height])
+            
+            questionContent3.setTitle(operation, forState: .Normal)
+            questionContent3.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            questionContent3.titleLabel?.font = UIFont(name: "HelveticaNeue",size: 15.0)
+            let questionContent4:UIButton = UIButton()
+            matchingQuestionLabel.addSubview(questionContent4)
+            questionContent4.translatesAutoresizingMaskIntoConstraints = false
+            let questionContent4Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let questionContent4Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(140 + leftOffset))
+            let questionContent4Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+            let questionContent4Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10))
+            matchingQuestionLabel.addConstraints([questionContent4Top,questionContent4Left])
+            questionContent4.addConstraints([questionContent4Width,questionContent4Height])
+            questionContent4.setTitle("=", forState: .Normal)
+            questionContent4.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            questionContent4.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold",size: 28.0)
+            
+            matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
+            matchingQuestionLabel.alpha = 0.0
+            
+            print(answerRow.frame.width)
+            
+            if i==0 {
+                answerRow.alpha = 1.0
+                answerRow.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
+                matchingQuestionLabel.alpha = 1.0
+            }
+            
             let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
             answerNumber.addGestureRecognizer(tapGesture)
         }
+        
     }
     
     func answerIsSelected(gesture:UITapGestureRecognizer) {
+
         for buttons in self.mainView.subviews {
             if let anyButton = buttons as? UIButton {
                 if anyButton.tag <= 6 {
@@ -349,12 +410,18 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             for vraiButton in buttons.subviews {
                 if let anyButton = vraiButton as? UIButton {
                     if anyButton.tag >= 10 && anyButton.tag <= 60 {
-                        anyButton.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
                         anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-                        anyButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
-                        //anyButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-                        //anyButton.layer.borderWidth = 3.0
-                        anyButton.titleLabel?.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                        for buttonSubView in anyButton.subviews {
+                            for answerSubView in buttonSubView.subviews {
+                                if let answrButton = answerSubView as? UIButton {
+                                    answrButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                                }
+                                if let answrLabel = answerSubView as? UILabel {
+                                    answrLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                                    answrLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+                                }
+                            }
+                        }
                     }
                     if anyButton.tag > 60 {
                         anyButton.alpha = 0.0
@@ -367,8 +434,17 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 if let actButton = actualButton as? UIButton {
                     actButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                    actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
-                    actButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                    for buttonSubView in actButton.subviews {
+                            for answerSubView in buttonSubView.subviews {
+                                if let answrButton = answerSubView as? UIButton {
+                                    answrButton.backgroundColor = UIColor.whiteColor()
+                                }
+                                if let answrLabel = answerSubView as? UILabel {
+                                    answrLabel.textColor = UIColor.whiteColor()
+                                    answrLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
+                                }
+                            }
+                    }
                     self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag/10 - 1)
                     for buttons in self.mainView.subviews {
                         if let corrButton = buttons as? UIButton {
@@ -387,6 +463,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
                 }
                 }, completion: nil)
         }
+        
     }
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
@@ -458,6 +535,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
     }
     
     func feedbackScreen() {
+        
         //Display feedback screen here
         self.isTestComplete = true
         var i:Int = 0
@@ -660,6 +738,35 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         else if self.difficulty=="H" {
             self.arrayOperation = ["*","/","+","-"]
         }
+    }
+    
+    func createFraction(fractionView:UIView, viewHeight:Int, fontName:String, fontSize:Int, topNb:Int,bottomNb:Int) {
+        
+        let topLabel:UILabel = UILabel()
+        let bottomLabel:UILabel = UILabel()
+        let fractionLine:UIButton = UIButton()
+        
+        fractionView.addSubview(topLabel)
+        fractionView.addSubview(bottomLabel)
+        fractionView.addSubview(fractionLine)
+        
+        topLabel.text = String(topNb)
+        bottomLabel.text = String(bottomNb)
+        topLabel.textAlignment = NSTextAlignment.Center
+        bottomLabel.textAlignment = NSTextAlignment.Center
+        fractionLine.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        
+        topLabel.setConstraintsToSuperview(15, bottom: viewHeight/2+2, left: 0, right: 0)
+        bottomLabel.setConstraintsToSuperview(viewHeight/2+2, bottom: 15, left: 0, right: 0)
+        fractionLine.setConstraintsToSuperview(viewHeight/2-1, bottom: viewHeight/2-1, left: 0, right: 0)
+
+        topLabel.font = UIFont(name: fontName, size: CGFloat(fontSize))
+        bottomLabel.font = UIFont(name: fontName, size: CGFloat(fontSize))
+        topLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        bottomLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        
+        print(viewHeight)
+        
     }
     
 }

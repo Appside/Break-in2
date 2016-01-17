@@ -33,7 +33,6 @@
 		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
 		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; };
 		49929DA21C42E96800527929 /* sequencesQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA11C42E96800527929 /* sequencesQuestion.swift */; };
-		49929DA41C42ED3900527929 /* FractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA31C42ED3900527929 /* FractionView.swift */; };
 		49929DA61C42FDC300527929 /* fractionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA51C42FDC300527929 /* fractionViewController.swift */; };
 		49929DA81C42FDEA00527929 /* fractionsQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929DA71C42FDEA00527929 /* fractionsQuestion.swift */; };
 		4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499375351C02573100AA0588 /* numericalReasoningViewController.swift */; };
@@ -115,7 +114,6 @@
 		497A515E1C39B10C004B325C /* LabelPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPointerView.swift; sourceTree = "<group>"; };
 		49929D9F1C42E95700527929 /* sequencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesViewController.swift; sourceTree = "<group>"; };
 		49929DA11C42E96800527929 /* sequencesQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesQuestion.swift; sourceTree = "<group>"; };
-		49929DA31C42ED3900527929 /* FractionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FractionView.swift; sourceTree = "<group>"; };
 		49929DA51C42FDC300527929 /* fractionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fractionViewController.swift; sourceTree = "<group>"; };
 		49929DA71C42FDEA00527929 /* fractionsQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fractionsQuestion.swift; sourceTree = "<group>"; };
 		499375351C02573100AA0588 /* numericalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = numericalReasoningViewController.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 				49929DA11C42E96800527929 /* sequencesQuestion.swift */,
 				49929DA51C42FDC300527929 /* fractionViewController.swift */,
 				49929DA71C42FDEA00527929 /* fractionsQuestion.swift */,
-				49929DA31C42ED3900527929 /* FractionView.swift */,
 				25622B131C39B6240063C770 /* QuestionViewController.swift */,
 			);
 			name = QuestionView;
@@ -639,7 +636,6 @@
 				617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */,
 				49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */,
 				2526701D1C2378A6007D55BE /* CalendarDaysTitleView.swift in Sources */,
-				49929DA41C42ED3900527929 /* FractionView.swift in Sources */,
 				61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

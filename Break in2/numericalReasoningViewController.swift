@@ -286,7 +286,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         if self.testEnded {
             self.displayedQuestionIndex = self.totalNumberOfQuestions
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
-                self.selectedAnswers[self.displayedQuestionIndex]=19
+                self.selectedAnswers[self.displayedQuestionIndex]=21
             }
             self.timeTimer.invalidate()
             self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
