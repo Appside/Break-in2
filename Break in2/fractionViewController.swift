@@ -671,10 +671,17 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         var i:Int = 0
 
         //Randomize question numbers
-        number1 = Float(arc4random_uniform(9))+1
-        number2 = Float(arc4random_uniform(9))+1
-        number3 = Float(arc4random_uniform(9))+1
-        number4 = Float(arc4random_uniform(9))+1
+        if self.difficulty=="H" {
+            number1 = Float(arc4random_uniform(20))+1
+            number2 = Float(arc4random_uniform(20))+1
+            number3 = Float(arc4random_uniform(20))+1
+            number4 = Float(arc4random_uniform(20))+1
+        } else {
+            number1 = Float(arc4random_uniform(10))+1
+            number2 = Float(arc4random_uniform(10))+1
+            number3 = Float(arc4random_uniform(10))+1
+            number4 = Float(arc4random_uniform(10))+1
+        }
         
         //Generate random answers
         if operation=="+" {

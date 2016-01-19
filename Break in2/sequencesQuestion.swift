@@ -13,5 +13,6 @@ class sequencesQuestion {
     var question:[Int] = [Int]()
     var answers:[Int] = [Int]()
     var correctAnswer:Int = Int()
+    var feedback:String = String()
     
 }
