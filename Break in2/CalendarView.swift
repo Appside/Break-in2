@@ -84,7 +84,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
   func displayCalendar() {
     
-    superview?.layoutIfNeeded()
+    self.layoutIfNeeded()
     self.rowHeight = self.frame.height/9
     self.columnWidth = self.frame.width/7
     

@@ -918,6 +918,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         if sender == self.backButton {
           self.performSegueWithIdentifier("backFromEditProfile", sender: self.backButton)
         }
+        else if sender == self.tutorialNextButton {
+          self.performSegueWithIdentifier("backFromEditProfile", sender: self.tutorialNextButton)
+        }
         else if sender == self.facebookLogoutButton {
             
             self.deleteFBTapped(self.facebookLogoutButton)
@@ -1069,7 +1072,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     if self.tutorialViews[self.tutorialPageNumber - 1] == self.chooseCareersView {
       self.savePrefsToParse(sender)
-      self.performSegueWithIdentifier("backFromEditProfile", sender: sender)
     }
     
   }
