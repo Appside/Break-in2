@@ -10,7 +10,7 @@ import UIKit
 
 class sequencesList {
     
-    var arithmeticReason:Int = Int()
+    var sequenceReason:Int = Int()
     var sequenceFirstTerm:Int = Int()
     
     func runSequence(sequenceNB:Int, initialNumber:Int) -> Int {
@@ -23,6 +23,9 @@ class sequencesList {
         if sequenceNB==2 {
             returnInt = self.arithmeticSequence(initialNumber)
         }
+        if sequenceNB==3 {
+            returnInt = self.arithmeticSequence(initialNumber)
+        }
         
         return returnInt
         
@@ -31,12 +34,15 @@ class sequencesList {
     func addFeedback(sequenceNB:Int) -> String {
         
         var feedbackString:String = String()
+        
         if sequenceNB==1 {
             feedbackString = "The terms in this sequence are Fibonacci numbers, meaning that each number in the sequence is equal to the sum of the two previous numbers."
+        } else if sequenceNB==2 {
+            feedbackString = "This sequence follows an arithmetic progression, the common difference of successive numbers being equal to \(self.sequenceReason)."
+        } else if sequenceNB==3 {
+            feedbackString = "This sequence follows a geometric progression with initial value \(self.sequenceFirstTerm) and common ratio \(self.sequenceReason)."
         }
-        if sequenceNB==2 {
-            feedbackString = "This sequence follows an arithmetic progression, the common difference of successive numbers being equal to \(self.arithmeticReason)."
-        }
+        
         return feedbackString
         
     }
@@ -48,13 +54,23 @@ class sequencesList {
         let phi1:Float = (1+sqrt(5))/2
         let phi2:Float = (-1/phi1)
         let returnNumber:Float = alpha * powf(phi1, Float(requestedIndex)) + beta * powf(phi2, Float(requestedIndex))
+        
         return Int(returnNumber)
     
     }
     
     func arithmeticSequence(requestIndex:Int) -> Int {
         
-        let returnNumber:Int = Int(requestIndex * self.arithmeticReason)
+        let returnNumber:Int = Int(requestIndex * self.sequenceReason)
+        
+        return returnNumber
+        
+    }
+    
+    func geometricSequence(requestIndex:Int) -> Int {
+        
+        let returnNumber:Int = Int(Float(self.sequenceFirstTerm) * powf(Float(self.sequenceReason), Float(requestIndex)))
+        
         return returnNumber
         
     }

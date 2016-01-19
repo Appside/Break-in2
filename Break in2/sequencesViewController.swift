@@ -591,10 +591,10 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         var i:Int = 0
         
         //Randomize first number
-        sequenceNumber = Int(arc4random_uniform(2) + 1)
+        sequenceNumber = Int(arc4random_uniform(3) + 1)
         initialNumber = Int(arc4random_uniform(10) + 1)
-        self.listOfSequences.arithmeticReason = Int(arc4random_uniform(10) + 1)
-        self.listOfSequences.sequenceFirstTerm = Int(arc4random_uniform(40) + 1)
+        self.listOfSequences.sequenceReason = Int(arc4random_uniform(10) + 1)
+        self.listOfSequences.sequenceFirstTerm = Int(arc4random_uniform(10) + 1)
         
         for i=0;i<5;i++ {
             questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
