@@ -229,6 +229,9 @@ class HomeViewController: UIViewController {
     
     // Display calendar
     
+    if self.firstTimeUser && self.tutorialPageNumber == 0 {
+      self.calendarView.chosenCareers = self.homeViewModel.getAppVariables("careerTypes") as! [String]
+    }
     self.calendarView.displayCalendar()
     
   }
