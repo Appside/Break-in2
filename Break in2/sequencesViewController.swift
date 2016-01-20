@@ -256,14 +256,18 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     
     func displayQuestion(indexQuestion:Int) {
         
+        if self.isTestComplete==false {
+            
         //Initialize labels
-        let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
-        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+            let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
+            let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: NSString(string: labelString).length))
-        self.questionMenuLabel.attributedText = attributedString
-        self.questionMenuLabel.attributedText = attributedString
+            self.questionMenuLabel.attributedText = attributedString
+            self.questionMenuLabel.attributedText = attributedString
+        
+        }
         
         // add answers to SwipeUIVIew
         for answerSubView in self.mainView.subviews {
@@ -334,8 +338,10 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
+            if self.isTestComplete==false {
+                let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
             answerNumber.addGestureRecognizer(tapGesture)
+            }
         }
         
     }
@@ -554,11 +560,52 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             answerUIButton.addConstraints([topMM,leftMM,bottomMM])
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
             answerNumber.addConstraint(widthMM)
+            
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
+            answerUIButton.addGestureRecognizer(tapGesture)
+            
         }
         
         self.feebdackScreen.scrollEnabled = true
         let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + 10))
         self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40), height: totalHeight+10)
+        self.nextButton.text = "Back to Results"
+    }
+    
+    func displayAnswerWithFeedback(gesture:UITapGestureRecognizer) {
+        
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.mainView.alpha = 1.0
+            self.swipeUIView.alpha = 1.0
+            self.feebdackScreen.alpha = 0.0
+            
+            var questionFeedback:Int = Int()
+            let buttonTapped:UIView? = gesture.view
+            if let actualButton = buttonTapped {
+                questionFeedback = actualButton.tag
+            }
+            
+            self.displayQuestion(questionFeedback)
+            let feedbackLabel:UITextView = UITextView()
+            self.mainView.addSubview(feedbackLabel)
+            
+            feedbackLabel.setConstraintsToSuperview(Int((self.view.frame.height-250)/6+15), bottom: 0, left: 10, right: 125)
+            feedbackLabel.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
+            feedbackLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+            feedbackLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.0)
+            
+            if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {
+                self.timeLabel.text = "Correct Answer"
+                self.timeLabel.textColor = UIColor.greenColor()
+                feedbackLabel.text = "Your answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer]).\nThis is the correct answer.\n\n\(self.quizzArray[questionFeedback].feedback)"
+            }
+            else {
+                self.timeLabel.text = "Wrong Answer"
+                self.timeLabel.textColor = UIColor.redColor()
+                feedbackLabel.text = "Your answer was \(self.quizzArray[questionFeedback].answers[self.selectedAnswers[questionFeedback]).\nThis is a wrong answer.\n\n\(self.quizzArray[questionFeedback].feedback)\n\nThe correct answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer])."
+            }
+            
+            }, completion: nil)
         
     }
     
@@ -570,14 +617,15 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     func addNewQuestion() {
         //Add a new question to the array
         let newQuestion:sequencesQuestion = sequencesQuestion()
-        let (sequence, answers, correctIndex) = self.fillArrayWithRandomNumbers()
+        let (sequence, answers, correctIndex, feedbackString) = self.fillArrayWithRandomNumbers()
         newQuestion.question = sequence
         newQuestion.answers = answers
         newQuestion.correctAnswer = correctIndex
+        newQuestion.feedback = feedbackString
         self.quizzArray.append(newQuestion)
     }
     
-    func fillArrayWithRandomNumbers() -> ([Int], [Int],Int) {
+    func fillArrayWithRandomNumbers() -> ([Int], [Int],Int, String) {
         
         //Set function's variables
         var initialNumber:Int = Int()
@@ -591,21 +639,31 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         var i:Int = 0
         
         //Randomize first number
-        sequenceNumber = Int(arc4random_uniform(3) + 1)
+        sequenceNumber = Int(arc4random_uniform(5) + 1)
         initialNumber = Int(arc4random_uniform(10) + 1)
-        self.listOfSequences.sequenceReason = Int(arc4random_uniform(10) + 1)
+        self.listOfSequences.arithmeticReason = Int(arc4random_uniform(20) + 1)
+        self.listOfSequences.geometricReason = Int(arc4random_uniform(5) + 1)
         self.listOfSequences.sequenceFirstTerm = Int(arc4random_uniform(10) + 1)
         
         for i=0;i<5;i++ {
             questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
         }
         i = 0
-        for i=5;i<11;i++ {
-            answersArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
+        let rightAnswer:Int = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+5)
+        answersArray.append(rightAnswer)
+        var a:Int = 1
+        for i=6;i<11;i++ {
+            a = Int(arc4random_uniform(2))
+            if a==0 {
+                answersArray.append(rightAnswer+(i-5))
+            } else {
+                answersArray.append(rightAnswer-(i-5))
+            }
         }
         
         //Add feedback
-        self.listOfSequences.addFeedback(sequenceNumber)
+        var feedbackString:String = String()
+        feedbackString = self.listOfSequences.addFeedback(sequenceNumber)
         
         //Shuffle array of answers
         for i=0;i<6;i++ {
@@ -619,7 +677,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         }
 
         //Return question info array
-        return (questionArray, returnedArray, correctIndex)
+        return (questionArray, returnedArray, correctIndex, feedbackString)
     }
     
     func setDifficultyLevel() {
