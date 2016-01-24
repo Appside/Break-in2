@@ -22,7 +22,7 @@ class LogicalPictureView: UIView {
         // Drawing code
     }
     */
-  
+    
   override init(frame: CGRect) {
     super.init(frame: frame)
     

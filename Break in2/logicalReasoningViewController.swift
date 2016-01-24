@@ -158,6 +158,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         }
         
         //Generate random questions for the test
+        self.logicModel = LogicalModel()
         var questionNew:Int = Int()
         for questionNew=0;questionNew<=self.totalNumberOfQuestions;questionNew++ {
             self.addNewQuestion()
@@ -276,9 +277,10 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         let arrayAnswers:[LogicalPictureView] = self.quizzArray[indexQuestion].answers
         let questionAsked:[LogicalPictureView] = self.quizzArray[indexQuestion].question
         let buttonHeight:Int = Int((self.view.frame.height-250)/4)
-        let shapesWidth:Int = Int((self.view.frame.height-250)/4)-10
         let shapesMargin:Int = 10
+        let shapesWidth:Int = (Int(self.view.frame.width)-170-4*shapesMargin)/4
         var i:Int = 0
+        var j:Int = 0
         
         for i=0; i<arrayAnswers.count;i++ {
             let answerRow:UIButton = UIButton()
@@ -298,19 +300,28 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             answerNumber.addSubview(arrayAnswers[i])
             arrayAnswers[i].backgroundColor = UIColor.grayColor()
             arrayAnswers[i].translatesAutoresizingMaskIntoConstraints = false
-            let topAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
-            let leftAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 5)
-            answerNumber.addConstraints([topAnsw,leftAnsw])
-            let widthAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
-            let heightAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
-            arrayAnswers[i].addConstraints([widthAnsw,heightAnsw])
-            //answerNumber.setTitle(String(arrayAnswers[i]), forState: .Normal)
-            //answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-            //answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            let centerXAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+            let centerYAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+            answerNumber.addConstraints([centerXAnsw,centerYAnsw])
+            let heightAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+            let widthAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+            arrayAnswers[i].addConstraints([heightAnsw,widthAnsw])
+            
+            for j=0;j<4;j++ {
+                matchingQuestionLabel.addSubview(questionAsked[j])
+                questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
+                let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+                let leftMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(j*(shapesWidth+shapesMargin)))
+                matchingQuestionLabel.addConstraints([topMMM,leftMMM])
+                let heightMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                questionAsked[j].addConstraints([heightMMM,widthMMM])
+                questionAsked[j].backgroundColor = UIColor.grayColor()
+            }
+            
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
             answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             answerNumber.layer.borderWidth = 2.0
-            
             matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             matchingQuestionLabel.alpha = 0.0
             
@@ -339,19 +350,6 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             answerRow.addConstraints([topMM,rightMM,bottomMM])
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
             answerNumber.addConstraint(widthMM)
-            
-            var j:Int = 0
-            for j=0;j<4;j++ {
-                matchingQuestionLabel.addSubview(questionAsked[j])
-                questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
-                let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-                let bottomMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-                let leftMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(j*(shapesMargin)))
-                matchingQuestionLabel.addConstraints([topMMM,bottomMMM,leftMMM])
-                let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
-                questionAsked[j].addConstraint(widthMMM)
-                questionAsked[j].backgroundColor = UIColor.grayColor()
-            }
             
             if self.isTestComplete==false {
                 let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
@@ -652,14 +650,13 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         var i:Int = 0
         
         //Add feedback
-        let feedbackString:String = String()
-        //feedbackString = self.listOfSequences.addFeedback(sequenceNumber)
+        var feedbackString:String = String()
+        feedbackString = ""
         
         //Generate Question and Answers
-        for i=0;i<4;i++ {
-            questionArray.append(LogicalPictureView())
-            answersArray.append(LogicalPictureView())
-        }
+        let logicalProblem:[[LogicalPictureView]] = self.logicModel.getLogicalProblem()
+        questionArray = logicalProblem[0]
+        answersArray = logicalProblem[1]
         
         //Shuffle array of answers
         for i=0;i<4;i++ {

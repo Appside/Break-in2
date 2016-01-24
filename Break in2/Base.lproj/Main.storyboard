@@ -246,7 +246,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" id="VL5-Ng-wAU"/>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="VL5-Ng-wAU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZSa-4Y-Ju0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -277,6 +277,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Z2O-uS-5Gc"/>
+        <segue reference="VL5-Ng-wAU"/>
     </inferredMetricsTieBreakers>
 </document>
