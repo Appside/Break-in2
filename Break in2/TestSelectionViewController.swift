@@ -40,6 +40,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   var backButton:UIButton = UIButton()
   let swipeInfoLabel:UILabel = UILabel()
   var testsTotal:UIButton = UIButton()
+  let testLivesBackgroundView:UIView = UIView()
+  let testLivesTitleLabel:UILabel = UILabel()
+  let testLivesSubtitleLabel:UILabel = UILabel()
+  let testLivesUpgradeButton1:UIButton = UIButton()
+  let testLivesUpgradeButton2:UIButton = UIButton()
+  let testLivesInfoLabel:UILabel = UILabel()
   
   // Declare and initialize constraints that will be animated
   
@@ -49,6 +55,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   // Declare and initialize tracking variables
   
   var testSelectionViewVisible:Bool = false
+  var testLivesBackgroudViewVisible = false
   var currentScrollViewPage:Int = 0
   
   // Declare and initialize design constants
@@ -70,7 +77,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
-  let testsTotalHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   
   var statsViewVisible:Bool = false
   
@@ -101,6 +107,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.view.addSubview(self.testSelectionView)
     self.view.addSubview(self.backButton)
     self.view.addSubview(self.testsTotal)
+    self.view.addSubview(self.testLivesBackgroundView)
     
     // Add testSelectionView subviews
     
@@ -108,6 +115,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.testSelectionView.addSubview(self.testScrollView)
     self.testSelectionView.addSubview(self.testStartButton)
     self.testSelectionView.addSubview(self.swipeInfoLabel)
+    
+    // Add testLivesBackgroundView subviews
+    
+    self.testLivesBackgroundView.addSubview(self.testLivesTitleLabel)
+    self.testLivesBackgroundView.addSubview(self.testLivesSubtitleLabel)
+    self.testLivesBackgroundView.addSubview(self.testLivesInfoLabel)
+    self.testLivesBackgroundView.addSubview(self.testLivesUpgradeButton1)
+    self.testLivesBackgroundView.addSubview(self.testLivesUpgradeButton2)
     
     // Create testTypeViews for each testType
     
@@ -170,13 +185,18 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.view.backgroundColor = self.secondaryBackgroundColor
     
-    // Adjust testSelectioView apperance
+    // Adjust testSelectioView apperance and testLivesBackgroundView
     
     self.testSelectionView.backgroundColor = self.mainBackgroundColor
     self.testSelectionView.layer.cornerRadius = self.minorMargin
     self.testSelectionView.alpha = 0
     
-    // Adjust testStartButton and backButton appearances
+    self.testLivesBackgroundView.backgroundColor = UIColor.whiteColor()
+    self.testLivesBackgroundView.layer.cornerRadius = self.minorMargin
+    self.testLivesBackgroundView.clipsToBounds = true
+    self.testLivesBackgroundView.alpha = 0
+    
+    // Adjust testStartButton, backButton and testLivesUpgradeButtons appearances
     
     self.testStartButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
     self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
@@ -188,6 +208,18 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
+    
+    self.testLivesUpgradeButton1.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.testLivesUpgradeButton1.setTitle("£0.50 / 5 Tests", forState: UIControlState.Normal)
+    self.testLivesUpgradeButton1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.testLivesUpgradeButton1.backgroundColor = UIColor.turquoiseColor()
+    self.testLivesUpgradeButton1.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
+    
+    self.testLivesUpgradeButton2.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.testLivesUpgradeButton2.setTitle("£2.50 / Unlimited", forState: UIControlState.Normal)
+    self.testLivesUpgradeButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
+    self.testLivesUpgradeButton2.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
     
     membershipType = defaults.objectForKey("Membership") as! String
     
@@ -210,21 +242,38 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
             
         }
         
-        self.testsTotal.addTarget(self, action: "", forControlEvents: UIControlEvents.TouchUpInside)
+        self.testsTotal.addTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
         self.testsTotal.setTitle(String(numberOfTestsTotal), forState: UIControlState.Normal)
         self.testsTotal.clipsToBounds = true
+        self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
+        self.testsTotal.layer.borderWidth = 2
+        self.testsTotal.layer.borderColor = UIColor.whiteColor().CGColor
         
     }
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
     
-    // Adjust swipeInfoLabel appearance
+    // Adjust swipeInfoLabel, testLivesTitleLabel and testLivesSubtitleLabel appearance
     
     self.swipeInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
     self.swipeInfoLabel.textAlignment = NSTextAlignment.Center
     self.swipeInfoLabel.textColor = UIColor.lightGrayColor()
     self.swipeInfoLabel.text = "Swipe Up For Test Explanation"
+    
+    self.testLivesTitleLabel.textAlignment = NSTextAlignment.Center
+    self.testLivesTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.testLivesTitleLabel.text = "YOUR SUBSCRIPTION"
+    
+    self.testLivesSubtitleLabel.backgroundColor = UIColor.turquoiseColor()
+    self.testLivesSubtitleLabel.textAlignment = NSTextAlignment.Center
+    self.testLivesSubtitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.testLivesSubtitleLabel.text = "FREE"
+    self.testLivesSubtitleLabel.textColor = UIColor.whiteColor()
+    
+    self.testLivesInfoLabel.textAlignment = NSTextAlignment.Center
+    self.testLivesInfoLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.testLivesInfoLabel.text = "You have 0 LIVES."
     
     // Display each testTypeView
     
@@ -449,6 +498,96 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.testsTotal.addConstraints([testsTotalHeightConstraint, testsTotalWidthConstraint])
     self.view.addConstraints([testsTotalRightConstraint, testsTotalTopConstraint])
     
+    // Create and add constraints for testLivesBackgroundView
+    
+    self.testLivesBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testLivesBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    
+    let testLivesBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    
+    let testLivesBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    
+    let testLivesBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 7) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))
+    
+    self.testLivesBackgroundView.addConstraint(testLivesBackgroundViewHeightConstraint)
+    self.view.addConstraints([testLivesBackgroundViewTopConstraint, testLivesBackgroundViewLeftConstraint, testLivesBackgroundViewRightConstraint])
+    
+    // Create and add constraints for testLivesTitleLabel
+    
+    self.testLivesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testLivesTitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    
+    let testLivesTitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let testLivesTitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: ((self.screenFrame.width - (self.majorMargin * 2)) * 8)/10)
+    
+    let testLivesTitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: ((self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight)) * 2)/9)
+    
+    self.testLivesTitleLabel.addConstraints([testLivesTitleLabelWidthConstraint, testLivesTitleLabelHeightConstraint])
+    self.testLivesBackgroundView.addConstraints([testLivesTitleLabelTopConstraint, testLivesTitleLabelCenterXConstraint])
+    
+    // Create and add constraints for testLivesSubtitleLabel
+    
+    self.testLivesSubtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testLivesSubtitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    
+    let testLivesSubtitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesTitleLabel, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let testLivesSubtitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2) - (self.minorMargin * 2))
+    
+    let testLivesSubtitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))/9)
+    
+    self.testLivesSubtitleLabel.addConstraints([testLivesSubtitleLabelWidthConstraint, testLivesSubtitleLabelHeightConstraint])
+    self.testLivesBackgroundView.addConstraints([testLivesSubtitleLabelTopConstraint, testLivesSubtitleLabelCenterXConstraint])
+    
+    // Create and add constraints for testLivesUpgradeButton1
+    
+    self.testLivesUpgradeButton1.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testLivesUpgradeButton1LeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    
+    let testLivesUpgradeButton1BottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let testLivesUpgradeButton1RightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: self.minorMargin * -0.5)
+    
+    let testLivesUpgradeButton1HeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    
+    self.testLivesUpgradeButton1.addConstraint(testLivesUpgradeButton1HeightConstraint)
+    self.view.addConstraints([testLivesUpgradeButton1LeftConstraint, testLivesUpgradeButton1BottomConstraint, testLivesUpgradeButton1RightConstraint])
+    
+    // Create and add constraints for testLivesUpgradeButton2
+    
+    self.testLivesUpgradeButton2.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testLivesUpgradeButton2RightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    
+    let testLivesUpgradeButton2BottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let testLivesUpgradeButton2LeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: self.minorMargin * 0.5)
+    
+    let testLivesUpgradeButton2HeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    
+    self.testLivesUpgradeButton2.addConstraint(testLivesUpgradeButton2HeightConstraint)
+    self.view.addConstraints([testLivesUpgradeButton2LeftConstraint, testLivesUpgradeButton2BottomConstraint, testLivesUpgradeButton2RightConstraint])
+    
+    // Create and add constraints for testLivesInfoLabel
+    
+    self.testLivesInfoLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let testLivesInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    
+    let testLivesInfoLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    
+    let testLivesInfoLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2) - (self.minorMargin * 2))
+    
+    let testLivesInfoLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    
+    self.testLivesInfoLabel.addConstraint(testLivesInfoLabelWidthConstraint)
+    self.testLivesBackgroundView.addConstraints([testLivesInfoLabelTopConstraint, testLivesInfoLabelCenterXConstraint, testLivesInfoLabelBottomConstraint])
+    
   }
   
   func showTestSelectionView() {
@@ -647,6 +786,24 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       
       
     }
+    
+  }
+  
+  func showTestLives(sender:UIButton) {
+    
+    UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      
+      if self.testLivesBackgroudViewVisible == false {
+        self.testLivesBackgroundView.alpha = 1
+        self.testLivesBackgroudViewVisible = true
+      }
+      else {
+        self.testLivesBackgroundView.alpha = 0
+        self.testLivesBackgroudViewVisible = false
+      }
+      self.view.layoutIfNeeded()
+      
+    }, completion: nil)
     
   }
   
