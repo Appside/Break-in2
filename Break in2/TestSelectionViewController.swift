@@ -79,12 +79,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   
   var statsViewVisible:Bool = false
-  
+  var firstTimeUser:Bool = false
+
   // Declare and initialize gestures
-  
-  var careerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer()
-  var testSelectionViewSwipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-  var testSelectionViewSwipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -259,7 +256,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.swipeInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
     self.swipeInfoLabel.textAlignment = NSTextAlignment.Center
     self.swipeInfoLabel.textColor = UIColor.lightGrayColor()
-    self.swipeInfoLabel.text = "Swipe Up For Test Explanation"
+    self.swipeInfoLabel.text = "Swipe For More Tests"
     
     self.testLivesTitleLabel.textAlignment = NSTextAlignment.Center
     self.testLivesTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
@@ -282,16 +279,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       testTypeViewAtIndex.displayView()
       
     }
-    
-    // Set up, customise and add gestures
-    
-    self.testSelectionViewSwipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showStats:"))
-    self.testSelectionViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
-    self.testSelectionView.addGestureRecognizer(self.testSelectionViewSwipeUpGesture)
-    
-    self.testSelectionViewSwipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideStats:"))
-    self.testSelectionViewSwipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
-    self.testSelectionView.addGestureRecognizer(self.testSelectionViewSwipeDownGesture)
     
   }
   
