@@ -28,7 +28,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     let mainView:UIView = UIView()
     var quizzArray:[sequencesQuestion] = [sequencesQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 19
+    var totalNumberOfQuestions:Int = 4
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 10
     var countSeconds:Int = Int()

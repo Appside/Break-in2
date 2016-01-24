@@ -30,9 +30,6 @@
 		25A21B761C34956C00A72455 /* StatisticsTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A21B751C34956C00A72455 /* StatisticsTitleView.swift */; };
 		25ACFC791C42A3AA00699604 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ACFC781C42A3AA00699604 /* TutorialViewController.swift */; };
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
-		4972F8EF1C55131F00757F27 /* logicalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972F8EE1C55131F00757F27 /* logicalReasoningViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		4972F8F11C55194500757F27 /* logicalShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972F8F01C55194500757F27 /* logicalShapes.swift */; settings = {ASSET_TAGS = (); }; };
-		4972F8F31C551A4900757F27 /* logicalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972F8F21C551A4900757F27 /* logicalQuestion.swift */; settings = {ASSET_TAGS = (); }; };
 		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
 		498B79021C4C27EF002E14D6 /* sequencesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B79011C4C27EF002E14D6 /* sequencesList.swift */; };
 		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; };
@@ -115,9 +112,6 @@
 		25ACFC781C42A3AA00699604 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		25ADC3AC1C052BA4004465FF /* CareerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareerButton.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
-		4972F8EE1C55131F00757F27 /* logicalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalReasoningViewController.swift; sourceTree = "<group>"; };
-		4972F8F01C55194500757F27 /* logicalShapes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalShapes.swift; sourceTree = "<group>"; };
-		4972F8F21C551A4900757F27 /* logicalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalQuestion.swift; sourceTree = "<group>"; };
 		497A515E1C39B10C004B325C /* LabelPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPointerView.swift; sourceTree = "<group>"; };
 		498B79011C4C27EF002E14D6 /* sequencesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesList.swift; sourceTree = "<group>"; };
 		49929D9F1C42E95700527929 /* sequencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesViewController.swift; sourceTree = "<group>"; };
@@ -247,17 +241,6 @@
 				49929DA51C42FDC300527929 /* fractionViewController.swift */,
 				49929DA71C42FDEA00527929 /* fractionsQuestion.swift */,
 				25622B131C39B6240063C770 /* QuestionViewController.swift */,
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-				25993C571C55298C003DFD35 /* LogicalPictureView.swift */,
-				25993C581C55298C003DFD35 /* LogicalModel.swift */,
-=======
-				4972F8EE1C55131F00757F27 /* logicalReasoningViewController.swift */,
-				4972F8F21C551A4900757F27 /* logicalQuestion.swift */,
-				4972F8F01C55194500757F27 /* logicalShapes.swift */,
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 			);
 			name = QuestionView;
 			sourceTree = "<group>";
@@ -622,12 +605,10 @@
 				2526701A1C2378A6007D55BE /* CalendarView.swift in Sources */,
 				61FF7B8D1C2FDF6C00CD4392 /* TODO.swift in Sources */,
 				25849DC31C333D58006C8A17 /* StatisticsViewController.swift in Sources */,
-				4972F8EF1C55131F00757F27 /* logicalReasoningViewController.swift in Sources */,
 				61CAD3481C2760B100B8D887 /* Person.swift in Sources */,
 				617FC6431BEF92220019AE9B /* LoginViewController.swift in Sources */,
 				25622B141C39B6240063C770 /* QuestionViewController.swift in Sources */,
 				617FC64B1BEF92700019AE9B /* SettingsViewController.swift in Sources */,
-				4972F8F11C55194500757F27 /* logicalShapes.swift in Sources */,
 				25622B0E1C39880D0063C770 /* ChooseCareerTitleView.swift in Sources */,
 				61517DF91C42AE1C00C570A9 /* BWWalkthroughPageViewController.swift in Sources */,
 				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,
@@ -652,7 +633,6 @@
 				4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				25A21B761C34956C00A72455 /* StatisticsTitleView.swift in Sources */,
-				4972F8F31C551A4900757F27 /* logicalQuestion.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,
 				61CAD33E1C2708D200B8D887 /* LoginCredentials.xcdatamodeld in Sources */,
 				253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */,
