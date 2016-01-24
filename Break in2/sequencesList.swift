@@ -13,6 +13,9 @@ class sequencesList {
     var arithmeticReason:Int = Int()
     var geometricReason:Int = Int()
     var sequenceFirstTerm:Int = Int()
+    var increment1:Int = Int()
+    var increment2:Int = Int()
+    var memory1:Int = 0
     
     func runSequence(sequenceNB:Int, initialNumber:Int) -> Int {
         
@@ -33,6 +36,9 @@ class sequencesList {
         if sequenceNB==5 {
             returnInt = self.primeNumberSequence(initialNumber)
         }
+        if sequenceNB==6 {
+            returnInt = self.fixedStepsSequence(initialNumber)
+        }
         return returnInt
         
     }
@@ -51,6 +57,8 @@ class sequencesList {
             feedbackString = "This sequence returns the square of consecutive integers."
         } else if sequenceNB==5 {
             feedbackString = "This sequence corresponds to the sequence of prime numbers."
+        } else if sequenceNB==6 {
+            feedbackString = "The numbers in this sequence increase by fixed alternatively \(self.increment1) and \(self.increment2)."
         }
         
         return feedbackString
@@ -115,6 +123,28 @@ class sequencesList {
         }
         
         return prime-1
+        
+    }
+    
+    func fixedStepsSequence(requestIndex:Int) -> Int {
+        
+        var returnNumber:Int = Int()
+        
+        if (self.memory1 == 0) {
+            self.memory1 = 1
+            returnNumber = requestIndex
+        }
+        if self.memory1 == 1 {
+            self.memory1 = 2
+            returnNumber = (requestIndex-1) + self.increment1
+        }
+        if self.memory1 == 2 {
+            self.memory1 = 1
+            returnNumber = (requestIndex-1) + self.increment2
+        }
+        
+        
+        return returnNumber
         
     }
 

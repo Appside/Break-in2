@@ -639,19 +639,31 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         var i:Int = 0
         
         //Randomize first number
-        sequenceNumber = Int(arc4random_uniform(5) + 1)
-        initialNumber = Int(arc4random_uniform(10) + 1)
+        sequenceNumber = Int(arc4random_uniform(6) + 1)
+        initialNumber = Int(arc4random_uniform(5) + 1)
         self.listOfSequences.arithmeticReason = Int(arc4random_uniform(20) + 1)
-        self.listOfSequences.geometricReason = Int(arc4random_uniform(5) + 1)
-        self.listOfSequences.sequenceFirstTerm = Int(arc4random_uniform(10) + 1)
-        
-        for i=0;i<5;i++ {
-            questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
-        }
-        i = 0
-        let rightAnswer:Int = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+5)
-        answersArray.append(rightAnswer)
+        self.listOfSequences.geometricReason = Int(arc4random_uniform(3) + 1)
+        self.listOfSequences.sequenceFirstTerm = Int(arc4random_uniform(5) + 1)
+        self.listOfSequences.increment1 = Int(arc4random_uniform(10) + 1)
+        self.listOfSequences.increment2 = Int(arc4random_uniform(10) + 1)
+
+        var rightAnswer:Int = Int()
         var a:Int = 1
+        a = Int(arc4random_uniform(2))
+        
+        if (a==0) {
+            for i=0;i<5;i++ {
+                questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
+                rightAnswer = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+5)
+            }
+        } else {
+            for i=0;i<5;i++ {
+                questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+(5-i)))
+                rightAnswer = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber)
+            }
+        }
+        
+        answersArray.append(rightAnswer)
         for i=6;i<11;i++ {
             a = Int(arc4random_uniform(2))
             if a==0 {
@@ -681,15 +693,22 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     }
     
     func setDifficultyLevel() {
-        if self.difficulty=="E" {
-            self.arrayOperation = ["*","/"]
+
+        //Initialize timer depending on difficulty
+        if self.difficulty == "H" {
+            self.allowedSeconds = 00
+            self.allowedMinutes = 05
+            self.totalNumberOfQuestions = 19
         }
-        else if self.difficulty=="M" {
-            self.arrayOperation = ["*","/","+"]
+        else if self.difficulty == "M" {
+            self.allowedSeconds = 00
+            self.allowedMinutes = 08
+            self.totalNumberOfQuestions = 19
         }
-        else if self.difficulty=="H" {
-            self.arrayOperation = ["*","/","+","-"]
+        else {
+            self.allowedSeconds = 00
+            self.allowedMinutes = 10
+            self.totalNumberOfQuestions = 19
         }
     }
-    
 }

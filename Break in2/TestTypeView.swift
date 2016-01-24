@@ -242,10 +242,10 @@ class TestTypeView: UIView {
             self.testTypeTimeLabel.text = "Easy (10 minutes)"
         }
         if self.difficultySelected == "M" {
-            self.testTypeTimeLabel.text = "Medium (10 minutes)"
+            self.testTypeTimeLabel.text = "Medium (8 minutes)"
         }
         if self.difficultySelected == "H" {
-            self.testTypeTimeLabel.text = "Hard (10 minutes)"
+            self.testTypeTimeLabel.text = "Hard (5 minutes)"
         }
     }
   }
