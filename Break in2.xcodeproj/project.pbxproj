@@ -32,6 +32,8 @@
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
 		25E4ACCD1C552C9800C49551 /* LogicalPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E4ACCB1C552C9800C49551 /* LogicalPictureView.swift */; };
 		25E4ACCE1C552C9800C49551 /* LogicalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E4ACCC1C552C9800C49551 /* LogicalModel.swift */; };
+		490CB4061C552E0300A68493 /* logicalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4051C552E0300A68493 /* logicalQuestion.swift */; settings = {ASSET_TAGS = (); }; };
+		490CB4081C552E6800A68493 /* logicalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
 		498B79021C4C27EF002E14D6 /* sequencesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B79011C4C27EF002E14D6 /* sequencesList.swift */; };
 		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; };
@@ -116,6 +118,8 @@
 		25E4ACCB1C552C9800C49551 /* LogicalPictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicalPictureView.swift; sourceTree = "<group>"; };
 		25E4ACCC1C552C9800C49551 /* LogicalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicalModel.swift; sourceTree = "<group>"; };
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
+		490CB4051C552E0300A68493 /* logicalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalQuestion.swift; sourceTree = "<group>"; };
+		490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalReasoningViewController.swift; sourceTree = "<group>"; };
 		497A515E1C39B10C004B325C /* LabelPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPointerView.swift; sourceTree = "<group>"; };
 		498B79011C4C27EF002E14D6 /* sequencesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesList.swift; sourceTree = "<group>"; };
 		49929D9F1C42E95700527929 /* sequencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 				49929DA51C42FDC300527929 /* fractionViewController.swift */,
 				49929DA71C42FDEA00527929 /* fractionsQuestion.swift */,
 				25622B131C39B6240063C770 /* QuestionViewController.swift */,
+				490CB4051C552E0300A68493 /* logicalQuestion.swift */,
+				490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */,
 			);
 			name = QuestionView;
 			sourceTree = "<group>";
@@ -621,6 +627,7 @@
 				2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */,
 				49929DA61C42FDC300527929 /* fractionViewController.swift in Sources */,
 				61FCAED51C0672480072FDFB /* Images.swift in Sources */,
+				490CB4081C552E6800A68493 /* logicalReasoningViewController.swift in Sources */,
 				2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */,
 				252C461F1C430D11000B5B3D /* TutorialDescriptionView.swift in Sources */,
 				2526701C1C2378A6007D55BE /* CalendarMonthView.swift in Sources */,
@@ -641,6 +648,7 @@
 				4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				25A21B761C34956C00A72455 /* StatisticsTitleView.swift in Sources */,
+				490CB4061C552E0300A68493 /* logicalQuestion.swift in Sources */,
 				61DB11D81BF902600081123B /* segueFromLeft.swift in Sources */,
 				61CAD33E1C2708D200B8D887 /* LoginCredentials.xcdatamodeld in Sources */,
 				253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */,

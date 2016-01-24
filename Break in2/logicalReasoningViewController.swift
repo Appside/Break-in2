@@ -12,7 +12,7 @@ import SCLAlertView
 import Parse
 import SwiftSpinner
 
-class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
+class logicalReasoningViewController: QuestionViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -26,9 +26,9 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     let timeLabel:UILabel = UILabel()
     var timeTimer:NSTimer = NSTimer()
     let mainView:UIView = UIView()
-    var quizzArray:[sequencesQuestion] = [sequencesQuestion]()
+    var quizzArray:[logicalQuestion] = [logicalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 19
+    var totalNumberOfQuestions:Int = 4
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 10
     var countSeconds:Int = Int()
@@ -42,7 +42,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
     var arrayOperation:[String] = [String]()
-    var listOfSequences:sequencesList = sequencesList()
+    var logicModel:LogicalModel = LogicalModel()
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -258,31 +258,28 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         
         if self.isTestComplete==false {
             
-        //Initialize labels
+            //Initialize labels
             let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
             let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: NSString(string: labelString).length))
             self.questionMenuLabel.attributedText = attributedString
             self.questionMenuLabel.attributedText = attributedString
-        
+            
         }
         
         // add answers to SwipeUIVIew
         for answerSubView in self.mainView.subviews {
             answerSubView.removeFromSuperview()
         }
-        let arrayAnswers:[Int] = self.quizzArray[indexQuestion].answers
-        let questionAsked:[Int] = self.quizzArray[indexQuestion].question
-        let buttonHeight:Int = Int((self.view.frame.height-250)/6)
+        let arrayAnswers:[LogicalPictureView] = self.quizzArray[indexQuestion].answers
+        let questionAsked:[LogicalPictureView] = self.quizzArray[indexQuestion].question
+        let buttonHeight:Int = Int((self.view.frame.height-250)/4)
+        let shapesWidth:Int = Int((self.view.frame.height-250)/4)-10
+        let shapesMargin:Int = 10
         var i:Int = 0
         
-        var reshapedQuestion:String = String(questionAsked[0])
-        for i=1;i<questionAsked.count;i++ {
-            reshapedQuestion = "\(String(reshapedQuestion)), \(String(questionAsked[i]))"
-        }
-        i=0
         for i=0; i<arrayAnswers.count;i++ {
             let answerRow:UIButton = UIButton()
             let answerNumber:UIButton = UIButton()
@@ -298,18 +295,23 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             answerNumber.tag = (i+1) * 10
             matchingQuestionLabel.tag = (i+1) * 100
             
-            answerNumber.setTitle(String(arrayAnswers[i]), forState: .Normal)
-            answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-            answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
+            answerNumber.addSubview(arrayAnswers[i])
+            arrayAnswers[i].backgroundColor = UIColor.grayColor()
+            arrayAnswers[i].translatesAutoresizingMaskIntoConstraints = false
+            let topAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5)
+            let leftAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 5)
+            answerNumber.addConstraints([topAnsw,leftAnsw])
+            let widthAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
+            let heightAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
+            arrayAnswers[i].addConstraints([widthAnsw,heightAnsw])
+            //answerNumber.setTitle(String(arrayAnswers[i]), forState: .Normal)
+            //answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
+            //answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 20.0)
             answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             answerNumber.layer.borderWidth = 2.0
             
             matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
-            matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
-            matchingQuestionLabel.setTitle("\(reshapedQuestion),❓", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
             
             if i==0 {
@@ -338,9 +340,22 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
             answerNumber.addConstraint(widthMM)
             
+            var j:Int = 0
+            for j=0;j<4;j++ {
+                matchingQuestionLabel.addSubview(questionAsked[j])
+                questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
+                let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+                let bottomMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+                let leftMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(j*(shapesMargin)))
+                matchingQuestionLabel.addConstraints([topMMM,bottomMMM,leftMMM])
+                let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                questionAsked[j].addConstraint(widthMMM)
+                questionAsked[j].backgroundColor = UIColor.grayColor()
+            }
+            
             if self.isTestComplete==false {
                 let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
-            answerNumber.addGestureRecognizer(tapGesture)
+                answerNumber.addGestureRecognizer(tapGesture)
             }
         }
         
@@ -616,70 +631,39 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
     
     func addNewQuestion() {
         //Add a new question to the array
-        let newQuestion:sequencesQuestion = sequencesQuestion()
-        let (sequence, answers, correctIndex, feedbackString) = self.fillArrayWithRandomNumbers()
-        newQuestion.question = sequence
-        newQuestion.answers = answers
+        let newQuestion:logicalQuestion = logicalQuestion()
+        let (questionShapes, answerShapes, correctIndex, feedbackString) = self.fillArrayWithRandomNumbers()
+        newQuestion.question = questionShapes
+        newQuestion.answers = answerShapes
         newQuestion.correctAnswer = correctIndex
         newQuestion.feedback = feedbackString
         self.quizzArray.append(newQuestion)
     }
     
-    func fillArrayWithRandomNumbers() -> ([Int], [Int],Int, String) {
+    func fillArrayWithRandomNumbers() -> ([LogicalPictureView], [LogicalPictureView],Int, String) {
         
         //Set function's variables
-        var initialNumber:Int = Int()
-        var sequenceNumber:Int = Int()
-        var questionArray:[Int] = [Int]()
-        var answersArray:[Int] = [Int]()
-        var returnedArray:[Int] = [Int]()
+        var questionArray:[LogicalPictureView] = [LogicalPictureView]()
+        var answersArray:[LogicalPictureView] = [LogicalPictureView]()
+        var returnedArray:[LogicalPictureView] = [LogicalPictureView]()
         var correctIndex:Int = Int()
         var randomIndex:Int = Int()
         var correctIndexSet:Bool = false
         var i:Int = 0
         
-        //Randomize first number
-        sequenceNumber = Int(arc4random_uniform(6) + 1)
-        initialNumber = Int(arc4random_uniform(5) + 1)
-        self.listOfSequences.arithmeticReason = Int(arc4random_uniform(20) + 1)
-        self.listOfSequences.geometricReason = Int(arc4random_uniform(3) + 1)
-        self.listOfSequences.sequenceFirstTerm = Int(arc4random_uniform(5) + 1)
-        self.listOfSequences.increment1 = Int(arc4random_uniform(10) + 1)
-        self.listOfSequences.increment2 = Int(arc4random_uniform(10) + 1)
-
-        var rightAnswer:Int = Int()
-        var a:Int = 1
-        a = Int(arc4random_uniform(2))
-        
-        if (a==0) {
-            for i=0;i<5;i++ {
-                questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
-                rightAnswer = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+5)
-            }
-        } else {
-            for i=0;i<5;i++ {
-                questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+(5-i)))
-                rightAnswer = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber)
-            }
-        }
-        
-        answersArray.append(rightAnswer)
-        for i=6;i<11;i++ {
-            a = Int(arc4random_uniform(2))
-            if a==0 {
-                answersArray.append(rightAnswer+(i-5))
-            } else {
-                answersArray.append(rightAnswer-(i-5))
-            }
-        }
-        
         //Add feedback
-        var feedbackString:String = String()
-        feedbackString = self.listOfSequences.addFeedback(sequenceNumber)
+        let feedbackString:String = String()
+        //feedbackString = self.listOfSequences.addFeedback(sequenceNumber)
+        
+        //Generate Question and Answers
+        for i=0;i<4;i++ {
+            questionArray.append(LogicalPictureView())
+            answersArray.append(LogicalPictureView())
+        }
         
         //Shuffle array of answers
-        for i=0;i<6;i++ {
-            randomIndex = Int(arc4random_uniform(UInt32(6-i)))
+        for i=0;i<4;i++ {
+            randomIndex = Int(arc4random_uniform(UInt32(4-i)))
             returnedArray.append(answersArray[randomIndex])
             answersArray.removeAtIndex(randomIndex)
             if randomIndex==0 && !correctIndexSet {
@@ -687,13 +671,13 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
                 correctIndexSet = true
             }
         }
-
+        
         //Return question info array
         return (questionArray, returnedArray, correctIndex, feedbackString)
     }
     
     func setDifficultyLevel() {
-
+        
         //Initialize timer depending on difficulty
         if self.difficulty == "H" {
             self.allowedSeconds = 00

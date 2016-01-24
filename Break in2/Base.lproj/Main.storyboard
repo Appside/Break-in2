@@ -74,6 +74,7 @@
                         <segue destination="dEw-t5-imH" kind="show" identifier="arithmeticReasoningSelected" id="nEU-SV-tlS"/>
                         <segue destination="drz-ZO-mQG" kind="show" identifier="sequencesSelected" id="lCt-Yj-gSM"/>
                         <segue destination="BGa-Dr-Nn6" kind="show" identifier="fractionsSelected" id="O30-qH-PLu"/>
+                        <segue destination="FZZ-Nf-FJX" kind="show" identifier="logicalReasoningSelected" id="V4A-0V-PLC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -231,6 +232,27 @@
             </objects>
             <point key="canvasLocation" x="3404" y="853"/>
         </scene>
+        <!--Logical Reasoning View Controller-->
+        <scene sceneID="D3u-io-4Kk">
+            <objects>
+                <viewController id="FZZ-Nf-FJX" customClass="logicalReasoningViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bee-gR-ezs"/>
+                        <viewControllerLayoutGuide type="bottom" id="pZh-7c-SiS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7IX-tr-DP2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" id="VL5-Ng-wAU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZSa-4Y-Ju0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3393" y="1568"/>
+        </scene>
         <!--Arithmetic Reasoning View Controller-->
         <scene sceneID="7pB-7F-gYV">
             <objects>
@@ -255,6 +277,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lOv-b3-KiM"/>
+        <segue reference="Z2O-uS-5Gc"/>
     </inferredMetricsTieBreakers>
 </document>
