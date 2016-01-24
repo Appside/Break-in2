@@ -1,0 +1,346 @@
+//
+//  LogicalModel.swift
+//  TestSelectionScreen
+//
+//  Created by Sangeet on 17/01/2016.
+//  Copyright © 2016 Sangeet Shah. All rights reserved.
+//
+
+import UIKit
+
+class LogicalModel: NSObject {
+  
+  let logicalProblemTypes:[String] = ["basicShapes","shadedShapes","sizedShapes","insideShapes"]
+  let shapeTypes:[String] = ["Circle","Square","Triangle","Octagon","Rhombus"]
+  
+  func getLogicalProblem() -> [[LogicalPictureView]] {
+    
+    //let randomProblemNumber:Int = Int(arc4random_uniform(UInt32(self.logicalProblemTypes.count)))
+    let randomProblemNumber:Int = 3
+    
+    if self.logicalProblemTypes[randomProblemNumber] == "basicShapes" {
+      return self.basicShapesProblem()
+    }
+    else if self.logicalProblemTypes[randomProblemNumber] == "shadedShapes" {
+      return self.shadedShapesProblem()
+    }
+    else if self.logicalProblemTypes[randomProblemNumber] == "sizedShapes" {
+      return self.sizedShapesProblem()
+    }
+    else if self.logicalProblemTypes[randomProblemNumber] == "insideShapes" {
+      return self.insideShapesProblem()
+    }
+    else {
+      return [[LogicalPictureView]]()
+    }
+    
+  }
+  
+  func initializeLogicalPictureViews() -> [[LogicalPictureView]] {
+    
+    var questionShapesArray:[Int] = [Int]()
+    var answerShapesArray:[Int] = [Int]()
+    var questionLogicalPictureArray:[LogicalPictureView] = [LogicalPictureView]()
+    var answerLogicalPictureArray:[LogicalPictureView] = [LogicalPictureView]()
+    
+    while questionShapesArray.count < 4 {
+      
+      let randomShapeNumber:Int = Int(arc4random_uniform(UInt32(self.shapeTypes.count)))
+      
+      if !questionShapesArray.contains(randomShapeNumber) {
+        questionShapesArray.append(randomShapeNumber)
+      }
+    }
+    
+    answerShapesArray.append(questionShapesArray[0])
+    
+    while answerShapesArray.count < 4 {
+      
+      let randomShapeNumber:Int = Int(arc4random_uniform(UInt32(self.shapeTypes.count)))
+      
+      if !(answerShapesArray[0] == randomShapeNumber) && !answerShapesArray.contains(randomShapeNumber) {
+        answerShapesArray.append(randomShapeNumber)
+      }
+      
+    }
+    
+    for index:Int in questionShapesArray {
+      
+      let logicalPictureViewAtIndex:LogicalPictureView = LogicalPictureView()
+      
+      logicalPictureViewAtIndex.shapeToDraw = [self.shapeTypes[index]]
+      
+      questionLogicalPictureArray.append(logicalPictureViewAtIndex)
+      
+    }
+    for index:Int in answerShapesArray {
+      
+      let logicalPictureViewAtIndex:LogicalPictureView = LogicalPictureView()
+      
+      logicalPictureViewAtIndex.shapeToDraw = [self.shapeTypes[index]]
+      
+      answerLogicalPictureArray.append(logicalPictureViewAtIndex)
+      
+    }
+    
+    return [questionLogicalPictureArray,answerLogicalPictureArray]
+  }
+  
+  func basicShapesProblem() -> [[LogicalPictureView]] {
+    
+    var logicalPictureViews:[[LogicalPictureView]] = self.initializeLogicalPictureViews()
+    
+    let randomShadedNumber:Int = Int(arc4random_uniform(3))
+    
+    if randomShadedNumber == 0 {
+      
+      logicalPictureViews[0][2].shapeToDraw = logicalPictureViews[0][0].shapeToDraw
+      logicalPictureViews[0][3].shapeToDraw = logicalPictureViews[0][1].shapeToDraw
+      
+    }
+    else if randomShadedNumber == 1 {
+      
+      logicalPictureViews[0][3].shapeToDraw = logicalPictureViews[0][0].shapeToDraw
+      
+      logicalPictureViews[1][0].shapeToDraw = logicalPictureViews[0][1].shapeToDraw
+      
+      var shapesArray:[String] = [String]()
+      for pictureView in logicalPictureViews[1] {
+        shapesArray.append(pictureView.shapeToDraw[0])
+      }
+      
+      while shapesArray[1] == shapesArray[0] {
+        let randomShapeNumber:Int = Int(arc4random_uniform(UInt32(self.shapeTypes.count)))
+        logicalPictureViews[1][1].shapeToDraw = [self.shapeTypes[randomShapeNumber]]
+        shapesArray[1] = logicalPictureViews[1][1].shapeToDraw[0]
+      }
+      
+    }
+    else if randomShadedNumber == 2 {
+      
+    }
+    
+    return logicalPictureViews
+
+  }
+  
+  func shadedShapesProblem() -> [[LogicalPictureView]] {
+    
+    var logicalPictureViews:[[LogicalPictureView]] = self.basicShapesProblem()
+    
+    let randomShadedNumber:Int = Int(arc4random_uniform(3))
+    
+    if randomShadedNumber == 0 {
+      
+      let randomNumber:Int = Int(arc4random_uniform(2))
+      
+      if randomNumber == 0 {
+        logicalPictureViews[0][0].isShaded = true
+        logicalPictureViews[0][2].isShaded = true
+      }
+      else {
+        logicalPictureViews[0][1].isShaded = true
+        logicalPictureViews[0][3].isShaded = true
+      }
+      
+      if logicalPictureViews[0][0].isShaded {
+        logicalPictureViews[1][0].isShaded = true
+      }
+      
+    }
+    else if randomShadedNumber == 1 {
+      
+      let randomNumber:Int = Int(arc4random_uniform(2))
+      
+      if randomNumber == 0 {
+        logicalPictureViews[0][0].isShaded = true
+        logicalPictureViews[0][1].isShaded = true
+      }
+      else {
+        logicalPictureViews[0][2].isShaded = true
+        logicalPictureViews[0][3].isShaded = true
+      }
+      
+      if logicalPictureViews[0][0].isShaded {
+        logicalPictureViews[1][0].isShaded = true
+      }
+      
+    }
+    else if randomShadedNumber == 2 {
+      
+      let randomNumber:Int = Int(arc4random_uniform(2))
+      
+      if randomNumber == 0 {
+        logicalPictureViews[0][0].isShaded = true
+        logicalPictureViews[0][1].isShaded = true
+        logicalPictureViews[0][2].isShaded = true
+      }
+      else {
+        logicalPictureViews[0][1].isShaded = true
+        logicalPictureViews[0][2].isShaded = true
+        logicalPictureViews[0][3].isShaded = true
+      }
+      
+    }
+    
+    for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+      
+      let randomNumber2:Int = Int(arc4random_uniform(2))
+      if randomNumber2 == 0 {
+        logicalPictureViews[1][i].isShaded = true
+      }
+      
+    }
+    
+    return logicalPictureViews
+  }
+  
+  func sizedShapesProblem() -> [[LogicalPictureView]] {
+    
+    var logicalPictureViews:[[LogicalPictureView]] = self.basicShapesProblem()
+    
+    let randomSizeNumber:Int = Int(arc4random_uniform(3))
+    
+    if randomSizeNumber == 0 {
+      
+      let randomNumber:Int = Int(arc4random_uniform(2))
+      
+      if randomNumber == 0 {
+        logicalPictureViews[0][0].shapeSize = 3
+        logicalPictureViews[0][2].shapeSize = 3
+      }
+      else {
+        logicalPictureViews[0][1].shapeSize = 3
+        logicalPictureViews[0][3].shapeSize = 3
+      }
+      
+      logicalPictureViews[1][0].shapeSize = logicalPictureViews[0][0].shapeSize
+      
+    }
+    else if randomSizeNumber == 1 {
+      
+      let randomNumber:Int = Int(arc4random_uniform(2))
+      
+      if randomNumber == 0 {
+        logicalPictureViews[0][0].shapeSize = 3
+        logicalPictureViews[0][1].shapeSize = 2
+        logicalPictureViews[0][3].shapeSize = 3
+      }
+      else {
+        logicalPictureViews[0][1].shapeSize = 2
+        logicalPictureViews[0][2].shapeSize = 3
+      }
+      
+      logicalPictureViews[1][0].shapeSize = logicalPictureViews[0][1].shapeSize
+      
+    }
+    else if randomSizeNumber == 2 {
+      
+      let randomNumber:Int = Int(arc4random_uniform(2))
+      
+      if randomNumber == 0 {
+        logicalPictureViews[0][0].shapeSize = 3
+        logicalPictureViews[0][1].shapeSize = 3
+      }
+      else {
+        logicalPictureViews[0][2].shapeSize = 3
+        logicalPictureViews[0][3].shapeSize = 3
+      }
+      
+      logicalPictureViews[1][0].shapeSize = logicalPictureViews[0][0].shapeSize
+      
+    }
+    
+    for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+      
+      let randomNumber2:Int = Int(arc4random_uniform(3))
+      if randomNumber2 == 0 {
+        logicalPictureViews[1][i].shapeSize = 1
+      }
+      else if randomNumber2 == 1 {
+        logicalPictureViews[1][i].shapeSize = 2
+      }
+      else {
+        logicalPictureViews[1][i].shapeSize = 3
+      }
+      
+    }
+    
+    return logicalPictureViews
+  }
+  
+  func insideShapesProblem() -> [[LogicalPictureView]] {
+    
+    var logicalPictureViews:[[LogicalPictureView]] = self.basicShapesProblem()
+    var shapesArray:[String] = [String]()
+    
+    for logicalPictureView in logicalPictureViews[0] {
+      shapesArray.append(logicalPictureView.shapeToDraw[0])
+    }
+    
+    let randomSizeOrderNumber:Int = 0
+    
+    if randomSizeOrderNumber == 0 {
+      for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
+        var shapesToDrawArray:[String] = [String]()
+        for var j:Int = 0 ; j < 3 ; j++ {
+          shapesToDrawArray.append(shapesArray[(i + j) % shapesArray.count])
+        }
+        logicalPictureViews[0][i].shapeToDraw = shapesToDrawArray
+      }
+      
+      logicalPictureViews[1][0].shapeToDraw = logicalPictureViews[0][0].shapeToDraw
+      
+      var randomAnswers:[[String]] = [[String]]()
+      while randomAnswers.count < 4 {
+        var shapesToDrawArray:[String] = [String]()
+        for var index:Int = 0 ; index < 3 ; index++ {
+          shapesToDrawArray.append(self.shapeTypes[Int(arc4random_uniform(UInt32(self.shapeTypes.count)))])
+        }
+        if shapesToDrawArray != logicalPictureViews[1][0] {
+          randomAnswers.append(shapesToDrawArray)
+        }
+      }
+      for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+        logicalPictureViews[1][i].shapeToDraw = randomAnswers[i]
+      }
+      
+      return logicalPictureViews
+      
+    }
+    else if randomSizeOrderNumber == 1 {
+      
+      for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
+        var shapesToDrawArray:[String] = [String]()
+        for var j:Int = 2 ; j < 0 ; j-- {
+          shapesToDrawArray.append(shapesArray[(j - i) % shapesArray.count])
+        }
+        logicalPictureViews[0][i].shapeToDraw = shapesToDrawArray
+      }
+      
+      logicalPictureViews[1][0] = logicalPictureViews[0][0]
+      
+      var randomAnswers:[[String]] = [[String]]()
+      while randomAnswers.count < 4 {
+        var shapesToDrawArray:[String] = [String]()
+        for var index:Int = 3 ; index < 1 ; index++ {
+          shapesToDrawArray.append(self.shapeTypes[Int(arc4random_uniform(UInt32(self.shapeTypes.count)))])
+        }
+        if shapesToDrawArray != logicalPictureViews[1][0] {
+          randomAnswers.append(shapesToDrawArray)
+        }
+      }
+      for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+        logicalPictureViews[1][i].shapeToDraw = randomAnswers[i]
+      }
+      
+      return logicalPictureViews
+      
+    }
+    else {
+      return [[LogicalPictureView]]()
+    }
+    
+  }
+  
+}
