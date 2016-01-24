@@ -74,6 +74,7 @@
                         <segue destination="dEw-t5-imH" kind="show" identifier="arithmeticReasoningSelected" id="nEU-SV-tlS"/>
                         <segue destination="drz-ZO-mQG" kind="show" identifier="sequencesSelected" id="lCt-Yj-gSM"/>
                         <segue destination="BGa-Dr-Nn6" kind="show" identifier="fractionsSelected" id="O30-qH-PLu"/>
+                        <segue destination="T3w-6a-PQ7" kind="show" identifier="logicalReasoningSelected" id="DVN-TR-Bp0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -253,8 +254,29 @@
             </objects>
             <point key="canvasLocation" x="2730" y="1567"/>
         </scene>
+        <!--Logical Reasoning View Controller-->
+        <scene sceneID="pTQ-1q-SQq">
+            <objects>
+                <viewController id="T3w-6a-PQ7" customClass="logicalReasoningViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AfY-1U-58r"/>
+                        <viewControllerLayoutGuide type="bottom" id="7aJ-tv-zqp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mcw-FB-dwY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="custom" identifier="backHomeSegue" customClass="segueFromLeft" customModule="Break_in2" customModuleProvider="target" id="C2x-Rs-IqQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a8X-1J-oTI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3406" y="1565"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lOv-b3-KiM"/>
+        <segue reference="C2x-Rs-IqQ"/>
     </inferredMetricsTieBreakers>
 </document>
