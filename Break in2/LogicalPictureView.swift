@@ -1,6 +1,6 @@
 //
 //  LogicalPictureView.swift
-//  TestSelectionScreen
+//  Break in2
 //
 //  Created by Sangeet on 14/01/2016.
 //  Copyright © 2016 Sangeet Shah. All rights reserved.
@@ -14,14 +14,14 @@ class LogicalPictureView: UIView {
   var shapeToDraw:[String] = [String]()
   var isShaded:Bool = false
   var shapeSize:Int = 1
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
+  
+  /*
+  // Only override drawRect: if you perform custom drawing.
+  // An empty implementation adversely affects performance during animation.
+  override func drawRect(rect: CGRect) {
+  // Drawing code
+  }
+  */
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -75,13 +75,18 @@ class LogicalPictureView: UIView {
     else if self.shapeToDraw.count == 3 {
       
       var drawRects:[CGRect] = [CGRect]()
-      drawRects.append(CGRectMake(self.bounds.width * 0.05, self.bounds.height * 0.05, self.bounds.width * 0.9, self.bounds.height * 0.9))
+      drawRects.append(CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.1, self.bounds.width * 0.8, self.bounds.height * 0.8))
       drawRects.append(CGRectMake(self.bounds.width * 0.25, self.bounds.height * 0.25, self.bounds.width * 0.5, self.bounds.height * 0.5))
       drawRects.append(CGRectMake(self.bounds.width * 0.4, self.bounds.height * 0.4, self.bounds.width * 0.2, self.bounds.height * 0.2))
-      
-//      drawRects.append(CGRectMake(self.bounds.width * 0.05, self.bounds.height * 0.05, self.bounds.width * 0.9, self.bounds.height * 0.9))
-//      drawRects.append(CGRectMake(self.bounds.width * 0.25, self.bounds.height * 0.25, self.bounds.width * 0.5, self.bounds.height * 0.5))
-//      drawRects.append(CGRectMake(self.bounds.width * 0.4, self.bounds.height * 0.4, self.bounds.width * 0.2, self.bounds.height * 0.2))
+      if self.shapeToDraw[0] == "Rhombus" {
+        drawRects[0] = CGRectMake(self.bounds.width * 0.05, self.bounds.height * 0.05, self.bounds.width * 0.9, self.bounds.height * 0.9)
+        if self.shapeToDraw[1] == "Square" {
+          drawRects[1] = CGRectMake(self.bounds.width * 0.3, self.bounds.height * 0.3, self.bounds.width * 0.4, self.bounds.height * 0.4)
+        }
+      }
+      if self.shapeToDraw[1] == "Rhombus" {
+        drawRects[1] = CGRectMake(self.bounds.width * 0.2, self.bounds.height * 0.2, self.bounds.width * 0.6, self.bounds.height * 0.6)
+      }
       
       for var index:Int = 0 ; index < self.shapeToDraw.count ; index++ {
         
@@ -107,10 +112,10 @@ class LogicalPictureView: UIView {
     else if self.shapeToDraw.count == 4 {
       
       var drawRects:[CGRect] = [CGRect]()
-      drawRects.append(CGRectMake(0, 0, self.bounds.width/2, self.bounds.height/2))
-      drawRects.append(CGRectMake(self.bounds.width/2, 0, self.bounds.width/2, self.bounds.height/2))
-      drawRects.append(CGRectMake(self.bounds.width/2, self.bounds.height/2, self.bounds.width/2, self.bounds.height/2))
-      drawRects.append(CGRectMake(0, self.bounds.height/2, self.bounds.width/2, self.bounds.height/2))
+      drawRects.append(CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.1, self.bounds.width * 0.3, self.bounds.height * 0.3))
+      drawRects.append(CGRectMake(self.bounds.width * 0.6, self.bounds.height * 0.1, self.bounds.width * 0.3, self.bounds.height * 0.3))
+      drawRects.append(CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.6, self.bounds.width * 0.3, self.bounds.height * 0.3))
+      drawRects.append(CGRectMake(self.bounds.width * 0.6, self.bounds.height * 0.6, self.bounds.width * 0.3, self.bounds.height * 0.3))
       
       for var index:Int = 0 ; index < self.shapeToDraw.count ; index++ {
         
@@ -137,7 +142,7 @@ class LogicalPictureView: UIView {
   }
   
   func drawCircle(contextRef:CGContextRef, inRect:CGRect) {
-
+    
     if self.isShaded {
       CGContextFillEllipseInRect(contextRef, inRect)
     }
@@ -216,5 +221,5 @@ class LogicalPictureView: UIView {
       CGContextStrokePath(contextRef)
     }
   }
-
+  
 }

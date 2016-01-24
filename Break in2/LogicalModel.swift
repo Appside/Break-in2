@@ -1,6 +1,6 @@
 //
 //  LogicalModel.swift
-//  TestSelectionScreen
+//  Break in2
 //
 //  Created by Sangeet on 17/01/2016.
 //  Copyright © 2016 Sangeet Shah. All rights reserved.
@@ -10,13 +10,12 @@ import UIKit
 
 class LogicalModel: NSObject {
   
-  let logicalProblemTypes:[String] = ["basicShapes","shadedShapes","sizedShapes","insideShapes"]
+  let logicalProblemTypes:[String] = ["basicShapes","shadedShapes","sizedShapes","insideShapes", "cornerShapes"]
   let shapeTypes:[String] = ["Circle","Square","Triangle","Octagon","Rhombus"]
   
   func getLogicalProblem() -> [[LogicalPictureView]] {
     
-    //let randomProblemNumber:Int = Int(arc4random_uniform(UInt32(self.logicalProblemTypes.count)))
-    let randomProblemNumber:Int = 3
+    let randomProblemNumber:Int = Int(arc4random_uniform(UInt32(self.logicalProblemTypes.count)))
     
     if self.logicalProblemTypes[randomProblemNumber] == "basicShapes" {
       return self.basicShapesProblem()
@@ -29,6 +28,9 @@ class LogicalModel: NSObject {
     }
     else if self.logicalProblemTypes[randomProblemNumber] == "insideShapes" {
       return self.insideShapesProblem()
+    }
+    else if self.logicalProblemTypes[randomProblemNumber] == "cornerShapes" {
+      return self.cornerShapesProblem()
     }
     else {
       return [[LogicalPictureView]]()
@@ -121,7 +123,7 @@ class LogicalModel: NSObject {
     }
     
     return logicalPictureViews
-
+    
   }
   
   func shadedShapesProblem() -> [[LogicalPictureView]] {
@@ -271,14 +273,19 @@ class LogicalModel: NSObject {
   
   func insideShapesProblem() -> [[LogicalPictureView]] {
     
-    var logicalPictureViews:[[LogicalPictureView]] = self.basicShapesProblem()
+    var logicalPictureViews:[[LogicalPictureView]] = [[LogicalPictureView]]()
     var shapesArray:[String] = [String]()
     
-    for logicalPictureView in logicalPictureViews[0] {
-      shapesArray.append(logicalPictureView.shapeToDraw[0])
-    }
+    repeat {
+      logicalPictureViews.removeAll()
+      shapesArray.removeAll()
+      logicalPictureViews = self.basicShapesProblem()
+      for logicalPictureView in logicalPictureViews[0] {
+        shapesArray.append(logicalPictureView.shapeToDraw[0])
+      }
+    } while shapesArray.contains("Triangle")
     
-    let randomSizeOrderNumber:Int = 0
+    let randomSizeOrderNumber:Int = Int(arc4random_uniform(2))
     
     if randomSizeOrderNumber == 0 {
       for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
@@ -295,7 +302,7 @@ class LogicalModel: NSObject {
       while randomAnswers.count < 4 {
         var shapesToDrawArray:[String] = [String]()
         for var index:Int = 0 ; index < 3 ; index++ {
-          shapesToDrawArray.append(self.shapeTypes[Int(arc4random_uniform(UInt32(self.shapeTypes.count)))])
+          shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
         }
         if shapesToDrawArray != logicalPictureViews[1][0] {
           randomAnswers.append(shapesToDrawArray)
@@ -312,19 +319,19 @@ class LogicalModel: NSObject {
       
       for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
         var shapesToDrawArray:[String] = [String]()
-        for var j:Int = 2 ; j < 0 ; j-- {
-          shapesToDrawArray.append(shapesArray[(j - i) % shapesArray.count])
+        for var j:Int = (logicalPictureViews[0].count - i) + 1 ; j > (logicalPictureViews[0].count - i) - 2 ; j-- {
+          shapesToDrawArray.append(shapesArray[j % shapesArray.count])
         }
         logicalPictureViews[0][i].shapeToDraw = shapesToDrawArray
       }
       
-      logicalPictureViews[1][0] = logicalPictureViews[0][0]
+      logicalPictureViews[1][0].shapeToDraw = logicalPictureViews[0][0].shapeToDraw
       
       var randomAnswers:[[String]] = [[String]]()
       while randomAnswers.count < 4 {
         var shapesToDrawArray:[String] = [String]()
-        for var index:Int = 3 ; index < 1 ; index++ {
-          shapesToDrawArray.append(self.shapeTypes[Int(arc4random_uniform(UInt32(self.shapeTypes.count)))])
+        for var index:Int = 0 ; index < 3 ; index++ {
+          shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
         }
         if shapesToDrawArray != logicalPictureViews[1][0] {
           randomAnswers.append(shapesToDrawArray)
@@ -336,6 +343,50 @@ class LogicalModel: NSObject {
       
       return logicalPictureViews
       
+    }
+    else {
+      return [[LogicalPictureView]]()
+    }
+    
+  }
+  
+  func cornerShapesProblem() -> [[LogicalPictureView]] {
+    
+    var logicalPictureViews:[[LogicalPictureView]] = self.shadedShapesProblem()
+    var shapesArray:[String] = [String]()
+    
+    for logicalPictureView in logicalPictureViews[0] {
+      shapesArray.append(logicalPictureView.shapeToDraw[0])
+    }
+    
+    for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
+      var shapesToDrawArray:[String] = [String]()
+      for var j:Int = 0 ; j < 4 ; j++ {
+        shapesToDrawArray.append(shapesArray[(i + j) % shapesArray.count])
+      }
+      logicalPictureViews[0][i].shapeToDraw = shapesToDrawArray
+    }
+    
+    logicalPictureViews[1][0].shapeToDraw = logicalPictureViews[0][0].shapeToDraw
+    
+    var randomAnswers:[[String]] = [[String]]()
+    while randomAnswers.count < 4 {
+      var shapesToDrawArray:[String] = [String]()
+      for var index:Int = 0 ; index < 4 ; index++ {
+        shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
+      }
+      if shapesToDrawArray != logicalPictureViews[1][0] {
+        randomAnswers.append(shapesToDrawArray)
+      }
+    }
+    for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+      logicalPictureViews[1][i].shapeToDraw = randomAnswers[i]
+    }
+    
+    let randomShapeOrderNumber:Int = Int(arc4random_uniform(1))
+    
+    if randomShapeOrderNumber == 0 {
+      return logicalPictureViews
     }
     else {
       return [[LogicalPictureView]]()
