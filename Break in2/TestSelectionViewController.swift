@@ -7,10 +7,18 @@
 //
 
 import UIKit
+import SwiftSpinner
 
 class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
-    
+  
+  // Timer stuff
   let defaults = NSUserDefaults.standardUserDefaults()
+  var timer = NSTimer()
+  var numberOfTestsTotal:Int = Int()
+  var membershipType:String = String()
+  var maxNumberOfTests:Int = 3
+  var count:Int = 24
+  var startTime:CFAbsoluteTime = CFAbsoluteTime()
   
   // Declare and initialize types of tests and difficulties available for selected career
   
@@ -31,7 +39,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   let testStartButton:UIButton = UIButton(type: UIButtonType.System)
   var backButton:UIButton = UIButton()
   let swipeInfoLabel:UILabel = UILabel()
-  var numberOfTestsTotal:Int = Int()
   var testsTotal:UIButton = UIButton()
   
   // Declare and initialize constraints that will be animated
@@ -182,11 +189,32 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
-    numberOfTestsTotal = defaults.integerForKey("Lives")
-    self.testsTotal.addTarget(self, action: "", forControlEvents: UIControlEvents.TouchUpInside)
-    self.testsTotal.setTitle(String(numberOfTestsTotal), forState: UIControlState.Normal)
-    self.testsTotal.clipsToBounds = true
+    membershipType = defaults.objectForKey("Membership") as! String
     
+    if (membershipType == "Paid") {
+        
+        //placeholder for freemium
+    
+    }else{
+        
+        numberOfTestsTotal = defaults.integerForKey("Lives")
+        
+        if (numberOfTestsTotal < maxNumberOfTests) {
+            
+            let date = NSDate().dateByAddingTimeInterval(0)
+            let timer = NSTimer(fireDate: date, interval: 30, target: self, selector: "checkLives", userInfo: nil, repeats: true)
+            NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+            //self.checkLives()
+            
+        }else{
+            
+        }
+        
+        self.testsTotal.addTarget(self, action: "", forControlEvents: UIControlEvents.TouchUpInside)
+        self.testsTotal.setTitle(String(numberOfTestsTotal), forState: UIControlState.Normal)
+        self.testsTotal.clipsToBounds = true
+        
+    }
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
@@ -231,6 +259,27 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
+    
+    func checkLives(){
+        
+        startTime = CFAbsoluteTimeGetCurrent()
+        let initialTime: CFAbsoluteTime = defaults.objectForKey("LivesTimer") as! CFAbsoluteTime
+        let diff = startTime - initialTime
+        let timeBetweenLives:Double = 30
+        let numberToAdd = floor(diff / timeBetweenLives)
+        let newLives:Int = Int(numberToAdd) + numberOfTestsTotal
+        
+        if numberToAdd > 0 {
+            
+            numberOfTestsTotal = min(newLives, 3)
+            self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+            self.testsTotal.setTitle(String(numberOfTestsTotal), forState: UIControlState.Normal)
+            
+        }else{
+            
+        }
+        
+    }
   
   func setConstraints() {
     
@@ -448,11 +497,35 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
           self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
         }
         else if sender == self.testStartButton {
-        
-            self.numberOfTestsTotal--
-            self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
             
-        self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+            if (self.numberOfTestsTotal == 3) {
+        
+                let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
+                self.defaults.setObject(now, forKey: "LivesTimer")
+                self.numberOfTestsTotal--
+                self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+                self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+                
+            }else if (self.numberOfTestsTotal > 0 && self.numberOfTestsTotal < 3) {
+            
+                self.numberOfTestsTotal--
+                self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+                self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+                
+            }else{
+                
+                //placeholder, we need to open the option to buy more tests
+                SwiftSpinner.show("You need more lives", animated: false).addTapHandler({
+                    
+                    self.numberOfTestsTotal = 3
+                    self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+                    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                    SwiftSpinner.hide()
+                    
+                    }, subtitle: "Tap to add for free")
+                
+            }
+        
         }
         
     })
