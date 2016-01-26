@@ -465,11 +465,11 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                     SwiftSpinner.show("Saving Results")
                     
                     let user = PFUser.currentUser()
-                    let analytics = PFObject(className: PF_SEQUENCE_CLASS_NAME)
-                    analytics[PF_SEQUENCE_USER] = user
-                    analytics[PF_SEQUENCE_SCORE] = self.scoreRatio
-                    analytics[PF_SEQUENCE_TIME] = timeTaken
-                    analytics[PF_SEQUENCE_USERNAME] = user![PF_USER_USERNAME]
+                    let analytics = PFObject(className: PF_LOGICAL_CLASS_NAME)
+                    analytics[PF_LOGICAL_USER] = user
+                    analytics[PF_LOGICAL_SCORE] = self.scoreRatio
+                    analytics[PF_LOGICAL_TIME] = timeTaken
+                    analytics[PF_LOGICAL_USERNAME] = user![PF_USER_USERNAME]
                     
                     analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
