@@ -275,7 +275,6 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             answerSubView.removeFromSuperview()
         }
         let arrayAnswers:[LogicalPictureView] = self.quizzArray[indexQuestion].answers
-        let questionAsked:[LogicalPictureView] = self.quizzArray[indexQuestion].question
         let buttonHeight:Int = Int((self.view.frame.height-250)/4)
         let shapesMargin:Int = 10
         let shapesWidth:Int = (Int(self.view.frame.width)-170-4*shapesMargin)/4
@@ -307,18 +306,6 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             let widthAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
             arrayAnswers[i].addConstraints([heightAnsw,widthAnsw])
             
-            for j=0;j<4;j++ {
-                matchingQuestionLabel.addSubview(questionAsked[j])
-                questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
-                let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
-                let leftMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(j*(shapesWidth+shapesMargin)))
-                matchingQuestionLabel.addConstraints([topMMM,leftMMM])
-                let heightMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
-                let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
-                questionAsked[j].addConstraints([heightMMM,widthMMM])
-                questionAsked[j].backgroundColor = UIColor.grayColor()
-            }
-            
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
             answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             answerNumber.layer.borderWidth = 2.0
@@ -326,9 +313,26 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             matchingQuestionLabel.alpha = 0.0
             
             if i==0 {
+                //Select first row by default
                 answerRow.alpha = 1.0
                 answerRow.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
                 matchingQuestionLabel.alpha = 1.0
+                
+                //Set constraints for the shapes
+                j = 0
+                let questionAsked:[LogicalPictureView] = self.quizzArray[indexQuestion].question
+                for j=0;j<4;j++ {
+                    matchingQuestionLabel.addSubview(questionAsked[j])
+                    questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
+                    let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+                    let leftMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(j*(shapesWidth+shapesMargin)))
+                    matchingQuestionLabel.addConstraints([topMMM,leftMMM])
+                    let heightMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                    let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                    questionAsked[j].addConstraints([heightMMM,widthMMM])
+                    questionAsked[j].backgroundColor = UIColor.grayColor()
+                }
+                
             }
             
             let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10)))
@@ -400,6 +404,24 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                                 if let actualSubButton = subButton as? UIButton {
                                     if actualSubButton.tag == (actButton.tag)*10 {
                                         actualSubButton.alpha = 1.0
+                                        
+                                        //Move question to selected matchingQuestionLabel
+                                        let shapesMargin:Int = 10
+                                        let shapesWidth:Int = (Int(self.view.frame.width)-170-4*shapesMargin)/4
+                                        var j:Int = 0
+                                        let questionAsked:[LogicalPictureView] = self.quizzArray[self.displayedQuestionIndex].question
+                                        for j=0;j<4;j++ {
+                                            actualSubButton.addSubview(questionAsked[j])
+                                            questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
+                                            let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: actualSubButton, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+                                            let leftMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: actualSubButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(j*(shapesWidth+shapesMargin)))
+                                            actualSubButton.addConstraints([topMMM,leftMMM])
+                                            let heightMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                                            let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                                            questionAsked[j].addConstraints([heightMMM,widthMMM])
+                                            questionAsked[j].backgroundColor = UIColor.grayColor()
+                                        }
+                                        
                                     }
                                 }
                             }
