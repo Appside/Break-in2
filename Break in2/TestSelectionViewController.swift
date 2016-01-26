@@ -926,6 +926,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
         
     }
+    
+    func premiumMembership(){
+        
+    }
   
 }
 
