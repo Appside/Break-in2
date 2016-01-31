@@ -32,8 +32,8 @@
 		25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ADC3AC1C052BA4004465FF /* CareerButton.swift */; };
 		25E4ACCD1C552C9800C49551 /* LogicalPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E4ACCB1C552C9800C49551 /* LogicalPictureView.swift */; };
 		25E4ACCE1C552C9800C49551 /* LogicalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E4ACCC1C552C9800C49551 /* LogicalModel.swift */; };
-		490CB4061C552E0300A68493 /* logicalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4051C552E0300A68493 /* logicalQuestion.swift */; settings = {ASSET_TAGS = (); }; };
-		490CB4081C552E6800A68493 /* logicalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		490CB4061C552E0300A68493 /* logicalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4051C552E0300A68493 /* logicalQuestion.swift */; };
+		490CB4081C552E6800A68493 /* logicalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */; };
 		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
 		498B79021C4C27EF002E14D6 /* sequencesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B79011C4C27EF002E14D6 /* sequencesList.swift */; };
 		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; };

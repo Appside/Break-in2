@@ -15,8 +15,9 @@ import FBSDKLoginKit
 import SCLAlertView
 import CoreData
 import SwiftSpinner
+import MessageUI
 
-class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate {
+class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate, MFMailComposeViewControllerDelegate {
   
   let settingsModel:JSONModel = JSONModel()
   let defaults = NSUserDefaults.standardUserDefaults()
@@ -907,6 +908,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
 
   func hideSettingsMenuView(sender:UIButton) {
     
+    if sender.currentTitle == "Contact Us" {
+        
+        self.sendEmailButtonTapped(sender)
+        
+    }else{
+    
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
       self.chooseCareersView.alpha = 0
@@ -930,6 +937,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         }
         
     })
+    }
     
   }
     
@@ -1139,5 +1147,30 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
   }
 
+    func sendEmailButtonTapped(sender: AnyObject) {
+        let mailComposeViewController = configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            let emailError = SCLAlertView()
+            emailError.showError("Could Not Send Email", subTitle: "Try Again")
+        }
+    }
+    
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.setToRecipients(["team@appside.co.uk"])
+        mailComposerVC.setSubject("Break In2 Feedback")
+        //mailComposerVC.setMessageBody("Sending e-mail in-app is not so bad!", isHTML: false)
+        
+        return mailComposerVC
+    }
+
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
   
 }
