@@ -912,7 +912,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         self.sendEmailButtonTapped(sender)
         
-    }else{
+    }
+    else if sender.currentTitle == "About" {
+      UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)    }
+    else{
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
@@ -929,6 +932,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         }
         else if sender == self.tutorialNextButton {
           self.performSegueWithIdentifier("backFromEditProfile", sender: self.tutorialNextButton)
+        }
+        else if sender.currentTitle == "Show Walkthrough" {
+          self.performSegueWithIdentifier("showTutorialFromSettings", sender: self.settingsButtons[0])
         }
         else if sender == self.facebookLogoutButton {
             

@@ -10,7 +10,7 @@ import UIKit
 
 class LogicalPictureView: UIView {
   
-  let drawingColor:UIColor = UIColor.blueColor()
+  let drawingColor:UIColor = UIColor.turquoiseColor()
   var shapeToDraw:[String] = [String]()
   var isShaded:Bool = false
   var shapeSize:Int = 1
@@ -26,7 +26,7 @@ class LogicalPictureView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.backgroundColor = UIColor.lightGrayColor()
+    self.backgroundColor = UIColor.clearColor()
     
   }
   

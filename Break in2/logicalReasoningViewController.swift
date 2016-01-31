@@ -297,7 +297,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             matchingQuestionLabel.tag = (i+1) * 100
             
             answerNumber.addSubview(arrayAnswers[i])
-            arrayAnswers[i].backgroundColor = UIColor.grayColor()
+            arrayAnswers[i].backgroundColor = UIColor.clearColor()
             arrayAnswers[i].translatesAutoresizingMaskIntoConstraints = false
             let centerXAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
             let centerYAnsw:NSLayoutConstraint = NSLayoutConstraint(item: arrayAnswers[i], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
@@ -330,7 +330,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                     let heightMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
                     let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
                     questionAsked[j].addConstraints([heightMMM,widthMMM])
-                    questionAsked[j].backgroundColor = UIColor.grayColor()
+                    questionAsked[j].backgroundColor = UIColor.clearColor()
                 }
                 
             }
@@ -391,7 +391,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         if let actualButton = buttonTapped {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 if let actButton = actualButton as? UIButton {
-                    actButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+                    actButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.5)
                     actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
                     actButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                     self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag/10 - 1)
@@ -419,7 +419,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                                             let heightMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
                                             let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
                                             questionAsked[j].addConstraints([heightMMM,widthMMM])
-                                            questionAsked[j].backgroundColor = UIColor.grayColor()
+                                            questionAsked[j].backgroundColor = UIColor.clearColor()
                                         }
                                         
                                     }

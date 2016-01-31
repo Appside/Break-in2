@@ -113,6 +113,7 @@
                     </view>
                     <connections>
                         <segue destination="so5-KN-hxF" kind="show" identifier="backFromEditProfile" animates="NO" id="F0f-T8-cql"/>
+                        <segue destination="qPe-jy-3Ia" kind="show" identifier="showTutorialFromSettings" animates="NO" id="ozu-v7-0io"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DtD-yn-t8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -268,6 +269,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rjW-J2-l3e"/>
+        <segue reference="F0f-T8-cql"/>
+        <segue reference="ozu-v7-0io"/>
     </inferredMetricsTieBreakers>
 </document>

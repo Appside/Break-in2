@@ -678,6 +678,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         self.backgroundImageView2.alpha = 1
         self.backgroundImageView.alpha = 0
         self.testSelectionView.alpha = 0
+        self.testsTotal.alpha = 0
+        if self.testLivesBackgroudViewVisible {
+          self.testLivesBackgroundView.alpha = 0
+        }
         //self.testSelectionViewBottomConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7)
         self.backButton.alpha = 0
         self.view.layoutIfNeeded()
