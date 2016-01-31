@@ -16,7 +16,6 @@ class LogicalModel: NSObject {
   func getLogicalProblem() -> [[LogicalPictureView]] {
     
     let randomProblemNumber:Int = Int(arc4random_uniform(UInt32(self.logicalProblemTypes.count)))
-    //let randomProblemNumber:Int = 0
     
     if self.logicalProblemTypes[randomProblemNumber] == "basicShapes" {
       return self.basicShapesProblem()
