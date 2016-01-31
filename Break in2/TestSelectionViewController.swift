@@ -9,6 +9,7 @@
 import UIKit
 import SwiftSpinner
 import SCLAlertView
+import Parse
 
 class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
@@ -27,6 +28,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   var secondsBetweenLives:Int = 60
   var countSeconds:Int = Int()
   var countMinutes:Int = Int()
+    var lifeOrLives:String = String()
     
   
   // Declare and initialize types of tests and difficulties available for selected career
@@ -229,9 +231,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     membershipType = defaults.objectForKey("Membership") as! String
     
-    if (membershipType == "Paid") {
+    if (membershipType == "Premium") {
         
         //placeholder for freemium
+        paidConduit()
     
     }else{
         
@@ -294,7 +297,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         
         self.testsTotal.addTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
         self.testsTotal.setTitle(String(self.numberOfTestsTotal), forState: UIControlState.Normal)
-        self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) lives left."
+        if self.numberOfTestsTotal == 1 {
+            lifeOrLives = "life"
+        }else{
+            lifeOrLives = "lives"
+        }
+        self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
         self.testsTotal.clipsToBounds = true
         self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
         self.testsTotal.layer.borderWidth = 2
@@ -302,24 +310,25 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         
         if (self.numberOfTestsTotal < self.maxNumberOfTests) {
             
-//            let date = NSDate().dateByAddingTimeInterval(0)
-//            let timer = NSTimer(fireDate: date, interval: 1, target: self, selector: "checkLives", userInfo: nil, repeats: true)
-//            NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
             self.checkLives()
             
         }else{
             
-            //timer.invalidate()
             self.testLivesSubtitleLabel.text = "MAXIMUM AMOUNT OF LIVES"
             
         }
         
-//        self.testsTotal.addTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
-//        self.testsTotal.setTitle(String(numberOfTestsTotal), forState: UIControlState.Normal)
-//        self.testsTotal.clipsToBounds = true
-//        self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
-//        self.testsTotal.layer.borderWidth = 2
-//        self.testsTotal.layer.borderColor = UIColor.whiteColor().CGColor
+    }
+    
+    func paidConduit(){
+        
+        //self.testsTotal.addTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
+        //self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) lives left."
+        self.testsTotal.clipsToBounds = true
+        self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
+        self.testsTotal.layer.borderWidth = 2
+        self.testsTotal.layer.borderColor = UIColor.whiteColor().CGColor
         
     }
     
@@ -342,7 +351,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
             self.numberOfTestsTotal = min(newLives, 3)
             self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
             self.testsTotal.setTitle(String(self.numberOfTestsTotal), forState: UIControlState.Normal)
-            self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) lives left."
+            if self.numberOfTestsTotal == 1 {
+                lifeOrLives = "life"
+            }else{
+                lifeOrLives = "lives"
+            }
+            self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
             numberToAdd = 0
             let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
             self.defaults.setObject(now, forKey: "LivesTimer")
@@ -693,12 +707,15 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
                 self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
                 self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
                 
+            }else if (self.membershipType == "Premium"){
+                
+                self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+            
             }else{
                 
                 let backAlert = SCLAlertView()
                 backAlert.showCloseButton = false
                 backAlert.addButton("5 Lives / £0.50", target:self, selector: "extraLives2:")
-                //backAlert.addButton("£2.50 / Unlimited", target:self, selector:Selector(""))
                 backAlert.addButton("Wait", action: ({
                     
                     self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
@@ -835,7 +852,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   func showTestLives(sender:UIButton) {
     
     numberOfTestsTotal = defaults.integerForKey("Lives")
-    self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) lives left."
+    if self.numberOfTestsTotal == 1 {
+        lifeOrLives = "life"
+    }else{
+        lifeOrLives = "lives"
+    }
+    self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
     
 //    if (numberOfTestsTotal < maxNumberOfTests) {
 //        
@@ -888,7 +910,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
             let newLabel:String = "\(newMin) : \(newSec)"
             self.testLivesSubtitleLabel.text = newLabel
             if (self.minutesRemaining==0 && self.secondsRemaining==0) {
-                self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) lives left."
+                if self.numberOfTestsTotal == 1 {
+                    lifeOrLives = "life"
+                }else{
+                    lifeOrLives = "lives"
+                }
+                self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
             }
     }
     }
@@ -928,6 +955,38 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func premiumMembership(sender: UIButton){
+        
+        SwiftSpinner.show("Purchasing")
+        
+        if let currentUser = PFUser.currentUser(){
+            currentUser[PF_USER_MEMBERSHIP] = "Premium"
+            //set other fields the same way....
+            currentUser.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                                    if error == nil {
+                
+                                        self.defaults.setObject("Premium", forKey: "Membership")
+                                        self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
+                                        self.testLivesBackgroundView.alpha = 0
+                                        self.testLivesBackgroudViewVisible = false
+                                        self.testsTotal.removeTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
+                                        self.paidConduit()
+                                        
+                                        SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
+                                            SwiftSpinner.hide()
+                                            }, subtitle: "This means you can practice an unlimited number of tests!")
+                
+                                    } else {
+                
+                                        SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                
+                                            SwiftSpinner.hide()
+                                            
+                                            }, subtitle: "Payment error, tap to return home")
+                                        
+                                    }
+                                    
+                                })
+        }
         
     }
   
