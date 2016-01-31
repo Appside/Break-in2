@@ -55,12 +55,13 @@ class TestTypeView: UIView {
     self.addSubview(self.testTypeStatsView)
     
     // Set testTypeTitleLabel and testTypeTimeLabel characteristics
-    
-    self.testTypeTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+    let textSize:CGFloat = self.getTextSize(20)
+    self.testTypeTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     self.testTypeTitleLabel.textColor = UIColor.turquoiseColor()
     self.testTypeTitleLabel.textAlignment = NSTextAlignment.Center
     
-    self.testTypeTimeLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
+    let textSize2:CGFloat = self.getTextSize(16)
+    self.testTypeTimeLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
     self.testTypeTimeLabel.textColor = UIColor.turquoiseColor()
     self.testTypeTimeLabel.textAlignment = NSTextAlignment.Center
     
@@ -88,10 +89,11 @@ class TestTypeView: UIView {
       
       difficultyButton.setTitle(self.testDifficulties[index], forState: UIControlState.Normal)
       
+      let textSize3:CGFloat = self.getTextSize(15)
       difficultyButton.layer.borderWidth = 1
       difficultyButton.layer.borderColor = self.mainLineColor.CGColor
       difficultyButton.layer.cornerRadius = self.testTypeDifficultyButtonHeight / 2
-      difficultyButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      difficultyButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: textSize3)
       
       if index == 0 {
         difficultyButton.backgroundColor = self.secondaryBackgroundColor

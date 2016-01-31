@@ -88,7 +88,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
-  
+  var textSize:CGFloat = 15
+
   var statsViewVisible:Bool = false
   var firstTimeUser:Bool = false
 
@@ -106,6 +107,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     self.backgroundImageView2.image = UIImage.init(named: "homeBG")
     self.backgroundImageView2.alpha = 1
+    
+    self.textSize = self.view.getTextSize(15)
     
     // Add testSelectionView and backButton to the main view
     
@@ -206,7 +209,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     // Adjust testStartButton, backButton and testLivesUpgradeButtons appearances
     
-    self.testStartButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.testStartButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
     self.testStartButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testStartButton.backgroundColor = UIColor.turquoiseColor()
@@ -217,13 +220,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
-    self.testLivesUpgradeButton1.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.testLivesUpgradeButton1.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.testLivesUpgradeButton1.setTitle("£0.50 / 5 Tests", forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.backgroundColor = UIColor.turquoiseColor()
     self.testLivesUpgradeButton1.addTarget(self, action: "addLives:", forControlEvents: UIControlEvents.TouchUpInside)
     
-    self.testLivesUpgradeButton2.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.testLivesUpgradeButton2.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.testLivesUpgradeButton2.setTitle("£2.50 / Unlimited", forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
@@ -250,22 +253,23 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     // Adjust swipeInfoLabel, testLivesTitleLabel and testLivesSubtitleLabel appearance
     
-    self.swipeInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.swipeInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
     self.swipeInfoLabel.textAlignment = NSTextAlignment.Center
     self.swipeInfoLabel.textColor = UIColor.lightGrayColor()
     self.swipeInfoLabel.text = "Swipe For More Tests"
     
+    let textSize2:CGFloat = self.view.getTextSize(18)
     self.testLivesTitleLabel.textAlignment = NSTextAlignment.Center
-    self.testLivesTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.testLivesTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
     self.testLivesTitleLabel.text = "TIME TO NEXT LIFE:"
     
     self.testLivesSubtitleLabel.backgroundColor = UIColor.turquoiseColor()
     self.testLivesSubtitleLabel.textAlignment = NSTextAlignment.Center
-    self.testLivesSubtitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.testLivesSubtitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
     self.testLivesSubtitleLabel.textColor = UIColor.whiteColor()
     
     self.testLivesInfoLabel.textAlignment = NSTextAlignment.Center
-    self.testLivesInfoLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.testLivesInfoLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
     
     // Display each testTypeView
     

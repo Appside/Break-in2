@@ -914,7 +914,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }
     else if sender.currentTitle == "About" {
-      UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)    }
+      UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)
+    }
+    else if sender.currentTitle == "Notifications" {
+      print("jobdeadlines")
+      self.getChosenJobDeadlines()
+    }
     else{
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
@@ -1037,6 +1042,22 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       self.chooseCareersScrollView.setContentOffset(previousCareerView.frame.origin, animated: true)
     }
     
+  }
+  
+  func getChosenJobDeadlines() {
+    
+    let jobDeadlines:[[String:AnyObject]] = self.settingsModel.getJobDeadlines()
+    var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
+    
+    for var index = 0 ; index < jobDeadlines.count ; index++ {
+      if self.chosenCareers.contains(jobDeadlines[index]["career"] as! String) {
+        deadlines.append(jobDeadlines[index])
+      }
+    }
+      
+  // ADD NOTIFICATIONS HERE
+      
+      
   }
   
   func showTutorial() {

@@ -80,6 +80,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   let loginPageControllerViewHeight:CGFloat = 50
   var tutorialImageHeight:CGFloat = 150
   let buttonHeight:CGFloat = 50
+  var textSize:CGFloat = 15
   
   //---------------------------------------------------------------
   // VIEW DID LOAD
@@ -101,6 +102,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.loginView.addSubview(self.facebookLoginButton)
     self.loginView.addSubview(self.swipeUpLabel)
     
+    self.textSize = self.view.getTextSize(15)
+    
     // Customize and add content to imageViews
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -117,7 +120,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.loginView.layer.cornerRadius = self.minorMargin
     self.loginView.backgroundColor = UIColor.whiteColor()
     
-    self.swipeUpLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.swipeUpLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
     self.swipeUpLabel.textAlignment = NSTextAlignment.Center
     self.swipeUpLabel.textColor = UIColor.lightGrayColor()
     self.swipeUpLabel.text = "Swipe Up For Tutorial"
