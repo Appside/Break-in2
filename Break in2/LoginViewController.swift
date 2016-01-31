@@ -214,7 +214,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
             PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
                 
-                if error == nil {
+                if user != nil {
+                    
+                    let membership = user![PF_USER_MEMBERSHIP] as! String
+                    print(membership)
+                    self.defaults.setObject(membership, forKey: "Membership")
                 
                 SwiftSpinner.hide()
                 self.userLoggedIn((user)!)
@@ -351,6 +355,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         if((FBSDKAccessToken.currentAccessToken()) != nil){
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if (error == nil){
+                    
+                    if user.isNew{
+                    
                     let userData = result as! [String: AnyObject]!
                     user[PF_USER_EMAILCOPY] = userData["email"]
                     user[PF_USER_FULLNAME] = userData["name"]
@@ -388,6 +395,51 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                             }
                         }
                     })
+                    }else{
+                        
+                        let token = FBSDKAccessToken.currentAccessToken().tokenString
+                        let permissions = FBSDKAccessToken.currentAccessToken().permissions
+                        let declinedPerm = FBSDKAccessToken.currentAccessToken().declinedPermissions
+                        let appId = FBSDKAccessToken.currentAccessToken().appID
+                        let userId = FBSDKAccessToken.currentAccessToken().userID
+                        let expiration = FBSDKAccessToken.currentAccessToken().expirationDate
+                        let refresh = FBSDKAccessToken.currentAccessToken().refreshDate
+                        
+                        self.saveToCoreData(token, p: permissions, dP: declinedPerm, aI: appId, uI: userId, ex: expiration, r: refresh)
+                        
+                        self.fetchLoginCreds()
+                        
+                        if self.Ptoken != "" {
+                            
+                            let set = self.Ppermissions as! NSSet //NSSet
+                            let set2 = self.PdeclinedPerm as! NSSet
+                            let arr = set.allObjects //Swift Array
+                            let arr2 = set2.allObjects
+                            
+                            let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
+                            PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
+                                
+                                if user != nil {
+                                    
+                                    let membership = user![PF_USER_MEMBERSHIP] as! String
+                                    print(membership)
+                                    self.defaults.setObject(membership, forKey: "Membership")
+                                    
+                                    SwiftSpinner.hide()
+                                    self.userLoggedIn((user)!)
+                                    
+                                }else{
+                                    
+                                    self.getFBUserData(user!)
+                                    
+                                }
+                                
+                            })
+                        }else{
+                            //error handle if nothing happens when device change
+                        }
+                        
+                    }
                 }
             })
         }

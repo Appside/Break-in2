@@ -240,7 +240,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         
         freeConduit()
         let date = NSDate().dateByAddingTimeInterval(0)
-        let timer = NSTimer(fireDate: date, interval: 1, target: self, selector: "freeConduit", userInfo: nil, repeats: true)
+        timer = NSTimer(fireDate: date, interval: 1, target: self, selector: "freeConduit", userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
         
     }
@@ -964,14 +964,18 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
             currentUser.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                                     if error == nil {
                 
+                                        self.timer.invalidate()
                                         self.defaults.setObject("Premium", forKey: "Membership")
-                                        self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
                                         self.testLivesBackgroundView.alpha = 0
                                         self.testLivesBackgroudViewVisible = false
                                         self.testsTotal.removeTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
+                                        self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
+                                        self.membershipType = self.defaults.objectForKey("Membership") as! String
                                         self.paidConduit()
+                                        print(self.membershipType)
                                         
                                         SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
+                                            self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
                                             SwiftSpinner.hide()
                                             }, subtitle: "This means you can practice an unlimited number of tests!")
                 
