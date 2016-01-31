@@ -307,7 +307,7 @@ class LogicalModel: NSObject {
         for var index:Int = 0 ; index < 3 ; index++ {
           shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
         }
-        if shapesToDrawArray != logicalPictureViews[1][0] {
+        if shapesToDrawArray != logicalPictureViews[1][0].shapeToDraw {
           randomAnswers.append(shapesToDrawArray)
         }
       }
@@ -336,7 +336,7 @@ class LogicalModel: NSObject {
         for var index:Int = 0 ; index < 3 ; index++ {
           shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
         }
-        if shapesToDrawArray != logicalPictureViews[1][0] {
+        if shapesToDrawArray != logicalPictureViews[1][0].shapeToDraw {
           randomAnswers.append(shapesToDrawArray)
         }
       }
@@ -378,7 +378,7 @@ class LogicalModel: NSObject {
       for var index:Int = 0 ; index < 4 ; index++ {
         shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
       }
-      if shapesToDrawArray != logicalPictureViews[1][0] {
+      if shapesToDrawArray != logicalPictureViews[1][0].shapeToDraw {
         randomAnswers.append(shapesToDrawArray)
       }
     }

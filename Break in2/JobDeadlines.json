@@ -1,66 +1,12 @@
  [
   
   {
-  "day":5,
-  "month":1,
-  "year":2016,
-  "company":"Barclays",
-  "career":"Investment Banking",
-  "position":"Internships",
-  },
-  
-  {
-  "day":5,
-  "month":1,
-  "year":2016,
-  "company":"Barclays",
-  "career":"Trading",
-  "position":"Internships",
-  },
-  
-  {
-  "day":5,
-  "month":1,
-  "year":2016,
-  "company":"Barclays",
-  "career":"Technology",
-  "position":"Internships",
-  },
-  
-  {
-  "day":10,
-  "month":1,
-  "year":2016,
-  "company":"Nomura",
-  "career":"Investment Banking",
-  "position":"Internships",
-  },
-  
-  {
-  "day":10,
-  "month":1,
-  "year":2016,
-  "company":"Nomura",
-  "career":"Trading",
-  "position":"Internships",
-  },
-  
-  {
-  "day":10,
-  "month":1,
-  "year":2016,
-  "company":"Nomura",
-  "career":"Technology",
-  "position":"Internships",
-  },
-  
-  {
-  "day":24,
+  "day":31,
   "month":1,
   "year":2016,
   "company":"JP Morgan",
   "career":"Technology",
-  "position":"Internships",
+  "position":"Technology Analyst",
   },
   
   {
@@ -68,35 +14,116 @@
   "month":1,
   "year":2016,
   "company":"JP Morgan",
-  "career":"Investment Banking",
-  "position":"Graduate",
+  "career":"Finance",
+  "position":"Finance Analyst",
   },
   
   {
-  "day":10,
-  "month":1,
+  "day":31,
+  "month":5,
   "year":2016,
-  "company":"HSBC",
-  "career":"Investment Banking",
-  "position":"Internships",
-  },
-  
-  {
-  "day":10,
-  "month":1,
-  "year":2016,
-  "company":"HSBC",
-  "career":"Trading",
-  "position":"Internships",
+  "company":"IBM",
+  "career":"Technology",
+  "position":"Software Designer",
   },
   
   {
   "day":31,
   "month":1,
   "year":2016,
-  "company":"ICAP",
-  "career":"Trading",
-  "position":"Internships",
+  "company":"IBM",
+  "career":"Technology",
+  "position":"Technology Solutions Specialist",
+  },
+  
+  {
+  "day":31,
+  "month":5,
+  "year":2016,
+  "company":"IBM",
+  "career":"Technology",
+  "position":"Software Consultant",
+  },
+  
+  {
+  "day":31,
+  "month":5,
+  "year":2016,
+  "company":"IBM",
+  "career":"Technology",
+  "position":"Software Developer",
+  },
+  
+  {
+  "day":9,
+  "month":2,
+  "year":2016,
+  "company":"Sky",
+  "career":"Technology",
+  "position":"Software Engineering Apprenticeship",
+  },
+  
+  {
+  "day":31,
+  "month":1,
+  "year":2016,
+  "company":"Shell",
+  "career":"Engineering",
+  "position":"Asset Maintenance Engineering Intern",
+  },
+  
+  {
+  "day":31,
+  "month":1,
+  "year":2016,
+  "company":"Shell",
+  "career":"Engineering",
+  "position":"Process Automation, Control and Optimisation (PACO) Engineering Intern",
+  },
+  
+  {
+  "day":31,
+  "month":3,
+  "year":2016,
+  "company":"Shell",
+  "career":"Engineering",
+  "position":"Process Automation, Control and Optimisation (PACO) Engineering Graduate",
+  },
+  
+  {
+  "day":31,
+  "month":1,
+  "year":2016,
+  "company":"Shell",
+  "career":"Engineering",
+  "position":"Electrical Engineering Intern",
+  },
+  
+  {
+  "day":31,
+  "month":3,
+  "year":2016,
+  "company":"Shell",
+  "career":"Engineering",
+  "position":"Electrical Engineering Graduate",
+  },
+  
+  {
+  "day":31,
+  "month":1,
+  "year":2016,
+  "company":"Shell",
+  "career":"Engineering",
+  "position":"Production Engineering Intern",
+  },
+  
+  {
+  "day":31,
+  "month":3,
+  "year":2016,
+  "company":"Shell",
+  "career":"Engineering",
+  "position":"Production Engineering Graduate",
   },
   
   {

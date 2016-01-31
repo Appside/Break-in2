@@ -27,9 +27,9 @@ class CareerButton: UIButton {
     self.addSubview(self.careerColorView)
     
     // Customize button properties
-    
+    let textSize:CGFloat = self.getTextSize(15)
     self.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
-    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     
     self.careerImageView.contentMode = UIViewContentMode.ScaleAspectFit
 

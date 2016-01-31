@@ -76,10 +76,10 @@ class CalendarDayButton: UIButton {
         CGContextSetFillColorWithColor(contextRef, self.circleColors[careers[index]]!.CGColor)
         
         CGContextBeginPath(contextRef)
-        CGContextMoveToPoint(contextRef, self.bounds.width/2, self.bounds.height/2)
         let arcSegmentAngle:Double = (2 * M_PI) / Double(careers.count)
+        CGContextMoveToPoint(contextRef, self.bounds.width/2, self.bounds.height/2)
         if self.today {
-          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 4, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 2, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
         }
         else {
           CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, self.bounds.height/2, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
