@@ -62,7 +62,8 @@ class HomeViewController: UIViewController {
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   var loginPageControllerViewHeight:CGFloat = 50
-  
+  var textSize:CGFloat = 15
+
   var segueFromLoginView:Bool = true
   var firstTimeUser:Bool = false
   var tutorialPageNumber:Int = 0
@@ -83,6 +84,8 @@ class HomeViewController: UIViewController {
     for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
+    
+    self.textSize = self.view.getTextSize(15)
     
     // Add background image to HomeViewController's view
     
@@ -156,19 +159,18 @@ class HomeViewController: UIViewController {
     self.settingsButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.settingsButton.setImage(UIImage.init(named: "settings"), forState: UIControlState.Normal)
     self.settingsButton.alpha = 0
-    
     self.logOutButton.backgroundColor = UIColor.turquoiseColor()
-    self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.logOutButton.setTitle("Log Out", forState: UIControlState.Normal)
     self.logOutButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     
-    self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
     self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
     self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
     self.scrollInfoLabel.text = "Scroll For More Careers"
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
-    self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     if self.tutorialPageNumber == 0 {
       self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
     }

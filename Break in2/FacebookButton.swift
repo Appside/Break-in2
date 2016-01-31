@@ -24,8 +24,9 @@ class FacebookButton: UIButton {
     
     // customize button appearance
     
+    let textSize = self.getTextSize(15)
     self.backgroundColor = UIColor.init(red: 59/255, green: 89/255, blue: 152/255, alpha: 1)
-    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     self.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     
     self.facebookLogoImageView.contentMode = UIViewContentMode.ScaleAspectFit

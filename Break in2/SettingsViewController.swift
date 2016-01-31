@@ -70,6 +70,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   var chooseCareersInfoLabelHeight:CGFloat = 50
+  var textSize:CGFloat = 15
   
   // Declare and initialize tracking variables
   
@@ -118,7 +119,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.backButton.alpha = 0
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
-    self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.tutorialNextButton.setTitle("Back To Home Screen", forState: UIControlState.Normal)
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.tutorialNextButton.alpha = 0
@@ -161,12 +162,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     // Customize scrollInfoLabel and chooseCareersInfoLabel
     
-    self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
     self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
     self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
     self.scrollInfoLabel.text = "Scroll For More Settings"
     
-    self.chooseCareersInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+    self.chooseCareersInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
     self.chooseCareersInfoLabel.textAlignment = NSTextAlignment.Center
     self.chooseCareersInfoLabel.textColor = UIColor.lightGrayColor()
     self.chooseCareersInfoLabel.numberOfLines = 0
@@ -199,7 +200,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.currentCareerLabel.backgroundColor = UIColor.turquoiseColor()
     self.currentCareerLabel.textAlignment = NSTextAlignment.Center
     self.currentCareerLabel.textColor = UIColor.whiteColor()
-    self.currentCareerLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+    self.currentCareerLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     
     // Create settingsButtons for each setting
     
@@ -420,7 +421,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         self.noDataUILabel.setConstraintsToSuperview(25, bottom: 10, left: 5, right: 5)
         self.noDataUILabel.text = "Loading..."
         self.noDataUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-        self.noDataUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 14.0)
+        let textSize2:CGFloat = self.view.getTextSize(14)
+        self.noDataUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
         self.noDataUILabel.textAlignment = NSTextAlignment.Center
         self.noDataUILabel.numberOfLines = 0
         //self.noDataLabel.alpha = 0

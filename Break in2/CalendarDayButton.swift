@@ -26,8 +26,9 @@ class CalendarDayButton: UIButton {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
+    let textSize:CGFloat = self.getTextSize(14)
     self.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+    self.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: textSize)
     
     // Get app variables
     

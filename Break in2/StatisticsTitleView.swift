@@ -22,9 +22,9 @@ class StatisticsTitleView: UIView {
     self.addSubview(self.previousStatisticButton)
     
     // Customize statisticsTitleLabel
-    
+    let textSize:CGFloat = self.getTextSize(18)
     self.statisticsTitleLabel.textAlignment = NSTextAlignment.Center
-    self.statisticsTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.statisticsTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     self.statisticsTitleLabel.text = "SCORES"
     
     // Customize nextStatisticButton and previousStatisticButton

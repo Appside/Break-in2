@@ -24,9 +24,9 @@ class ChooseCareerTitleView: UIView {
     self.addSubview(self.previousCareerButton)
     
     // Customize careerTitleLabel
-    
+    let textSize:CGFloat = self.getTextSize(18)
     self.careerSelectedLabel.textAlignment = NSTextAlignment.Center
-    self.careerSelectedLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.careerSelectedLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     self.careerSelectedLabel.text = "Career"
     
     // Customize nextStatisticButton and previousStatisticButton

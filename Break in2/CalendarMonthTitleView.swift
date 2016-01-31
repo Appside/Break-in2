@@ -28,9 +28,9 @@ class CalendarMonthTitleView: UIView {
     self.addSubview(self.previousMonthButton)
     
     // Customize monthLabel
-    
+    let textSize:CGFloat = self.getTextSize(18)
     self.monthLabel.textAlignment = NSTextAlignment.Center
-    self.monthLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+    self.monthLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     self.monthLabel.text = "Month"
     
     // Customize nextMonthButton and previousMonthButton

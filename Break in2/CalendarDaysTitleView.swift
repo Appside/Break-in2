@@ -27,7 +27,8 @@ class CalendarDaysTitleView: UIView {
       
       labelAtIndex.textAlignment = NSTextAlignment.Center
       labelAtIndex.textColor = UIColor.whiteColor()
-      labelAtIndex.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      let textSize:CGFloat = self.getTextSize(15)
+      labelAtIndex.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
       labelAtIndex.text = self.daysOfTheWeek[index]
       
       // Add labels as subviews

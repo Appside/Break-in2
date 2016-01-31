@@ -56,6 +56,11 @@ extension UIView {
     return label.frame.height
   }
   
+  func getTextSize(iPhone6TextSize:CGFloat) -> CGFloat {
+    let screenFrame:CGRect = UIScreen.mainScreen().bounds
+    return ((iPhone6TextSize/667) * screenFrame.size.height)
+  }
+  
 }
 
 extension UIColor {

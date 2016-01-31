@@ -65,6 +65,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
   
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   let menuButtonHeight:CGFloat = 50
+  var textSize:CGFloat = 15
 
   var firstTimeUser:Bool = false
   var tutorialPageNumber:Int = 0
@@ -76,6 +77,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       
       self.view.addHomeBG()
       self.statisticsTitleView.disablePrevious()
+      
+      self.textSize = self.view.getTextSize(15)
         
       // Add subviews
       
@@ -189,18 +192,18 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       self.backButton.alpha = 0
       
       self.clearStatsButton.backgroundColor = UIColor.turquoiseColor()
-      self.clearStatsButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      self.clearStatsButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
       self.clearStatsButton.setTitle("Clear Selected Test Statistics", forState: UIControlState.Normal)
       self.clearStatsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
       self.clearStatsButton.addTarget(self, action: "clearStatsWarning:", forControlEvents: UIControlEvents.TouchUpInside)
       
-      self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15)
+      self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
       self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
       self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
       self.scrollInfoLabel.text = "Scroll For More Tests"
       
       self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
-      self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
       self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
       self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
       self.tutorialNextButton.alpha = 0
@@ -518,7 +521,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     self.noDataUILabel.setConstraintsToSuperview(25, bottom: 10, left: 5, right: 5)
     self.noDataUILabel.text = "Select a test from the Menu"
     self.noDataUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-    self.noDataUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 14.0)
+    let textSize2:CGFloat = self.view.getTextSize(14)
+    self.noDataUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
     self.noDataUILabel.textAlignment = NSTextAlignment.Center
     self.noDataUILabel.numberOfLines = 0
     self.noDataLabel.alpha = 0
@@ -980,7 +984,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         chartDataSet.highlightAlpha = 1.0
         self.chartObject.descriptionText = ""
         chartData.setValueTextColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0))
-        chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        let textSize3:CGFloat = self.view.getTextSize(13)
+        chartData.setValueFont(UIFont(name: "HelveticaNeue", size: textSize3))
         self.chartObject.xAxis.enabled = false
         self.chartObject.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
         self.chartObject.legend.enabled = false
@@ -996,7 +1001,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         
         self.barChartDescription.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.barChartText.textColor = UIColor.whiteColor()
-        self.barChartText.font = UIFont(name: "Helvetica-NeueBold", size: 12.0)
+        let textSize4:CGFloat = self.view.getTextSize(12)
+        self.barChartText.font = UIFont(name: "Helvetica-NeueBold", size: textSize4)
         self.barChartText.textAlignment = NSTextAlignment.Center
         self.barChartText.text = "Select a test from the graph"
         

@@ -20,16 +20,16 @@ class TutorialDescriptionView: UIView {
     self.addSubview(self.descriptionLabel)
     
     // Customize Labels
-    
+    let textSize:CGFloat = self.getTextSize(15)
     self.titleLabel.textColor = UIColor.whiteColor()
     self.titleLabel.textAlignment = NSTextAlignment.Center
-    self.titleLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+    self.titleLabel.font = UIFont(name: "HelveticaNeue-Light", size: textSize)
     self.titleLabel.numberOfLines = 0
     self.titleLabel.clipsToBounds = false
     
     self.descriptionLabel.textColor = UIColor.whiteColor()
     self.descriptionLabel.textAlignment = NSTextAlignment.Center
-    self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+    self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: textSize)
     self.descriptionLabel.numberOfLines = 0
     self.descriptionLabel.clipsToBounds = false
         
