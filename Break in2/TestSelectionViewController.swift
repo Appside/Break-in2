@@ -225,7 +225,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.testLivesUpgradeButton2.setTitle("£2.50 / Unlimited", forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
-    self.testLivesUpgradeButton2.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.testLivesUpgradeButton2.addTarget(self, action: "premiumMembership:", forControlEvents: UIControlEvents.TouchUpInside)
     
     membershipType = defaults.objectForKey("Membership") as! String
     
@@ -927,7 +927,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    func premiumMembership(){
+    func premiumMembership(sender: UIButton){
         
     }
   
