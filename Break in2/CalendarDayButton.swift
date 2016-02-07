@@ -54,7 +54,7 @@ class CalendarDayButton: UIButton {
       
       CGContextSetFillColorWithColor(contextRef, UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.5).CGColor)
       
-      CGContextFillEllipseInRect(contextRef, CGRectMake((self.bounds.width - self.bounds.height)/2, 0, self.bounds.height, self.bounds.height))
+      CGContextFillEllipseInRect(contextRef, CGRectMake((self.bounds.width - (self.bounds.height - 2))/2, 1, self.bounds.height - 2, self.bounds.height - 2))
       
     }
     
@@ -79,10 +79,10 @@ class CalendarDayButton: UIButton {
         let arcSegmentAngle:Double = (2 * M_PI) / Double(careers.count)
         CGContextMoveToPoint(contextRef, self.bounds.width/2, self.bounds.height/2)
         if self.today {
-          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 2, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 1, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
         }
         else {
-          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, self.bounds.height/2, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 1, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
         }
         CGContextFillPath(contextRef)
       }

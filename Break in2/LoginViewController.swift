@@ -25,7 +25,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   // Declare and initialize types of tests and difficulties available for selected career
   
-  let tutorialImageNames:[String] = ["Numerical Reasoning", "Verbal Reasoning", "Logical Reasoning"]
   let homeViewModel:JSONModel = JSONModel()
     
   //set number of lives
@@ -36,16 +35,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   let logoImageView:UIImageView = UIImageView()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
-  let loginScrollView:UIScrollView = UIScrollView()
   
   let loginView:UIView = UIView()
-  let swipeUpLabel:UILabel = UILabel()
-  var loginPageControllerView:PageControllerView = PageControllerView()
-  var loginTutorialViews:[LoginTutorialView] = [LoginTutorialView]()
   let facebookLoginButton:FacebookButton = FacebookButton()
-  
-  var tutorialViewSwipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-  var tutorialViewSwipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
   
   var loginViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var loginScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -97,10 +89,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.view.addSubview(self.sloganImageView)
     
     self.view.addSubview(self.loginView)
-    self.loginView.addSubview(self.loginScrollView)
-    self.loginView.addSubview(self.loginPageControllerView)
     self.loginView.addSubview(self.facebookLoginButton)
-    self.loginView.addSubview(self.swipeUpLabel)
     
     self.textSize = self.view.getTextSize(15)
     
@@ -120,38 +109,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.loginView.layer.cornerRadius = self.minorMargin
     self.loginView.backgroundColor = UIColor.whiteColor()
     
-    self.swipeUpLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.swipeUpLabel.textAlignment = NSTextAlignment.Center
-    self.swipeUpLabel.textColor = UIColor.lightGrayColor()
-    self.swipeUpLabel.text = "Swipe Up For Tutorial"
-    //self.swipeUpLabel.backgroundColor = UIColor.lightGrayColor()
-    
-    self.loginPageControllerView.numberOfPages = self.tutorialImageNames.count
-    self.loginPageControllerView.minorMargin = self.minorMargin
-    self.loginPageControllerView.alpha = 0
-    
     self.facebookLoginButton.facebookButtonTitle = "Login With Facebook"
     self.facebookLoginButton.displayButton()
-    
-    // Create loginTutorialViews for each tutorialImage
-    
-    for var index = 0 ; index < self.tutorialImageNames.count ; index++ {
-      
-      let loginTutorialViewAtIndex:LoginTutorialView = LoginTutorialView()
-      
-      self.loginScrollView.addSubview(loginTutorialViewAtIndex)
-      
-      self.loginTutorialViews.append(loginTutorialViewAtIndex)
-      
-    }
-    
-    // Adjust testScrollView characteristics
-    
-    self.loginScrollView.pagingEnabled = true
-    self.loginScrollView.showsHorizontalScrollIndicator = true
-    self.loginScrollView.backgroundColor = UIColor.lightGrayColor()
-    
-    self.loginScrollView.delegate = self
     
     // Add target for facebookLoginButton
     
@@ -164,16 +123,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     // Set tutorialImageHeight
     
     self.tutorialImageHeight = self.screenFrame.height - (self.buttonHeight + (self.minorMargin * 3) + self.loginPageControllerViewHeight + self.statusBarFrame.height)
-    
-    // Set up, customise and add gestures
-    
-    self.tutorialViewSwipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showTutorial:"))
-    self.tutorialViewSwipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
-    self.loginView.addGestureRecognizer(self.tutorialViewSwipeUpGesture)
-    
-    self.tutorialViewSwipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideTutorial:"))
-    self.tutorialViewSwipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
-    self.loginView.addGestureRecognizer(self.tutorialViewSwipeDownGesture)
     
   }
 
@@ -539,46 +488,16 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.loginView.translatesAutoresizingMaskIntoConstraints = false
     
-    self.loginViewHeightConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 2))
+    self.loginViewHeightConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight + (self.minorMargin * 3))
     
     let loginViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
     let loginViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.loginViewBottomConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3))
+    self.loginViewBottomConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.buttonHeight + (self.minorMargin * 3))
     
     self.loginView.addConstraint(self.loginViewHeightConstraint)
     self.view.addConstraints([loginViewLeftConstraint, loginViewRightConstraint, self.loginViewBottomConstraint])
-    
-    // Create and add constraints for loginPageControllerView
-    
-    self.loginPageControllerView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let loginPageControllerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-    
-    let loginPageControllerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    
-    let loginPageControllerViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    
-    let loginPageControllerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginPageControllerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.loginPageControllerViewHeight)
-    
-    self.loginPageControllerView.addConstraint(loginPageControllerViewHeightConstraint)
-    self.view.addConstraints([loginPageControllerViewTopConstraint, loginPageControllerViewLeftConstraint, loginPageControllerViewRightConstraint])
-    
-    // Create and add constraints for swipeUpLabel
-    
-    self.swipeUpLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    let swipeUpLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-    
-    let swipeUpLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    
-    let swipeUpLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    
-    let swipeUpLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeUpLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.loginPageControllerViewHeight)
-    
-    self.swipeUpLabel.addConstraint(swipeUpLabelHeightConstraint)
-    self.view.addConstraints([swipeUpLabelTopConstraint, swipeUpLabelLeftConstraint, swipeUpLabelRightConstraint])
     
     // Create and add constraints for facebookLoginButton
     
@@ -595,58 +514,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.facebookLoginButton.addConstraint(facebookLoginButtonHeightConstraint)
     self.view.addConstraints([facebookLoginButtonLeftConstraint, facebookLoginButtonRightConstraint, facebookLoginButtonBottomConstraint])
     
-    // Create and add constraints for loginScrollView
-    
-    self.loginScrollView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let loginScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-    
-    let loginScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    
-    let loginScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    
-    self.loginScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.loginScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLoginButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-    
-    self.view.addConstraints([loginScrollViewTopConstraint, loginScrollViewLeftConstraint, loginScrollViewRightConstraint, loginScrollViewBottomConstraint])
-    
-    // Create and add constraints for each testTypeView and set content size for testScrollView
-    
-    for var index:Int = 0 ; index < self.tutorialImageNames.count ; index++ {
-      
-      self.loginTutorialViews[index].translatesAutoresizingMaskIntoConstraints = false
-      
-      let loginTutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.loginScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-      
-      let loginTutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.tutorialImageHeight)
-      
-      let loginTutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
-      
-      if index == 0 {
-        
-        let loginTutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        
-        self.view.addConstraint(loginTutorialViewLeftConstraint)
-        
-      }
-      else {
-        
-        let loginTutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginTutorialViews[index - 1], attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        
-        self.view.addConstraint(loginTutorialViewLeftConstraint)
-        
-      }
-      
-      self.loginTutorialViews[index].addConstraints([loginTutorialViewWidthConstraint, loginTutorialViewHeightConstraint])
-      self.view.addConstraint(loginTutorialViewTopConstraint)
-      
-      if index == self.tutorialImageNames.count - 1 {
-        
-        let loginTutorialViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginTutorialViews[index], attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        
-        self.view.addConstraint(loginTutorialViewRightConstraint)
-      }
-    }
-    
     // Create and add constraints for sloganImageView
     
     self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -662,45 +529,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
     
-  }
-  
-  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-    
-    let pageIndex:Int = Int(self.loginScrollView.contentOffset.x / self.loginScrollView.frame.size.width)
-    self.loginPageControllerView.updatePageController(pageIndex)
-    
-  }
-  
-  func showTutorial(sender: UISwipeGestureRecognizer) {
-    
-    UIView.animateWithDuration(1, animations: {
-      
-      self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3) + self.tutorialImageHeight
-      self.loginScrollViewBottomConstraint.constant = self.minorMargin * -1
-      self.view.layoutIfNeeded()
-      
-      self.swipeUpLabel.alpha = 0
-      self.loginPageControllerView.alpha = 1
-      
-      }, completion: nil)
-    
-    self.loginTutorialViewVisible = true
-  }
-  
-  func hideTutorial(sender: UISwipeGestureRecognizer) {
-    
-    UIView.animateWithDuration(1, animations: {
-      
-      self.loginScrollViewBottomConstraint.constant = 0
-      self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 2)
-      self.view.layoutIfNeeded()
-      
-      self.swipeUpLabel.alpha = 1
-      self.loginPageControllerView.alpha = 0
-      
-      }, completion: nil)
-    
-    self.loginTutorialViewVisible = false
   }
   
   func showLoginView() {
@@ -723,9 +551,6 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
           self.loginViewHeightConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 2)
           self.loginScrollViewBottomConstraint.constant = 0
           self.view.layoutIfNeeded()
-          
-          self.swipeUpLabel.alpha = 1
-          self.loginPageControllerView.alpha = 0
           
           self.loginTutorialViewVisible = false
           
