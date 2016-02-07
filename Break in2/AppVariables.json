@@ -1,8 +1,8 @@
 [{
-"careerTypes":["Investment Banking", "Engineering", "Trading", "Technology","Finance"],
+"careerTypes":["Accounting","Engineering","Investment Banking","Strategy Consulting","Technology","Trading"],
 "colorsRGBAlpha":[[208,2,27,1],[74,144,226,1],[126,211,33,1],[248,231,28,1],[255,164,46,1],[46,255,234,1]],
-"careerTypeImages":{"Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Technology":"laptop", "Finance":"briefcase"},
-"careersTestTypes":{"Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning"], "Trading":["Numerical Reasoning", "Fractions","Arithmetic Reasoning","Sequences"], "Technology":["Verbal Reasoning","Logical Reasoning"], "Finance":["Fractions","Arithmetic Reasoning"]},
+"careerTypeImages":{"Investment Banking":"briefcase", "Engineering":"engineeringLogo", "Trading":"tradeIcon", "Technology":"laptop", "Accounting":"briefcase","Strategy Consulting":"briefcase"},
+"careersTestTypes":{"Investment Banking":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Engineering":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"], "Trading":["Numerical Reasoning","Arithmetic Reasoning","Sequences","Fractions"], "Technology":["Numerical Reasoning","Logical Reasoning","Sequences"], "Accounting":["Numerical Reasoning","Logical Reasoning","Verbal Reasoning"],"Strategy Consulting":["Numerical Reasoning","Verbal Reasoning","Logical Reasoning"]},
 "chosenCareers":["Engineering","Trading"],
-"settings":["Show Walkthrough","Notifications","About","Contact Us"]
+"settings":["Show Walkthrough","About","Contact Us"]
  }]

@@ -28,7 +28,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
     let mainView:UIView = UIView()
     var quizzArray:[logicalQuestion] = [logicalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 4
+    var totalNumberOfQuestions:Int = 24
     var allowedSeconds:Int = 00
     var allowedMinutes:Int = 10
     var countSeconds:Int = Int()
@@ -911,18 +911,18 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         //Initialize timer depending on difficulty
         if self.difficulty == "H" {
             self.allowedSeconds = 00
-            self.allowedMinutes = 05
-            self.totalNumberOfQuestions = 19
+            self.allowedMinutes = 10
+            self.totalNumberOfQuestions = 25
         }
         else if self.difficulty == "M" {
             self.allowedSeconds = 00
-            self.allowedMinutes = 08
-            self.totalNumberOfQuestions = 19
+            self.allowedMinutes = 15
+            self.totalNumberOfQuestions = 25
         }
         else {
             self.allowedSeconds = 00
-            self.allowedMinutes = 10
-            self.totalNumberOfQuestions = 19
+            self.allowedMinutes = 20
+            self.totalNumberOfQuestions = 25
         }
     }
 }

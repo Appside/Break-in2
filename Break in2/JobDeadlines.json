@@ -6,7 +6,7 @@
   "year":2016,
   "company":"JP Morgan",
   "career":"Technology",
-  "position":"Technology Analyst",
+  "position":"Technology Analyst"
   },
   
   {
@@ -14,8 +14,8 @@
   "month":1,
   "year":2016,
   "company":"JP Morgan",
-  "career":"Finance",
-  "position":"Finance Analyst",
+  "career":"Investment Banking",
+  "position":"Finance Analyst"
   },
   
   {
@@ -24,7 +24,7 @@
   "year":2016,
   "company":"IBM",
   "career":"Technology",
-  "position":"Software Designer",
+  "position":"Software Designer"
   },
   
   {
@@ -33,7 +33,7 @@
   "year":2016,
   "company":"IBM",
   "career":"Technology",
-  "position":"Technology Solutions Specialist",
+  "position":"Technology Solutions Specialist"
   },
   
   {
@@ -42,7 +42,7 @@
   "year":2016,
   "company":"IBM",
   "career":"Technology",
-  "position":"Software Consultant",
+  "position":"Software Consultant"
   },
   
   {
@@ -51,7 +51,7 @@
   "year":2016,
   "company":"IBM",
   "career":"Technology",
-  "position":"Software Developer",
+  "position":"Software Developer"
   },
   
   {
@@ -60,7 +60,7 @@
   "year":2016,
   "company":"Sky",
   "career":"Technology",
-  "position":"Software Engineering Apprenticeship",
+  "position":"Software Engineering Apprenticeship"
   },
   
   {
@@ -69,7 +69,7 @@
   "year":2016,
   "company":"Shell",
   "career":"Engineering",
-  "position":"Asset Maintenance Engineering Intern",
+  "position":"Asset Maintenance Engineering Intern"
   },
   
   {
@@ -78,7 +78,7 @@
   "year":2016,
   "company":"Shell",
   "career":"Engineering",
-  "position":"Process Automation, Control and Optimisation (PACO) Engineering Intern",
+  "position":"Process Automation, Control and Optimisation (PACO) Engineering Intern"
   },
   
   {
@@ -87,7 +87,7 @@
   "year":2016,
   "company":"Shell",
   "career":"Engineering",
-  "position":"Process Automation, Control and Optimisation (PACO) Engineering Graduate",
+  "position":"Process Automation, Control and Optimisation (PACO) Engineering Graduate"
   },
   
   {
@@ -96,7 +96,7 @@
   "year":2016,
   "company":"Shell",
   "career":"Engineering",
-  "position":"Electrical Engineering Intern",
+  "position":"Electrical Engineering Intern"
   },
   
   {
@@ -105,7 +105,7 @@
   "year":2016,
   "company":"Shell",
   "career":"Engineering",
-  "position":"Electrical Engineering Graduate",
+  "position":"Electrical Engineering Graduate"
   },
   
   {
@@ -114,7 +114,7 @@
   "year":2016,
   "company":"Shell",
   "career":"Engineering",
-  "position":"Production Engineering Intern",
+  "position":"Production Engineering Intern"
   },
   
   {
@@ -123,7 +123,160 @@
   "year":2016,
   "company":"Shell",
   "career":"Engineering",
-  "position":"Production Engineering Graduate",
+  "position":"Production Engineering Graduate"
+  },
+  
+  {
+  "day":7,
+  "month":12,
+  "year":2016,
+  "company":"JP Morgan",
+  "career":"Investment Banking",
+  "position":"Spring Week Internship"
+  },
+  
+  {
+  "day":7,
+  "month":12,
+  "year":2016,
+  "company":"JP Morgan",
+  "career":"Trading",
+  "position":"Spring Week Internship"
+  },
+  
+  {
+  "day":31,
+  "month":12,
+  "year":2015,
+  "company":"UBS",
+  "career":"Investment Banking",
+  "position":"Spring Week Internship"
+  },
+  
+  {
+  "day":31,
+  "month":12,
+  "year":2015,
+  "company":"UBS",
+  "career":"Trading",
+  "position":"Spring Week Internship"
+  },
+  
+  {
+  "day":7,
+  "month":2,
+  "year":2016,
+  "company":"Deutsche Bank",
+  "career":"Investment Banking",
+  "position":"Insight Programme"
+  },
+
+  {
+  "day":7,
+  "month":2,
+  "year":2016,
+  "company":"Deutsche Bank",
+  "career":"Trading",
+  "position":"Insight Programme"
+  },
+  
+  {
+  "day":10,
+  "month":2,
+  "year":2016,
+  "company":"HSBC",
+  "career":"Investment Banking",
+  "position":"Internship"
+  },
+  
+  {
+  "day":10,
+  "month":2,
+  "year":2016,
+  "company":"HSBC",
+  "career":"Trading",
+  "position":"Internship"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"Deutsche Bank",
+  "career":"Investment Banking",
+  "position":"Internship"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"Deutsche Bank",
+  "career":"Trading",
+  "position":"Internship"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"Deutsche Bank",
+  "career":"Investment Banking",
+  "position":"Graduate Programme"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"Deutsche Bank",
+  "career":"Trading",
+  "position":"Graduate Programme"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"HSBC",
+  "career":"Investment Banking",
+  "position":"Internship"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"HSBC",
+  "career":"Trading",
+  "position":"Internship"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"HSBC",
+  "career":"Investment Banking",
+  "position":"Insight Programme"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"HSBC",
+  "career":"Trading",
+  "position":"Insight Programme"
+  },
+  
+  {
+  "day":28,
+  "month":2,
+  "year":2016,
+  "company":"ICAP",
+  "career":"Investment Banking",
+  "position":"Insight Programme"
   },
   
   {
@@ -132,43 +285,43 @@
   "year":2016,
   "company":"ICAP",
   "career":"Trading",
-  "position":"Spring Week Internship",
+  "position":"Insight Programme"
   },
   
   {
-  "day":7,
-  "month":12,
+  "day":28,
+  "month":2,
   "year":2016,
   "company":"JP Morgan",
   "career":"Investment Banking",
-  "position":"Spring Week Internship",
+  "position":"Internship"
   },
   
   {
-  "day":7,
-  "month":12,
+  "day":28,
+  "month":2,
   "year":2016,
   "company":"JP Morgan",
   "career":"Trading",
-  "position":"Spring Week Internship",
+  "position":"Internship"
   },
   
   {
-  "day":31,
-  "month":12,
-  "year":2015,
-  "company":"UBS",
+  "day":21,
+  "month":3,
+  "year":2016,
+  "company":"LLoyds",
   "career":"Investment Banking",
-  "position":"Spring Week Internship",
+  "position":"Graduate Programme"
   },
   
   {
-  "day":31,
-  "month":12,
-  "year":2015,
-  "company":"UBS",
+  "day":21,
+  "month":3,
+  "year":2016,
+  "company":"LLoyds",
   "career":"Trading",
-  "position":"Spring Week Internship",
-  },
-  
+  "position":"Graduate Programme"
+  }
+
 ]

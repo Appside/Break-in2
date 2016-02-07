@@ -912,17 +912,17 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         //Initialize timer depending on difficulty
         if self.difficulty == "H" {
             self.allowedSeconds = 00
-            self.allowedMinutes = 05
+            self.allowedMinutes = 10
             self.totalNumberOfQuestions = 19
         }
         else if self.difficulty == "M" {
             self.allowedSeconds = 00
-            self.allowedMinutes = 08
+            self.allowedMinutes = 15
             self.totalNumberOfQuestions = 19
         }
         else {
             self.allowedSeconds = 00
-            self.allowedMinutes = 1
+            self.allowedMinutes = 20
             self.totalNumberOfQuestions = 19
         }
     }

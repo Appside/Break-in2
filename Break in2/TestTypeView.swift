@@ -217,7 +217,7 @@ class TestTypeView: UIView {
     
     self.difficultySelected = sender.titleLabel!.text!
     
-    if self.testType == "Numerical Reasoning" || self.testType == "Verbal Reasoning" || self.testType == "Logical Reasoning" {
+    if self.testType == "Numerical Reasoning" || self.testType == "Verbal Reasoning" {
       if self.difficultySelected == "E" {
         self.testTypeTimeLabel.text = "Easy (30 minutes)"
       }
@@ -230,24 +230,46 @@ class TestTypeView: UIView {
     }
     if self.testType == "Arithmetic Reasoning" {
       if self.difficultySelected == "E" {
-        self.testTypeTimeLabel.text = "Easy (10 minutes)"
+        self.testTypeTimeLabel.text = "Easy"
       }
       if self.difficultySelected == "M" {
-        self.testTypeTimeLabel.text = "Medium (10 minutes)"
+        self.testTypeTimeLabel.text = "Medium"
       }
       if self.difficultySelected == "H" {
-        self.testTypeTimeLabel.text = "Hard (10 minutes)"
+        self.testTypeTimeLabel.text = "Hard"
       }
     }
-    if self.testType == "Sequences" || self.testType == "Fractions" {
+    if self.testType == "Logical Reasoning" {
         if self.difficultySelected == "E" {
-            self.testTypeTimeLabel.text = "Easy (10 minutes)"
+            self.testTypeTimeLabel.text = "Easy (20 minutes)"
         }
         if self.difficultySelected == "M" {
-            self.testTypeTimeLabel.text = "Medium (8 minutes)"
+            self.testTypeTimeLabel.text = "Medium (15 minutes)"
         }
         if self.difficultySelected == "H" {
-            self.testTypeTimeLabel.text = "Hard (5 minutes)"
+            self.testTypeTimeLabel.text = "Hard (10 minutes)"
+        }
+    }
+    if self.testType == "Sequences" {
+        if self.difficultySelected == "E" {
+            self.testTypeTimeLabel.text = "Easy (20 minutes)"
+        }
+        if self.difficultySelected == "M" {
+            self.testTypeTimeLabel.text = "Medium (15 minutes)"
+        }
+        if self.difficultySelected == "H" {
+            self.testTypeTimeLabel.text = "Hard (10 minutes)"
+        }
+    }
+    if self.testType == "Fractions" {
+        if self.difficultySelected == "E" {
+            self.testTypeTimeLabel.text = "Easy"
+        }
+        if self.difficultySelected == "M" {
+            self.testTypeTimeLabel.text = "Medium"
+        }
+        if self.difficultySelected == "H" {
+            self.testTypeTimeLabel.text = "Hard"
         }
     }
   }

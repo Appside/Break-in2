@@ -28,9 +28,9 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
     let mainView:UIView = UIView()
     var quizzArray:[fractionsQuestion] = [fractionsQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 2
+    var totalNumberOfQuestions:Int = 29
     var allowedSeconds:Int = 00
-    var allowedMinutes:Int = 02
+    var allowedMinutes:Int = 15
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let nextButton:UILabel = UILabel()

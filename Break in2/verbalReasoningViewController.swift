@@ -33,7 +33,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[verbalQuestion] = [verbalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 2
+    var totalNumberOfQuestions:Int = 14
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = Int()
     var allowedMinutes:Int = Int()
