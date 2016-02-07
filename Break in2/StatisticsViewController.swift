@@ -940,7 +940,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         
         if (yUnits.count==0) {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.noDataUILabel.text = "No Score available"
+                self.noDataUILabel.text = "No Score Available"
                 self.statisticsTitleView.alpha = 0.0
                 self.graphView1.alpha = 0.0
                 self.graphView2.alpha = 0.0
@@ -1108,7 +1108,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         
         let alertView = SCLAlertView()
         
-        if self.noDataUILabel.text == "No Score available" {
+        if self.noDataUILabel.text == "No Score Available" {
             alertView.showTitle(
                 "Don't Worry", // Title of view
                 subTitle: "Statistics already deleted.", // String of view

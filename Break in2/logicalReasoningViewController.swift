@@ -749,6 +749,22 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             self.feebdackScreen.layer.cornerRadius = 8.0
             }, completion: nil)
         
+        let topComment:UILabel = UILabel()
+        self.feebdackScreen.addSubview(topComment)
+        topComment.translatesAutoresizingMaskIntoConstraints = false
+        let topMg:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10)
+        let leftMg:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
+        self.feebdackScreen.addConstraints([topMg,leftMg])
+        
+        let widthCt:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 80)
+        let heightCt:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 15)
+        topComment.addConstraints([heightCt,widthCt])
+        topComment.text = "Select Question For Feedback"
+        topComment.numberOfLines = 0
+        topComment.textAlignment = NSTextAlignment.Center
+        topComment.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+        topComment.textColor = UIColor.whiteColor()
+        
         for i=0; i<self.selectedAnswers.count;i++ {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
@@ -786,7 +802,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             }
             
             //Set constraints to answerViews
-            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10) + 20))
+            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10) + 40))
             let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20)
             self.feebdackScreen.addConstraints([topMargin,leftMargin])
             
@@ -946,12 +962,12 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         if self.difficulty == "H" {
             self.allowedSeconds = 00
             self.allowedMinutes = 10
-            self.totalNumberOfQuestions = 2
+            self.totalNumberOfQuestions = 24
         }
         else if self.difficulty == "M" {
             self.allowedSeconds = 00
             self.allowedMinutes = 15
-            self.totalNumberOfQuestions = 2
+            self.totalNumberOfQuestions = 24
         }
         else {
             self.allowedSeconds = 00
