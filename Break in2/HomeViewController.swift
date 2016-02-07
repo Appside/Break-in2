@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
   var careerTypes:[String] = [String]()
   var careerTypeImages:[String:String] = [String:String]()
   var careersTestTypes:[String:[String]] = [String:[String]]()
+  var comingSoonTestTypes:[String:[String]] = [String:[String]]()
   var careerColors:[String:UIColor] = [String:UIColor]()
   var tutorialViews:[UIView] = [UIView]()
   var tutorialDescriptions:[UIView:[String]] = [UIView:[String]]()
@@ -60,7 +61,7 @@ class HomeViewController: UIViewController {
   let minorMargin:CGFloat = 10
   
   var menuButtonHeight:CGFloat = 50
-  let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
+  var backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   var calendarBackgroundViewHeight:CGFloat = 300
   var textSize:CGFloat = 15
 
@@ -79,6 +80,7 @@ class HomeViewController: UIViewController {
     self.careerTypes = self.homeViewModel.getAppVariables("careerTypes") as! [String]
     self.careerTypeImages = self.homeViewModel.getAppVariables("careerTypeImages") as! [String:String]
     self.careersTestTypes = self.homeViewModel.getAppVariables("careersTestTypes") as! [String:[String]]
+    self.comingSoonTestTypes = self.homeViewModel.getAppVariables("comingSoonTestTypes") as! [String:[String]]
     
     let appColors:[UIColor] = self.homeViewModel.getAppColors()
     for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
@@ -225,13 +227,14 @@ class HomeViewController: UIViewController {
     
     self.careersScrollView.showsVerticalScrollIndicator = false
     
-    // Set menuButtonHeight and calendarBackgroundViewWidth
+    // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewWidth
     
     if self.screenFrame.height <= 738 {
       self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
 
       let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
       self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+      
     }
     else {
       self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 12)
@@ -258,6 +261,8 @@ class HomeViewController: UIViewController {
     if segue.identifier == "careerClicked" {
       let destinationVC:TestSelectionViewController = segue.destinationViewController as! TestSelectionViewController
       destinationVC.testTypes = self.careersTestTypes[sender!.careerTitle]!
+      destinationVC.comingSoonTestTypes = self.comingSoonTestTypes[sender!.careerTitle]!
+      destinationVC.selectedCareer = sender!.careerTitle
     }
     if segue.identifier == "settingsClicked" {
       let destinationVC:SettingsViewController = segue.destinationViewController as! SettingsViewController

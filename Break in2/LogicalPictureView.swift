@@ -42,6 +42,7 @@ class LogicalPictureView: UIView {
     let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
     CGContextSetStrokeColorWithColor(contextRef, self.drawingColor.CGColor)
     CGContextSetFillColorWithColor(contextRef, self.drawingColor.CGColor)
+    CGContextSetLineWidth(contextRef, 2)
     
     if self.shapeToDraw.count == 1 {
       

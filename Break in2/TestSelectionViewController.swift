@@ -28,13 +28,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   var secondsBetweenLives:Int = 60
   var countSeconds:Int = Int()
   var countMinutes:Int = Int()
-    var lifeOrLives:String = String()
+  var lifeOrLives:String = String()
     
   
   // Declare and initialize types of tests and difficulties available for selected career
   
   var testTypes:[String] = [String]()
-  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG", "Arithmetic Reasoning":"arithmeticBG","Sequences":"arithmeticBG","Fractions":"arithmeticBG"]
+  var comingSoonTestTypes:[String] = [String]()
+  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG", "Arithmetic Reasoning":"arithmeticBG", "Sequences":"arithmeticBG", "Fractions":"arithmeticBG", "Help Us Add More Tests:":"numericalBG"]
   let testTypeSegues:[String:String] = ["Numerical Reasoning":"numericalReasoningSelected","Verbal Reasoning":"verbalReasoningSelected","Logical Reasoning":"logicalReasoningSelected","Arithmetic Reasoning":"arithmeticReasoningSelected","Sequences":"sequencesSelected","Fractions":"fractionsSelected"]
   let testDifficulties:[String] = ["E", "M", "H"]
   
@@ -92,6 +93,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
 
   var statsViewVisible:Bool = false
   var firstTimeUser:Bool = false
+  var selectedCareer:String = String()
 
   // Declare and initialize gestures
   
@@ -148,7 +150,19 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
       // Set testTypeView properties
       
       testTypeViewAtIndex.testType = self.testTypes[index]
-      testTypeViewAtIndex.testDifficulties = self.testDifficulties
+      
+      if self.testTypes[index] == "Help Us Add More Tests:" {
+        var testDifficultiesArray:[String] = [String]()
+        for comingSoonTestType in self.comingSoonTestTypes {
+          let firstChar:String = String(comingSoonTestType[comingSoonTestType.startIndex.advancedBy(0)])
+          testDifficultiesArray.append(firstChar)
+        }
+        testTypeViewAtIndex.testDifficulties = testDifficultiesArray
+        testTypeViewAtIndex.comingSoonTestTypes = self.comingSoonTestTypes
+      }
+      else {
+        testTypeViewAtIndex.testDifficulties = self.testDifficulties
+      }
       
       testTypeViewAtIndex.majorMargin = self.majorMargin
       testTypeViewAtIndex.minorMargin = self.minorMargin
@@ -825,6 +839,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[self.currentScrollViewPage]]!)
     self.backgroundImageView.alpha = 1
     self.backgroundImageView2.alpha = 0
+    
+    if self.currentScrollViewPage == self.testTypes.count - 1 {
+      self.testStartButton.setTitle("Vote For This Test", forState: UIControlState.Normal)
+    }
+    else {
+      self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
+    }
     
   }
   
