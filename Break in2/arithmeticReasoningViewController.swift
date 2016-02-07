@@ -135,7 +135,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         self.swipeMenuTopBar.addSubview(self.timeLabel)
         self.timeLabel.text = String(format: "%02d", self.countMinutes) + " : " + String(format: "%02d", self.countSeconds)
         self.timeLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 18.0)
+        self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: self.view.getTextSize(18))
         self.timeLabel.textAlignment = NSTextAlignment.Center
         self.timeLabel.textColor = UIColor.redColor()
         self.timeLabel.userInteractionEnabled = true
@@ -152,7 +152,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         self.nextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.nextButton.textColor = UIColor.whiteColor()
         self.nextButton.textAlignment = NSTextAlignment.Center
-        self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+        self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         self.nextButton.text = "Next"
         let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 50)
         let rightLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20))
@@ -280,8 +280,8 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             //Tutorial Title
             let labelString:String = String("ARITHMETIC TEST")
             let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 10, length: NSString(string: labelString).length-10))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 10, length: NSString(string: labelString).length-10))
             attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
             self.logoImageView.attributedText = attributedString
             
@@ -289,31 +289,31 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             self.logoImageView.textAlignment = NSTextAlignment.Center
             self.tutoView.backgroundColor = UIColor(white: 0.0, alpha: 0.9)
             self.tutoDescriptionTitle.textColor = UIColor.whiteColor()
-            self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Justified
             self.tutoDescriptionTitle.numberOfLines = 0
             self.tutoDescriptionText.textColor = UIColor.whiteColor()
-            self.tutoDescriptionText.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+            self.tutoDescriptionText.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Left
             self.tutoDescriptionText.numberOfLines = 0
             self.tutoDescriptionTitle2.textColor = UIColor.whiteColor()
-            self.tutoDescriptionTitle2.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoDescriptionTitle2.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoDescriptionTitle2.textAlignment = NSTextAlignment.Justified
             self.tutoDescriptionTitle2.numberOfLines = 0
             self.tutoDescriptionText2.textColor = UIColor.whiteColor()
-            self.tutoDescriptionText2.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+            self.tutoDescriptionText2.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
             self.tutoDescriptionText2.textAlignment = NSTextAlignment.Left
             self.tutoDescriptionText2.numberOfLines = 0
             self.tutoNextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
             self.tutoNextButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoNextButton.setTitle("Continue", forState: .Normal)
-            self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
             let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext:"))
             self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
             self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoSkipButton.setTitle("Skip the Tutorial", forState: .Normal)
-            self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15.0)
+            self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(15))
             self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
             let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoSkip:"))
             self.tutoSkipButton.addGestureRecognizer(tutoSkipButtonTap)
@@ -476,8 +476,8 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
@@ -512,13 +512,13 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             answerNumber.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+            answerNumber.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: self.view.getTextSize(22))
             answerNumber.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             answerNumber.layer.borderWidth = 2.0
             
             matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
-            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
+            matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: self.view.getTextSize(28))
             matchingQuestionLabel.setTitle("\(questionAsked) =", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
 
@@ -568,7 +568,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
                     if anyButton.tag >= 10 && anyButton.tag <= 60 {
                         anyButton.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
                         anyButton.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
-                        anyButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 22.0)
+                        anyButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: self.view.getTextSize(22))
                         //anyButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
                         //anyButton.layer.borderWidth = 3.0
                         anyButton.titleLabel?.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
@@ -584,7 +584,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 if let actButton = actualButton as? UIButton {
                 actButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 28.0)
+                actButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: self.view.getTextSize(28))
                 actButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                 self.selectedAnswers[self.displayedQuestionIndex] = Int(actualButton.tag/10 - 1)
                 for buttons in self.mainView.subviews {
@@ -691,8 +691,8 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             
             let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
             let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
             if self.scoreRatio<70 {
                 attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
             }
@@ -730,7 +730,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             answerUILabel.numberOfLines = 0
             answerUILabel.adjustsFontSizeToFitWidth = true
             answerUIButton.backgroundColor = UIColor.whiteColor()
-            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             answerUIButton.layer.borderWidth = 3.0
             answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             

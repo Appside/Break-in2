@@ -147,14 +147,14 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         self.swipeMenuTopBar.addSubview(self.timeLabel)
         self.timeLabel.text = String(format: "%02d", self.countMinutes) + " : " + String(format: "%02d", self.countSeconds)
         self.timeLabel.setConstraintsToSuperview(0, bottom: 30, left: 0, right: 0)
-        self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: 18.0)
+        self.timeLabel.font = UIFont(name: "HelveticaNeue-Bold",size: self.view.getTextSize(18))
         self.timeLabel.textAlignment = NSTextAlignment.Center
         self.timeLabel.textColor = UIColor.redColor()
         self.timeLabel.userInteractionEnabled = true
         self.swipeMenuTopBar.addSubview(self.descriptionSwipeLabel)
         self.descriptionSwipeLabel.setConstraintsToSuperview(30, bottom: 0, left: 0, right: 0)
         self.descriptionSwipeLabel.text = "Swipe up for Answers"
-        self.descriptionSwipeLabel.font = UIFont(name: "HelveticaNeue-Medium",size: 14.0)
+        self.descriptionSwipeLabel.font = UIFont(name: "HelveticaNeue-Medium",size: self.view.getTextSize(14))
         self.descriptionSwipeLabel.textAlignment = NSTextAlignment.Center
         self.descriptionSwipeLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.descriptionSwipeLabel.userInteractionEnabled = true
@@ -189,7 +189,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         self.questionView.addSubview(self.questionLabel)
         self.questionLabel.setConstraintsToSuperview(Int(round(self.questionView.frame.height-self.questionLabel.frame.height)/2), bottom: 0, left: 5, right: 5)
         self.questionLabel.textColor = UIColor.whiteColor()
-        self.questionLabel.font = UIFont(name: "HelveticaNeue-Light",size: 16.0)
+        self.questionLabel.font = UIFont(name: "HelveticaNeue-Light",size: self.view.getTextSize(16))
         self.questionLabel.textAlignment = NSTextAlignment.Center
         self.questionLabel.backgroundColor = UIColor(white: 0, alpha: 0)
         self.questionView.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
@@ -207,7 +207,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35)
         self.graphTitle.addConstraint(graphTitleHeight)
         self.graphTitle.textAlignment = NSTextAlignment.Left
-        self.graphTitle.font = UIFont(name: "HelveticaNeue-Italic", size: 14.0)
+        self.graphTitle.font = UIFont(name: "HelveticaNeue-Italic", size: self.view.getTextSize(14))
         self.graphTitle.textColor = UIColor.whiteColor()
         
         //Update top constraint
@@ -225,7 +225,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         self.nextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.nextButton.textColor = UIColor.whiteColor()
         self.nextButton.textAlignment = NSTextAlignment.Center
-        self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+        self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         self.nextButton.text = "Next"
         let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 320)
         let rightLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20))
@@ -356,8 +356,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             //Tutorial Title
             let labelString:String = String("NUMERICAL TEST")
             let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 10, length: NSString(string: labelString).length-10))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 10, length: NSString(string: labelString).length-10))
             attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
             self.logoImageView.attributedText = attributedString
             
@@ -365,31 +365,31 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.logoImageView.textAlignment = NSTextAlignment.Center
             self.tutoView.backgroundColor = UIColor(white: 0.0, alpha: 0.9)
             self.tutoDescriptionTitle.textColor = UIColor.whiteColor()
-            self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Justified
             self.tutoDescriptionTitle.numberOfLines = 0
             self.tutoDescriptionText.textColor = UIColor.whiteColor()
-            self.tutoDescriptionText.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+            self.tutoDescriptionText.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Left
             self.tutoDescriptionText.numberOfLines = 0
             self.tutoDescriptionTitle2.textColor = UIColor.whiteColor()
-            self.tutoDescriptionTitle2.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoDescriptionTitle2.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoDescriptionTitle2.textAlignment = NSTextAlignment.Justified
             self.tutoDescriptionTitle2.numberOfLines = 0
             self.tutoDescriptionText2.textColor = UIColor.whiteColor()
-            self.tutoDescriptionText2.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+            self.tutoDescriptionText2.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
             self.tutoDescriptionText2.textAlignment = NSTextAlignment.Left
             self.tutoDescriptionText2.numberOfLines = 0
             self.tutoNextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
             self.tutoNextButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoNextButton.setTitle("Continue", forState: .Normal)
-            self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
             let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext:"))
             self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
             self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoSkipButton.setTitle("Skip the Tutorial", forState: .Normal)
-            self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15.0)
+            self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(15))
             self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
             let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoSkip:"))
             self.tutoSkipButton.addGestureRecognizer(tutoSkipButtonTap)
@@ -563,9 +563,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-        let textSize:CGFloat = self.view.getTextSize(25)
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: textSize)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: textSize)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
@@ -603,7 +602,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             answerUILabel.numberOfLines = 0
             answerUILabel.adjustsFontSizeToFitWidth = true
             answerUIButton.backgroundColor = UIColor.whiteColor()
-            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             answerUIButton.layer.borderWidth = 3.0
             answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             
@@ -804,12 +803,12 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             chartObject.userInteractionEnabled = true
             chartObject.pinchZoomEnabled = true
-            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
-            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
-            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
+            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13))!
+            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(5))!
+            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(5))!
             chartObject.leftAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
             chartObject.rightAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
-            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13))!
             chartObject.doubleTapToZoomEnabled = false
             chartObject.pinchZoomEnabled = true
             
@@ -841,7 +840,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.graphView.addSubview(chartObject)
             
             chartObject.userInteractionEnabled = true
-            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13))!
             chartObject.legend.enabled = false
             
             return chartObject
@@ -881,12 +880,12 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.graphView.addSubview(chartObject)
             
             chartObject.userInteractionEnabled = true
-            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: 13.0)!
-            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
-            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: 5.0)!
+            chartObject.legend.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13))!
+            chartObject.rightAxis.labelFont = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(5))!
+            chartObject.leftAxis.labelFont = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(5))!
             chartObject.leftAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
             chartObject.rightAxis.labelTextColor = UIColor(white: 0.0, alpha: 0.0)
-            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: 13.0)!
+            chartObject.xAxis.labelFont = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13))!
             chartObject.doubleTapToZoomEnabled = false
             chartObject.pinchZoomEnabled = true
             
@@ -931,7 +930,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         let chartData = BarChartData(xVals: dataPoints, dataSets: chartDataSets)
         chartView.data = chartData
         chartData.setValueTextColor(UIColor.whiteColor())
-        chartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        chartData.setValueFont(UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13)))
         chartView.autoScaleMinMaxEnabled = true
         
         return chartView
@@ -964,7 +963,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         }
         chartView.data = pieChartData
         pieChartDataSet.colors = colors
-        pieChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        pieChartData.setValueFont(UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13)))
         
         return chartView
     }
@@ -1000,7 +999,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         
         chartView.data = lineChartData
         lineChartData.setValueTextColor(UIColor.whiteColor())
-        lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
+        lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13)))
         chartView.data?.highlightEnabled = true
         chartView.autoScaleMinMaxEnabled = true
         
@@ -1016,8 +1015,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
             let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
             if self.scoreRatio<70 {
             attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
             }
@@ -1049,7 +1048,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         topComment.text = "Select Question For Feedback"
         topComment.numberOfLines = 0
         topComment.textAlignment = NSTextAlignment.Center
-        topComment.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+        topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         topComment.textColor = UIColor.whiteColor()
         
         for i=0; i<self.selectedAnswers.count;i++ {
@@ -1071,7 +1070,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             answerUILabel.numberOfLines = 0
             answerUILabel.adjustsFontSizeToFitWidth = true
             answerUIButton.backgroundColor = UIColor.whiteColor()
-            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             answerUIButton.layer.borderWidth = 3.0
             answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             
@@ -1150,7 +1149,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             feedbackLabel.setConstraintsToSuperview(10, bottom: 10, left: 30, right: 30)
             feedbackLabel.text = self.quizzArray[questionFeedback].explaination
-            feedbackLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
+            feedbackLabel.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(14))
             
             if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {
                 self.timeLabel.text = "Correct Answer"
