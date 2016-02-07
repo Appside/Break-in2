@@ -479,6 +479,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     }
     
     func tutoSkip(sender:UITapGestureRecognizer) {
+        self.passageView.alpha = 1.0
         self.showTutorial = false
         self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {

@@ -447,7 +447,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.tutoNextButton.setTitle("Start Test", forState: .Normal)
         }
         if self.tutoPage==5 {
-            self.tutoView.alpha = 0
+            self.tutoView.alpha = 0.0
             self.graphView.alpha = 1.0
             self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
@@ -458,6 +458,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     }
     
     func tutoSkip(sender:UITapGestureRecognizer) {
+        self.graphView.alpha = 1.0
         self.showTutorial = false
         self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
