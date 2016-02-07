@@ -714,39 +714,44 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
           self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
         }
         else if sender == self.testStartButton {
-            
+          
+          if sender.titleLabel?.text == "Start Test" {
             if (self.numberOfTestsTotal == 3) {
-        
-                let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
-                self.defaults.setObject(now, forKey: "LivesTimer")
-                self.numberOfTestsTotal--
-                self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
-                self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
-                
+              
+              let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
+              self.defaults.setObject(now, forKey: "LivesTimer")
+              self.numberOfTestsTotal--
+              self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+              self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+              
             }else if (self.numberOfTestsTotal > 0 && self.numberOfTestsTotal != 3) {
-            
-                self.numberOfTestsTotal--
-                self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
-                self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
-                
+              
+              self.numberOfTestsTotal--
+              self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+              self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+              
             }else if (self.membershipType == "Premium"){
-                
-                self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
-            
+              
+              self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+              
             }else{
+              
+              let backAlert = SCLAlertView()
+              backAlert.showCloseButton = false
+              backAlert.addButton("5 Lives / £0.50", target:self, selector: "extraLives2:")
+              backAlert.addButton("Wait", action: ({
                 
-                let backAlert = SCLAlertView()
-                backAlert.showCloseButton = false
-                backAlert.addButton("5 Lives / £0.50", target:self, selector: "extraLives2:")
-                backAlert.addButton("Wait", action: ({
-                    
-                    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
-                    
-                }))
-                backAlert.showSuccess("OUT OF LIVES", subTitle: "You can purchase some now.")
+                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
                 
+              }))
+              backAlert.showSuccess("OUT OF LIVES", subTitle: "You can purchase some now.")
+              
             }
-        
+          }
+          else {
+            
+          }
+          
         }
         
     })

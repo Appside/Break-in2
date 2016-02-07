@@ -388,7 +388,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         let deadlineTitleWidth:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width*8/10)
         deadlineTitle.addConstraint(deadlineTitleWidth)
         deadlineTitle.textColor = UIColor.blackColor()
-        deadlineTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
+      let textSize = self.getTextSize(18)
+        deadlineTitle.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
         deadlineTitle.textAlignment = NSTextAlignment.Center
         
         deadlineScrollView.setConstraintsToSuperview(Int(self.rowHeight*2+5), bottom: 0, left: 0, right: 0)
@@ -438,11 +439,12 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         companyName.numberOfLines = 0
         careerName.numberOfLines = 0
         positionName.numberOfLines = 0
-        companyName.font = UIFont(name: "HelveticaNeue-MediumBold", size: 15.0)
+          let textSize2 = self.getTextSize(15)
+        companyName.font = UIFont(name: "HelveticaNeue-MediumBold", size: textSize2)
         companyName.textAlignment = NSTextAlignment.Left
-        careerName.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15.0)
+        careerName.font = UIFont(name: "HelveticaNeue-LightItalic", size: textSize2)
         careerName.textAlignment = NSTextAlignment.Left
-        positionName.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15.0)
+        positionName.font = UIFont(name: "HelveticaNeue-LightItalic", size: textSize2)
         positionName.textAlignment = NSTextAlignment.Left
         
         companyName.text = elementArray[0]
