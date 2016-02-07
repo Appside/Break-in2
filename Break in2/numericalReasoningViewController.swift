@@ -50,6 +50,24 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     var testEnded:Bool = false
     var graphContent:UIView = UIView()
     
+    //Tutorial Views
+    var showTutorial:Bool = true
+    let tutoView:UIView = UIView()
+    let tutoDescription:UILabel = UILabel()
+    let tutoDescriptionTitle:UILabel = UILabel()
+    let tutoDescriptionText:UILabel = UILabel()
+    let tutoDescriptionTitle2:UILabel = UILabel()
+    let tutoDescriptionText2:UILabel = UILabel()
+    let tutoNextButton:UIButton = UIButton()
+    let tutoSkipButton:UIButton = UIButton()
+    let logoImageView:UILabel = UILabel()
+    let tutorialFingerImageView:UIImageView = UIImageView()
+    var tutoPage:Int = 0
+    let tutoDescriptionSep:UIView = UIView()
+    let tutoDescriptionSep2:UIView = UIView()
+    let whiteBGView:UIView = UIView()
+    let newTutoButton:UILabel = UILabel()
+    
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -234,9 +252,6 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         self.quizzArray = self.quizzModel.selectNumericalReasoning(self.totalNumberOfQuestions+1)
         self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
         
-        //Launch timer
-        timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
-        
         //Initialize swipeUIView
         self.view.addSubview(self.swipeUIView)
         self.swipeUIView.translatesAutoresizingMaskIntoConstraints = false
@@ -256,6 +271,198 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         swipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideSwipeMenu:"))
         swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
         self.swipeUIView.addGestureRecognizer(swipeDownGesture)
+        
+        if self.showTutorial == true {
+            
+            //Set constraints to each view
+            self.tutoView.tag = 999
+            self.view.addSubview(self.tutoView)
+            self.tutoView.addSubview(self.tutoNextButton)
+            self.tutoView.addSubview(self.tutoSkipButton)
+            self.tutoView.addSubview(self.tutoDescription)
+            self.tutoView.addSubview(self.logoImageView)
+            self.tutoView.addSubview(self.tutorialFingerImageView)
+            self.tutoDescription.addSubview(self.tutoDescriptionTitle)
+            self.tutoDescription.addSubview(self.tutoDescriptionText)
+            self.tutoDescription.addSubview(self.tutoDescriptionTitle2)
+            self.tutoDescription.addSubview(self.tutoDescriptionText2)
+            self.tutoDescription.addSubview(self.tutoDescriptionSep)
+            self.tutoDescriptionSep.backgroundColor = UIColor.whiteColor()
+            self.tutoDescription.addSubview(self.tutoDescriptionSep2)
+            self.tutoDescriptionSep2.backgroundColor = UIColor.whiteColor()
+            
+            self.tutoView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+            
+            self.tutoDescription.translatesAutoresizingMaskIntoConstraints = false
+            let tutoDescriptionCenterY:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 300/2-60)
+            let tutoDescriptionLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 50)
+            let tutoDescriptionRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -50)
+            self.tutoView.addConstraints([tutoDescriptionCenterY,tutoDescriptionLeft,tutoDescriptionRight])
+            let tutoDescriptionHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 300)
+            self.tutoDescription.addConstraint(tutoDescriptionHeight)
+            
+            self.tutoNextButton.translatesAutoresizingMaskIntoConstraints = false
+            let tutoNextButtonBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -10)
+            let tutoNextButtonLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 40)
+            let tutoNextButtonRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -40)
+            self.tutoView.addConstraints([tutoNextButtonBottom,tutoNextButtonLeft,tutoNextButtonRight])
+            let tutoNextButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+            self.tutoNextButton.addConstraint(tutoNextButtonHeight)
+            
+            self.tutoSkipButton.translatesAutoresizingMaskIntoConstraints = false
+            let tutoSkipButtonTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 25+(self.view.frame.width/12)+5)
+            let tutoSkipButtonCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+            self.tutoView.addConstraints([tutoSkipButtonTop,tutoSkipButtonCenterX])
+            let tutoSkipButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+            let tutoSkipButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 200)
+            self.tutoSkipButton.addConstraints([tutoSkipButtonHeight,tutoSkipButtonWidth])
+            
+            self.tutoDescriptionTitle.setConstraintsToSuperview(0, bottom: 285, left: 0, right: 0)
+            self.tutoDescriptionSep.setConstraintsToSuperview(17, bottom: 282, left: 0, right: 0)
+            //self.tutoDescriptionText.setConstraintsToSuperview(20, bottom: 125, left: 0, right: 0)
+            self.tutoDescriptionTitle2.setConstraintsToSuperview(160, bottom: 125, left: 0, right: 0)
+            self.tutoDescriptionSep2.setConstraintsToSuperview(177, bottom: 122, left: 0, right: 0)
+            //self.tutoDescriptionText2.setConstraintsToSuperview(200, bottom: 0, left: 0, right: 0)
+            
+            self.tutoDescriptionText.translatesAutoresizingMaskIntoConstraints = false
+            let tutoDescriptionTextTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 20)
+            let tutoDescriptionTextLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+            let tutoDescriptionTextRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+            self.tutoDescription.addConstraints([tutoDescriptionTextTop,tutoDescriptionTextLeft,tutoDescriptionTextRight])
+            let tutoDescriptionText2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 180)
+            let tutoDescriptionText2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+            let tutoDescriptionText2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+            self.tutoDescription.addConstraints([tutoDescriptionText2Top,tutoDescriptionText2Left,tutoDescriptionText2Right])
+            
+            self.tutoDescriptionText2.translatesAutoresizingMaskIntoConstraints = false
+            self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
+            let logoImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+            let logoImageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 25)
+            let logoImageViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width/12)
+            let logoImageViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width-40)
+            self.logoImageView.addConstraints([logoImageViewHeight, logoImageViewWidth])
+            self.tutoView.addConstraints([logoImageViewCenterX, logoImageViewTop])
+            
+            //Finger ImageView
+            self.tutorialFingerImageView.image = UIImage.init(named: "fingbutton")
+            self.tutorialFingerImageView.contentMode = UIViewContentMode.ScaleAspectFit
+            self.tutorialFingerImageView.translatesAutoresizingMaskIntoConstraints = false
+            let descriptionImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+            let descriptionImageViewCenterY:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -self.view.frame.width/8-100)
+            let descriptionImageViewHeight:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width/4)
+            let descriptionImageViewWidth:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 10)
+            self.tutorialFingerImageView.addConstraints([descriptionImageViewHeight, descriptionImageViewWidth])
+            self.tutoView.addConstraints([descriptionImageViewCenterX, descriptionImageViewCenterY])
+            
+            //Tutorial Title
+            let labelString:String = String("NUMERICAL TEST")
+            let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 10, length: NSString(string: labelString).length-10))
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+            self.logoImageView.attributedText = attributedString
+            
+            //Design
+            self.logoImageView.textAlignment = NSTextAlignment.Center
+            self.tutoView.backgroundColor = UIColor(white: 0.0, alpha: 0.9)
+            self.tutoDescriptionTitle.textColor = UIColor.whiteColor()
+            self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Justified
+            self.tutoDescriptionTitle.numberOfLines = 0
+            self.tutoDescriptionText.textColor = UIColor.whiteColor()
+            self.tutoDescriptionText.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+            self.tutoDescriptionText.textAlignment = NSTextAlignment.Left
+            self.tutoDescriptionText.numberOfLines = 0
+            self.tutoDescriptionTitle2.textColor = UIColor.whiteColor()
+            self.tutoDescriptionTitle2.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoDescriptionTitle2.textAlignment = NSTextAlignment.Justified
+            self.tutoDescriptionTitle2.numberOfLines = 0
+            self.tutoDescriptionText2.textColor = UIColor.whiteColor()
+            self.tutoDescriptionText2.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+            self.tutoDescriptionText2.textAlignment = NSTextAlignment.Left
+            self.tutoDescriptionText2.numberOfLines = 0
+            self.tutoNextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+            self.tutoNextButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            self.tutoNextButton.setTitle("Continue", forState: .Normal)
+            self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 15.0)
+            self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
+            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext:"))
+            self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
+            self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            self.tutoSkipButton.setTitle("Skip the Tutorial", forState: .Normal)
+            self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: 15.0)
+            self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
+            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoSkip:"))
+            self.tutoSkipButton.addGestureRecognizer(tutoSkipButtonTap)
+            
+            //Set tutorial text
+            self.tutoDescriptionTitle.text = "Test Description:"
+            self.tutoDescriptionText.text = "You will be tested on your ability to read and understand numerical charts and tables in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
+            self.tutoDescriptionTitle2.text = "Our Recommendation:"
+            self.tutoDescriptionText2.text = "We recommend that you achieve a score of at least 85% on the Hard difficulty level before taking the real test."
+            self.graphView.alpha = 0.0
+            
+            //Set Tutorial page
+            self.tutoPage = 1
+            
+        } else {
+            //Launch timer
+            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        }
+        
+    }
+    
+    func tutoNext(sender:UITapGestureRecognizer) {
+        self.tutoPage++
+        if self.tutoPage==2 {
+            self.tutoDescriptionSep2.alpha = 0
+            self.tutoDescriptionText2.alpha = 0
+            self.tutoDescriptionTitle2.alpha = 0
+            self.tutoDescriptionText.textAlignment = NSTextAlignment.Center
+            self.tutoDescriptionTitle.alpha = 0.0
+            self.tutorialFingerImageView.alpha = 0.0
+            self.tutoDescriptionText.text = "A graph will appear with a question at the top of the screen. To answer it, swipe up the answer menu at the bottom of the screen and select an answer."
+        }
+        if self.tutoPage==3 {
+            self.tutoSkipButton.alpha = 0.0
+            self.tutoDescriptionText.alpha = 0.0
+            self.tutoDescriptionSep.alpha = 0.0
+            self.view.bringSubviewToFront(self.mainView)
+            self.view.bringSubviewToFront(self.swipeUIView)
+            self.graphView.alpha = 1.0
+            self.nextButton.text = "Continue"
+        }
+        if self.tutoPage==4 {
+            self.hideSwipeMenu(UISwipeGestureRecognizer())
+            self.graphView.alpha = 0.0
+            self.view.bringSubviewToFront(self.tutoView)
+            self.nextButton.text = "Next"
+            self.tutoSkipButton.alpha = 1.0
+            self.tutoDescriptionTitle.alpha = 1.0
+            self.tutoDescriptionSep.alpha = 1.0
+            self.tutoDescriptionText.alpha = 1.0
+            self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Center
+            self.tutoDescriptionTitle.text = "Ready to Start ?"
+            self.tutoDescriptionText.text = "You are now ready to Start the test. Practice hard, and remember: both your final score and speed matter when it comes to selecting candidates !"
+            self.tutoNextButton.setTitle("Start Test", forState: .Normal)
+        }
+        if self.tutoPage==5 {
+            self.tutoView.alpha = 0
+            self.graphView.alpha = 1.0
+            self.selectedAnswers[self.displayedQuestionIndex] = 20
+            self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+            self.showTutorial = false
+            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        }
+        
+    }
+    
+    func tutoSkip(sender:UITapGestureRecognizer) {
+        self.showTutorial = false
+        self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.tutoView.alpha = 0.0
+            }, completion: nil)
     }
     
     //Show Swipe Menu
@@ -465,6 +672,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
         
+        //Check if button pressed during tutorial ?
+        if self.tutoPage==3 {
+            self.tutoNext(UITapGestureRecognizer())
+        } else {
+            
         // If no answer is selected, show Alert
         if self.selectedAnswers[self.displayedQuestionIndex]==20 {
             let exitAlert = SCLAlertView()
@@ -546,6 +758,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                 }
                 self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             }
+        }
         }
     }
     

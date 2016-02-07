@@ -372,11 +372,13 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.text = "Ready to Start ?"
             self.tutoDescriptionText.text = "You are now ready to Start the test. Practice hard, and remember: both your final score and speed matter when it comes to selecting candidates !"
+            self.tutoNextButton.setTitle("Start Test", forState: .Normal)
         }
         if self.tutoPage==5 {
             self.tutoView.alpha = 0
             self.whiteBGView.alpha = 0
             self.displayQuestion(self.displayedQuestionIndex)
+            self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.showTutorial = false
             self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
         }
