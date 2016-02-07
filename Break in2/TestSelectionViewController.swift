@@ -688,6 +688,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   func hideTestSelectionView(sender:UIButton) {
     
+    
+    
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       if self.testSelectionViewVisible {
@@ -747,16 +749,80 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
               backAlert.showSuccess("OUT OF LIVES", subTitle: "You can purchase some now.")
               
             }
-          }
-          else {
+          }else {
             
-          }
-          
+            SwiftSpinner.show("Submitting Vote")
+            
+            let query = PFQuery(className: PF_TESTVOTE_CLASS_NAME)
+            query.whereKey(PF_TESTVOTE_CAREER, equalTo: self.selectedCareer)
+            query.whereKey(PF_TESTVOTE_TEST, equalTo: self.testTypeViews[self.currentScrollViewPage].testTypeTimeLabel.text!)
+
+            query.getFirstObjectInBackgroundWithBlock({ (votes: PFObject?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    votes?.incrementKey(PF_TESTVOTE_VOTES)
+                    
+                        votes?.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            
+                        if error == nil {
+
+                            SwiftSpinner.show("Vote Submitted", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                
+                                }, subtitle: "Tap to return to test selection")
+                            
+                        } else {
+                            
+                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                
+                                }, subtitle: "Try again later. Tap to return to test selection")
+                            
+                        }
+                        
+                    })
+                    
+                }else{
+                    
+                    SwiftSpinner.show("Submitting Vote")
+                    
+                    let voteSubmission = PFObject(className: PF_TESTVOTE_CLASS_NAME)
+                    voteSubmission[PF_TESTVOTE_CAREER] = self.selectedCareer
+                    voteSubmission[PF_TESTVOTE_TEST] = self.testTypeViews[self.currentScrollViewPage].testTypeTimeLabel.text!
+                    voteSubmission[PF_TESTVOTE_VOTES] = 1
+                    
+                    voteSubmission.saveInBackgroundWithBlock({ (succeeded, error) -> Void in
+                        if error == nil {
+                            
+                            SwiftSpinner.show("Vote Submitted", animated: false).addTapHandler({
+                                SwiftSpinner.hide()
+                                }, subtitle: "Tap to proceed to test selection")
+                            
+                        } else {
+                            
+                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                }, subtitle: "Try again later. Tap to proceed to feedback")
+                            
+                        }
+                    })
+
+                    
+                }
+            })
+            }
+            
         }
-        
-    })
+        })
     
-  }
+    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+    
+    }
+        
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     

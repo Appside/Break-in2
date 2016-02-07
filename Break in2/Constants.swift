@@ -95,3 +95,10 @@ let PF_PREFERENCES_CREATED               = "createdAt"              //	Date
 let PF_PREFERENCES_TIME                  = "time"                   //	Number
 let PF_PREFERENCES_USERNAME              = "username"				//	String
 let PF_PREFERENCES_CAREERPREFS           = "careerPrefs"            //	Array
+
+/* Test voting class in Parse*/
+let PF_TESTVOTE_CLASS_NAME            = "New_Test_Vote"            //	Class name
+let PF_TESTVOTE_CREATED               = "createdAt"              //	Date
+let PF_TESTVOTE_VOTES                  = "votes"                   //	Number
+let PF_TESTVOTE_CAREER           = "career"            //	String
+let PF_TESTVOTE_TEST           = "test"            //	String
