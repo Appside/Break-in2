@@ -832,24 +832,63 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             }
             
             self.displayQuestion(questionFeedback)
-            let feedbackLabel:UITextView = UITextView()
-            self.mainView.addSubview(feedbackLabel)
-            
-            feedbackLabel.setConstraintsToSuperview(Int((self.view.frame.height-250)/6+15), bottom: 0, left: 10, right: 125)
-            feedbackLabel.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
-            feedbackLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-            feedbackLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.0)
-            
             if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {
                 self.timeLabel.text = "Correct Answer"
                 self.timeLabel.textColor = UIColor.greenColor()
-                feedbackLabel.text = "Your answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer]).\nThis is the correct answer.\n\n\(self.quizzArray[questionFeedback].feedback)"
             }
             else {
                 self.timeLabel.text = "Wrong Answer"
                 self.timeLabel.textColor = UIColor.redColor()
-                feedbackLabel.text = "Your answer was \(self.quizzArray[questionFeedback].answers[self.selectedAnswers[questionFeedback]).\nThis is a wrong answer.\n\n\(self.quizzArray[questionFeedback].feedback)\n\nThe correct answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer])."
             }
+
+            //**************
+            let correctAnswer:Int = self.quizzArray[questionFeedback].correctAnswer
+            let answerSelect:Int = self.selectedAnswers[questionFeedback]
+            //**************
+            self.mainView.userInteractionEnabled = false
+            for element in self.mainView.subviews {
+                if let answer = element as? UIButton {
+                    if answer.tag == (answerSelect+1) {
+                        answer.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.3)
+                    } else {
+                        answer.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.0)
+                    }
+                    for answerNb in answer.subviews {
+                            if let answerRow = answerNb as? UIButton {
+                                if answerRow.tag == (answerSelect+1)*10 {
+                                    answerRow.layer.borderColor = UIColor.redColor().CGColor
+                                    answerRow.backgroundColor = UIColor.redColor()
+                                    answerRow.titleLabel?.textColor = UIColor.whiteColor()
+                                }
+                                if answerRow.tag == (correctAnswer+1)*10 {
+                                    answerRow.layer.borderColor = UIColor.greenColor().CGColor
+                                    answerRow.backgroundColor = UIColor.greenColor()
+                                    answerRow.titleLabel?.textColor = UIColor.whiteColor()
+                                }
+                                if answerRow.tag == (answerSelect+1)*100 {
+                                    //Move question to selected matchingQuestionLabel
+                                    answerRow.alpha = 1.0
+                                    let shapesMargin:Int = 10
+                                    let shapesWidth:Int = (Int(self.view.frame.width)-170-4*shapesMargin)/4
+                                    var j:Int = 0
+                                    let questionAsked:[LogicalPictureView] = self.quizzArray[questionFeedback].question
+                                    for j=0;j<4;j++ {
+                                        answerRow.addSubview(questionAsked[j])
+                                        questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
+                                        let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+                                        let leftMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(j*(shapesWidth+shapesMargin)))
+                                        answerRow.addConstraints([topMMM,leftMMM])
+                                        let heightMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                                        let widthMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(shapesWidth))
+                                        questionAsked[j].addConstraints([heightMMM,widthMMM])
+                                        questionAsked[j].backgroundColor = UIColor.clearColor()
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+            //**************
             
             }, completion: nil)
         
@@ -863,15 +902,14 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
     func addNewQuestion() {
         //Add a new question to the array
         let newQuestion:logicalQuestion = logicalQuestion()
-        let (questionShapes, answerShapes, correctIndex, feedbackString) = self.fillArrayWithRandomNumbers()
+        let (questionShapes, answerShapes, correctIndex) = self.fillArrayWithRandomNumbers()
         newQuestion.question = questionShapes
         newQuestion.answers = answerShapes
         newQuestion.correctAnswer = correctIndex
-        newQuestion.feedback = feedbackString
         self.quizzArray.append(newQuestion)
     }
     
-    func fillArrayWithRandomNumbers() -> ([LogicalPictureView], [LogicalPictureView],Int, String) {
+    func fillArrayWithRandomNumbers() -> ([LogicalPictureView], [LogicalPictureView],Int) {
         
         //Set function's variables
         var questionArray:[LogicalPictureView] = [LogicalPictureView]()
@@ -881,10 +919,6 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         var randomIndex:Int = Int()
         var correctIndexSet:Bool = false
         var i:Int = 0
-        
-        //Add feedback
-        var feedbackString:String = String()
-        feedbackString = ""
         
         //Generate Question and Answers
         let logicalProblem:[[LogicalPictureView]] = self.logicModel.getLogicalProblem()
@@ -903,7 +937,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         }
         
         //Return question info array
-        return (questionArray, returnedArray, correctIndex, feedbackString)
+        return (questionArray, returnedArray, correctIndex)
     }
     
     func setDifficultyLevel() {
@@ -912,17 +946,17 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         if self.difficulty == "H" {
             self.allowedSeconds = 00
             self.allowedMinutes = 10
-            self.totalNumberOfQuestions = 25
+            self.totalNumberOfQuestions = 2
         }
         else if self.difficulty == "M" {
             self.allowedSeconds = 00
             self.allowedMinutes = 15
-            self.totalNumberOfQuestions = 25
+            self.totalNumberOfQuestions = 2
         }
         else {
             self.allowedSeconds = 00
             self.allowedMinutes = 20
-            self.totalNumberOfQuestions = 25
+            self.totalNumberOfQuestions = 2
         }
     }
 }

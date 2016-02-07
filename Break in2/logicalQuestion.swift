@@ -13,6 +13,5 @@ class logicalQuestion {
     var question:[LogicalPictureView] = [LogicalPictureView]()
     var answers:[LogicalPictureView] = [LogicalPictureView]()
     var correctAnswer:Int = Int()
-    var feedback:String = String()
     
 }
