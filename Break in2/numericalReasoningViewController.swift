@@ -123,18 +123,17 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         self.view.addSubview(self.questionMenu)
         self.questionMenu.translatesAutoresizingMaskIntoConstraints = false
         let questionViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
-        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 115)
+        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 40)
         let questionViewTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 35)
         let questionViewRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20)
         self.questionMenu.addConstraints([questionViewHeight, questionViewWidth])
         self.view.addConstraints([questionViewRightMargin,questionViewTopMargin])
-        self.menuBackButton.bringSubviewToFront(self.questionMenu)
+        self.view.bringSubviewToFront(self.menuBackButton)
         
         self.questionMenu.addSubview(self.questionMenuLabel)
-        self.questionMenuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 75)
+        self.questionMenuLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         questionMenuLabel.textAlignment = NSTextAlignment.Center
         self.questionMenuLabel.textColor = UIColor.whiteColor()
-        
         
         //Initialize swipeMenuTopBar UIView
         self.swipeUIView.addSubview(self.swipeMenuTopBar)
@@ -564,8 +563,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 25.0)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: 25.0)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
+        let textSize:CGFloat = self.view.getTextSize(25)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: textSize)!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: textSize)!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
