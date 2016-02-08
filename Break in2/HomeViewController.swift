@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
   let tutorialNextButton:UIButton = UIButton()
   var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
   var tutorialFingerImageView:UIImageView = UIImageView()
+  let brainBreakerQuestionButton:UIButton = UIButton()
   
   var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -109,6 +110,7 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.tutorialView)
     self.view.addSubview(self.tutorialNextButton)
     self.view.addSubview(self.tutorialFingerImageView)
+    self.careersBackgroundView.addSubview(self.brainBreakerQuestionButton)
     
     // Create careerButtons for each careerType
     
@@ -161,6 +163,7 @@ class HomeViewController: UIViewController {
     self.settingsButton.contentMode = UIViewContentMode.ScaleAspectFit
     self.settingsButton.setImage(UIImage.init(named: "settings"), forState: UIControlState.Normal)
     self.settingsButton.alpha = 0
+    
     self.logOutButton.backgroundColor = UIColor.turquoiseColor()
     self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.logOutButton.setTitle("Log Out", forState: UIControlState.Normal)
@@ -182,6 +185,8 @@ class HomeViewController: UIViewController {
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     
     self.descriptionLabelView.clipsToBounds = false
+    
+    self.brainBreakerQuestionButton.backgroundColor = UIColor.grayColor()
     
     // Add actions to buttons
     
@@ -240,7 +245,7 @@ class HomeViewController: UIViewController {
       self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 12)
       
       let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
-      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
+      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
     }
     
     // Set constraints
@@ -278,7 +283,7 @@ class HomeViewController: UIViewController {
       var testColors:[String:UIColor] = [String:UIColor]()
       for career in self.careerTypes {
         for testType in self.careersTestTypes[career]! {
-          if !testTypes.contains(testType) {
+          if !testTypes.contains(testType) && testType != "Help Us Add More Tests:" {
             testTypes.append(testType)
           }
         }
@@ -550,6 +555,21 @@ class HomeViewController: UIViewController {
     
     self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
     self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
+    
+    // Create and add constraints for brainBreakerQuestionButton
+    
+    self.brainBreakerQuestionButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    let brainBreakerQuestionButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    
+    let brainBreakerQuestionButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    
+    let brainBreakerQuestionButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    
+    let brainBreakerQuestionButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    
+    self.brainBreakerQuestionButton.addConstraints([brainBreakerQuestionButtonHeightConstraint, brainBreakerQuestionButtonWidthConstraint])
+    self.view.addConstraints([brainBreakerQuestionButtonRightConstraint, brainBreakerQuestionButtonTopConstraint])
     
   }
   
