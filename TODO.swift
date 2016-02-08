@@ -1,111 +1,33 @@
-//
-//  File.swift
-//  Break in2
-//
-//  Created by Jonathan Crawford on 27/12/2015.
-//  Copyright © 2015 Appside. All rights reserved.
-//
-
-import Foundation
-
-//free version only gives you a sample of each test
-//5 tests across each discipline
-//x hours free per month
 
 //-----------------------------------------------------------------------------------------
-// GENERAL
+// HOME PAGE
 //-----------------------------------------------------------------------------------------
 
 /*
 
-- IMPLEMENT NOTIFICATIONS (WHEN APPROACHING A DEADLINE; FOR US TO SEND MESSAGES TO USERS)
-- RECORD VIDEO OF APP BEING USED AND SEND TO ANDRE
-- WORK OUT PAINT2CODE
-- ANIMATIONS BETWEEN VIEWS (MAYBE FADE IN/FADE OUT WORKS BETTER..)
-- WORK OUT & APPLY FREEMIUM (COINS, SUBSCRIPTION, ONE OFF PURCHASE?)
-- MARKETING STRATEGY
-- RESEARCH COMPETITIONS TO ENTER THIS INTO (SMALL SCALE)
+- Size of the "back" and "next" arrows in the CalendarView when you click on a given deadline are too small for large size sceeens; we should make the size of the arrows dynamic on the width of the screen
+- Same issue on the Settings Page and on the Statistics Page
+- Size of the icons when running the app on an iPad is too small  (settings, stats, number of lives)
+- Easy / medium / hard buttons a bit small on iPad
+- The test selection menu on TestSelectionView is not high enough on iPad
+- Home Page: icons for each carreer are too small
 
 */
 
 //-----------------------------------------------------------------------------------------
-// LOGIN
+// TEST PAGES
 //-----------------------------------------------------------------------------------------
 
 /*
 
-- INTRODUCTORY TUTORIAL
-- LOGIN WITH PUBLISH PERMISSIONS (TO ALLOW USERS TO POST SCORES ON FBK)
-- LOADING ANIMATIONS
-- CHECK THAT CORE DATA IS BEING SUITABLY DELETED, IF NOT SORT IT OUT!!
-- APP WALKTHROUGH UPON INITIAL LOGIN
-
-*/
-
-//-----------------------------------------------------------------------------------------
-// HOME
-//-----------------------------------------------------------------------------------------
-
-/*
-
-- DESIGN CAREER DEADLINE VIEW
-- QUERY CAREERS FROM PARSE BASED ON SELECTIONS FROM SETTINGS
-- SCALE CALENDAR BASED ON SCREEN SIZE (I.E. FONT SIZE)
-
-*/
-
-//-----------------------------------------------------------------------------------------
-// SETTINGS
-//-----------------------------------------------------------------------------------------
-
-/*
-
-- IMPLEMENT NEW CAREERS SELECTION DESIGN
-- USE CORE DATA OR NSUSERDEFAULTS TO SAVE SELECTIONS
-- VERSION UPGRADE
-- HELP
-- ABOUT
-- SETTINGS (SUCH AS TURNING OFF NOTIFICATIONS)
-- DEACTIVATE WARNING ALERT
-- DEACTIVATE LOADING DISPLAY
-- DELETE PROPERLY FROM CORE DATA
-
-*/
-
-//-----------------------------------------------------------------------------------------
-// TEST SELECTION
-//-----------------------------------------------------------------------------------------
-
-/*
-
-- EXPLANANTION OF HOW TO DO EACH TEST
-- HAVE "E,M,H" ABOVE THE TIME DESCRIPTION AND USE THAT DESCRIPTION TO DEFINE TEST PARAMETERS
-- ANIMATION BETWEEN TEST SELECTION SHOULD BE A LOADING SCREEN
-
-*/
-
-//-----------------------------------------------------------------------------------------
-// TESTS
-//-----------------------------------------------------------------------------------------
-
-/*
-
-- ARITHMETIC
-  - BUG: QUESTIONS WITH 5 OR MORE ANSWERS DON'T FIT ON SCREEN
-  - BUG: QUESTION NUMBER LABEL TOO SMALL FOR MORE THAN 10 QUESTIONS
-- LOGICAL
-
-*/
-
-//-----------------------------------------------------------------------------------------
-// STATISTICS
-//-----------------------------------------------------------------------------------------
-
-/*
-
-- STORE DATA IN PARSE BY TEST TYPE (I.E. NUMERICAL, VERBAL ETC...)
-- IMPLEMENT DESIGN
-- DISPLAY THIS TO USER ON TEST SELECTION
-- GET RID OF TEST TIMES STAT, ADD TIME PER QUESTION AND "LEAGUE POSISTION" CHARTS
+- TutorialView: size of titles
+- Height of questionLabel too small
+- TopMargin of questionLabel too small
+- Constraints
+- Question showed on the tutorialView: new question and show the first answer as the correct answer
+- "Complete Test" button
+- Adjust time and number of questions (current questions are too easy)
+- Adjust difficulty of questions (current questions are too easy)
+- Background images for each test
 
 */
