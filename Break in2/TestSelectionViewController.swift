@@ -749,7 +749,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
               backAlert.showSuccess("OUT OF LIVES", subTitle: "You can purchase some now.")
               
             }
-          }else {
+          }
+          else {
             
             SwiftSpinner.show("Submitting Vote")
             
@@ -815,11 +816,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
                 }
             })
             }
-            
+            self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
         }
         })
-    
-    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
     
     }
         
