@@ -235,13 +235,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     self.backButton.alpha = 0
     
     self.testLivesUpgradeButton1.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.testLivesUpgradeButton1.setTitle("£0.50 / 5 Tests", forState: UIControlState.Normal)
+    self.testLivesUpgradeButton1.setTitle("Buy 10 Lives", forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.backgroundColor = UIColor.turquoiseColor()
     self.testLivesUpgradeButton1.addTarget(self, action: "addLives:", forControlEvents: UIControlEvents.TouchUpInside)
     
     self.testLivesUpgradeButton2.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.testLivesUpgradeButton2.setTitle("£2.50 / Unlimited", forState: UIControlState.Normal)
+    self.testLivesUpgradeButton2.setTitle("Buy Unlimited Lives", forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
     self.testLivesUpgradeButton2.addTarget(self, action: "premiumMembership:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -275,7 +275,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     let textSize2:CGFloat = self.view.getTextSize(18)
     self.testLivesTitleLabel.textAlignment = NSTextAlignment.Center
     self.testLivesTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
-    self.testLivesTitleLabel.text = "TIME TO NEXT LIFE:"
+    self.testLivesTitleLabel.text = "TIME TO NEXT FREE LIFE:"
     
     self.testLivesSubtitleLabel.backgroundColor = UIColor.turquoiseColor()
     self.testLivesSubtitleLabel.textAlignment = NSTextAlignment.Center
@@ -332,7 +332,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
             
         }else{
             
-            self.testLivesSubtitleLabel.text = "MAXIMUM AMOUNT OF LIVES"
+            self.testLivesSubtitleLabel.text = "MAXIMUM NUMBER OF FREE LIVES"
             
         }
         
@@ -382,7 +382,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
             if self.numberOfTestsTotal == self.maxNumberOfTests {
                 
                 timer.invalidate()
-                self.testLivesSubtitleLabel.text = "MAXIMUM AMOUNT OF LIVES"
+                self.testLivesSubtitleLabel.text = "MAXIMUM NUMBER OF FREE LIVES"
                 
             }
 
@@ -392,7 +392,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         } else if self.numberOfTestsTotal == self.maxNumberOfTests {
             
             timer.invalidate()
-            self.testLivesSubtitleLabel.text = "MAXIMUM AMOUNT OF LIVES"
+            self.testLivesSubtitleLabel.text = "MAXIMUM NUMBER OF FREE LIVES"
             
         }else{
         
@@ -740,7 +740,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
               
               let backAlert = SCLAlertView()
               backAlert.showCloseButton = false
-              backAlert.addButton("5 Lives / £0.50", target:self, selector: "extraLives2:")
+              backAlert.addButton("Buy 10 Lives", target:self, selector: "extraLives2:")
               backAlert.addButton("Wait", action: ({
                 
                 self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
@@ -770,17 +770,21 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
 
                             SwiftSpinner.show("Vote Submitted", animated: false).addTapHandler({
                                 
+                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                                
                                 SwiftSpinner.hide()
                                 
-                                }, subtitle: "Tap to return to test selection")
+                                }, subtitle: "Tap to return home")
                             
                         } else {
                             
                             SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                 
+                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                                
                                 SwiftSpinner.hide()
                                 
-                                }, subtitle: "Try again later. Tap to return to test selection")
+                                }, subtitle: "Try again later. Tap to return home")
                             
                         }
                         
@@ -799,15 +803,16 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
                         if error == nil {
                             
                             SwiftSpinner.show("Vote Submitted", animated: false).addTapHandler({
+                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
                                 SwiftSpinner.hide()
-                                }, subtitle: "Tap to proceed to test selection")
+                                }, subtitle: "Tap to return home")
                             
                         } else {
                             
                             SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                
+                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
                                 SwiftSpinner.hide()
-                                }, subtitle: "Try again later. Tap to proceed to feedback")
+                                }, subtitle: "Try again later. Tap to return home")
                             
                         }
                     })
@@ -816,7 +821,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
                 }
             })
             }
-            self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
         }
         })
     
@@ -989,7 +993,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
     
     func updateTimer() {
         
-        if self.testLivesSubtitleLabel.text == "MAXIMUM AMOUNT OF LIVES" {
+        if self.testLivesSubtitleLabel.text == "MAXIMUM NUMBER OF FREE LIVES" {
             
         }else{
             if (self.secondsRemaining-1<0) {
@@ -1025,7 +1029,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         backAlert.addButton("Yes", target:self, selector:Selector("extraLives"))
         backAlert.showTitle(
             "Are you sure?", // Title of view
-            subTitle: "Purchasing an extra 5 lives will cost you £0.50", // String of view
+            subTitle: "Purchasing extra lives will cost you", // String of view
             duration: 0.0, // Duration to show before closing automatically, default: 0.0
             completeText: "No", // Optional button value, default: ""
             style: .Success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
