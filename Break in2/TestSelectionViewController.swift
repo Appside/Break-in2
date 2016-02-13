@@ -11,7 +11,7 @@ import SwiftSpinner
 import SCLAlertView
 import Parse
 
-class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
+class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKProductsRequestDelegate {
   
   // Timer stuff
   let defaults = NSUserDefaults.standardUserDefaults()
@@ -30,6 +30,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   var countMinutes:Int = Int()
   var lifeOrLives:String = String()
     
+  //in app purchase initialisation
+  let productIdentifiers = Set(["com.APPSIDE.Breakin2.ExtraLives", "com.APPSIDE.Breakin2.UnlimitedLives"])
+  var product: SKProduct?
+  var productsArray = Array<SKProduct>()
+  var list = [SKProduct]()
+  var p = SKProduct()
   
   // Declare and initialize types of tests and difficulties available for selected career
   
@@ -99,6 +105,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    requestProductData()
     
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -1096,6 +1104,72 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate {
         }
         
     }
+    
+    func requestProductData()
+    {
+        if SKPaymentQueue.canMakePayments() {
+            print("IAP is enabled, loading")
+            let productID:NSSet = NSSet(objects: "com.APPSIDE.Breakin2.ExtraLives", "com.APPSIDE.Breakin2.UnlimitedLives")
+            let request: SKProductsRequest = SKProductsRequest(productIdentifiers: productID as! Set<String>)
+            print(productID as! Set<String>)
+            request.delegate = self
+            request.start()
+        } else {
+            let alert = UIAlertController(title: "In-App Purchases Not Enabled", message: "Please enable In App Purchase in Settings", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { alertAction in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+                
+                let url: NSURL? = NSURL(string: UIApplicationOpenSettingsURLString)
+                if url != nil
+                {
+                    UIApplication.sharedApplication().openURL(url!)
+                }
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { alertAction in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+//    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+//        
+//        var products = response.products
+//        
+//        if (products.count != 0) {
+//            for var i = 0; i < products.count; i++
+//            {
+//                self.product = products[i] 
+//                self.productsArray.append(product!)
+//            }
+//            
+//            //print(productsArray)
+//
+//        } else {
+//            print("No products found")
+//        }
+//
+//    }
   
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+        print("product request")
+        let myProduct = response.products
+        print(myProduct)
+        
+        for product in myProduct {
+            print("product added")
+            print(product.productIdentifier)
+            print(product.localizedTitle)
+            print(product.localizedDescription)
+            print(product.price)
+            
+            list.append(product)
+        }
+        
+        //outRemoveAds.enabled = true
+        //outAddCoins.enabled = true
+    }
+    
 }
 

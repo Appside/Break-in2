@@ -374,6 +374,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                 if user != nil {
                                     
                                     let membership = user![PF_USER_MEMBERSHIP] as! String
+                                    
+                                    if membership == "Free" {
+                                        
+                                        self.defaults.setInteger(self.setNumberOfLivesFree, forKey: "Lives")
+                                        
+                                    }
+                                    
                                     print(membership)
                                     self.defaults.setObject(membership, forKey: "Membership")
                                     
