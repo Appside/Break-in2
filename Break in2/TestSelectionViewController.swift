@@ -384,9 +384,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         var numberToAdd = floor(diff / timeBetweenLives)
         let newLives:Int = Int(numberToAdd) + numberOfTestsTotal
         
-        self.hoursRemaining = max(self.hoursBetweenLives - Int(diff)/3600, 0)
-        self.minutesRemaining = max(self.minutesBetweenLives - Int(diff)/60, 0)
-        self.secondsRemaining = max(self.secondsBetweenLives - Int(diff)%60, 0)
+        //self.hoursRemaining = max(self.hoursBetweenLives - Int(diff)/3600, 0)
+        //self.minutesRemaining = max(self.minutesBetweenLives - Int(diff)/60, 0)
+        self.secondsRemaining = max(self.secondsBetweenLives - Int(diff), 0)
         
         //self.updateTimer()
         
@@ -423,9 +423,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         }else{
         
             //self.updateTimer()
-            let newHour:String = String(format: "%02d", self.hoursRemaining)
-            let newMin:String = String(format: "%02d", self.minutesRemaining)
-            let newSec:String = String(format: "%02d", self.secondsRemaining)
+            let newHour:String = String(format: "%02d", (self.secondsRemaining / 3600))
+            let newMin:String = String(format: "%02d", (self.secondsRemaining % 3600) / 60)
+            let newSec:String = String(format: "%02d", (self.secondsRemaining % 3600) % 60)
             let newLabel:String = "\(newHour) : \(newMin) : \(newSec)"
             self.testLivesSubtitleLabel.text = newLabel
             
@@ -1060,7 +1060,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                 self.timer.invalidate()
                 
             }else{
-            
+                
                 
                 
             }
