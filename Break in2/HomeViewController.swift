@@ -572,7 +572,15 @@ class HomeViewController: UIViewController {
     self.brainBreakerQuestionButton.addConstraints([brainBreakerQuestionButtonHeightConstraint, brainBreakerQuestionButtonWidthConstraint])
     self.view.addConstraints([brainBreakerQuestionButtonRightConstraint, brainBreakerQuestionButtonTopConstraint])
     
+    //Add tap Gesture to brainBreakerQuestionButton
+    let brainBreakerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("brainBreakerSegue:"))
+    self.brainBreakerQuestionButton.addGestureRecognizer(brainBreakerTapGesture)
+    
   }
+    
+    func brainBreakerSegue(sender:UITapGestureRecognizer) {
+        self.performSegueWithIdentifier("BrainBreakerSegue", sender: nil)
+    }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
