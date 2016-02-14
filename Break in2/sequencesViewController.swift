@@ -531,6 +531,9 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             matchingQuestionLabel.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             matchingQuestionLabel.setTitleColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), forState: .Normal)
             matchingQuestionLabel.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: self.view.getTextSize(22))
+            matchingQuestionLabel.titleLabel?.numberOfLines = 1
+            matchingQuestionLabel.titleLabel?.adjustsFontSizeToFitWidth = true
+            matchingQuestionLabel.titleLabel?.minimumScaleFactor = 8/(matchingQuestionLabel.titleLabel?.font.pointSize)!
             matchingQuestionLabel.setTitle("\(reshapedQuestion),❓", forState: .Normal)
             matchingQuestionLabel.alpha = 0.0
             
@@ -805,8 +808,8 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count) * (buttonHeight + Int(10*self.heightRatio)))
-        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight)
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + Int(10*self.heightRatio)))
+        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight + 30)
         self.nextButton.text = "Back to Results"
     }
     

@@ -885,8 +885,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat(self.selectedAnswers.count) * (CGFloat(buttonHeight) + 10*self.heightRatio)
-        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight)
+        let totalHeight:CGFloat = CGFloat(self.selectedAnswers.count+1) * (CGFloat(buttonHeight) + 10*self.heightRatio)
+        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight+30)
         
     }
     

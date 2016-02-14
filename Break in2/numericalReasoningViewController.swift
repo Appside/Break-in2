@@ -324,7 +324,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.tutoNextButton.addConstraint(tutoNextButtonHeight)
             
             self.tutoSkipButton.translatesAutoresizingMaskIntoConstraints = false
-            let tutoSkipButtonTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (25+(self.view.frame.width/12)+5)*self.heightRatio)
+            let tutoSkipButtonTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.view.frame.width/12+30*self.heightRatio)
             let tutoSkipButtonCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
             self.tutoView.addConstraints([tutoSkipButtonTop,tutoSkipButtonCenterX])
             let tutoSkipButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20*self.heightRatio)
@@ -349,7 +349,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.tutoDescriptionText2.translatesAutoresizingMaskIntoConstraints = false
             self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
             let logoImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-            let logoImageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 25*self.heightRatio)
+            let logoImageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10*self.heightRatio)
             let logoImageViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.view.frame.width/12)*self.heightRatio)
             let logoImageViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.view.frame.width-40)*self.widthRatio)
             self.logoImageView.addConstraints([logoImageViewHeight, logoImageViewWidth])
@@ -1124,7 +1124,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         
         self.feebdackScreen.scrollEnabled = true
         let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * buttonHeight)
-        self.feebdackScreen.contentSize = CGSize(width: self.view.frame.width - 40*self.widthRatio, height: totalHeight)
+        self.feebdackScreen.contentSize = CGSize(width: self.view.frame.width - 40*self.widthRatio, height: totalHeight+30)
         
     }
     
