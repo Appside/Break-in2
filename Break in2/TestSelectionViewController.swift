@@ -719,7 +719,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   
   func hideTestSelectionView(sender:UIButton) {
     
-    if (self.numberOfTestsTotal == 0 && sender.titleLabel?.text == "Start Test"){
+    if (membershipType != "Premium" && self.numberOfTestsTotal == 0 && sender.titleLabel?.text == "Start Test"){
         
         let backAlert = SCLAlertView()
         backAlert.showCloseButton = false
