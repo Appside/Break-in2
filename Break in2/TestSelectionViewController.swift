@@ -156,10 +156,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
       
     }
     else {
-      self.testSelectionBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 12)
+      self.testSelectionBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 14)
       
       let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.testSelectionBackgroundViewHeight + self.minorMargin)
-      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
     }
         
     // Create testTypeViews for each testType
@@ -613,7 +613,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     let testLivesBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let testLivesBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 7) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))
+    let testLivesBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testSelectionBackgroundViewHeight)
     
     self.testLivesBackgroundView.addConstraint(testLivesBackgroundViewHeightConstraint)
     self.view.addConstraints([testLivesBackgroundViewTopConstraint, testLivesBackgroundViewLeftConstraint, testLivesBackgroundViewRightConstraint])

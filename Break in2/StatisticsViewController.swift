@@ -220,10 +220,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         
       }
       else {
-        self.statisticsBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 12)
+        self.statisticsBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 14)
         
         let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.statisticsBackgroundViewHeight + self.minorMargin)
-        self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+        self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
       }
 
       

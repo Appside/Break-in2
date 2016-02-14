@@ -243,10 +243,10 @@ class HomeViewController: UIViewController {
       
     }
     else {
-      self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 12)
+      self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 14)
       
       let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
-      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
     }
     
     // Set constraints

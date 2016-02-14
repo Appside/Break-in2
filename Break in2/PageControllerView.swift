@@ -27,8 +27,8 @@ class PageControllerView: UIView {
   
   var minorMargin:CGFloat = CGFloat()
   
-  var pageControllerCircleHeight:CGFloat = 10
-  var pageControllerSelectedCircleHeight:CGFloat = 18
+  var pageControllerCircleHeight:CGFloat = UIScreen.mainScreen().bounds.height/60
+  var pageControllerSelectedCircleHeight:CGFloat = (UIScreen.mainScreen().bounds.height/60) + 8
   var pageControllerSelectedCircleThickness:CGFloat = 2
   
   override init(frame: CGRect) {

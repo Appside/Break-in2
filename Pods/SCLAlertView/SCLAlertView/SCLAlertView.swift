@@ -77,13 +77,13 @@ public class SCLAlertView: UIViewController {
     let kCircleBackgroundTopPosition: CGFloat = -15.0
     let kCircleHeight: CGFloat = 56.0
     let kCircleIconHeight: CGFloat = 20.0
-    let kTitleTop:CGFloat = 30.0
-    let kTitleHeight:CGFloat = 40.0
-    let kWindowWidth: CGFloat = 240.0
-    var kWindowHeight: CGFloat = 178.0
-    var kTextHeight: CGFloat = 90.0
-    let kTextFieldHeight: CGFloat = 45.0
-    let kButtonHeight: CGFloat = 45.0
+    let kTitleTop:CGFloat = 30
+    let kTitleHeight:CGFloat = 45
+    let kWindowWidth: CGFloat = (UIScreen.mainScreen().bounds.width * 2)/3
+    var kWindowHeight: CGFloat = (UIScreen.mainScreen().bounds.height * 3)/4
+    var kTextHeight: CGFloat = 90
+    let kTextFieldHeight: CGFloat = 45
+    let kButtonHeight: CGFloat = 45
     
     // Font
     let kDefaultFont = "HelveticaNeue"

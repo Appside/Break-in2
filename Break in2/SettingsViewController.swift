@@ -280,10 +280,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
     }
     else {
-      self.chooseCareersViewHeight = self.screenFrame.width - (self.majorMargin * 12)
+      self.chooseCareersViewHeight = self.screenFrame.width - (self.majorMargin * 14)
       
       let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.chooseCareersViewHeight + self.minorMargin)
-      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
     }
 
     // Set constraints
