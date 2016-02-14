@@ -11,7 +11,7 @@ import SwiftSpinner
 import SCLAlertView
 import Parse
 
-class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKProductsRequestDelegate {
+class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
   
   // Timer stuff
   let defaults = NSUserDefaults.standardUserDefaults()
@@ -24,14 +24,17 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var counter:Int = Int()
   var minutesRemaining:Int = Int()
   var secondsRemaining:Int = Int()
+  var hoursRemaining:Int = Int()
   var minutesBetweenLives:Int = 1
   var secondsBetweenLives:Int = 60
+  var hoursBetweenLives:Int = 12
   var countSeconds:Int = Int()
   var countMinutes:Int = Int()
+  var countHours:Int = Int()
   var lifeOrLives:String = String()
     
   //in app purchase initialisation
-  let productIdentifiers = Set(["com.APPSIDE.Breakin2.ExtraLives", "com.APPSIDE.Breakin2.UnlimitedLives"])
+  let productIdentifiers = Set(["com.APPSIDE.Breakin2.ExtraLives1", "com.APPSIDE.Breakin2.UnlimitedLives1"])
   var product: SKProduct?
   var productsArray = Array<SKProduct>()
   var list = [SKProduct]()
@@ -252,7 +255,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.testLivesUpgradeButton2.setTitle("Buy Unlimited Lives", forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
-    self.testLivesUpgradeButton2.addTarget(self, action: "premiumMembership:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.testLivesUpgradeButton2.addTarget(self, action: "unlimitedLivesTapped:", forControlEvents: UIControlEvents.TouchUpInside)
     
     membershipType = defaults.objectForKey("Membership") as! String
     
@@ -363,12 +366,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         startTime = CFAbsoluteTimeGetCurrent()
         let initialTime: CFAbsoluteTime = defaults.objectForKey("LivesTimer") as! CFAbsoluteTime
         let diff = startTime - initialTime
-        let timeBetweenLives = Double((60 * minutesBetweenLives) + secondsBetweenLives)
+        let timeBetweenLives = Double((3600 * hoursBetweenLives) + (60 * minutesBetweenLives) + secondsBetweenLives)
         var numberToAdd = floor(diff / timeBetweenLives)
         let newLives:Int = Int(numberToAdd) + numberOfTestsTotal
         
-        minutesRemaining = max(minutesBetweenLives - Int(floor(diff / 60)), 0)
-        secondsRemaining = max(secondsBetweenLives - Int(diff)%60, 0)
+        self.hoursRemaining = max(self.hoursBetweenLives - Int(floor(diff / 3600)), 0)
+        self.minutesRemaining = max(self.minutesBetweenLives - Int(floor(diff / 60)), 0)
+        self.secondsRemaining = max(self.secondsBetweenLives - Int(diff)%60, 0)
         
         //self.updateTimer()
         
@@ -404,7 +408,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             
         }else{
         
-            self.updateTimer()
+            //self.updateTimer()
+            let newHour:String = String(format: "%02d", self.hoursRemaining)
+            let newMin:String = String(format: "%02d", self.minutesRemaining)
+            let newSec:String = String(format: "%02d", self.secondsRemaining)
+            let newLabel:String = "\(newHour) : \(newMin) : \(newSec)"
+            self.testLivesSubtitleLabel.text = self.secondsRemaining as? String
             
         }
         
@@ -696,7 +705,26 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   
   func hideTestSelectionView(sender:UIButton) {
     
-    
+    if (self.numberOfTestsTotal == 0 && sender.titleLabel?.text == "Start Test"){
+        
+        let backAlert = SCLAlertView()
+        backAlert.showCloseButton = false
+        backAlert.addButton("Buy 10 Lives", action: ({
+            
+            SwiftSpinner.show("Purchasing")
+            //self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+            self.addLivesTapped()
+            
+        }))
+        
+        backAlert.addButton("Wait", action: ({
+            
+            //self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+            
+        }))
+        backAlert.showSuccess("OUT OF LIVES", subTitle: "You can purchase some now.")
+        
+    }else{
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
@@ -748,7 +776,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
               
               let backAlert = SCLAlertView()
               backAlert.showCloseButton = false
-              backAlert.addButton("Buy 10 Lives", target:self, selector: "extraLives2:")
+                backAlert.addButton("Buy 10 Lives", action: ({
+                    
+                    SwiftSpinner.show("Purchasing")
+                    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                    self.addLivesTapped()
+                    
+                }))
+
               backAlert.addButton("Wait", action: ({
                 
                 self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
@@ -832,6 +867,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         }
         })
     
+    }
     }
         
   
@@ -1004,23 +1040,19 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         if self.testLivesSubtitleLabel.text == "MAXIMUM NUMBER OF FREE LIVES" {
             
         }else{
-            if (self.secondsRemaining-1<0) {
-                if (self.minutesRemaining+self.secondsRemaining==0) {
-                    self.timer.invalidate()
-                }
-                else {
-                    self.minutesRemaining--
-                    self.secondsRemaining = 59
-                }
+
+            if (self.hoursRemaining == 0 && self.minutesRemaining == 0 && self.secondsRemaining == 0) {
+                    
+                self.timer.invalidate()
+                
+            }else{
+            
+                
+                
             }
-            else {
-                self.secondsRemaining--
-            }
-            let newMin:String = String(format: "%02d", self.minutesRemaining)
-            let newSec:String = String(format: "%02d", self.secondsRemaining)
-            let newLabel:String = "\(newMin) : \(newSec)"
-            self.testLivesSubtitleLabel.text = newLabel
-            if (self.minutesRemaining==0 && self.secondsRemaining==0) {
+
+            
+            if (self.hoursRemaining == 0 && self.minutesRemaining == 0 && self.secondsRemaining == 0) {
                 if self.numberOfTestsTotal == 1 {
                     lifeOrLives = "life"
                 }else{
@@ -1033,39 +1065,56 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     func addLives(sender: UIButton){
         
-        let backAlert = SCLAlertView()
-        backAlert.addButton("Yes", target:self, selector:Selector("extraLives"))
-        backAlert.showTitle(
-            "Are you sure?", // Title of view
-            subTitle: "Purchasing extra lives will cost you", // String of view
-            duration: 0.0, // Duration to show before closing automatically, default: 0.0
-            completeText: "No", // Optional button value, default: ""
-            style: .Success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
-            colorStyle: 0x22B573,//0x526B7B,//0xD0021B - RED
-            colorTextButton: 0xFFFFFF
-        )
-        backAlert.showCloseButton = false
+        SwiftSpinner.show("Purchasing")
+        addLivesTapped()
+        
+//        let backAlert = SCLAlertView()
+//        backAlert.addButton("Yes", target:self, selector:Selector("addLivesTapped"))
+//        backAlert.showTitle(
+//            "Are you sure?", // Title of view
+//            subTitle: "Purchasing extra lives will cost you", // String of view
+//            duration: 0.0, // Duration to show before closing automatically, default: 0.0
+//            completeText: "No", // Optional button value, default: ""
+//            style: .Success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+//            colorStyle: 0x22B573,//0x526B7B,//0xD0021B - RED
+//            colorTextButton: 0xFFFFFF
+//        )
+//        backAlert.showCloseButton = false
         
     }
     
     func extraLives(){
         
-        self.numberOfTestsTotal = self.numberOfTestsTotal + 5
+        self.numberOfTestsTotal = self.numberOfTestsTotal + 10
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
         
+        SwiftSpinner.show("You Have Purchased 10 Additional Lives", animated: false).addTapHandler({
+            SwiftSpinner.hide()
+            }, subtitle: "We encourage you to put them to good use!")
+        
     }
+    
+    //if lives are bought when out of lives
     
     func extraLives2(sender: UIButton){
         
-        self.numberOfTestsTotal = self.numberOfTestsTotal + 5
+        SwiftSpinner.show("Purchasing")
+        
+        addLivesTapped()
+        
+        self.numberOfTestsTotal = self.numberOfTestsTotal + 10
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
         self.numberOfTestsTotal--
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
-        self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+        
+        SwiftSpinner.show("You Have Purchased 10 Additional Lives", animated: false).addTapHandler({
+            self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+            SwiftSpinner.hide()
+            }, subtitle: "We encourage you to put them to good use!")
         
     }
     
-    func premiumMembership(sender: UIButton){
+    func premiumMembership(){
         
         SwiftSpinner.show("Purchasing")
         
@@ -1109,7 +1158,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     {
         if SKPaymentQueue.canMakePayments() {
             print("IAP is enabled, loading")
-            let productID:NSSet = NSSet(objects: "com.APPSIDE.Breakin2.ExtraLives", "com.APPSIDE.Breakin2.UnlimitedLives")
+            let productID:NSSet = NSSet(objects: "com.APPSIDE.Breakin2.ExtraLives1", "com.APPSIDE.Breakin2.UnlimitedLives1")
             let request: SKProductsRequest = SKProductsRequest(productIdentifiers: productID as! Set<String>)
             print(productID as! Set<String>)
             request.delegate = self
@@ -1132,43 +1181,128 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
-    
-//    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
-//        
-//        var products = response.products
-//        
-//        if (products.count != 0) {
-//            for var i = 0; i < products.count; i++
-//            {
-//                self.product = products[i] 
-//                self.productsArray.append(product!)
-//            }
-//            
-//            //print(productsArray)
-//
-//        } else {
-//            print("No products found")
-//        }
-//
-//    }
   
     func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
         print("product request")
         let myProduct = response.products
-        print(myProduct)
+        //print(myProduct)
         
         for product in myProduct {
-            print("product added")
-            print(product.productIdentifier)
-            print(product.localizedTitle)
-            print(product.localizedDescription)
-            print(product.price)
-            
+//            print("product added")
+//            print(product.productIdentifier)
+//            print(product.localizedTitle)
+//            print(product.localizedDescription)
+//            print(product.price)
             list.append(product)
         }
         
-        //outRemoveAds.enabled = true
-        //outAddCoins.enabled = true
+    }
+    
+    func addLivesTapped(){
+        
+        for product in list {
+            let prodID = product.productIdentifier
+            if(prodID == "com.APPSIDE.Breakin2.ExtraLives1") {
+                p = product
+                buyProduct()
+                break;
+            }
+        }
+        
+    }
+    
+    func unlimitedLivesTapped(sender: UIButton){
+        
+        for product in list {
+            let prodID = product.productIdentifier
+            if(prodID == "com.APPSIDE.Breakin2.UnlimitedLives1") {
+                p = product
+                buyProduct()
+                break;
+            }
+        }
+        
+    }
+    
+    func buyProduct(){
+        
+        print("buy " + p.productIdentifier)
+        let pay = SKPayment(product: p)
+        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
+        SKPaymentQueue.defaultQueue().addPayment(pay as SKPayment)
+        
+    }
+    
+//    func paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue) {
+//        print("transactions restored")
+//        
+//        for transaction in queue.transactions {
+//            let t: SKPaymentTransaction = transaction
+//            
+//            let prodID = t.payment.productIdentifier as String
+//            
+//            switch prodID {
+//            case "seemu.iap.removeads":
+//                print("remove ads")
+//                removeAds()
+//            case "seemu.iap.addcoins":
+//                print("add coins to account")
+//                addCoins()
+//            default:
+//                print("IAP not setup")
+//            }
+//            
+//        }
+//    }
+    
+    
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        print("add payment")
+        
+        for transaction:AnyObject in transactions {
+            let trans = transaction as! SKPaymentTransaction
+            print(trans.error)
+            
+            switch trans.transactionState {
+                
+            case .Purchased:
+                //print("buy, ok unlock iap here")
+                //print(p.productIdentifier)
+                
+                let prodID = p.productIdentifier as String
+                switch prodID {
+                case "com.APPSIDE.Breakin2.ExtraLives1":
+                    //print("extra lives bought")
+                    extraLives()
+                case "com.APPSIDE.Breakin2.UnlimitedLives1":
+                    //print("unlimited lives bought")
+                    premiumMembership()
+                default:
+                    print("IAP not setup")
+                }
+                
+                queue.finishTransaction(trans)
+                break;
+            case .Failed:
+                print("buy error")
+                queue.finishTransaction(trans)
+                break;
+            default:
+                print("default")
+                break;
+                
+            }
+        }
+    }
+    
+    func finishTransaction(trans:SKPaymentTransaction)
+    {
+        print("finish transaction")
+        SKPaymentQueue.defaultQueue().finishTransaction(trans)
+    }
+    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
+    {
+        print("remove trans");
     }
     
 }
