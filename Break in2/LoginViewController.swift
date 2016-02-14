@@ -71,7 +71,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   let loginPageControllerViewHeight:CGFloat = 50
   var tutorialImageHeight:CGFloat = 150
-  let buttonHeight:CGFloat = 50
+  var buttonHeight:CGFloat = 50
   var textSize:CGFloat = 15
   
   //---------------------------------------------------------------
@@ -115,6 +115,22 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     // Add target for facebookLoginButton
     
     self.facebookLoginButton.addTarget(self, action: "hideLoginView", forControlEvents: UIControlEvents.TouchUpInside)
+    
+    // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
+    
+    if self.screenFrame.height <= 738 {
+      let calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
+      
+      let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + (self.screenFrame.height/12) + (self.majorMargin * 2) + calendarBackgroundViewHeight + self.minorMargin)
+      self.buttonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+      
+    }
+    else {
+      let calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 14)
+      
+      let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + (self.screenFrame.height/12) + (self.majorMargin * 2) + calendarBackgroundViewHeight + self.minorMargin)
+      self.buttonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
+    }
     
     // Set constraints
     
@@ -529,7 +545,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
-    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     

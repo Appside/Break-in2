@@ -41,7 +41,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let facebookLogoutButton:FacebookButton = FacebookButton()
   let scrollInfoLabel:UILabel = UILabel()
   let settingsScrollView:UIScrollView = UIScrollView()
-  var settingsButtons:[CareerButton] = [CareerButton]()
+  var settingsButtons:[UIButton] = [UIButton]()
   let chooseCareersTitleView:ChooseCareerTitleView = ChooseCareerTitleView()
   let currentCareerLabel:UILabel = UILabel()
   let chooseCareersInfoLabel:UILabel = UILabel()
@@ -53,6 +53,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   var tutorialFingerImageView:UIImageView = UIImageView()
   let noDataLabel:UIView = UIView()
   let noDataUILabel:UILabel = UILabel()
+  let saveCareersChoicesButton:UIButton = UIButton()
   
   var settingsMenuViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
     
@@ -102,9 +103,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.view.addSubview(self.settingsMenuView)
     self.view.addSubview(self.chooseCareersView)
     
-    self.settingsMenuView.addSubview(self.facebookLogoutButton)
     self.settingsMenuView.addSubview(self.scrollInfoLabel)
     self.settingsMenuView.addSubview(self.settingsScrollView)
+    self.settingsMenuView.addSubview(self.saveCareersChoicesButton)
     
     self.chooseCareersView.addSubview(self.chooseCareersTitleView)
     self.chooseCareersView.addSubview(self.currentCareerLabel)
@@ -157,11 +158,17 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.chooseCareersView.clipsToBounds = true
     self.chooseCareersView.alpha = 0
     
-    // Customize facebookLogoutButton
+    // Customize facebookLogoutButton and saveCareersChoicesButton
     
     self.facebookLogoutButton.facebookButtonTitle = "Deactivate"
     self.facebookLogoutButton.displayButton()
     self.facebookLogoutButton.addTarget(self, action: "deactivateFB:", forControlEvents: UIControlEvents.TouchUpInside)
+    
+    self.saveCareersChoicesButton.backgroundColor = UIColor.turquoiseColor()
+    self.saveCareersChoicesButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
+    self.saveCareersChoicesButton.setTitle("Save Career Preferences", forState: UIControlState.Normal)
+    self.saveCareersChoicesButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.saveCareersChoicesButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
     
     // Customize scrollInfoLabel and chooseCareersInfoLabel
     
@@ -229,6 +236,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       settingsButtonAtIndex.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
     }
+    
+    self.settingsScrollView.addSubview(self.facebookLogoutButton)
+    self.settingsButtons.append(self.facebookLogoutButton)
     
     for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
       
@@ -671,20 +681,20 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.chooseCareersView.addConstraint(chooseCareersViewHeightConstraint)
     self.view.addConstraints([chooseCareersViewTopConstraint, chooseCareersViewLeftConstraint, chooseCareersViewRightConstraint])
     
-    // Create and add constraints for facebookLogoutButton
+    // Create and add constraints for saveCareersChoicesButton
     
-    self.facebookLogoutButton.translatesAutoresizingMaskIntoConstraints = false
+    self.saveCareersChoicesButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let facebookLogoutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let saveCareersChoicesButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
-    let facebookLogoutButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let saveCareersChoicesButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
-    let facebookLogoutButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let saveCareersChoicesButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let facebookLogoutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLogoutButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+    let saveCareersChoicesButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
     
-    self.facebookLogoutButton.addConstraint(facebookLogoutButtonHeightConstraint)
-    self.view.addConstraints([facebookLogoutButtonLeftConstraint, facebookLogoutButtonRightConstraint, facebookLogoutButtonBottomConstraint])
+    self.saveCareersChoicesButton.addConstraint(saveCareersChoicesButtonHeightConstraint)
+    self.view.addConstraints([saveCareersChoicesButtonLeftConstraint, saveCareersChoicesButtonRightConstraint, saveCareersChoicesButtonBottomConstraint])
     
     // Create and add constraints for scrollInfoLabel
     
@@ -707,7 +717,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     let settingsScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let settingsScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.facebookLogoutButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    let settingsScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
     
     let settingsScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
@@ -934,9 +944,11 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     else if sender.currentTitle == "About" {
       UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)
     }
-    else if sender.currentTitle == "Notifications" {
-      print("jobdeadlines")
-      self.getChosenJobDeadlines()
+    else if sender.currentTitle == "Account Status" {
+      print("account status")
+    }
+    else if sender == self.saveCareersChoicesButton {
+      print("save choices")
     }
     else{
     

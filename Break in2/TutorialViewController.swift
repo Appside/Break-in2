@@ -33,7 +33,7 @@ class TutorialViewController: UIViewController {
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
   
-  let menuButtonHeight:CGFloat = 50
+  var menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
   var loginPageControllerViewHeight:CGFloat = 50
   
@@ -70,7 +70,7 @@ class TutorialViewController: UIViewController {
       self.sloganImageView.image = UIImage.init(named: "asSlogan")
       
       self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
-      self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
       self.tutorialNextButton.setTitle("Let's Get Started", forState: UIControlState.Normal)
       self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
       self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -84,6 +84,22 @@ class TutorialViewController: UIViewController {
       self.descriptionImageView.image = UIImage.init(named: "fingbutton")
       self.descriptionImageView.contentMode = UIViewContentMode.ScaleAspectFit
       self.descriptionImageView.alpha = 0
+      
+      // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
+      
+      if self.screenFrame.height <= 738 {
+        let calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
+        
+        let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + calendarBackgroundViewHeight + self.minorMargin)
+        self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+        
+      }
+      else {
+        let calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 14)
+        
+        let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + calendarBackgroundViewHeight + self.minorMargin)
+        self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
+      }
       
       // Set constraints
       
