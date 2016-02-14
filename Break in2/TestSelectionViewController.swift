@@ -25,8 +25,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var minutesRemaining:Int = Int()
   var secondsRemaining:Int = Int()
   var hoursRemaining:Int = Int()
-  var minutesBetweenLives:Int = 1
-  var secondsBetweenLives:Int = 60
+  var minutesBetweenLives:Int = 12 * 60
+  var secondsBetweenLives:Int = 12 * 3600
   var hoursBetweenLives:Int = 12
   var countSeconds:Int = Int()
   var countMinutes:Int = Int()
@@ -366,12 +366,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         startTime = CFAbsoluteTimeGetCurrent()
         let initialTime: CFAbsoluteTime = defaults.objectForKey("LivesTimer") as! CFAbsoluteTime
         let diff = startTime - initialTime
-        let timeBetweenLives = Double((3600 * hoursBetweenLives) + (60 * minutesBetweenLives) + secondsBetweenLives)
+        let timeBetweenLives = Double(self.secondsBetweenLives)
         var numberToAdd = floor(diff / timeBetweenLives)
         let newLives:Int = Int(numberToAdd) + numberOfTestsTotal
         
-        self.hoursRemaining = max(self.hoursBetweenLives - Int(floor(diff / 3600)), 0)
-        self.minutesRemaining = max(self.minutesBetweenLives - Int(floor(diff / 60)), 0)
+        self.hoursRemaining = max(self.hoursBetweenLives - Int(diff)/3600, 0)
+        self.minutesRemaining = max(self.minutesBetweenLives - Int(diff)/60, 0)
         self.secondsRemaining = max(self.secondsBetweenLives - Int(diff)%60, 0)
         
         //self.updateTimer()
@@ -413,7 +413,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             let newMin:String = String(format: "%02d", self.minutesRemaining)
             let newSec:String = String(format: "%02d", self.secondsRemaining)
             let newLabel:String = "\(newHour) : \(newMin) : \(newSec)"
-            self.testLivesSubtitleLabel.text = self.secondsRemaining as? String
+            self.testLivesSubtitleLabel.text = newLabel
             
         }
         
