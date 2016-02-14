@@ -91,13 +91,11 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
   
-  let testPageControllerViewHeight:CGFloat = 50
-  let testTypeTitleLabelHeight:CGFloat = 30
-  let testTypeTimeLabelHeight:CGFloat = 20
-  let testTypeDifficultyViewHeight:CGFloat = 50
+  let testPageControllerViewHeight:CGFloat = UIScreen.mainScreen().bounds.height/16
   
-  let menuButtonHeight:CGFloat = 50
+  var menuButtonHeight:CGFloat = 50
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
+  var testSelectionBackgroundViewHeight:CGFloat = 300
   var textSize:CGFloat = 15
 
   var statsViewVisible:Bool = false
@@ -148,9 +146,23 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.testLivesBackgroundView.addSubview(self.testLivesUpgradeButton1)
     self.testLivesBackgroundView.addSubview(self.testLivesUpgradeButton2)
     
-    // Create testTypeViews for each testType
+    // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
     
-    let testTypeDifficultyButtonHeight:CGFloat = self.testTypeDifficultyViewHeight - (2 * self.minorMargin)
+    if self.screenFrame.height <= 738 {
+      self.testSelectionBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
+      
+      let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.testSelectionBackgroundViewHeight + self.minorMargin)
+      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+      
+    }
+    else {
+      self.testSelectionBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 12)
+      
+      let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.testSelectionBackgroundViewHeight + self.minorMargin)
+      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+    }
+        
+    // Create testTypeViews for each testType
     
     for var index:Int = 0 ; index < self.testTypes.count ; index++ {
       
@@ -181,11 +193,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
       testTypeViewAtIndex.mainBackgroundColor = self.mainBackgroundColor
       testTypeViewAtIndex.secondaryBackgroundColor = self.secondaryBackgroundColor
       
-      testTypeViewAtIndex.testTypeTitleLabelHeight = self.testTypeTitleLabelHeight
-      testTypeViewAtIndex.testTypeTimeLabelHeight = self.testTypeTimeLabelHeight
-      testTypeViewAtIndex.testTypeDifficultyViewHeight = self.testTypeDifficultyViewHeight
-      testTypeViewAtIndex.testTypeDifficultyButtonHeight = testTypeDifficultyButtonHeight
-      testTypeViewAtIndex.testTypeStatsViewHeightAfterSwipe = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + self.majorMargin + self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 5))
+      let testScrollViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.testSelectionBackgroundViewHeight + (self.minorMargin * 4) + 25 + self.testPageControllerViewHeight + self.menuButtonHeight)
+      
+      testTypeViewAtIndex.testTypeTitleLabelHeight = (testScrollViewHeight * 2)/7
+      testTypeViewAtIndex.testTypeTimeLabelHeight = (testScrollViewHeight * 2)/7
+      testTypeViewAtIndex.testTypeDifficultyViewHeight = (testScrollViewHeight * 3)/7
+      testTypeViewAtIndex.testTypeDifficultyButtonHeight = testTypeViewAtIndex.testTypeDifficultyViewHeight - (2 * self.minorMargin)
+      testTypeViewAtIndex.testTypeStatsViewHeightAfterSwipe = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + self.majorMargin + self.testPageControllerViewHeight + testTypeViewAtIndex.testTypeTitleLabelHeight + testTypeViewAtIndex.testTypeTimeLabelHeight + testTypeViewAtIndex.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 5))
       
       testTypeViewAtIndex.clipsToBounds = true
       
@@ -455,7 +469,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     let testSelectionViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.testSelectionViewHeightConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7))
+    self.testSelectionViewHeightConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.testSelectionBackgroundViewHeight + self.minorMargin) + self.minorMargin)
     
     self.testSelectionView.addConstraint(self.testSelectionViewHeightConstraint)
     self.view.addConstraints([self.testSelectionViewBottomConstraint, testSelectionViewLeftConstraint, testSelectionViewRightConstraint])
@@ -470,7 +484,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     let swipeInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let swipeInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight * 0.5)
+    let swipeInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
     
     self.swipeInfoLabel.addConstraint(swipeInfoLabelHeightConstraint)
     self.view.addConstraints([swipeInfoLabelTopConstraint, swipeInfoLabelLeftConstraint, swipeInfoLabelRightConstraint])
@@ -500,7 +514,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     let testScrollViewRightConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
     
-    let testScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.majorMargin * -1)
+    let testScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
     
     self.view.addConstraints([testScrollViewTopConstraint, testScrollViewLeftConstraint, testScrollViewRightConstraint, testScrollViewBottomConstraint])
     
@@ -905,7 +919,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   }
   
-  func hideStats(sender: UISwipeGestureRecognizer) {
+  /*func hideStats(sender: UISwipeGestureRecognizer) {
     
     if self.statsViewVisible {
       
@@ -924,7 +938,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
       
     }
     
-  }
+  }*/
   
   /*func scrollViewDidScroll(scrollView: UIScrollView) {
   self.backgroundImageView.alpha = 1 - (((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width))) * 2)

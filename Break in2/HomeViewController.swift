@@ -149,6 +149,7 @@ class HomeViewController: UIViewController {
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
+    self.logoImageView.clipsToBounds = true
     
     self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
     self.profilePictureImageView.image = UIImage.init(named: "planeLogo")!
@@ -186,7 +187,7 @@ class HomeViewController: UIViewController {
     
     self.descriptionLabelView.clipsToBounds = false
     
-    self.brainBreakerQuestionButton.backgroundColor = UIColor.grayColor()
+    self.brainBreakerQuestionButton.setImage(UIImage.init(named: "brainBreakerLogo"), forState: UIControlState.Normal)
     
     // Add actions to buttons
     
@@ -232,7 +233,7 @@ class HomeViewController: UIViewController {
     
     self.careersScrollView.showsVerticalScrollIndicator = false
     
-    // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewWidth
+    // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
     
     if self.screenFrame.height <= 738 {
       self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
@@ -356,7 +357,7 @@ class HomeViewController: UIViewController {
     
     let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
     
-    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
@@ -566,7 +567,7 @@ class HomeViewController: UIViewController {
     
     let brainBreakerQuestionButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
     
-    let brainBreakerQuestionButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let brainBreakerQuestionButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
     
     self.brainBreakerQuestionButton.addConstraints([brainBreakerQuestionButtonHeightConstraint, brainBreakerQuestionButtonWidthConstraint])
     self.view.addConstraints([brainBreakerQuestionButtonRightConstraint, brainBreakerQuestionButtonTopConstraint])

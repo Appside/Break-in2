@@ -64,7 +64,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
   let minorMargin:CGFloat = 10
   
   let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
-  let menuButtonHeight:CGFloat = 50
+  var menuButtonHeight:CGFloat = 50
+  var statisticsBackgroundViewHeight:CGFloat = 300
   var textSize:CGFloat = 15
 
   var firstTimeUser:Bool = false
@@ -209,6 +210,23 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       self.tutorialNextButton.alpha = 0
       self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
       
+      // Set menuButtonHeight, backButtonHeight and statisticsBackgroundViewHeight
+      
+      if self.screenFrame.height <= 738 {
+        self.statisticsBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
+        
+        let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.statisticsBackgroundViewHeight + self.minorMargin)
+        self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+        
+      }
+      else {
+        self.statisticsBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 12)
+        
+        let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.statisticsBackgroundViewHeight + self.minorMargin)
+        self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+      }
+
+      
       // Set contraints
       
       self.setConstraints()
@@ -291,7 +309,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     
     let statisticsBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let statisticsBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 7) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))
+    let statisticsBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.statisticsBackgroundViewHeight)
     
     self.statisticsBackgroundView.addConstraint(statisticsBackgroundViewHeightConstraint)
     self.view.addConstraints([statisticsBackgroundViewTopConstraint, statisticsBackgroundViewLeftConstraint, statisticsBackgroundViewRightConstraint])
@@ -329,13 +347,13 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     
     self.testTypesBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let testTypesBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.minorMargin * 7) + (self.menuButtonHeight * 4.5))
+    let testTypesBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.statisticsBackgroundViewHeight + self.minorMargin) + self.minorMargin)
     
     let testTypesBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
     
     let testTypesBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.testTypesBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height - ((self.minorMargin * 7) + (self.menuButtonHeight * 4.5)) + self.minorMargin)
+    self.testTypesBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.statisticsBackgroundViewHeight + self.minorMargin)
     
     self.testTypesBackgroundView.addConstraint(testTypesBackgroundViewHeightConstraint)
     self.view.addConstraints([testTypesBackgroundViewRightConstraint, testTypesBackgroundViewLeftConstraint, self.testTypesBackgroundViewTopConstraint])
@@ -379,7 +397,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     
     let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypesBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
     
-    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight/2)
+    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
     
     self.scrollInfoLabel.addConstraint(scrollInfoLabelHeightConstraint)
     self.view.addConstraints([scrollInfoLabelLeftConstraint, scrollInfoLabelTopConstraint, scrollInfoLabelRightConstraint])
@@ -406,7 +424,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       
       let testTypeButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeButtons[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypesScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
       
-      let testTypeButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeButtons[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+      let testTypeButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeButtons[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
       
       let testTypeButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeButtons[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
       

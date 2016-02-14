@@ -81,7 +81,7 @@ class ChooseCareerTitleView: UIView {
     
     let nextCareerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let nextCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 18)
+    let nextCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.nextCareerButton.addConstraints([nextCareerButtonWidthConstraint, nextCareerButtonHeightConstraint])
     self.addConstraints([nextCareerButtonCenterYConstraint, nextCareerButtonRightConstraint])
@@ -96,7 +96,7 @@ class ChooseCareerTitleView: UIView {
     
     let previousCareerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let previousCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 18)
+    let previousCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.previousCareerButton.addConstraints([previousCareerButtonWidthConstraint, previousCareerButtonHeightConstraint])
     self.addConstraints([previousCareerButtonCenterYConstraint, previousCareerButtonLeftConstraint])

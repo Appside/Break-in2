@@ -80,7 +80,7 @@ class StatisticsTitleView: UIView {
     
     let nextStatisticButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let nextStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 18)
+    let nextStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.nextStatisticButton.addConstraints([nextStatisticButtonWidthConstraint, nextStatisticButtonHeightConstraint])
     self.addConstraints([nextStatisticButtonCenterYConstraint, nextStatisticButtonRightConstraint])
@@ -95,7 +95,7 @@ class StatisticsTitleView: UIView {
     
     let previousStatisticButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let previousStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 18)
+    let previousStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.previousStatisticButton.addConstraints([previousStatisticButtonWidthConstraint, previousStatisticButtonHeightConstraint])
     self.addConstraints([previousStatisticButtonCenterYConstraint, previousStatisticButtonLeftConstraint])
