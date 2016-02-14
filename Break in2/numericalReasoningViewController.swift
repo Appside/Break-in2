@@ -32,7 +32,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[numericalQuestion] = [numericalQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 4
+    var totalNumberOfQuestions:Int = 19
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = Int()
     var allowedMinutes:Int = Int()
