@@ -540,7 +540,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
                 matchingQuestionLabel.alpha = 1.0
             }
             
-            let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10*Int(self.heightRatio))))
+            let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+Int(10*self.heightRatio))))
             let left:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10*self.widthRatio)
             let right:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -10*self.widthRatio)
             self.mainView.addConstraints([top,left,right])
@@ -700,7 +700,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         //Display feedback screen here
         self.isTestComplete = true
         var i:Int = 0
-        let buttonHeight:Int = 40*Int(self.heightRatio)
+        let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
             let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
@@ -778,7 +778,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             }
             
             //Set constraints to answerViews
-            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10) + 40*Int(self.heightRatio)))
+            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10) + Int(40*self.heightRatio)))
             let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
             self.feebdackScreen.addConstraints([topMargin,leftMargin])
             
@@ -805,7 +805,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count) * (buttonHeight + 10*Int(self.heightRatio)))
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count) * (buttonHeight + Int(10*self.heightRatio)))
         self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight)
         self.nextButton.text = "Back to Results"
     }

@@ -517,7 +517,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             answerNumber.tag = (i+1) * 10
             matchingQuestionLabel.tag = (i+1) * 100
             
-            let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10*Int(self.heightRatio))))
+            let top:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+Int(10*self.heightRatio))))
             let left:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10*self.widthRatio)
             let right:NSLayoutConstraint = NSLayoutConstraint(item: answerRow, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -10*self.widthRatio)
             self.mainView.addConstraints([top,left,right])
@@ -543,10 +543,10 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             let answerContentTop:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 2*self.heightRatio)
             let answerContentLeft:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerNumber, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10*self.widthRatio)
             let answerContentWidth:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 55*self.widthRatio)
-            let answerContentHeight:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10*Int(self.heightRatio)))
+            let answerContentHeight:NSLayoutConstraint = NSLayoutConstraint(item: answerContent, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-Int(10*self.heightRatio)))
             answerNumber.addConstraints([answerContentTop,answerContentLeft])
             answerContent.addConstraints([answerContentWidth,answerContentHeight])
-            self.createFraction(answerContent, viewHeight: Int(buttonHeight-10*Int(self.heightRatio)), fontName:"HelveticaNeue-Bold", fontSize:Int(self.view.getTextSize(22)), topNb: arrayAnswers[i][0], bottomNb: arrayAnswers[i][1])
+            self.createFraction(answerContent, viewHeight: Int(buttonHeight-Int(10*self.heightRatio)), fontName:"HelveticaNeue-Bold", fontSize:Int(self.view.getTextSize(22)), topNb: arrayAnswers[i][0], bottomNb: arrayAnswers[i][1])
             
             answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
             answerNumber.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
@@ -561,27 +561,27 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             let questionContent1Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 2*self.heightRatio)
             let questionContent1Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(5*self.widthRatio + leftOffset))
             let questionContent1Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
-            let questionContent1Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10*Int(self.heightRatio)))
+            let questionContent1Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-Int(10*self.heightRatio)))
             matchingQuestionLabel.addConstraints([questionContent1Top,questionContent1Left])
             questionContent1.addConstraints([questionContent1Width,questionContent1Height])
-            self.createFraction(questionContent1, viewHeight: Int(buttonHeight-10*Int(self.heightRatio)), fontName:"HelveticaNeue-Bold", fontSize:Int(self.view.getTextSize(28)), topNb: questionAsked[0], bottomNb: questionAsked[1])
+            self.createFraction(questionContent1, viewHeight: Int(buttonHeight-Int(10*self.heightRatio)), fontName:"HelveticaNeue-Bold", fontSize:Int(self.view.getTextSize(28)), topNb: questionAsked[0], bottomNb: questionAsked[1])
             let questionContent2:UIView = UIView()
             matchingQuestionLabel.addSubview(questionContent2)
             questionContent2.translatesAutoresizingMaskIntoConstraints = false
             let questionContent2Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 2*self.heightRatio)
             let questionContent2Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(95*self.widthRatio + leftOffset))
             let questionContent2Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
-            let questionContent2Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10*Int(self.heightRatio)))
+            let questionContent2Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-Int(10*self.heightRatio)))
             matchingQuestionLabel.addConstraints([questionContent2Top,questionContent2Left])
             questionContent2.addConstraints([questionContent2Width,questionContent2Height])
-            self.createFraction(questionContent2, viewHeight: Int(buttonHeight-10*Int(self.heightRatio)), fontName:"HelveticaNeue-Bold", fontSize:Int(self.view.getTextSize(28)), topNb: questionAsked[2], bottomNb: questionAsked[3])
+            self.createFraction(questionContent2, viewHeight: Int(buttonHeight-Int(10*self.heightRatio)), fontName:"HelveticaNeue-Bold", fontSize:Int(self.view.getTextSize(28)), topNb: questionAsked[2], bottomNb: questionAsked[3])
             let questionContent3:UIButton = UIButton()
             matchingQuestionLabel.addSubview(questionContent3)
             questionContent3.translatesAutoresizingMaskIntoConstraints = false
             let questionContent3Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 2*self.heightRatio)
             let questionContent3Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(60*self.widthRatio + leftOffset))
             let questionContent3Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30*self.widthRatio)
-            let questionContent3Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10*Int(self.heightRatio)))
+            let questionContent3Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent3, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-Int(10*self.heightRatio)))
             matchingQuestionLabel.addConstraints([questionContent3Top,questionContent3Left])
             questionContent3.addConstraints([questionContent3Width,questionContent3Height])
             
@@ -594,7 +594,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             let questionContent4Top:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 2*self.heightRatio)
             let questionContent4Left:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(150*self.widthRatio + leftOffset))
             let questionContent4Width:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20*self.widthRatio)
-            let questionContent4Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-10*Int(self.heightRatio)))
+            let questionContent4Height:NSLayoutConstraint = NSLayoutConstraint(item: questionContent4, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(buttonHeight-Int(10*self.heightRatio)))
             matchingQuestionLabel.addConstraints([questionContent4Top,questionContent4Left])
             questionContent4.addConstraints([questionContent4Width,questionContent4Height])
             questionContent4.setTitle("=", forState: .Normal)
@@ -766,7 +766,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         //Display feedback screen here
         self.isTestComplete = true
         var i:Int = 0
-        let buttonHeight:Int = 40*Int(self.heightRatio)
+        let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
             let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
@@ -828,7 +828,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             }
             
             //Set constraints to answerViews
-            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+10*Int(self.heightRatio)) + 20*Int(self.heightRatio)))
+            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+Int(10*self.heightRatio)) + Int(20*self.heightRatio)))
             let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
             self.feebdackScreen.addConstraints([topMargin,leftMargin])
             
@@ -851,7 +851,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count) * (buttonHeight + 10*Int(self.heightRatio)))
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count) * (buttonHeight + Int(10*self.heightRatio)))
         self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight)
         
     }
@@ -990,9 +990,9 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         bottomLabel.textAlignment = NSTextAlignment.Center
         fractionLine.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         
-        topLabel.setConstraintsToSuperview(Int(15*self.heightRatio), bottom: (viewHeight/2+3*Int(self.heightRatio)), left: 0, right: 0)
-        bottomLabel.setConstraintsToSuperview(viewHeight/2+3*Int(self.heightRatio), bottom: Int(15*self.heightRatio), left: 0, right: 0)
-        fractionLine.setConstraintsToSuperview(viewHeight/2, bottom: viewHeight/2-Int(self.heightRatio), left: 0, right: 0)
+        topLabel.setConstraintsToSuperview(Int(15*self.heightRatio), bottom: (viewHeight/2+Int(3*self.heightRatio)), left: 0, right: 0)
+        bottomLabel.setConstraintsToSuperview(viewHeight/2+Int(3*self.heightRatio), bottom: Int(15*self.heightRatio), left: 0, right: 0)
+        fractionLine.setConstraintsToSuperview(viewHeight/2, bottom: Int(CGFloat(viewHeight)/2-self.heightRatio), left: 0, right: 0)
 
         topLabel.font = UIFont(name: fontName, size: CGFloat(fontSize))
         bottomLabel.font = UIFont(name: fontName, size: CGFloat(fontSize))
