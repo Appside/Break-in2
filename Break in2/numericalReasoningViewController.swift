@@ -102,7 +102,13 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         //Initialize backgroun UIView
         self.view.addSubview(self.backgroungUIView)
         self.backgroungUIView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        self.backgroungUIView.addHomeBG()
+        let width = UIScreen.mainScreen().bounds.size.width
+        let height = UIScreen.mainScreen().bounds.size.height
+        let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
+        imageViewBackground.image = UIImage(named: "homeBG")
+        imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
+        self.backgroungUIView.addSubview(imageViewBackground)
+        self.backgroungUIView.sendSubviewToBack(imageViewBackground)
         
         //Initialize menuBackButton UIView
         self.view.addSubview(self.menuBackButton)
