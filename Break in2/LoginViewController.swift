@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   // Declare and initialize types of tests and difficulties available for selected career
   
-  let homeViewModel:JSONModel = JSONModel()
+  let loginViewModel:JSONModel = JSONModel()
     
   //set number of lives
     var setNumberOfLivesFree:Int = 3
@@ -139,7 +139,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     // Set tutorialImageHeight
     
     self.tutorialImageHeight = self.screenFrame.height - (self.buttonHeight + (self.minorMargin * 3) + self.loginPageControllerViewHeight + self.statusBarFrame.height)
-    
+
   }
 
    //---------------------------------------------------------------
@@ -429,7 +429,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         //let user = PFUser.currentUser()
         let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
         careerPrefs[PF_PREFERENCES_USER] = user
-        careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.homeViewModel.getAppVariables("careerTypes") as! [String]
+        careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.loginViewModel.getAppVariables("careerTypes") as! [String]
         careerPrefs[PF_PREFERENCES_USERNAME] = user[PF_USER_USERNAME]
         
         careerPrefs.saveInBackgroundWithBlock({ (succeeded, error: NSError?) -> Void in

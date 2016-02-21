@@ -8,7 +8,9 @@
 
 import UIKit
 
-class JSONModel: NSObject {
+class JSONModel: NSObject, NSURLConnectionDelegate {
+  
+  var downloadData:NSMutableData = NSMutableData()
 
   func getJobDeadlines() -> [[String:AnyObject]] {
     
@@ -189,5 +191,165 @@ class JSONModel: NSObject {
     }
     return [[String:AnyObject]]()
   }
+  
+  func downloadAndSaveQuestions() {
+    
+    self.downloadAndSaveNumericalReasoning()
+    self.downloadAndSaveVerbalReasoning()
+  
+  }
+  
+  func downloadAndSaveJobDeadlines() {
+    
+    // Set up NSURLSession
+    
+    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/JobDeadlines.json")!
+    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+    let session = NSURLSession.sharedSession()
+    let task = session.dataTaskWithRequest(urlRequest) {
+      (data, response, error) -> Void in
+      
+      let httpResponse = response as! NSHTTPURLResponse
+      let statusCode = httpResponse.statusCode
+      
+      if (statusCode == 200) {
+        
+        // Get JobDeadlines.json path
+        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("JobDeadlines", ofType: "json")
+        if let actualFilePath = fileBundlePath {
+          //Case where the path has been found
+          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
+          do {
+            // Write downloaded JSON over current JSON file
+            let file = try NSFileHandle(forWritingToURL: urlPath)
+            file.writeData(data!)
+            print("Job Deadlines data was written to the JSON file successfully!")
+          } catch let error as NSError {
+            print("Couldn't write to file: \(error.localizedDescription)")
+          }
+          
+        }
+
+      }
+    }
+  
+  task.resume()
+    
+  }
+  
+  func downloadAndSaveNumericalReasoning() {
+    
+    // Set up NSURLSession
+    
+    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/NumericalReasoning.json")!
+    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+    let session = NSURLSession.sharedSession()
+    let task = session.dataTaskWithRequest(urlRequest) {
+      (data, response, error) -> Void in
+      
+      let httpResponse = response as! NSHTTPURLResponse
+      let statusCode = httpResponse.statusCode
+      
+      if (statusCode == 200) {
+        
+        // Get NumericalReasoning.json path
+        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("NumericalReasoning", ofType: "json")
+        if let actualFilePath = fileBundlePath {
+          //Case where the path has been found
+          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
+          do {
+            // Write downloaded JSON over current JSON file
+            let file = try NSFileHandle(forWritingToURL: urlPath)
+            file.writeData(data!)
+            print("Numerical Reasoning data was written to the JSON file successfully!")
+          } catch let error as NSError {
+            print("Couldn't write to file: \(error.localizedDescription)")
+          }
+        }
+        
+      }
+    }
+    
+    task.resume()
+    
+  }
+  
+  func downloadAndSaveVerbalReasoning() {
+    
+    // Set up NSURLSession
+    
+    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/VerbalReasoning.json")!
+    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+    let session = NSURLSession.sharedSession()
+    let task = session.dataTaskWithRequest(urlRequest) {
+      (data, response, error) -> Void in
+      
+      let httpResponse = response as! NSHTTPURLResponse
+      let statusCode = httpResponse.statusCode
+      
+      if (statusCode == 200) {
+        
+        // Get VerbalReasoning.json path
+        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("VerbalReasoning", ofType: "json")
+        if let actualFilePath = fileBundlePath {
+          //Case where the path has been found
+          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
+          do {
+            // Write downloaded JSON over current JSON file
+            let file = try NSFileHandle(forWritingToURL: urlPath)
+            file.writeData(data!)
+            print("Verbal Reasoning data was written to the JSON file successfully!")
+          } catch let error as NSError {
+            print("Couldn't write to file: \(error.localizedDescription)")
+          }
+          
+        }
+        
+      }
+    }
+    
+    task.resume()
+    
+  }
+
+  func downloadAndSaveAppVariables() {
+    
+    // Set up NSURLSession
+    
+    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/AppVariables.json")!
+    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+    let session = NSURLSession.sharedSession()
+    let task = session.dataTaskWithRequest(urlRequest) {
+      (data, response, error) -> Void in
+      
+      let httpResponse = response as! NSHTTPURLResponse
+      let statusCode = httpResponse.statusCode
+      
+      if (statusCode == 200) {
+        
+        // Get AppVariables.json path
+        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("AppVariables", ofType: "json")
+        if let actualFilePath = fileBundlePath {
+          //Case where the path has been found
+          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
+          do {
+            // Write downloaded JSON over current JSON file
+            let file = try NSFileHandle(forWritingToURL: urlPath)
+            file.writeData(data!)
+            print("App Variables data was written to the JSON file successfully!")
+          } catch let error as NSError {
+            print("Couldn't write to file: \(error.localizedDescription)")
+          }
+          
+        }
+        
+      }
+    }
+    
+    task.resume()
+    
+  }
+
+
   
 }
