@@ -6,6 +6,14 @@
 //  Copyright © 2015 Sangeet Shah. All rights reserved.
 //
 
+/*
+DIRECTORY:
+
+NUMBER 1: CHECKING MEMBERSHIP
+NUMBER 2: PAID MEMBERSHIP 
+NUMBER 3: FREE MEMBERSHIP
+*/
+
 import UIKit
 import SwiftSpinner
 import SCLAlertView
@@ -22,18 +30,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var count:Int = 24
   var startTime:CFAbsoluteTime = CFAbsoluteTime()
   var counter:Int = Int()
-  var minutesRemaining:Int = Int()
   var secondsRemaining:Int = Int()
-  var hoursRemaining:Int = Int()
-  var minutesBetweenLives:Int = 12 * 60
-  var secondsBetweenLives:Int = 12 * 3600
-  var hoursBetweenLives:Int = 12
-  var countSeconds:Int = Int()
-  var countMinutes:Int = Int()
-  var countHours:Int = Int()
+  var secondsBetweenLives:Int = 60//12 * 3600
   var lifeOrLives:String = String()
     
   //in app purchase initialisation
+    
   let productIdentifiers = Set(["com.APPSIDE.Breakin2.ExtraLives1", "com.APPSIDE.Breakin2.UnlimitedLives1"])
   var product: SKProduct?
   var productsArray = Array<SKProduct>()
@@ -41,7 +43,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var p = SKProduct()
   
   // Declare and initialize types of tests and difficulties available for selected career
-  
+    
   var testTypes:[String] = [String]()
   var comingSoonTestTypes:[String] = [String]()
   let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG", "Arithmetic Reasoning":"arithmeticBG", "Sequences":"arithmeticBG", "Fractions":"arithmeticBG", "Help Us Add More Tests:":"numericalBG"]
@@ -271,14 +273,25 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
     self.testLivesUpgradeButton2.addTarget(self, action: "unlimitedLivesTapped:", forControlEvents: UIControlEvents.TouchUpInside)
     
+    //********************************************************************
+    //NUMBER 1: CHECK MEMBERSHIP TYPE
+    //********************************************************************
+    
     membershipType = defaults.objectForKey("Membership") as! String
     
     if (membershipType == "Premium") {
         
-        //placeholder for freemium
+        //********************************************************************
+        //NUMBER 2: PREMIUM MEMBERS GO TO PAID METHOD
+        //********************************************************************
+        
         paidConduit()
     
     }else{
+        
+        //********************************************************************
+        //NUMBER 3: FREE MEMBERS GO TO CHECK METHOD EVERY SECOND
+        //********************************************************************
         
         freeConduit()
         let date = NSDate().dateByAddingTimeInterval(0)
@@ -334,22 +347,31 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     // Dispose of any resources that can be recreated.
   }
     
+    //********************************************************************
+    //NUMBER 3A: CHECK NUMBER OF LIVES AND SET BUTTON TITLE
+    //********************************************************************
+    
     func freeConduit(){
         
         self.numberOfTestsTotal = defaults.integerForKey("Lives")
-        
         self.testsTotal.addTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
         self.testsTotal.setTitle(String(self.numberOfTestsTotal), forState: UIControlState.Normal)
+        
         if self.numberOfTestsTotal == 1 {
             lifeOrLives = "life"
         }else{
             lifeOrLives = "lives"
         }
+        
         self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
         self.testsTotal.clipsToBounds = true
         self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
         self.testsTotal.layer.borderWidth = 2
         self.testsTotal.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        //********************************************************************
+        //NUMBER 3B: IF NUMBER OF LIVES IS LESS THAN MAX, CHECK HOW MANY...
+        //********************************************************************
         
         if (self.numberOfTestsTotal < self.maxNumberOfTests) {
             
@@ -363,17 +385,23 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
     }
     
+    //********************************************************************
+    //NUMBER 2A: SET INFINITY LOGO
+    //********************************************************************
+    
     func paidConduit(){
         
-        //self.testsTotal.addTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
         self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
-        //self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) lives left."
         self.testsTotal.clipsToBounds = true
         self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
         self.testsTotal.layer.borderWidth = 2
         self.testsTotal.layer.borderColor = UIColor.whiteColor().CGColor
         
     }
+    
+    //****************************************************************************************************
+    //NUMBER 3C: CHECK THE DIFFERENCE BETWEEN THE CURRENT TIME AND THE TIME SET WHEN 1ST FREE LIFE IS USED
+    //****************************************************************************************************
     
     func checkLives(){
         
@@ -383,23 +411,28 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         let timeBetweenLives = Double(self.secondsBetweenLives)
         var numberToAdd = floor(diff / timeBetweenLives)
         let newLives:Int = Int(numberToAdd) + numberOfTestsTotal
-        
-        //self.hoursRemaining = max(self.hoursBetweenLives - Int(diff)/3600, 0)
-        //self.minutesRemaining = max(self.minutesBetweenLives - Int(diff)/60, 0)
         self.secondsRemaining = max(self.secondsBetweenLives - Int(diff), 0)
         
         //self.updateTimer()
+        
+        //****************************************************************************************************
+        //NUMBER 3D: IF THERE IS A LIFE/LIVES TO ADD, CHECK THEY DON'T EXCEED MAX AND ADD THEM
+        //****************************************************************************************************
         
         if numberToAdd > 0 && self.numberOfTestsTotal < self.maxNumberOfTests {
             
             self.numberOfTestsTotal = min(newLives, 3)
             self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
             self.testsTotal.setTitle(String(self.numberOfTestsTotal), forState: UIControlState.Normal)
+            
             if self.numberOfTestsTotal == 1 {
                 lifeOrLives = "life"
             }else{
                 lifeOrLives = "lives"
             }
+            
+            //SET RELEVANT VARIABLES BACK TO 0 SO TIMER CAN START AFRESH, BUT IF MAX, STOP
+            
             self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
             numberToAdd = 0
             let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
@@ -407,7 +440,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             
             if self.numberOfTestsTotal == self.maxNumberOfTests {
                 
-                timer.invalidate()
+                self.timer.invalidate()
                 self.testLivesSubtitleLabel.text = "MAXIMUM NUMBER OF FREE LIVES"
                 
             }
@@ -415,9 +448,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             //freeConduit()
             //updateTimer()
             
+        //****************************************************************************************************
+        //NUMBER 3E: IF LIVES ARE MAXIMUM, SET TITLE, OTHERWISE UPDATE CLOCK
+        //****************************************************************************************************
+            
         } else if self.numberOfTestsTotal == self.maxNumberOfTests {
             
-            timer.invalidate()
+            self.timer.invalidate()
             self.testLivesSubtitleLabel.text = "MAXIMUM NUMBER OF FREE LIVES"
             
         }else{
@@ -919,50 +956,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   }
   
-  /*func hideStats(sender: UISwipeGestureRecognizer) {
-    
-    if self.statsViewVisible {
-      
-      UIView.animateWithDuration(1, animations: {
-        
-        self.testSelectionViewHeightConstraint.constant = self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7)
-        self.view.layoutIfNeeded()
-        
-        }, completion: {(Bool) in
-          
-          self.swipeInfoLabel.text = "Swipe Up For Test Explanation"
-          
-      })
-      
-      self.statsViewVisible = false
-      
-    }
-    
-  }*/
-  
-  /*func scrollViewDidScroll(scrollView: UIScrollView) {
-  self.backgroundImageView.alpha = 1 - (((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width))) * 2)
-  }
-  
-  func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
-  
-  let scrollViewPosition:CGFloat = ((self.testScrollView.contentOffset.x/self.testScrollView.frame.size.width) - CGFloat(Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)))
-  
-  if scrollViewPosition < 0.5 {
-  let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
-  self.testPageControllerView.updatePageController(pageIndex)
-  self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
-  }
-  else {
-  let pageIndex:Int = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width) + 1
-  self.testPageControllerView.updatePageController(pageIndex)
-  self.backgroundImageView.image = UIImage.init(named: self.testTypeBackgroundImages[self.testTypes[pageIndex]]!)
-  }
-  
-  UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-  self.backgroundImageView.alpha = 1
-  }, completion: nil)
-  }*/
   
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     
@@ -1020,18 +1013,6 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     }
     self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
     
-//    if (numberOfTestsTotal < maxNumberOfTests) {
-//        
-//        //let date = NSDate().dateByAddingTimeInterval(0)
-//        //let timer = NSTimer(fireDate: date, interval: 1, target: self, selector: "checkLives", userInfo: nil, repeats: true)
-//        //NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-//        //self.testLivesSubtitleLabel.text = String(format: "%02d", self.minutesRemaining) + " : " + String(format: "%02d", self.secondsRemaining)
-//        //self.checkLives()
-//        
-//    }else{
-//        
-//    }
-    
     UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
       if self.testLivesBackgroudViewVisible == false {
@@ -1049,51 +1030,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   }
     
-    func updateTimer() {
-        
-        if self.testLivesSubtitleLabel.text == "MAXIMUM NUMBER OF FREE LIVES" {
-            
-        }else{
-
-            if (self.hoursRemaining == 0 && self.minutesRemaining == 0 && self.secondsRemaining == 0) {
-                    
-                self.timer.invalidate()
-                
-            }else{
-                
-                
-                
-            }
-
-            
-            if (self.hoursRemaining == 0 && self.minutesRemaining == 0 && self.secondsRemaining == 0) {
-                if self.numberOfTestsTotal == 1 {
-                    lifeOrLives = "life"
-                }else{
-                    lifeOrLives = "lives"
-                }
-                self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
-            }
-    }
-    }
-    
     func addLives(sender: UIButton){
         
         SwiftSpinner.show("Purchasing")
         addLivesTapped()
-        
-//        let backAlert = SCLAlertView()
-//        backAlert.addButton("Yes", target:self, selector:Selector("addLivesTapped"))
-//        backAlert.showTitle(
-//            "Are you sure?", // Title of view
-//            subTitle: "Purchasing extra lives will cost you", // String of view
-//            duration: 0.0, // Duration to show before closing automatically, default: 0.0
-//            completeText: "No", // Optional button value, default: ""
-//            style: .Success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
-//            colorStyle: 0x22B573,//0x526B7B,//0xD0021B - RED
-//            colorTextButton: 0xFFFFFF
-//        )
-//        backAlert.showCloseButton = false
         
     }
     
