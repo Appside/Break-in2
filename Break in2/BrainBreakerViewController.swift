@@ -630,9 +630,9 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
                         SwiftSpinner.show("Saving Results")
                         let user = PFUser.currentUser()
                         let analytics = PFObject(className: PF_VERBREAS_CLASS_NAME)
-                        analytics[PF_VERBREAS_USER] = user
-                        analytics[PF_VERBREAS_SCORE] = nbCorrectAnswers
-                        analytics[PF_VERBREAS_USERNAME] = user![PF_USER_USERNAME]
+                        //analytics[PF_VERBREAS_USER] = user
+                        //analytics[PF_VERBREAS_SCORE] = nbCorrectAnswers
+                        //analytics[PF_VERBREAS_USERNAME] = user![PF_USER_USERNAME]
                         
                         analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                             if error == nil {
