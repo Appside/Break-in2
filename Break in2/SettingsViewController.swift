@@ -17,10 +17,41 @@ import CoreData
 import SwiftSpinner
 import MessageUI
 
+/*
+DIRECTORY
+
+NUMBER 1: ACCOUNT STATUS
+
+*/
+
 class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate, MFMailComposeViewControllerDelegate {
   
   let settingsModel:JSONModel = JSONModel()
   let defaults = NSUserDefaults.standardUserDefaults()
+    
+    //****************************************************************************************************
+    //NUMBER 1: VARIABLES
+    //****************************************************************************************************
+    var showMembership:Bool = true
+    let conduitView:UIView = UIView()
+    let tutoView:UIView = UIView()
+    let tutoDescription:UIScrollView = UIScrollView()
+    let tutoDescriptionTitle:UILabel = UILabel()
+    let tutoDescriptionText:UILabel = UILabel()
+    let tutoDescriptionTitle2:UILabel = UILabel()
+    let tutoDescriptionText2:UILabel = UILabel()
+    let tutoNextButton:UIButton = UIButton()
+    let tutoSkipButton:UIButton = UIButton()
+    let logoImageViewMembership:UILabel = UILabel()
+    let tutorialFingerImageViewMembership:UIImageView = UIImageView()
+    var tutoPage:Int = 0
+    let tutoDescriptionSep:UIView = UIView()
+    let tutoDescriptionSep2:UIView = UIView()
+    let whiteBGView:UIView = UIView()
+    let newTutoButton:UILabel = UILabel()
+    //Screen size
+    var widthRatio:CGFloat = CGFloat()
+    var heightRatio:CGFloat = CGFloat()
   
   // Declare and initialize types of settings
   
@@ -87,6 +118,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.view.addHomeBG()
     self.textSize = self.view.getTextSize(15)
     
+    //Screen size and constraints
+    self.widthRatio = screenFrame.size.width / 414
+    self.heightRatio = screenFrame.size.height / 736
+    
     // Get app variables
     
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
@@ -118,7 +153,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Adjust backButton appearance
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: "savePrefsToParse:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
@@ -523,18 +558,23 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                         
                         self.defaults.setObject(self.chosenCareers, forKey: "SavedCareerPreferences")
                         let array = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
+                        
+                        SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
+                            
                         print(array)
                         SwiftSpinner.hide()
-                        self.hideSettingsMenuView(sender)
+                        //self.hideSettingsMenuView(sender)
+                            
+                        }, subtitle: "Tap to return to settings")
                         
                     } else {
                         
                         SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                             
                             SwiftSpinner.hide()
-                            self.hideSettingsMenuView(sender)
+                            //self.hideSettingsMenuView(sender)
                             
-                            }, subtitle: "Preferences unsaved, tap to return home")
+                            }, subtitle: "Preferences unsaved, tap to return to settings")
                         
                     }
                     
@@ -545,9 +585,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
                     SwiftSpinner.hide()
-                    self.hideSettingsMenuView(sender)
+                    //self.hideSettingsMenuView(sender)
                     
-                    }, subtitle: "Preferences unsaved, tap to return home")
+                    }, subtitle: "Preferences unsaved, to return to settings")
                 
             }
         })
@@ -940,17 +980,26 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         self.sendEmailButtonTapped(sender)
         
-    }
-    else if sender.currentTitle == "About" {
+    }else if sender.currentTitle == "About" {
+        
       UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)
-    }
-    else if sender.currentTitle == "Account Status" {
-      print("account status")
-    }
-    else if sender == self.saveCareersChoicesButton {
+        
+    }else if sender.currentTitle == "Account Status" {
+        
+        //****************************************************************************************************
+        //NUMBER 1B: ACCOUNT STATUS CLICK
+        //****************************************************************************************************
+        
+        print("account status")
+        self.tutoView.alpha = 1
+        self.membershipTypeClicked()
+        
+    }else if sender == self.saveCareersChoicesButton {
+        
       print("save choices")
-    }
-    else{
+        self.savePrefsToParse(sender)
+        
+    }else{
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
@@ -1139,6 +1188,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     if self.tutorialViews[self.tutorialPageNumber - 1] == self.chooseCareersView {
       self.savePrefsToParse(sender)
+      self.hideSettingsMenuView(sender)
     }
     
   }
@@ -1227,6 +1277,220 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
 
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    func membershipTypeClicked(){
+        
+        //****************************************************************************************************
+        //NUMBER 1A: SETUP THE SCREEN
+        //****************************************************************************************************
+        
+        //Set constraints to each view
+        self.view.addSubview(self.tutoView)
+        self.tutoView.addSubview(self.conduitView)
+        self.tutoView.addSubview(self.tutoNextButton)
+        self.tutoView.addSubview(self.tutoSkipButton)
+        self.tutoView.addSubview(self.tutoDescription)
+        self.tutoView.addSubview(self.logoImageViewMembership)
+        self.tutoView.addSubview(self.tutorialFingerImageView)
+        self.tutoDescription.addSubview(self.conduitView)
+        self.conduitView.addSubview(self.tutoDescriptionTitle)
+        self.conduitView.addSubview(self.tutoDescriptionText)
+        self.conduitView.addSubview(self.tutoDescriptionTitle2)
+        self.conduitView.addSubview(self.tutoDescriptionText2)
+        self.conduitView.addSubview(self.tutoDescriptionSep)
+        self.tutoDescriptionSep.backgroundColor = UIColor.whiteColor()
+        self.conduitView.addSubview(self.tutoDescriptionSep2)
+        self.tutoDescriptionSep2.backgroundColor = UIColor.whiteColor()
+        
+        self.tutoView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+        
+        //***************************
+        //CONDUIT VIEW
+        //***************************
+        
+        self.conduitView.translatesAutoresizingMaskIntoConstraints = false
+        let conduitViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let conduitViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let conduitViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 300*self.heightRatio)
+        let conduitViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.view.frame.width - 100*self.widthRatio))
+        
+        self.tutoDescription.addConstraints([conduitViewTop, conduitViewLeft])
+        self.conduitView.addConstraints([conduitViewHeight, conduitViewWidth])
+        
+        //***************************
+        //OUTER SCROLL VIEW: TUTO DES
+        //***************************
+        
+        self.tutoDescription.translatesAutoresizingMaskIntoConstraints = false
+        self.tutoDescription.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: 500)
+        let tutoDescriptionCenterY:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: (300/2-60)*self.heightRatio)
+        let tutoDescriptionLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 50*self.widthRatio)
+        let tutoDescriptionRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -50*self.widthRatio)
+        
+        self.tutoView.addConstraints([tutoDescriptionCenterY,tutoDescriptionLeft,tutoDescriptionRight])
+        
+        let tutoDescriptionHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 300*self.heightRatio)
+        let tutoDescriptionWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.view.frame.width - 40*self.widthRatio))
+        
+        self.tutoDescription.addConstraints([tutoDescriptionHeight, tutoDescriptionWidth])
+        self.tutoDescription.contentSize = CGSize(width: 300*self.heightRatio, height: self.view.frame.width - 40*self.widthRatio)
+        
+        //***************************
+        //CLOSE BUTTON
+        //***************************
+        
+        self.tutoNextButton.translatesAutoresizingMaskIntoConstraints = false
+        let tutoNextButtonBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -10*self.heightRatio)
+        let tutoNextButtonLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 40*self.widthRatio)
+        let tutoNextButtonRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -40*self.widthRatio)
+        self.tutoView.addConstraints([tutoNextButtonBottom,tutoNextButtonLeft,tutoNextButtonRight])
+        let tutoNextButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.heightRatio)
+        self.tutoNextButton.addConstraint(tutoNextButtonHeight)
+        
+        //***************************
+        //MEMBERSHIP TYPE
+        //***************************
+        
+        self.tutoSkipButton.translatesAutoresizingMaskIntoConstraints = false
+        let tutoSkipButtonTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.view.frame.width/12+50*self.heightRatio)
+        let tutoSkipButtonCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        self.tutoView.addConstraints([tutoSkipButtonTop,tutoSkipButtonCenterX])
+        let tutoSkipButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20*self.heightRatio)
+        let tutoSkipButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 200*self.widthRatio)
+        self.tutoSkipButton.addConstraints([tutoSkipButtonHeight,tutoSkipButtonWidth])
+        
+        //***************************
+        //Top text
+        //***************************
+        
+        self.tutoDescriptionTitle.translatesAutoresizingMaskIntoConstraints = false
+        let tutoDescriptionTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let tutoDescriptionTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let tutoDescriptionTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let tutoDescriptionTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+        
+        self.conduitView.addConstraints([tutoDescriptionTitleTop, tutoDescriptionTitleLeft, tutoDescriptionTitleRight])
+        self.tutoDescriptionTitle.addConstraints([tutoDescriptionTitleHeight])
+        
+        self.tutoDescriptionSep.translatesAutoresizingMaskIntoConstraints = false
+        let tutoDescriptionSepLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let tutoDescriptionSepTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        let tutoDescriptionSepRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let tutoDescriptionSepHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 3)
+        
+        self.conduitView.addConstraints([tutoDescriptionSepLeft, tutoDescriptionSepRight, tutoDescriptionSepTop])
+        self.tutoDescriptionSep.addConstraints([tutoDescriptionSepHeight])
+        
+        self.tutoDescriptionText.translatesAutoresizingMaskIntoConstraints = false
+        let tutoDescriptionTextTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tutoDescriptionSep, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 10)
+        let tutoDescriptionTextLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let tutoDescriptionTextRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        
+        self.conduitView.addConstraints([tutoDescriptionTextTop,tutoDescriptionTextLeft,tutoDescriptionTextRight])
+        
+        //***************************
+        //Bottom text
+        //***************************
+        
+        self.tutoDescriptionTitle2.translatesAutoresizingMaskIntoConstraints = false
+        let tutoDescriptionTitle2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let tutoDescriptionTitle2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescriptionText, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 10)
+        let tutoDescriptionTitle2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let tutoDescriptionTitle2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+        
+        self.conduitView.addConstraints([tutoDescriptionTitle2Top, tutoDescriptionTitle2Left, tutoDescriptionTitle2Right])
+        self.tutoDescriptionTitle2.addConstraints([tutoDescriptionTitle2Height])
+        
+        self.tutoDescriptionSep2.translatesAutoresizingMaskIntoConstraints = false
+        let tutoDescriptionSep2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let tutoDescriptionSep2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        let tutoDescriptionSep2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let tutoDescriptionSep2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 3)
+        
+        self.conduitView.addConstraints([tutoDescriptionSep2Left, tutoDescriptionSep2Right, tutoDescriptionSep2Top])
+        self.tutoDescriptionSep2.addConstraints([tutoDescriptionSep2Height])
+        
+        self.tutoDescriptionText2.translatesAutoresizingMaskIntoConstraints = false
+        let tutoDescriptionText2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tutoDescriptionSep2, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 10)
+        let tutoDescriptionText2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let tutoDescriptionText2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        
+        self.conduitView.addConstraints([tutoDescriptionText2Top,tutoDescriptionText2Left,tutoDescriptionText2Right])
+        
+
+        self.logoImageViewMembership.translatesAutoresizingMaskIntoConstraints = false
+        let logoImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let logoImageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 25*self.heightRatio)
+        let logoImageViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width/12)
+        let logoImageViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width-40)
+        self.logoImageViewMembership.addConstraints([logoImageViewHeight, logoImageViewWidth])
+        self.tutoView.addConstraints([logoImageViewCenterX, logoImageViewTop])
+        
+        //Finger ImageView
+        self.tutorialFingerImageView.image = UIImage.init(named: "fingbutton")
+        self.tutorialFingerImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        self.tutorialFingerImageView.translatesAutoresizingMaskIntoConstraints = false
+        let descriptionImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let descriptionImageViewCenterY:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -self.view.frame.width/8-100*self.heightRatio)
+        let descriptionImageViewHeight:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width/4)
+        let descriptionImageViewWidth:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 10*self.widthRatio)
+        self.tutorialFingerImageView.addConstraints([descriptionImageViewHeight, descriptionImageViewWidth])
+        self.tutoView.addConstraints([descriptionImageViewCenterX, descriptionImageViewCenterY])
+        
+        //Tutorial Title
+        let labelString:String = String("YOUR SUBSCRIPTION")
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        self.logoImageViewMembership.attributedText = attributedString
+        
+        //Design
+        self.logoImageViewMembership.textAlignment = NSTextAlignment.Center
+        self.tutoView.backgroundColor = UIColor(white: 0.0, alpha: 0.9)
+        self.tutoDescriptionTitle.textColor = UIColor.whiteColor()
+        self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
+        self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Justified
+        self.tutoDescriptionTitle.numberOfLines = 0
+        self.tutoDescriptionText.textColor = UIColor.whiteColor()
+        self.tutoDescriptionText.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
+        self.tutoDescriptionText.textAlignment = NSTextAlignment.Left
+        self.tutoDescriptionText.numberOfLines = 0
+        self.tutoDescriptionTitle2.textColor = UIColor.whiteColor()
+        self.tutoDescriptionTitle2.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
+        self.tutoDescriptionTitle2.textAlignment = NSTextAlignment.Justified
+        self.tutoDescriptionTitle2.numberOfLines = 0
+        self.tutoDescriptionText2.textColor = UIColor.whiteColor()
+        self.tutoDescriptionText2.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
+        self.tutoDescriptionText2.textAlignment = NSTextAlignment.Left
+        self.tutoDescriptionText2.numberOfLines = 0
+        self.tutoNextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+        self.tutoNextButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.tutoNextButton.setTitle("Close", forState: .Normal)
+        self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
+        self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext"))
+        self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
+        self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.tutoSkipButton.setTitle(self.defaults.objectForKey("Membership") as? String, forState: .Normal)
+        self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(20))
+        self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        
+        //Set tutorial text
+        self.tutoDescriptionTitle.text = "Free Subscription:"
+        self.tutoDescriptionText.text = "We have provided full access to tests and the chance to win a prize through the Brain Breaker question. However, you are limited to 3 lives with which to take tests. We will give you a new life every 12 hours; but if you need lives more quickly, you can either purchase a set of 10 or upgrade to our Premium version."
+        self.tutoDescriptionTitle2.text = "Premium Subscription:"
+        self.tutoDescriptionText2.text = "Premium access allows you to practice tests with unlimited access. You are also granted 3 chances to win a prize through the Brain Breaker question."
+
+        
+    }
+    
+    func tutoNext(){
+        
+        self.tutoView.alpha = 0
+        self.showMembership = false
         
     }
   
