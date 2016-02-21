@@ -98,7 +98,6 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         self.countSeconds = self.allowedSeconds
         self.countMinutes = self.allowedMinutes
         
-        
         //Initialize backgroun UIView
         self.view.addSubview(self.backgroungUIView)
         self.backgroungUIView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
