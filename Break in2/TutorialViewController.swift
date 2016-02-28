@@ -24,9 +24,7 @@ class TutorialViewController: UIViewController {
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
-  
-  let tutorialModel:JSONModel = JSONModel()
-  
+    
   // Declare and initialize design constants
   
   let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -106,13 +104,6 @@ class TutorialViewController: UIViewController {
       // Set constraints
       
       self.setConstraints()
-      
-      // Load JSON files
-      
-      //self.tutorialModel.downloadAndSaveAppVariables()
-      self.tutorialModel.downloadAndSaveJobDeadlines()
-      self.tutorialModel.downloadAndSaveNumericalReasoning()
-      self.tutorialModel.downloadAndSaveVerbalReasoning()
       
     }
 
