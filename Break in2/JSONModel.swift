@@ -223,6 +223,7 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
             // Write downloaded JSON over current JSON file
             let file = try NSFileHandle(forWritingToURL: urlPath)
             file.writeData(data!)
+            print(data!)
             print("Job Deadlines data was written to the JSON file successfully!")
           } catch let error as NSError {
             print("Couldn't write to file: \(error.localizedDescription)")
@@ -336,6 +337,7 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
             // Write downloaded JSON over current JSON file
             let file = try NSFileHandle(forWritingToURL: urlPath)
             file.writeData(data!)
+            print(data!)
             print("App Variables data was written to the JSON file successfully!")
           } catch let error as NSError {
             print("Couldn't write to file: \(error.localizedDescription)")

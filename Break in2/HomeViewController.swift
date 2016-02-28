@@ -15,6 +15,8 @@ import SwiftSpinner
 
 class HomeViewController: UIViewController {
   
+  var newSwitch:Bool = Bool()
+  
   // Declare and initialize types of careers
   
   var careerTypes:[String] = [String]()
@@ -47,6 +49,7 @@ class HomeViewController: UIViewController {
   var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
   var tutorialFingerImageView:UIImageView = UIImageView()
   let brainBreakerQuestionButton:UIButton = UIButton()
+  let brainBreakerNewLabel:UILabel = UILabel()
   
   var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -112,6 +115,7 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.tutorialNextButton)
     self.view.addSubview(self.tutorialFingerImageView)
     self.careersBackgroundView.addSubview(self.brainBreakerQuestionButton)
+    self.careersBackgroundView.addSubview(self.brainBreakerNewLabel)
     
     // Create careerButtons for each careerType
     
@@ -190,6 +194,23 @@ class HomeViewController: UIViewController {
     
     self.brainBreakerQuestionButton.setImage(UIImage.init(named: "brainBreakerLogo"), forState: UIControlState.Normal)
     
+    self.brainBreakerNewLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
+    self.brainBreakerNewLabel.textAlignment = NSTextAlignment.Right
+    self.brainBreakerNewLabel.textColor = UIColor.redColor()
+    self.brainBreakerNewLabel.text = "New!"
+    
+    self.newSwitch = defaults.boolForKey("newSwitchBB")
+    
+    if self.newSwitch == true{
+    
+      self.brainBreakerNewLabel.alpha = 1
+      
+    }else{
+      
+      self.brainBreakerNewLabel.alpha = 0
+      
+    }
+    
     // Add actions to buttons
     
     self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
@@ -261,6 +282,9 @@ class HomeViewController: UIViewController {
     }
     self.calendarView.displayCalendar()
     
+    // Check for new Brain Breaker question
+    
+    self.checkNewBrainBreaker()
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -577,13 +601,30 @@ class HomeViewController: UIViewController {
     let brainBreakerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("brainBreakerSegue:"))
     self.brainBreakerQuestionButton.addGestureRecognizer(brainBreakerTapGesture)
     
-    checkNewBrainBreaker()
+    // Create and add constraints for brainBreakerNewLabel
+    
+    self.brainBreakerNewLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let brainBreakerNewLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: -5)
+    
+    let brainBreakerNewLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    
+    let brainBreakerNewLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    
+    let brainBreakerNewLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+    
+    self.brainBreakerNewLabel.addConstraints([brainBreakerNewLabelHeightConstraint, brainBreakerNewLabelWidthConstraint])
+    self.view.addConstraints([brainBreakerNewLabelRightConstraint, brainBreakerNewLabelTopConstraint])
+
     
   }
     
     func brainBreakerSegue(sender:UITapGestureRecognizer) {
         
         SwiftSpinner.show("Loading")
+      
+        //self.newSwitch = false
+        self.defaults.setBool(false, forKey: "newSwitchBB")
         
         let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
         //let currentUser = PFUser.currentUser()!
@@ -653,19 +694,23 @@ class HomeViewController: UIViewController {
             
             if error == nil {
                 
-                self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
-                
                 let numberCheck = self.defaults.integerForKey("BrainBreakerQuestionNumber")
                 let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
                 
                 if (numberCheck2 != numberCheck){
-                    
-                    //sangeet enter here
+                  
+                    print("YES")
+                    self.brainBreakerNewLabel.alpha = 1
+                    self.defaults.setBool(true, forKey: "newSwitchBB")
+                    //self.newSwitch = true
                         
                     }else{
-                    
-                        
+                  
+                    print("NO")
+                  
                     }
+              
+              self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
                 
                     
                 }
@@ -715,7 +760,7 @@ class HomeViewController: UIViewController {
     if self.firstTimeUser {
       self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton])
       self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. Hopefully, the calender we have provided will help! Deadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
-      self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries."], forKey: self.careersBackgroundView)
+      self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n Click on the light bulb to try our super-difficult Brain Breaker question. Get the answer right and you enter into a draw for a special prize!"], forKey: self.careersBackgroundView)
       self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the Settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
       self.tutorialDescriptions.updateValue(["STATISTICS", "Finally, we've added some statistics that allow you to track your progress.\n\nChoose a career and start practicing some tests.\n\n Best of luck!\nAPPSIDE"], forKey: self.statsButton)
       self.showTutorial()
