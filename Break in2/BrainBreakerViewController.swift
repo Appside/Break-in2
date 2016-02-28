@@ -62,17 +62,40 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     //Question Variables
-    var questionType:String = "Verbal Reasoning"
-    var passage:String = "The average age of 10 members of a committee is the same as it was 4 years ago, because an old member has been replaced by a young member. "
-    var question:String = "How much younger is the new member ?"
-    var answers:[String] = ["32","36","40","44","No Answer"]
-    var correctAnswer:Int = 2
-    var explanation:String = "You'll find out soon"
+    var questionType:String = String()
+    var passage:String = String()
+    var question:String = String()
+    var answers:[String] = [String]()
+    var correctAnswer:Int = Int()
+    var explanation:String = String()
+    var attemptsRemaining:Int = Int()
+    var currentPrize:String = String()
+    var timer:NSTimer = NSTimer()
+    var newLabel:String = String()
+    var questionNumber:Int = Int()
+    var startTime:CFAbsoluteTime = CFAbsoluteTime()
+    var time:Int = Int()
     
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.questionType = self.defaults.objectForKey("BrainBreakerQuestionType") as? String ?? String()
+        self.passage = self.defaults.objectForKey("BrainBreakerPassage") as? String ?? String()
+        self.question = self.defaults.objectForKey("BrainBreakerQuestion") as? String ?? String()
+        self.answers = self.defaults.objectForKey("BrainBreakerAnswers") as? [String] ?? [String]()
+        self.correctAnswer = self.defaults.integerForKey("BrainBreakerCorrectAnswerIndex")
+        self.explanation = self.defaults.objectForKey("BrainBreakerExplanation") as? String ?? String()
+        self.attemptsRemaining = self.defaults.integerForKey("NoOfBrainBreakerLives")
+        self.currentPrize = self.defaults.objectForKey("BrainBreakerTestPrize") as? String ?? String()
+        self.questionNumber = self.defaults.integerForKey("BrainBreakerQuestionNumber")
+        
+        
+        
+        //self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "brainBreakerTimer", userInfo: nil, repeats: true)
         
         //Initialize timer
         self.allowedSeconds = 00
@@ -306,12 +329,17 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
         swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
         self.swipeUIView.addGestureRecognizer(swipeDownGesture)
         
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         //Call tutoNextPage
         self.tutoNext()
         self.setConstraints()
+        let dateBB = NSDate().dateByAddingTimeInterval(0)
+        self.timer = NSTimer(fireDate: dateBB, interval: 1, target: self, selector: "brainBreakerTimer", userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(self.timer, forMode: NSRunLoopCommonModes)
     }
    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -408,7 +436,7 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoDescription2.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
             self.tutoDescription2.textAlignment = NSTextAlignment.Center
             self.tutoDescription2.numberOfLines = 0
-            self.tutoDescription2.text = "Current test ends in:\n2 days\nCurrent test prize:\n tbd\nNext test:\nComing Soon\n"
+            self.tutoDescription2.text = "Attempts Remaining:\n\(self.attemptsRemaining)\n\nCurrent Brain Breaker Prize:\n \(self.currentPrize)\n\nCurrent Brain Breaker Ends in:\n\(self.newLabel)\n"
 
             //Start Button
             self.tutoView.addSubview(self.tutoNextButton)
@@ -440,6 +468,12 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
     }
     
     func startTest(sender:UITapGestureRecognizer) {
+        
+        if (self.attemptsRemaining > 0) {
+            
+            self.attemptsRemaining--
+            self.defaults.setInteger(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
+        
         self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
         UIView.animateWithDuration(0.75, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.passageView.alpha = 1.0
@@ -447,6 +481,30 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoView.alpha = 0.0
             self.questionView.alpha = 1.0
             }, completion: nil)
+            
+        }else if (tutoNextButton.titleLabel == "Return Home"){
+            
+        goBack()
+        
+        }else{
+            
+            var alertMessage:String = String()
+            alertMessage = "You have no attempts remaining"
+            
+            let backAlert = SCLAlertView()
+            backAlert.addButton("Return Home", target:self, selector:Selector("goBack"))
+            backAlert.showTitle(
+                "Sorry", // Title of view
+                subTitle: alertMessage, // String of view
+                duration: 0.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "Cancel", // Optional button value, default: ""
+                style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
+                colorTextButton: 0xFFFFFF
+            )
+            backAlert.showCloseButton = false
+            
+        }
     }
     
     //Show Swipe Menu
@@ -601,14 +659,48 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoView.alpha = 1.0
             }, completion: nil)
         if self.quizzArray[0].correctAnswer == self.selectedAnswers[0] {
-            self.tutoDescription.text = "Correct Answer"
+            self.tutoDescription.text = "Correct Answer!\n\nWell done, you are now in with a chance of winning the Brain Breaker prize! The winner(s) will be announced on our social media pages and we will be in touch by email"
         } else {
-            self.tutoDescription.text = "Wrong Answer"
+            self.tutoDescription.text = "Wrong Answer!\n\nUnlucky, please try again when we release our next Brain Breaker Question to be in with a chance of winning a great prize!\n\nJust to let you know, if you sign up for our premium membership, you are allowed up to three attempts at answering the Brain Breaker..."
         }
-        self.tutoDescription2.text = "Blablabla"
+        self.tutoDescription2.text = "Enjoy the rest of Break IN2..."
         self.tutoNextButton.setTitle("Return to Home", forState: .Normal)
         let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("goBackHome:"))
         self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
+    }
+    
+    func brainBreakerTimer(){
+        
+        startTime = CFAbsoluteTimeGetCurrent()
+        let initialTime: NSDate = defaults.objectForKey("BrainBreakerExpirationDate") as! NSDate
+        let diff:CFTimeInterval = initialTime.timeIntervalSinceReferenceDate - startTime
+        time = Int(diff)
+        //self.time = Int(diff)
+        //let diff = startTime - initialTime
+        
+        
+        if self.time > 0 {
+        //self.time = max(self.secondsBetweenLives - Int(diff), 0)
+        let newHour:String = String(format: "%02d", (self.time / 3600))
+        let newMin:String = String(format: "%02d", (self.time % 3600) / 60)
+        let newSec:String = String(format: "%02d", (self.time % 3600) % 60)
+        self.newLabel = "\(newHour) : \(newMin) : \(newSec)"
+        self.tutoDescription2.text = "Attempts Remaining:\n\(self.attemptsRemaining)\n\nCurrent Brain Breaker Prize:\n \(self.currentPrize)\n\nCurrent Brain Breaker Ends in:\n\(self.newLabel)\n"
+        
+        }else{
+            
+            self.newLabel = "Current Brain Breaker Ended, New Question Coming Soon!"
+            self.tutoDescription2.text = "Attempts Remaining:\n\(self.attemptsRemaining)\n\nCurrent Brain Breaker Prize:\n \(self.currentPrize)\n\nCurrent Brain Breaker Ends in:\n\(self.newLabel)\n"
+            
+            self.tutoNextButton.setTitle("Return Home", forState: .Normal)
+            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("goBackHome:"))
+            self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
+            
+            self.timer.invalidate()
+            
+            
+        }
+        
     }
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
@@ -628,11 +720,19 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
                             nbCorrectAnswers++
                         }
                         SwiftSpinner.show("Saving Results")
-                        let user = PFUser.currentUser()
-                        let analytics = PFObject(className: PF_VERBREAS_CLASS_NAME)
-                        //analytics[PF_VERBREAS_USER] = user
-                        //analytics[PF_VERBREAS_SCORE] = nbCorrectAnswers
-                        //analytics[PF_VERBREAS_USERNAME] = user![PF_USER_USERNAME]
+                        let currentUser = PFUser.currentUser()!
+                        let query = PFQuery(className: PF_USER_CLASS_NAME)
+                        let username = currentUser.username
+                        query.whereKey(PF_USER_USERNAME, equalTo: username!)
+                        query.getFirstObjectInBackgroundWithBlock({ (userBB: PFObject?, error: NSError?) -> Void in
+                        
+                        if error == nil {
+                    
+                        let analytics = PFObject(className: PF_BRAINBREAKER_A_CLASS_NAME)
+                        analytics[PF_BRAINBREAKER_A_EMAIL] = userBB![PF_USER_EMAILCOPY]
+                        analytics[PF_BRAINBREAKER_A_FULLNAME] = userBB![PF_USER_FULLNAME]
+                        analytics[PF_BRAINBREAKER_A_Q_NUMBER] = self.questionNumber
+                        analytics[PF_BRAINBREAKER_A_ANSWER_CORRECT] = nbCorrectAnswers
                         
                         analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                             if error == nil {
@@ -647,15 +747,32 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
                                 
                                 SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                     
+                                    self.attemptsRemaining++
+                                    self.defaults.setInteger(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
+                                    self.goBack()
                                     SwiftSpinner.hide()
-                                    self.feedbackScreen()
                                     
-                                    }, subtitle: "Results unsaved, tap to proceed to feedback")
+                                    }, subtitle: "You will not lose a life. Tap to return home.")
                                 
                             }
                         })
-                    }
-                    else {
+                            
+                        }else{
+                            
+                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                
+                                self.attemptsRemaining++
+                                self.defaults.setInteger(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
+                                self.goBack()
+                                SwiftSpinner.hide()
+                                
+                                }, subtitle: "You will not lose a life. Tap to return home.")
+                            
+                            }
+                            
+                    })
+                    
+                    }else {
                         self.feedbackScreen()
                     }
                 }
@@ -676,5 +793,6 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
                 }
             }
         }
+    
 }
     

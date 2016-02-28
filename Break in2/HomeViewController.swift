@@ -11,6 +11,7 @@ import QuartzCore
 import Parse
 import ParseUI
 import SCLAlertView
+import SwiftSpinner
 
 class HomeViewController: UIViewController {
   
@@ -576,12 +577,104 @@ class HomeViewController: UIViewController {
     let brainBreakerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("brainBreakerSegue:"))
     self.brainBreakerQuestionButton.addGestureRecognizer(brainBreakerTapGesture)
     
+    checkNewBrainBreaker()
+    
   }
     
     func brainBreakerSegue(sender:UITapGestureRecognizer) {
-        self.performSegueWithIdentifier("BrainBreakerSegue", sender: nil)
+        
+        SwiftSpinner.show("Loading")
+        
+        let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
+        //let currentUser = PFUser.currentUser()!
+        //let username = currentUser.username
+        //query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
+        //query.limit = 6
+        query.getFirstObjectInBackgroundWithBlock({ (question: PFObject?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_QUESTION], forKey: "BrainBreakerQuestion")
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_QUESTION_TYPE], forKey: "BrainBreakerQuestionType")
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_PASSAGE], forKey: "BrainBreakerPassage")
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_ANSWERS], forKey: "BrainBreakerAnswers")
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_CORRECT_ANSWER], forKey: "BrainBreakerCorrectAnswerIndex")
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_EXPLANATION], forKey: "BrainBreakerExplanation")
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_EXPIRATION_DATE] as? NSDate ?? NSDate(), forKey: "BrainBreakerExpirationDate")
+                self.defaults.setObject(question![PF_BRAINBREAKER_Q_TEST_PRIZE], forKey: "BrainBreakerTestPrize")
+                
+                let numberCheck = self.defaults.integerForKey("BrainBreakerQuestionNumber")
+                let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
+                
+                if (numberCheck2 != numberCheck){
+                    
+                    let membershipType = self.defaults.objectForKey("Membership") as! String
+                    
+                    if (membershipType == "Premium") {
+                        
+                        self.defaults.setInteger(3, forKey: "NoOfBrainBreakerLives")
+                        
+                    }else{
+                        
+                        self.defaults.setInteger(1, forKey: "NoOfBrainBreakerLives")
+                        
+                    }
+                    
+                     self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
+                    
+                }
+                
+                //let array = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
+                
+                SwiftSpinner.show("Tap to Proceed", animated: false).addTapHandler({
+                    
+                    self.performSegueWithIdentifier("BrainBreakerSegue", sender: nil)
+                    SwiftSpinner.hide()
+                    
+                    }, subtitle: "Good luck!")
+                
+            }else{
+                
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                    }, subtitle: "Tap to return to home screen")
+                
+            }
+        })
+        
     }
   
+    func checkNewBrainBreaker(){
+        
+        let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
+        query.getFirstObjectInBackgroundWithBlock({ (question: PFObject?, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
+                
+                let numberCheck = self.defaults.integerForKey("BrainBreakerQuestionNumber")
+                let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
+                
+                if (numberCheck2 != numberCheck){
+                    
+                    //sangeet enter here
+                        
+                    }else{
+                    
+                        
+                    }
+                
+                    
+                }
+            
+        })
+
+        
+    }
+    
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.

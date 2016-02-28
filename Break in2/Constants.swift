@@ -71,34 +71,57 @@ let PF_FRACTIONS_TEST                   = "test"                    //	String
 let PF_FRACTIONS_SCORE                  = "score"                   //	Number
 
 /* Logical class in Parse*/
-let PF_LOGICAL_CLASS_NAME             = "Logical_Reasoning"       //	Class name
-let PF_LOGICAL_USER                   = "user"					//	Pointer to User Class
-let PF_LOGICAL_CREATED                = "createdAt"               //	Date
-let PF_LOGICAL_TIME                   = "time"                    //	Number
-let PF_LOGICAL_USERNAME               = "username"				//	String
-let PF_LOGICAL_TEST                   = "test"                    //	String
-let PF_LOGICAL_SCORE                  = "score"                   //	Number
+let PF_LOGICAL_CLASS_NAME               = "Logical_Reasoning"       //	Class name
+let PF_LOGICAL_USER                     = "user"					//	Pointer to User Class
+let PF_LOGICAL_CREATED                  = "createdAt"               //	Date
+let PF_LOGICAL_TIME                     = "time"                    //	Number
+let PF_LOGICAL_USERNAME                 = "username"				//	String
+let PF_LOGICAL_TEST                     = "test"                    //	String
+let PF_LOGICAL_SCORE                    = "score"                   //	Number
 
 /* Sequences class in Parse*/
-let PF_SEQUENCE_CLASS_NAME             = "Sequences"               //	Class name
-let PF_SEQUENCE_USER                   = "user"					//	Pointer to User Class
-let PF_SEQUENCE_CREATED                = "createdAt"               //	Date
-let PF_SEQUENCE_TIME                   = "time"                    //	Number
-let PF_SEQUENCE_USERNAME               = "username"				//	String
-let PF_SEQUENCE_TEST                   = "test"                    //	String
-let PF_SEQUENCE_SCORE                  = "score"                   //	Number
+let PF_SEQUENCE_CLASS_NAME              = "Sequences"               //	Class name
+let PF_SEQUENCE_USER                    = "user"					//	Pointer to User Class
+let PF_SEQUENCE_CREATED                 = "createdAt"               //	Date
+let PF_SEQUENCE_TIME                    = "time"                    //	Number
+let PF_SEQUENCE_USERNAME                = "username"				//	String
+let PF_SEQUENCE_TEST                    = "test"                    //	String
+let PF_SEQUENCE_SCORE                   = "score"                   //	Number
 
 /* Preferences class in Parse*/
-let PF_PREFERENCES_CLASS_NAME            = "Preferences"            //	Class name
-let PF_PREFERENCES_USER                  = "user"					//	Pointer to User Class
-let PF_PREFERENCES_CREATED               = "createdAt"              //	Date
-let PF_PREFERENCES_TIME                  = "time"                   //	Number
-let PF_PREFERENCES_USERNAME              = "username"				//	String
-let PF_PREFERENCES_CAREERPREFS           = "careerPrefs"            //	Array
+let PF_PREFERENCES_CLASS_NAME           = "Preferences"             //	Class name
+let PF_PREFERENCES_USER                 = "user"					//	Pointer to User Class
+let PF_PREFERENCES_CREATED              = "createdAt"               //	Date
+let PF_PREFERENCES_TIME                 = "time"                    //	Number
+let PF_PREFERENCES_USERNAME             = "username"				//	String
+let PF_PREFERENCES_CAREERPREFS          = "careerPrefs"             //	Array
 
 /* Test voting class in Parse*/
-let PF_TESTVOTE_CLASS_NAME            = "New_Test_Vote"            //	Class name
-let PF_TESTVOTE_CREATED               = "createdAt"              //	Date
-let PF_TESTVOTE_VOTES                  = "votes"                   //	Number
-let PF_TESTVOTE_CAREER           = "career"            //	String
-let PF_TESTVOTE_TEST           = "test"            //	String
+let PF_TESTVOTE_CLASS_NAME              = "New_Test_Vote"           //	Class name
+let PF_TESTVOTE_CREATED                 = "createdAt"               //	Date
+let PF_TESTVOTE_VOTES                   = "votes"                   //	Number
+let PF_TESTVOTE_CAREER                  = "career"                  //	String
+let PF_TESTVOTE_TEST                    = "test"                    //	String
+
+/* Brain Breaker Question class in Parse */
+let PF_BRAINBREAKER_Q_CLASS_NAME        = "Brain_Breaker_Q"         //	Class name
+let PF_BRAINBREAKER_Q_CREATED           = "createdAt"               //	Date
+let PF_BRAINBREAKER_Q_QUESTION_TYPE     = "questionType"            //	String
+let PF_BRAINBREAKER_Q_QUESTION          = "question"                //	String
+let PF_BRAINBREAKER_Q_PASSAGE           = "passage"                 //	String
+let PF_BRAINBREAKER_Q_ANSWERS           = "answers"                 //  Array
+let PF_BRAINBREAKER_Q_CORRECT_ANSWER    = "correctAnswerIndex"      //  Number
+let PF_BRAINBREAKER_Q_EXPLANATION       = "explanation"             //  String
+let PF_BRAINBREAKER_Q_Q_NUMBER          = "questionNumber"          //  Number
+let PF_BRAINBREAKER_Q_EXPIRATION_DATE   = "expirationDate"          //  Date
+let PF_BRAINBREAKER_Q_TEST_PRIZE        = "testPrize"               //  String
+
+/* Brain Breaker Answer class in Parse */
+let PF_BRAINBREAKER_A_CLASS_NAME		= "Brain_Breaker_A"         //	Class name
+let PF_BRAINBREAKER_A_USER              = "user"					//	Pointer to User Class
+let PF_BRAINBREAKER_A_USERNAME			= "username"				//	String
+let PF_BRAINBREAKER_A_EMAIL				= "email"                   //	String
+let PF_BRAINBREAKER_A_FULLNAME			= "fullname"				//	String
+let PF_BRAINBREAKER_A_ANSWER_CORRECT    = "answerCorrect"           //  Number
+let PF_BRAINBREAKER_A_Q_NUMBER          = "questionNumber"            //  Number
+
