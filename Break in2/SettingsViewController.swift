@@ -985,12 +985,28 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)
         
     }else if sender.currentTitle == "Refresh Job Deadlines" {
+        
+        SwiftSpinner.show("Downloading")
       
       self.settingsModel.downloadAndSaveJobDeadlines()
+        
+        SwiftSpinner.show("Saved", animated: false).addTapHandler({
+            
+            SwiftSpinner.hide()
+            
+            }, subtitle: "Tap to dismiss")
       
     }else if sender.currentTitle == "Update Questions" {
+        
+        SwiftSpinner.show("Downloading")
       
       self.settingsModel.downloadAndSaveQuestions()
+        
+        SwiftSpinner.show("Saved", animated: false).addTapHandler({
+            
+            SwiftSpinner.hide()
+            
+            }, subtitle: "Tap to dismiss")
       
     }else if sender.currentTitle == "Account Status" {
         
