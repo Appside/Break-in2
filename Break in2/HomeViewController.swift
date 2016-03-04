@@ -809,9 +809,9 @@ class HomeViewController: UIViewController {
     func userLoggedIn(){
         
         if PFUser.currentUser() == nil {
-            
-            let navigationVC = storyboard!.instantiateViewControllerWithIdentifier("navigationVC") as! LoginViewController
-            presentViewController(navigationVC, animated: false, completion: nil)
+          
+            let navigationVC = self.storyboard!.instantiateViewControllerWithIdentifier("navigationVC") as! LoginViewController
+            self.presentViewController(navigationVC, animated: false, completion: nil)
             
         }else{
             

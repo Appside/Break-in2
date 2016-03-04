@@ -165,193 +165,95 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     
   func getjsonfile(jsonFileName:String) -> [[String:AnyObject]] {
     
-    //Define JSon file URL
-    let fileBundlePath:String? = NSBundle.mainBundle().pathForResource(jsonFileName, ofType: "json")
-    if let actualFilePath = fileBundlePath {
-      //Case where the path has been found
-      let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
-      let jsonData:NSData? = NSData(contentsOfURL: urlPath)
-      if let actualJsonData = jsonData {
-        //NSData exist so use NSJSONerialization to parse data
-        do {
-          //Data correctly parsed
-          let arrayOfDictionaries:[[String:AnyObject]] = try NSJSONSerialization.JSONObjectWithData(actualJsonData, options: NSJSONReadingOptions.MutableContainers) as! [[String:AnyObject]]
-          return arrayOfDictionaries
+    let fileManager = NSFileManager.defaultManager()
+    let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+    
+    if let directoryURL = directoryURLs.first {
+      
+      let fileURL = directoryURL.URLByAppendingPathComponent(jsonFileName + ".json")
+      
+      if fileURL.checkResourceIsReachableAndReturnError(nil) {
+        let jsonData:NSData? = NSData(contentsOfURL: fileURL)
+        if let actualJsonData = jsonData {
+          //NSData exist so use NSJSONerialization to parse data
+          do {
+            //Data correctly parsed
+            let arrayOfDictionaries:[[String:AnyObject]] = try NSJSONSerialization.JSONObjectWithData(actualJsonData, options: NSJSONReadingOptions.MutableContainers) as! [[String:AnyObject]]
+            //print(jsonFileName + " JSON file retrieved")
+            return arrayOfDictionaries
+          }
+          catch {
+            //Error parsing JSON data
+            print("Problem reading " + jsonFileName + " JSON Serialization")
+          }
         }
-        catch {
-          //Error parsing JSON data
+        else {
+          //NSData does not exist
+          print("Problem reading " + jsonFileName + " NSData")
         }
       }
       else {
-        //NSData does not exist
+        print("Problem reading " + jsonFileName + " JSON file")
       }
     }
-    else {
-      //Case where the path does not exist
-    }
+    
     return [[String:AnyObject]]()
   }
-  
-  func downloadAndSaveQuestions() {
+
+  func saveJSONFile(jsonFileName:String, completion:(() -> Void)?) {
+    let fileManager = NSFileManager.defaultManager()
+    let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
     
-    self.downloadAndSaveNumericalReasoning()
-    self.downloadAndSaveVerbalReasoning()
-  
-  }
-  
-  func downloadAndSaveJobDeadlines() {
-    
-    // Set up NSURLSession
-    
-    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/JobDeadlines.json")!
-    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-    let session = NSURLSession.sharedSession()
-    let task = session.dataTaskWithRequest(urlRequest) {
-      (data, response, error) -> Void in
+    if let directoryURL = directoryURLs.first {
       
-      let httpResponse = response as! NSHTTPURLResponse
-      let statusCode = httpResponse.statusCode
+      let fileURL = directoryURL.URLByAppendingPathComponent(jsonFileName + ".json")
       
-      if (statusCode == 200) {
+      if !fileURL.checkResourceIsReachableAndReturnError(nil) {
+        fileManager.createFileAtPath(fileURL.path!, contents: nil, attributes: nil)
+      }
         
-        // Get JobDeadlines.json path
-        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("JobDeadlines", ofType: "json")
-        if let actualFilePath = fileBundlePath {
-          //Case where the path has been found
-          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
-          do {
-            // Write downloaded JSON over current JSON file
-            let file = try NSFileHandle(forWritingToURL: urlPath)
-            file.writeData(data!)
-            print(data!)
-            print("Job Deadlines data was written to the JSON file successfully!")
-          } catch let error as NSError {
-            print("Couldn't write to file: \(error.localizedDescription)")
-          }
+      let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/" + jsonFileName + ".json")!
+      let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+      let session = NSURLSession.sharedSession()
+      
+      let task = session.dataTaskWithRequest(urlRequest) {
+        (data, response, error) -> Void in
+        
+        let httpResponse = response as! NSHTTPURLResponse
+        let statusCode = httpResponse.statusCode
+        
+        if (statusCode == 200) {
           
-        }
-
-      }
-    }
-  
-  task.resume()
-    
-  }
-  
-  func downloadAndSaveNumericalReasoning() {
-    
-    // Set up NSURLSession
-    
-    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/NumericalReasoning.json")!
-    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-    let session = NSURLSession.sharedSession()
-    let task = session.dataTaskWithRequest(urlRequest) {
-      (data, response, error) -> Void in
-      
-      let httpResponse = response as! NSHTTPURLResponse
-      let statusCode = httpResponse.statusCode
-      
-      if (statusCode == 200) {
-        
-        // Get NumericalReasoning.json path
-        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("NumericalReasoning", ofType: "json")
-        if let actualFilePath = fileBundlePath {
-          //Case where the path has been found
-          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
           do {
-            // Write downloaded JSON over current JSON file
-            let file = try NSFileHandle(forWritingToURL: urlPath)
-            file.writeData(data!)
-            print("Numerical Reasoning data was written to the JSON file successfully!")
-          } catch let error as NSError {
-            print("Couldn't write to file: \(error.localizedDescription)")
+            if let downloadedData = data {
+              let file = try NSFileHandle(forWritingToURL: fileURL)
+              file.writeData(downloadedData)
+              print(jsonFileName + " JSON file overwritten!")
+            }
+            else {
+              print("Problem writing " + jsonFileName + " downloaded data")
+            }
+          }
+          catch {
+            print("Problem writing " + jsonFileName + " JSON Serialization")
           }
         }
-        
+        else {
+          print("Problem opening " + jsonFileName + " URL (httpResponse: " + String(statusCode) + ")")
+        }
       }
+      task.resume()
     }
-    
-    task.resume()
-    
   }
   
-  func downloadAndSaveVerbalReasoning() {
-    
-    // Set up NSURLSession
-    
-    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/VerbalReasoning.json")!
-    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-    let session = NSURLSession.sharedSession()
-    let task = session.dataTaskWithRequest(urlRequest) {
-      (data, response, error) -> Void in
-      
-      let httpResponse = response as! NSHTTPURLResponse
-      let statusCode = httpResponse.statusCode
-      
-      if (statusCode == 200) {
-        
-        // Get VerbalReasoning.json path
-        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("VerbalReasoning", ofType: "json")
-        if let actualFilePath = fileBundlePath {
-          //Case where the path has been found
-          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
-          do {
-            // Write downloaded JSON over current JSON file
-            let file = try NSFileHandle(forWritingToURL: urlPath)
-            file.writeData(data!)
-            print("Verbal Reasoning data was written to the JSON file successfully!")
-          } catch let error as NSError {
-            print("Couldn't write to file: \(error.localizedDescription)")
-          }
-          
-        }
-        
-      }
-    }
-    
-    task.resume()
-    
+  func refreshJobDeadlines() {
+    self.saveJSONFile("JobDeadlines", completion: nil)
+    self.saveJSONFile("AppVariables", completion: nil)
   }
-
-  func downloadAndSaveAppVariables() {
-    
-    // Set up NSURLSession
-    
-    let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/AppVariables.json")!
-    let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-    let session = NSURLSession.sharedSession()
-    let task = session.dataTaskWithRequest(urlRequest) {
-      (data, response, error) -> Void in
-      
-      let httpResponse = response as! NSHTTPURLResponse
-      let statusCode = httpResponse.statusCode
-      
-      if (statusCode == 200) {
-        
-        // Get AppVariables.json path
-        let fileBundlePath:String? = NSBundle.mainBundle().pathForResource("AppVariables", ofType: "json")
-        if let actualFilePath = fileBundlePath {
-          //Case where the path has been found
-          let urlPath:NSURL = NSURL(fileURLWithPath: actualFilePath)
-          do {
-            // Write downloaded JSON over current JSON file
-            let file = try NSFileHandle(forWritingToURL: urlPath)
-            file.writeData(data!)
-            print(data!)
-            print("App Variables data was written to the JSON file successfully!")
-          } catch let error as NSError {
-            print("Couldn't write to file: \(error.localizedDescription)")
-          }
-          
-        }
-        
-      }
-    }
-    
-    task.resume()
-    
+  
+  func updateQuestions() {
+    self.saveJSONFile("NumericalReasoning", completion: nil)
+    self.saveJSONFile("VerbalReasoning", completion: nil)
   }
-
-
   
 }

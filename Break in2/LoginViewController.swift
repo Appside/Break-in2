@@ -169,7 +169,12 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         SwiftSpinner.show("Logging in...")
         //self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
         //self.clearAllNotice()
-        
+      
+      // Download and save JSON files
+      
+      self.loginViewModel.refreshJobDeadlines()
+      self.loginViewModel.updateQuestions()
+      
         fetchLoginCreds()
         
         if Ptoken != "" {
@@ -350,8 +355,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     
                     user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
+                          
                             self.createCareerPrefs(user)
                             //self.userLoggedIn(user)
+                          
                         } else {
                             PFUser.logOut()
                             if let _ = error?.userInfo {
@@ -362,6 +369,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                     }, subtitle: "Please try again. Tap to dismiss")
                             }
                         }
+                      
                     })
                     }else{
                         
@@ -425,7 +433,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     //---------------------------------------------------------------
   
     func createCareerPrefs(user: PFUser){
-        
+      
         //let user = PFUser.currentUser()
         let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
         careerPrefs[PF_PREFERENCES_USER] = user
@@ -449,8 +457,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                 
             }
         })
-        
-        
+      
     }
     
     //---------------------------------------------------------------
@@ -460,6 +467,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   func userLoggedIn(user: PFUser) {
     //let storyboard = UIStoryboard(name: "Main", bundle: nil)
     if self.firstTimeUser {
+      // Download and save JSON files
+      self.loginViewModel.refreshJobDeadlines()
+      self.loginViewModel.updateQuestions()
+      
       performSegueWithIdentifier("showTutorial", sender: self)
     }
     else {

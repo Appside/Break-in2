@@ -20,7 +20,7 @@ class TutorialViewController: UIViewController {
   let tutorialNextButton:UIButton = UIButton()
   let descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
   let descriptionImageView:UIImageView = UIImageView()
-
+  
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()

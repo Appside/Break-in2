@@ -985,10 +985,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)
         
     }else if sender.currentTitle == "Refresh Job Deadlines" {
-        
+      
         SwiftSpinner.show("Downloading")
       
-      self.settingsModel.downloadAndSaveJobDeadlines()
+      self.settingsModel.refreshJobDeadlines()
         
         SwiftSpinner.show("Saved", animated: false).addTapHandler({
             
@@ -1000,7 +1000,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         SwiftSpinner.show("Downloading")
       
-      self.settingsModel.downloadAndSaveQuestions()
+      self.settingsModel.updateQuestions()
         
         SwiftSpinner.show("Saved", animated: false).addTapHandler({
             

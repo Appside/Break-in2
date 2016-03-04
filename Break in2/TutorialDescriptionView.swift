@@ -36,6 +36,7 @@ class TutorialDescriptionView: UIView {
     // Set constraints
     
     self.setConstraints()
+    
   }
 
   required init?(coder aDecoder: NSCoder) {
