@@ -883,10 +883,11 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         sequenceNumber = Int(arc4random_uniform(6) + 1)
         initialNumber = Int(arc4random_uniform(5) + 1)
         self.listOfSequences.arithmeticReason = Int(arc4random_uniform(20) + 1)
-        self.listOfSequences.geometricReason = Int(arc4random_uniform(3) + 1)
+        self.listOfSequences.geometricReason = Int(arc4random_uniform(3) + 2)
         self.listOfSequences.sequenceFirstTerm = Int(arc4random_uniform(5) + 1)
         self.listOfSequences.increment1 = Int(arc4random_uniform(10) + 1)
         self.listOfSequences.increment2 = Int(arc4random_uniform(10) + 1)
+        self.listOfSequences.memory1 = 0
 
         var rightAnswer:Int = Int()
         var a:Int = 1
@@ -895,11 +896,23 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         if (a==0) {
             for i=0;i<5;i++ {
                 questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
+                self.listOfSequences.memory2 = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i)
+                if i==0 {
+                    self.listOfSequences.memory1++
+                } else {
+                    self.listOfSequences.memory1 = -1 * self.listOfSequences.memory1
+                }
                 rightAnswer = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+5)
             }
         } else {
             for i=0;i<5;i++ {
                 questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+(5-i)))
+                self.listOfSequences.memory2 = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+(5-i))
+                if i==0 {
+                    self.listOfSequences.memory1++
+                } else {
+                    self.listOfSequences.memory1 = -1 * self.listOfSequences.memory1
+                }
                 rightAnswer = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber)
             }
         }

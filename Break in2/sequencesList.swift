@@ -15,7 +15,8 @@ class sequencesList {
     var sequenceFirstTerm:Int = Int()
     var increment1:Int = Int()
     var increment2:Int = Int()
-    var memory1:Int = 0
+    var memory1:Int = Int()
+    var memory2:Int = Int()
     
     func runSequence(sequenceNB:Int, initialNumber:Int) -> Int {
         
@@ -131,16 +132,13 @@ class sequencesList {
         var returnNumber:Int = Int()
         
         if (self.memory1 == 0) {
-            self.memory1 = 1
             returnNumber = requestIndex
         }
         if self.memory1 == 1 {
-            self.memory1 = 2
-            returnNumber = (requestIndex-1) + self.increment1
+            returnNumber = self.memory2 + self.increment1
         }
-        if self.memory1 == 2 {
-            self.memory1 = 1
-            returnNumber = (requestIndex-1) + self.increment2
+        if self.memory1 == -1 {
+            returnNumber = self.memory2 + self.increment2
         }
         
         
