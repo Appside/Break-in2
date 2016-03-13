@@ -351,7 +351,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             self.tutoDescriptionTitle2.alpha = 0
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.alpha = 0.0
-            self.tutoDescriptionText.text = "Questions will appear here. Try to select an answer on the right."
+            self.tutoDescriptionText.text = "Questions will appear here. You can select from a range of answers on the right."
             self.tutorialFingerImageView.alpha = 0.0
             self.tutoSkipButton.alpha = 0.0
             for answerView in self.mainView.subviews {
