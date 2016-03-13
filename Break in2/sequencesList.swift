@@ -51,15 +51,15 @@ class sequencesList {
         if sequenceNB==1 {
             feedbackString = "The terms in this sequence are Fibonacci numbers, meaning that each number in the sequence is equal to the sum of the two previous numbers."
         } else if sequenceNB==2 {
-            feedbackString = "This sequence follows an arithmetic progression, the common difference of successive numbers being equal to \(self.arithmeticReason)."
+            feedbackString = "This sequence follows an arithmetic progression, which means that the difference between two consecutive numbers is equal to \(self.arithmeticReason)."
         } else if sequenceNB==3 {
-            feedbackString = "This sequence follows a geometric progression with initial value \(self.sequenceFirstTerm) and common ratio \(self.geometricReason)."
+            feedbackString = "This sequence follows a geometric progression, which means that the initial value of \(self.sequenceFirstTerm), is either multiplied or divided by the common ratio of \(self.geometricReason)."
         } else if sequenceNB==4 {
-            feedbackString = "This sequence returns the square of consecutive integers."
+            feedbackString = "This sequence represents the squared numbers of consecutive integers."
         } else if sequenceNB==5 {
-            feedbackString = "This sequence corresponds to the sequence of prime numbers."
+            feedbackString = "This is a sequence of consecutive prime numbers."
         } else if sequenceNB==6 {
-            feedbackString = "The numbers in this sequence increase by fixed alternatively \(self.increment1) and \(self.increment2)."
+            feedbackString = "The numbers in this sequence, increase by \(self.increment1) and \(self.increment2), alternatively."
         }
         
         return feedbackString

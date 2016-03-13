@@ -370,7 +370,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             self.view.bringSubviewToFront(self.tutoView)
             self.tutoView.insertSubview(self.swipeUIView, atIndex: 3)
             self.tutoView.bringSubviewToFront(self.tutoNextButton)
-            self.tutoDescriptionText.text = "A timer shows you how much time you have left. Once you have selected an answerm press the \"Continue\" button below to go to the next question."
+            self.tutoDescriptionText.text = "You will be shown how much time you have left. Once you have selected an answer, press the \"Continue\" button below to go to the next question."
         }
         if self.tutoPage==4 {
             self.view.insertSubview(self.swipeUIView, atIndex: 10)

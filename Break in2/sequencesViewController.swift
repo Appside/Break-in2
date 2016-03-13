@@ -328,7 +328,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             
             //Set tutorial text
             self.tutoDescriptionTitle.text = "Test Description:"
-            self.tutoDescriptionText.text = "You will be tested on your ability to recognize patterns in different types of numerical series in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
+            self.tutoDescriptionText.text = "You will be tested on your ability to recognise patterns in different types of numerical series in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
             self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
             
@@ -350,7 +350,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoDescriptionTitle2.alpha = 0
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.alpha = 0.0
-            self.tutoDescriptionText.text = "Questions will appear here. Try to select an answer on the right."
+            self.tutoDescriptionText.text = "Questions will appear here. You can select from a range of answers on the right."
             self.tutorialFingerImageView.alpha = 0.0
             self.tutoSkipButton.alpha = 0.0
             for answerView in self.mainView.subviews {
@@ -371,7 +371,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             self.view.bringSubviewToFront(self.tutoView)
             self.tutoView.insertSubview(self.swipeUIView, atIndex: 3)
             self.tutoView.bringSubviewToFront(self.tutoNextButton)
-            self.tutoDescriptionText.text = "A timer shows you how much time you have left. Once you have selected an answerm press the \"Continue\" button below to go to the next question."
+            self.tutoDescriptionText.text = "You will be shown how much time you have left. Once you have selected an answer, press the \"Continue\" button below to go to the next question."
         }
         if self.tutoPage==4 {
             self.view.insertSubview(self.swipeUIView, atIndex: 10)
