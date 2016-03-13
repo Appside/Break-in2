@@ -329,7 +329,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoDescriptionTitle.text = "Test Description:"
             self.tutoDescriptionText.text = "You will be tested on your ability to compute and reduce simple fractions in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
-            self.tutoDescriptionText2.text = "We recommend that you achieve a score of at least 85% on the Hard difficulty level before taking the real test."
+            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
             
             //Set Tutorial page
             self.tutoPage = 1
@@ -690,7 +690,7 @@ class fractionsViewController: QuestionViewController, UIScrollViewDelegate {
         // If no answer is selected, show Alert
         if self.selectedAnswers[self.displayedQuestionIndex] == 20 {
             let exitAlert = SCLAlertView()
-            exitAlert.showError("No Answer Selected", subTitle: "Please Select An Answer Before Proceeding")
+            exitAlert.showError("No Answer Selected", subTitle: "Please select an answer before proceeding")
         }
         else {
             //Else go to next question

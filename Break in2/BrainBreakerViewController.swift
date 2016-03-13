@@ -93,13 +93,11 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
         self.currentPrize = self.defaults.objectForKey("BrainBreakerTestPrize") as? String ?? String()
         self.questionNumber = self.defaults.integerForKey("BrainBreakerQuestionNumber")
         
-        
-        
         //self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "brainBreakerTimer", userInfo: nil, repeats: true)
         
         //Initialize timer
         self.allowedSeconds = 00
-        self.allowedMinutes = 05
+        self.allowedMinutes = self.defaults.integerForKey("MinutesToAnswerBrainBreaker")
         self.countSeconds = self.allowedSeconds
         self.countMinutes = self.allowedMinutes
         
@@ -533,7 +531,7 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
                 self.selectedAnswers[self.displayedQuestionIndex]=21
             }
-            //self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
             self.timeTimer.invalidate()
         }
         else {
@@ -737,11 +735,11 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
                         analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                             if error == nil {
                                 
-                                SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
+                                SwiftSpinner.show("Answer Submitted", animated: false).addTapHandler({
                                     SwiftSpinner.hide()
                                     self.resultsUploaded = true
                                     self.feedbackScreen()
-                                    }, subtitle: "Tap to proceed to feedback screen")
+                                    }, subtitle: "Tap to proceed to feedback")
                                 
                             } else {
                                 

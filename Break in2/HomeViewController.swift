@@ -643,6 +643,7 @@ class HomeViewController: UIViewController {
                 self.defaults.setObject(question![PF_BRAINBREAKER_Q_EXPLANATION], forKey: "BrainBreakerExplanation")
                 self.defaults.setObject(question![PF_BRAINBREAKER_Q_EXPIRATION_DATE] as? NSDate ?? NSDate(), forKey: "BrainBreakerExpirationDate")
                 self.defaults.setObject(question![PF_BRAINBREAKER_Q_TEST_PRIZE], forKey: "BrainBreakerTestPrize")
+                self.defaults.setInteger(question![PF_BRAINBREAKER_Q_TIME_REQUIRED] as? Int ?? Int(), forKey: "MinutesToAnswerBrainBreaker")
                 
                 let numberCheck = self.defaults.integerForKey("BrainBreakerQuestionNumber")
                 let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
@@ -763,7 +764,7 @@ class HomeViewController: UIViewController {
     if self.firstTimeUser {
       self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton])
       self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. Hopefully, the calender we have provided will help! Deadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
-      self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n Click on the light bulb to try our super-difficult Brain Breaker question. Get the answer right and you enter into a draw for a special prize!"], forKey: self.careersBackgroundView)
+      self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n Click on the light bulb to try our Brain Breaker question. Get the answer right and you enter into a draw for a special prize!"], forKey: self.careersBackgroundView)
       self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the Settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
       self.tutorialDescriptions.updateValue(["STATISTICS", "Finally, we've added some statistics that allow you to track your progress.\n\nChoose a career and start practicing some tests.\n\n Best of luck!\nAPPSIDE"], forKey: self.statsButton)
       self.showTutorial()

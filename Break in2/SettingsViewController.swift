@@ -159,7 +159,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.tutorialNextButton.setTitle("Back To Home Screen", forState: UIControlState.Normal)
+    self.tutorialNextButton.setTitle("Save Preferences", forState: UIControlState.Normal)
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.tutorialNextButton.alpha = 0
     self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -356,7 +356,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     if self.firstTimeUser {
       self.tutorialViews.appendContentsOf([self.chooseCareersView, self.backButton])
-      self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "This is where you can select the careers that are most appropriate to you. Have a go now! Pressing the Back arrow will save your changes.\n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
+      self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "This is where you can select the careers that are most appropriate to you. Have a go now! \n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
       self.showTutorial()
     }
   }
@@ -959,7 +959,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
             alertView.addButton("Ok", target:self, selector:Selector("conduit"))
             alertView.showTitle(
                 "Deactivate", // Title of view
-                subTitle: "Are You Sure? Deactivation will delete all of your statistics, preferences and user data.", // String of view
+                subTitle: "Are you sure? Deactivation will delete all of your statistics, preferences and user data.", // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "Cancel", // Optional button value, default: ""
                 style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait

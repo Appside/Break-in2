@@ -329,9 +329,9 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             
             //Set tutorial text
             self.tutoDescriptionTitle.text = "Test Description:"
-            self.tutoDescriptionText.text = "You will be tested on your ability to analyze logical patterns in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
+            self.tutoDescriptionText.text = "You will be tested on your ability to analyse logical patterns in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
-            self.tutoDescriptionText2.text = "We recommend that you achieve a score of at least 85% on the Hard difficulty level before taking the real test."
+            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
             
             //Set Tutorial page
             self.tutoPage = 1
@@ -372,7 +372,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             self.view.bringSubviewToFront(self.tutoView)
             self.tutoView.insertSubview(self.swipeUIView, atIndex: 3)
             self.tutoView.bringSubviewToFront(self.tutoNextButton)
-            self.tutoDescriptionText.text = "A timer shows you how much time you have left. Once you have selected an answerm press the \"Continue\" button below to go to the next question."
+            self.tutoDescriptionText.text = "You will be shown how much time you have left. Once you have selected an answer, press the \"Continue\" button below to go to the next question."
         }
         if self.tutoPage==4 {
             self.view.insertSubview(self.swipeUIView, atIndex: 10)
@@ -657,7 +657,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         // If no answer is selected, show Alert
         if self.selectedAnswers[self.displayedQuestionIndex] == 20 {
             let exitAlert = SCLAlertView()
-            exitAlert.showError("No Answer Selected", subTitle: "Please Select An Answer Before Proceeding")
+            exitAlert.showError("No Answer Selected", subTitle: "Please select an answer before proceeding")
         }
         else {
             //Else go to next question

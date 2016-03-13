@@ -104,7 +104,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         let width = UIScreen.mainScreen().bounds.size.width
         let height = UIScreen.mainScreen().bounds.size.height
         let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
-        imageViewBackground.image = UIImage(named: "homeBG")
+        imageViewBackground.image = UIImage(named: "hexagonBGDark")
         imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
         self.backgroungUIView.addSubview(imageViewBackground)
         self.backgroungUIView.sendSubviewToBack(imageViewBackground)
@@ -432,7 +432,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             self.tutoDescriptionTitle.text = "Test Description:"
             self.tutoDescriptionText.text = "You will be tested on your ability to read a passage and answer logical questions in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
-            self.tutoDescriptionText2.text = "We recommend that you achieve a score of at least 85% on the Hard difficulty level before taking the real test."
+            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
             self.passageView.alpha = 0.0
             
             //Set Tutorial page
@@ -454,7 +454,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.alpha = 0.0
             self.tutorialFingerImageView.alpha = 0.0
-            self.tutoDescriptionText.text = "A passage will appear with a question at the top of the screen. To answer it, swipe up the answer menu at the bottom of the screen and select an answer."
+            self.tutoDescriptionText.text = "You will have to answer a question based on the passage that appears. Answers can be selected after swiping up."
         }
         if self.tutoPage==3 {
             self.tutoSkipButton.alpha = 0.0
@@ -701,7 +701,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         // If no answer is selected, show Alert
         if self.selectedAnswers[self.displayedQuestionIndex] == 20 {
             let exitAlert = SCLAlertView()
-            exitAlert.showError("No Answer Selected", subTitle: "Please Select An Answer Before Proceeding")
+            exitAlert.showError("No Answer Selected", subTitle: "Please select an answer before proceeding")
         }
         else {
             //Else go to next question

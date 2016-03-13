@@ -105,7 +105,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         let width = UIScreen.mainScreen().bounds.size.width
         let height = UIScreen.mainScreen().bounds.size.height
         let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
-        imageViewBackground.image = UIImage(named: "homeBG")
+        imageViewBackground.image = UIImage(named: "hexagonBGDark")
         imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
         self.backgroungUIView.addSubview(imageViewBackground)
         self.backgroungUIView.sendSubviewToBack(imageViewBackground)
@@ -219,7 +219,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         let graphTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 10*self.widthRatio)
         let graphTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.graphContent, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
         self.graphContent.addConstraints([graphTitleTop,graphTitleRight,graphTitleLeft])
-        let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35*self.heightRatio)
+        let graphTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.graphTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.heightRatio)
         self.graphTitle.addConstraint(graphTitleHeight)
         self.graphTitle.textAlignment = NSTextAlignment.Left
         self.graphTitle.font = UIFont(name: "HelveticaNeue-Italic", size: self.view.getTextSize(14))
@@ -409,9 +409,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             //Set tutorial text
             self.tutoDescriptionTitle.text = "Test Description:"
-            self.tutoDescriptionText.text = "You will be tested on your ability to read and understand numerical charts and tables in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
+            self.tutoDescriptionText.text = "You will be tested on your ability to read and understand numerical data in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
-            self.tutoDescriptionText2.text = "We recommend that you achieve a score of at least 85% on the Hard difficulty level before taking the real test."
+            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
             self.graphView.alpha = 0.0
             
             //Set Tutorial page
@@ -692,7 +692,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         // If no answer is selected, show Alert
         if self.selectedAnswers[self.displayedQuestionIndex]==20 {
             let exitAlert = SCLAlertView()
-            exitAlert.showError("No Answer Selected", subTitle: "Please Select An Answer Before Proceeding")
+            exitAlert.showError("No Answer Selected", subTitle: "Please select an answer before proceeding")
         }
         else {
             //Else go to next question
@@ -1123,8 +1123,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * buttonHeight)
-        self.feebdackScreen.contentSize = CGSize(width: self.view.frame.width - 40*self.widthRatio, height: totalHeight+30)
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + Int(10*self.heightRatio)))
+        self.feebdackScreen.contentSize = CGSize(width: self.view.frame.width - 40*self.widthRatio, height: totalHeight)
         
     }
     

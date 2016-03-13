@@ -115,6 +115,7 @@ let PF_BRAINBREAKER_Q_EXPLANATION       = "explanation"             //  String
 let PF_BRAINBREAKER_Q_Q_NUMBER          = "questionNumber"          //  Number
 let PF_BRAINBREAKER_Q_EXPIRATION_DATE   = "expirationDate"          //  Date
 let PF_BRAINBREAKER_Q_TEST_PRIZE        = "testPrize"               //  String
+let PF_BRAINBREAKER_Q_TIME_REQUIRED     = "timeRequiredMinutes"     //  Number
 
 /* Brain Breaker Answer class in Parse */
 let PF_BRAINBREAKER_A_CLASS_NAME		= "Brain_Breaker_A"         //	Class name

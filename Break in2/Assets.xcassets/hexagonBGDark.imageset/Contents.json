@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "blurredGreen.png",
+      "filename" : "hexagonBGDark.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "blurredGreen@2x.png",
+      "filename" : "hexagonBGDark@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "blurredGreen@3x.png",
+      "filename" : "hexagonBGDark@3x.png",
       "scale" : "3x"
     }
   ],
