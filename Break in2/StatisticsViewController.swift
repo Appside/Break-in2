@@ -643,10 +643,22 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             self.statisticsTitleView.enablePrevious()
             self.statisticsTitleView.disableNext()
             self.statisticsTitleView.statisticsTitleLabel.text = "TIME PER QUESTION"
+            self.lineChartText.text = "Select a test from the graph"
+            self.barChartText.text = "Select a test from the graph"
+            self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+            self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+            self.pointerView1.moveLabelPointer(-10000)
+            self.pointerView2.moveLabelPointer(-10000)
         } else {
             self.statisticsTitleView.enableNext()
             self.statisticsTitleView.disablePrevious()
             self.statisticsTitleView.statisticsTitleLabel.text = "SCORES"
+            self.lineChartText.text = "Select a test from the graph"
+            self.barChartText.text = "Select a test from the graph"
+            self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+            self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+            self.pointerView1.moveLabelPointer(-10000)
+            self.pointerView2.moveLabelPointer(-10000)
         }
     }
     
@@ -655,6 +667,12 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.statisticsTitleView.disableNext()
         self.statisticsScrollView.setContentOffset(self.graphView2.frame.origin, animated: true)
         self.statisticsTitleView.statisticsTitleLabel.text = "TIME PER QUESTION"
+        self.lineChartText.text = "Select a test from the graph"
+        self.barChartText.text = "Select a test from the graph"
+        self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+        self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+        self.pointerView1.moveLabelPointer(-10000)
+        self.pointerView2.moveLabelPointer(-10000)
     }
 
     func previousStatButtonClicked(sender:UIButton) {
@@ -662,6 +680,12 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.statisticsTitleView.disablePrevious()
         self.statisticsScrollView.setContentOffset(self.graphView1.frame.origin, animated: true)
         self.statisticsTitleView.statisticsTitleLabel.text = "SCORES"
+        self.lineChartText.text = "Select a test from the graph"
+        self.barChartText.text = "Select a test from the graph"
+        self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+        self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+        self.pointerView1.moveLabelPointer(-10000)
+        self.pointerView2.moveLabelPointer(-10000)
     }
 
     func dataDownload(sender:UIButton){
