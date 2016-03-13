@@ -421,7 +421,7 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoDescription.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
             self.tutoDescription.textAlignment = NSTextAlignment.Center
             self.tutoDescription.numberOfLines = 0
-            self.tutoDescription.text = "The Brain Breaker is a weekly contest consisting in a high difficulty level question. You have up to three attempts to get it right. \n\nIf you get it right, you will be elligible to winning the prize show below."
+            self.tutoDescription.text = "The Brain Breaker competition is the chance for you to win an amazing prize. Premium users have three attempts to answer correctly, whilst free users have one. \n\nIf you do get it right, you will be in with a chance to win the prize below."
             
             //Tuto Description 2
             self.tutoView.addSubview(self.tutoDescription2)

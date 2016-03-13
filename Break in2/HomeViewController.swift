@@ -647,6 +647,9 @@ class HomeViewController: UIViewController {
                 let numberCheck = self.defaults.integerForKey("BrainBreakerQuestionNumber")
                 let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
                 
+                print(numberCheck)
+                print(numberCheck2)
+                
                 if (numberCheck2 != numberCheck){
                     
                     let membershipType = self.defaults.objectForKey("Membership") as! String
@@ -694,10 +697,10 @@ class HomeViewController: UIViewController {
             
             if error == nil {
                 
-                let numberCheck = self.defaults.integerForKey("BrainBreakerQuestionNumber")
-                let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
+                let numberCheckNew = self.defaults.integerForKey("BrainBreakerQuestionNumber")
+                let numberCheck2New = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
                 
-                if (numberCheck2 != numberCheck){
+                if (numberCheck2New != numberCheckNew){
                   
                     print("YES")
                     self.brainBreakerNewLabel.alpha = 1
@@ -710,7 +713,7 @@ class HomeViewController: UIViewController {
                   
                     }
               
-              self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
+              //self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
                 
                     
                 }

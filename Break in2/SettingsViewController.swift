@@ -1506,7 +1506,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         self.tutoDescriptionTitle.text = "Free Subscription:"
         self.tutoDescriptionText.text = "We have provided full access to tests and the chance to win a prize through the Brain Breaker question. However, you are limited to 3 lives with which to take tests. We will give you a new life every 12 hours; but if you need lives more quickly, you can either purchase a set of 10 or upgrade to our Premium version."
         self.tutoDescriptionTitle2.text = "Premium Subscription:"
-        self.tutoDescriptionText2.text = "Premium access allows you to practice tests with unlimited access. You are also granted 3 chances to win a prize through the Brain Breaker question."
+        self.tutoDescriptionText2.text = "Premium subscription allows you to practice tests with unlimited access. You are also granted 3 chances to win a prize through the Brain Breaker question."
 
         
     }

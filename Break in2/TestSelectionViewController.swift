@@ -31,7 +31,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var startTime:CFAbsoluteTime = CFAbsoluteTime()
   var counter:Int = Int()
   var secondsRemaining:Int = Int()
-  var secondsBetweenLives:Int = 60//12 * 3600
+  var secondsBetweenLives:Int = 12 * 3600
   var lifeOrLives:String = String()
     
   //in app purchase initialisation
