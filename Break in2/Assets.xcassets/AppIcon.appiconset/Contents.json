@@ -45,8 +45,9 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "Icon-60@3x-1.png",
       "scale" : "3x"
     },
     {
@@ -106,6 +107,12 @@
       "size" : "76x76",
       "idiom" : "ipad",
       "filename" : "Icon-76@2x.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "Icon-iPadPro@2x.png",
       "scale" : "2x"
     },
     {
@@ -176,9 +183,8 @@
       "subtype" : "42mm"
     },
     {
-      "idiom" : "ipad",
-      "size" : "83.5x83.5",
-      "scale" : "2x"
+      "filename" : "Icon-76@3x-1.png",
+      "unassigned" : true
     },
     {
       "filename" : "Icon-76@3x.png",
