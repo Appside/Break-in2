@@ -210,7 +210,17 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
       
       if !fileURL.checkResourceIsReachableAndReturnError(nil) {
         fileManager.createFileAtPath(fileURL.path!, contents: nil, attributes: nil)
-      }
+      }else{
+        
+        do {
+            try fileManager.removeItemAtPath(fileURL.path!)
+            fileManager.createFileAtPath(fileURL.path!, contents: nil, attributes: nil)
+        }
+        catch let error as NSError {
+            print("Ooops! Something went wrong: \(error)")
+        }
+        
+        }
         
       let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/" + jsonFileName + ".json")!
       let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)

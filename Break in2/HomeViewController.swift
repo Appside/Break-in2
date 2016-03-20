@@ -792,7 +792,7 @@ class HomeViewController: UIViewController {
     alertView.addButton("Ok", target:self, selector:Selector("logOut"))
     alertView.showTitle(
       "Logout", // Title of view
-      subTitle: "Are you sure you Want To Exit?", // String of view
+      subTitle: "Are you sure you want to exit?", // String of view
       duration: 0.0, // Duration to show before closing automatically, default: 0.0
       completeText: "Cancel", // Optional button value, default: ""
       style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
