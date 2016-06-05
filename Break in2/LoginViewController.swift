@@ -114,7 +114,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     // Add target for facebookLoginButton
     
-    self.facebookLoginButton.addTarget(self, action: "hideLoginView", forControlEvents: UIControlEvents.TouchUpInside)
+    self.facebookLoginButton.addTarget(self, action: #selector(LoginViewController.hideLoginView), forControlEvents: UIControlEvents.TouchUpInside)
     
     // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
     
