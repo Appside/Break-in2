@@ -989,7 +989,7 @@ class HomeViewController: UIViewController {
             self.hideTutorial()
           }
           else {
-            for index:Int in 0  ..< self.tutorialViews.count  {
+            for var index:Int = 0 ; index < self.tutorialViews.count ; index += 1 {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
                 self.tutorialViews[index].userInteractionEnabled = false

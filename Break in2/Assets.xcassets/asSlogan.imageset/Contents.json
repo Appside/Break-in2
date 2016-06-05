@@ -14,6 +14,15 @@
       "idiom" : "universal",
       "filename" : "asSlogan@3x.png",
       "scale" : "3x"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "ipad",
+      "filename" : "asSlogan-iPad.png",
+      "scale" : "2x"
     }
   ],
   "info" : {

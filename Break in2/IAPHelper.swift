@@ -123,7 +123,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
                 completeTransaction(transaction)
                 break
             case .Failed:
-                failedTransaction(transaction)
+                // failedTransaction(transaction)
                 break
             case .Restored:
                 restoreTransaction(transaction)
@@ -157,11 +157,11 @@ extension IAPHelper: SKPaymentTransactionObserver {
         NSNotificationCenter.defaultCenter().postNotificationName(IAPHelperProductPurchasedNotification, object: productIdentifier)
     }
     
-    private func failedTransaction(transaction: SKPaymentTransaction) {
-        print("failedTransaction...")
-        if transaction.error!.code != SKErrorPaymentCancelled {
-            print("Transaction error: \(transaction.error!.localizedDescription)")
-        }
-        SKPaymentQueue.defaultQueue().finishTransaction(transaction)
-    }
+//    private func failedTransaction(transaction: SKPaymentTransaction) {
+//        print("failedTransaction...")
+//        if transaction.error!.code != SKErrorPaymentCancelled {
+//            print("Transaction error: \(transaction.error!.localizedDescription)")
+//        }
+//        SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+//    }
 }
