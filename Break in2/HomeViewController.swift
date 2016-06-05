@@ -88,7 +88,7 @@ class HomeViewController: UIViewController {
     self.comingSoonTestTypes = self.homeViewModel.getAppVariables("comingSoonTestTypes") as! [String:[String]]
     
     let appColors:[UIColor] = self.homeViewModel.getAppColors()
-    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+    for var index:Int = 0 ; index < self.careerTypes.count ; index += 1 {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
     
@@ -119,7 +119,7 @@ class HomeViewController: UIViewController {
     
     // Create careerButtons for each careerType
     
-    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+    for var index:Int = 0 ; index < self.careerTypes.count ; index += 1 {
       
       let careerButtonAtIndex:CareerButton = CareerButton()
       
@@ -139,7 +139,7 @@ class HomeViewController: UIViewController {
       
       // Make each button perform a segue to the TestSelectionViewController
       
-      self.careerButtons[index].addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.careerButtons[index].addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     // Add careerButtons to careersScrollView
@@ -213,10 +213,10 @@ class HomeViewController: UIViewController {
     
     // Add actions to buttons
     
-    self.logOutButton.addTarget(self, action: "logoutBtnPressed:", forControlEvents: .TouchUpInside)
-    self.settingsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
-    self.statsButton.addTarget(self, action: "hideCareersBackgroundView:", forControlEvents: .TouchUpInside)
-    self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.logOutButton.addTarget(self, action: #selector(HomeViewController.logoutBtnPressed(_:)), forControlEvents: .TouchUpInside)
+    self.settingsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), forControlEvents: .TouchUpInside)
+    self.statsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), forControlEvents: .TouchUpInside)
+    self.tutorialNextButton.addTarget(self, action: #selector(HomeViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
     // Customize careersBackgroundView, deadlinesView and statsView
     
@@ -315,7 +315,7 @@ class HomeViewController: UIViewController {
         }
       }
       let appColors:[UIColor] = self.homeViewModel.getAppColors()
-      for var index:Int = 0 ; index < testTypes.count ; index++ {
+      for var index:Int = 0 ; index < testTypes.count ; index += 1 {
         testColors.updateValue(appColors[index], forKey: testTypes[index])
       }
       destinationVC.testTypes = testTypes
@@ -514,7 +514,7 @@ class HomeViewController: UIViewController {
     
     // Create and add constraints for each careerButton and set content size for careersScrollView
     
-    for var index:Int = 0 ; index < self.careerButtons.count ; index++ {
+    for var index:Int = 0 ; index < self.careerButtons.count ; index += 1 {
       
       self.careerButtons[index].translatesAutoresizingMaskIntoConstraints = false
       
@@ -598,7 +598,7 @@ class HomeViewController: UIViewController {
     self.view.addConstraints([brainBreakerQuestionButtonRightConstraint, brainBreakerQuestionButtonTopConstraint])
     
     //Add tap Gesture to brainBreakerQuestionButton
-    let brainBreakerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("brainBreakerSegue:"))
+    let brainBreakerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.brainBreakerSegue(_:)))
     self.brainBreakerQuestionButton.addGestureRecognizer(brainBreakerTapGesture)
     
     // Create and add constraints for brainBreakerNewLabel
@@ -789,7 +789,7 @@ class HomeViewController: UIViewController {
     //        alertView.showViewController(<#T##vc: UIViewController##UIViewController#>, sender: <#T##AnyObject?#>)
     //        alertView.showWarning("Logout", subTitle: "Are You Sure You Want To Exit?")
     
-    alertView.addButton("Ok", target:self, selector:Selector("logOut"))
+    alertView.addButton("Ok", target:self, selector:#selector(HomeViewController.logOut))
     alertView.showTitle(
       "Logout", // Title of view
       subTitle: "Are you sure you want to exit?", // String of view
@@ -930,7 +930,7 @@ class HomeViewController: UIViewController {
           self.descriptionLabelView.alpha = 0
           }, completion: {(Bool) in
             self.descriptionLabelView.removeFromSuperview()
-            for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+            for var index:Int = 0 ; index < self.tutorialViews.count ; index += 1 {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
                 self.tutorialViews[index].userInteractionEnabled = false
@@ -973,7 +973,7 @@ class HomeViewController: UIViewController {
   
   func nextTutorialButtonClicked(sender:UIButton) {
     
-    self.tutorialPageNumber++
+    self.tutorialPageNumber += 1
     
     // Bring correct view to front or perform segues to other viewcontrollers
     
@@ -989,7 +989,7 @@ class HomeViewController: UIViewController {
             self.hideTutorial()
           }
           else {
-            for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+            for index:Int in 0  ..< self.tutorialViews.count  {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
                 self.tutorialViews[index].userInteractionEnabled = false

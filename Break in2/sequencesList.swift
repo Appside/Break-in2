@@ -107,10 +107,10 @@ class sequencesList {
         var divisor: Int
         var isPrime: Bool
         var counter = 0
-        for (prime = 2;  prime <= 50 && counter < requestIndex;  ++prime )
+        for (prime = 2;  prime <= 50 && counter < requestIndex;  prime += 1 )
         {
             isPrime = true;
-            for (divisor = 2;  divisor < prime;  ++divisor )
+            for (divisor = 2;  divisor < prime;  divisor += 1 )
             {
                 if ((prime % divisor) == 0 )
                 {
@@ -119,7 +119,7 @@ class sequencesList {
             }
             if (isPrime)
             {
-                counter++
+                counter += 1
             }
         }
         
