@@ -26,7 +26,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   // Declare and initialize types of tests and difficulties available for selected career
   
   let loginViewModel:JSONModel = JSONModel()
-    
+  
   //set number of lives
     var setNumberOfLivesFree:Int = 3
     
@@ -170,10 +170,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         //self.noticeInfo("Please wait...", autoClear: true, autoClearTime: 2)
         //self.clearAllNotice()
       
-      // Download and save JSON files
-      
-      self.loginViewModel.refreshJobDeadlines()
-      self.loginViewModel.updateQuestions()
+      //self.loginViewModel.updateQuestions()
       
         fetchLoginCreds()
         
@@ -467,9 +464,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   func userLoggedIn(user: PFUser) {
     //let storyboard = UIStoryboard(name: "Main", bundle: nil)
     if self.firstTimeUser {
-      // Download and save JSON files
-      self.loginViewModel.refreshJobDeadlines()
-      self.loginViewModel.updateQuestions()
+      
+      //self.loginViewModel.updateQuestions()
       
       performSegueWithIdentifier("showTutorial", sender: self)
     }

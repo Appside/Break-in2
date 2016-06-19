@@ -20,6 +20,7 @@ class TutorialViewController: UIViewController {
   let tutorialNextButton:UIButton = UIButton()
   let descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
   let descriptionImageView:UIImageView = UIImageView()
+  let tutorialViewModel:JSONModel = JSONModel()
   
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -42,6 +43,10 @@ class TutorialViewController: UIViewController {
       let user = PFUser.currentUser()
 
         // Do any additional setup after loading the view.
+      
+      // Download and save JSON files
+      
+      self.tutorialViewModel.saveJSONFile("JobDeadlines", completion: nil)
       
       // Add logoImageView and profilePictureImageView to HomeViewController view
       

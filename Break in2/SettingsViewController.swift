@@ -1000,7 +1000,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         SwiftSpinner.show("Downloading")
       
-      self.settingsModel.updateQuestions()
+      //self.settingsModel.updateQuestions()
         
         SwiftSpinner.show("Saved", animated: false).addTapHandler({
             

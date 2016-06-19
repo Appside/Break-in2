@@ -165,15 +165,41 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     
   func getjsonfile(jsonFileName:String) -> [[String:AnyObject]] {
     
-    let fileManager = NSFileManager.defaultManager()
-    let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    
-    if let directoryURL = directoryURLs.first {
+    if jsonFileName == "JobDeadlines" {
+      let fileManager = NSFileManager.defaultManager()
+      let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
       
-      let fileURL = directoryURL.URLByAppendingPathComponent(jsonFileName + ".json")
-      
-      if fileURL.checkResourceIsReachableAndReturnError(nil) {
+      if let directoryURL = directoryURLs.first {
+        
+        let fileURL = directoryURL.URLByAppendingPathComponent(jsonFileName + ".json")
+                
         let jsonData:NSData? = NSData(contentsOfURL: fileURL)
+        if let actualJsonData = jsonData {
+          //NSData exist so use NSJSONerialization to parse data
+          do {
+            //Data correctly parsed
+            let arrayOfDictionaries:[[String:AnyObject]] = try NSJSONSerialization.JSONObjectWithData(actualJsonData, options: NSJSONReadingOptions.MutableContainers) as! [[String:AnyObject]]
+            //print(jsonFileName + " JSON file retrieved")
+            return arrayOfDictionaries
+          }
+          catch {
+            //Error parsing JSON data
+            print("Problem reading " + jsonFileName + " JSON Serialization")
+          }
+        }
+        else {
+          //NSData does not exist
+          print("Problem reading " + jsonFileName + " NSData")
+        }
+        
+      }
+    }
+    else {
+      
+      let fileURL = NSBundle.mainBundle().URLForResource(jsonFileName, withExtension: "json")
+      
+      if let actualfileURL = fileURL {
+        let jsonData:NSData? = NSData(contentsOfURL: actualfileURL)
         if let actualJsonData = jsonData {
           //NSData exist so use NSJSONerialization to parse data
           do {
@@ -208,7 +234,7 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
       
       let fileURL = directoryURL.URLByAppendingPathComponent(jsonFileName + ".json")
       
-      if !fileURL.checkResourceIsReachableAndReturnError(nil) {
+      if !fileManager.fileExistsAtPath(fileURL.path!) {
         fileManager.createFileAtPath(fileURL.path!, contents: nil, attributes: nil)
       }else{
         
@@ -258,12 +284,6 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
   
   func refreshJobDeadlines() {
     self.saveJSONFile("JobDeadlines", completion: nil)
-    self.saveJSONFile("AppVariables", completion: nil)
-  }
-  
-  func updateQuestions() {
-    self.saveJSONFile("NumericalReasoning", completion: nil)
-    self.saveJSONFile("VerbalReasoning", completion: nil)
   }
   
 }
