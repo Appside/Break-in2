@@ -267,5 +267,626 @@
 "answers":["True","False","Cannot Say"],
 "correctAnswer":2,
 "explanation":"It is not stated in the passage whether Fredrick Taylor coined the term, scientific management. It is only stated that scientific management is also known as “Taylorism. Therefore, the correct answer is “Cannot Say”."
-}
+},
+ 
+ {
+ "questionType": "Verbal Reasoning",
+ "passage": "Presently, the term surreal is used to denote a curious imaginative effect. The word’s origin can be traced back to the revolutionary surrealism movement which grew out of Dadaism in the mid-1920s. Surrealism spread quite rapidly across European arts and literature, particularly in France, between the two world wars. The movement’s founder – French poet Andre Breton – was influenced heavily by Freud’s theories, as he countered against reason and logic in order to free the imagination from the unconscious mind. Surrealist works, both visual and oral, juxtaposed seemingly unconnected everyday objects and placed these in dreamlike settings. Thus, the popularity of surrealist paintings, including Salvador Dali’s, lies in the eccentric positioning of powerful images such as leaping tigers, melting watches and metronomes. Surrealist art is widely recognised today, unlike the less easily understandable works of the French surrealist writers who, ignoring the literal meanings of words, focused instead on word associations and implications. That said, the literary surrealist tradition still survives in modern-day proponents of experimental writing.",
+ "question": "True or False: Andre Breton’s work is less popular than Salvador Dali’s output.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": " This can be deduced from the passage. Breton was a French surrealist poet and the surrealist’s written work is described as “less easily understandable”, compared to the “popularity” of Dali’s paintings. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Presently, the term surreal is used to denote a curious imaginative effect. The word’s origin can be traced back to the revolutionary surrealism movement which grew out of Dadaism in the mid-1920s. Surrealism spread quite rapidly across European arts and literature, particularly in France, between the two world wars. The movement’s founder – French poet Andre Breton – was influenced heavily by Freud’s theories, as he countered against reason and logic in order to free the imagination from the unconscious mind. Surrealist works, both visual and oral, juxtaposed seemingly unconnected everyday objects and placed these in dreamlike settings. Thus, the popularity of surrealist paintings, including Salvador Dali’s, lies in the eccentric positioning of powerful images such as leaping tigers, melting watches and metronomes. Surrealist art is widely recognised today, unlike the less easily understandable works of the French surrealist writers who, ignoring the literal meanings of words, focused instead on word associations and implications. That said, the literary surrealist tradition still survives in modern-day proponents of experimental writing.",
+ "question": "True or False: All experimental writing is surreal.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": " The passage does not state that all of the surrealists from whose work the word is derived practiced experimental writing. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Presently, the term surreal is used to denote a curious imaginative effect. The word’s origin can be traced back to the revolutionary surrealism movement which grew out of Dadaism in the mid-1920s. Surrealism spread quite rapidly across European arts and literature, particularly in France, between the two world wars. The movement’s founder – French poet Andre Breton – was influenced heavily by Freud’s theories, as he countered against reason and logic in order to free the imagination from the unconscious mind. Surrealist works, both visual and oral, juxtaposed seemingly unconnected everyday objects and placed these in dreamlike settings. Thus, the popularity of surrealist paintings, including Salvador Dali’s, lies in the eccentric positioning of powerful images such as leaping tigers, melting watches and metronomes. Surrealist art is widely recognised today, unlike the less easily understandable works of the French surrealist writers who, ignoring the literal meanings of words, focused instead on word associations and implications. That said, the literary surrealist tradition still survives in modern-day proponents of experimental writing.",
+ "question": "True or False: Surrealist painting is recognised as the abstract portrayal of everyday objects.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": " The passage states that “Surrealist works, both visual and oral, juxtaposed seemingly unconnected everyday objects and placed these in dreamlike settings.”. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Presently, the term surreal is used to denote a curious imaginative effect. The word’s origin can be traced back to the revolutionary surrealism movement which grew out of Dadaism in the mid-1920s. Surrealism spread quite rapidly across European arts and literature, particularly in France, between the two world wars. The movement’s founder – French poet Andre Breton – was influenced heavily by Freud’s theories, as he countered against reason and logic in order to free the imagination from the unconscious mind. Surrealist works, both visual and oral, juxtaposed seemingly unconnected everyday objects and placed these in dreamlike settings. Thus, the popularity of surrealist paintings, including Salvador Dali’s, lies in the eccentric positioning of powerful images such as leaping tigers, melting watches and metronomes. Surrealist art is widely recognised today, unlike the less easily understandable works of the French surrealist writers who, ignoring the literal meanings of words, focused instead on word associations and implications. That said, the literary surrealist tradition still survives in modern-day proponents of experimental writing.",
+ "question": "True or False: Salvador Dali was born in France.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": " The passage talks about Dali and emphasising the movement’s French focus, but does not mention where he was born. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Huge debate surrounded the construction between 1994 and 2006 of what was then the world’s largest hydroelectric dam, the Three Gorges Dam. Crossing China’s 1.4-mile wide Yangtze River in the Hubei province with 26 state-of-the-art turbines, the Chinese state has heralded the dam as a symbol of China’s modernisation and engineering prowess. It aids China’s economic development by providing over 10% of its electricity. However, over 1.3 million people were intentionally displaced as part of the Gorges flooding project that created the dam’s 660km-long reservoir. Hundreds of archaeological sites, both above and below ground level, were lost under the reservoir’s water. Questions remain as to whether the dam – as a source of renewable energy – improves the surrounding environment, or diminishes it by causing, for example, landslides and loss of fish species in the Yangtze. Supporters argue that the dam has made the Yangtze easier for large ships to navigate and has reduced the risk of flooding downstream by deepening the river. As the only other viable Chinese energy source is non-renewable coal power, the hydroelectric power produced by the dam may be the lesser of two evils.",
+ "question": "True or False: The passage suggests that energy supplies are essential to the country’s economic development. ",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The third sentence says that electricity from the dam “aids China’s economic development” but we are not told whether electricity is essential to its economic development. Note the statement is “the passage suggests...” so we must respond False, instead of Cannot Say. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Huge debate surrounded the construction between 1994 and 2006 of what was then the world’s largest hydroelectric dam, the Three Gorges Dam. Crossing China’s 1.4-mile wide Yangtze River in the Hubei province with 26 state-of-the-art turbines, the Chinese state has heralded the dam as a symbol of China’s modernisation and engineering prowess. It aids China’s economic development by providing over 10% of its electricity. However, over 1.3 million people were intentionally displaced as part of the Gorges flooding project that created the dam’s 660km-long reservoir. Hundreds of archaeological sites, both above and below ground level, were lost under the reservoir’s water. Questions remain as to whether the dam – as a source of renewable energy – improves the surrounding environment, or diminishes it by causing, for example, landslides and loss of fish species in the Yangtze. Supporters argue that the dam has made the Yangtze easier for large ships to navigate and has reduced the risk of flooding downstream by deepening the river. As the only other viable Chinese energy source is non-renewable coal power, the hydroelectric power produced by the dam may be the lesser of two evils.",
+ "question": "True or False: China’s largest and most controversial dam is the Three Gorges Dam.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "During the period when it was built, it was the largest in the world (first sentence), however the sentence is written in the past tense so we don’t know whether it still Is today. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Huge debate surrounded the construction between 1994 and 2006 of what was then the world’s largest hydroelectric dam, the Three Gorges Dam. Crossing China’s 1.4-mile wide Yangtze River in the Hubei province with 26 state-of-the-art turbines, the Chinese state has heralded the dam as a symbol of China’s modernisation and engineering prowess. It aids China’s economic development by providing over 10% of its electricity. However, over 1.3 million people were intentionally displaced as part of the Gorges flooding project that created the dam’s 660km-long reservoir. Hundreds of archaeological sites, both above and below ground level, were lost under the reservoir’s water. Questions remain as to whether the dam – as a source of renewable energy – improves the surrounding environment, or diminishes it by causing, for example, landslides and loss of fish species in the Yangtze. Supporters argue that the dam has made the Yangtze easier for large ships to navigate and has reduced the risk of flooding downstream by deepening the river. As the only other viable Chinese energy source is non-renewable coal power, the hydroelectric power produced by the dam may be the lesser of two evils.",
+ "question": "True or False: The environmental impacts brought about by the Three Gorges Dam have been more negative than positive.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage lists both the positive and negative environmental impacts and presents examples of both, but neither side is stated as being greater than the other. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Huge debate surrounded the construction between 1994 and 2006 of what was then the world’s largest hydroelectric dam, the Three Gorges Dam. Crossing China’s 1.4-mile wide Yangtze River in the Hubei province with 26 state-of-the-art turbines, the Chinese state has heralded the dam as a symbol of China’s modernisation and engineering prowess. It aids China’s economic development by providing over 10% of its electricity. However, over 1.3 million people were intentionally displaced as part of the Gorges flooding project that created the dam’s 660km-long reservoir. Hundreds of archaeological sites, both above and below ground level, were lost under the reservoir’s water. Questions remain as to whether the dam – as a source of renewable energy – improves the surrounding environment, or diminishes it by causing, for example, landslides and loss of fish species in the Yangtze. Supporters argue that the dam has made the Yangtze easier for large ships to navigate and has reduced the risk of flooding downstream by deepening the river. As the only other viable Chinese energy source is non-renewable coal power, the hydroelectric power produced by the dam may be the lesser of two evils.",
+ "question": "True or False: The 1.4-mile Three Gorges Dam spans the Yangtze River.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The passage states that the dam crosses the 1.4-mile wide river in the second sentence. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Huge debate surrounded the construction between 1994 and 2006 of what was then the world’s largest hydroelectric dam, the Three Gorges Dam. Crossing China’s 1.4-mile wide Yangtze River in the Hubei province with 26 state-of-the-art turbines, the Chinese state has heralded the dam as a symbol of China’s modernisation and engineering prowess. It aids China’s economic development by providing over 10% of its electricity. However, over 1.3 million people were intentionally displaced as part of the Gorges flooding project that created the dam’s 660km-long reservoir. Hundreds of archaeological sites, both above and below ground level, were lost under the reservoir’s water. Questions remain as to whether the dam – as a source of renewable energy – improves the surrounding environment, or diminishes it by causing, for example, landslides and loss of fish species in the Yangtze. Supporters argue that the dam has made the Yangtze easier for large ships to navigate and has reduced the risk of flooding downstream by deepening the river. As the only other viable Chinese energy source is non-renewable coal power, the hydroelectric power produced by the dam may be the lesser of two evils.",
+ "question": "True or False: The dam’s financial benefits were prioritised over the environmental issues.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage says the dam “aids China’s economic development” and that there were environmentally harmful results, but one cannot assume that these two points were prioritised over one another. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Hydrogen-fuelled cars are not dependant upon petrol or diesel, which could make them safer. Hydrogen fuel can be created from renewable sources, such as wind or solar power, and gets rid of a car’s dependency on burning fossil fuels. Since cars account for approximately a third of greenhouse gas emissions, these innovative vehicles could be a great way to reduce global warming. This is an idealistic scenario and there are many issues to be overcome beforehand. The current designs for hydrogen fuelled cars are tremendously expensive. The National Research Association also estimates that £8 billion would be needed to create the refuelling stations required by hydrogen-fuelled cars. For these cars to become a mass market product, there needs to be increased cooperation between governments and the industry in order to build the right infrastructure to enable production. In fact, hybrid and hybrid-electric car designs may be a more sensible long-term investment for governments. Compared to ordinary cars, hybrids release reduced levels of carbon dioxide, whereas hydrogen-fuelled cars produce only water and so are 100% clean.",
+ "question": "True or False: The first hydrogen-fuelled car was too expensive for consumers.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage tells us that the current designs are very expensive but does not state the retail price for the first hydrogen fuelled car or how affordable it was. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Hydrogen-fuelled cars are not dependant upon petrol or diesel, which could make them safer. Hydrogen fuel can be created from renewable sources, such as wind or solar power, and gets rid of a car’s dependency on burning fossil fuels. Since cars account for approximately a third of greenhouse gas emissions, these innovative vehicles could be a great way to reduce global warming. This is an idealistic scenario and there are many issues to be overcome beforehand. The current designs for hydrogen fuelled cars are tremendously expensive. The National Research Association also estimates that £8 billion would be needed to create the refuelling stations required by hydrogen-fuelled cars. For these cars to become a mass market product, there needs to be increased cooperation between governments and the industry in order to build the right infrastructure to enable production. In fact, hybrid and hybrid-electric car designs may be a more sensible long-term investment for governments. Compared to ordinary cars, hybrids release reduced levels of carbon dioxide, whereas hydrogen-fuelled cars produce only water and so are 100% clean.",
+ "question": "True or False: The passage questions the effectiveness of hydrogen-fuelled cars as a solution to global warming.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The passage says that “this is an idealistic scenario” and that they “could a great way to combat global warming” as well as stating that hybrids “may be a more sensible long-term investment”. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Hydrogen-fuelled cars are not dependant upon petrol or diesel, which could make them safer. Hydrogen fuel can be created from renewable sources, such as wind or solar power, and gets rid of a car’s dependency on burning fossil fuels. Since cars account for approximately a third of greenhouse gas emissions, these innovative vehicles could be a great way to reduce global warming. This is an idealistic scenario and there are many issues to be overcome beforehand. The current designs for hydrogen fuelled cars are tremendously expensive. The National Research Association also estimates that £8 billion would be needed to create the refuelling stations required by hydrogen-fuelled cars. For these cars to become a mass market product, there needs to be increased cooperation between governments and the industry in order to build the right infrastructure to enable production. In fact, hybrid and hybrid-electric car designs may be a more sensible long-term investment for governments. Compared to ordinary cars, hybrids release reduced levels of carbon dioxide, whereas hydrogen-fuelled cars produce only water and so are 100% clean.",
+ "question": "True or False: Making hydrogen-fuelled cars widespread would require high infrastructure costs.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "Sentences 5 and 6 in the passage clearly state that huge expenditure is required to provide the infrastructure needed for hydrogen-fuelled cars. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Hydrogen-fuelled cars are not dependant upon petrol or diesel, which could make them safer. Hydrogen fuel can be created from renewable sources, such as wind or solar power, and gets rid of a car’s dependency on burning fossil fuels. Since cars account for approximately a third of greenhouse gas emissions, these innovative vehicles could be a great way to reduce global warming. This is an idealistic scenario and there are many issues to be overcome beforehand. The current designs for hydrogen fuelled cars are tremendously expensive. The National Research Association also estimates that £8 billion would be needed to create the refuelling stations required by hydrogen-fuelled cars. For these cars to become a mass market product, there needs to be increased cooperation between governments and the industry in order to build the right infrastructure to enable production. In fact, hybrid and hybrid-electric car designs may be a more sensible long-term investment for governments. Compared to ordinary cars, hybrids release reduced levels of carbon dioxide, whereas hydrogen-fuelled cars produce only water and so are 100% clean.",
+ "question": "True or False: Hybrid vehicles are the most environmentally-friendly form of vehicle.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The text clearly says that hybrid vehicles produce some carbon dioxide making them less clean than hydrogen-fuelled cars. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Hydrogen-fuelled cars are not dependant upon petrol or diesel, which could make them safer. Hydrogen fuel can be created from renewable sources, such as wind or solar power, and gets rid of a car’s dependency on burning fossil fuels. Since cars account for approximately a third of greenhouse gas emissions, these innovative vehicles could be a great way to reduce global warming. This is an idealistic scenario and there are many issues to be overcome beforehand. The current designs for hydrogen fuelled cars are tremendously expensive. The National Research Association also estimates that £8 billion would be needed to create the refuelling stations required by hydrogen-fuelled cars. For these cars to become a mass market product, there needs to be increased cooperation between governments and the industry in order to build the right infrastructure to enable production. In fact, hybrid and hybrid-electric car designs may be a more sensible long-term investment for governments. Compared to ordinary cars, hybrids release reduced levels of carbon dioxide, whereas hydrogen-fuelled cars produce only water and so are 100% clean.",
+ "question": "True or False: Hydrogen is not a greenhouse gas and is readily available.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage does not explicitly state this. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Outsourcing – buying services from an external supplier rather than doing the work internally – is a popular but politically sensitive means of reducing costs. There has been an increasing use of third parties for HR functions, such as handling payroll and other employee records, and for conventional Finance jobs, such as invoice services. The manufacture of goods has even become part of this movement; though product design is normally kept in-house. Third party call centre operators can offer customer service expertise that might be costlier to provide in-house. “Offshoring”, when functions are moved abroad, usually to India or China, where the average salary is substantially lower raises job protection issues. The possible profits from outsourcing operations encourage underdeveloped countries to invest in the required educational infrastructure and skills training that are needed to support these industries. Still, higher business profits may be seen to be at the expense of low-wage economies, and the cost benefits are not always given to the consumer. Moreover, the consumer may not benefit from a better quality of customer service. Outsourcing drops prices in another way – the competitive marketplace in which service providers’ companies work gets tighter as they compete for client contracts.",
+ "question": "True or False: Offshoring is the same as outsourcing.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "Offshoring is a particular type of outsourcing (when outsourcing is “moved abroad”), according to the passage. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Outsourcing – buying services from an external supplier rather than doing the work internally – is a popular but politically sensitive means of reducing costs. There has been an increasing use of third parties for HR functions, such as handling payroll and other employee records, and for conventional Finance jobs, such as invoice services. The manufacture of goods has even become part of this movement; though product design is normally kept in-house. Third party call centre operators can offer customer service expertise that might be costlier to provide in-house. “Offshoring”, when functions are moved abroad, usually to India or China, where the average salary is substantially lower raises job protection issues. The possible profits from outsourcing operations encourage underdeveloped countries to invest in the required educational infrastructure and skills training that are needed to support these industries. Still, higher business profits may be seen to be at the expense of low-wage economies, and the cost benefits are not always given to the consumer. Moreover, the consumer may not benefit from a better quality of customer service. Outsourcing drops prices in another way – the competitive marketplace in which service providers’ companies work gets tighter as they compete for client contracts.",
+ "question": "True or False: Developing countries might need to improve their infrastructure to draw more outsourcing contracts.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The sentence in the passage “encourage underdeveloped countries to invest in the required educational infrastructure and skills training that are needed to support these industries.” suggests this. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Outsourcing – buying services from an external supplier rather than doing the work internally – is a popular but politically sensitive means of reducing costs. There has been an increasing use of third parties for HR functions, such as handling payroll and other employee records, and for conventional Finance jobs, such as invoice services. The manufacture of goods has even become part of this movement; though product design is normally kept in-house. Third party call centre operators can offer customer service expertise that might be costlier to provide in-house. “Offshoring”, when functions are moved abroad, usually to India or China, where the average salary is substantially lower raises job protection issues. The possible profits from outsourcing operations encourage underdeveloped countries to invest in the required educational infrastructure and skills training that are needed to support these industries. Still, higher business profits may be seen to be at the expense of low-wage economies, and the cost benefits are not always given to the consumer. Moreover, the consumer may not benefit from a better quality of customer service. Outsourcing drops prices in another way – the competitive marketplace in which service providers’ companies work gets tighter as they compete for client contracts.",
+ "question": "True or False: Outsourcing providers fight for client contracts.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The final sentence of the passage says that companies “compete” for contracts. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Outsourcing – buying services from an external supplier rather than doing the work internally – is a popular but politically sensitive means of reducing costs. There has been an increasing use of third parties for HR functions, such as handling payroll and other employee records, and for conventional Finance jobs, such as invoice services. The manufacture of goods has even become part of this movement; though product design is normally kept in-house. Third party call centre operators can offer customer service expertise that might be costlier to provide in-house. “Offshoring”, when functions are moved abroad, usually to India or China, where the average salary is substantially lower raises job protection issues. The possible profits from outsourcing operations encourage underdeveloped countries to invest in the required educational infrastructure and skills training that are needed to support these industries. Still, higher business profits may be seen to be at the expense of low-wage economies, and the cost benefits are not always given to the consumer. Moreover, the consumer may not benefit from a better quality of customer service. Outsourcing drops prices in another way – the competitive marketplace in which service providers’ companies work gets tighter as they compete for client contracts.",
+ "question": "True or False: Outsourcing has resulted in a decrease of the cost of consumer goods.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The text says that “cost benefits are not always given to the consumer”. The passage does not state explicitly that the cost of consumer goods has gone down due to outsourcing. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Outsourcing – buying services from an external supplier rather than doing the work internally – is a popular but politically sensitive means of reducing costs. There has been an increasing use of third parties for HR functions, such as handling payroll and other employee records, and for conventional Finance jobs, such as invoice services. The manufacture of goods has even become part of this movement; though product design is normally kept in-house. Third party call centre operators can offer customer service expertise that might be costlier to provide in-house. “Offshoring”, when functions are moved abroad, usually to India or China, where the average salary is substantially lower raises job protection issues. The possible profits from outsourcing operations encourage underdeveloped countries to invest in the required educational infrastructure and skills training that are needed to support these industries. Still, higher business profits may be seen to be at the expense of low-wage economies, and the cost benefits are not always given to the consumer. Moreover, the consumer may not benefit from a better quality of customer service. Outsourcing drops prices in another way – the competitive marketplace in which service providers’ companies work gets tighter as they compete for client contracts.",
+ "question": "True or False: Outsourcing is the name used when a third party supplier runs both HR or Finance functions.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "Outsourcing is not specific to HR or Finance functions for example, the passage states that manufacturing can also be outsourced. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Growing worldwide demand for champagne has required champagne producers to increase output by making more vineyards and producing more grapes. The Champagne region has been making sparkling wines since the 1500s from the range of grapes found in the area. Traditionally served when French kings are crowned, the drink’s association with wealth flourished throughout the 19th century. Following on from 1891’s Treaty of Madrid, the Treaty of Versailles after World War 1 restated the Champagne region’s legal right for exclusive usage of the word “champagne”. Time-consuming and expensive, the Champenoise technique of production involves two fermentation processes. However, these have been copied outside the French region. Champagne’s grapes are not distinct to the region – they can be cultivated elsewhere if their seeds are planted in a almost identical climate. Presently, bottles that are labelled as using the Champenoise method can lead to some consumer confusion as to whether they are real champagne or not. Well-defined labelling of a sparkling wine’s source on the bottle is necessary to tell buyers whether or not it is from Champagne.",
+ "question": "True or False: A sparkling wine’s entitlement to the Champagne name lies solely with its country of origin.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The Champagne name can solely be used by sparkling wines from the French region of Champagne. So it is the wine’s region as well as it’s country of origin that defines its entitlement to use the Champagne name. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Growing worldwide demand for champagne has required champagne producers to increase output by making more vineyards and producing more grapes. The Champagne region has been making sparkling wines since the 1500s from the range of grapes found in the area. Traditionally served when French kings are crowned, the drink’s association with wealth flourished throughout the 19th century. Following on from 1891’s Treaty of Madrid, the Treaty of Versailles after World War 1 restated the Champagne region’s legal right for exclusive usage of the word “champagne”. Time-consuming and expensive, the Champenoise technique of production involves two fermentation processes. However, these have been copied outside the French region. Champagne’s grapes are not distinct to the region – they can be cultivated elsewhere if their seeds are planted in a almost identical climate. Presently, bottles that are labelled as using the Champenoise method can lead to some consumer confusion as to whether they are real champagne or not. Well-defined labelling of a sparkling wine’s source on the bottle is necessary to tell buyers whether or not it is from Champagne.",
+ "question": "True or False: The French monopoly on champagne production has resulted in global shortages of the beverage.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "This is not specified explicitly in the text. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Growing worldwide demand for champagne has required champagne producers to increase output by making more vineyards and producing more grapes. The Champagne region has been making sparkling wines since the 1500s from the range of grapes found in the area. Traditionally served when French kings are crowned, the drink’s association with wealth flourished throughout the 19th century. Following on from 1891’s Treaty of Madrid, the Treaty of Versailles after World War 1 restated the Champagne region’s legal right for exclusive usage of the word “champagne”. Time-consuming and expensive, the Champenoise technique of production involves two fermentation processes. However, these have been copied outside the French region. Champagne’s grapes are not distinct to the region – they can be cultivated elsewhere if their seeds are planted in a almost identical climate. Presently, bottles that are labelled as using the Champenoise method can lead to some consumer confusion as to whether they are real champagne or not. Well-defined labelling of a sparkling wine’s source on the bottle is necessary to tell buyers whether or not it is from Champagne.",
+ "question": "True or False: Champagne has created its luxurious reputation over time.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The drink’s reputation as a luxury item has been growing since the 1800s. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Growing worldwide demand for champagne has required champagne producers to increase output by making more vineyards and producing more grapes. The Champagne region has been making sparkling wines since the 1500s from the range of grapes found in the area. Traditionally served when French kings are crowned, the drink’s association with wealth flourished throughout the 19th century. Following on from 1891’s Treaty of Madrid, the Treaty of Versailles after World War 1 restated the Champagne region’s legal right for exclusive usage of the word “champagne”. Time-consuming and expensive, the Champenoise technique of production involves two fermentation processes. However, these have been copied outside the French region. Champagne’s grapes are not distinct to the region – they can be cultivated elsewhere if their seeds are planted in a almost identical climate. Presently, bottles that are labelled as using the Champenoise method can lead to some consumer confusion as to whether they are real champagne or not. Well-defined labelling of a sparkling wine’s source on the bottle is necessary to tell buyers whether or not it is from Champagne.",
+ "question": "True or False: The Treaty of Versailles founded the legal protection for the term “champagne”",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The 1981 Treaty of Madrid founded the legal protection of the term. The Treaty of Versailles of reinstated it. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Growing worldwide demand for champagne has required champagne producers to increase output by making more vineyards and producing more grapes. The Champagne region has been making sparkling wines since the 1500s from the range of grapes found in the area. Traditionally served when French kings are crowned, the drink’s association with wealth flourished throughout the 19th century. Following on from 1891’s Treaty of Madrid, the Treaty of Versailles after World War 1 restated the Champagne region’s legal right for exclusive usage of the word “champagne”. Time-consuming and expensive, the Champenoise technique of production involves two fermentation processes. However, these have been copied outside the French region. Champagne’s grapes are not distinct to the region – they can be cultivated elsewhere if their seeds are planted in a almost identical climate. Presently, bottles that are labelled as using the Champenoise method can lead to some consumer confusion as to whether they are real champagne or not. Well-defined labelling of a sparkling wine’s source on the bottle is necessary to tell buyers whether or not it is from Champagne.",
+ "question": "True or False: There is only one type of grape found in the Champagne region.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The passage states that “Champagne’s grapes are not distinct to the region. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "For a long time, the benefits of single-sex education been discussed in the United States, where demand for single-sex schools is currently growing. Title IV, a 1972 law forbidding sex discrimination in education, was revised in 2006 permitting the formation of single-sex state schools as long as a co-educational alternative exists. While critics see single-sex schools as prejudiced and as poor preparation for adult life, supporters assert that children, and especially girls, profit from a single-sex education. Some American research demonstrates that girls attending single-sex schools have higher self-esteem, contribute more in class, and score higher on aptitude tests than other girls in co educational schools. A 2005 study stated that both girls and boys at single-sex schools spent more time on homework and had fewer disciplinary issues. Single-sex schools disrupt stereotypical course-taking trends and results. Advocates of single-sex schools claim that educators can provide better teaching by altering their tuition to reflect recent research about gender-based brain development. Several experts, however, consider the research into single-sex education as inconclusive, and that as long as the schooling provided is gender-fair, both sexes can succeed in a co-educational environment.",
+ "question": "True or False: Girls that join single-sex schools perform better in maths and sciences than girls in co-educational schools.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage states that “girls attending single-sex schools have higher self esteem, contribute more in class, and score higher on aptitude tests than other girls in co educational schools.” however there is no mention of the maths or sciences grades. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " For a long time, the benefits of single-sex education been discussed in the United States, where demand for single-sex schools is currently growing. Title IV, a 1972 law forbidding sex discrimination in education, was revised in 2006 permitting the formation of single-sex state schools as long as a co-educational alternative exists. While critics see single-sex schools as prejudiced and as poor preparation for adult life, supporters assert that children, and especially girls, profit from a single-sex education. Some American research demonstrates that girls attending single-sex schools have higher self-esteem, contribute more in class, and score higher on aptitude tests than other girls in co educational schools. A 2005 study stated that both girls and boys at single-sex schools spent more time on homework and had fewer disciplinary issues. Single-sex schools disrupt stereotypical course-taking trends and results. Advocates of single-sex schools claim that educators can provide better teaching by altering their tuition to reflect recent research about gender-based brain development. Several experts, however, consider the research into single-sex education as inconclusive, and that as long as the schooling provided is gender-fair, both sexes can succeed in a co-educational environment.",
+ "question": "True or False: Only in recent years has there been an increased demand for American single-sex state education.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The rise in American single-sex education is happening now as shown by “demand for single-sex schools is currently growing.” In the first sentence. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " For a long time, the benefits of single-sex education been discussed in the United States, where demand for single-sex schools is currently growing. Title IV, a 1972 law forbidding sex discrimination in education, was revised in 2006 permitting the formation of single-sex state schools as long as a co-educational alternative exists. While critics see single-sex schools as prejudiced and as poor preparation for adult life, supporters assert that children, and especially girls, profit from a single-sex education. Some American research demonstrates that girls attending single-sex schools have higher self-esteem, contribute more in class, and score higher on aptitude tests than other girls in co educational schools. A 2005 study stated that both girls and boys at single-sex schools spent more time on homework and had fewer disciplinary issues. Single-sex schools disrupt stereotypical course-taking trends and results. Advocates of single-sex schools claim that educators can provide better teaching by altering their tuition to reflect recent research about gender-based brain development. Several experts, however, consider the research into single-sex education as inconclusive, and that as long as the schooling provided is gender-fair, both sexes can succeed in a co-educational environment.",
+ "question": "True or False: Supporters of single-sex schooling believe there are neurological differences between the two sexes.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "Advocates of single-sex schooling “educators can provide better teaching by altering their tuition to reflect recent research about gender-based brain development.” In the 7th sentence. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " For a long time, the benefits of single-sex education been discussed in the United States, where demand for single-sex schools is currently growing. Title IV, a 1972 law forbidding sex discrimination in education, was revised in 2006 permitting the formation of single-sex state schools as long as a co-educational alternative exists. While critics see single-sex schools as prejudiced and as poor preparation for adult life, supporters assert that children, and especially girls, profit from a single-sex education. Some American research demonstrates that girls attending single-sex schools have higher self-esteem, contribute more in class, and score higher on aptitude tests than other girls in co educational schools. A 2005 study stated that both girls and boys at single-sex schools spent more time on homework and had fewer disciplinary issues. Single-sex schools disrupt stereotypical course-taking trends and results. Advocates of single-sex schools claim that educators can provide better teaching by altering their tuition to reflect recent research about gender-based brain development. Several experts, however, consider the research into single-sex education as inconclusive, and that as long as the schooling provided is gender-fair, both sexes can succeed in a co-educational environment.",
+ "question": "True or False: The sole advantage of single-sex education for boys is better discipline.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage states that both genders have less disciplinary issues but does not say it is the only benefits for boys. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " For a long time, the benefits of single-sex education been discussed in the United States, where demand for single-sex schools is currently growing. Title IV, a 1972 law forbidding sex discrimination in education, was revised in 2006 permitting the formation of single-sex state schools as long as a co-educational alternative exists. While critics see single-sex schools as prejudiced and as poor preparation for adult life, supporters assert that children, and especially girls, profit from a single-sex education. Some American research demonstrates that girls attending single-sex schools have higher self-esteem, contribute more in class, and score higher on aptitude tests than other girls in co educational schools. A 2005 study stated that both girls and boys at single-sex schools spent more time on homework and had fewer disciplinary issues. Single-sex schools disrupt stereotypical course-taking trends and results. Advocates of single-sex schools claim that educators can provide better teaching by altering their tuition to reflect recent research about gender-based brain development. Several experts, however, consider the research into single-sex education as inconclusive, and that as long as the schooling provided is gender-fair, both sexes can succeed in a co-educational environment.",
+ "question": "True or False: Criticisers of single-sex schooling feel that such education reinforces pre-existing gender stereotypes.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "There is no reference to gender stereotypes. The text only refers to “stereotypical course-taking trends”. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "The United States’ space programme is at a perilous juncture. Between 1971 and 2011, expenditure on space has reduced from 5% of the federal budget to 0.5%. The US government just declared it has abandoned its Constellation human spaceflight programme, which was going to provide transportation to the International Space Station (ISS). Rather, NASA will shift its priorities to creating new technologies and commercialising space flight. Transportation to the ISS will now be outsourced in a move considered to significantly decrease launch costs. Five private companies – almost all of which are led by internet entrepreneurs – are sharing $50 million of federal funds to build cargo spacecraft. NASA’s latest vision has not been well received by some, with criticizers calling it the death knell of America’s previous dominance in space travel. In states that are losing out on jobs as a consequence of NASA’s cancelled programmes, politicians have been among the most outspoken critics. With entrepreneurs racing to reach human spaceflight, the next American to set foot on the moon could be a commercial passenger rather than an astronaut from NASA.",
+ "question": "True or False: NASA wishes to reduce costs by outsourcing transport to the International Space Station.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The passage states “Transportation to the ISS will now be outsourced in a move considered to significantly decrease launch costs.”. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The United States’ space programme is at a perilous juncture. Between 1971 and 2011, expenditure on space has reduced from 5% of the federal budget to 0.5%. The US government just declared it has abandoned its Constellation human spaceflight programme, which was going to provide transportation to the International Space Station (ISS). Rather, NASA will shift its priorities to creating new technologies and commercialising space flight. Transportation to the ISS will now be outsourced in a move considered to significantly decrease launch costs. Five private companies – almost all of which are led by internet entrepreneurs – are sharing $50 million of federal funds to build cargo spacecraft. NASA’s latest vision has not been well received by some, with criticizers calling it the death knell of America’s previous dominance in space travel. In states that are losing out on jobs as a consequence of NASA’s cancelled programmes, politicians have been among the most outspoken critics. With entrepreneurs racing to reach human spaceflight, the next American to set foot on the moon could be a commercial passenger rather than an astronaut from NASA.",
+ "question": "True or False: Under NASA’s changes, transport to the International Space Station will be privatised.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The passage says that private companies will take over the construction of cargo spacecraft. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The United States’ space programme is at a perilous juncture. Between 1971 and 2011, expenditure on space has reduced from 5% of the federal budget to 0.5%. The US government just declared it has abandoned its Constellation human spaceflight programme, which was going to provide transportation to the International Space Station (ISS). Rather, NASA will shift its priorities to creating new technologies and commercialising space flight. Transportation to the ISS will now be outsourced in a move considered to significantly decrease launch costs. Five private companies – almost all of which are led by internet entrepreneurs – are sharing $50 million of federal funds to build cargo spacecraft. NASA’s latest vision has not been well received by some, with criticizers calling it the death knell of America’s previous dominance in space travel. In states that are losing out on jobs as a consequence of NASA’s cancelled programmes, politicians have been among the most outspoken critics. With entrepreneurs racing to reach human spaceflight, the next American to set foot on the moon could be a commercial passenger rather than an astronaut from NASA.",
+ "question": "True or False: The 5 firms sharing the federal funds are utilising internet technology to build cargo spacecraft.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though the companies are headed by “internet entrepreneurs”, the passage does not specifically state that they are using this for the spacecraft. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The United States’ space programme is at a perilous juncture. Between 1971 and 2011, expenditure on space has reduced from 5% of the federal budget to 0.5%. The US government just declared it has abandoned its Constellation human spaceflight programme, which was going to provide transportation to the International Space Station (ISS). Rather, NASA will shift its priorities to creating new technologies and commercialising space flight. Transportation to the ISS will now be outsourced in a move considered to significantly decrease launch costs. Five private companies – almost all of which are led by internet entrepreneurs – are sharing $50 million of federal funds to build cargo spacecraft. NASA’s latest vision has not been well received by some, with criticizers calling it the death knell of America’s previous dominance in space travel. In states that are losing out on jobs as a consequence of NASA’s cancelled programmes, politicians have been among the most outspoken critics. With entrepreneurs racing to reach human spaceflight, the next American to set foot on the moon could be a commercial passenger rather than an astronaut from NASA.",
+ "question": "True or False: A few critics think that NASA’s new approach marks the end of American leadership in space exploration.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "This is expressed in the passage: ”criticizers calling it the death knell of America’s previous dominance in space travel.”. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The United States’ space programme is at a perilous juncture. Between 1971 and 2011, expenditure on space has reduced from 5% of the federal budget to 0.5%. The US government just declared it has abandoned its Constellation human spaceflight programme, which was going to provide transportation to the International Space Station (ISS). Rather, NASA will shift its priorities to creating new technologies and commercialising space flight. Transportation to the ISS will now be outsourced in a move considered to significantly decrease launch costs. Five private companies – almost all of which are led by internet entrepreneurs – are sharing $50 million of federal funds to build cargo spacecraft. NASA’s latest vision has not been well received by some, with criticizers calling it the death knell of America’s previous dominance in space travel. In states that are losing out on jobs as a consequence of NASA’s cancelled programmes, politicians have been among the most outspoken critics. With entrepreneurs racing to reach human spaceflight, the next American to set foot on the moon could be a commercial passenger rather than an astronaut from NASA.",
+ "question": "True or False: The US government just revealed plans to decrease its space programme budget.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The 2nd sentence says that costs have been cut over the past 40 years, but it does not state that the government announced this (NASA could have done it on their own). Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": "Although mephedrone has only been around since 2008 according to the EU funded Psychonaut Research Project, mephedrone is currently the 4th most popular recreational drug in the United Kingdom. Otherwise known as “meow meow” or “drone”, mephedrone is an artificial stimulant that is created from cathinone compounds, which come from the khat plant of Eastern Africa. Chemically analogous to amphetamines, mephedrone gives the user a sense of euphoria and increased stimulation. The reason that mephedrone is currently legal in the United Kingdom, is because it is traded as plant fertilizer and hence is not subject to medical regulations even though it has been prohibited in several countries, including Sweden, Germany and Israel. Produced in China and sold at low prices, the drug’s legality and availability have led to its speedy rise. Whilst it is not illegal, it it should not be assumed that mephedrone is safe to use – an international shortage of scientific research means that the health risks are not fully understood. With many reports of addiction and the drug’s alleged involvement in several fatalities; there is great pressure for the UK to make mephedrone a banned substance as soon as possible. This legal decision, though, can’t be put in place until a government advisory council has completely investigated any scientific evidence.",
+ "question": "True or False: Mephedrone is a naturally occurring substance.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The passage clearly states that mephedrone is an “artificial stimulant”. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Although mephedrone has only been around since 2008 according to the EU funded Psychonaut Research Project, mephedrone is currently the 4th most popular recreational drug in the United Kingdom. Otherwise known as “meow meow” or “drone”, mephedrone is an artificial stimulant that is created from cathinone compounds, which come from the khat plant of Eastern Africa. Chemically analogous to amphetamines, mephedrone gives the user a sense of euphoria and increased stimulation. The reason that mephedrone is currently legal in the United Kingdom, is because it is traded as plant fertilizer and hence is not subject to medical regulations even though it has been prohibited in several countries, including Sweden, Germany and Israel. Produced in China and sold at low prices, the drug’s legality and availability have led to its speedy rise. Whilst it is not illegal, it it should not be assumed that mephedrone is safe to use – an international shortage of scientific research means that the health risks are not fully understood. With many reports of addiction and the drug’s alleged involvement in several fatalities; there is great pressure for the UK to make mephedrone a banned substance as soon as possible. This legal decision, though, can’t be put in place until a government advisory council has completely investigated any scientific evidence.",
+ "question": "True or False: Sweden and Germany have scientifically verified the health risks of mephedrone.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "Although Sweden and Germany have banned the substance, no country has been able to determine the health dangers of the drug as pointed out by the “international shortage of scientific research”. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Although mephedrone has only been around since 2008 according to the EU funded Psychonaut Research Project, mephedrone is currently the 4th most popular recreational drug in the United Kingdom. Otherwise known as “meow meow” or “drone”, mephedrone is an artificial stimulant that is created from cathinone compounds, which come from the khat plant of Eastern Africa. Chemically analogous to amphetamines, mephedrone gives the user a sense of euphoria and increased stimulation. The reason that mephedrone is currently legal in the United Kingdom, is because it is traded as plant fertilizer and hence is not subject to medical regulations even though it has been prohibited in several countries, including Sweden, Germany and Israel. Produced in China and sold at low prices, the drug’s legality and availability have led to its speedy rise. Whilst it is not illegal, it it should not be assumed that mephedrone is safe to use – an international shortage of scientific research means that the health risks are not fully understood. With many reports of addiction and the drug’s alleged involvement in several fatalities; there is great pressure for the UK to make mephedrone a banned substance as soon as possible. This legal decision, though, can’t be put in place until a government advisory council has completely investigated any scientific evidence.",
+ "question": "True or False: Mephedrone’s cheap price means it particularly attractive to teenagers.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage doesn’t state anything about the ages of users. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Although mephedrone has only been around since 2008 according to the EU funded Psychonaut Research Project, mephedrone is currently the 4th most popular recreational drug in the United Kingdom. Otherwise known as “meow meow” or “drone”, mephedrone is an artificial stimulant that is created from cathinone compounds, which come from the khat plant of Eastern Africa. Chemically analogous to amphetamines, mephedrone gives the user a sense of euphoria and increased stimulation. The reason that mephedrone is currently legal in the United Kingdom, is because it is traded as plant fertilizer and hence is not subject to medical regulations even though it has been prohibited in several countries, including Sweden, Germany and Israel. Produced in China and sold at low prices, the drug’s legality and availability have led to its speedy rise. Whilst it is not illegal, it it should not be assumed that mephedrone is safe to use – an international shortage of scientific research means that the health risks are not fully understood. With many reports of addiction and the drug’s alleged involvement in several fatalities; there is great pressure for the UK to make mephedrone a banned substance as soon as possible. This legal decision, though, can’t be put in place until a government advisory council has completely investigated any scientific evidence.",
+ "question": "True or False: Although it is a legal substance, using mephedrone is unsafe.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though the passage states that there is not enough scientific research to fully understand the health consequences of using mephedrone, this does not mean the drug is unsafe to use. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Although mephedrone has only been around since 2008 according to the EU funded Psychonaut Research Project, mephedrone is currently the 4th most popular recreational drug in the United Kingdom. Otherwise known as “meow meow” or “drone”, mephedrone is an artificial stimulant that is created from cathinone compounds, which come from the khat plant of Eastern Africa. Chemically analogous to amphetamines, mephedrone gives the user a sense of euphoria and increased stimulation. The reason that mephedrone is currently legal in the United Kingdom, is because it is traded as plant fertilizer and hence is not subject to medical regulations even though it has been prohibited in several countries, including Sweden, Germany and Israel. Produced in China and sold at low prices, the drug’s legality and availability have led to its speedy rise. Whilst it is not illegal, it it should not be assumed that mephedrone is safe to use – an international shortage of scientific research means that the health risks are not fully understood. With many reports of addiction and the drug’s alleged involvement in several fatalities; there is great pressure for the UK to make mephedrone a banned substance as soon as possible. This legal decision, though, can’t be put in place until a government advisory council has completely investigated any scientific evidence.",
+ "question": "True or False: The UK government has been criticised for not acting quickly to outlaw mephedrone.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage says that the government is under “great pressure” but does not explicitly say they have been criticised. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One definition of Ecotourism is responsible travel to natural places that aims to both sustain the environment and create economic opportunities to the local population. Ecotourism offers another option to environmentally harmful industries such as logging and mining, while additionally helping the local economy. Conversely, its reliance on foreign investment results in one of the main criticisms of the industry: that the revenues made from ecotourism do not actually find their way to the local economy and work force. Moreover, while the principles behind ecotourism are morally correct, the industry is very vulnerable to “greenwashing” – whereby an untruthful impression of environmental friendliness is presented. More extreme opposition comes from those criticisers who think that ecotourism is fundamentally flawed because travel that uses fossil fuels is detrimental to the environment. Notwithstanding these opinions of dissent, ecotourism has become the fastest-growing type of tourism, rising at a rate of twenty to thirty percent per annum. Ironically, ecotourism’s success could neutralise its environmental goals, as large amounts of visitors, even careful ones, will unavoidably harm the ecosystem.",
+ "question": "True or False: Ecotourism attempts to profit from a country’s natural reserves.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though the text says that ecotourism may be defined as creating “economic opportunities” from travellers going to natural areas, there is no specific mention that this is the aim of ecotourism. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One definition of Ecotourism is responsible travel to natural places that aims to both sustain the environment and create economic opportunities to the local population. Ecotourism offers another option to environmentally harmful industries such as logging and mining, while additionally helping the local economy. Conversely, its reliance on foreign investment results in one of the main criticisms of the industry: that the revenues made from ecotourism do not actually find their way to the local economy and work force. Moreover, while the principles behind ecotourism are morally correct, the industry is very vulnerable to “greenwashing” – whereby an untruthful impression of environmental friendliness is presented. More extreme opposition comes from those criticisers who think that ecotourism is fundamentally flawed because travel that uses fossil fuels is detrimental to the environment. Notwithstanding these opinions of dissent, ecotourism has become the fastest-growing type of tourism, rising at a rate of twenty to thirty percent per annum. Ironically, ecotourism’s success could neutralise its environmental goals, as large amounts of visitors, even careful ones, will unavoidably harm the ecosystem.",
+ "question": "True or False: Ecotourism opposition feel that air travel contributes to global warming.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though the passage states that criticisers feel that “fossil fuels is detrimental to the environment.”, it did not specify that this leads to global warming. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One definition of Ecotourism is responsible travel to natural places that aims to both sustain the environment and create economic opportunities to the local population. Ecotourism offers another option to environmentally harmful industries such as logging and mining, while additionally helping the local economy. Conversely, its reliance on foreign investment results in one of the main criticisms of the industry: that the revenues made from ecotourism do not actually find their way to the local economy and work force. Moreover, while the principles behind ecotourism are morally correct, the industry is very vulnerable to “greenwashing” – whereby an untruthful impression of environmental friendliness is presented. More extreme opposition comes from those criticisers who think that ecotourism is fundamentally flawed because travel that uses fossil fuels is detrimental to the environment. Notwithstanding these opinions of dissent, ecotourism has become the fastest-growing type of tourism, rising at a rate of twenty to thirty percent per annum. Ironically, ecotourism’s success could neutralise its environmental goals, as large amounts of visitors, even careful ones, will unavoidably harm the ecosystem.",
+ "question": "True or False: The text opposes the ecotourism industry as it is an instance of greenwashing.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The passage only describes that the ecotourism industry is susceptible to greenwashing but does not disregard it. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One definition of Ecotourism is responsible travel to natural places that aims to both sustain the environment and create economic opportunities to the local population. Ecotourism offers another option to environmentally harmful industries such as logging and mining, while additionally helping the local economy. Conversely, its reliance on foreign investment results in one of the main criticisms of the industry: that the revenues made from ecotourism do not actually find their way to the local economy and work force. Moreover, while the principles behind ecotourism are morally correct, the industry is very vulnerable to “greenwashing” – whereby an untruthful impression of environmental friendliness is presented. More extreme opposition comes from those criticisers who think that ecotourism is fundamentally flawed because travel that uses fossil fuels is detrimental to the environment. Notwithstanding these opinions of dissent, ecotourism has become the fastest-growing type of tourism, rising at a rate of twenty to thirty percent per annum. Ironically, ecotourism’s success shall neutralise its environmental goals, as large amounts of visitors, even careful ones, will unavoidably harm the ecosystem.",
+ "question": "True or False: Ecotourism’s conservational credentials in the long-run are questionable.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The final sentence of the passage says that future success of the industry will harm the environment. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One definition of Ecotourism is responsible travel to natural places that aims to both sustain the environment and create economic opportunities to the local population. Ecotourism offers another option to environmentally harmful industries such as logging and mining, while additionally helping the local economy. Conversely, its reliance on foreign investment results in one of the main criticisms of the industry: that the revenues made from ecotourism do not actually find their way to the local economy and work force. Moreover, while the principles behind ecotourism are morally correct, the industry is very vulnerable to “greenwashing” – whereby an untruthful impression of environmental friendliness is presented. More extreme opposition comes from those criticisers who think that ecotourism is fundamentally flawed because travel that uses fossil fuels is detrimental to the environment. Notwithstanding these opinions of dissent, ecotourism has become the fastest-growing type of tourism, rising at a rate of twenty to thirty percent per annum. Ironically, ecotourism’s success shall neutralise its environmental goals, as large amounts of visitors, even careful ones, will unavoidably harm the ecosystem.",
+ "question": "True or False: Although ecotourism’s environmental value is undecided, there is an agreement that it provides economic benefits to local people.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The passage says that ecotourism will be “helping the local economy.” but also states that “that the revenues made from ecotourism do not actually find their way to the local economy and work force.”. Therefore, this issue is still debatable so the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The democratic peace theory asserts that liberal democracies seldom go to war against each other. The first to support this notion was the German philosopher Immanuel Kant, who postulated that constitutional republics stimulate peace, since the majority of population will not vote to go to war except if in self-defence. In more recent times, the democratic peace theory was taken further by Dean Babst in 1964. Babst performed the first statistical study into the theory, thus scientifically demonstrating that democracies hardly fight each other. Despite an irrefutable statistical connection between democracy and peace, the democratic peace theory is highly disputed amongst diplomatic scientists. The definitions of “democracy” and “war” are a quarrelsome issue. Some challengers of the democratic peace theory point to outliers, for example the Spanish-American War. Nonetheless, the chief criticism of the theory is that it is founded on unsound logic – that harmony between democracies is not a result of the democratic nature of those states. Additionally, opponents claim that democracies regularly attack non-democracies, dismissing the notion that democracies are fundamentally pacifistic. There are numerous derivatives of the democratic peace theory, such as the economic peace theory, which states that improving the economic exchange between states may lead to a lower chance of conflict.",
+ "question": "True or False: Immanuel Kant used statistical research to prove the democratic peace theory.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The passage clearly says that Babst was the first person to use statistics to show the correlation between democracy and peace. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The democratic peace theory asserts that liberal democracies seldom go to war against each other. The first to support this notion was the German philosopher Immanuel Kant, who postulated that constitutional republics stimulate peace, since the majority of population will not vote to go to war except if in self-defence. In more recent times, the democratic peace theory was taken further by Dean Babst in 1964. Babst performed the first statistical study into the theory, thus scientifically demonstrating that democracies hardly fight each other. Despite an irrefutable statistical connection between democracy and peace, the democratic peace theory is highly disputed amongst diplomatic scientists. The definitions of “democracy” and “war” are a quarrelsome issue. Some challengers of the democratic peace theory point to outliers, for example the Spanish-American War. Nonetheless, the chief criticism of the theory is that it is founded on unsound logic – that harmony between democracies is not a result of the democratic nature of those states. Additionally, opponents claim that democracies regularly attack non-democracies, dismissing the notion that democracies are fundamentally pacifistic. There are numerous derivatives of the democratic peace theory, such as the economic peace theory, which states that improving the economic exchange between states may lead to a lower chance of conflict.",
+ "question": "True or False: The accountability of a democratically elected government to its electorate is the idea behind the reason liberal democracies rarely go to war.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The second sentence says that the reason whether these countries go to war depends on whether the public votes to go to war or not. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The democratic peace theory asserts that liberal democracies seldom go to war against each other. The first to support this notion was the German philosopher Immanuel Kant, who postulated that constitutional republics stimulate peace, since the majority of population will not vote to go to war except if in self-defence. In more recent times, the democratic peace theory was taken further by Dean Babst in 1964. Babst performed the first statistical study into the theory, thus scientifically demonstrating that democracies hardly fight each other. Despite an irrefutable statistical connection between democracy and peace, the democratic peace theory is highly disputed amongst diplomatic scientists. The definitions of “democracy” and “war” are a quarrelsome issue. Some challengers of the democratic peace theory point to outliers, for example the Spanish-American War. Nonetheless, the chief criticism of the theory is that it is founded on unsound logic – that harmony between democracies is not a result of the democratic nature of those states. Additionally, opponents claim that democracies regularly attack non-democracies, dismissing the notion that democracies are fundamentally pacifistic. There are numerous derivatives of the democratic peace theory, such as the economic peace theory, which states that improving the economic exchange between states may lead to a lower chance of conflict.",
+ "question": "True or False: Political scientists agree on the definition of peace.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though the passage says that the “democratic peace theory is highly disputed amongst diplomatic scientists.”, it does not mention whether they agree or disagree on the definition of peace. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The democratic peace theory asserts that liberal democracies seldom go to war against each other. The first to support this notion was the German philosopher Immanuel Kant, who postulated that constitutional republics stimulate peace, since the majority of population will not vote to go to war except if in self-defence. In more recent times, the democratic peace theory was taken further by Dean Babst in 1964. Babst performed the first statistical study into the theory, thus scientifically demonstrating that democracies hardly fight each other. Despite an irrefutable statistical connection between democracy and peace, the democratic peace theory is highly disputed amongst diplomatic scientists. The definitions of “democracy” and “war” are a quarrelsome issue. Some challengers of the democratic peace theory point to outliers, for example the Spanish-American War. Nonetheless, the chief criticism of the theory is that it is founded on unsound logic – that harmony between democracies is not a result of the democratic nature of those states. Additionally, opponents claim that democracies regularly attack non-democracies, dismissing the notion that democracies are fundamentally pacifistic. There are numerous derivatives of the democratic peace theory, such as the economic peace theory, which states that improving the economic exchange between states may lead to a lower chance of conflict.",
+ "question": "True or False: The economic peace theory states that states are more likely to engage in war if trade between them improves.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The texts states the opposite in the last line: “improving the economic exchange between states may lead to a lower chance of conflict.”. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The democratic peace theory asserts that liberal democracies seldom go to war against each other. The first to support this notion was the German philosopher Immanuel Kant, who postulated that constitutional republics stimulate peace, since the majority of population will not vote to go to war except if in self-defence. In more recent times, the democratic peace theory was taken further by Dean Babst in 1964. Babst performed the first statistical study into the theory, thus scientifically demonstrating that democracies hardly fight each other. Despite an irrefutable statistical connection between democracy and peace, the democratic peace theory is highly disputed amongst diplomatic scientists. The definitions of “democracy” and “war” are a quarrelsome issue. Some challengers of the democratic peace theory point to outliers, for example the Spanish-American War. Nonetheless, the chief criticism of the theory is that it is founded on unsound logic – that harmony between democracies is not a result of the democratic nature of those states. Additionally, opponents claim that democracies regularly attack non-democracies, dismissing the notion that democracies are fundamentally pacifistic. There are numerous derivatives of the democratic peace theory, such as the economic peace theory, which states that improving the economic exchange between states may lead to a lower chance of conflict.",
+ "question": "True of False: Dean Babst statistically proved that democracies do not fight in wars.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The texts says that Babst found statistical evidence that democracies fight less with other democracies but does not say whether he found evidence that they don’t take part in wars at all. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The discussion about the British Museum’s Parthenon sculptures, also known as the Elgin Marbles, has been going on for almost two centuries. The marble statues were exhumed in 1801 – with official permission – from the remnants of the Parthenon by Lord Elgin, the British Ambassador to the Ottoman Empire. He sold these ageless Greek treasures to the British Museum in 1816, where they have been kept ever since. Nowadays, 5 million visitors from all over the world come to view the sculptures, free of charge, at the British Museum. Since the Greek government achieved independence in 1830, they have argued that the statues be returned to Athens. Previously, the Hellenic position was based on ownership, maintaining that Lord Elgin bribed authorities to obtain the sculptures illegitimately. Opposition argued that Lord Elgin prevented these classical treasures from being neglected. Greece no longer disagrees with the British Museum’s ownership, but wants the sculptures to be lent to the New Acropolis Museum in Athens, where they could be placed with the remaining sculptures that survived and be exhibited in their correct geographical and cultural context. Even with public sympathy for the homecoming of the Elgin marbles, the British Museum considers the Parthenon marbles part of collective world heritage and hence should be widely reachable. Moreover, returning the Parthenon statues would set a precedent for giving back other relics to their land of origin.",
+ "question": "True of False: The British Museum’s opinion is that the Elgin Marbles transcend international borders.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The passage says that the British Museum feels that the sculptures are part of a worldwide heritage and should therefore be “widely reachable”. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The discussion about the British Museum’s Parthenon sculptures, also known as the Elgin Marbles, has been going on for almost two centuries. The marble statues were exhumed in 1801 – with official permission – from the remnants of the Parthenon by Lord Elgin, the British Ambassador to the Ottoman Empire. He sold these ageless Greek treasures to the British Museum in 1816, where they have been kept ever since. Nowadays, 5 million visitors from all over the world come to view the sculptures, free of charge, at the British Museum. Since the Greek government achieved independence in 1830, they have argued that the statues be returned to Athens. Previously, the Hellenic position was based on ownership, maintaining that Lord Elgin bribed authorities to obtain the sculptures illegitimately. Opposition argued that Lord Elgin prevented these classical treasures from being neglected. Greece no longer disagrees with the British Museum’s ownership, but wants the sculptures to be lent to the New Acropolis Museum in Athens, where they could be placed with the remaining sculptures that survived and be exhibited in their correct geographical and cultural context. Even with public sympathy for the homecoming of the Elgin marbles, the British Museum considers the Parthenon marbles part of collective world heritage and hence should be widely reachable. Moreover, returning the Parthenon statues would set a precedent for giving back other relics to their land of origin.",
+ "question": "True of False: Before 1830, Greece was within the Ottoman Empire.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The text says that Greece obtained independence in 1830 but does not state from whom it gained independence from. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The discussion about the British Museum’s Parthenon sculptures, also known as the Elgin Marbles, has been going on for almost two centuries. The marble statues were exhumed in 1801 – with official permission – from the remnants of the Parthenon by Lord Elgin, the British Ambassador to the Ottoman Empire. He sold these ageless Greek treasures to the British Museum in 1816, where they have been kept ever since. Nowadays, 5 million visitors from all over the world come to view the sculptures, free of charge, at the British Museum. Since the Greek government achieved independence in 1830, they have argued that the statues be returned to Athens. Previously, the Hellenic position was based on ownership, maintaining that Lord Elgin bribed authorities to obtain the sculptures illegitimately. Opposition argued that Lord Elgin prevented these classical treasures from being neglected. Greece no longer disagrees with the British Museum’s ownership, but wants the sculptures to be lent to the New Acropolis Museum in Athens, where they could be placed with the remaining sculptures that survived and be exhibited in their correct geographical and cultural context. Even with public sympathy for the homecoming of the Elgin marbles, the British Museum considers the Parthenon marbles part of collective world heritage and hence should be widely reachable. Moreover, returning the Parthenon statues would set a precedent for giving back other relics to their land of origin.",
+ "question": "True of False: The British people do not understand why the Greek government want the Elgin Marbles returned.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The text says “Even with public sympathy for the homecoming of the Elgin marbles” showing that the public do appreciate the Greek government’s stance. This is the opposite to what the question says. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The discussion about the British Museum’s Parthenon sculptures, also known as the Elgin Marbles, has been going on for almost two centuries. The marble statues were exhumed in 1801 – with official permission – from the remnants of the Parthenon by Lord Elgin, the British Ambassador to the Ottoman Empire. He sold these ageless Greek treasures to the British Museum in 1816, where they have been kept ever since. Nowadays, 5 million visitors from all over the world come to view the sculptures, free of charge, at the British Museum. Since the Greek government achieved independence in 1830, they have argued that the statues be returned to Athens. Previously, the Hellenic position was based on ownership, maintaining that Lord Elgin bribed authorities to obtain the sculptures illegitimately. Opposition argued that Lord Elgin prevented these classical treasures from being neglected. Greece no longer disagrees with the British Museum’s ownership, but wants the sculptures to be lent to the New Acropolis Museum in Athens, where they could be placed with the remaining sculptures that survived and be exhibited in their correct geographical and cultural context. Even with public sympathy for the homecoming of the Elgin marbles, the British Museum considers the Parthenon marbles part of collective world heritage and hence should be widely reachable. Moreover, returning the Parthenon statues would set a precedent for giving back other relics to their land of origin.",
+ "question": "True of False: The only remaining Parthenon marble statues are split between the British Museum and the New Acropolis Museum.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage says that there are other statues from the Parthenon in the New Acropolis Museum and that the Elgin Marbles are in the British Museum but does not say that they are no others elsewhere. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " The discussion about the British Museum’s Parthenon sculptures, also known as the Elgin Marbles, has been going on for almost two centuries. The marble statues were exhumed in 1801 – with official permission – from the remnants of the Parthenon by Lord Elgin, the British Ambassador to the Ottoman Empire. He sold these ageless Greek treasures to the British Museum in 1816, where they have been kept ever since. Nowadays, 5 million visitors from all over the world come to view the sculptures, free of charge, at the British Museum. Since the Greek government achieved independence in 1830, they have argued that the statues be returned to Athens. Previously, the Hellenic position was based on ownership, maintaining that Lord Elgin bribed authorities to obtain the sculptures illegitimately. Opposition argued that Lord Elgin prevented these classical treasures from being neglected. Greece no longer disagrees with the British Museum’s ownership, but wants the sculptures to be lent to the New Acropolis Museum in Athens, where they could be placed with the remaining sculptures that survived and be exhibited in their correct geographical and cultural context. Even with public sympathy for the homecoming of the Elgin marbles, the British Museum considers the Parthenon marbles part of collective world heritage and hence should be widely reachable. Moreover, returning the Parthenon statues would set a precedent for giving back other relics to their land of origin.",
+ "question": "True of False: The Greek public feel that the Elgin Marbles should not officially be property of the British Museum.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The text says “Greece no longer disagrees with the British Museum’s ownership” but this is referencing the Greek government. The passage never states the opinion of the Greek public. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " A lot of people know that high cholesterol increases the chance of heart disease, however they will be astonished to hear that cholesterol performs vital functions in the human body. A fat created in the liver and present in animal cell membranes, cholesterol is needed to repair tissues and break down other fats, as well as in the production of hormones, bile salts, and Vitamin D. Nevertheless, issues arise when there is a surplus of cholesterol as it builds up in blood vessels, blocking blood flow. A human’s blood cholesterol count is formed of two distinctive kinds of cholesterol: low-density lipoprotein (LDL), often known as the “bad” cholesterol, and high-density lipoprotein (HDL), called “good” cholesterol. While HDL transports cholesterol to the liver and away from the arteries, LDL transfers cholesterol from the liver to the arteries where it gathers. Even though particular foodstuffs derived from animals, for example meat, shellfish, cheese and eggs, have a lot of dietary cholesterol, it is in fact the intake of the saturated fats in things such as red meat, full-fat dairy products, cakes and biscuits that elevate “bad” cholesterol levels. Conversely, consuming polyunsaturated fats and soluble fibre can reduce LDL.",
+ "question": "True of False: Consumption of full-fat dairy products won’t effect a person’s LDL levels.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The text says that full-fat dairy products will “elevate “bad” cholesterol levels.” and also clearly states that LDL is commonly referred to as “bad cholesterol”. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " A lot of people know that high cholesterol increases the chance of heart disease, however they will be astonished to hear that cholesterol performs vital functions in the human body. A fat created in the liver and present in animal cell membranes, cholesterol is needed to repair tissues and break down other fats, as well as in the production of hormones, bile salts, and Vitamin D. Nevertheless, issues arise when there is a surplus of cholesterol as it builds up in blood vessels, blocking blood flow. A human’s blood cholesterol count is formed of two distinctive kinds of cholesterol: low-density lipoprotein (LDL), often known as the “bad” cholesterol, and high-density lipoprotein (HDL), called “good” cholesterol. While HDL transports cholesterol to the liver and away from the arteries, LDL transfers cholesterol from the liver to the arteries where it gathers. Even though particular foodstuffs derived from animals, for example meat, shellfish, cheese and eggs, have a lot of dietary cholesterol, it is in fact the intake of the saturated fats in things such as red meat, full-fat dairy products, cakes and biscuits that elevate “bad” cholesterol levels. Conversely, consuming polyunsaturated fats and soluble fibre can reduce LDL.",
+ "question": "True of False: Most people are not aware of the full effects of cholesterol on one’s health.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The first part of the passage says that “a lot of people” know that high cholesterol levels may lead to heart disease but may also not be aware that cholesterol is needed by the body. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " A lot of people know that high cholesterol increases the chance of heart disease, however they will be astonished to hear that cholesterol performs vital functions in the human body. A fat created in the liver and present in animal cell membranes, cholesterol is needed to repair tissues and break down other fats, as well as in the production of hormones, bile salts, and Vitamin D. Nevertheless, issues arise when there is a surplus of cholesterol as it builds up in blood vessels, blocking blood flow. A human’s blood cholesterol count is formed of two distinctive kinds of cholesterol: low-density lipoprotein (LDL), often known as the “bad” cholesterol, and high-density lipoprotein (HDL), called “good” cholesterol. While HDL transports cholesterol to the liver and away from the arteries, LDL transfers cholesterol from the liver to the arteries where it gathers. Even though particular foodstuffs derived from animals, for example meat, shellfish, cheese and eggs, have a lot of dietary cholesterol, it is in fact the intake of the saturated fats in things such as red meat, full-fat dairy products, cakes and biscuits that elevate “bad” cholesterol levels. Conversely, consuming polyunsaturated fats and soluble fibre can reduce LDL.",
+ "question": "True of False: To get maximum blood flow in the arteries, reduced levels of HDL are better.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The text states that “HDL transports cholesterol to the liver and away from the arteries” meaning higher levels of HDL improve blood flow.  Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " A lot of people know that high cholesterol increases the chance of heart disease, however they will be astonished to hear that cholesterol performs vital functions in the human body. A fat created in the liver and present in animal cell membranes, cholesterol is needed to repair tissues and break down other fats, as well as in the production of hormones, bile salts, and Vitamin D. Nevertheless, issues arise when there is a surplus of cholesterol as it builds up in blood vessels, blocking blood flow. A human’s blood cholesterol count is formed of two distinctive kinds of cholesterol: low-density lipoprotein (LDL), often known as the “bad” cholesterol, and high-density lipoprotein (HDL), called “good” cholesterol. While HDL transports cholesterol to the liver and away from the arteries, LDL transfers cholesterol from the liver to the arteries where it gathers. Even though particular foodstuffs derived from animals, for example meat, shellfish, cheese and eggs, have a lot of dietary cholesterol, it is in fact the intake of the saturated fats in things such as red meat, full-fat dairy products, cakes and biscuits that elevate “bad” cholesterol levels. Conversely, consuming polyunsaturated fats and soluble fibre can reduce LDL.",
+ "question": "True of False: Changing one’s diet is the best way to lower LDL levels.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though the passage says that LDL comes from foods such as “red meat, full-fat dairy products, cakes and biscuits”, it does not mention that removing these from your diet is the best way to reduce LDL in the body. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " A lot of people know that high cholesterol increases the chance of heart disease, however they will be astonished to hear that cholesterol performs vital functions in the human body. A fat created in the liver and present in animal cell membranes, cholesterol is needed to repair tissues and break down other fats, as well as in the production of hormones, bile salts, and Vitamin D. Nevertheless, issues arise when there is a surplus of cholesterol as it builds up in blood vessels, blocking blood flow. A human’s blood cholesterol count is formed of two distinctive kinds of cholesterol: low-density lipoprotein (LDL), often known as the “bad” cholesterol, and high-density lipoprotein (HDL), called “good” cholesterol. While HDL transports cholesterol to the liver and away from the arteries, LDL transfers cholesterol from the liver to the arteries where it gathers. Even though particular foodstuffs derived from animals, for example meat, shellfish, cheese and eggs, have a lot of dietary cholesterol, it is in fact the intake of the saturated fats in things such as red meat, full-fat dairy products, cakes and biscuits that elevate “bad” cholesterol levels. Conversely, consuming polyunsaturated fats and soluble fibre can reduce LDL.",
+ "question": "True of False: Vegetarians are expected to have reduced levels of LDL since they do not eat meat.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Although HDL is obtained from animal derived foods, the text doesn’t say that vegetarians will have lower levels of “bad” cholesterol. Vegetarians can still consume cakes and biscuits which will raise LDL levels. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One philosophical and literary movement that became widely recognised in the mid-1900s was Existentialism. Predominantly linked with the work of Jean-Paul Sartre and Parisian café society, existentialism was shaped by the work of the Danish theologian Soren Kierkegaard and the German philosopher Friedrich Nietzsche beforehand. While hard to define, existentialism can be explained by its emphasis on human existence above human essence, and the significance of one’s freedom of choice. It is an atheistic thinking that discards moral rules, but not responsibility. Although every person is free, he or she must be in harmony with the freedom of others. According to existentialists, the one inevitability in life is death, and appreciating this leads to anguish. This existential suffering, though, can be surpassed when an individual begins a project that will provide his or her life with meaning. While not a political program, existentialism’s connections with social and diplomatic causes, such as challenging fascism, resulted in its widespread popularity in the 1960s.",
+ "question": "True of False: The initial existentialist concepts were made by Soren Kierkegaard and Friedrich Nietzsche.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though we are told that “existentialism was shaped by the work of the Danish theologian Soren Kierkegaard and the German philosopher Friedrich Nietzsche”, we do not know if they began the movement. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One philosophical and literary movement that became widely recognised in the mid-1900s was Existentialism. Predominantly linked with the work of Jean-Paul Sartre and Parisian café society, existentialism was shaped by the work of the Danish theologian Soren Kierkegaard and the German philosopher Friedrich Nietzsche beforehand. While hard to define, existentialism can be explained by its emphasis on human existence above human essence, and the significance of one’s freedom of choice. It is an atheistic thinking that discards moral rules, but not responsibility. Although every person is free, he or she must be in harmony with the freedom of others. According to existentialists, the one inevitability in life is death, and appreciating this leads to anguish. This existential suffering, though, can be surpassed when an individual begins a project that will provide his or her life with meaning. While not a political program, existentialism’s connections with social and diplomatic causes, such as challenging fascism, resulted in its widespread popularity in the 1960s.",
+ "question": "True of False: Even though existentialism disregards moral codes, it doesn’t imply that people act without regard for others.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The 5th and 6th sentences state that this is what existentialism advises. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One philosophical and literary movement that became widely recognised in the mid-1900s was Existentialism. Predominantly linked with the work of Jean-Paul Sartre and Parisian café society, existentialism was shaped by the work of the Danish theologian Soren Kierkegaard and the German philosopher Friedrich Nietzsche beforehand. While hard to define, existentialism can be explained by its emphasis on human existence above human essence, and the significance of one’s freedom of choice. It is an atheistic thinking that discards moral rules, but not responsibility. Although every person is free, he or she must be in harmony with the freedom of others. According to existentialists, the one inevitability in life is death, and appreciating this leads to anguish. This existential suffering, though, can be surpassed when an individual begins a project that will provide his or her life with meaning. While not a political program, existentialism’s connections with social and diplomatic causes, such as challenging fascism, resulted in its widespread popularity in the 1960s.",
+ "question": "True of False: Followers of existentialism are likely to get depressed.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage states that existential followers may suffer and be in anguish but does not specifically state that they will become depressed. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One philosophical and literary movement that became widely recognised in the mid-1900s was Existentialism. Predominantly linked with the work of Jean-Paul Sartre and Parisian café society, existentialism was shaped by the work of the Danish theologian Soren Kierkegaard and the German philosopher Friedrich Nietzsche beforehand. While hard to define, existentialism can be explained by its emphasis on human existence above human essence, and the significance of one’s freedom of choice. It is an atheistic thinking that discards moral rules, but not responsibility. Although every person is free, he or she must be in harmony with the freedom of others. According to existentialists, the one inevitability in life is death, and appreciating this leads to anguish. This existential suffering, though, can be surpassed when an individual begins a project that will provide his or her life with meaning. While not a political program, existentialism’s connections with social and diplomatic causes, such as challenging fascism, resulted in its widespread popularity in the 1960s.",
+ "question": "True of False: According to existentialism views, mortality is life’s only certainty.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The text specifically says that “the one inevitability in life is death”. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " One philosophical and literary movement that became widely recognised in the mid-1900s was Existentialism. Predominantly linked with the work of Jean-Paul Sartre and Parisian café society, existentialism was shaped by the work of the Danish theologian Soren Kierkegaard and the German philosopher Friedrich Nietzsche beforehand. While hard to define, existentialism can be explained by its emphasis on human existence above human essence, and the significance of one’s freedom of choice. It is an atheistic thinking that discards moral rules, but not responsibility. Although every person is free, he or she must be in harmony with the freedom of others. According to existentialists, the one inevitability in life is death, and appreciating this leads to anguish. This existential suffering, though, can be surpassed when an individual begins a project that will provide his or her life with meaning. While not a political program, existentialism’s connections with social and diplomatic causes, such as challenging fascism, resulted in its widespread popularity in the 1960s.",
+ "question": "True of False: In the 20th century, existentialism was a trendy political movement.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "The passage states that existentialism is a “philosophical and literary movement” and it is “not a political program”. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Kangaroo culling is a contentious matter in Australia, where the government has introduced culls to control populations. The issue is predominantly sensitive because of the kangaroo’s status as a national icon, and some detractors are seeing the culls as an assault on Australia’s identity. While native to Australia, kangaroos are, in some regions, threatening the grassland environment. Overgrazing leads to soil erosion hence threatening the existence of certain rare species of lizard. Moreover, in overpopulated parts, food shortages are motivating kangaroos to destroy wheat crops. Activists usually oppose the cull on grounds that it is callous. Rather, they prefer the relocation of the animals to apt new habitats, or sterilising the kangaroos in highly populated areas. Sterilisation, though, will take some time to have an effect on the issues of inadequate resources and land degradation through grazing. Not only will moving large numbers of kangaroos be an expensive process, critics feel it would possibly traumatize the transferred animals and eventually threaten the new habitat.",
+ "question": "True of False: Most of the animal rights campaigners are resisting the Australian government’s strategy of kangaroo culls.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "The passage does not explicitly state that animal rights activists are opposing the culls. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Kangaroo culling is a contentious matter in Australia, where the government has introduced culls to control populations. The issue is predominantly sensitive because of the kangaroo’s status as a national icon, and some detractors are seeing the culls as an assault on Australia’s identity. While native to Australia, kangaroos are, in some regions, threatening the grassland environment. Overgrazing leads to soil erosion hence threatening the existence of certain rare species of lizard. Moreover, in overpopulated parts, food shortages are motivating kangaroos to destroy wheat crops. Activists usually oppose the cull on grounds that it is callous. Rather, they prefer the relocation of the animals to apt new habitats, or sterilising the kangaroos in highly populated areas. Sterilisation, though, will take some time to have an effect on the issues of inadequate resources and land degradation through grazing. Not only will moving large numbers of kangaroos be an expensive process, critics feel it would possibly traumatize the transferred animals and eventually threaten the new habitat.",
+ "question": "True of False: The prime reason against culling kangaroos is that it is a threat to Australian national identity.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 1,
+ "explanation": "Although the 2nd sentence says that some critics oppose the culls because of this, the 6th sentence says that opposition “usually” oppose the culls on the basis that it is inhumane. The word “usually” implies that this is the primary reason. Therefore, the correct answer is “False”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Kangaroo culling is a contentious matter in Australia, where the government has introduced culls to control populations. The issue is predominantly sensitive because of the kangaroo’s status as a national icon, and some detractors are seeing the culls as an assault on Australia’s identity. While native to Australia, kangaroos are, in some regions, threatening the grassland environment. Overgrazing leads to soil erosion hence threatening the existence of certain rare species of lizard. Moreover, in overpopulated parts, food shortages are motivating kangaroos to destroy wheat crops. Activists usually oppose the cull on grounds that it is callous. Rather, they prefer the relocation of the animals to apt new habitats, or sterilising the kangaroos in highly populated areas. Sterilisation, though, will take some time to have an effect on the issues of inadequate resources and land degradation through grazing. Not only will moving large numbers of kangaroos be an expensive process, critics feel it would possibly traumatize the transferred animals and eventually threaten the new habitat.",
+ "question": "True of False: In addition to the ecology, kangaroos present a threat to farming.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The passage says that kangaroos are starting to “destroy wheat crops”. Therefore, the correct answer is “True”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Kangaroo culling is a contentious matter in Australia, where the government has introduced culls to control populations. The issue is predominantly sensitive because of the kangaroo’s status as a national icon, and some detractors are seeing the culls as an assault on Australia’s identity. While native to Australia, kangaroos are, in some regions, threatening the grassland environment. Overgrazing leads to soil erosion hence threatening the existence of certain rare species of lizard. Moreover, in overpopulated parts, food shortages are motivating kangaroos to destroy wheat crops. Activists usually oppose the cull on grounds that it is callous. Rather, they prefer the relocation of the animals to apt new habitats, or sterilising the kangaroos in highly populated areas. Sterilisation, though, will take some time to have an effect on the issues of inadequate resources and land degradation through grazing. Not only will moving large numbers of kangaroos be an expensive process, critics feel it would possibly traumatize the transferred animals and eventually threaten the new habitat.",
+ "question": "True of False: In overpopulated areas where there are shortages of food, kangaroos are hunting rare lizards.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 2,
+ "explanation": "Even though the passage says that the kangaroos are “threatening the existence of certain rare species of lizard.”, it does not say that they are preying on them. Therefore, the correct answer is “Cannot Say”."
+	},
+ 
+	{
+ "questionType": "Verbal Reasoning",
+ "passage": " Kangaroo culling is a contentious matter in Australia, where the government has introduced culls to control populations. The issue is predominantly sensitive because of the kangaroo’s status as a national icon, and some detractors are seeing the culls as an assault on Australia’s identity. While native to Australia, kangaroos are, in some regions, threatening the grassland environment. Overgrazing leads to soil erosion hence threatening the existence of certain rare species of lizard. Moreover, in overpopulated parts, food shortages are motivating kangaroos to destroy wheat crops. Activists usually oppose the cull on grounds that it is callous. Rather, they prefer the relocation of the animals to apt new habitats, or sterilising the kangaroos in highly populated areas. Sterilisation, though, will take some time to have an effect on the issues of inadequate resources and land degradation through grazing. Not only will moving large numbers of kangaroos be an expensive process, critics feel it would possibly traumatize the transferred animals and eventually threaten the new habitat.",
+ "question": "True of False: Sterilising kangaroos will not instantaneously ease the troubles brought about by their overgrazing.",
+ "answers": ["True", "False", "Cannot Say"],
+ "correctAnswer": 0,
+ "explanation": "The text states that “Sterilisation, though, will take some time to have an effect on the issues of inadequate resources and land degradation through grazing.”. Sterile kangaroos will still graze even though they will not reproduce. Therefore, the correct answer is “True”."
+	}
 ]
