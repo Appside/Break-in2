@@ -12,7 +12,7 @@ import SCLAlertView
 import Parse
 import SwiftSpinner
 
-class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
+class programmingViewController: QuestionViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -204,7 +204,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
         self.swipeUIView.backgroundColor = UIColor.whiteColor()
         self.swipeUIView.layer.cornerRadius = 8.0
-    
+        
         if self.showTutorial == true {
             
             //Set constraints to each view
@@ -339,7 +339,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             //Launch timer
             self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(sequencesViewController.updateTimer), userInfo: nil, repeats: true)
         }
-    
+        
     }
     
     func tutoNext(sender:UITapGestureRecognizer) {
@@ -480,15 +480,15 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         
         if self.isTestComplete==false {
             
-        //Initialize labels
+            //Initialize labels
             let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
             let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 9, length: NSString(string: labelString).length-9))
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0), range: NSRange(location: 0, length: NSString(string: labelString).length))
             self.questionMenuLabel.attributedText = attributedString
             self.questionMenuLabel.attributedText = attributedString
-        
+            
         }
         
         // add answers to SwipeUIVIew
@@ -565,7 +565,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
             
             if self.isTestComplete==false {
                 let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sequencesViewController.answerIsSelected(_:)))
-            answerNumber.addGestureRecognizer(tapGesture)
+                answerNumber.addGestureRecognizer(tapGesture)
             }
         }
         
@@ -844,7 +844,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
                 self.timeLabel.text = "Wrong Answer"
                 self.timeLabel.textColor = UIColor.redColor()
                 feedbackLabel.text = "Your answer was \(self.quizzArray[questionFeedback].answers[self.selectedAnswers[questionFeedback]]).\nThis is a wrong answer.\n\n\(self.quizzArray[questionFeedback].feedback)\n\nThe correct answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer])."
-              feedbackLabel.text = "Your answer was .\nThis is a wrong answer.\n\n\(self.quizzArray[questionFeedback].feedback)\n\nThe correct answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer])."
+                feedbackLabel.text = "Your answer was .\nThis is a wrong answer.\n\n\(self.quizzArray[questionFeedback].feedback)\n\nThe correct answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer])."
             }
             
             }, completion: nil)
@@ -889,7 +889,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
         self.listOfSequences.increment1 = Int(arc4random_uniform(10) + 1)
         self.listOfSequences.increment2 = Int(arc4random_uniform(10) + 1)
         self.listOfSequences.memory1 = 0
-
+        
         var rightAnswer:Int = Int()
         var a:Int = 1
         a = Int(arc4random_uniform(2))
@@ -942,13 +942,13 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate {
                 correctIndexSet = true
             }
         }
-
+        
         //Return question info array
         return (questionArray, returnedArray, correctIndex, feedbackString)
     }
     
     func setDifficultyLevel() {
-
+        
         //Initialize timer depending on difficulty
         if self.difficulty == "H" {
             self.allowedSeconds = 00

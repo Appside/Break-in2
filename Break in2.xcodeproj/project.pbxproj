@@ -34,6 +34,7 @@
 		25E4ACCE1C552C9800C49551 /* LogicalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E4ACCC1C552C9800C49551 /* LogicalModel.swift */; };
 		490CB4061C552E0300A68493 /* logicalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4051C552E0300A68493 /* logicalQuestion.swift */; };
 		490CB4081C552E6800A68493 /* logicalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */; };
+		494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE5451D3B91C30086D261 /* programmingViewController.swift */; };
 		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
 		498B79021C4C27EF002E14D6 /* sequencesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B79011C4C27EF002E14D6 /* sequencesList.swift */; };
 		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; };
@@ -123,6 +124,7 @@
 		3697AE34E1038270A58E3773 /* Pods-Break in2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2/Pods-Break in2.release.xcconfig"; sourceTree = "<group>"; };
 		490CB4051C552E0300A68493 /* logicalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalQuestion.swift; sourceTree = "<group>"; };
 		490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalReasoningViewController.swift; sourceTree = "<group>"; };
+		494AE5451D3B91C30086D261 /* programmingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingViewController.swift; sourceTree = "<group>"; };
 		497A515E1C39B10C004B325C /* LabelPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPointerView.swift; sourceTree = "<group>"; };
 		498B79011C4C27EF002E14D6 /* sequencesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesList.swift; sourceTree = "<group>"; };
 		49929D9F1C42E95700527929 /* sequencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesViewController.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				490CB4051C552E0300A68493 /* logicalQuestion.swift */,
 				490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */,
 				499E46D91C7137FC00540159 /* BrainBreakerViewController.swift */,
+				494AE5451D3B91C30086D261 /* programmingViewController.swift */,
 			);
 			name = QuestionView;
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 				617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */,
 				2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */,
 				49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */,
+				494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */,
 				49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
 				61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */,
