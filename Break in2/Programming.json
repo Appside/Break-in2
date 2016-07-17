@@ -1,0 +1,294 @@
+[
+
+{
+"questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+},
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ },
+ 
+ {
+ "questionType":"Programming",
+ "question":"What line of code is missing for this code to work correctly ?",
+ "codePassage":"For i=1 to 10 do\n\n...\n\nNext i",
+ "answers":["2","8","256","1,024"],
+ "correctAnswer":2,
+ "feedback":"There are always 8 bits in a byte."
+ }
+]

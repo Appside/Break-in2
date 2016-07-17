@@ -163,6 +163,52 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     return arrayOfQuestions
   }
     
+    func selectProgramming(nbOfQuestions:Int) -> [programmingQuestion] {
+        
+        //Initialize variables
+        var arrayOfQuestions:[programmingQuestion] = [programmingQuestion]()
+        
+        //Get JSon file
+        let jsonObject:[NSDictionary] = self.getjsonfile("Programming")
+        var randomNumber:Int = Int()
+        var selectedQuestions:[Int] = [Int]()
+        var index:Int = 0
+        var y:Int = 0
+        var z:Int = 0
+        
+        for index = 0; index < nbOfQuestions; index += 1 {
+            
+            y = 0
+            while y==0 {
+                randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
+                if selectedQuestions.count>0 {
+                    for z=0;z<selectedQuestions.count;z += 1 {
+                        if selectedQuestions[z] != randomNumber {
+                            y = 1
+                        }
+                    }
+                } else {
+                    y = 1
+                }
+            }
+            selectedQuestions.append(randomNumber)
+            
+            let currentJsonDictionary:NSDictionary = jsonObject[randomNumber]
+            let newQuestion:programmingQuestion = programmingQuestion()
+            //Assign values to the newQuestion
+            newQuestion.question = currentJsonDictionary["question"] as! String
+            newQuestion.codePassage = currentJsonDictionary["codePassage"] as! String
+            newQuestion.answers = currentJsonDictionary["answers"] as! [String]
+            newQuestion.correctAnswer = currentJsonDictionary["correctAnswer"] as! Int
+            newQuestion.feedback = currentJsonDictionary["feedback"] as! String
+            //Add the new Question to the returned array
+            arrayOfQuestions.append(newQuestion)
+        }
+        
+        //Return final array
+        return arrayOfQuestions
+    }
+    
   func getjsonfile(jsonFileName:String) -> [[String:AnyObject]] {
     
     if jsonFileName == "JobDeadlines" {
