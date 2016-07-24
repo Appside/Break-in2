@@ -1,0 +1,193 @@
+ [
+  
+  {
+  "questionType":"Technology",
+  "question":"How many bits are in a byte?",
+  "answers":["2","256","8","1,024"],
+  "correctAnswer":2,
+  "explanation":"There are always 8 bits in a byte."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does HTTP stand for?",
+  "answers":["Hypertext Transfer Protocol","Hyphenated Teleconference Transfer Procedure","Handset Terminal Timestamp Protocol","Hexadecimal Text Transaction Processing"],
+  "correctAnswer":0,
+  "explanation":"HTTP stands for Hypertext Transfer Protocol. It is a set of rules used when communicating on the World Wide Web."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does POP3 stand for?",
+  "answers":["Peer Override Protocol 3 ","Phablet Online Platform 3","Post Office Protocol 3","Podcast Organisation Procedure 3"],
+  "correctAnswer":2,
+  "explanation":"POP3 stands for Post Office Protocol 3. It is the latest protocol used when receiving E-mails."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"How many megabytes (MB) are there in a terabyte (TB)?",
+  "answers":["1,024","256,000","2,048,000","1,048,576"],
+  "correctAnswer":3,
+  "explanation":"1 gigabyte contains 1,024 megabytes and 1 terabyte contains 1,024 gigbytes. So there are 1,024 x 1,024 = 1,048,576 megabytes in a terabyte."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What must an IF statement contain?",
+  "answers":["An integer","A Boolean expression","A conditional statement","A string"],
+  "correctAnswer":2,
+  "explanation":"An IF statement is a logical command. It requires a conditional statement to determine whether the following block of code should be executed."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Is RAM storage volatile?",
+  "answers":["Yes","No","Sometimes","Cannot Say"],
+  "correctAnswer":0,
+  "explanation":"Random Access Memory (RAM) is volatile. Its contents are erased when the system loses power."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Is ROM storage volatile?",
+  "answers":["Yes","No","Sometimes","Cannot Say"],
+  "correctAnswer":0,
+  "explanation":"Read Only Memory (ROM) is non-volatile. Its contents can still be read is the system loses power."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What part of database stores only on type of information?",
+  "answers":["Record","File","Field","Report"],
+  "correctAnswer":2,
+  "explanation":"Fields are used to store a certain type of information. Many fields make a record and many records make a file."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does CPU stand for?",
+  "answers":["Computer Preparation Unit","Central Processing Unit","Command Prompt Uninstaller","Cellular Phone Usability"],
+  "correctAnswer":1,
+  "explanation":"The Central Processing Unit (CPU) is the electronic circuit board where arithmetic, logical and input/output operations are carried out."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which of the following is a valid e-mail address?",
+  "answers":["info.appside:co:uk","info@appside.co.uk","info/appside.co.uk","www.appside.co.uk"],
+  "correctAnswer":1,
+  "explanation":"E-mail addresses are typically in the format ___@___.___"
+  },
+  {
+  "questionType":"Technology",
+  "question":"In a binary system, what will be the output of 1 ANerD 0?",
+  "answers":["0","1","10","Cannot Say"],
+  "correctAnswer":1,
+  "explanation":"The binary AND operator will only return a 0 when both inputs are 0. Otherwise, the output is 1."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does SSL stand for?",
+  "answers":[" Secure Socket Layer ","Secure System Login","System Socket Layer","Scalable Serial Link"],
+  "correctAnswer":0,
+  "explanation":"The Secure Socket Layer (SSL) is the basic security technology for establishing a link between a web server and host."
+  },
+ 
+  {
+  "questionType":"Technology",
+  "question":"How many bits are in a byte?",
+  "answers":["2","256","8","1,024"],
+  "correctAnswer":2,
+  "explanation":"There are always 8 bits in a byte."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does HTTP stand for?",
+  "answers":["Hypertext Transfer Protocol","Hyphenated Teleconference Transfer Procedure","Handset Terminal Timestamp Protocol","Hexadecimal Text Transaction Processing"],
+  "correctAnswer":0,
+  "explanation":"HTTP stands for Hypertext Transfer Protocol. It is a set of rules used when communicating on the World Wide Web."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does POP3 stand for?",
+  "answers":["Peer Override Protocol 3 ","Phablet Online Platform 3","Post Office Protocol 3","Podcast Organisation Procedure 3"],
+  "correctAnswer":2,
+  "explanation":"POP3 stands for Post Office Protocol 3. It is the latest protocol used when receiving E-mails."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"How many megabytes (MB) are there in a terabyte (TB)?",
+  "answers":["1,024","256,000","2,048,000","1,048,576"],
+  "correctAnswer":3,
+  "explanation":"1 gigabyte contains 1,024 megabytes and 1 terabyte contains 1,024 gigbytes. So there are 1,024 x 1,024 = 1,048,576 megabytes in a terabyte."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What must an IF statement contain?",
+  "answers":["An integer","A Boolean expression","A conditional statement","A string"],
+  "correctAnswer":2,
+  "explanation":"An IF statement is a logical command. It requires a conditional statement to determine whether the following block of code should be executed."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Is RAM storage volatile?",
+  "answers":["Yes","No","Sometimes","Cannot Say"],
+  "correctAnswer":0,
+  "explanation":"Random Access Memory (RAM) is volatile. Its contents are erased when the system loses power."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Is ROM storage volatile?",
+  "answers":["Yes","No","Sometimes","Cannot Say"],
+  "correctAnswer":0,
+  "explanation":"Read Only Memory (ROM) is non-volatile. Its contents can still be read is the system loses power."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What part of database stores only on type of information?",
+  "answers":["Record","File","Field","Report"],
+  "correctAnswer":2,
+  "explanation":"Fields are used to store a certain type of information. Many fields make a record and many records make a file."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does CPU stand for?",
+  "answers":["Computer Preparation Unit","Central Processing Unit","Command Prompt Uninstaller","Cellular Phone Usability"],
+  "correctAnswer":1,
+  "explanation":"The Central Processing Unit (CPU) is the electronic circuit board where arithmetic, logical and input/output operations are carried out."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which of the following is a valid e-mail address?",
+  "answers":["info.appside:co:uk","info@appside.co.uk","info/appside.co.uk","www.appside.co.uk"],
+  "correctAnswer":1,
+  "explanation":"E-mail addresses are typically in the format ___@___.___"
+  },
+  {
+  "questionType":"Technology",
+  "question":"In a binary system, what will be the output of 1 ANerD 0?",
+  "answers":["0","1","10","Cannot Say"],
+  "correctAnswer":1,
+  "explanation":"The binary AND operator will only return a 0 when both inputs are 0. Otherwise, the output is 1."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does SSL stand for?",
+  "answers":[" Secure Socket Layer ","Secure System Login","System Socket Layer","Scalable Serial Link"],
+  "correctAnswer":0,
+  "explanation":"The Secure Socket Layer (SSL) is the basic security technology for establishing a link between a web server and host."
+  }
+  
+  ]

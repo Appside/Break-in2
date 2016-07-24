@@ -971,6 +971,98 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             }
 
 
+        }else if (sender.currentTitle == "Programming"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_PROG_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_PROG_USERNAME, equalTo: username!)
+            query.limit = 6
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            yUnits.append(object[PF_PROG_SCORE] as! Double)
+                            yUnits2.append(object[PF_PROG_TIME] as! Double)
+                            dateTaken.append(object.createdAt as NSDate!)
+                            print(yUnits)
+                            print(yUnits2)
+                            print(dateTaken)
+                            
+                        }
+                    }
+                    for element in dateTaken {
+                        self.dateTests.append(formatter.stringFromDate(element))
+                    }
+                    SwiftSpinner.hide()
+                    self.noDataUILabel.text = ""
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
+                }
+            }
+            
+            
+        }else if (sender.currentTitle == "Technology"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_TECH_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_TECH_USERNAME, equalTo: username!)
+            query.limit = 6
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("Successfully retrieved \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            yUnits.append(object[PF_TECH_SCORE] as! Double)
+                            yUnits2.append(object[PF_TECH_TIME] as! Double)
+                            dateTaken.append(object.createdAt as NSDate!)
+                            print(yUnits)
+                            print(yUnits2)
+                            print(dateTaken)
+                            
+                        }
+                    }
+                    for element in dateTaken {
+                        self.dateTests.append(formatter.stringFromDate(element))
+                    }
+                    SwiftSpinner.hide()
+                    self.noDataUILabel.text = ""
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
+                }
+            }
+            
+            
         }
     }
 
@@ -1412,6 +1504,84 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         }, subtitle: "Tap to dismiss")
                 }
             }
+        }else if (self.selectedTest == "Programming"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_PROG_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_PROG_USERNAME, equalTo: username!)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("About to delete \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            object.deleteInBackground()
+                            
+                        }
+                    }
+                    
+                    let yUnits:[Double] = []
+                    let yUnits2:[Double] = []
+                    SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
+                }
+            }
+            
+            
+        }else if (self.selectedTest == "Technology"){
+            
+            SwiftSpinner.show("Loading statistics")
+            let query = PFQuery(className: PF_TECH_CLASS_NAME)
+            let currentUser = PFUser.currentUser()!
+            let username = currentUser.username
+            query.whereKey(PF_TECH_USERNAME, equalTo: username!)
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    // The find succeeded.
+                    print("About to delete \(objects!.count) scores.")
+                    // Do something with the found objects
+                    if let objects = objects {
+                        for object in objects {
+                            
+                            object.deleteInBackground()
+                            
+                        }
+                    }
+                    
+                    let yUnits:[Double] = []
+                    let yUnits2:[Double] = []
+                    SwiftSpinner.hide()
+                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    
+                } else {
+                    // Log details of the failure
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Tap to dismiss")
+                }
+            }
+            
+            
         }
 
         

@@ -12,7 +12,7 @@ import SCLAlertView
 import Parse
 import SwiftSpinner
 
-class programmingViewController: QuestionViewController, UIScrollViewDelegate {
+class technologyViewController: QuestionViewController, UIScrollViewDelegate {
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -28,10 +28,8 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
     let descriptionSwipeLabel:UILabel = UILabel()
     let mainView:UIView = UIView()
     let questionView:UIView = UIView()
-    let passageView:UIView = UIView()
-    let passageLabel:UITextView = UITextView()
     var quizzModel:JSONModel = JSONModel()
-    var quizzArray:[programmingQuestion] = [programmingQuestion]()
+    var quizzArray:[technologyQuestion] = [technologyQuestion]()
     var displayedQuestionIndex:Int = 0
     var totalNumberOfQuestions:Int = 14
     let questionLabel:UITextView = UITextView()
@@ -180,9 +178,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         self.view.addSubview(self.mainView)
         self.mainView.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(85*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
         self.mainView.addSubview(self.questionView)
-        self.mainView.addSubview(self.passageView)
         self.questionView.translatesAutoresizingMaskIntoConstraints = false
-        self.passageView.translatesAutoresizingMaskIntoConstraints = false
         
         let questionViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
         let questionViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
@@ -190,51 +186,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         self.mainView.addConstraints([questionViewTop,questionViewRight,questionViewLeft])
         self.qViewHeight = NSLayoutConstraint(item: self.questionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 90*self.heightRatio)
         self.mainView.addConstraint(qViewHeight)
-        
-        //Set passageView topMenu
-        let layer1:UIView = UIView()
-        let layer2:UIView = UIView()
-        self.passageView.addSubview(layer1)
-        self.passageView.addSubview(layer2)
-        
-        layer1.translatesAutoresizingMaskIntoConstraints = false
-        layer2.translatesAutoresizingMaskIntoConstraints = false
-        
-        let layer1top:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-        let layer1left:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let layer1right:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let layer1height:NSLayoutConstraint = NSLayoutConstraint(item: layer1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 20*self.heightRatio)
-        self.passageView.addConstraints([layer1left,layer1right,layer1top])
-        layer1.addConstraint(layer1height)
-        
-        let layer2top:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 5*self.heightRatio)
-        let layer2left:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let layer2right:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.passageView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let layer2height:NSLayoutConstraint = NSLayoutConstraint(item: layer2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 30*self.heightRatio)
-        self.passageView.addConstraints([layer2left,layer2right,layer2top])
-        layer2.addConstraint(layer2height)
-        
-        layer1.backgroundColor = UIColor.blackColor()
-        layer2.backgroundColor = UIColor.blackColor()
-        layer1.layer.cornerRadius = 8.0
-        
-        let passageText:UILabel = UILabel()
-        layer2.addSubview(passageText)
-        passageText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        passageText.textColor = UIColor.whiteColor()
-        passageText.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(16))
-        passageText.textAlignment = NSTextAlignment.Center
-        passageText.text = ""
-        
-        //Design of passageView
-        self.passageView.addSubview(self.passageLabel)
-        self.passageLabel.setConstraintsToSuperview(Int(50*self.heightRatio), bottom: Int(40*self.heightRatio), left: Int(40*self.widthRatio), right: Int(40*self.widthRatio))
-        self.passageLabel.textColor = UIColor.whiteColor()
-        self.passageView.backgroundColor = UIColor.blackColor()
-        self.passageLabel.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(16))
-        self.passageLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
-        self.passageView.layer.cornerRadius = 10.0
-        self.passageLabel.textAlignment = NSTextAlignment.Justified
         
         //update questionView
         self.questionView.addSubview(self.questionLabel)
@@ -245,13 +196,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         self.questionLabel.backgroundColor = UIColor(white: 0, alpha: 0)
         self.questionView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         self.questionView.layer.cornerRadius = 8.0
-        
-        //Update top constraint
-        let passageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 100*self.heightRatio)
-        let passageViewRight:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let passageViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let passageViewBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.passageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.mainView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        self.mainView.addConstraints([passageViewTop,passageViewRight,passageViewLeft,passageViewBottom])
         
         //Create nextButton
         let nextUIView:UIView = UIView()
@@ -284,7 +228,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         
         //Display questions
         self.displayedQuestionIndex = 0
-        self.quizzArray = self.quizzModel.selectProgramming(self.totalNumberOfQuestions+1)
+        self.quizzArray = self.quizzModel.selectTechnology(self.totalNumberOfQuestions+1)
         self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
         
         //Initialize swipeUIView
@@ -292,20 +236,12 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         self.swipeUIView.translatesAutoresizingMaskIntoConstraints = false
         self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 390*self.heightRatio)
         self.swipeUIView.addConstraint(self.swipeMenuHeightConstraint)
-        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 320*self.heightRatio)
+        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 5*self.heightRatio)
         let leftMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
         let rightMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20*self.widthRatio)
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
         self.swipeUIView.backgroundColor = UIColor.whiteColor()
         self.swipeUIView.layer.cornerRadius = 8.0
-        var swipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        var swipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        swipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showSwipeMenu:"))
-        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
-        self.swipeUIView.addGestureRecognizer(swipeUpGesture)
-        swipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideSwipeMenu:"))
-        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
-        self.swipeUIView.addGestureRecognizer(swipeDownGesture)
         
         if self.showTutorial == true {
             
@@ -388,10 +324,10 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoView.addConstraints([descriptionImageViewCenterX, descriptionImageViewCenterY])
             
             //Tutorial Title
-            let labelString:String = String("PROGRAMMING TEST")
+            let labelString:String = String("TECHNOLOGY TEST")
             let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
             attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 7, length: NSString(string: labelString).length-7))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 11, length: NSString(string: labelString).length-11))
             attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
             self.logoImageView.attributedText = attributedString
             
@@ -430,10 +366,9 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             
             //Set tutorial text
             self.tutoDescriptionTitle.text = "Test Description:"
-            self.tutoDescriptionText.text = "You will be tested on your ability to understand and write code. This test does not explicitely refer to one programming language in particular, but rather tests you on the coding logic in general. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
+            self.tutoDescriptionText.text = "You will be tested on your ability to read a passage and answer logical questions in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
             self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
-            self.passageView.alpha = 0.0
             
             //Set Tutorial page
             self.tutoPage = 1
@@ -462,12 +397,9 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoDescriptionSep.alpha = 0.0
             self.view.bringSubviewToFront(self.mainView)
             self.view.bringSubviewToFront(self.swipeUIView)
-            self.passageView.alpha = 1.0
             self.nextButton.text = "Continue"
         }
         if self.tutoPage==4 {
-            self.hideSwipeMenu(UISwipeGestureRecognizer())
-            self.passageView.alpha = 0.0
             self.view.bringSubviewToFront(self.tutoView)
             self.nextButton.text = "Next"
             self.tutoSkipButton.alpha = 1.0
@@ -481,7 +413,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         }
         if self.tutoPage==5 {
             self.tutoView.alpha = 0
-            self.passageView.alpha = 1.0
             self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             self.showTutorial = false
@@ -491,31 +422,10 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
     }
     
     func tutoSkip(sender:UITapGestureRecognizer) {
-        self.passageView.alpha = 1.0
         self.showTutorial = false
         self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.tutoView.alpha = 0.0
-            }, completion: nil)
-    }
-    
-    //Show Swipe Menu
-    func showSwipeMenu(sender: UISwipeGestureRecognizer) {
-        UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
-            self.view.layoutIfNeeded()
-            self.passageView.alpha = 0.0
-            self.descriptionSwipeLabel.text = "Swipe down for Question"
-            }, completion: nil)
-    }
-    
-    //Hie Swipe Menu
-    func hideSwipeMenu(sender: UISwipeGestureRecognizer) {
-        UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
-            self.view.layoutIfNeeded()
-            self.passageView.alpha = 1.0
-            self.descriptionSwipeLabel.text = "Swipe up for Answers"
             }, completion: nil)
     }
     
@@ -590,7 +500,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         
     }
     
-    func displayQuestion(arrayOfQuestions:[programmingQuestion], indexQuestion:Int) {
+    func displayQuestion(arrayOfQuestions:[technologyQuestion], indexQuestion:Int) {
         
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
@@ -600,7 +510,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
-        self.passageLabel.text = self.quizzArray[indexQuestion].codePassage
         
         //Update the view with the new question
         let questionText:String = arrayOfQuestions[indexQuestion].question
@@ -729,11 +638,11 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
                         SwiftSpinner.show("Saving Results")
                         
                         let user = PFUser.currentUser()
-                        let analytics = PFObject(className: PF_PROG_CLASS_NAME)
-                        analytics[PF_PROG_USER] = user
-                        analytics[PF_PROG_SCORE] = self.scoreRatio
-                        analytics[PF_PROG_TIME] = timeTaken
-                        analytics[PF_PROG_USERNAME] = user![PF_USER_USERNAME]
+                        let analytics = PFObject(className: PF_TECH_CLASS_NAME)
+                        analytics[PF_TECH_USER] = user
+                        analytics[PF_TECH_SCORE] = self.scoreRatio
+                        analytics[PF_TECH_TIME] = timeTaken
+                        analytics[PF_TECH_USERNAME] = user![PF_USER_USERNAME]
                         
                         analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                             if error == nil {
@@ -762,12 +671,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
                 }
                     //Continue to the next question
                 else {
-                    UIView.animateWithDuration(1, animations: {
-                        self.swipeMenuBottomConstraint.constant = 315*self.heightRatio
-                        self.view.layoutIfNeeded()
-                        self.passageView.alpha = 1.0
-                        self.descriptionSwipeLabel.text = "Swipe up for Answers"
-                        }, completion: nil)
                     self.displayedQuestionIndex++
                     if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                         //Switch Button text to "Complete"
@@ -909,10 +812,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             }
             
             UIView.animateWithDuration(1, animations: {
-                self.swipeMenuBottomConstraint.constant = 315*self.heightRatio
-                self.view.layoutIfNeeded()
-                self.passageView.alpha = 1.0
-                self.descriptionSwipeLabel.text = "Swipe up for Explanation"
                 self.nextButton.text = "Return to Results"
                 }, completion: nil)
             
@@ -920,7 +819,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             self.answerView.addSubview(feedbackLabel)
             
             feedbackLabel.setConstraintsToSuperview(Int(10*self.heightRatio), bottom: Int(10*self.heightRatio), left: Int(30*self.widthRatio), right: Int(30*self.widthRatio))
-            feedbackLabel.text = self.quizzArray[questionFeedback].feedback
+            feedbackLabel.text = self.quizzArray[questionFeedback].explanation
             feedbackLabel.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(14))
             
             if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {

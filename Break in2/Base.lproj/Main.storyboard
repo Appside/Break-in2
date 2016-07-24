@@ -75,6 +75,7 @@
                         <segue destination="BGa-Dr-Nn6" kind="show" identifier="fractionsSelected" id="O30-qH-PLu"/>
                         <segue destination="FZZ-Nf-FJX" kind="show" identifier="logicalReasoningSelected" id="V4A-0V-PLC"/>
                         <segue destination="MSz-O2-LZB" kind="show" identifier="programmingSelected" id="We6-ps-ZAP"/>
+                        <segue destination="RB9-0L-aoj" kind="show" identifier="technologySelected" id="mCH-9s-uAH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="flz-ZY-m6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -290,6 +291,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ee2-Nw-vZp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2730" y="1567"/>
+        </scene>
+        <!--Technology View Controller-->
+        <scene sceneID="CN1-4W-lNQ">
+            <objects>
+                <viewController id="RB9-0L-aoj" customClass="technologyViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j9f-vq-PTY"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Uv-Xa-FHh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="q95-jA-JSP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="so5-KN-hxF" kind="show" identifier="backHomeSegue" id="YTi-jW-aRL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FGy-Yd-XNm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1993" y="2231"/>
         </scene>
         <!--Programming View Controller-->
         <scene sceneID="JyG-hS-hp3">

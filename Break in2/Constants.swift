@@ -126,3 +126,20 @@ let PF_BRAINBREAKER_A_FULLNAME			= "fullname"				//	String
 let PF_BRAINBREAKER_A_ANSWER_CORRECT    = "answerCorrect"           //  Number
 let PF_BRAINBREAKER_A_Q_NUMBER          = "questionNumber"            //  Number
 
+/* Programming class in Parse*/
+let PF_PROG_CLASS_NAME              = "Programming"               //	Class name
+let PF_PROG_USER                    = "user"					//	Pointer to User Class
+let PF_PROG_CREATED                 = "createdAt"               //	Date
+let PF_PROG_TIME                    = "time"                    //	Number
+let PF_PROG_USERNAME                = "username"				//	String
+let PF_PROG_TEST                    = "test"                    //	String
+let PF_PROG_SCORE                   = "score"                   //	Number
+
+/* Technology class in Parse*/
+let PF_TECH_CLASS_NAME              = "Technology"               //	Class name
+let PF_TECH_USER                    = "user"					//	Pointer to User Class
+let PF_TECH_CREATED                 = "createdAt"               //	Date
+let PF_TECH_TIME                    = "time"                    //	Number
+let PF_TECH_USERNAME                = "username"				//	String
+let PF_TECH_TEST                    = "test"                    //	String
+let PF_TECH_SCORE                   = "score"                   //	Number

@@ -46,8 +46,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   var testTypes:[String] = [String]()
   var comingSoonTestTypes:[String] = [String]()
-  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG", "Arithmetic Reasoning":"arithmeticBG", "Sequences":"arithmeticBG", "Fractions":"arithmeticBG", "Programming":"arithmeticBG", "Help Us Add More Tests:":"numericalBG"]
-  let testTypeSegues:[String:String] = ["Numerical Reasoning":"numericalReasoningSelected","Verbal Reasoning":"verbalReasoningSelected","Logical Reasoning":"logicalReasoningSelected","Arithmetic Reasoning":"arithmeticReasoningSelected","Sequences":"sequencesSelected","Fractions":"fractionsSelected","Programming":"programmingSelected"]
+  let testTypeBackgroundImages:[String:String] = ["Numerical Reasoning":"numericalBG", "Verbal Reasoning":"verbalBG", "Logical Reasoning":"logicalBG", "Arithmetic Reasoning":"arithmeticBG", "Sequences":"arithmeticBG", "Fractions":"arithmeticBG", "Programming":"arithmeticBG", "Technology":"arithmeticBG","Help Us Add More Tests:":"numericalBG"]
+  let testTypeSegues:[String:String] = ["Numerical Reasoning":"numericalReasoningSelected","Verbal Reasoning":"verbalReasoningSelected","Logical Reasoning":"logicalReasoningSelected","Arithmetic Reasoning":"arithmeticReasoningSelected","Sequences":"sequencesSelected","Fractions":"fractionsSelected","Programming":"programmingSelected","Technology":"technologySelected"]
   let testDifficulties:[String] = ["E", "M", "H"]
   
   // Declare and intialize views
