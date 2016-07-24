@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SwiftSpinner
+import Parse
+import ParseUI
 
 class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
@@ -48,7 +51,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     self.currentYear = self.userCalendar.component(NSCalendarUnit.Year, fromDate: self.todaysDate)
     self.currentMonth = self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate)
     
-    self.jobDeadlines = self.calendarModel.getJobDeadlines()
+    //self.jobDeadlines = self.calendarModel.getJobDeadlines()
     self.chosenCareers = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
         
         //self.calendarModel.getAppVariables("chosenCareers") as! [String]
@@ -483,25 +486,124 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
   func getJobDeadlinesForMonth(month: Int, year: Int) -> [[String:AnyObject]] {
     
+    SwiftSpinner.show("Loading")
+    let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
+    
     var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
     
-    for var index = 0 ; index < self.jobDeadlines.count ; index++ {
-      
-      if self.chosenCareers.contains(self.jobDeadlines[index]["career"] as! String) {
-        if self.jobDeadlines[index]["year"] as! Int == year {
-          if self.jobDeadlines[index]["month"] as! Int == month {
-            deadlines.append(self.jobDeadlines[index])
-          }
+    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: month)
+    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: year)
+    
+    query.findObjectsInBackgroundWithBlock {
+        (objects: [PFObject]?, error: NSError?) -> Void in
+        
+        if error == nil {
+            
+            // The find succeeded.
+            print("Successfully retrieved \(objects!.count) job deadlines.")
+            
+            // Do something with the found objects
+            if let objects = objects {
+                
+                var deadlinesIndividual:[String:AnyObject] = [:]
+                
+                for object in objects {
+                    
+                    print(object[PF_CALENDAR_CAREERTYPE] as! String)
+                    print(self.chosenCareers)
+                        
+                        if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
+                        
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+
+                            deadlines.append(deadlinesIndividual)
+                            print(deadlines)
+                            
+                                }
+                            }
+            
+        } else {
+            // Log details of the failure
+            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                
+                SwiftSpinner.hide()
+                
+                }, subtitle: "Tap to dismiss")
         }
-      }
-      
-      
+    }
       
     }
     
+    print(deadlines)
     return deadlines
+    
   }
   
+    //ASYNCHRONOUS DOWNLOAD
+    
+//    func getJobDeadlinesForMonth(month: Int, year: Int) -> [[String:AnyObject]] {
+//        
+//        SwiftSpinner.show("Loading")
+//        let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
+//        
+//        var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
+//        
+//        query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: month)
+//        query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: year)
+//        
+//        do {
+//            let objects:[PFObject] = try query.findObjects()
+//            
+//            print("Successfully retrieved \(objects.count) job deadlines.")
+//            
+//            // Do something with the found objects
+//            //if let objects = objects {
+//            
+//            var deadlinesIndividual:[String:AnyObject] = [:]
+//            
+//            for object in objects {
+//                
+//                print(object[PF_CALENDAR_CAREERTYPE] as! String)
+//                print(self.chosenCareers)
+//                
+//                if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
+//                    
+//                    deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
+//                    deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
+//                    deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
+//                    deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
+//                    deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
+//                    deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+//                    
+//                    deadlines.append(deadlinesIndividual)
+//                    print(deadlines)
+//                    
+//                }
+//            }
+//            
+//        }catch{
+//            
+//            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+//                
+//                SwiftSpinner.hide()
+//                
+//                }, subtitle: "Tap to dismiss")
+//        }
+//        
+//        //    }
+//        //
+//        //    }
+//        
+//        print(deadlines)
+//        return deadlines
+//        
+//    }
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
