@@ -139,11 +139,33 @@
                     <connections>
                         <segue destination="so5-KN-hxF" kind="show" identifier="backFromEditProfile" animates="NO" id="F0f-T8-cql"/>
                         <segue destination="qPe-jy-3Ia" kind="show" identifier="showTutorialFromSettings" animates="NO" id="ozu-v7-0io"/>
+                        <segue destination="qMK-dk-gfg" kind="show" identifier="goToProfilePage" id="kZI-Nr-0I8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DtD-yn-t8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2851" y="-674"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="2bd-rl-9wA">
+            <objects>
+                <viewController id="qMK-dk-gfg" customClass="ProfileViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sMS-Az-ctS"/>
+                        <viewControllerLayoutGuide type="bottom" id="rUK-mH-gHv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uJ0-Hr-Xky">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="itC-MS-TAe" kind="show" identifier="backSettingsSegue" id="eku-li-aYg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8xy-4W-oQS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3563" y="-674"/>
         </scene>
         <!--Statistics View Controller-->
         <scene sceneID="uqf-l3-6Bd">
@@ -336,7 +358,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Z2O-uS-5Gc"/>
+        <segue reference="F0f-T8-cql"/>
+        <segue reference="eku-li-aYg"/>
         <segue reference="ozu-v7-0io"/>
     </inferredMetricsTieBreakers>
 </document>

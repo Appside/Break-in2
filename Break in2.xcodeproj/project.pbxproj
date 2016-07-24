@@ -51,6 +51,7 @@
 		49B391A21D450DC700D45444 /* Technology.json in Resources */ = {isa = PBXBuildFile; fileRef = 49B391A11D450DC700D45444 /* Technology.json */; };
 		49B391A41D450E0400D45444 /* technologyQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A31D450E0400D45444 /* technologyQuestion.swift */; };
 		49B391A61D450E1D00D45444 /* technologyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A51D450E1D00D45444 /* technologyViewController.swift */; };
+		49B391A81D4520ED00D45444 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A71D4520ED00D45444 /* ProfileViewController.swift */; };
 		49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */; };
 		49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
@@ -146,6 +147,7 @@
 		49B391A11D450DC700D45444 /* Technology.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Technology.json; sourceTree = "<group>"; };
 		49B391A31D450E0400D45444 /* technologyQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = technologyQuestion.swift; sourceTree = "<group>"; };
 		49B391A51D450E1D00D45444 /* technologyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = technologyViewController.swift; sourceTree = "<group>"; };
+		49B391A71D4520ED00D45444 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
 		49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticQuestion.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
@@ -322,6 +324,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		49B391A91D4520FC00D45444 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				49B391A71D4520ED00D45444 /* ProfileViewController.swift */,
+			);
+			name = ProfileView;
+			sourceTree = "<group>";
+		};
 		6143163B1BEF843A0047A37D = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +366,7 @@
 				253AC83E1C27218100495DF5 /* JSONModel.swift */,
 				25ACFC781C42A3AA00699604 /* TutorialViewController.swift */,
 				252C461E1C430D11000B5B3D /* TutorialDescriptionView.swift */,
+				49B391A91D4520FC00D45444 /* ProfileView */,
 				25849DC11C333D2C006C8A17 /* StatisticsView */,
 				252670141C23787A007D55BE /* CalendarView */,
 				255264B11C1F0DA800E64D33 /* SettingsView */,
@@ -699,6 +710,7 @@
 				494D5FB21D3BD04B005A1511 /* programmingQuestion.swift in Sources */,
 				617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */,
 				49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */,
+				49B391A81D4520ED00D45444 /* ProfileViewController.swift in Sources */,
 				2526701D1C2378A6007D55BE /* CalendarDaysTitleView.swift in Sources */,
 				61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */,
 			);
