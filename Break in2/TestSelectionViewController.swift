@@ -828,7 +828,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
               
               let backAlert = SCLAlertView()
               backAlert.showCloseButton = false
-                backAlert.addButton("Buy \(numberOfAdditionalLives) Lives", action: ({
+                backAlert.addButton("Buy \(self.numberOfAdditionalLives) Lives", action: ({
                     
                     SwiftSpinner.show("Purchasing")
                     self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
