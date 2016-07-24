@@ -143,16 +143,16 @@
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
 		49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticQuestion.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
-		614316441BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Break IN2.temp_caseinsensitive_rename.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		614316441BEF843A0047A37D /* Break in2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Break in2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316471BEF843A0047A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6143164C1BEF843A0047A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6143164E1BEF843A0047A37D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		614316511BEF843A0047A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		614316531BEF843A0047A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		614316581BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Break IN2.temp_caseinsensitive_rename.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		614316581BEF843A0047A37D /* Break in2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Break in2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6143165C1BEF843A0047A37D /* Break_in2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Break_in2Tests.swift; sourceTree = "<group>"; };
 		6143165E1BEF843A0047A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		614316631BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Break IN2.temp_caseinsensitive_rename.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		614316631BEF843A0047A37D /* Break in2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Break in2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316671BEF843A0047A37D /* Break_in2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Break_in2UITests.swift; sourceTree = "<group>"; };
 		614316691BEF843A0047A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61517DF71C42AE1C00C570A9 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
@@ -329,9 +329,9 @@
 		614316451BEF843A0047A37D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				614316441BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.app */,
-				614316581BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.xctest */,
-				614316631BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.xctest */,
+				614316441BEF843A0047A37D /* Break in2.app */,
+				614316581BEF843A0047A37D /* Break in2Tests.xctest */,
+				614316631BEF843A0047A37D /* Break in2UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -456,7 +456,7 @@
 			);
 			name = "Break in2";
 			productName = "Break in2";
-			productReference = 614316441BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.app */;
+			productReference = 614316441BEF843A0047A37D /* Break in2.app */;
 			productType = "com.apple.product-type.application";
 		};
 		614316571BEF843A0047A37D /* Break in2Tests */ = {
@@ -474,7 +474,7 @@
 			);
 			name = "Break in2Tests";
 			productName = "Break in2Tests";
-			productReference = 614316581BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.xctest */;
+			productReference = 614316581BEF843A0047A37D /* Break in2Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		614316621BEF843A0047A37D /* Break in2UITests */ = {
@@ -492,7 +492,7 @@
 			);
 			name = "Break in2UITests";
 			productName = "Break in2UITests";
-			productReference = 614316631BEF843A0047A37D /* Break IN2.temp_caseinsensitive_rename.xctest */;
+			productReference = 614316631BEF843A0047A37D /* Break in2UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -524,7 +524,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6143163F1BEF843A0047A37D /* Build configuration list for PBXProject "Break IN2" */;
+			buildConfigurationList = 6143163F1BEF843A0047A37D /* Build configuration list for PBXProject "Break in2" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -760,8 +760,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Appside Ltd (D68645WX3A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Appside Ltd (D68645WX3A)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -783,7 +782,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "6ab55ff8-a08d-4ea2-9f63-bd8005614323";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -807,8 +806,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Appside Ltd (D68645WX3A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Appside Ltd (D68645WX3A)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -823,7 +821,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "6ab55ff8-a08d-4ea2-9f63-bd8005614323";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -841,7 +839,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
-				PRODUCT_NAME = "Break IN2.temp_caseinsensitive_rename";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -858,7 +856,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
-				PRODUCT_NAME = "Break IN2.temp_caseinsensitive_rename";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -871,8 +869,8 @@
 				INFOPLIST_FILE = "Break in2Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2Tests";
-				PRODUCT_NAME = "Break IN2.temp_caseinsensitive_rename";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Break IN2.temp_caseinsensitive_rename.app/Break IN2.temp_caseinsensitive_rename";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Break in2.app/Break in2";
 			};
 			name = Debug;
 		};
@@ -883,8 +881,8 @@
 				INFOPLIST_FILE = "Break in2Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2Tests";
-				PRODUCT_NAME = "Break IN2.temp_caseinsensitive_rename";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Break IN2.temp_caseinsensitive_rename.app/Break IN2.temp_caseinsensitive_rename";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Break in2.app/Break in2";
 			};
 			name = Release;
 		};
@@ -894,7 +892,7 @@
 				INFOPLIST_FILE = "Break in2UITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2UITests";
-				PRODUCT_NAME = "Break IN2.temp_caseinsensitive_rename";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = "Break in2";
 				USES_XCTRUNNER = YES;
 			};
@@ -906,7 +904,7 @@
 				INFOPLIST_FILE = "Break in2UITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2UITests";
-				PRODUCT_NAME = "Break IN2.temp_caseinsensitive_rename";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = "Break in2";
 				USES_XCTRUNNER = YES;
 			};
@@ -915,7 +913,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6143163F1BEF843A0047A37D /* Build configuration list for PBXProject "Break IN2" */ = {
+		6143163F1BEF843A0047A37D /* Build configuration list for PBXProject "Break in2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6143166A1BEF843A0047A37D /* Debug */,

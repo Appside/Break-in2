@@ -31,9 +31,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var startTime:CFAbsoluteTime = CFAbsoluteTime()
   var counter:Int = Int()
   var secondsRemaining:Int = Int()
-  var secondsBetweenLives:Int = 24 * 3600
+  var secondsBetweenLives:Int = 12 * 3600
   var lifeOrLives:String = String()
-  var numberOfAdditionalLives:Int = 5
     
   //in app purchase initialisation
     
@@ -263,7 +262,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.backButton.alpha = 0
     
     self.testLivesUpgradeButton1.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.testLivesUpgradeButton1.setTitle("Buy \(numberOfAdditionalLives) Lives", forState: UIControlState.Normal)
+    self.testLivesUpgradeButton1.setTitle("Buy 10 Lives", forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.backgroundColor = UIColor.turquoiseColor()
     self.testLivesUpgradeButton1.addTarget(self, action: "addLives:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -761,7 +760,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
         let backAlert = SCLAlertView()
         backAlert.showCloseButton = false
-        backAlert.addButton("Buy \(numberOfAdditionalLives) Lives", action: ({
+        backAlert.addButton("Buy 10 Lives", action: ({
             
             SwiftSpinner.show("Purchasing")
             //self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
@@ -828,7 +827,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
               
               let backAlert = SCLAlertView()
               backAlert.showCloseButton = false
-                backAlert.addButton("Buy \(numberOfAdditionalLives) Lives", action: ({
+                backAlert.addButton("Buy 10 Lives", action: ({
                     
                     SwiftSpinner.show("Purchasing")
                     self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
@@ -1040,10 +1039,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     func extraLives(){
         
-        self.numberOfTestsTotal = self.numberOfTestsTotal + numberOfAdditionalLives
+        self.numberOfTestsTotal = self.numberOfTestsTotal + 10
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
         
-        SwiftSpinner.show("You Have Purchased \(numberOfAdditionalLives) Additional Lives", animated: false).addTapHandler({
+        SwiftSpinner.show("You Have Purchased 10 Additional Lives", animated: false).addTapHandler({
             SwiftSpinner.hide()
             }, subtitle: "We encourage you to put them to good use!")
         
@@ -1057,12 +1056,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
         addLivesTapped()
         
-        self.numberOfTestsTotal = self.numberOfTestsTotal + numberOfAdditionalLives
+        self.numberOfTestsTotal = self.numberOfTestsTotal + 10
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
         self.numberOfTestsTotal--
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
         
-        SwiftSpinner.show("You Have Purchased \(numberOfAdditionalLives) Additional Lives", animated: false).addTapHandler({
+        SwiftSpinner.show("You Have Purchased 10 Additional Lives", animated: false).addTapHandler({
             self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
             SwiftSpinner.hide()
             }, subtitle: "We encourage you to put them to good use!")

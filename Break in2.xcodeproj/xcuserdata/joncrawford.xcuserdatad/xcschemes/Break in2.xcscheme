@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "614316431BEF843A0047A37D"
-               BuildableName = "Break IN2.temp_caseinsensitive_rename.app"
+               BuildableName = "Break in2.app"
                BlueprintName = "Break in2"
-               ReferencedContainer = "container:Break IN2.xcodeproj">
+               ReferencedContainer = "container:Break in2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "614316571BEF843A0047A37D"
-               BuildableName = "Break IN2.temp_caseinsensitive_rename.xctest"
+               BuildableName = "Break in2Tests.xctest"
                BlueprintName = "Break in2Tests"
-               ReferencedContainer = "container:Break IN2.xcodeproj">
+               ReferencedContainer = "container:Break in2.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "614316621BEF843A0047A37D"
-               BuildableName = "Break IN2.temp_caseinsensitive_rename.xctest"
+               BuildableName = "Break in2UITests.xctest"
                BlueprintName = "Break in2UITests"
-               ReferencedContainer = "container:Break IN2.xcodeproj">
+               ReferencedContainer = "container:Break in2.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "614316431BEF843A0047A37D"
-            BuildableName = "Break IN2.temp_caseinsensitive_rename.app"
+            BuildableName = "Break in2.app"
             BlueprintName = "Break in2"
-            ReferencedContainer = "container:Break IN2.xcodeproj">
+            ReferencedContainer = "container:Break in2.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "614316431BEF843A0047A37D"
-            BuildableName = "Break IN2.temp_caseinsensitive_rename.app"
+            BuildableName = "Break in2.app"
             BlueprintName = "Break in2"
-            ReferencedContainer = "container:Break IN2.xcodeproj">
+            ReferencedContainer = "container:Break in2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "614316431BEF843A0047A37D"
-            BuildableName = "Break IN2.temp_caseinsensitive_rename.app"
+            BuildableName = "Break in2.app"
             BlueprintName = "Break in2"
-            ReferencedContainer = "container:Break IN2.xcodeproj">
+            ReferencedContainer = "container:Break in2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
