@@ -160,7 +160,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="itC-MS-TAe" kind="show" identifier="backSettingsSegue" id="eku-li-aYg"/>
+                        <segue destination="so5-KN-hxF" kind="show" identifier="backSettingsSegue" id="xOh-Qa-41L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8xy-4W-oQS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -358,8 +358,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="F0f-T8-cql"/>
-        <segue reference="eku-li-aYg"/>
+        <segue reference="xOh-Qa-41L"/>
         <segue reference="ozu-v7-0io"/>
     </inferredMetricsTieBreakers>
 </document>
