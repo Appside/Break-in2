@@ -1,27 +1,15 @@
 //
-//  CalendarMonthView.swift
-//  Break in2
+//  NewMonthView.swift
+//  TestSelectionScreen
 //
-//  Created by Sangeet on 15/12/2015.
-//  Copyright © 2015 Sangeet Shah. All rights reserved.
+//  Created by Sangeet on 30/07/2016.
+//  Copyright © 2016 Sangeet Shah. All rights reserved.
 //
 
 import UIKit
 
-protocol CalendarMonthViewDelegate {
-  
-  func getJobDeadlinesForMonth(month:Int, year:Int) -> [[String:AnyObject]]
-  func calendarDayButtonClicked(sender: CalendarDayButton)
-  
-}
+class NewMonthView: UIView {
 
-class CalendarMonthView: UIView {
-  
-  var delegate:CalendarMonthViewDelegate?
-  
-  let calendarDaysTitleView:CalendarDaysTitleView = CalendarDaysTitleView()
-  var calendarDayButtons:[CalendarDayButton] = [CalendarDayButton]()
-  
   var daysOfTheWeek:[String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
   
   var daysOfTheWeekLabels:[UILabel] = [UILabel]()
@@ -36,7 +24,6 @@ class CalendarMonthView: UIView {
   var startingWeekday:Int = 0
   var numberOfDaysInMonth:Int = 0
   var numberOfDaysInPreviousMonth:Int = 0
-  var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -89,14 +76,13 @@ class CalendarMonthView: UIView {
         
       }
     }
-    
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
   }
   
-  func displayView(columnWidth:CGFloat, rowHeight:CGFloat) {
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  func displayView() {
     
     // Get number of days in month and month starting day
     
@@ -174,44 +160,9 @@ class CalendarMonthView: UIView {
         
       }
     }
-    
+
     for dayButton in self.dayButtons {
       dayButton.setNeedsDisplay()
-    }
-    
-    // Get deadline dates
-    
-    if let unwrappedDelegate = self.delegate {
-      self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
-    }
-    
-    // Display dates with deadlines
-    
-    for index:Int in 0.stride(to: self.deadlines.count, by: 1) {
-      
-      if self.startingWeekday == 1 {
-        
-        let deadline:[String:AnyObject] = self.deadlines[index]
-        self.calendarDayButtons[(deadline["day"] as! Int) + 5].clicked = true
-        
-        let company:String = deadline["company"] as! String
-        let career:String = deadline["career"] as! String
-        let position:String = deadline["position"] as! String
-        self.calendarDayButtons[(deadline["day"] as! Int) + 5].deadlines.append([company,career,position])
-        
-      }
-      else {
-        
-        let deadline:[String:AnyObject] = self.deadlines[index]
-        self.calendarDayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].clicked = true
-        
-        let company:String = deadline["company"] as! String
-        let career:String = deadline["career"] as! String
-        let position:String = deadline["position"] as! String
-        self.calendarDayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].deadlines.append([company,career,position])
-
-      }
-      
     }
     
   }
@@ -270,26 +221,13 @@ class CalendarMonthView: UIView {
           self.addConstraint(dayButtonLeftConstraint)
           
         }
-        
+
       }
     }
-
   }
   
-  func calendarDayButtonClicked(sender:CalendarDayButton) {
+  func calendarDayButtonClicked(button:UIButton) {
     
-    self.delegate?.calendarDayButtonClicked(sender)
-    
-    /*if sender.clicked {
-      sender.clicked = false
-      sender.setNeedsDisplay()
-    }
-    else {
-      sender.clicked = true
-      sender.drawCircle(3)
-    }*/
-    
-
   }
     /*
     // Only override drawRect: if you perform custom drawing.

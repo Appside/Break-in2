@@ -19,6 +19,8 @@
 		2526701D1C2378A6007D55BE /* CalendarDaysTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */; };
 		2526701E1C2378A6007D55BE /* CalendarDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670191C2378A6007D55BE /* CalendarDayButton.swift */; };
 		252C461F1C430D11000B5B3D /* TutorialDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252C461E1C430D11000B5B3D /* TutorialDescriptionView.swift */; };
+		2532EEB11D4E417E000EAABB /* NewCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2532EEAF1D4E417E000EAABB /* NewCalendarView.swift */; };
+		2532EEB21D4E417E000EAABB /* NewMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2532EEB01D4E417E000EAABB /* NewMonthView.swift */; };
 		253796AC1C0DD01200BA00F3 /* LoginTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */; };
 		253AC83C1C2716B700495DF5 /* AppVariables.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83A1C2716B600495DF5 /* AppVariables.json */; };
 		253AC83D1C2716B700495DF5 /* JobDeadlines.json in Resources */ = {isa = PBXBuildFile; fileRef = 253AC83B1C2716B600495DF5 /* JobDeadlines.json */; };
@@ -114,6 +116,8 @@
 		252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDaysTitleView.swift; sourceTree = "<group>"; };
 		252670191C2378A6007D55BE /* CalendarDayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayButton.swift; sourceTree = "<group>"; };
 		252C461E1C430D11000B5B3D /* TutorialDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialDescriptionView.swift; sourceTree = "<group>"; };
+		2532EEAF1D4E417E000EAABB /* NewCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCalendarView.swift; sourceTree = "<group>"; };
+		2532EEB01D4E417E000EAABB /* NewMonthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMonthView.swift; sourceTree = "<group>"; };
 		253796AB1C0DD01200BA00F3 /* LoginTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTutorialView.swift; sourceTree = "<group>"; };
 		253AC83A1C2716B600495DF5 /* AppVariables.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppVariables.json; sourceTree = "<group>"; };
 		253AC83B1C2716B600495DF5 /* JobDeadlines.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = JobDeadlines.json; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 				252670171C2378A6007D55BE /* CalendarMonthView.swift */,
 				252670181C2378A6007D55BE /* CalendarDaysTitleView.swift */,
 				252670191C2378A6007D55BE /* CalendarDayButton.swift */,
+				2532EEAF1D4E417E000EAABB /* NewCalendarView.swift */,
+				2532EEB01D4E417E000EAABB /* NewMonthView.swift */,
 			);
 			name = CalendarView;
 			sourceTree = "<group>";
@@ -665,6 +671,7 @@
 				25E4ACCE1C552C9800C49551 /* LogicalModel.swift in Sources */,
 				25411FF61C1E14EF000118BF /* FacebookButton.swift in Sources */,
 				2526701A1C2378A6007D55BE /* CalendarView.swift in Sources */,
+				2532EEB11D4E417E000EAABB /* NewCalendarView.swift in Sources */,
 				61FF7B8D1C2FDF6C00CD4392 /* TODO.swift in Sources */,
 				25849DC31C333D58006C8A17 /* StatisticsViewController.swift in Sources */,
 				61CAD3481C2760B100B8D887 /* Person.swift in Sources */,
@@ -680,6 +687,7 @@
 				2510B6E31C021C24005AE520 /* PageControllerView.swift in Sources */,
 				49B391A61D450E1D00D45444 /* technologyViewController.swift in Sources */,
 				252C461F1C430D11000B5B3D /* TutorialDescriptionView.swift in Sources */,
+				2532EEB21D4E417E000EAABB /* NewMonthView.swift in Sources */,
 				2526701C1C2378A6007D55BE /* CalendarMonthView.swift in Sources */,
 				49929DA21C42E96800527929 /* sequencesQuestion.swift in Sources */,
 				4993753B1C02573100AA0588 /* numericalQuestion.swift in Sources */,
