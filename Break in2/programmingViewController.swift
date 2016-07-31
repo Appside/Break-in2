@@ -167,7 +167,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         self.timeLabel.userInteractionEnabled = true
         self.swipeMenuTopBar.addSubview(self.descriptionSwipeLabel)
         self.descriptionSwipeLabel.setConstraintsToSuperview(Int(30*self.heightRatio), bottom: 0, left: 0, right: 0)
-        self.descriptionSwipeLabel.text = "Tap for Answers"
+        self.descriptionSwipeLabel.text = "Swipe up for Answers"
         self.descriptionSwipeLabel.font = UIFont(name: "HelveticaNeue-Medium",size: self.view.getTextSize(14))
         self.descriptionSwipeLabel.textAlignment = NSTextAlignment.Center
         self.descriptionSwipeLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
@@ -298,9 +298,14 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
         self.swipeUIView.backgroundColor = UIColor.whiteColor()
         self.swipeUIView.layer.cornerRadius = 8.0
-        var swipeUpGesture:UITapGestureRecognizer = UITapGestureRecognizer()
-        swipeUpGesture = UITapGestureRecognizer.init(target: self, action: Selector("SwipeMenu:"))
+        var swipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
+        var swipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
+        swipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showSwipeMenu:"))
+        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
         self.swipeUIView.addGestureRecognizer(swipeUpGesture)
+        swipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideSwipeMenu:"))
+        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
+        self.swipeUIView.addGestureRecognizer(swipeDownGesture)
         
         if self.showTutorial == true {
             
@@ -461,7 +466,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             self.nextButton.text = "Continue"
         }
         if self.tutoPage==4 {
-            self.SwipeMenu(UITapGestureRecognizer())
+            self.hideSwipeMenu(UISwipeGestureRecognizer())
             self.passageView.alpha = 0.0
             self.view.bringSubviewToFront(self.tutoView)
             self.nextButton.text = "Next"
@@ -493,20 +498,24 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoView.alpha = 0.0
             }, completion: nil)
     }
-
-    func SwipeMenu(sender: UITapGestureRecognizer) {
+    
+    //Show Swipe Menu
+    func showSwipeMenu(sender: UISwipeGestureRecognizer) {
         UIView.animateWithDuration(1, animations: {
-            if(self.swipeMenuBottomConstraint.constant == 320*self.heightRatio) {
-                self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
-                self.view.layoutIfNeeded()
-                self.passageView.alpha = 0.0
-                self.descriptionSwipeLabel.text = "Tap here for Question"
-            }
-            else if (self.swipeMenuBottomConstraint.constant == 5*self.heightRatio) {
-                self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
-                self.view.layoutIfNeeded()
-                self.passageView.alpha = 1.0
-                self.descriptionSwipeLabel.text = "Tap here for Answers"            }
+            self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
+            self.view.layoutIfNeeded()
+            self.passageView.alpha = 0.0
+            self.descriptionSwipeLabel.text = "Swipe down for Question"
+            }, completion: nil)
+    }
+    
+    //Hie Swipe Menu
+    func hideSwipeMenu(sender: UISwipeGestureRecognizer) {
+        UIView.animateWithDuration(1, animations: {
+            self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
+            self.view.layoutIfNeeded()
+            self.passageView.alpha = 1.0
+            self.descriptionSwipeLabel.text = "Swipe up for Answers"
             }, completion: nil)
     }
     
@@ -754,10 +763,10 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
                     //Continue to the next question
                 else {
                     UIView.animateWithDuration(1, animations: {
-                        self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
+                        self.swipeMenuBottomConstraint.constant = 315*self.heightRatio
                         self.view.layoutIfNeeded()
                         self.passageView.alpha = 1.0
-                        self.descriptionSwipeLabel.text = "Tap for Answers"
+                        self.descriptionSwipeLabel.text = "Swipe up for Answers"
                         }, completion: nil)
                     self.displayedQuestionIndex++
                     if self.displayedQuestionIndex==self.totalNumberOfQuestions{
@@ -900,7 +909,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate {
             }
             
             UIView.animateWithDuration(1, animations: {
-                self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
+                self.swipeMenuBottomConstraint.constant = 315*self.heightRatio
                 self.view.layoutIfNeeded()
                 self.passageView.alpha = 1.0
                 self.descriptionSwipeLabel.text = "Swipe up for Explanation"
