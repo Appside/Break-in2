@@ -255,9 +255,8 @@ class TutorialViewController: UIViewController {
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "tutorialEnded" {
-      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      let destinationVC:ProfileViewController = segue.destinationViewController as! ProfileViewController
       destinationVC.firstTimeUser = true
-      destinationVC.segueFromLoginView = false
     }
   }
 

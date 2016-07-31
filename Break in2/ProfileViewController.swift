@@ -29,6 +29,8 @@ class ProfileViewController: UIViewController {
     var pageDescriptionSub:UILabel = UILabel()
     var profileScrollView:UIView = UIView()
     var profileContentView:UIView = UIView()
+    let tutorialNextButton:UIButton = UIButton()
+    var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
     
     let profileEntryHeight:Int = 40
     let nbOfProfileEntries:Int = 3
@@ -38,9 +40,14 @@ class ProfileViewController: UIViewController {
     
     var saveProfileButton:UIButton = UIButton()
     let menuButtonHeight:CGFloat = 50
-    
+    var firstTimeUser:Bool = false
+    var tutorialPageNumber:Int = 0
+    var textSize:CGFloat = 15
+  
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        self.textSize = self.view.getTextSize(15)
         
         //Hide Keyboard
         self.hideKeyboardWhenTappedAround()
@@ -85,6 +92,12 @@ class ProfileViewController: UIViewController {
         self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
         self.backButton.addTarget(self, action: "goBackToSettingsMenu:", forControlEvents: UIControlEvents.TouchUpInside)
         self.backButton.clipsToBounds = true
+      if self.firstTimeUser {
+        self.backButton.alpha = 0
+      }
+      else {
+        self.backButton.alpha = 1
+      }
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         
         let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
@@ -97,7 +110,7 @@ class ProfileViewController: UIViewController {
         
         self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
         self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
-        
+      
         //pageDescription set up
         self.view.addSubview(self.pageDescription)
         self.pageDescription.translatesAutoresizingMaskIntoConstraints = false
@@ -164,7 +177,12 @@ class ProfileViewController: UIViewController {
         
         self.saveProfileButton.backgroundColor = UIColor.turquoiseColor()
         self.saveProfileButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
+      if self.firstTimeUser {
+        self.saveProfileButton.setTitle("Save & Continue", forState: UIControlState.Normal)
+      }
+      else {
         self.saveProfileButton.setTitle("Save Profile", forState: UIControlState.Normal)
+      }
         self.saveProfileButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.saveProfileButton.addTarget(self, action: "saveProfile:", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -280,12 +298,21 @@ class ProfileViewController: UIViewController {
             )
             backAlert.showCloseButton = false
         } else{
+          
+          //Save changes to Parse
+          // Name: entry1Value
+          // Surname: entry2Value
+          // Email address: entry3Value
+          SwiftSpinner.show("Saving changes")
+          
+          if self.firstTimeUser {
+            self.performSegueWithIdentifier("tutorialEnded", sender: sender)
+          }
+          else {
+            // Segue back to Settings?
+          }
             
-            //Save changes to Parse
-            // Name: entry1Value
-            // Surname: entry2Value
-            // Email address: entry3Value
-            SwiftSpinner.show("Saving changes")
+          
             
             
         }
@@ -316,4 +343,12 @@ class ProfileViewController: UIViewController {
             return false
         }
     }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "tutorialEnded" {
+      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      destinationVC.firstTimeUser = true
+      destinationVC.segueFromLoginView = false
+    }
+  }
 }

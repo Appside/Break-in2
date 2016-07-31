@@ -41,6 +41,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Set deadlinesView properties and add as subview to self
     self.deadlinesView.backgroundColor = UIColor.whiteColor()
+    self.deadlinesView.alpha = 0
     self.addSubview(self.deadlinesView)
     
     // Set monthTitleLabel properties and add as subview to self
