@@ -20,7 +20,6 @@ class CalendarMonthView: UIView {
   var delegate:CalendarMonthViewDelegate?
   
   let calendarDaysTitleView:CalendarDaysTitleView = CalendarDaysTitleView()
-  var calendarDayButtons:[CalendarDayButton] = [CalendarDayButton]()
   
   var daysOfTheWeek:[String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
   
@@ -96,7 +95,7 @@ class CalendarMonthView: UIView {
       fatalError("init(coder:) has not been implemented")
   }
   
-  func displayView(columnWidth:CGFloat, rowHeight:CGFloat) {
+  func displayView() {
     
     // Get number of days in month and month starting day
     
@@ -127,6 +126,9 @@ class CalendarMonthView: UIView {
       for index:Int in 6.stride(to: (self.startingWeekday + self.numberOfDaysInMonth + 5), by: 1) {
         self.dayButtons[index].setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         self.dayButtons[index].setTitle(String(index - 5), forState: UIControlState.Normal)
+        self.dayButtons[index].year = self.year
+        self.dayButtons[index].month = self.month
+        self.dayButtons[index].day = index - 5
       }
       for index:Int in (self.startingWeekday + self.numberOfDaysInMonth + 5).stride(to: (7 * 6), by: 1){
         self.dayButtons[index].setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
@@ -141,6 +143,9 @@ class CalendarMonthView: UIView {
       for index:Int in (self.startingWeekday - 2).stride(to: (self.startingWeekday + self.numberOfDaysInMonth - 2), by: 1) {
         self.dayButtons[index].setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         self.dayButtons[index].setTitle(String(index - (self.startingWeekday - 3)), forState: UIControlState.Normal)
+        self.dayButtons[index].year = self.year
+        self.dayButtons[index].month = self.month
+        self.dayButtons[index].day = index - (self.startingWeekday - 3)
       }
       for index:Int in (self.startingWeekday + self.numberOfDaysInMonth - 2).stride(to: (7 * 6), by: 1) {
         self.dayButtons[index].setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
@@ -155,9 +160,10 @@ class CalendarMonthView: UIView {
     // Highlight today's date
     let todaysDay:Int = self.userCalendar.component(NSCalendarUnit.Day, fromDate: self.todaysDate)
     
-    // Clear previously highlighted today' dates
+    // Clear previously highlighted dates
     for dayButton in self.dayButtons {
       dayButton.today = false
+      dayButton.clicked = false
     }
     
     if self.year == self.userCalendar.component(NSCalendarUnit.Year, fromDate: self.todaysDate) {
@@ -192,23 +198,23 @@ class CalendarMonthView: UIView {
       if self.startingWeekday == 1 {
         
         let deadline:[String:AnyObject] = self.deadlines[index]
-        self.calendarDayButtons[(deadline["day"] as! Int) + 5].clicked = true
+        self.dayButtons[(deadline["day"] as! Int) + 5].clicked = true
         
         let company:String = deadline["company"] as! String
         let career:String = deadline["career"] as! String
         let position:String = deadline["position"] as! String
-        self.calendarDayButtons[(deadline["day"] as! Int) + 5].deadlines.append([company,career,position])
+        self.dayButtons[(deadline["day"] as! Int) + 5].deadlines.append([company,career,position])
         
       }
       else {
         
         let deadline:[String:AnyObject] = self.deadlines[index]
-        self.calendarDayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].clicked = true
+        self.dayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].clicked = true
         
         let company:String = deadline["company"] as! String
         let career:String = deadline["career"] as! String
         let position:String = deadline["position"] as! String
-        self.calendarDayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].deadlines.append([company,career,position])
+        self.dayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].deadlines.append([company,career,position])
 
       }
       
