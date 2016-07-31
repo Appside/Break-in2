@@ -13,7 +13,7 @@ import Parse
 import ParseUI
 
 class ProfileViewController: UIViewController {
-
+    
     // Declare and intialize views
     var backgroundImageView:UIImageView = UIImageView()
     var mainView:UIView = UIView()
@@ -27,9 +27,9 @@ class ProfileViewController: UIViewController {
     var backButton:UIButton = UIButton()
     var pageDescription:UILabel = UILabel()
     var pageDescriptionSub:UILabel = UILabel()
-    var profileScrollView:UIScrollView = UIScrollView()
+    var profileScrollView:UIView = UIView()
     var profileContentView:UIView = UIView()
- 
+    
     let profileEntryHeight:Int = 40
     let nbOfProfileEntries:Int = 3
     var entry1:UITextField = UITextField()
@@ -41,7 +41,10 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //Hide Keyboard
+        self.hideKeyboardWhenTappedAround()
+        
         //Initialize size variables
         self.screenFrame = UIScreen.mainScreen().bounds
         self.statusBarFrame = UIApplication.sharedApplication().statusBarFrame
@@ -67,7 +70,7 @@ class ProfileViewController: UIViewController {
         self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
         let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-
+        
         let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
         
         let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
@@ -140,10 +143,9 @@ class ProfileViewController: UIViewController {
         self.profileScrollView.setConstraintsToSuperview(Int(self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40), bottom: 3*Int(self.minorMargin)+Int(self.menuButtonHeight), left: Int(self.minorMargin), right: Int(self.minorMargin))
         
         self.profileScrollView.addSubview(self.profileContentView)
+        self.profileContentView.translatesAutoresizingMaskIntoConstraints = false
         self.profileContentView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        
-        let profileContentViewHeight:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profileContentView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.minorMargin*CGFloat(self.nbOfProfileEntries)+CGFloat(self.profileEntryHeight*(self.nbOfProfileEntries)))
-        self.profileContentView.addConstraint(profileContentViewHeight)
+        self.profileContentView.userInteractionEnabled = true
         
         //Save Button
         self.view.addSubview(self.saveProfileButton)
@@ -165,15 +167,17 @@ class ProfileViewController: UIViewController {
         self.saveProfileButton.setTitle("Save Profile", forState: UIControlState.Normal)
         self.saveProfileButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.saveProfileButton.addTarget(self, action: "saveProfile:", forControlEvents: UIControlEvents.TouchUpInside)
-
+        
         //Create profile entries - just copy past to add a new entry
         self.createNewEntry(self.entry1, IndexEntry: 1)
         self.createNewEntry(self.entry2, IndexEntry: 2)
         self.createNewEntry(self.entry3, IndexEntry: 3)
         
-        self.entry1.text = "Name"
-        self.entry2.text = "Surname"
-        self.entry3.text = "Email address"
+        self.entry1.attributedPlaceholder = NSAttributedString(string:"Name", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+        self.entry2.attributedPlaceholder = NSAttributedString(string:"Surname", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+        self.entry3.attributedPlaceholder = NSAttributedString(string:"Email address", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+        
+        
     }
     
     func createNewEntry(EntryImageView:UITextField, IndexEntry:Int) {
@@ -225,5 +229,91 @@ class ProfileViewController: UIViewController {
     
     func saveProfile(sender: UIButton) {
         
+        var entry1Value:String = String()
+        var entry2Value:String = String()
+        var entry3Value:String = String()
+        var alertMessage:String = String()
+        var showErrorMessage:Bool = false
+        
+        entry1Value = entry1.text!
+        entry2Value = entry2.text!
+        entry3Value = entry3.text!
+        
+        //Check entry1Value (Name)
+        if entry3Value.isEmpty {
+            alertMessage = alertMessage + "No email address" + "\n"
+            showErrorMessage = true
+        } else {
+            if !isValidEmail(entry3Value) {
+                alertMessage = alertMessage + "Invalid email address." + "\n"
+                showErrorMessage = true
+            }
+        }
+        if entry2Value.isEmpty {
+            alertMessage = alertMessage + "No surname." + "\n"
+            showErrorMessage = true
+        }
+        if entry1Value.isEmpty {
+            alertMessage = alertMessage + "No name." + "\n"
+            showErrorMessage = true
+        }
+        if !checkName(entry1Value) {
+            alertMessage = alertMessage + "Invalid name." + "\n"
+            showErrorMessage = true
+        }
+        if !checkName(entry2Value) {
+            alertMessage = alertMessage + "Invalid surname." + "\n"
+            showErrorMessage = true
+        }
+        if showErrorMessage == true {
+            
+            //Show Error Message
+            let backAlert = SCLAlertView()
+            backAlert.showTitle(
+                "Return", // Title of view
+                subTitle: alertMessage, // String of view
+                duration: 0.0, // Duration to show before closing automatically, default: 0.0
+                completeText: "Cancel", // Optional button value, default: ""
+                style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
+                colorTextButton: 0xFFFFFF
+            )
+            backAlert.showCloseButton = false
+        } else{
+            
+            //Save changes to Parse
+            // Name: entry1Value
+            // Surname: entry2Value
+            // Email address: entry3Value
+            SwiftSpinner.show("Saving changes")
+            
+            
+        }
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "^(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?(?:(?:(?:[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+(?:\\.[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+)*)|(?:\"(?:(?:(?:(?: )*(?:(?:[!#-Z^-~]|\\[|\\])|(?:\\\\(?:\\t|[ -~]))))+(?: )*)|(?: )+)\"))(?:@)(?:(?:(?:[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)(?:\\.[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)*)|(?:\\[(?:(?:(?:(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))\\.){3}(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))))|(?:(?:(?: )*[!-Z^-~])*(?: )*)|(?:[Vv][0-9A-Fa-f]+\\.[-A-Za-z0-9._~!$&'()*+,;=:]+))\\])))(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?$"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let result = emailTest.evaluateWithObject(testStr)
+        return result
+    }
+    
+    func checkName(testStr:String) -> Bool {
+        let letters = NSCharacterSet.letterCharacterSet()
+        let digits = NSCharacterSet.decimalDigitCharacterSet()
+        var letterCount = 0
+        var digitCount = 0
+        for uni in testStr.unicodeScalars {
+            if letters.longCharacterIsMember(uni.value) {
+                letterCount += 1
+            } else if digits.longCharacterIsMember(uni.value) {
+                digitCount += 1
+            }
+        }
+        if letterCount == testStr.characters.count {
+            return true
+        } else {
+            return false
+        }
     }
 }
