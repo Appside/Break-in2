@@ -143,3 +143,12 @@ let PF_TECH_TIME                    = "time"                    //	Number
 let PF_TECH_USERNAME                = "username"				//	String
 let PF_TECH_TEST                    = "test"                    //	String
 let PF_TECH_SCORE                   = "score"                   //	Number
+
+/* Technology class in Parse*/
+let PF_CALENDAR_CLASS_NAME              = "Jobs"                    //	Class name
+let PF_CALENDAR_DEADLINEDAY             = "deadlineDay"             //	Number
+let PF_CALENDAR_DEADLINEMONTH           = "deadlineMonth"             //	Number
+let PF_CALENDAR_DEADLINEYEAR            = "deadlineYear"             //	Number
+let PF_CALENDAR_CAREERTYPE              = "careerType"				//	String
+let PF_CALENDAR_COMPANY                 = "company"                 //	String
+let PF_CALENDAR_JOBTITLE                = "position"                //	String
