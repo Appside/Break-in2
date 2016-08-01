@@ -43,6 +43,8 @@ class ProfileViewController: UIViewController {
     var firstTimeUser:Bool = false
     var tutorialPageNumber:Int = 0
     var textSize:CGFloat = 15
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,9 +193,39 @@ class ProfileViewController: UIViewController {
         self.createNewEntry(self.entry2, IndexEntry: 2)
         self.createNewEntry(self.entry3, IndexEntry: 3)
         
-        self.entry1.attributedPlaceholder = NSAttributedString(string:"Name", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        self.entry2.attributedPlaceholder = NSAttributedString(string:"Surname", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-        self.entry3.attributedPlaceholder = NSAttributedString(string:"Email address", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+        let profileFirstName = self.defaults.objectForKey("profileFirstName") as! String
+        let profileLastName = self.defaults.objectForKey("profileLastName") as! String
+        let profileEmail = self.defaults.objectForKey("profileEmail") as! String
+        
+        if (profileFirstName == "") {
+            
+            self.entry1.attributedPlaceholder = NSAttributedString(string:"First Name", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+            
+        }else{
+            
+            self.entry1.text = profileFirstName
+            
+        }
+        
+        if (profileLastName == "") {
+            
+            self.entry2.attributedPlaceholder = NSAttributedString(string:"Surname", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+            
+        }else{
+            
+            self.entry2.text = profileLastName
+            
+        }
+        
+        if (profileEmail == "") {
+            
+            self.entry3.attributedPlaceholder = NSAttributedString(string:"Email address", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
+            
+        }else{
+            
+            self.entry3.text = profileEmail
+            
+        }
         
         
     }
@@ -303,7 +335,62 @@ class ProfileViewController: UIViewController {
           // Name: entry1Value
           // Surname: entry2Value
           // Email address: entry3Value
+            
           SwiftSpinner.show("Saving changes")
+            
+            let currentUser = PFUser.currentUser()!
+            //let objID = currentUser.objectId
+            let username = currentUser.username
+            let query = PFQuery(className: PF_USER_CLASS_NAME)
+            query.whereKey(PF_USER_USERNAME, equalTo: username!)
+            //query.getObjectInBackgroundWithId(objID!)
+            query.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    user![PF_USER_EMAIL] = entry3Value
+                    user![PF_USER_FULLNAME_LOWER] = entry1Value + entry2Value
+                    
+                    user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                        if error == nil {
+                            
+                            self.defaults.setObject(entry1Value, forKey: "profileFirstName")
+                            self.defaults.setObject(entry2Value, forKey: "profileLastName")
+                            self.defaults.setObject(entry3Value, forKey: "profileEmail")
+                            
+                            SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                //self.hideSettingsMenuView(sender)
+                                
+                                }, subtitle: "Tap to return to settings")
+                            
+                        } else {
+                            
+                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                
+                                SwiftSpinner.hide()
+                                //self.hideSettingsMenuView(sender)
+                                
+                                }, subtitle: "Preferences unsaved, tap to return to settings")
+                            
+                        }
+                        
+                    })
+                    
+                }else{
+                    
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        //self.hideSettingsMenuView(sender)
+                        
+                        }, subtitle: "Preferences unsaved, to return to settings")
+                    
+                }
+            })
+
+            
           
           if self.firstTimeUser {
             self.performSegueWithIdentifier("tutorialEnded", sender: sender)

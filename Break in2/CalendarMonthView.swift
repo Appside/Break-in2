@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SwiftSpinner
+import ParseUI
+import Parse
 
 protocol CalendarMonthViewDelegate {
   
@@ -36,6 +39,7 @@ class CalendarMonthView: UIView {
   var numberOfDaysInMonth:Int = 0
   var numberOfDaysInPreviousMonth:Int = 0
   var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
+    var chosenCareers:[String] = [String]()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -188,7 +192,7 @@ class CalendarMonthView: UIView {
     // Get deadline dates
     
     if let unwrappedDelegate = self.delegate {
-      self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
+        self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
     }
     
     // Display dates with deadlines

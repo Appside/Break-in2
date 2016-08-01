@@ -465,58 +465,74 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     SwiftSpinner.show("Loading")
     let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
     
-    var deadlines:[[String:AnyObject]] = [["day":12,"month":7,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
+    //var deadlines:[[String:AnyObject]] = [["day":12,"month":7,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
     
-//    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: month)
-//    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: year)
-//    
-//    query.findObjectsInBackgroundWithBlock {
-//      (objects: [PFObject]?, error: NSError?) -> Void in
-//      
-//      if error == nil {
-//        
-//        // The find succeeded.
-//        print("Successfully retrieved \(objects!.count) job deadlines.")
-//        
-//        // Do something with the found objects
-//        if let objects = objects {
-//          
-//          var deadlinesIndividual:[String:AnyObject] = [:]
-//          
-//          for object in objects {
-//            
-//            print(object[PF_CALENDAR_CAREERTYPE] as! String)
-//            print(self.chosenCareers)
-//            
-//            if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
-//              
-//              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
-//              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
-//              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
-//              deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
-//              deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
-//              deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
-//              
-//              deadlines.append(deadlinesIndividual)
-//              print(deadlines)
-//              
-//            }
-//          }
-//          
-//        } else {
-//          // Log details of the failure
-//          SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-//            
-//            SwiftSpinner.hide()
-//            
-//            }, subtitle: "Tap to dismiss")
-//        }
-//      }
-//      
-//    }
-//    
-//    print(deadlines)
-    return deadlines
+    var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
+    let test:[[String:AnyObject]] = self.defaults.objectForKey("monthDeadlines") as! [[String:AnyObject]]
+    
+    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: month)
+    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: year)
+    
+    query.findObjectsInBackgroundWithBlock {
+      (objects: [PFObject]?, error: NSError?) -> Void in
+      
+      if error == nil {
+        
+        // The find succeeded.
+        print("Successfully retrieved \(objects!.count) job deadlines.")
+        
+        // Do something with the found objects
+        if let objects = objects {
+          
+          var deadlinesIndividual:[String:AnyObject] = [:]
+          
+          for object in objects {
+            
+            if objects.count >= 0 {
+            
+            print(object[PF_CALENDAR_CAREERTYPE] as! String)
+            print(self.chosenCareers)
+            
+            if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
+              
+              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
+              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
+              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
+              deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
+              deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
+              deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+              
+              deadlines.append(deadlinesIndividual)
+                
+              //print(deadlines)
+              
+                }
+            }
+          }
+        }
+        
+        NSUserDefaults().setObject(deadlines, forKey: "monthDeadlines")
+        print(test)
+        SwiftSpinner.hide()
+
+          
+        } else {
+          // Log details of the failure
+          SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+            
+            SwiftSpinner.hide()
+            
+            }, subtitle: "Tap to dismiss")
+        }
+      }
+      
+    
+    
+    
+    
+    //print(deadlines)
+    
+    return test
     
   }
   

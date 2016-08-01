@@ -337,6 +337,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     user[PF_USER_NUMBER_LIVES] = self.setNumberOfLivesFree
                     
                     self.defaults.setObject("Free", forKey: "Membership")
+                    self.defaults.setObject(userData["first_name"], forKey: "profileFirstName")
+                    self.defaults.setObject(userData["last_name"], forKey: "profileLastName")
+                    self.defaults.setObject(userData["email"], forKey: "profileEmail")
                     self.defaults.setInteger(self.setNumberOfLivesFree, forKey: "Lives")
                     
                     let token = FBSDKAccessToken.currentAccessToken().tokenString

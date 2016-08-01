@@ -71,6 +71,7 @@
 		617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC6481BEF92590019AE9B /* HomeViewController.swift */; };
 		617FC64B1BEF92700019AE9B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64A1BEF92700019AE9B /* SettingsViewController.swift */; };
 		617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617FC64C1BF89D560019AE9B /* Extensions.swift */; };
+		61A24EFA1D4E72190022C68D /* Semaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A24EF91D4E72190022C68D /* Semaphore.swift */; };
 		61CAD33E1C2708D200B8D887 /* LoginCredentials.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61CAD33C1C2708D200B8D887 /* LoginCredentials.xcdatamodeld */; };
 		61CAD3401C270BAE00B8D887 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CAD33F1C270BAE00B8D887 /* DataController.swift */; };
 		61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */; };
@@ -175,6 +176,7 @@
 		617FC6481BEF92590019AE9B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		617FC64A1BEF92700019AE9B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		617FC64C1BF89D560019AE9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = "Break in2/Extensions.swift"; sourceTree = "<group>"; };
+		61A24EF91D4E72190022C68D /* Semaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Semaphore.swift; path = BWWalkthrough/Semaphore.swift; sourceTree = "<group>"; };
 		61CAD33D1C2708D200B8D887 /* LoginCredentials.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoginCredentials.xcdatamodel; sourceTree = "<group>"; };
 		61CAD33F1C270BAE00B8D887 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataController.swift; path = "Break in2/DataController.swift"; sourceTree = "<group>"; };
 		61CAD3451C2760B100B8D887 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Person+CoreDataProperties.swift"; path = "Break in2/Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 			children = (
 				61517DF61C42AE1C00C570A9 /* BWWalkthrough */,
 				61FCAED41C0672480072FDFB /* Images.swift */,
+				61A24EF91D4E72190022C68D /* Semaphore.swift */,
 				61FCAED01C050E0C0072FDFB /* SwiftNotice.swift */,
 				617FC64C1BF89D560019AE9B /* Extensions.swift */,
 				61DB11D71BF902600081123B /* segueFromLeft.swift */,
@@ -696,6 +699,7 @@
 				2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */,
 				49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */,
 				494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */,
+				61A24EFA1D4E72190022C68D /* Semaphore.swift in Sources */,
 				49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
 				61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */,
