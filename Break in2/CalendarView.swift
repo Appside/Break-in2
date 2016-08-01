@@ -162,6 +162,10 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     let monthTitleString:String = dateFormatter.monthSymbols[self.currentMonth - 1] + " " + String(self.currentYear)
     self.monthTitleLabel.text = monthTitleString.uppercaseString
     
+    // Give deadlines array to monthView[1] (current month)
+    
+    self.monthViews[1].deadlines = self.getJobDeadlinesForCurrentMonth()
+    
     // Set constraints
     
     self.setConstraints()
@@ -279,6 +283,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       
     }
     
+    self.nextMonthButton.userInteractionEnabled = true
+    self.previousMonthButton.userInteractionEnabled = true
+    
   }
   
   func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
@@ -287,12 +294,16 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
   func nextMonthButtonClicked(sender: UIButton) {
     
+    self.nextMonthButton.userInteractionEnabled = false
+    self.previousMonthButton.userInteractionEnabled = false
     self.monthScrollView.setContentOffset(CGPointMake(self.frame.width*2, 0), animated: true)
     
   }
   
   func previousMonthButtonClicked(sender: UIButton) {
     
+    self.nextMonthButton.userInteractionEnabled = false
+    self.previousMonthButton.userInteractionEnabled = false
     self.monthScrollView.setContentOffset(CGPointMake(0, 0), animated: true)
     
   }
@@ -460,19 +471,47 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
   }
   
+  func getJobDeadlinesForCurrentMonth() -> [[String:AnyObject]] {
+    
+    // ADD CODE TO GET A [[String:AnyObject]] ARRAY OF DEADLINES FOR THE CURRENT MONTH & CURRENT YEAR THEN RETURN IT
+    // i.e.
+    // query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
+    // query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
+    
+    // THE FOLLOWING CODE OUTLINES THE LOGIC (RUN TO TEST)
+    
+    var deadlines:[[String:AnyObject]] = [["day":12,"month":8,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
+    
+    var deadlinesForCurrentMonth:[[String:AnyObject]] = [[String:AnyObject]]()
+    
+    for deadline in deadlines {
+      if deadline["year"] as! Int == self.currentYear {
+        if deadline["month"] as! Int == self.currentMonth {
+          deadlinesForCurrentMonth.append(deadline)
+        }
+      }
+    }
+    
+    return deadlinesForCurrentMonth
+    
+  }
+  
   func getJobDeadlinesForMonth(month: Int, year: Int) -> [[String:AnyObject]] {
+    
+    // ----------------------------------------------------------------------------------------------------------------
+    // THIS FUNCTION IS NOT CALLED ANY MORE
+    // ----------------------------------------------------------------------------------------------------------------
     
     SwiftSpinner.show("Loading")
     let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
     
-    //var deadlines:[[String:AnyObject]] = [["day":12,"month":7,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
+      //var deadlines:[[String:AnyObject]] = [["day":12,"month":7,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
     
     var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
-    let test:[[String:AnyObject]] = self.defaults.objectForKey("monthDeadlines") as! [[String:AnyObject]]
     
     query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: month)
     query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: year)
-    
+
     query.findObjectsInBackgroundWithBlock {
       (objects: [PFObject]?, error: NSError?) -> Void in
       
@@ -512,7 +551,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         }
         
         NSUserDefaults().setObject(deadlines, forKey: "monthDeadlines")
-        print(test)
+        //print(test)
         SwiftSpinner.hide()
 
           
@@ -525,14 +564,14 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
             }, subtitle: "Tap to dismiss")
         }
       }
-      
+    
     
     
     
     
     //print(deadlines)
-    
-    return test
+    //let test:[[String:AnyObject]] = self.defaults.objectForKey("monthDeadlines") as! [[String:AnyObject]]
+    return deadlines
     
   }
   

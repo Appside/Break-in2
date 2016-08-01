@@ -13,7 +13,7 @@ import Parse
 
 protocol CalendarMonthViewDelegate {
   
-  func getJobDeadlinesForMonth(month:Int, year:Int) -> [[String:AnyObject]]
+  //func getJobDeadlinesForMonth(month:Int, year:Int) -> [[String:AnyObject]]
   func calendarDayButtonClicked(sender: CalendarDayButton)
   
 }
@@ -191,9 +191,9 @@ class CalendarMonthView: UIView {
     
     // Get deadline dates
     
-    if let unwrappedDelegate = self.delegate {
-        self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
-    }
+//    if let unwrappedDelegate = self.delegate {
+//        self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
+//    }
     
     // Display dates with deadlines
     
