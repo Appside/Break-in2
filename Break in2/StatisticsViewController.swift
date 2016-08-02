@@ -111,7 +111,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
 
       // Create careerButtons for each testType
 
-      for var index:Int = 0 ; index < self.testTypes.count ; index++ {
+      for index:Int in 0.stride(to: self.testTypes.count, by: 1) {
         
         let careerButtonAtIndex:CareerButton = CareerButton()
         
@@ -135,7 +135,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         // Make each button perform a segue to the TestSelectionViewController
         
         self.testTypeButtons[index].tag = index
-        self.testTypeButtons[index].addTarget(self, action: "dataDownload:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.testTypeButtons[index].addTarget(self, action: #selector(StatisticsViewController.dataDownload(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       }
       
       // Customize views
@@ -188,7 +188,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       // Customize buttons
       
       self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-      self.backButton.addTarget(self, action: "hideTestTypesBackgroundView:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.backButton.addTarget(self, action: #selector(StatisticsViewController.hideTestTypesBackgroundView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       self.backButton.clipsToBounds = true
       self.backButton.alpha = 0
       
@@ -196,7 +196,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       self.clearStatsButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
       self.clearStatsButton.setTitle("Clear Selected Test Statistics", forState: UIControlState.Normal)
       self.clearStatsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-      self.clearStatsButton.addTarget(self, action: "clearStatsWarning:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.clearStatsButton.addTarget(self, action: #selector(StatisticsViewController.clearStatsWarning(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       
       self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
       self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
@@ -208,7 +208,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
       self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
       self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
       self.tutorialNextButton.alpha = 0
-      self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.tutorialNextButton.addTarget(self, action: #selector(StatisticsViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       
       // Set menuButtonHeight, backButtonHeight and statisticsBackgroundViewHeight
       
@@ -418,7 +418,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
 
     // Create and add constraints for each testTypeButton and set content size for testTypesScrollView
     
-    for var index:Int = 0 ; index < self.testTypeButtons.count ; index++ {
+    for index:Int in 0.stride(to: self.testTypeButtons.count, by: 1) {
       
       self.testTypeButtons[index].translatesAutoresizingMaskIntoConstraints = false
       
@@ -1103,7 +1103,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         var dataEntries2: [ChartDataEntry] = []
         var y2:Int = 0
         
-        for y=0;y<yUnits.count;y++ {
+        for y in 0.stride(to: yUnits.count, by: 1) {
             let dataEntry = BarChartDataEntry(value: round(yUnits[y]), xIndex: y)
             dataEntries.append(dataEntry)
         }
@@ -1140,7 +1140,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.barChartText.textAlignment = NSTextAlignment.Center
         self.barChartText.text = "Select a test from the graph"
         
-        for y2=0;y2<yUnits2.count;y2++ {
+        for y2 in 0.stride(to: yUnits2.count, by: 1) {
             let dataEntry = ChartDataEntry(value: round(yUnits2[y2]), xIndex: y2)
             dataEntries2.append(dataEntry)
         }
@@ -1215,13 +1215,13 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
   
   func nextTutorialButtonClicked(sender:UIButton) {
     
-    self.tutorialPageNumber++
+    self.tutorialPageNumber += 1
     
     if self.tutorialViews[self.tutorialPageNumber - 1] == self.backButton {
       self.performSegueWithIdentifier("backFromStatistics", sender: sender)
     }
     else {
-      for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+      for index:Int in 0.stride(to: self.tutorialViews.count, by: 1) {
         if index == self.tutorialPageNumber {
           self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
           self.tutorialViews[index].userInteractionEnabled = false
@@ -1258,7 +1258,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         
         if sender == self.clearStatsButton {
             
-            alertView.addButton("Ok", target:self, selector:Selector("clearParseStatistics:"))
+            alertView.addButton("Ok", target:self, selector:#selector(StatisticsViewController.clearParseStatistics(_:)))
             alertView.showTitle(
                 "Clear All Statistics", // Title of view
                 subTitle: "Are you sure? You will be unable to recover these.", // String of view

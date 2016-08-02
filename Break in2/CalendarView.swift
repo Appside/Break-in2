@@ -364,7 +364,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     backButton.addConstraints([backButtonHeight,backButtonWidth])
     backButton.setImage(UIImage(named: "prevButton"), forState: UIControlState.Normal)
     backButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    backButton.addTarget(self, action: "backToCalendarView:", forControlEvents: UIControlEvents.TouchUpInside)
+    backButton.addTarget(self, action: #selector(CalendarView.backToCalendarView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     deadlineTitle.translatesAutoresizingMaskIntoConstraints = false
     let deadlineTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
@@ -437,7 +437,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       careerName.text = elementArray[1]
       positionName.text = elementArray[2]
       
-      i++
+      i += 1
       
     }
     

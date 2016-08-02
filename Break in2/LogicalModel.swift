@@ -119,7 +119,7 @@ class LogicalModel: NSObject {
           randomAnswers.append(shapeToDraw)
         }
       }
-      for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+      for i:Int in 1.stride(to: logicalPictureViews[1].count, by: 1) {
         logicalPictureViews[1][i].shapeToDraw[0] = randomAnswers[i]
       }
       
@@ -188,7 +188,7 @@ class LogicalModel: NSObject {
       
     }
     
-    for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+    for i:Int in 1.stride(to: logicalPictureViews[1].count, by: 1) {
       
       let randomNumber2:Int = Int(arc4random_uniform(2))
       if randomNumber2 == 0 {
@@ -256,7 +256,7 @@ class LogicalModel: NSObject {
       
     }
     
-    for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+    for i:Int in 1.stride(to: logicalPictureViews[1].count, by: 1) {
       
       let randomNumber2:Int = Int(arc4random_uniform(3))
       if randomNumber2 == 0 {
@@ -291,9 +291,9 @@ class LogicalModel: NSObject {
     let randomSizeOrderNumber:Int = Int(arc4random_uniform(2))
     
     if randomSizeOrderNumber == 0 {
-      for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
+      for i:Int in 0.stride(to: logicalPictureViews[0].count, by: 1) {
         var shapesToDrawArray:[String] = [String]()
-        for var j:Int = 0 ; j < 3 ; j++ {
+        for j:Int in 0 .stride(to: 3, by: 1) {
           shapesToDrawArray.append(shapesArray[(i + j) % shapesArray.count])
         }
         logicalPictureViews[0][i].shapeToDraw = shapesToDrawArray
@@ -304,14 +304,14 @@ class LogicalModel: NSObject {
       var randomAnswers:[[String]] = [[String]]()
       while randomAnswers.count < 4 {
         var shapesToDrawArray:[String] = [String]()
-        for var index:Int = 0 ; index < 3 ; index++ {
+        for index:Int in 0.stride(to: 3, by: 1) {
           shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
         }
         if shapesToDrawArray != logicalPictureViews[1][0].shapeToDraw {
           randomAnswers.append(shapesToDrawArray)
         }
       }
-      for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+      for i:Int in 1.stride(to: logicalPictureViews[1].count, by: 1) {
         logicalPictureViews[1][i].shapeToDraw = randomAnswers[i]
       }
       
@@ -320,9 +320,9 @@ class LogicalModel: NSObject {
     }
     else if randomSizeOrderNumber == 1 {
       
-      for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
+      for i:Int in 0.stride(to: logicalPictureViews[0].count, by: 1) {
         var shapesToDrawArray:[String] = [String]()
-        for var j:Int = (logicalPictureViews[0].count - i) + 1 ; j > (logicalPictureViews[0].count - i) - 2 ; j-- {
+        for j:Int in ((logicalPictureViews[0].count - i) + 1).stride(to: (logicalPictureViews[0].count - i) - 2, by: -1) {
           shapesToDrawArray.append(shapesArray[j % shapesArray.count])
         }
         logicalPictureViews[0][i].shapeToDraw = shapesToDrawArray
@@ -333,14 +333,14 @@ class LogicalModel: NSObject {
       var randomAnswers:[[String]] = [[String]]()
       while randomAnswers.count < 4 {
         var shapesToDrawArray:[String] = [String]()
-        for var index:Int = 0 ; index < 3 ; index++ {
+        for index:Int in 0.stride(to: 3, by: 1) {
           shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
         }
         if shapesToDrawArray != logicalPictureViews[1][0].shapeToDraw {
           randomAnswers.append(shapesToDrawArray)
         }
       }
-      for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+      for i:Int in 1.stride(to: logicalPictureViews[1].count, by: 1) {
         logicalPictureViews[1][i].shapeToDraw = randomAnswers[i]
       }
       
@@ -362,9 +362,9 @@ class LogicalModel: NSObject {
       shapesArray.append(logicalPictureView.shapeToDraw[0])
     }
     
-    for var i:Int = 0 ; i < logicalPictureViews[0].count ; i++ {
+    for i:Int in 0.stride(to: logicalPictureViews[0].count, by: 1) {
       var shapesToDrawArray:[String] = [String]()
-      for var j:Int = 0 ; j < 4 ; j++ {
+      for j:Int in 0.stride(to: 4, by: 1) {
         shapesToDrawArray.append(shapesArray[(i + j) % shapesArray.count])
       }
       logicalPictureViews[0][i].shapeToDraw = shapesToDrawArray
@@ -375,14 +375,14 @@ class LogicalModel: NSObject {
     var randomAnswers:[[String]] = [[String]]()
     while randomAnswers.count < 4 {
       var shapesToDrawArray:[String] = [String]()
-      for var index:Int = 0 ; index < 4 ; index++ {
+      for index:Int in 0.stride(to: 4, by: 1) {
         shapesToDrawArray.append(shapesArray[Int(arc4random_uniform(UInt32(shapesArray.count)))])
       }
       if shapesToDrawArray != logicalPictureViews[1][0].shapeToDraw {
         randomAnswers.append(shapesToDrawArray)
       }
     }
-    for var i:Int = 1 ; i < logicalPictureViews[1].count ; i++ {
+    for i:Int in 1.stride(to: logicalPictureViews[1].count, by: 1) {
       logicalPictureViews[1][i].shapeToDraw = randomAnswers[i]
     }
     

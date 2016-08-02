@@ -55,10 +55,10 @@ class ChooseCareerView: UIView {
     
     // Set properties for tickButton and crossButton
     
-    self.tickButton.addTarget(self, action: "tickButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.tickButton.addTarget(self, action: #selector(ChooseCareerView.tickButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     self.tickButton.setImage(UIImage.init(named: "tickUnselected"), forState: UIControlState.Normal)
 
-    self.crossButton.addTarget(self, action: "crossButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.crossButton.addTarget(self, action: #selector(ChooseCareerView.crossButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     self.crossButton.setImage(UIImage.init(named: "crossUnselected"), forState: UIControlState.Normal)
 
   }

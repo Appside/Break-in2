@@ -31,11 +31,11 @@ class StatisticsTitleView: UIView {
     
     self.nextStatisticButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
     self.nextStatisticButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.nextStatisticButton.addTarget(self.superview, action: "nextStatButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.nextStatisticButton.addTarget(self.superview, action: #selector(StatisticsViewController.nextStatButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     self.previousStatisticButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
     self.previousStatisticButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.previousStatisticButton.addTarget(self.superview, action: "previousStatButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.previousStatisticButton.addTarget(self.superview, action: #selector(StatisticsViewController.previousStatButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
   }
 

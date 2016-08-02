@@ -127,7 +127,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
     //self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
     let appColors:[UIColor] = self.settingsModel.getAppColors()
-    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
     
@@ -153,7 +153,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Adjust backButton appearance
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
@@ -162,7 +162,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.tutorialNextButton.setTitle("Save Preferences", forState: UIControlState.Normal)
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.tutorialNextButton.alpha = 0
-    self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.tutorialNextButton.addTarget(self, action: #selector(SettingsViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
     
@@ -197,13 +197,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.facebookLogoutButton.facebookButtonTitle = "Deactivate"
     self.facebookLogoutButton.displayButton()
-    self.facebookLogoutButton.addTarget(self, action: "deactivateFB:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.facebookLogoutButton.addTarget(self, action: #selector(SettingsViewController.deactivateFB(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     self.saveCareersChoicesButton.backgroundColor = UIColor.turquoiseColor()
     self.saveCareersChoicesButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.saveCareersChoicesButton.setTitle("Save Career Preferences", forState: UIControlState.Normal)
     self.saveCareersChoicesButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-    self.saveCareersChoicesButton.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.saveCareersChoicesButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     // Customize scrollInfoLabel and chooseCareersInfoLabel
     
@@ -249,7 +249,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     // Create settingsButtons for each setting
     
-    for var index:Int = 0 ; index < self.settings.count ; index++ {
+    for index:Int in 0.stride(to: self.settings.count, by: 1) {
       
       let settingsButtonAtIndex:CareerButton = CareerButton()
       
@@ -269,13 +269,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       // Make each button perform a segue to the TestSelectionViewController
       
-      settingsButtonAtIndex.addTarget(self, action: "hideSettingsMenuView:", forControlEvents: UIControlEvents.TouchUpInside)
+      settingsButtonAtIndex.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     self.settingsScrollView.addSubview(self.facebookLogoutButton)
     self.settingsButtons.append(self.facebookLogoutButton)
     
-    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
       
       // Create each chooseCareerView
       
@@ -510,7 +510,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                     for object in objects {
                         self.chosenCareers = object[PF_PREFERENCES_CAREERPREFS] as! [String]
                         print(self.chosenCareers)
-                        for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+                        for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
                             
                             if self.chosenCareers.contains(self.careerTypes[index]) {
                                 self.chooseCareerViews[index].careerChosen = true
@@ -767,7 +767,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     // Create and add constraints for each settingsButton and set content size for settingsScrollView
     
-    for var index:Int = 0 ; index < self.settingsButtons.count ; index++ {
+    for index:Int in 0.stride(to: self.settingsButtons.count, by: 1) {
       
       self.settingsButtons[index].translatesAutoresizingMaskIntoConstraints = false
       
@@ -866,7 +866,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     // Create and add constraints for each chooseCareerView and set content size for chooseCareersScrollView
     
-    for var index:Int = 0 ; index < self.careerTypes.count ; index++ {
+    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
       
       self.chooseCareerViews[index].translatesAutoresizingMaskIntoConstraints = false
       
@@ -956,7 +956,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
             
             let alertView = SCLAlertView()
             
-            alertView.addButton("Ok", target:self, selector:Selector("conduit"))
+            alertView.addButton("Ok", target:self, selector:#selector(SettingsViewController.conduit))
             alertView.showTitle(
                 "Deactivate", // Title of view
                 subTitle: "Are you sure? Deactivation will delete all of your statistics, preferences and user data.", // String of view
@@ -1154,7 +1154,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     let jobDeadlines:[[String:AnyObject]] = self.settingsModel.getJobDeadlines()
     var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
     
-    for var index = 0 ; index < jobDeadlines.count ; index++ {
+    for index:Int in 0.stride(to: jobDeadlines.count, by: 1) {
       if self.chosenCareers.contains(jobDeadlines[index]["career"] as! String) {
         deadlines.append(jobDeadlines[index])
       }
@@ -1181,7 +1181,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
           self.descriptionLabelView.alpha = 0
           }, completion: {(Bool) in
             self.descriptionLabelView.removeFromSuperview()
-            for var index:Int = 0 ; index < self.tutorialViews.count ; index++ {
+            for index:Int in 0.stride(to: self.tutorialViews.count, by: 1) {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
                 self.tutorialViews[index].userInteractionEnabled = true
@@ -1210,7 +1210,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   func nextTutorialButtonClicked(sender:UIButton) {
     
-    self.tutorialPageNumber++
+    self.tutorialPageNumber += 1
     
     if self.tutorialViews[self.tutorialPageNumber - 1] == self.chooseCareersView {
       self.savePrefsToParse(sender)
@@ -1497,7 +1497,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         self.tutoNextButton.setTitle("Close", forState: .Normal)
         self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext"))
+        let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.tutoNext))
         self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
         self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.tutoSkipButton.setTitle(self.defaults.objectForKey("Membership") as? String, forState: .Normal)

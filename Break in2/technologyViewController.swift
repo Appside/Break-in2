@@ -127,7 +127,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
         let arrowWidth:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35*self.heightRatio)
         self.menuBackButton.addConstraints([arrowTop,arrowLeft])
         menuBackImageVIew.addConstraints([arrowHeight,arrowWidth])
-        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("backHome:"))
+        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(technologyViewController.backHome(_:)))
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
         
@@ -215,13 +215,13 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
         nextUIView.addConstraint(heightLabelConstraint)
         nextUIView.addSubview(self.nextButton)
         self.nextButton.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("nextQuestion:"))
+        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(technologyViewController.nextQuestion(_:)))
         tapGestureNext.numberOfTapsRequired = 1
         nextUIView.addGestureRecognizer(tapGestureNext)
-        
+      
         //Set answersArray
         var answerIndex:Int = 0
-        for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex++ {
+        for answerIndex in 0.stride(through: self.totalNumberOfQuestions, by: 1) {
             let fixedNumber:Int = 20
             self.selectedAnswers.append(fixedNumber)
         }
@@ -355,13 +355,13 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
             self.tutoNextButton.setTitle("Continue", forState: .Normal)
             self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext:"))
+            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(technologyViewController.tutoNext(_:)))
             self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
             self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoSkipButton.setTitle("Skip the Tutorial", forState: .Normal)
             self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(15))
             self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoSkip:"))
+            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(technologyViewController.tutoSkip(_:)))
             self.tutoSkipButton.addGestureRecognizer(tutoSkipButtonTap)
             
             //Set tutorial text
@@ -375,13 +375,13 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
             
         } else {
             //Launch timer
-            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(technologyViewController.updateTimer), userInfo: nil, repeats: true)
         }
         
     }
     
     func tutoNext(sender:UITapGestureRecognizer) {
-        self.tutoPage++
+        self.tutoPage += 1
         if self.tutoPage==2 {
             self.tutoDescriptionSep2.alpha = 0
             self.tutoDescriptionText2.alpha = 0
@@ -416,14 +416,14 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
             self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             self.showTutorial = false
-            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(technologyViewController.updateTimer), userInfo: nil, repeats: true)
         }
         
     }
     
     func tutoSkip(sender:UITapGestureRecognizer) {
         self.showTutorial = false
-        self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(technologyViewController.updateTimer), userInfo: nil, repeats: true)
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.tutoView.alpha = 0.0
             }, completion: nil)
@@ -435,7 +435,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
                 self.selectedAnswers[self.displayedQuestionIndex]=21
             }
-            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: #selector(technologyViewController.nextQuestion(_:))))
             self.timeTimer.invalidate()
         }
         else {
@@ -444,12 +444,12 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
                     self.timeTimer.invalidate()
                 }
                 else {
-                    self.countMinutes--
+                    self.countMinutes -= 1
                     self.countSeconds = 59
                 }
             }
             else {
-                self.countSeconds--
+                self.countSeconds -= 1
             }
             let newMin:String = String(format: "%02d", self.countMinutes)
             let newSec:String = String(format: "%02d", self.countSeconds)
@@ -470,7 +470,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
         }
         
         let backAlert = SCLAlertView()
-        backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
+        backAlert.addButton("Yes", target:self, selector:#selector(technologyViewController.goBack))
         backAlert.showTitle(
             "Return to Menu", // Title of view
             subTitle: alertMessage, // String of view
@@ -521,9 +521,8 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
         }
         let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
         let buttonHeight:Int = Int(50*self.heightRatio)
-        var i:Int = 0
-        
-        for i=0; i<arrayAnswers.count;i++ {
+      
+        for i in 0.stride(to: arrayAnswers.count, by: 1) {
             let answerUIButton:UIView = UIView()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UIButton = UIButton()
@@ -570,7 +569,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(technologyViewController.answerIsSelected(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
         }
     }
@@ -624,9 +623,9 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
                         //Upload Results to Parse
                         var i:Int = 0
                         var nbCorrectAnswers:Int = 0
-                        for i=0;i<self.selectedAnswers.count;i++ {
+                        for i in 0.stride(to: self.selectedAnswers.count, by: 1) {
                             if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
-                                nbCorrectAnswers++
+                                nbCorrectAnswers += 1
                             }
                         }
                         self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
@@ -671,7 +670,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
                 }
                     //Continue to the next question
                 else {
-                    self.displayedQuestionIndex++
+                    self.displayedQuestionIndex += 1
                     if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                         //Switch Button text to "Complete"
                         self.nextButton.text = "Complete Test"
@@ -727,7 +726,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
         topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         topComment.textColor = UIColor.whiteColor()
         
-        for i=0; i<self.selectedAnswers.count;i++ {
+        for i in 0.stride(to: self.selectedAnswers.count, by: 1) {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UILabel = UILabel()
@@ -781,7 +780,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate {
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(technologyViewController.displayAnswerWithFeedback(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
             
         }

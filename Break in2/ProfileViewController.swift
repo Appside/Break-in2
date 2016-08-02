@@ -92,7 +92,7 @@ class ProfileViewController: UIViewController {
         //Back Button
         self.view.addSubview(self.backButton)
         self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-        self.backButton.addTarget(self, action: "goBackToSettingsMenu:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.backButton.addTarget(self, action: #selector(ProfileViewController.goBackToSettingsMenu(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.backButton.clipsToBounds = true
       if self.firstTimeUser {
         self.backButton.alpha = 0
@@ -186,7 +186,7 @@ class ProfileViewController: UIViewController {
         self.saveProfileButton.setTitle("Save Profile", forState: UIControlState.Normal)
       }
         self.saveProfileButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.saveProfileButton.addTarget(self, action: "saveProfile:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.saveProfileButton.addTarget(self, action: #selector(ProfileViewController.saveProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         //Create profile entries - just copy past to add a new entry
         self.createNewEntry(self.entry1, IndexEntry: 1)
@@ -260,7 +260,7 @@ class ProfileViewController: UIViewController {
         var alertMessage:String = String()
         alertMessage = "Any unsaved change will be lost."
         let backAlert = SCLAlertView()
-        backAlert.addButton("Continue", target:self, selector:Selector("goBackToSettings:"))
+        backAlert.addButton("Continue", target:self, selector:#selector(ProfileViewController.goBackToSettings(_:)))
         backAlert.showTitle(
             "Return to Settings", // Title of view
             subTitle: alertMessage, // String of view

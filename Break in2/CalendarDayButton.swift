@@ -35,7 +35,7 @@ class CalendarDayButton: UIButton {
     self.careerTypes = self.calendarModel.getAppVariables("careerTypes") as! [String]
     
     let appColors:[UIColor] = self.calendarModel.getAppColors()
-    for var index:Int = 0 ; index < self.careerTypes.count ; index += 1 {
+    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
       self.circleColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
 
@@ -63,7 +63,7 @@ class CalendarDayButton: UIButton {
       let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
       var careers:[String] = [String]()
       
-      for var index:Int = 0 ; index < self.deadlines.count ; index += 1 {
+      for index:Int in 0.stride(to: self.deadlines.count, by: 1) {
         
         if !careers.contains(self.deadlines[index][1]) {
           careers.append(self.deadlines[index][1])
@@ -71,7 +71,7 @@ class CalendarDayButton: UIButton {
         
       }
       
-      for var index:Int = 0 ; index < careers.count ; index += 1 {
+      for index:Int in 0.stride(to: careers.count, by: 1) {
         
         CGContextSetFillColorWithColor(contextRef, self.circleColors[careers[index]]!.CGColor)
         

@@ -89,7 +89,7 @@ class LogicalPictureView: UIView {
         drawRects[1] = CGRectMake(self.bounds.width * 0.2, self.bounds.height * 0.2, self.bounds.width * 0.6, self.bounds.height * 0.6)
       }
       
-      for var index:Int = 0 ; index < self.shapeToDraw.count ; index++ {
+      for index:Int in 0.stride(to: self.shapeToDraw.count, by: 1) {
         
         if self.shapeToDraw[index] == "Circle" {
           self.drawCircle(contextRef, inRect: drawRects[index])
@@ -118,7 +118,7 @@ class LogicalPictureView: UIView {
       drawRects.append(CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.6, self.bounds.width * 0.3, self.bounds.height * 0.3))
       drawRects.append(CGRectMake(self.bounds.width * 0.6, self.bounds.height * 0.6, self.bounds.width * 0.3, self.bounds.height * 0.3))
       
-      for var index:Int = 0 ; index < self.shapeToDraw.count ; index++ {
+      for index:Int in 0.stride(to: self.shapeToDraw.count, by: 1) {
         
         if self.shapeToDraw[index] == "Circle" {
           self.drawCircle(contextRef, inRect: drawRects[index])

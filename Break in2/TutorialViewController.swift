@@ -78,7 +78,7 @@ class TutorialViewController: UIViewController {
       self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
       self.tutorialNextButton.setTitle("Let's Get Started", forState: UIControlState.Normal)
       self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-      self.tutorialNextButton.addTarget(self, action: "nextTutorialButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+      self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       self.tutorialNextButton.alpha = 0
       
       let string:String = "Welcome \(user![PF_USER_FULLNAME])"

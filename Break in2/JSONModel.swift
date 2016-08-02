@@ -61,13 +61,13 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     var y:Int = 0
     var z:Int = 0
     
-    for index = 0; index < nbOfQuestions; index++ {
+    for index in 0.stride(to: nbOfQuestions, by: 1) {
       
       y = 0
       while y==0 {
         randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
         if selectedQuestions.count>0 {
-          for z=0;z<selectedQuestions.count;z++ {
+          for z in 0.stride(to: selectedQuestions.count, by: 1) {
             if selectedQuestions[z] != randomNumber {
               y = 1
             }
@@ -129,13 +129,13 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     var y:Int = 0
     var z:Int = 0
     
-    for index = 0; index < nbOfQuestions; index++ {
+    for index in 0.stride(to: nbOfQuestions, by: 1) {
       
       y = 0
       while y==0 {
         randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
         if selectedQuestions.count>0 {
-          for z=0;z<selectedQuestions.count;z++ {
+          for z in 0.stride(to: selectedQuestions.count, by: 1) {
             if selectedQuestions[z] != randomNumber {
               y = 1
             }
@@ -176,13 +176,13 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         var y:Int = 0
         var z:Int = 0
         
-        for index = 0; index < nbOfQuestions; index += 1 {
+        for index in 0.stride(to: nbOfQuestions, by: 1) {
             
             y = 0
             while y==0 {
                 randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
                 if selectedQuestions.count>0 {
-                    for z=0;z<selectedQuestions.count;z += 1 {
+                    for z in 0.stride(to: selectedQuestions.count, by: 1) {
                         if selectedQuestions[z] != randomNumber {
                             y = 1
                         }
@@ -222,13 +222,13 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         var y:Int = 0
         var z:Int = 0
         
-        for index = 0; index < nbOfQuestions; index += 1 {
+        for index in 0.stride(to: nbOfQuestions, by: 1) {
             
             y = 0
             while y==0 {
                 randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
                 if selectedQuestions.count>0 {
-                    for z=0;z<selectedQuestions.count;z += 1 {
+                    for z in 0.stride(to: selectedQuestions.count, by: 1) {
                         if selectedQuestions[z] != randomNumber {
                             y = 1
                         }

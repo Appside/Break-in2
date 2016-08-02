@@ -59,7 +59,7 @@ class PageControllerView: UIView {
     
     // Create as many page controller circles as there are types of test
     
-    for var index:Int = 0 ; index < self.numberOfPages ; index++ {
+    for index:Int in 0.stride(to: self.numberOfPages, by: 1) {
       
       // Set the fill color to randomColor
       
