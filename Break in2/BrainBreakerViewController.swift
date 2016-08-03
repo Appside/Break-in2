@@ -350,7 +350,10 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
     
     func backHome(sender:UITapGestureRecognizer) {
         let alertMessage:String = "Are you sure you want to return home?"
-        let backAlert = SCLAlertView()
+
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
+        let backAlert = SCLAlertView(appearance: appearance)
+        
         backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
         backAlert.showTitle(
             "Return to Menu", // Title of view
@@ -361,7 +364,6 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
-        backAlert.showCloseButton = false
     }
 
     func goBackHome(sender:UITapGestureRecognizer) {
@@ -489,7 +491,8 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
             var alertMessage:String = String()
             alertMessage = "You have no attempts remaining"
             
-            let backAlert = SCLAlertView()
+            let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+            let backAlert = SCLAlertView(appearance: appearance)
             backAlert.addButton("Return Home", target:self, selector:Selector("goBack"))
             backAlert.showTitle(
                 "Sorry", // Title of view
@@ -500,8 +503,6 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
                 colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
-            backAlert.showCloseButton = false
-            
         }
     }
     

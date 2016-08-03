@@ -1240,8 +1240,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     
     func clearStatsWarning(sender:UIButton){
         
-        let alertView = SCLAlertView()
-        
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let alertView = SCLAlertView(appearance: appearance)
         if self.noDataUILabel.text == "No Score Available" {
             alertView.showTitle(
                 "Don't Worry", // Title of view
@@ -1252,7 +1252,6 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                 colorStyle: 0x9B9B9B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
-            alertView.showCloseButton = false
             
         }else{
         
@@ -1268,7 +1267,6 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                 colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
-            alertView.showCloseButton = false
             
         }else{
             

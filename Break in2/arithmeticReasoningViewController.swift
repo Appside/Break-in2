@@ -440,7 +440,8 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             alertMessage = "Are you sure you want to return home?"
         }
         
-        let backAlert = SCLAlertView()
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
+        let backAlert = SCLAlertView(appearance: appearance)
         backAlert.addButton("Yes", target:self, selector:#selector(arithmeticReasoningViewController.goBack))
         backAlert.showTitle(
             "Return to Menu", // Title of view
@@ -451,7 +452,6 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
-        backAlert.showCloseButton = false
         
     }
     

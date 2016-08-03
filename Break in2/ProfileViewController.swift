@@ -259,7 +259,8 @@ class ProfileViewController: UIViewController {
     func goBackToSettingsMenu(sender: UIButton) {
         var alertMessage:String = String()
         alertMessage = "Any unsaved change will be lost."
-        let backAlert = SCLAlertView()
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let backAlert = SCLAlertView(appearance: appearance)
         backAlert.addButton("Continue", target:self, selector:#selector(ProfileViewController.goBackToSettings(_:)))
         backAlert.showTitle(
             "Return to Settings", // Title of view
@@ -270,7 +271,6 @@ class ProfileViewController: UIViewController {
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
-        backAlert.showCloseButton = false
     }
     
     func goBackToSettings(sender: UIButton) {
@@ -318,7 +318,8 @@ class ProfileViewController: UIViewController {
         if showErrorMessage == true {
             
             //Show Error Message
-            let backAlert = SCLAlertView()
+            let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+            let backAlert = SCLAlertView(appearance: appearance)
             backAlert.showTitle(
                 "Return", // Title of view
                 subTitle: alertMessage, // String of view
@@ -328,7 +329,6 @@ class ProfileViewController: UIViewController {
                 colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
-            backAlert.showCloseButton = false
         } else{
           
           //Save changes to Parse

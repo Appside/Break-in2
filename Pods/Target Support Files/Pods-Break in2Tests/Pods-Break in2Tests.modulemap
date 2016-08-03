@@ -1,0 +1,6 @@
+framework module Pods_Break_in2Tests {
+  umbrella header "Pods-Break in2Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

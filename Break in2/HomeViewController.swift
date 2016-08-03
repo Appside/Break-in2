@@ -780,7 +780,8 @@ class HomeViewController: UIViewController {
   
   func logoutBtnPressed(sender: UIButton!){
     
-    let alertView = SCLAlertView()
+    let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+    let alertView = SCLAlertView(appearance: appearance)
     //        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
     //        alertView.addButton("Cancel") {
     //            alertView.clearAllNotice()
@@ -799,7 +800,6 @@ class HomeViewController: UIViewController {
       colorStyle: 0x526B7B,//0xD0021B - RED
       colorTextButton: 0xFFFFFF
     )
-    alertView.showCloseButton = false
     
   }
   

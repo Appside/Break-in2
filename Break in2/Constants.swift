@@ -152,3 +152,14 @@ let PF_CALENDAR_DEADLINEYEAR            = "deadlineYear"             //	Number
 let PF_CALENDAR_CAREERTYPE              = "careerType"				//	String
 let PF_CALENDAR_COMPANY                 = "company"                 //	String
 let PF_CALENDAR_JOBTITLE                = "position"                //	String
+
+/* Add AD IDs from FIREBASE here */
+let AD_ID_NUMERICAL                 = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_LOGICAL                   = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_VERBAL                    = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_ARITHMETIC                = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_SEQUENCES                 = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_FRACTIONS                 = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_PROGRAMMING               = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_TECHNOLOGY                = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_BRAINBREAKER              = "ca-app-pub-3940256099942544/4411468910"

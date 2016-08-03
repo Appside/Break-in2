@@ -9,16 +9,16 @@
 //  A port of MPAndroidChart for iOS
 //  Licensed under Apache License 2.0
 //
-//  https://github.com/danielgindi/ios-charts
+//  https://github.com/danielgindi/Charts
 //
 
 import Foundation
-import UIKit
+import CoreGraphics
 
 public class ChartXAxis: ChartAxisBase
 {
-    @objc
-    public enum XAxisLabelPosition: Int
+    @objc(XAxisLabelPosition)
+    public enum LabelPosition: Int
     {
         case Top
         case Bottom
@@ -83,13 +83,13 @@ public class ChartXAxis: ChartAxisBase
     }
     
     /// the position of the x-labels relative to the chart
-    public var labelPosition = XAxisLabelPosition.Top
+    public var labelPosition = LabelPosition.Top
     
     /// if set to true, word wrapping the labels will be enabled.
     /// word wrapping is done using `(value width * labelRotatedWidth)`
     ///
     /// *Note: currently supports all charts except pie/radar/horizontal-bar*
-    public var wordWrapEnabled = true
+    public var wordWrapEnabled = false
     
     /// - returns: true if word wrapping the labels is enabled
     public var isWordWrapEnabled: Bool { return wordWrapEnabled }
@@ -98,7 +98,7 @@ public class ChartXAxis: ChartAxisBase
     /// used only when isWordWrapEnabled = true.
     /// 
     /// **default**: 1.0
-    public var wordWrapWidthPercent: CGFloat = 5.0
+    public var wordWrapWidthPercent: CGFloat = 1.0
     
     public override init()
     {
@@ -111,7 +111,7 @@ public class ChartXAxis: ChartAxisBase
     {
         var longest = ""
         
-        for (var i = 0; i < values.count; i++)
+        for i in 0 ..< values.count
         {
             let text = values[i]
             

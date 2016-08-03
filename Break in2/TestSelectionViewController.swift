@@ -759,8 +759,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     if (membershipType != "Premium" && self.numberOfTestsTotal == 0 && sender.titleLabel?.text == "Start Test"){
         
-        let backAlert = SCLAlertView()
-        backAlert.showCloseButton = false
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let backAlert = SCLAlertView(appearance: appearance)
         backAlert.addButton("Buy \(self.noAddtlLives) Lives", action: ({
             
             SwiftSpinner.show("Purchasing")
@@ -826,8 +826,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
               
             }else{
               
-              let backAlert = SCLAlertView()
-              backAlert.showCloseButton = false
+                let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+                let backAlert = SCLAlertView(appearance: appearance)
                 backAlert.addButton("Buy \(self.noAddtlLives) Lives", action: ({
                     
                     SwiftSpinner.show("Purchasing")

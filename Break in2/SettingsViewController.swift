@@ -954,7 +954,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         if sender == self.facebookLogoutButton {
             
-            let alertView = SCLAlertView()
+            let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+            let alertView = SCLAlertView(appearance: appearance)
             
             alertView.addButton("Ok", target:self, selector:#selector(SettingsViewController.conduit))
             alertView.showTitle(
@@ -966,7 +967,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 colorStyle: 0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
-            alertView.showCloseButton = false
             
         }else{
             

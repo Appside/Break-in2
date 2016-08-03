@@ -11,8 +11,13 @@ import Charts
 import SCLAlertView
 import Parse
 import SwiftSpinner
+import GoogleMobileAds
 
-class numericalReasoningViewController: QuestionViewController, UIScrollViewDelegate {
+class numericalReasoningViewController: QuestionViewController, UIScrollViewDelegate, GADInterstitialDelegate {
+    
+    //Ad variables
+    var interstitialAd:GADInterstitial!
+    var testStarted:Bool = false
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -76,6 +81,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        self.interstitialAd = self.createAndLoadInterstitial()
+        
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
         self.widthRatio = screenFrame.size.width / 414
@@ -414,7 +421,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
         } else {
             //Launch timer
-            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+            if self.interstitialAd.isReady {
+                self.interstitialAd.presentFromRootViewController(self)
+            } else {
+                print("Ad wasn't ready")
+            }
         }
         
     }
@@ -459,7 +470,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             self.showTutorial = false
-            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+            if self.interstitialAd.isReady {
+                self.interstitialAd.presentFromRootViewController(self)
+            } else {
+                print("Ad wasn't ready")
+            }
         }
         
     }
@@ -467,7 +482,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     func tutoSkip(sender:UITapGestureRecognizer) {
         self.graphView.alpha = 1.0
         self.showTutorial = false
-        self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+        if self.interstitialAd.isReady {
+            self.interstitialAd.presentFromRootViewController(self)
+        } else {
+            print("Ad wasn't ready")
+        }
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.tutoView.alpha = 0.0
             }, completion: nil)
@@ -535,7 +554,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             alertMessage = "Are you sure you want to return home?"
         }
         
-        let backAlert = SCLAlertView()
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
+        let backAlert = SCLAlertView(appearance: appearance)
         backAlert.addButton("Yes", target:self, selector:#selector(numericalReasoningViewController.goBack))
         backAlert.showTitle(
             "Return to Menu", // Title of view
@@ -546,7 +566,6 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
-        backAlert.showCloseButton = false
         
     }
     
@@ -693,8 +712,17 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             if self.displayedQuestionIndex + 1 > self.totalNumberOfQuestions {
                 
                 if self.resultsUploaded==false {
+                    
                     //Stop Timer
                     self.timeTimer.invalidate()
+                    
+                    if self.testStarted == true {
+                        if self.interstitialAd.isReady {
+                            self.interstitialAd.presentFromRootViewController(self)
+                        } else {
+                            print("Ad wasn't ready")
+                        }
+                    } else {
                     
                     //Upload Results to Parse
                     var i:Int = 0
@@ -740,6 +768,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                         }
                     })
                 self.nextButton.text = "Return to Feedback Screen"
+                }
                 }
                 else {
                     self.feedbackScreen()
@@ -800,9 +829,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             //Return chart UIView
             chartObject.legend.textColor = UIColor.whiteColor()
-            chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
-            chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
-            chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
+            chartObject.legend.position = ChartLegend.Position.BelowChartCenter
+            chartObject.legend.form = ChartLegend.Form.Circle
+            chartObject.legend.direction = ChartLegend.Direction.LeftToRight
             chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
@@ -838,9 +867,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             //Return chart UIView
             chartObject.legend.textColor = UIColor.whiteColor()
-            chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
-            chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
-            chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
+            chartObject.legend.position = ChartLegend.Position.BelowChartCenter
+            chartObject.legend.form = ChartLegend.Form.Circle
+            chartObject.legend.direction = ChartLegend.Direction.LeftToRight
             chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
@@ -878,9 +907,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             //Return chart UIView
             chartObject.legend.textColor = UIColor.whiteColor()
-            chartObject.legend.position = ChartLegend.ChartLegendPosition.BelowChartCenter
-            chartObject.legend.form = ChartLegend.ChartLegendForm.Circle
-            chartObject.legend.direction = ChartLegend.ChartLegendDirection.LeftToRight
+            chartObject.legend.position = ChartLegend.Position.BelowChartCenter
+            chartObject.legend.form = ChartLegend.Form.Circle
+            chartObject.legend.direction = ChartLegend.Direction.LeftToRight
             chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
@@ -1169,6 +1198,24 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             }, completion: nil)
         
+    }
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: AD_ID_NUMERICAL)
+        interstitial.delegate = self
+        interstitial.loadRequest(GADRequest())
+        return interstitial
+    }
+    
+    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+        self.interstitialAd = createAndLoadInterstitial()
+        if self.testStarted == false {
+            self.testStarted = true
+            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+        } else if self.testStarted == true {
+            self.testStarted = false
+            self.nextQuestion(UITapGestureRecognizer())
+        }
     }
     
     override func didReceiveMemoryWarning() {
