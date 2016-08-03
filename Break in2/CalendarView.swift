@@ -164,7 +164,95 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Give deadlines array to monthView[1] (current month)
     
-    self.monthViews[1].deadlines = self.getJobDeadlinesForCurrentMonth()
+    //self.monthViews[1].deadlines = [[:]]
+    
+    //var deadlines:[[String:AnyObject]] = [[:]]
+    
+    //---------------------------------------
+    //SANGEET FROM HERE
+    //---------------------------------------
+    
+    SwiftSpinner.show("Loading")
+    let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
+    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
+    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
+    
+    query.findObjectsInBackgroundWithBlock {
+        (objects: [PFObject]?, error: NSError?) -> Void in
+        
+        if error == nil {
+            
+            // The find succeeded.
+            print("Successfully retrieved \(objects!.count) job deadlines.")
+            
+            // Do something with the found objects
+            if let objects = objects {
+                
+                for object in objects {
+                    
+                    if objects.count >= 0 {
+                        
+                        var deadlinesIndividual:[String:AnyObject] = [:]
+                        
+                        print(object[PF_CALENDAR_CAREERTYPE] as! String)
+                        print(self.chosenCareers)
+                        
+                        if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
+                            
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
+                            deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+                            
+                            self.monthViews[1].deadlines.append(deadlinesIndividual)
+                            
+                        }else{
+                            print("career not selected by user")
+                        }
+                    }else{
+                        print("no jobs available this month")
+                    }
+                }//for loop ends
+                
+            }else{
+                //if objects ends
+            }
+            
+            print(self.monthViews[1].deadlines)
+            
+            //---------------------------------------
+            //SANGEET UPDATE NUMBERS HERE
+            //---------------------------------------
+            
+            SwiftSpinner.show("Job refreshed", animated: false).addTapHandler({
+                
+                SwiftSpinner.hide()
+                
+                }, subtitle: "Tap to dismiss")
+            
+            //NSUserDefaults().setObject(deadlines, forKey: "monthDeadlines")
+            //print(test)
+            //SwiftSpinner.hide()
+            
+        } else {
+            // Log details of the failure
+            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                
+                SwiftSpinner.hide()
+                
+                }, subtitle: "Tap to dismiss")
+        }
+    }
+    
+    //---------------------------------------
+    //SANGEET TO HERE
+    //---------------------------------------
+    
+    
+    //var deadlinesForCurrentMonth:[[String:AnyObject]] = deadlines
+    
     
     // Set constraints
     
@@ -482,7 +570,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     var deadlines:[[String:AnyObject]] = [["day":12,"month":8,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
     
-    var deadlinesForCurrentMonth:[[String:AnyObject]] = [[String:AnyObject]]()
+    var deadlinesForCurrentMonth:[[String:AnyObject]] = deadlines
+    
     
     for deadline in deadlines {
       if deadline["year"] as! Int == self.currentYear {

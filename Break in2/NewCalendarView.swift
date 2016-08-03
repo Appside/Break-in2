@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SwiftSpinner
+import Parse
+import ParseUI
 
 class NewCalendarView: UIView, UIScrollViewDelegate {
   
