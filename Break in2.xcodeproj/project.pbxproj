@@ -37,6 +37,7 @@
 		25E4ACCE1C552C9800C49551 /* LogicalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E4ACCC1C552C9800C49551 /* LogicalModel.swift */; };
 		490CB4061C552E0300A68493 /* logicalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4051C552E0300A68493 /* logicalQuestion.swift */; };
 		490CB4081C552E6800A68493 /* logicalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */; };
+		494A9B671D52B0C1001DBE42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 494A9B661D52B0C1001DBE42 /* GoogleService-Info.plist */; };
 		494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE5451D3B91C30086D261 /* programmingViewController.swift */; };
 		494D5FB21D3BD04B005A1511 /* programmingQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D5FB11D3BD04B005A1511 /* programmingQuestion.swift */; };
 		494D5FB41D3BD07B005A1511 /* Programming.json in Resources */ = {isa = PBXBuildFile; fileRef = 494D5FB31D3BD07B005A1511 /* Programming.json */; };
@@ -140,6 +141,7 @@
 		46D21796E8BF7B77B713850C /* Pods-Break in2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2Tests/Pods-Break in2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		490CB4051C552E0300A68493 /* logicalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalQuestion.swift; sourceTree = "<group>"; };
 		490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalReasoningViewController.swift; sourceTree = "<group>"; };
+		494A9B661D52B0C1001DBE42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		494AE5451D3B91C30086D261 /* programmingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingViewController.swift; sourceTree = "<group>"; };
 		494D5FB11D3BD04B005A1511 /* programmingQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingQuestion.swift; sourceTree = "<group>"; };
 		494D5FB31D3BD07B005A1511 /* Programming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Programming.json; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				61FF7B8C1C2FDF6C00CD4392 /* TODO.swift */,
+				494A9B661D52B0C1001DBE42 /* GoogleService-Info.plist */,
 				614316461BEF843A0047A37D /* Break in2 */,
 				6143165B1BEF843A0047A37D /* Break in2Tests */,
 				614316661BEF843A0047A37D /* Break in2UITests */,
@@ -606,6 +609,7 @@
 				6143164D1BEF843A0047A37D /* Main.storyboard in Resources */,
 				251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */,
 				251D4BC01C11FBEB004A6715 /* VerbalReasoning.json in Resources */,
+				494A9B671D52B0C1001DBE42 /* GoogleService-Info.plist in Resources */,
 				494D5FB41D3BD07B005A1511 /* Programming.json in Resources */,
 				253AC83C1C2716B700495DF5 /* AppVariables.json in Resources */,
 			);

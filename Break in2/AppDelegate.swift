@@ -13,14 +13,17 @@ import ParseUI
 import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import FBSDKLoginKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        //Start and setup Firebase
+        FIRApp.configure()
         
         // [Optional] Parse also lets you store objects in a local datastore on the device itself
         Parse.enableLocalDatastore()
