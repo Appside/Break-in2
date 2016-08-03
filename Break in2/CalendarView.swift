@@ -172,7 +172,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     //SANGEET FROM HERE
     //---------------------------------------
     
-    SwiftSpinner.show("Loading")
+    //SwiftSpinner.show("Loading")
     let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
     query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
     query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
@@ -226,11 +226,11 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
             //SANGEET UPDATE NUMBERS HERE
             //---------------------------------------
             
-            SwiftSpinner.show("Job refreshed", animated: false).addTapHandler({
-                
-                SwiftSpinner.hide()
-                
-                }, subtitle: "Tap to dismiss")
+//            SwiftSpinner.show("Job refreshed", animated: false).addTapHandler({
+//                
+//                SwiftSpinner.hide()
+//                
+//                }, subtitle: "Tap to dismiss")
             
             //NSUserDefaults().setObject(deadlines, forKey: "monthDeadlines")
             //print(test)
