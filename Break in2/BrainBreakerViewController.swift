@@ -10,8 +10,15 @@ import UIKit
 import SCLAlertView
 import Parse
 import SwiftSpinner
+import GoogleMobileAds
 
-class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
+
+class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, GADInterstitialDelegate {
+    
+    //Ad variables
+    var interstitialAd:GADInterstitial!
+    var testStarted:Bool = Bool()
+    var AdBeforeClosing:Bool = false
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -82,6 +89,9 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.interstitialAd = self.createAndLoadInterstitial()
+        self.testStarted = false
         
         self.questionType = self.defaults.objectForKey("BrainBreakerQuestionType") as? String ?? String()
         self.passage = self.defaults.objectForKey("BrainBreakerPassage") as? String ?? String()
@@ -371,8 +381,14 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
     }
     
     func goBack(){
-        self.performSegueWithIdentifier("backHomeSegue", sender: nil)
-    }
+        self.AdBeforeClosing = true
+        if self.interstitialAd.isReady {
+            self.interstitialAd.presentFromRootViewController(self)
+        } else {
+            self.timeTimer.invalidate()
+            self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+            print("Ad wasn't ready")
+        }    }
     
     func setConstraints() {
         
@@ -792,6 +808,32 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate {
                 }
             }
         }
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: AD_ID_BRAINBREAKER)
+        let request = GADRequest()
+        request.testDevices = [ kGADSimulatorID, "kGADSimulatorID" ]
+        interstitial.delegate = self
+        interstitial.loadRequest(request)
+        return interstitial
+    }
+    
+    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+        self.interstitialAd = createAndLoadInterstitial()
+        if self.AdBeforeClosing == true {
+            self.timeTimer.invalidate()
+            self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+        } else {
+            if self.testStarted == false {
+                self.testStarted = true
+                //self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(BrainBreakerReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+            } else if self.testStarted == true {
+                self.testStarted = false
+                self.nextQuestion(UITapGestureRecognizer())
+            }
+        }
+    }
+
     
 }
     

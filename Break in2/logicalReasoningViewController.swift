@@ -11,8 +11,15 @@ import Charts
 import SCLAlertView
 import Parse
 import SwiftSpinner
+import GoogleMobileAds
 
-class logicalReasoningViewController: QuestionViewController, UIScrollViewDelegate {
+
+class logicalReasoningViewController: QuestionViewController, UIScrollViewDelegate, GADInterstitialDelegate {
+    
+    //Ad variables
+    var interstitialAd:GADInterstitial!
+    var testStarted:Bool = Bool()
+    var AdBeforeClosing:Bool = false
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -68,6 +75,9 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
     //ViewDidLoad call
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.interstitialAd = self.createAndLoadInterstitial()
+        self.testStarted = false
         
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -338,7 +348,13 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             
         } else {
             //Launch timer
-            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+            if self.interstitialAd.isReady {
+                self.interstitialAd.presentFromRootViewController(self)
+            } else {
+                print("Ad wasn't ready")
+                self.testStarted = true
+                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(logicalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+            }
         }
         
     }
@@ -389,14 +405,26 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             self.whiteBGView.alpha = 0
             self.displayQuestion(self.displayedQuestionIndex)
             self.showTutorial = false
-            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+            if self.interstitialAd.isReady {
+                self.interstitialAd.presentFromRootViewController(self)
+            } else {
+                self.testStarted = true
+                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(logicalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+                print("Ad wasn't ready")
+            }
         }
         
     }
     
     func tutoSkip(sender:UITapGestureRecognizer) {
         self.showTutorial = false
-        self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        if self.interstitialAd.isReady {
+            self.interstitialAd.presentFromRootViewController(self)
+        } else {
+            self.testStarted = true
+            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(logicalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+            print("Ad wasn't ready")
+        }
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.tutoView.alpha = 0.0
             }, completion: nil)
@@ -459,7 +487,14 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
     
     func goBack(){
         
-        self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+        self.AdBeforeClosing = true
+        if self.interstitialAd.isReady {
+            self.interstitialAd.presentFromRootViewController(self)
+        } else {
+            self.timeTimer.invalidate()
+            self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+            print("Ad wasn't ready")
+        }
         
     }
     
@@ -668,6 +703,16 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                     //Stop Timer
                     self.timeTimer.invalidate()
                     
+                    if self.testStarted == true {
+                        if self.interstitialAd.isReady {
+                            self.interstitialAd.presentFromRootViewController(self)
+                        } else {
+                            print("Ad wasn't ready")
+                            self.testStarted = false
+                            self.nextQuestion(UITapGestureRecognizer())
+                        }
+                    } else {
+                        
                     //Upload Results to Parse
                     var i:Int = 0
                     var nbCorrectAnswers:Int = 0
@@ -710,6 +755,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                             
                         }
                     })
+                }
                 }
                 else {
                     self.feedbackScreen()
@@ -983,4 +1029,30 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             self.totalNumberOfQuestions = 24
         }
     }
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: AD_ID_LOGICAL)
+        let request = GADRequest()
+        request.testDevices = [ kGADSimulatorID, "kGADSimulatorID" ]
+        interstitial.delegate = self
+        interstitial.loadRequest(request)
+        return interstitial
+    }
+    
+    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+        self.interstitialAd = createAndLoadInterstitial()
+        if self.AdBeforeClosing == true {
+            self.timeTimer.invalidate()
+            self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+        } else {
+            if self.testStarted == false {
+                self.testStarted = true
+                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(logicalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
+            } else if self.testStarted == true {
+                self.testStarted = false
+                self.nextQuestion(UITapGestureRecognizer())
+            }
+        }
+    }
+
 }
