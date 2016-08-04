@@ -18,6 +18,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     //Ad variables
     var interstitialAd:GADInterstitial!
     var testStarted:Bool = Bool()
+    var AdBeforeClosing:Bool = false
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -426,6 +427,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
                 print("Ad wasn't ready")
+                self.testStarted = true
+                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
             }
         }
         
@@ -474,6 +477,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             if self.interstitialAd.isReady {
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
+                self.testStarted = true
+                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
                 print("Ad wasn't ready")
             }
         }
@@ -486,6 +491,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         if self.interstitialAd.isReady {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
+            self.testStarted = true
+            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
             print("Ad wasn't ready")
         }
         UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
@@ -571,7 +578,14 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     }
     
     func goBack(){
-        self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+        self.AdBeforeClosing = true
+        if self.interstitialAd.isReady {
+            self.interstitialAd.presentFromRootViewController(self)
+        } else {
+            self.timeTimer.invalidate()
+            self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+            print("Ad wasn't ready")
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -722,6 +736,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                             self.interstitialAd.presentFromRootViewController(self)
                         } else {
                             print("Ad wasn't ready")
+                            self.testStarted = false
+                            self.nextQuestion(UITapGestureRecognizer())
                         }
                     } else {
                     
@@ -1212,12 +1228,17 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
         self.interstitialAd = createAndLoadInterstitial()
+        if self.AdBeforeClosing == true {
+            self.timeTimer.invalidate()
+            self.performSegueWithIdentifier("backHomeSegue", sender: nil)
+        } else {
         if self.testStarted == false {
             self.testStarted = true
             self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(numericalReasoningViewController.updateTimer), userInfo: nil, repeats: true)
         } else if self.testStarted == true {
             self.testStarted = false
             self.nextQuestion(UITapGestureRecognizer())
+        }
         }
     }
     
