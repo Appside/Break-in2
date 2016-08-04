@@ -318,7 +318,7 @@ class ProfileViewController: UIViewController {
         if showErrorMessage == true {
             
             //Show Error Message
-            let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+            let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
             let backAlert = SCLAlertView(appearance: appearance)
             backAlert.showTitle(
                 "Return", // Title of view
