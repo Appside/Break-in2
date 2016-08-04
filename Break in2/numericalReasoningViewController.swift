@@ -17,7 +17,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     //Ad variables
     var interstitialAd:GADInterstitial!
-    var testStarted:Bool = false
+    var testStarted:Bool = Bool()
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -82,6 +82,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         super.viewDidLoad()
       
         self.interstitialAd = self.createAndLoadInterstitial()
+        self.testStarted = false
         
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -1202,8 +1203,10 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     func createAndLoadInterstitial() -> GADInterstitial {
         let interstitial = GADInterstitial(adUnitID: AD_ID_NUMERICAL)
+        let request = GADRequest()
+        request.testDevices = [ kGADSimulatorID, "kGADSimulatorID" ]
         interstitial.delegate = self
-        interstitial.loadRequest(GADRequest())
+        interstitial.loadRequest(request)
         return interstitial
     }
     
