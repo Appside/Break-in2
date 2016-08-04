@@ -23,7 +23,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   let calendarModel:JSONModel = JSONModel()
   let defaults = NSUserDefaults.standardUserDefaults()
   
-  let monthTitleLabel:UILabel = UILabel()
+  let monthTitleButton:UIButton = UIButton()
+  let updateDeadlinesButton:UIButton = UIButton()
   let nextMonthButton:UIButton = UIButton()
   let previousMonthButton:UIButton = UIButton()
   let monthScrollView:UIScrollView = UIScrollView()
@@ -44,11 +45,22 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     self.deadlinesView.alpha = 0
     self.addSubview(self.deadlinesView)
     
-    // Set monthTitleLabel properties and add as subview to self
+    // Set monthTitleButton properties and add as subview to self
     
-    self.monthTitleLabel.textAlignment = NSTextAlignment.Center
-    self.monthTitleLabel.text = "Month"
-    self.addSubview(self.monthTitleLabel)
+    self.monthTitleButton.titleLabel?.textAlignment = NSTextAlignment.Center
+    self.monthTitleButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.getTextSize(18))
+    self.monthTitleButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    self.monthTitleButton.addTarget(self, action: #selector(self.downloadAndDisplayJobDeadlinesForCurrentMonth), forControlEvents: UIControlEvents.TouchUpInside)
+    self.addSubview(self.monthTitleButton)
+    
+    // Set updateDeadlinesButton properties and add as subview to self
+    
+    self.updateDeadlinesButton.titleLabel?.textAlignment = NSTextAlignment.Center
+    self.updateDeadlinesButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.getTextSize(14))
+    self.updateDeadlinesButton.setTitle("Tap Here To Refresh", forState: UIControlState.Normal)
+    self.updateDeadlinesButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
+    self.updateDeadlinesButton.addTarget(self, action: #selector(self.downloadAndDisplayJobDeadlinesForCurrentMonth), forControlEvents: UIControlEvents.TouchUpInside)
+    self.addSubview(self.updateDeadlinesButton)
     
     // Set nextMonthButton properties and add as subview to self
     
@@ -155,104 +167,12 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       self.monthViews[2].year = self.currentYear
     }
     
-    // Set monthTitleLabel
+    // Set monthTitleButton
     
     let dateFormatter:NSDateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "MMMM"
     let monthTitleString:String = dateFormatter.monthSymbols[self.currentMonth - 1] + " " + String(self.currentYear)
-    self.monthTitleLabel.text = monthTitleString.uppercaseString
-    
-    // Give deadlines array to monthView[1] (current month)
-    
-    //self.monthViews[1].deadlines = [[:]]
-    
-    //var deadlines:[[String:AnyObject]] = [[:]]
-    
-    //---------------------------------------
-    //SANGEET FROM HERE
-    //---------------------------------------
-    
-    //SwiftSpinner.show("Loading")
-    let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
-    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
-    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
-    
-    query.findObjectsInBackgroundWithBlock {
-        (objects: [PFObject]?, error: NSError?) -> Void in
-        
-        if error == nil {
-            
-            // The find succeeded.
-            print("Successfully retrieved \(objects!.count) job deadlines.")
-            
-            // Do something with the found objects
-            if let objects = objects {
-                
-                for object in objects {
-                    
-                    if objects.count >= 0 {
-                        
-                        var deadlinesIndividual:[String:AnyObject] = [:]
-                        
-                        print(object[PF_CALENDAR_CAREERTYPE] as! String)
-                        print(self.chosenCareers)
-                        
-                        if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
-                            
-                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
-                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
-                            deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
-                            deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
-                            deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
-                            deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
-                            
-                            self.monthViews[1].deadlines.append(deadlinesIndividual)
-                            
-                        }else{
-                            print("career not selected by user")
-                        }
-                    }else{
-                        print("no jobs available this month")
-                    }
-                }//for loop ends
-                
-            }else{
-                //if objects ends
-            }
-            
-            print(self.monthViews[1].deadlines)
-            
-            //---------------------------------------
-            //SANGEET UPDATE NUMBERS HERE
-            //---------------------------------------
-            
-//            SwiftSpinner.show("Job refreshed", animated: false).addTapHandler({
-//                
-//                SwiftSpinner.hide()
-//                
-//                }, subtitle: "Tap to dismiss")
-            
-            //NSUserDefaults().setObject(deadlines, forKey: "monthDeadlines")
-            //print(test)
-            //SwiftSpinner.hide()
-            
-        } else {
-            // Log details of the failure
-            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                
-                SwiftSpinner.hide()
-                
-                }, subtitle: "Tap to dismiss")
-        }
-    }
-    
-    //---------------------------------------
-    //SANGEET TO HERE
-    //---------------------------------------
-    
-    
-    //var deadlinesForCurrentMonth:[[String:AnyObject]] = deadlines
-    
+    self.monthTitleButton.setTitle(monthTitleString.uppercaseString, forState: UIControlState.Normal)
     
     // Set constraints
     
@@ -270,18 +190,96 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
   }
   
+  func updateCalendar() {
+    
+    // Set current, next and previous monthView month and year properties
+    
+    if self.currentMonth == 0 {
+      self.currentMonth = 12
+      self.currentYear -= 1
+      self.monthViews[0].month = 11
+      self.monthViews[0].year = self.currentYear
+      self.monthViews[1].month = 12
+      self.monthViews[1].year = self.currentYear
+      self.monthViews[2].month = 1
+      self.monthViews[2].year = self.currentYear + 1
+    }
+    else if self.currentMonth == 1 {
+      self.monthViews[0].month = 12
+      self.monthViews[0].year = self.currentYear - 1
+      self.monthViews[1].month = 1
+      self.monthViews[1].year = self.currentYear
+      self.monthViews[2].month = 2
+      self.monthViews[2].year = self.currentYear
+    }
+    else if self.currentMonth == 13 {
+      self.currentMonth = 1
+      self.currentYear += 1
+      self.monthViews[0].month = 12
+      self.monthViews[0].year = self.currentYear - 1
+      self.monthViews[1].month = 1
+      self.monthViews[1].year = self.currentYear
+      self.monthViews[2].month = 2
+      self.monthViews[2].year = self.currentYear
+    }
+    else if self.currentMonth == 12 {
+      self.monthViews[0].month = 11
+      self.monthViews[0].year = self.currentYear
+      self.monthViews[1].month = 12
+      self.monthViews[1].year = self.currentYear
+      self.monthViews[2].month = 1
+      self.monthViews[2].year = self.currentYear + 1
+    }
+    else {
+      self.monthViews[0].month = self.currentMonth - 1
+      self.monthViews[0].year = self.currentYear
+      self.monthViews[1].month = self.currentMonth
+      self.monthViews[1].year = self.currentYear
+      self.monthViews[2].month = self.currentMonth + 1
+      self.monthViews[2].year = self.currentYear
+    }
+    
+    // Set monthTitleButton
+    
+    let dateFormatter:NSDateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "MMMM"
+    let monthTitleString:String = dateFormatter.monthSymbols[self.currentMonth - 1] + " " + String(self.currentYear)
+    self.monthTitleButton.setTitle(monthTitleString.uppercaseString, forState: UIControlState.Normal)
+    
+    // Give deadlines array to monthView[1] (current month)
+    
+    // Display all monthViews
+    for view:CalendarMonthView in self.monthViews {
+      view.displayView()
+    }
+    
+    // Move monthScrollView to the middle of the content size
+    
+    self.monthScrollView.setContentOffset(CGPointMake(self.monthScrollView.frame.width, 0), animated: false)
+    
+  }
+  
   func setConstraints() {
     
-    // Set constraints for monthTitleLabel
+    // Set constraints for monthTitleButton
     
-    self.monthTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-    let monthTitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-    let monthTitleLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.frame.width/4)
-    let monthTitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/2)
-    let monthTitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9)*2)
-    self.addConstraints([monthTitleLabelTopConstraint,monthTitleLabelLeftConstraint])
-    self.monthTitleLabel.addConstraints([monthTitleLabelWidthConstraint,monthTitleLabelHeightConstraint])
+    self.monthTitleButton.translatesAutoresizingMaskIntoConstraints = false
+    let monthTitleButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let monthTitleButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: (self.frame.width/10) * 2)
+    let monthTitleButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.width/10) * 6)
+    let monthTitleButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9) * 1.5)
+    self.addConstraints([monthTitleButtonTopConstraint,monthTitleButtonLeftConstraint])
+    self.monthTitleButton.addConstraints([monthTitleButtonWidthConstraint,monthTitleButtonHeightConstraint])
     
+    // Set constraints for updateDeadlinesButton
+    
+    self.updateDeadlinesButton.translatesAutoresizingMaskIntoConstraints = false
+    let updateDeadlinesButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.frame.height/9) * 1.2)
+    let updateDeadlinesButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: (self.frame.width/10) * 2)
+    let updateDeadlinesButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.width/10) * 6)
+    let updateDeadlinesButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9) * 0.5)
+    self.addConstraints([updateDeadlinesButtonTopConstraint,updateDeadlinesButtonLeftConstraint])
+    self.updateDeadlinesButton.addConstraints([updateDeadlinesButtonWidthConstraint,updateDeadlinesButtonHeightConstraint])
     // Set constraints for nextMonthButton
     
     self.nextMonthButton.translatesAutoresizingMaskIntoConstraints = false
@@ -361,13 +359,15 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     if self.monthScrollView.contentOffset.x == (self.monthScrollView.frame.width * 2) {
       
       self.currentMonth += 1
-      self.displayCalendar()
+      self.monthViews[1].deadlines.removeAll()
+      self.updateCalendar()
       
     }
     if self.monthScrollView.contentOffset.x == 0 {
       
       self.currentMonth -= 1
-      self.displayCalendar()
+      self.monthViews[1].deadlines.removeAll()
+      self.updateCalendar()
       
     }
     
@@ -404,7 +404,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       
       UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
         
-        self.monthTitleLabel.alpha = 0
+        self.monthTitleButton.alpha = 0
         self.nextMonthButton.alpha = 0
         self.previousMonthButton.alpha = 0
         self.monthScrollView.alpha = 0
@@ -537,7 +537,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   func backToCalendarView(sender: UITapGestureRecognizer) {
     UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
       
-      self.monthTitleLabel.alpha = 1
+      self.monthTitleButton.alpha = 1
       self.nextMonthButton.alpha = 1
       self.previousMonthButton.alpha = 1
       self.monthScrollView.alpha = 1
@@ -549,7 +549,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
       
-      self.monthTitleLabel.alpha = 1
+      self.monthTitleButton.alpha = 1
       self.nextMonthButton.alpha = 1
       self.previousMonthButton.alpha = 1
       self.monthScrollView.alpha = 1
@@ -559,48 +559,13 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
   }
   
-  func getJobDeadlinesForCurrentMonth() -> [[String:AnyObject]] {
+  func downloadAndDisplayJobDeadlinesForCurrentMonth() {
     
-    // ADD CODE TO GET A [[String:AnyObject]] ARRAY OF DEADLINES FOR THE CURRENT MONTH & CURRENT YEAR THEN RETURN IT
-    // i.e.
-    // query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
-    // query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
-    
-    // THE FOLLOWING CODE OUTLINES THE LOGIC (RUN TO TEST)
-    
-    var deadlines:[[String:AnyObject]] = [["day":12,"month":8,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
-    
-    var deadlinesForCurrentMonth:[[String:AnyObject]] = deadlines
-    
-    
-    for deadline in deadlines {
-      if deadline["year"] as! Int == self.currentYear {
-        if deadline["month"] as! Int == self.currentMonth {
-          deadlinesForCurrentMonth.append(deadline)
-        }
-      }
-    }
-    
-    return deadlinesForCurrentMonth
-    
-  }
-  
-  func getJobDeadlinesForMonth(month: Int, year: Int) -> [[String:AnyObject]] {
-    
-    // ----------------------------------------------------------------------------------------------------------------
-    // THIS FUNCTION IS NOT CALLED ANY MORE
-    // ----------------------------------------------------------------------------------------------------------------
-    
-    SwiftSpinner.show("Loading")
+    //SwiftSpinner.show("Loading")
     let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
+    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
+    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
     
-      //var deadlines:[[String:AnyObject]] = [["day":12,"month":7,"year":2016,"company":"Nomura","career":"Investment Banking","position":"Analyst"]]
-    
-    var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
-    
-    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: month)
-    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: year)
-
     query.findObjectsInBackgroundWithBlock {
       (objects: [PFObject]?, error: NSError?) -> Void in
       
@@ -612,124 +577,52 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         // Do something with the found objects
         if let objects = objects {
           
-          var deadlinesIndividual:[String:AnyObject] = [:]
-          
           for object in objects {
             
             if objects.count >= 0 {
-            
-            print(object[PF_CALENDAR_CAREERTYPE] as! String)
-            print(self.chosenCareers)
-            
-            if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
               
-              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
-              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
-              deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
-              deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
-              deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
-              deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+              var deadlinesIndividual:[String:AnyObject] = [:]
               
-              deadlines.append(deadlinesIndividual)
+              print(object[PF_CALENDAR_CAREERTYPE] as! String)
+              print(self.chosenCareers)
+              
+              if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
                 
-              //print(deadlines)
-              
-                }
+                deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
+                deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
+                deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
+                deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
+                deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
+                deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+                
+                self.monthViews[1].deadlines.append(deadlinesIndividual)
+                
+              }else{
+                print("career not selected by user")
+              }
+            }else{
+              print("no jobs available this month")
             }
-          }
+          }//for loop ends
+          
+        }else{
+          //if objects ends
         }
         
-        NSUserDefaults().setObject(deadlines, forKey: "monthDeadlines")
-        //print(test)
-        SwiftSpinner.hide()
-
+        print(self.monthViews[1].deadlines)
+        
+        self.monthViews[1].displayView()
+        
+      } else {
+        // Log details of the failure
+        SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
           
-        } else {
-          // Log details of the failure
-          SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-            
-            SwiftSpinner.hide()
-            
-            }, subtitle: "Tap to dismiss")
-        }
+          SwiftSpinner.hide()
+          
+          }, subtitle: "Tap to dismiss")
       }
-    
-    
-    
-    
-    
-    //print(deadlines)
-    //let test:[[String:AnyObject]] = self.defaults.objectForKey("monthDeadlines") as! [[String:AnyObject]]
-    return deadlines
+    }
     
   }
-  
-  //SYNCHRONOUS DOWNLOAD
-  
-  //    func getJobDeadlinesForMonth(month: Int, year: Int) -> [[String:AnyObject]] {
-  //
-  //        SwiftSpinner.show("Loading")
-  //        let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
-  //
-  //        var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
-  //
-  //        query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: month)
-  //        query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: year)
-  //
-  //        do {
-  //            let objects:[PFObject] = try query.findObjects()
-  //
-  //            print("Successfully retrieved \(objects.count) job deadlines.")
-  //
-  //            // Do something with the found objects
-  //            //if let objects = objects {
-  //
-  //            var deadlinesIndividual:[String:AnyObject] = [:]
-  //
-  //            for object in objects {
-  //
-  //                print(object[PF_CALENDAR_CAREERTYPE] as! String)
-  //                print(self.chosenCareers)
-  //
-  //                if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
-  //
-  //                    deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
-  //                    deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
-  //                    deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
-  //                    deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
-  //                    deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
-  //                    deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
-  //
-  //                    deadlines.append(deadlinesIndividual)
-  //                    print(deadlines)
-  //
-  //                }
-  //            }
-  //
-  //        }catch{
-  //
-  //            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-  //
-  //                SwiftSpinner.hide()
-  //
-  //                }, subtitle: "Tap to dismiss")
-  //        }
-  //
-  //        //    }
-  //        //
-  //        //    }
-  //
-  //        print(deadlines)
-  //        return deadlines
-  //
-  //    }
-  
-  /*
-   // Only override drawRect: if you perform custom drawing.
-   // An empty implementation adversely affects performance during animation.
-   override func drawRect(rect: CGRect) {
-   // Drawing code
-   }
-   */
   
 }

@@ -39,7 +39,7 @@ class CalendarMonthView: UIView {
   var numberOfDaysInMonth:Int = 0
   var numberOfDaysInPreviousMonth:Int = 0
   var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
-    var chosenCareers:[String] = [String]()
+  var chosenCareers:[String] = [String]()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -54,6 +54,7 @@ class CalendarMonthView: UIView {
       
       labelAtIndex.textAlignment = NSTextAlignment.Center
       labelAtIndex.textColor = UIColor.whiteColor()
+      labelAtIndex.font = UIFont(name: "HelveticaNeue-Medium", size: self.getTextSize(15))
       labelAtIndex.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1)
       labelAtIndex.text = self.daysOfTheWeek[index]
       
@@ -74,8 +75,7 @@ class CalendarMonthView: UIView {
         
         // Set dayButton properties and add as subview to self
         
-        //dayButtonAtIndex.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
-        //dayButtonAtIndex.setTitle("1", forState: UIControlState.Normal)
+        dayButtonAtIndex.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: self.getTextSize(14))
         
         // Add gray background to weekends
         if j == 5 || j == 6 {
@@ -94,9 +94,9 @@ class CalendarMonthView: UIView {
     }
     
   }
-
+  
   required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    fatalError("init(coder:) has not been implemented")
   }
   
   func displayView() {
@@ -191,9 +191,9 @@ class CalendarMonthView: UIView {
     
     // Get deadline dates
     
-//    if let unwrappedDelegate = self.delegate {
-//        self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
-//    }
+    //    if let unwrappedDelegate = self.delegate {
+    //        self.deadlines = unwrappedDelegate.getJobDeadlinesForMonth(self.month, year: self.year)
+    //    }
     
     // Display dates with deadlines
     
@@ -219,7 +219,7 @@ class CalendarMonthView: UIView {
         let career:String = deadline["career"] as! String
         let position:String = deadline["position"] as! String
         self.dayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].deadlines.append([company,career,position])
-
+        
       }
       
     }
@@ -283,7 +283,7 @@ class CalendarMonthView: UIView {
         
       }
     }
-
+    
   }
   
   func calendarDayButtonClicked(sender:CalendarDayButton) {
@@ -291,22 +291,22 @@ class CalendarMonthView: UIView {
     self.delegate?.calendarDayButtonClicked(sender)
     
     /*if sender.clicked {
-      sender.clicked = false
-      sender.setNeedsDisplay()
-    }
-    else {
-      sender.clicked = true
-      sender.drawCircle(3)
-    }*/
+     sender.clicked = false
+     sender.setNeedsDisplay()
+     }
+     else {
+     sender.clicked = true
+     sender.drawCircle(3)
+     }*/
     
-
+    
   }
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+  /*
+   // Only override drawRect: if you perform custom drawing.
+   // An empty implementation adversely affects performance during animation.
+   override func drawRect(rect: CGRect) {
+   // Drawing code
+   }
+   */
+  
 }
