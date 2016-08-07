@@ -118,6 +118,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.view.addHomeBG()
     self.textSize = self.view.getTextSize(15)
     
+    self.careerTypes = self.settingsModel.getAppVariables("careerTypes") as! [String]
+    self.careerTypeImages = self.settingsModel.getAppVariables("careerTypeImages") as! [String:String]
+    
     //Screen size and constraints
     self.widthRatio = screenFrame.size.width / 414
     self.heightRatio = screenFrame.size.height / 736

@@ -17,6 +17,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
   var jobDeadlines:[[String:AnyObject]] = [[String:AnyObject]]()
   var chosenCareers:[String] = [String]()
+    
+  // Sort appended jobs bug
+  var flushCounter:Int = Int()
   
   // Declare and initialize views and models
   
@@ -409,6 +412,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         self.previousMonthButton.alpha = 0
         self.monthScrollView.alpha = 0
         self.deadlinesView.alpha = 1
+        self.updateDeadlinesButton.alpha = 0
         
         }, completion: nil)
       
@@ -477,7 +481,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     //Initialize Deadline Table
     var i:Int = 0
     let cellHeight:Int = 70
-    
+
     for elementArray in sender.deadlines {
       
       let tableCell:UIView = UIView()
@@ -535,6 +539,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   }
   
   func backToCalendarView(sender: UITapGestureRecognizer) {
+    
+    self.flushCounter += 1
+    
     UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
       
       self.monthTitleButton.alpha = 1
@@ -542,6 +549,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       self.previousMonthButton.alpha = 1
       self.monthScrollView.alpha = 1
       self.deadlinesView.alpha = 0
+      self.updateDeadlinesButton.alpha = 1
+        
       }, completion: nil)
   }
   
@@ -561,7 +570,10 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
   func downloadAndDisplayJobDeadlinesForCurrentMonth() {
     
-    //SwiftSpinner.show("Loading")
+    SwiftSpinner.show("Loading")
+    var deadlinesTemp:[[String:AnyObject]] = [[String:AnyObject]]()
+    deadlinesTemp.removeAll()
+    
     let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
     query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
     query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
@@ -595,7 +607,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
                 deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
                 deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
                 
-                self.monthViews[1].deadlines.append(deadlinesIndividual)
+                deadlinesTemp.append(deadlinesIndividual)
+                //self.monthViews[1].deadlines.append(deadlinesIndividual)
                 
               }else{
                 print("career not selected by user")
@@ -609,9 +622,23 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
           //if objects ends
         }
         
-        print(self.monthViews[1].deadlines)
+        //print(self.monthViews[1].deadlines)
         
+        self.monthViews[1].deadlines.removeAll()
+        print(self.monthViews[1].deadlines)
+        self.monthViews[1].deadlines = deadlinesTemp
+        print(self.monthViews[1].deadlines)
         self.monthViews[1].displayView()
+        
+        let dateFormatter:NSDateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "Mmmm"
+        let monthTitleString1:String = dateFormatter.monthSymbols[self.currentMonth - 1]
+        
+        SwiftSpinner.show("\(monthTitleString1)'s Job Deadlines Updated", animated: false).addTapHandler({
+            
+            SwiftSpinner.hide()
+            
+            }, subtitle: "Tap to dismiss")
         
       } else {
         // Log details of the failure

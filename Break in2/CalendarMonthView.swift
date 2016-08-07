@@ -197,6 +197,12 @@ class CalendarMonthView: UIView {
     
     // Display dates with deadlines
     
+    for dayButton in dayButtons {
+        
+        dayButton.deadlines.removeAll()
+        
+    }
+    
     for index:Int in 0.stride(to: self.deadlines.count, by: 1) {
       
       if self.startingWeekday == 1 {

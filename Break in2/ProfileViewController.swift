@@ -259,7 +259,7 @@ class ProfileViewController: UIViewController {
     func goBackToSettingsMenu(sender: UIButton) {
         var alertMessage:String = String()
         alertMessage = "Any unsaved change will be lost."
-        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let backAlert = SCLAlertView(appearance: appearance)
         backAlert.addButton("Continue", target:self, selector:#selector(ProfileViewController.goBackToSettings(_:)))
         backAlert.showTitle(
@@ -274,7 +274,22 @@ class ProfileViewController: UIViewController {
     }
     
     func goBackToSettings(sender: UIButton) {
-        self.performSegueWithIdentifier("backSettingsSegue", sender: nil)
+        
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            
+            //self.chooseCareersView.alpha = 0
+            self.backButton.alpha = 0
+            self.mainView.alpha = 0
+            //self.settingsMenuView.alpha = 0
+            //self.settingsMenuViewTopConstraint.constant = self.screenFrame.height
+            self.view.layoutIfNeeded()
+            
+            }, completion: {(Bool) in
+        
+        self.performSegueWithIdentifier("toSettings", sender: nil)
+                
+        })
+    
     }
     
     func saveProfile(sender: UIButton) {
@@ -361,6 +376,7 @@ class ProfileViewController: UIViewController {
                             SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
                                 
                                 SwiftSpinner.hide()
+                                self.goBackToSettings(sender)
                                 //self.hideSettingsMenuView(sender)
                                 
                                 }, subtitle: "Tap to return to settings")
