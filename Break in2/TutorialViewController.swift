@@ -83,7 +83,7 @@ class TutorialViewController: UIViewController {
       
       let string:String = "Welcome \(user![PF_USER_FULLNAME])"
       self.descriptionLabelView.titleLabel.text = string.uppercaseString
-      self.descriptionLabelView.descriptionLabel.text = "BREAKIN2 is a simple app. But just to get you started, we've provided a quick introduction."
+      self.descriptionLabelView.descriptionLabel.text = "BREAKIN2 is a simple app...\n\n...but we all need a little help from time to time, so we've provided a short introduction to get you started."
       self.descriptionLabelView.alpha = 0
       
       self.descriptionImageView.image = UIImage.init(named: "fingbutton")

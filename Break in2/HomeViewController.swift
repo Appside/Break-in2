@@ -183,9 +183,7 @@ class HomeViewController: UIViewController {
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    if self.tutorialPageNumber == 0 {
       self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
-    }
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     
     self.descriptionLabelView.clipsToBounds = false
@@ -236,7 +234,7 @@ class HomeViewController: UIViewController {
     self.calendarView.layer.cornerRadius = self.minorMargin
     self.calendarView.clipsToBounds = true
     
-    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
+    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
     
     // Set tutorialView and tutorialNextButton alpha values
     
@@ -784,11 +782,11 @@ class HomeViewController: UIViewController {
     
     if self.firstTimeUser {
       self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton, self.membershipButton])
-      self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. Hopefully, the calender we have provided will help! Deadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
-      self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n Click on the light bulb to try our Brain Breaker question. Get the answer right and you enter into a draw for a special prize!"], forKey: self.careersBackgroundView)
-      self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the Settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
-      self.tutorialDescriptions.updateValue(["STATISTICS", "We've also added some statistics that allow you to track your progress. Choose a career and practice some tests. This section will them provide you with detailed analytics of your performance and how it changed over time."], forKey: self.statsButton)
-        self.tutorialDescriptions.updateValue(["SUBSCRIPTION TYPE", "You can now use BREAK IN2 for free or opt for our Premium membership to practice as much as you need.\n\n When selecting a test, this box will show you the number of free lives you have. Click on it anytime to upgrade your membership.\n\n"], forKey: self.membershipButton)
+      self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. Hopefully, the calender we have provided will help!\n\nDeadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
+      self.tutorialDescriptions.updateValue(["PRACTICE APTITUDE TESTS...", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n...OR HAVE SOME FUN!\n\nClick on the light bulb to try our Brain Breaker question. If you get the answer right, you will be in with a chance to win a special prize!"], forKey: self.careersBackgroundView)
+      self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
+      self.tutorialDescriptions.updateValue(["STATISTICS", "We've also added analytics which will allow you to track your progress.\n\nAfter you have taken a few practice tests, return here to monitor your performance and track your improvement over time."], forKey: self.statsButton)
+        self.tutorialDescriptions.updateValue(["FREE SUBSCRIPTION", "As a new user, you will automatically receive 3 free lives which you can use to practice tests. We will also renew a new life every 24 hours.\n\nPREMIUM SUBSCRIPTION\n\nIf you need a little more practice, you may purchase additional tests. However, Premium membership provides you with unlimited lives, removes all advertising and gives you a couple of extra chances at the Brain Breaker."], forKey: self.membershipButton)
 
       self.showTutorial()
     }
@@ -943,7 +941,7 @@ class HomeViewController: UIViewController {
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
       self.tutorialNextButton.alpha = 1
       self.view.layoutIfNeeded()
       
@@ -1064,7 +1062,19 @@ class HomeViewController: UIViewController {
         self.tutorialFingerImageView.alpha = 1.0
         self.membershipButton.alpha = 1.0
         self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
-        self.descriptionLabelView.setConstraintsToSuperview(Int(self.statusBarFrame.height + 2*self.minorMargin + self.backButtonHeight), bottom: Int(self.screenFrame.height/2), left: 35, right: 35)
+        
+        let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        
+        let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 20)
+        self.view.addConstraint(descriptionLabelViewTopConstraint)
+    
+        let descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2))*5)
+        
+        let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
+        
+        self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
+        self.view.addConstraints([descriptionLabelViewCenterXConstraint])
+        
     } else {
     
     let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
@@ -1078,11 +1088,7 @@ class HomeViewController: UIViewController {
       self.view.addConstraint(descriptionLabelViewBottomConstraint)
     }
     
-    var descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint()
-    
-    descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 600)
-
-    descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
+    let descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
     
     let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
     
