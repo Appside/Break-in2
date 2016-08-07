@@ -19,8 +19,6 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     var interstitialAd:GADInterstitial!
     var testStarted:Bool = Bool()
     var AdBeforeClosing:Bool = false
-    let defaults = NSUserDefaults.standardUserDefaults()
-    var membershipType:String = String()
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -84,7 +82,6 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
         
@@ -426,7 +423,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
         } else {
             //Launch timer
-            if self.interstitialAd.isReady && self.membershipType == "Free" {
+            if self.interstitialAd.isReady {
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
                 print("Ad wasn't ready")
@@ -477,7 +474,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             self.showTutorial = false
-            if self.interstitialAd.isReady && self.membershipType == "Free" {
+            if self.interstitialAd.isReady {
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
                 self.testStarted = true
@@ -491,7 +488,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     func tutoSkip(sender:UITapGestureRecognizer) {
         self.graphView.alpha = 1.0
         self.showTutorial = false
-        if self.interstitialAd.isReady && self.membershipType == "Free" {
+        if self.interstitialAd.isReady {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.testStarted = true
@@ -582,7 +579,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     func goBack(){
         self.AdBeforeClosing = true
-        if self.interstitialAd.isReady && self.membershipType == "Free" {
+        if self.interstitialAd.isReady {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.timeTimer.invalidate()
@@ -735,7 +732,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     self.timeTimer.invalidate()
                     
                     if self.testStarted == true {
-                        if self.interstitialAd.isReady && self.membershipType == "Free" {
+                        if self.interstitialAd.isReady {
                             self.interstitialAd.presentFromRootViewController(self)
                         } else {
                             print("Ad wasn't ready")

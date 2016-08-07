@@ -19,8 +19,6 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
     var interstitialAd:GADInterstitial!
     var testStarted:Bool = Bool()
     var AdBeforeClosing:Bool = false
-    let defaults = NSUserDefaults.standardUserDefaults()
-    var membershipType:String = String()
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -71,6 +69,8 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     //Question Variables
     var questionType:String = String()
     var passage:String = String()
@@ -90,7 +90,6 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
         
@@ -338,23 +337,14 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
         swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
         self.swipeUIView.addGestureRecognizer(swipeDownGesture)
         
-        //Set Constraints for TutoView
-        self.view.addSubview(self.tutoView)
-        self.tutoView.translatesAutoresizingMaskIntoConstraints = false
-        self.tutoViewTop = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 75*self.heightRatio)
-        self.tutoViewHeight = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.height - 95*self.heightRatio)
-        self.tutoViewWidth = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: self.view.frame.width - 40*self.widthRatio)
-        self.tutoViewLeft = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
-        self.view.addConstraints([self.tutoViewTop,self.tutoViewLeft])
-        self.tutoView.addConstraints([self.tutoViewHeight,self.tutoViewWidth])
-        self.tutoView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
-        self.tutoView.layer.cornerRadius = 8.0
+        
         
     }
     
     override func viewDidAppear(animated: Bool) {
         //Call tutoNextPage
         self.tutoNext()
+        self.setConstraints()
         let dateBB = NSDate().dateByAddingTimeInterval(0)
         self.timer = NSTimer(fireDate: dateBB, interval: 1, target: self, selector: "brainBreakerTimer", userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(self.timer, forMode: NSRunLoopCommonModes)
@@ -392,7 +382,7 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
     
     func goBack(){
         self.AdBeforeClosing = true
-        if self.interstitialAd.isReady && self.membershipType == "Free" {
+        if self.interstitialAd.isReady {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.timeTimer.invalidate()
@@ -400,6 +390,12 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
             print("Ad wasn't ready")
         }    }
     
+    func setConstraints() {
+        
+        self.tutoViewTop = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 75*self.heightRatio)
+        self.view.addConstraints([self.tutoViewTop,self.tutoViewLeft])
+        
+    }
     func tutoNext() {
         
         if self.tutoPage==0 {
@@ -415,6 +411,18 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
             attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
             attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
             self.questionMenuLabel.attributedText = attributedString
+            
+            //Display TutoView
+            self.view.addSubview(self.tutoView)
+            self.tutoView.translatesAutoresizingMaskIntoConstraints = false
+            self.tutoViewTop = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 2000*self.heightRatio)
+            self.tutoViewHeight = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.height - 95*self.heightRatio)
+            self.tutoViewWidth = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: self.view.frame.width - 40*self.widthRatio)
+            self.tutoViewLeft = NSLayoutConstraint(item: self.tutoView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
+            self.view.addConstraints([self.tutoViewTop,self.tutoViewLeft])
+            self.tutoView.addConstraints([self.tutoViewHeight,self.tutoViewWidth])
+            self.tutoView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+            self.tutoView.layer.cornerRadius = 8.0
             
             //Tuto Description
             self.tutoView.addSubview(self.tutoDescription)
@@ -463,9 +471,14 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
             let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("startTest:"))
             self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
             self.tutoView.alpha = 1.0
-            self.questionMenuRight.constant = -20*self.widthRatio
-            self.menuBackButtonLeft.constant = 20*self.widthRatio
-            self.view.layoutIfNeeded()
+            
+            //Animate constraints
+            UIView.animateWithDuration(0.75, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.questionMenuRight.constant = -20*self.widthRatio
+                self.menuBackButtonLeft.constant = 20*self.widthRatio
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+            self.setConstraints()
         }
         
     }
