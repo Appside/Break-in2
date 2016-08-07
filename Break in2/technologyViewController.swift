@@ -20,6 +20,8 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
     var interstitialAd:GADInterstitial!
     var testStarted:Bool = Bool()
     var AdBeforeClosing:Bool = false
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var membershipType:String = String()
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -80,6 +82,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
         
@@ -385,7 +388,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
             
         } else {
             //Launch timer
-            if self.interstitialAd.isReady {
+            if self.interstitialAd.isReady && self.membershipType == "Free" {
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
                 print("Ad wasn't ready")
@@ -432,7 +435,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
             self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             self.showTutorial = false
-            if self.interstitialAd.isReady {
+            if self.interstitialAd.isReady && self.membershipType == "Free" {
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
                 self.testStarted = true
@@ -445,7 +448,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
     
     func tutoSkip(sender:UITapGestureRecognizer) {
         self.showTutorial = false
-        if self.interstitialAd.isReady {
+        if self.interstitialAd.isReady && self.membershipType == "Free" {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.testStarted = true
@@ -515,7 +518,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
     func goBack(){
         
         self.AdBeforeClosing = true
-        if self.interstitialAd.isReady {
+        if self.interstitialAd.isReady && self.membershipType == "Free" {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.timeTimer.invalidate()
@@ -655,7 +658,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
                         self.timeTimer.invalidate()
                         
                         if self.testStarted == true {
-                            if self.interstitialAd.isReady {
+                            if self.interstitialAd.isReady && self.membershipType == "Free" {
                                 self.interstitialAd.presentFromRootViewController(self)
                             } else {
                                 print("Ad wasn't ready")

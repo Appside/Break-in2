@@ -50,7 +50,8 @@ class HomeViewController: UIViewController {
   var tutorialFingerImageView:UIImageView = UIImageView()
   let brainBreakerQuestionButton:UIButton = UIButton()
   let brainBreakerNewLabel:UILabel = UILabel()
-  
+    let membershipButton:UIButton = UIButton()
+    
   var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -184,9 +185,6 @@ class HomeViewController: UIViewController {
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     if self.tutorialPageNumber == 0 {
       self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
-    }
-    else {
-      self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
     }
     self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     
@@ -447,6 +445,29 @@ class HomeViewController: UIViewController {
     
     self.statsButton.addConstraints([statsButtonHeightConstraint, statsButtonWidthConstraint])
     self.view.addConstraints([statsButtonRightConstraint, statsButtonTopConstraint])
+    
+    // Create and add constraints for membershipButton
+    
+    self.view.addSubview(self.membershipButton)
+    self.membershipButton.alpha = 0.0
+    self.membershipButton.translatesAutoresizingMaskIntoConstraints = false
+    self.membershipButton.clipsToBounds = true
+    self.membershipButton.layer.cornerRadius = self.screenFrame.width/24
+    self.membershipButton.layer.borderWidth = 2
+    self.membershipButton.layer.borderColor = UIColor.whiteColor().CGColor
+    self.membershipButton.setTitle("3", forState: UIControlState.Normal)
+
+    
+    let membershipButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    
+    let membershipButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    
+    let membershipButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    
+    let membershipButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    
+    self.membershipButton.addConstraints([membershipButtonHeightConstraint, membershipButtonWidthConstraint])
+    self.view.addConstraints([membershipButtonRightConstraint, membershipButtonTopConstraint])
     
     // Create and add constraints for careersBackgroundView
     
@@ -762,11 +783,13 @@ class HomeViewController: UIViewController {
     // Show tutorial to first time users
     
     if self.firstTimeUser {
-      self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton])
+      self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton, self.membershipButton])
       self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. Hopefully, the calender we have provided will help! Deadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
       self.tutorialDescriptions.updateValue(["CHOOSE A CAREER", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n Click on the light bulb to try our Brain Breaker question. Get the answer right and you enter into a draw for a special prize!"], forKey: self.careersBackgroundView)
       self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the Settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
-      self.tutorialDescriptions.updateValue(["STATISTICS", "Finally, we've added some statistics that allow you to track your progress.\n\nChoose a career and start practicing some tests.\n\n Best of luck!\nAPPSIDE"], forKey: self.statsButton)
+      self.tutorialDescriptions.updateValue(["STATISTICS", "We've also added some statistics that allow you to track your progress. Choose a career and practice some tests. This section will them provide you with detailed analytics of your performance and how it changed over time."], forKey: self.statsButton)
+        self.tutorialDescriptions.updateValue(["SUBSCRIPTION TYPE", "You can now use BREAK IN2 for free or opt for our Premium membership to practice as much as you need.\n\n When selecting a test, this box will show you the number of free lives you have. Click on it anytime to upgrade your membership.\n\n"], forKey: self.membershipButton)
+
       self.showTutorial()
     }
     
@@ -985,8 +1008,11 @@ class HomeViewController: UIViewController {
           if self.tutorialViews[self.tutorialPageNumber - 1] == self.settingsButton {
             self.performSegueWithIdentifier("settingsClicked", sender: sender)
           }
-          else if self.tutorialViews[self.tutorialPageNumber - 1] == self.statsButton {
+          else if self.tutorialViews[self.tutorialPageNumber - 1] == self.membershipButton {
+            self.tutorialFingerImageView.alpha = 0.0
+            self.membershipButton.alpha = 0.0
             self.hideTutorial()
+            self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
           }
           else {
             for var index:Int = 0 ; index < self.tutorialViews.count ; index += 1 {
@@ -1033,6 +1059,14 @@ class HomeViewController: UIViewController {
     
     descriptionLabelView.translatesAutoresizingMaskIntoConstraints = false
     
+    if self.tutorialViews[self.tutorialPageNumber] == self.membershipButton {
+        self.displayFinger(false)
+        self.tutorialFingerImageView.alpha = 1.0
+        self.membershipButton.alpha = 1.0
+        self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
+        self.descriptionLabelView.setConstraintsToSuperview(Int(self.statusBarFrame.height + 2*self.minorMargin + self.backButtonHeight), bottom: Int(self.screenFrame.height/2), left: 35, right: 35)
+    } else {
+    
     let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
     if self.tutorialViews[self.tutorialPageNumber].frame.maxY < (self.screenFrame.height) {
@@ -1044,12 +1078,19 @@ class HomeViewController: UIViewController {
       self.view.addConstraint(descriptionLabelViewBottomConstraint)
     }
     
-    let descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
+    var descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint()
+    
+    descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 600)
+
+    descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
     
     let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
     
     self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
     self.view.addConstraints([descriptionLabelViewCenterXConstraint])
+    
+    }
+    
   }
   
   func displayFinger(pointingLeft:Bool) {
