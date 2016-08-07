@@ -94,15 +94,15 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
         //Initialize timer depending on difficulty
         if self.difficulty == "H" {
             self.allowedSeconds = 00
-            self.allowedMinutes = 20
+            self.allowedMinutes = 5
         }
         else if self.difficulty == "M" {
             self.allowedSeconds = 00
-            self.allowedMinutes = 25
+            self.allowedMinutes = 10
         }
         else {
             self.allowedSeconds = 00
-            self.allowedMinutes = 30
+            self.allowedMinutes = 15
         }
         
         //Initialize timer
@@ -379,7 +379,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
             
             //Set tutorial text
             self.tutoDescriptionTitle.text = "Test Description:"
-            self.tutoDescriptionText.text = "You will be tested on your ability to read a passage and answer logical questions in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
+            self.tutoDescriptionText.text = "You will be tested on your ability to answer general technology related questions in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
             self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
             

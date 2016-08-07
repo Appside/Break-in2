@@ -259,6 +259,28 @@ class TestTypeView: UIView {
           self.testTypeTimeLabel.text = "Hard"
         }
       }
+      else if self.testType == "Programming" {
+        if self.difficultySelected == "E" {
+            self.testTypeTimeLabel.text = "Easy (15 minutes)"
+        }
+        if self.difficultySelected == "M" {
+            self.testTypeTimeLabel.text = "Medium (10 minutes)"
+        }
+        if self.difficultySelected == "H" {
+            self.testTypeTimeLabel.text = "Hard (5 minutes)"
+        }
+        }
+      else if self.testType == "Technology" {
+        if self.difficultySelected == "E" {
+            self.testTypeTimeLabel.text = "Easy (15 minutes)"
+        }
+        if self.difficultySelected == "M" {
+            self.testTypeTimeLabel.text = "Medium (10 minutes)"
+        }
+        if self.difficultySelected == "H" {
+            self.testTypeTimeLabel.text = "Hard (5 minutes)"
+        }
+        }
     }
     
   }
