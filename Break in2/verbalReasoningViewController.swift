@@ -20,6 +20,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     var interstitialAd:GADInterstitial!
     var testStarted:Bool = Bool()
     var AdBeforeClosing:Bool = false
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var membershipType:String = String()
     
     //Declare variables
     let backgroungUIView:UIView = UIView()
@@ -82,6 +84,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
         
@@ -445,7 +448,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             
         } else {
             //Launch timer
-            if self.interstitialAd.isReady {
+            if self.interstitialAd.isReady && self.membershipType == "Free" {
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
                 print("Ad wasn't ready")
@@ -496,7 +499,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             self.selectedAnswers[self.displayedQuestionIndex] = 20
             self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             self.showTutorial = false
-            if self.interstitialAd.isReady {
+            if self.interstitialAd.isReady && self.membershipType == "Free" {
                 self.interstitialAd.presentFromRootViewController(self)
             } else {
                 self.testStarted = true
@@ -510,7 +513,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     func tutoSkip(sender:UITapGestureRecognizer) {
         self.passageView.alpha = 1.0
         self.showTutorial = false
-        if self.interstitialAd.isReady {
+        if self.interstitialAd.isReady && self.membershipType == "Free" {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.testStarted = true
@@ -598,7 +601,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     func goBack(){
         
         self.AdBeforeClosing = true
-        if self.interstitialAd.isReady {
+        if self.interstitialAd.isReady && self.membershipType == "Free" {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.timeTimer.invalidate()
@@ -741,7 +744,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
                     self.timeTimer.invalidate()
                     
                     if self.testStarted == true {
-                        if self.interstitialAd.isReady {
+                        if self.interstitialAd.isReady && self.membershipType == "Free" {
                             self.interstitialAd.presentFromRootViewController(self)
                         } else {
                             print("Ad wasn't ready")
