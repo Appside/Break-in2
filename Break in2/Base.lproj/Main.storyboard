@@ -359,9 +359,15 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+<<<<<<< HEAD
         <segue reference="F0f-T8-cql"/>
         <segue reference="Yxi-7F-lFe"/>
         <segue reference="kZI-Nr-0I8"/>
         <segue reference="ozu-v7-0io"/>
+=======
+        <segue reference="Wng-qs-57N"/>
+        <segue reference="9Tq-be-jCn"/>
+        <segue reference="PSf-AP-G14"/>
+>>>>>>> origin/master
     </inferredMetricsTieBreakers>
 </document>
