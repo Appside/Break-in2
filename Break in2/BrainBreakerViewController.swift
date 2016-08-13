@@ -331,14 +331,9 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
         self.swipeUIView.backgroundColor = UIColor.whiteColor()
         self.swipeUIView.layer.cornerRadius = 8.0
-        var swipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        var swipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        swipeUpGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("showSwipeMenu:"))
-        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.Up
+        var swipeUpGesture:UITapGestureRecognizer = UITapGestureRecognizer()
+        swipeUpGesture = UITapGestureRecognizer.init(target: self, action: #selector(BrainBreakerViewController.SwipeMenu(_:)))
         self.swipeUIView.addGestureRecognizer(swipeUpGesture)
-        swipeDownGesture = UISwipeGestureRecognizer.init(target: self, action: Selector("hideSwipeMenu:"))
-        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.Down
-        self.swipeUIView.addGestureRecognizer(swipeDownGesture)
         
         //Set Constraints for TutoView
         self.view.addSubview(self.tutoView)
@@ -512,22 +507,20 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
     }
     
     //Show Swipe Menu
-    func showSwipeMenu(sender: UISwipeGestureRecognizer) {
+    func SwipeMenu(sender: UITapGestureRecognizer) {
         UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
-            self.view.layoutIfNeeded()
-            self.passageView.alpha = 0.0
-            self.descriptionSwipeLabel.text = "Swipe down for Question"
-            }, completion: nil)
-    }
-    
-    //Hie Swipe Menu
-    func hideSwipeMenu(sender: UISwipeGestureRecognizer) {
-        UIView.animateWithDuration(1, animations: {
-            self.swipeMenuBottomConstraint.constant = 380*self.heightRatio
-            self.view.layoutIfNeeded()
-            self.passageView.alpha = 1.0
-            self.descriptionSwipeLabel.text = "Swipe up for Answers"
+            if(self.swipeMenuBottomConstraint.constant == 380*self.heightRatio) {
+                self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
+                self.view.layoutIfNeeded()
+                self.descriptionSwipeLabel.text = "Tap here for Question"
+                self.passageView.alpha = 1.0
+            }
+            else if (self.swipeMenuBottomConstraint.constant == 5*self.heightRatio) {
+                self.swipeMenuBottomConstraint.constant = 380*self.heightRatio
+                self.view.layoutIfNeeded()
+                self.descriptionSwipeLabel.text = "Tap here for Answers"
+                self.passageView.alpha = 0.0
+            }
             }, completion: nil)
     }
     
