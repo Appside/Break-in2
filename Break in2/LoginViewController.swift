@@ -187,8 +187,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                 if user != nil {
                     
                     let membership = user![PF_USER_MEMBERSHIP] as! String
+                    
                     print(membership)
                     self.defaults.setObject(membership, forKey: "Membership")
+                    
+                    self.defaults.setObject(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
+                    self.defaults.setObject(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
+                    self.defaults.setObject(user![PF_USER_EMAILCOPY] as! String, forKey: "profileEmail")
                 
                 SwiftSpinner.hide()
                 self.userLoggedIn((user)!)
@@ -332,6 +337,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     user[PF_USER_EMAILCOPY] = userData["email"]
                     user[PF_USER_FULLNAME] = userData["name"]
                     user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
+                    user[PF_USER_FIRST_NAME] = userData["first_name"]
+                    user[PF_USER_SURNAME] = userData["last_name"]
                     user[PF_USER_FACEBOOKID] = userData["id"]
                     user[PF_USER_MEMBERSHIP] = "Free"
                     user[PF_USER_NUMBER_LIVES] = self.setNumberOfLivesFree
@@ -404,6 +411,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                         self.defaults.setInteger(self.setNumberOfLivesFree, forKey: "Lives")
                                         
                                     }
+                                    
+                                    self.defaults.setObject(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
+                                    self.defaults.setObject(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
+                                    self.defaults.setObject(user![PF_USER_EMAILCOPY] as! String, forKey: "profileEmail")
                                     
                                     print(membership)
                                     self.defaults.setObject(membership, forKey: "Membership")

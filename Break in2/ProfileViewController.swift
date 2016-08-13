@@ -193,9 +193,9 @@ class ProfileViewController: UIViewController {
         self.createNewEntry(self.entry2, IndexEntry: 2)
         self.createNewEntry(self.entry3, IndexEntry: 3)
         
-        let profileFirstName = self.defaults.objectForKey("profileFirstName") as! String
-        let profileLastName = self.defaults.objectForKey("profileLastName") as! String
-        let profileEmail = self.defaults.objectForKey("profileEmail") as! String
+        let profileFirstName = self.defaults.objectForKey("profileFirstName") as? String ?? String()
+        let profileLastName = self.defaults.objectForKey("profileLastName") as? String ?? String()
+        let profileEmail = self.defaults.objectForKey("profileEmail") as? String ?? String()
         
         if (profileFirstName == "") {
             
@@ -364,7 +364,9 @@ class ProfileViewController: UIViewController {
                 if error == nil {
                     
                     user![PF_USER_EMAIL] = entry3Value
-                    user![PF_USER_FULLNAME_LOWER] = entry1Value + entry2Value
+                    user![PF_USER_FULLNAME_LOWER] = entry1Value + " " + entry2Value
+                    user![PF_USER_FIRST_NAME] = entry1Value
+                    user![PF_USER_SURNAME] = entry2Value
                     
                     user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {

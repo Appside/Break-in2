@@ -23,6 +23,8 @@ let PF_USER_THUMBNAIL					= "thumbnail"               //	File
 let PF_USER_CAREERPREFS                 = "careerPrefs"             //	Array
 let PF_USER_MEMBERSHIP                  = "Membership"              //  String
 let PF_USER_NUMBER_LIVES                = "Lives"                   //  Number
+let PF_USER_FIRST_NAME                  = "firstName"               //  String
+let PF_USER_SURNAME                     = "surname"                 //  String
 
 /* Analytics class in Parse*/
 let PF_ANALYTICS_CLASS_NAME				= "Analytics"				//	Class name
