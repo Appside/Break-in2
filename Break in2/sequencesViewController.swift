@@ -876,6 +876,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
             
             self.displayQuestion(questionFeedback)
             let feedbackLabel:UITextView = UITextView()
+            feedbackLabel.userInteractionEnabled = false
             self.mainView.addSubview(feedbackLabel)
             
             feedbackLabel.setConstraintsToSuperview(Int((self.view.frame.height-250*self.heightRatio)/6+15*self.heightRatio), bottom: 0, left: Int(10*self.widthRatio), right: Int(125*self.widthRatio))

@@ -85,6 +85,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
         self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
+        self.questionLabel.userInteractionEnabled = false
         
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -863,6 +864,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
                 }, completion: nil)
             
             let feedbackLabel:UITextView = UITextView()
+            feedbackLabel.userInteractionEnabled = false
             self.answerView.addSubview(feedbackLabel)
             
             feedbackLabel.setConstraintsToSuperview(Int(10*self.heightRatio), bottom: Int(10*self.heightRatio), left: Int(30*self.widthRatio), right: Int(30*self.widthRatio))

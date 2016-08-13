@@ -93,6 +93,8 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
         self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
+        self.questionLabel.userInteractionEnabled = false
+        self.passageLabel.userInteractionEnabled = false
         
         self.questionType = self.defaults.objectForKey("BrainBreakerQuestionType") as? String ?? String()
         self.passage = self.defaults.objectForKey("BrainBreakerPassage") as? String ?? String()

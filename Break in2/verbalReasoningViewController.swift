@@ -87,6 +87,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
+        self.questionLabel.userInteractionEnabled = false
+        self.passageLabel.userInteractionEnabled = false
         
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
