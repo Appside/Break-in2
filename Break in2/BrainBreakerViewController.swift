@@ -192,7 +192,7 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
         self.timeLabel.userInteractionEnabled = true
         self.swipeMenuTopBar.addSubview(self.descriptionSwipeLabel)
         self.descriptionSwipeLabel.setConstraintsToSuperview(Int(30*self.heightRatio), bottom: 0, left: 0, right: 0)
-        self.descriptionSwipeLabel.text = "Swipe up for Answers"
+        self.descriptionSwipeLabel.text = "Tap for Answers"
         self.descriptionSwipeLabel.font = UIFont(name: "HelveticaNeue-Medium",size: self.view.getTextSize(14))
         self.descriptionSwipeLabel.textAlignment = NSTextAlignment.Center
         self.descriptionSwipeLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
@@ -513,13 +513,13 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
                 self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
                 self.view.layoutIfNeeded()
                 self.descriptionSwipeLabel.text = "Tap here for Question"
-                self.passageView.alpha = 1.0
+                self.passageView.alpha = 0.0
             }
             else if (self.swipeMenuBottomConstraint.constant == 5*self.heightRatio) {
                 self.swipeMenuBottomConstraint.constant = 380*self.heightRatio
                 self.view.layoutIfNeeded()
                 self.descriptionSwipeLabel.text = "Tap here for Answers"
-                self.passageView.alpha = 0.0
+                self.passageView.alpha = 1.0
             }
             }, completion: nil)
     }
@@ -779,7 +779,7 @@ class BrainBreakerViewController: QuestionViewController, UIScrollViewDelegate, 
                         self.swipeMenuBottomConstraint.constant = 380*self.heightRatio
                         self.view.layoutIfNeeded()
                         self.passageView.alpha = 1.0
-                        self.descriptionSwipeLabel.text = "Swipe up for Answers"
+                        self.descriptionSwipeLabel.text = "Tap for Answers"
                         }, completion: nil)
                     self.displayedQuestionIndex++
                     if self.displayedQuestionIndex==self.totalNumberOfQuestions{
