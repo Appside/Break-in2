@@ -117,6 +117,7 @@ class HomeViewController: UIViewController {
     self.view.addSubview(self.tutorialFingerImageView)
     self.careersBackgroundView.addSubview(self.brainBreakerQuestionButton)
     self.careersBackgroundView.addSubview(self.brainBreakerNewLabel)
+    self.careersBackgroundView.bringSubviewToFront(self.brainBreakerQuestionButton)
     
     // Create careerButtons for each careerType
     
