@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController {
     var backButton:UIButton = UIButton()
     var pageDescription:UILabel = UILabel()
     var pageDescriptionSub:UILabel = UILabel()
-    var profileScrollView:UIView = UIView()
+    var profileScrollView:UIScrollView = UIScrollView()
     var profileContentView:UIView = UIView()
     let tutorialNextButton:UIButton = UIButton()
     var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
@@ -152,15 +152,11 @@ class ProfileViewController: UIViewController {
         self.pageDescriptionSub.textColor = UIColor.whiteColor()
         self.pageDescriptionSub.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
         self.pageDescriptionSub.textAlignment = NSTextAlignment.Center
-        
         self.view.addSubview(self.profileScrollView)
-        self.profileScrollView.translatesAutoresizingMaskIntoConstraints = false
-        self.profileScrollView.setConstraintsToSuperview(Int(self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40), bottom: 3*Int(self.minorMargin)+Int(self.menuButtonHeight), left: Int(self.minorMargin), right: Int(self.minorMargin))
-        
         self.profileScrollView.addSubview(self.profileContentView)
-        self.profileContentView.translatesAutoresizingMaskIntoConstraints = false
+        self.profileScrollView.setConstraintsToSuperview(Int(self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40), bottom: 3*Int(self.minorMargin)+Int(self.menuButtonHeight), left: Int(self.minorMargin), right: Int(self.minorMargin))
         self.profileContentView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        self.profileContentView.userInteractionEnabled = true
+        self.profileScrollView.delaysContentTouches = false
         
         //Save Button
         self.view.addSubview(self.saveProfileButton)
@@ -234,8 +230,7 @@ class ProfileViewController: UIViewController {
         
         self.profileContentView.addSubview(EntryImageView)
         EntryImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        EntryImageView.userInteractionEnabled = true
+        self.profileContentView.bringSubviewToFront(EntryImageView)
         
         let EntryCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: EntryImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
         let EntryTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: EntryImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profileContentView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin*CGFloat(IndexEntry)+CGFloat(self.profileEntryHeight*(IndexEntry-1)))
@@ -254,6 +249,7 @@ class ProfileViewController: UIViewController {
         EntryImageView.addSubview(borderBottom)
         borderBottom.backgroundColor = UIColor.whiteColor()
         borderBottom.setConstraintsToSuperview(self.profileEntryHeight-1, bottom: 0, left: 0, right: 0)
+        EntryImageView.userInteractionEnabled = true
     }
     
     func goBackToSettingsMenu(sender: UIButton) {
@@ -456,4 +452,10 @@ class ProfileViewController: UIViewController {
       destinationVC.segueFromLoginView = false
     }
   }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        //self.profileScrollView.contentSize = CGSize(width: self.profileContentView.frame.width, height: self.profileContentView.frame.height)
+        self.profileScrollView.contentSize = CGSize(width: 1000, height:1500)
+    }
 }
