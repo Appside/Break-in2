@@ -1240,6 +1240,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                 break;
             case .Failed:
                 print("buy error")
+                
+                SwiftSpinner.show("Purchase Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                    }, subtitle: "Tap to return home")
+                
                 queue.finishTransaction(trans)
                 break;
             default:
