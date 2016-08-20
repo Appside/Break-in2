@@ -9,6 +9,7 @@ PODS:
   - Charts (2.2.5):
     - Charts/Core (= 2.2.5)
   - Charts/Core (2.2.5)
+  - Eureka (1.7.0)
   - FBSDKCoreKit (4.14.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.14.0):
@@ -51,6 +52,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.0)
   - Charts
+  - Eureka (~> 1.7)
   - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase
@@ -65,6 +67,7 @@ SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
+  Eureka: 2020d9faeef7b7e9adeb9e3d8af779e5931c1897
   FBSDKCoreKit: 6e020b5db0b5bd1e01f5fb0902131befd129a502
   FBSDKLoginKit: da563567a108050ef83739c8c8c001ee9e25fa13
   Firebase: 754562547af419cc2f4b15247fee419081924bc2
@@ -80,6 +83,6 @@ SPEC CHECKSUMS:
   SCLAlertView: d7c6a48c7d340e60206d4ed0e8ebcbff3b9d2a44
   SwiftSpinner: c6585a0ae5c67eb33e737695cce88f0262008cce
 
-PODFILE CHECKSUM: 2e64bb7571528af595f370d875d81b90c494fa11
+PODFILE CHECKSUM: 1ce61e467f268bf07ae27c4aa70f532ed82b9946
 
 COCOAPODS: 1.0.1

@@ -25,6 +25,11 @@ let PF_USER_MEMBERSHIP                  = "Membership"              //  String
 let PF_USER_NUMBER_LIVES                = "Lives"                   //  Number
 let PF_USER_FIRST_NAME                  = "firstName"               //  String
 let PF_USER_SURNAME                     = "surname"                 //  String
+let PF_USER_PHONE                       = "phone"                   //  String
+let PF_USER_UNIVERSITY                  = "university"              //  String
+let PF_USER_COURSE                      = "course"                  //  String
+let PF_USER_DEGREE                      = "degree"                  //  String
+let PF_USER_POSITION                    = "position"                //  String
 
 /* Analytics class in Parse*/
 let PF_ANALYTICS_CLASS_NAME				= "Analytics"				//	Class name

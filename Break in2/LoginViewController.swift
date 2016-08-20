@@ -194,7 +194,12 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     self.defaults.setObject(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
                     self.defaults.setObject(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
                     self.defaults.setObject(user![PF_USER_EMAILCOPY] as! String, forKey: "profileEmail")
-                
+                    self.defaults.setObject(user![PF_USER_PHONE] as! String, forKey: "profilePhone")
+                    self.defaults.setObject(user![PF_USER_UNIVERSITY] as! String, forKey: "profileUniversity")
+                    self.defaults.setObject(user![PF_USER_COURSE] as! String, forKey: "profileCourse")
+                    self.defaults.setObject(user![PF_USER_DEGREE] as! String, forKey: "profileDegree")
+                    self.defaults.setObject(user![PF_USER_POSITION] as! String, forKey: "profilePosition")
+                    
                 SwiftSpinner.hide()
                 self.userLoggedIn((user)!)
                     

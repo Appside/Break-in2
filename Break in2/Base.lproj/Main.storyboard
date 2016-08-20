@@ -146,10 +146,10 @@
             </objects>
             <point key="canvasLocation" x="2851" y="-674"/>
         </scene>
-        <!--Profile View Controller-->
+        <!--Edit Profile View Controller-->
         <scene sceneID="2bd-rl-9wA">
             <objects>
-                <viewController id="qMK-dk-gfg" customClass="ProfileViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qMK-dk-gfg" customClass="EditProfileViewController" customModule="Break_in2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sMS-Az-ctS"/>
                         <viewControllerLayoutGuide type="bottom" id="rUK-mH-gHv"/>
@@ -359,9 +359,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="F0f-T8-cql"/>
+        <segue reference="ozu-v7-0io"/>
         <segue reference="Yxi-7F-lFe"/>
         <segue reference="kZI-Nr-0I8"/>
-        <segue reference="ozu-v7-0io"/>
+        <segue reference="z8g-Uc-4AT"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>

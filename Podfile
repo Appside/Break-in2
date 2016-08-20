@@ -14,6 +14,7 @@ pod 'SCLAlertView'
 pod "SwiftSpinner"
 pod “Firebase”
 pod “Firebase/AdMob”
+pod 'Eureka', '~> 1.7'
 
 end
 

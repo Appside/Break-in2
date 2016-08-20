@@ -255,7 +255,7 @@ class TutorialViewController: UIViewController {
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "tutorialEnded" {
-      let destinationVC:ProfileViewController = segue.destinationViewController as! ProfileViewController
+      let destinationVC:EditProfileViewController = segue.destinationViewController as! EditProfileViewController
       destinationVC.firstTimeUser = true
     }
   }

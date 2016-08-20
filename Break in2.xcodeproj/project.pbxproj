@@ -37,6 +37,7 @@
 		25E4ACCE1C552C9800C49551 /* LogicalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E4ACCC1C552C9800C49551 /* LogicalModel.swift */; };
 		490CB4061C552E0300A68493 /* logicalQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4051C552E0300A68493 /* logicalQuestion.swift */; };
 		490CB4081C552E6800A68493 /* logicalReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */; };
+		4924D37C1D60DD35009D3823 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924D37B1D60DD35009D3823 /* ProfileViewController.swift */; };
 		494A9B671D52B0C1001DBE42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 494A9B661D52B0C1001DBE42 /* GoogleService-Info.plist */; };
 		494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE5451D3B91C30086D261 /* programmingViewController.swift */; };
 		494D5FB21D3BD04B005A1511 /* programmingQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D5FB11D3BD04B005A1511 /* programmingQuestion.swift */; };
@@ -55,7 +56,7 @@
 		49B391A21D450DC700D45444 /* Technology.json in Resources */ = {isa = PBXBuildFile; fileRef = 49B391A11D450DC700D45444 /* Technology.json */; };
 		49B391A41D450E0400D45444 /* technologyQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A31D450E0400D45444 /* technologyQuestion.swift */; };
 		49B391A61D450E1D00D45444 /* technologyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A51D450E1D00D45444 /* technologyViewController.swift */; };
-		49B391A81D4520ED00D45444 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A71D4520ED00D45444 /* ProfileViewController.swift */; };
+		49B391A81D4520ED00D45444 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A71D4520ED00D45444 /* EditProfileViewController.swift */; };
 		49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */; };
 		49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
@@ -140,6 +141,7 @@
 		46D21796E8BF7B77B713850C /* Pods-Break in2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Break in2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Break in2Tests/Pods-Break in2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		490CB4051C552E0300A68493 /* logicalQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalQuestion.swift; sourceTree = "<group>"; };
 		490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = logicalReasoningViewController.swift; sourceTree = "<group>"; };
+		4924D37B1D60DD35009D3823 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		494A9B661D52B0C1001DBE42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		494AE5451D3B91C30086D261 /* programmingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingViewController.swift; sourceTree = "<group>"; };
 		494D5FB11D3BD04B005A1511 /* programmingQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingQuestion.swift; sourceTree = "<group>"; };
@@ -158,7 +160,7 @@
 		49B391A11D450DC700D45444 /* Technology.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Technology.json; sourceTree = "<group>"; };
 		49B391A31D450E0400D45444 /* technologyQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = technologyQuestion.swift; sourceTree = "<group>"; };
 		49B391A51D450E1D00D45444 /* technologyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = technologyViewController.swift; sourceTree = "<group>"; };
-		49B391A71D4520ED00D45444 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		49B391A71D4520ED00D45444 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
 		49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticQuestion.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
@@ -349,7 +351,8 @@
 		49B391A91D4520FC00D45444 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
-				49B391A71D4520ED00D45444 /* ProfileViewController.swift */,
+				49B391A71D4520ED00D45444 /* EditProfileViewController.swift */,
+				4924D37B1D60DD35009D3823 /* ProfileViewController.swift */,
 			);
 			name = ProfileView;
 			sourceTree = "<group>";
@@ -760,6 +763,7 @@
 				498B79021C4C27EF002E14D6 /* sequencesList.swift in Sources */,
 				61CAD3401C270BAE00B8D887 /* DataController.swift in Sources */,
 				49929DA81C42FDEA00527929 /* fractionsQuestion.swift in Sources */,
+				4924D37C1D60DD35009D3823 /* ProfileViewController.swift in Sources */,
 				49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */,
 				61517DFA1C42AE1C00C570A9 /* BWWalkthroughViewController.swift in Sources */,
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
@@ -818,7 +822,7 @@
 				494D5FB21D3BD04B005A1511 /* programmingQuestion.swift in Sources */,
 				617FC64D1BF89D560019AE9B /* Extensions.swift in Sources */,
 				49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */,
-				49B391A81D4520ED00D45444 /* ProfileViewController.swift in Sources */,
+				49B391A81D4520ED00D45444 /* EditProfileViewController.swift in Sources */,
 				2526701D1C2378A6007D55BE /* CalendarDaysTitleView.swift in Sources */,
 				61DB11DA1BF904360081123B /* segueFromRight.swift in Sources */,
 			);

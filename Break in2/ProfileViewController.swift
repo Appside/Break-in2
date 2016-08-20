@@ -11,6 +11,7 @@ import SCLAlertView
 import SwiftSpinner
 import Parse
 import ParseUI
+import Eureka
 
 class ProfileViewController: UIViewController {
     
@@ -27,16 +28,10 @@ class ProfileViewController: UIViewController {
     var backButton:UIButton = UIButton()
     var pageDescription:UILabel = UILabel()
     var pageDescriptionSub:UILabel = UILabel()
-    var profileScrollView:UIScrollView = UIScrollView()
-    var profileContentView:UIView = UIView()
+    var profileView:UIView = UIView()
+    var ProfileForm:EditProfileViewController = EditProfileViewController()
     let tutorialNextButton:UIButton = UIButton()
     var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
-    
-    let profileEntryHeight:Int = 40
-    let nbOfProfileEntries:Int = 3
-    var entry1:UITextField = UITextField()
-    var entry2:UITextField = UITextField()
-    var entry3:UITextField = UITextField()
     
     var saveProfileButton:UIButton = UIButton()
     let menuButtonHeight:CGFloat = 50
@@ -45,10 +40,10 @@ class ProfileViewController: UIViewController {
     var textSize:CGFloat = 15
     
     let defaults = NSUserDefaults.standardUserDefaults()
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
         self.textSize = self.view.getTextSize(15)
         
         //Hide Keyboard
@@ -94,12 +89,12 @@ class ProfileViewController: UIViewController {
         self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
         self.backButton.addTarget(self, action: #selector(ProfileViewController.goBackToSettingsMenu(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.backButton.clipsToBounds = true
-      if self.firstTimeUser {
-        self.backButton.alpha = 0
-      }
-      else {
-        self.backButton.alpha = 1
-      }
+        if self.firstTimeUser {
+            self.backButton.alpha = 0
+        }
+        else {
+            self.backButton.alpha = 1
+        }
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         
         let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
@@ -112,7 +107,7 @@ class ProfileViewController: UIViewController {
         
         self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
         self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
-      
+        
         //pageDescription set up
         self.view.addSubview(self.pageDescription)
         self.pageDescription.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +123,7 @@ class ProfileViewController: UIViewController {
         self.pageDescription.addConstraints([pageDescriptionHeightConstraint, pageDescriptionWidthConstraint])
         self.view.addConstraints([pageDescriptionCenterXConstraint, pageDescriptionTopConstraint])
         
-        self.pageDescription.text = "PERSONAL DETAILS"
+        self.pageDescription.text = "EDIT PROFILE DETAILS"
         self.pageDescription.textColor = UIColor.whiteColor()
         self.pageDescription.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
         self.pageDescription.textAlignment = NSTextAlignment.Center
@@ -152,11 +147,6 @@ class ProfileViewController: UIViewController {
         self.pageDescriptionSub.textColor = UIColor.whiteColor()
         self.pageDescriptionSub.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
         self.pageDescriptionSub.textAlignment = NSTextAlignment.Center
-        self.view.addSubview(self.profileScrollView)
-        self.profileScrollView.addSubview(self.profileContentView)
-        self.profileScrollView.setConstraintsToSuperview(Int(self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40), bottom: 3*Int(self.minorMargin)+Int(self.menuButtonHeight), left: Int(self.minorMargin), right: Int(self.minorMargin))
-        self.profileContentView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        self.profileScrollView.delaysContentTouches = false
         
         //Save Button
         self.view.addSubview(self.saveProfileButton)
@@ -175,81 +165,28 @@ class ProfileViewController: UIViewController {
         
         self.saveProfileButton.backgroundColor = UIColor.turquoiseColor()
         self.saveProfileButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-      if self.firstTimeUser {
-        self.saveProfileButton.setTitle("Save & Continue", forState: UIControlState.Normal)
-      }
-      else {
-        self.saveProfileButton.setTitle("Save Profile", forState: UIControlState.Normal)
-      }
+        if self.firstTimeUser {
+            self.saveProfileButton.setTitle("Save & Continue", forState: UIControlState.Normal)
+        }
+        else {
+            self.saveProfileButton.setTitle("Save Profile", forState: UIControlState.Normal)
+        }
         self.saveProfileButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.saveProfileButton.addTarget(self, action: #selector(ProfileViewController.saveProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         //Create profile entries - just copy past to add a new entry
-        self.createNewEntry(self.entry1, IndexEntry: 1)
-        self.createNewEntry(self.entry2, IndexEntry: 2)
-        self.createNewEntry(self.entry3, IndexEntry: 3)
         
         let profileFirstName = self.defaults.objectForKey("profileFirstName") as? String ?? String()
         let profileLastName = self.defaults.objectForKey("profileLastName") as? String ?? String()
         let profileEmail = self.defaults.objectForKey("profileEmail") as? String ?? String()
         
-        if (profileFirstName == "") {
-            
-            self.entry1.attributedPlaceholder = NSAttributedString(string:"First Name", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-            
-        }else{
-            
-            self.entry1.text = profileFirstName
-            
-        }
-        
-        if (profileLastName == "") {
-            
-            self.entry2.attributedPlaceholder = NSAttributedString(string:"Surname", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-            
-        }else{
-            
-            self.entry2.text = profileLastName
-            
-        }
-        
-        if (profileEmail == "") {
-            
-            self.entry3.attributedPlaceholder = NSAttributedString(string:"Email address", attributes:[NSForegroundColorAttributeName: UIColor.grayColor()])
-            
-        }else{
-            
-            self.entry3.text = profileEmail
-            
-        }
+        self.addChildViewController(self.ProfileForm)
+        self.view.addSubview(self.ProfileForm.view)
+        self.ProfileForm.didMoveToParentViewController(self)
+        self.ProfileForm.view.setConstraintsToSuperview(Int(self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40), bottom: 3*Int(self.minorMargin)+Int(self.menuButtonHeight), left: Int(self.minorMargin*2), right: Int(self.minorMargin*2))
+     
         
         
-    }
-    
-    func createNewEntry(EntryImageView:UITextField, IndexEntry:Int) {
-        
-        self.profileContentView.addSubview(EntryImageView)
-        EntryImageView.translatesAutoresizingMaskIntoConstraints = false
-        self.profileContentView.bringSubviewToFront(EntryImageView)
-        
-        let EntryCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: EntryImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-        let EntryTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: EntryImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profileContentView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin*CGFloat(IndexEntry)+CGFloat(self.profileEntryHeight*(IndexEntry-1)))
-        let EntryHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: EntryImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(self.profileEntryHeight))
-        let EntryWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: EntryImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*4)
-        
-        EntryImageView.addConstraints([EntryHeightConstraint, EntryWidthConstraint])
-        self.profileContentView.addConstraints([EntryTopConstraint])
-        self.view.addConstraints([EntryCenterXConstraint])
-        
-        EntryImageView.textColor = UIColor.whiteColor()
-        EntryImageView.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-        EntryImageView.textAlignment = NSTextAlignment.Center
-        
-        let borderBottom:UIImageView = UIImageView()
-        EntryImageView.addSubview(borderBottom)
-        borderBottom.backgroundColor = UIColor.whiteColor()
-        borderBottom.setConstraintsToSuperview(self.profileEntryHeight-1, bottom: 0, left: 0, right: 0)
-        EntryImageView.userInteractionEnabled = true
     }
     
     func goBackToSettingsMenu(sender: UIButton) {
@@ -281,11 +218,11 @@ class ProfileViewController: UIViewController {
             self.view.layoutIfNeeded()
             
             }, completion: {(Bool) in
-        
-        self.performSegueWithIdentifier("toSettings", sender: nil)
+                
+                self.performSegueWithIdentifier("toSettings", sender: nil)
                 
         })
-    
+        
     }
     
     func saveProfile(sender: UIButton) {
@@ -295,10 +232,6 @@ class ProfileViewController: UIViewController {
         var entry3Value:String = String()
         var alertMessage:String = String()
         var showErrorMessage:Bool = false
-        
-        entry1Value = entry1.text!
-        entry2Value = entry2.text!
-        entry3Value = entry3.text!
         
         //Check entry1Value (Name)
         if entry3Value.isEmpty {
@@ -341,13 +274,13 @@ class ProfileViewController: UIViewController {
                 colorTextButton: 0xFFFFFF
             )
         } else{
-          
-          //Save changes to Parse
-          // Name: entry1Value
-          // Surname: entry2Value
-          // Email address: entry3Value
             
-          SwiftSpinner.show("Saving changes")
+            //Save changes to Parse
+            // Name: entry1Value
+            // Surname: entry2Value
+            // Email address: entry3Value
+            
+            SwiftSpinner.show("Saving changes")
             
             let currentUser = PFUser.currentUser()!
             //let objID = currentUser.objectId
@@ -403,17 +336,17 @@ class ProfileViewController: UIViewController {
                     
                 }
             })
-
             
-          
-          if self.firstTimeUser {
-            self.performSegueWithIdentifier("tutorialEnded", sender: sender)
-          }
-          else {
-            // Segue back to Settings?
-          }
             
-          
+            
+            if self.firstTimeUser {
+                self.performSegueWithIdentifier("tutorialEnded", sender: sender)
+            }
+            else {
+                // Segue back to Settings?
+            }
+            
+            
             
             
         }
@@ -444,18 +377,13 @@ class ProfileViewController: UIViewController {
             return false
         }
     }
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "tutorialEnded" {
-      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
-      destinationVC.firstTimeUser = true
-      destinationVC.segueFromLoginView = false
-    }
-  }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        //self.profileScrollView.contentSize = CGSize(width: self.profileContentView.frame.width, height: self.profileContentView.frame.height)
-        self.profileScrollView.contentSize = CGSize(width: 1000, height:1500)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "tutorialEnded" {
+            let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+            destinationVC.firstTimeUser = true
+            destinationVC.segueFromLoginView = false
+        }
     }
+    
 }
