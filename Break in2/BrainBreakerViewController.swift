@@ -25,6 +25,12 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
     var nextButton:UIButton = UIButton()
     var brainLogo:UIImageView = UIImageView()
     var flexibleHeight:CGFloat = CGFloat()
+    var prizeLabel:UILabel = UILabel()
+    var numberOfLives:Int = 2
+    var life1:UIImageView = UIImageView()
+    var life2:UIImageView = UIImageView()
+    var life3:UIImageView = UIImageView()
+    var timeRemaining:UILabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,7 +161,89 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let frameBottomHeight:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight)
         frameBottom.addConstraint(frameBottomHeight)
         
+        //Frame 1 -- Content
+        frameTop.addSubview(self.prizeLabel)
+        self.prizeLabel.setConstraintsToSuperview(Int(self.flexibleHeight)/2-25, bottom: Int(self.flexibleHeight)/2, left: 0, right: 0)
+        self.prizeLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+        self.prizeLabel.text = "ARSENAL TICKETS"
+        self.prizeLabel.textAlignment = NSTextAlignment.Center
+        self.prizeLabel.textColor = UIColor.turquoiseColor()
+        let currentPrize:UILabel =  UILabel()
+        frameTop.addSubview(currentPrize)
+        currentPrize.setConstraintsToSuperview(Int(self.flexibleHeight)/2, bottom: Int(self.flexibleHeight)/2-25, left: 0, right: 0)
+        currentPrize.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+        currentPrize.text = "CURRENT PRIZE"
+        currentPrize.textAlignment = NSTextAlignment.Center
+        currentPrize.textColor = UIColor.turquoiseColor()
+        let borderBottom:UIView = UIView()
+        frameTop.addSubview(borderBottom)
+        borderBottom.setConstraintsToSuperview(Int(self.flexibleHeight)-1, bottom: 0, left: 0, right: 0)
+        borderBottom.backgroundColor = UIColor.turquoiseColor()
         
+        //Frame 2 -- Content
+        let livesUIView:UIView = UIView()
+        frameMid.addSubview(livesUIView)
+        livesUIView.setConstraintsToSuperview(Int(self.flexibleHeight)/2-30, bottom: Int(self.flexibleHeight)/2, left: 0, right: 0)
+        
+        livesUIView.addSubview(self.life2)
+        self.life2.translatesAutoresizingMaskIntoConstraints = false
+        let life2CenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.life2, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: livesUIView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let life2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.life2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: livesUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        livesUIView.addConstraints([life2CenterX,life2Top])
+        let life2Width:NSLayoutConstraint = NSLayoutConstraint(item: self.life2, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight/1.3)
+        let life2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.life2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight/1.3)
+        self.life2.addConstraints([life2Width,life2Height])
+        self.life2.image = UIImage(named: "crossSelected")
+        self.life2.clipsToBounds = true
+        
+        livesUIView.addSubview(self.life1)
+        self.life1.translatesAutoresizingMaskIntoConstraints = false
+        let life1CenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.life1, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: livesUIView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: -self.backButtonHeight/1.3-2*self.minorMargin)
+        let life1Top:NSLayoutConstraint = NSLayoutConstraint(item: self.life1, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: livesUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        livesUIView.addConstraints([life1CenterX,life1Top])
+        let life1Width:NSLayoutConstraint = NSLayoutConstraint(item: self.life1, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight/1.3)
+        let life1Height:NSLayoutConstraint = NSLayoutConstraint(item: self.life1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight/1.3)
+        self.life1.addConstraints([life1Width,life1Height])
+        self.life1.image = UIImage(named: "tickSelectedBrainbreaker")
+        self.life1.clipsToBounds = true
+        
+        livesUIView.addSubview(self.life3)
+        self.life3.translatesAutoresizingMaskIntoConstraints = false
+        let life3CenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.life3, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: livesUIView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: self.backButtonHeight/1.3+2*self.minorMargin)
+        let life3Top:NSLayoutConstraint = NSLayoutConstraint(item: self.life3, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: livesUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        livesUIView.addConstraints([life3CenterX,life3Top])
+        let life3Width:NSLayoutConstraint = NSLayoutConstraint(item: self.life3, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight/1.3)
+        let life3Height:NSLayoutConstraint = NSLayoutConstraint(item: self.life3, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight/1.3)
+        self.life3.addConstraints([life3Width,life3Height])
+        self.life3.image = UIImage(named: "crossSelected")
+        self.life3.clipsToBounds = true
+        
+        let attemptsLabel:UILabel =  UILabel()
+        frameMid.addSubview(attemptsLabel)
+        attemptsLabel.setConstraintsToSuperview(Int(self.flexibleHeight)/2, bottom: Int(self.flexibleHeight)/2-30, left: 0, right: 0)
+        attemptsLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+        attemptsLabel.text = "NUMBER OF ATTEMPTS REMAINING"
+        attemptsLabel.textAlignment = NSTextAlignment.Center
+        attemptsLabel.textColor = UIColor.turquoiseColor()
+        let borderBottom2:UIView = UIView()
+        frameMid.addSubview(borderBottom2)
+        borderBottom2.setConstraintsToSuperview(Int(self.flexibleHeight)-1, bottom: 0, left: 0, right: 0)
+        borderBottom2.backgroundColor = UIColor.turquoiseColor()
+        
+        //Frame 3 -- Content
+        frameBottom.addSubview(self.timeRemaining)
+        self.timeRemaining.setConstraintsToSuperview(Int(self.flexibleHeight)/2-25, bottom: Int(self.flexibleHeight)/2, left: 0, right: 0)
+        self.timeRemaining.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+        self.timeRemaining.text = "01:00:00"
+        self.timeRemaining.textAlignment = NSTextAlignment.Center
+        self.timeRemaining.textColor = UIColor.turquoiseColor()
+        let timeLabel:UILabel =  UILabel()
+        frameBottom.addSubview(timeLabel)
+        timeLabel.setConstraintsToSuperview(Int(self.flexibleHeight)/2, bottom: Int(self.flexibleHeight)/2-25, left: 0, right: 0)
+        timeLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+        timeLabel.text = "TIME REMAINING BEFORE CLOSING"
+        timeLabel.textAlignment = NSTextAlignment.Center
+        timeLabel.textColor = UIColor.turquoiseColor()
         
     }
     
