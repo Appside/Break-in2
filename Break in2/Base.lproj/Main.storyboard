@@ -359,10 +359,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ozu-v7-0io"/>
-        <segue reference="Yxi-7F-lFe"/>
+        <segue reference="O1a-Zm-ZTn"/>
         <segue reference="kZI-Nr-0I8"/>
-        <segue reference="z8g-Uc-4AT"/>
+        <segue reference="Yxi-7F-lFe"/>
+        <segue reference="ozu-v7-0io"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
