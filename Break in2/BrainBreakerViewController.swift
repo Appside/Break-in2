@@ -846,7 +846,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             view.removeFromSuperview()
         }
         let resultsLabel:UILabel =  UILabel()
-        self.frameTop.addSubview(attemptsLabel)
+        self.frameTop.addSubview(resultsLabel)
         resultsLabel.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         resultsLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
         resultsLabel.textAlignment = NSTextAlignment.Center
