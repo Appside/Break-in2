@@ -164,7 +164,7 @@
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
 		49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticQuestion.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
-		614316441BEF843A0047A37D /* Break in2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Break in2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		614316441BEF843A0047A37D /* BREAKIN2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BREAKIN2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316471BEF843A0047A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6143164C1BEF843A0047A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6143164E1BEF843A0047A37D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -374,7 +374,7 @@
 		614316451BEF843A0047A37D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				614316441BEF843A0047A37D /* Break in2.app */,
+				614316441BEF843A0047A37D /* BREAKIN2.app */,
 				614316581BEF843A0047A37D /* Break in2Tests.xctest */,
 				614316631BEF843A0047A37D /* Break in2UITests.xctest */,
 			);
@@ -504,7 +504,7 @@
 			);
 			name = "Break in2";
 			productName = "Break in2";
-			productReference = 614316441BEF843A0047A37D /* Break in2.app */;
+			productReference = 614316441BEF843A0047A37D /* BREAKIN2.app */;
 			productType = "com.apple.product-type.application";
 		};
 		614316571BEF843A0047A37D /* Break in2Tests */ = {
@@ -975,7 +975,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BREAKIN2;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -992,7 +992,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BREAKIN2;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

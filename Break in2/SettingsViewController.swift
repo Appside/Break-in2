@@ -167,7 +167,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.tutorialNextButton.alpha = 0
     self.tutorialNextButton.addTarget(self, action: #selector(SettingsViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
-    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
+    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
     
     // Set tutorialView and tutorialNextButton alpha values
     
@@ -1174,7 +1174,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
       
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.86)
+      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
       self.tutorialNextButton.alpha = 1
       self.view.layoutIfNeeded()
       

@@ -632,7 +632,7 @@ class HomeViewController: UIViewController {
     
     let brainBreakerNewLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
     
-    let brainBreakerNewLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+    let brainBreakerNewLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
     
     self.brainBreakerNewLabel.addConstraints([brainBreakerNewLabelHeightConstraint, brainBreakerNewLabelWidthConstraint])
     self.view.addConstraints([brainBreakerNewLabelRightConstraint, brainBreakerNewLabelTopConstraint])
