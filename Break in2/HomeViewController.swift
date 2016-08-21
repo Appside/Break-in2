@@ -201,6 +201,7 @@ class HomeViewController: UIViewController {
     if self.newSwitch == true{
     
       self.brainBreakerNewLabel.alpha = 1
+      self.defaults.setBool(false, forKey: "brainBreakerAnsweredCorrectly")
       
     }else{
       
@@ -727,6 +728,7 @@ class HomeViewController: UIViewController {
                     print("YES")
                     self.brainBreakerNewLabel.alpha = 1
                     self.defaults.setBool(true, forKey: "newSwitchBB")
+                    self.defaults.setBool(false, forKey: "brainBreakerAnsweredCorrectly")
                     //self.newSwitch = true
                         
                     }else{

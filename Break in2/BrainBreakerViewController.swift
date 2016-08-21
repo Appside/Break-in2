@@ -91,8 +91,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Determine if BB has already been answered
-        self.brainBreakerAlreadySolved = false
+        
         
         //Ad loading
         self.membershipType = defaults.objectForKey("Membership") as! String
@@ -127,6 +126,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         self.attemptsRemaining = self.defaults.integerForKey("NoOfBrainBreakerLives")
         self.currentPrize = self.defaults.objectForKey("BrainBreakerTestPrize") as? String ?? String()
         self.questionNumber = self.defaults.integerForKey("BrainBreakerQuestionNumber")
+        self.brainBreakerAlreadySolved = self.defaults.boolForKey("brainBreakerAnsweredCorrectly") as? Bool ?? Bool()
         
         //Background Image
         let backgroundImageView = UIImageView(frame: CGRectMake(0, 0, width, height))
@@ -368,7 +368,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         pageTitle.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         pageTitle.textAlignment = NSTextAlignment.Center
         pageTitle.textColor = UIColor.turquoiseColor()
-        pageTitle.text = "What's the BrainBreaker ?"
+        pageTitle.text = "What is the BrainBreaker?"
         
         let explanation:UILabel = UILabel()
         self.helpMenu.addSubview(explanation)
@@ -998,6 +998,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
                     var nbCorrectAnswers:Int = 0
                     if self.quizzArray[0].correctAnswer == self.selectedAnswers[0] {
                         nbCorrectAnswers++
+                        self.defaults.setBool(true, forKey: "brainBreakerAnsweredCorrectly")
                     }
                     SwiftSpinner.show("Saving Results")
                     let currentUser = PFUser.currentUser()!
