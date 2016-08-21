@@ -42,7 +42,6 @@
 		494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494AE5451D3B91C30086D261 /* programmingViewController.swift */; };
 		494D5FB21D3BD04B005A1511 /* programmingQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D5FB11D3BD04B005A1511 /* programmingQuestion.swift */; };
 		494D5FB41D3BD07B005A1511 /* Programming.json in Resources */ = {isa = PBXBuildFile; fileRef = 494D5FB31D3BD07B005A1511 /* Programming.json */; };
-		4957AC081D68AB9500FF0D75 /* BrainBreakerViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4957AC071D68AB9500FF0D75 /* BrainBreakerViewControllerOld.swift */; };
 		497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497A515E1C39B10C004B325C /* LabelPointerView.swift */; };
 		498B79021C4C27EF002E14D6 /* sequencesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B79011C4C27EF002E14D6 /* sequencesList.swift */; };
 		49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49929D9F1C42E95700527929 /* sequencesViewController.swift */; };
@@ -147,7 +146,6 @@
 		494AE5451D3B91C30086D261 /* programmingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingViewController.swift; sourceTree = "<group>"; };
 		494D5FB11D3BD04B005A1511 /* programmingQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingQuestion.swift; sourceTree = "<group>"; };
 		494D5FB31D3BD07B005A1511 /* Programming.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Programming.json; sourceTree = "<group>"; };
-		4957AC071D68AB9500FF0D75 /* BrainBreakerViewControllerOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrainBreakerViewControllerOld.swift; sourceTree = "<group>"; };
 		497A515E1C39B10C004B325C /* LabelPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelPointerView.swift; sourceTree = "<group>"; };
 		498B79011C4C27EF002E14D6 /* sequencesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesList.swift; sourceTree = "<group>"; };
 		49929D9F1C42E95700527929 /* sequencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sequencesViewController.swift; sourceTree = "<group>"; };
@@ -288,7 +286,6 @@
 				494AE5451D3B91C30086D261 /* programmingViewController.swift */,
 				49B391A51D450E1D00D45444 /* technologyViewController.swift */,
 				499E46D91C7137FC00540159 /* BrainBreakerViewController.swift */,
-				4957AC071D68AB9500FF0D75 /* BrainBreakerViewControllerOld.swift */,
 				25E4ACCB1C552C9800C49551 /* LogicalPictureView.swift */,
 				25E4ACCC1C552C9800C49551 /* LogicalModel.swift */,
 				499375361C02573100AA0588 /* numericalQuestion.swift */,
@@ -772,7 +769,6 @@
 				617FC6491BEF92590019AE9B /* HomeViewController.swift in Sources */,
 				610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */,
 				61FCAED31C0518740072FDFB /* Constants.swift in Sources */,
-				4957AC081D68AB9500FF0D75 /* BrainBreakerViewControllerOld.swift in Sources */,
 				497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */,
 				49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */,
 				25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */,

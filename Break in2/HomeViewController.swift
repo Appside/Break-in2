@@ -655,6 +655,7 @@ class HomeViewController: UIViewController {
             
             if error == nil {
                 
+                self.isBrainBreakerDone()
                 self.defaults.setObject(question![PF_BRAINBREAKER_Q_QUESTION], forKey: "BrainBreakerQuestion")
                 self.defaults.setObject(question![PF_BRAINBREAKER_Q_QUESTION_TYPE], forKey: "BrainBreakerQuestionType")
                 self.defaults.setObject(question![PF_BRAINBREAKER_Q_PASSAGE], forKey: "BrainBreakerPassage")
@@ -1141,5 +1142,11 @@ class HomeViewController: UIViewController {
   // Pass the selected object to the new view controller.
   }
   */
+    
+    func isBrainBreakerDone() {
+        
+        
+        
+    }
   
 }

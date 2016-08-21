@@ -132,6 +132,7 @@ let PF_BRAINBREAKER_A_EMAIL				= "email"                   //	String
 let PF_BRAINBREAKER_A_FULLNAME			= "fullname"				//	String
 let PF_BRAINBREAKER_A_ANSWER_CORRECT    = "answerCorrect"           //  Number
 let PF_BRAINBREAKER_A_Q_NUMBER          = "questionNumber"            //  Number
+let PF_BRAINBREAKER_A_SOLVED            = "solved"                  //Bool
 
 /* Programming class in Parse*/
 let PF_PROG_CLASS_NAME              = "Programming"               //	Class name
