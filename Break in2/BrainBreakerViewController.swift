@@ -32,6 +32,10 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
     var life3:UIImageView = UIImageView()
     var timeRemaining:UILabel = UILabel()
     
+    var welcomeMenu:UIView = UIView()
+    var helpMenu:UIView = UIView()
+    var questionMenu:UIView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,7 +94,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let helpButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.helpButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
         self.helpButton.addConstraints([helpButtonHeightConstraint, helpButtonWidthConstraint])
         self.view.addConstraints([helpButtonRightConstraint, helpButtonTopConstraint])
-        self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.helpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.ShowHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.helpButton.clipsToBounds = true
         self.helpButton.layer.cornerRadius = self.screenFrame.width/24
         self.helpButton.layer.borderWidth = 2
@@ -98,6 +102,10 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         self.helpButton.setTitle("?", forState: UIControlState.Normal)
         self.helpButton.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
         self.helpButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 24.0)
+
+        //Add Welcome Menu
+        self.view.addSubview(self.welcomeMenu)
+        self.welcomeMenu.setConstraintsToSuperview(Int(self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight), bottom: Int(3*self.minorMargin+1.5*self.backButtonHeight), left: 0, right: 0)
         
         //Next Button
         self.view.addSubview(self.nextButton)
@@ -115,14 +123,14 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         self.nextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
         
         //Brain Breaker Brain Logo
-        self.view.addSubview(self.brainLogo)
+        self.welcomeMenu.addSubview(self.brainLogo)
         self.brainLogo.translatesAutoresizingMaskIntoConstraints = false
-        let brainLogoCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.brainLogo, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-        let brainLogoTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainLogo, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 4*self.minorMargin + self.backButtonHeight)
+        let brainLogoCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.brainLogo, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let brainLogoTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainLogo, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
         let brainLogoHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainLogo, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 3*self.backButtonHeight)
         let brainLogoWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainLogo, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 3*self.backButtonHeight)
         self.brainLogo.addConstraints([brainLogoHeightConstraint, brainLogoWidthConstraint])
-        self.view.addConstraints([brainLogoTopConstraint,brainLogoCenterX])
+        self.welcomeMenu.addConstraints([brainLogoTopConstraint,brainLogoCenterX])
         self.brainLogo.image = UIImage.init(named: "brainbreakerBrainLogo")
         self.brainLogo.clipsToBounds = true
         
@@ -130,34 +138,34 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let frameTop:UIView = UIView()
         let frameMid:UIView = UIView()
         let frameBottom:UIView = UIView()
-        self.view.addSubview(frameTop)
-        self.view.addSubview(frameMid)
-        self.view.addSubview(frameBottom)
+        self.welcomeMenu.addSubview(frameTop)
+        self.welcomeMenu.addSubview(frameMid)
+        self.welcomeMenu.addSubview(frameBottom)
         frameTop.translatesAutoresizingMaskIntoConstraints = false
         frameMid.translatesAutoresizingMaskIntoConstraints = false
         frameBottom.translatesAutoresizingMaskIntoConstraints = false
         
         //Frame 1
-        let frameTopTopConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameTop, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height+6*self.minorMargin+4*self.backButtonHeight)
-        let frameTopLeftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameTop, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
-        let frameTopRightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameTop, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -self.majorMargin)
-        self.view.addConstraints([frameTopTopConstraint,frameTopLeftConstraint,frameTopRightConstraint])
+        let frameTopTopConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameTop, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 3*self.minorMargin+3*self.backButtonHeight)
+        let frameTopLeftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameTop, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+        let frameTopRightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameTop, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -self.majorMargin)
+        self.welcomeMenu.addConstraints([frameTopTopConstraint,frameTopLeftConstraint,frameTopRightConstraint])
         let frameTopHeight:NSLayoutConstraint = NSLayoutConstraint(item: frameTop, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight)
         frameTop.addConstraint(frameTopHeight)
         
         //Frame 2
-        let frameMidTopConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameMid, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height+6*self.minorMargin+4*self.backButtonHeight+self.flexibleHeight)
-        let frameMidLeftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameMid, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
-        let frameMidRightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameMid, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -self.majorMargin)
+        let frameMidTopConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameMid, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 3*self.minorMargin+3*self.backButtonHeight+self.flexibleHeight)
+        let frameMidLeftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameMid, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+        let frameMidRightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameMid, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -self.majorMargin)
         self.view.addConstraints([frameMidTopConstraint,frameMidLeftConstraint,frameMidRightConstraint])
         let frameMidHeight:NSLayoutConstraint = NSLayoutConstraint(item: frameMid, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight)
         frameMid.addConstraint(frameMidHeight)
 
         //Frame 3
-        let frameBottomTopConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height+6*self.minorMargin+4*self.backButtonHeight+2*self.flexibleHeight)
-        let frameBottomLeftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
-        let frameBottomRightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -self.majorMargin)
-        self.view.addConstraints([frameBottomTopConstraint,frameBottomLeftConstraint,frameBottomRightConstraint])
+        let frameBottomTopConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 3*self.minorMargin+3*self.backButtonHeight+2*self.flexibleHeight)
+        let frameBottomLeftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+        let frameBottomRightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.welcomeMenu, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -self.majorMargin)
+        self.welcomeMenu.addConstraints([frameBottomTopConstraint,frameBottomLeftConstraint,frameBottomRightConstraint])
         let frameBottomHeight:NSLayoutConstraint = NSLayoutConstraint(item: frameBottom, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight)
         frameBottom.addConstraint(frameBottomHeight)
         
@@ -245,6 +253,44 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         timeLabel.textAlignment = NSTextAlignment.Center
         timeLabel.textColor = UIColor.turquoiseColor()
         
+        //Set up Help Menu
+        self.helpMenu.alpha = 0.0
+        self.view.addSubview(self.helpMenu)
+        self.helpMenu.setConstraintsToSuperview(Int(self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight), bottom: Int(2*self.minorMargin+1.5*self.backButtonHeight), left: 0, right: 0)
+        
+        let pageTitle:UILabel = UILabel()
+        self.helpMenu.addSubview(pageTitle)
+        pageTitle.translatesAutoresizingMaskIntoConstraints = false
+        let pageTitleCenterX:NSLayoutConstraint = NSLayoutConstraint(item: pageTitle, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let pageTitleCenterY:NSLayoutConstraint = NSLayoutConstraint(item: pageTitle, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -80)
+        let pageTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: pageTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.minorMargin)
+        let pageTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: pageTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -4*self.minorMargin)
+        self.helpMenu.addConstraints([pageTitleCenterX,pageTitleCenterY,pageTitleLeft,pageTitleRight])
+        let pageTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: pageTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50)
+        pageTitle.addConstraint(pageTitleHeight)
+        
+        pageTitle.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        pageTitle.textAlignment = NSTextAlignment.Center
+        pageTitle.textColor = UIColor.turquoiseColor()
+        pageTitle.text = "What's the BrainBreaker ?"
+        
+        let explanation:UILabel = UILabel()
+        self.helpMenu.addSubview(explanation)
+        explanation.translatesAutoresizingMaskIntoConstraints = false
+        let explanationCenterX:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let explanationCenterY:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 20)
+        let explanationLeft:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.minorMargin)
+        let explanationRight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -4*self.minorMargin)
+        self.helpMenu.addConstraints([explanationCenterX,explanationCenterY,explanationLeft,explanationRight])
+        let explanationHeight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil    , attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100)
+        explanation.addConstraint(explanationHeight)
+
+        explanation.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+        explanation.textAlignment = NSTextAlignment.Center
+        explanation.textColor = UIColor.turquoiseColor()
+        explanation.numberOfLines = 0
+        explanation.text = "The BrainBreaker is a challenge giving you the chance to win great prizes. For each new challenge you will get one chance to answer correctly, with 3 additional chances if you opted for our Premium version."
+        
     }
     
     func backHome(sender:UITapGestureRecognizer) {
@@ -270,9 +316,33 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
     }
     
-    func helpScreen(sender:UITapGestureRecognizer) {
+    func ShowHelpScreen(sender:UITapGestureRecognizer) {
 
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            
+            self.welcomeMenu.alpha = 0.0
+            self.helpMenu.alpha = 1.0
+            self.helpButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
+            self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.HideHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            self.helpButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            self.helpButton.backgroundColor = UIColor.turquoiseColor()
+            
+            }, completion: nil)
         
+    }
+    
+    func HideHelpScreen(sender:UITapGestureRecognizer) {
+        
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            
+            self.welcomeMenu.alpha = 1.0
+            self.helpMenu.alpha = 0.0
+            self.helpButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
+            self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.ShowHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            self.helpButton.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
+            self.helpButton.backgroundColor = UIColor.clearColor()
+            
+            }, completion: nil)
         
     }
     
