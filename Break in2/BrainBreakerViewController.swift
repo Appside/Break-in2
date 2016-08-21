@@ -560,6 +560,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.interstitialAd.presentFromRootViewController(self)
         } else {
             self.timeTimer.invalidate()
+            self.timer.invalidate()
             self.performSegueWithIdentifier("backHomeSegue", sender: nil)
             print("Ad wasn't ready")
         }
@@ -620,7 +621,14 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             
             self.attemptsRemaining--
             self.defaults.setInteger(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
-            self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+            
+            if self.interstitialAd.isReady && self.membershipType == "Free" {
+                self.interstitialAd.presentFromRootViewController(self)
+            } else {
+                print("Ad wasn't ready")
+                self.testStarted = true
+                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+            }
             
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 
@@ -1079,6 +1087,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         self.interstitialAd = createAndLoadInterstitial()
         if self.AdBeforeClosing == true {
             self.timeTimer.invalidate()
+            self.timer.invalidate()
             self.performSegueWithIdentifier("backHomeSegue", sender: nil)
         } else {
             if self.testStarted == false {
