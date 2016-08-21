@@ -50,7 +50,7 @@ class HomeViewController: UIViewController {
   var tutorialFingerImageView:UIImageView = UIImageView()
   let brainBreakerQuestionButton:UIButton = UIButton()
   let brainBreakerNewLabel:UILabel = UILabel()
-    let membershipButton:UIButton = UIButton()
+  let membershipButton:UIButton = UIButton()
     
   var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -790,7 +790,7 @@ class HomeViewController: UIViewController {
       self.tutorialDescriptions.updateValue(["PRACTICE APTITUDE TESTS...", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n...OR HAVE SOME FUN!\n\nClick on the light bulb to try our Brain Breaker question. If you get the answer right, you will be in with a chance to win a special prize!"], forKey: self.careersBackgroundView)
       self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
       self.tutorialDescriptions.updateValue(["STATISTICS", "We've also added analytics which will allow you to track your progress.\n\nAfter you have taken a few practice tests, return here to monitor your performance and track your improvement over time."], forKey: self.statsButton)
-        self.tutorialDescriptions.updateValue(["FREE SUBSCRIPTION", "As a new user, you will automatically receive 3 free lives which you can use to practice tests. We will also renew a new life every 24 hours.\n\nPREMIUM SUBSCRIPTION\n\nIf you need a little more practice, you may purchase additional tests. However, Premium membership provides you with unlimited lives, removes all advertising and gives you a couple of extra chances at the Brain Breaker."], forKey: self.membershipButton)
+        self.tutorialDescriptions.updateValue(["", "FREE SUBSCRIPTION\n\nAs a new user, you will automatically receive 3 free lives which you can use to practice tests. We will also renew a free life every 24 hours.\n\nPREMIUM SUBSCRIPTION\n\nIf you need a little more practice, you may purchase additional tests. However, Premium membership provides you with unlimited lives, removes all advertising and gives you a couple of extra chances at the Brain Breaker."], forKey: self.membershipButton)
 
       self.showTutorial()
     }
@@ -1067,17 +1067,7 @@ class HomeViewController: UIViewController {
         self.membershipButton.alpha = 1.0
         self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
         
-        let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-        
-        let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 20)
-        self.view.addConstraint(descriptionLabelViewTopConstraint)
-    
-        let descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2))*5)
-        
-        let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
-        
-        self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
-        self.view.addConstraints([descriptionLabelViewCenterXConstraint])
+        self.descriptionLabelView.setConstraintsToSuperview(75, bottom: 150, left: Int(2*self.majorMargin), right: Int(2*self.majorMargin))
         
     } else {
     

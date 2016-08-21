@@ -117,7 +117,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="qMK-dk-gfg" kind="show" identifier="tutorialEnded" id="9Tq-be-jCn"/>
+                        <segue destination="qMK-dk-gfg" kind="show" identifier="tutorialEnded" animates="NO" id="9Tq-be-jCn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpP-Rp-r92" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -359,10 +359,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="O1a-Zm-ZTn"/>
-        <segue reference="kZI-Nr-0I8"/>
+        <segue reference="9Tq-be-jCn"/>
+        <segue reference="PSf-AP-G14"/>
+        <segue reference="lOv-b3-KiM"/>
         <segue reference="Yxi-7F-lFe"/>
-        <segue reference="ozu-v7-0io"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>

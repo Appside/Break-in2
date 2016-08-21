@@ -21,7 +21,8 @@ class TutorialViewController: UIViewController {
   let descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
   let descriptionImageView:UIImageView = UIImageView()
   let tutorialViewModel:JSONModel = JSONModel()
-  
+  var descriptionLabelViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
+    
   var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
   var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -78,7 +79,7 @@ class TutorialViewController: UIViewController {
       self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
       self.tutorialNextButton.setTitle("Let's Get Started", forState: UIControlState.Normal)
       self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-      self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+      self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.GoToEditProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       self.tutorialNextButton.alpha = 0
       
       let string:String = "Welcome \(user![PF_USER_FULLNAME])"
@@ -221,14 +222,14 @@ class TutorialViewController: UIViewController {
     
     let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
-    let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -20)
+    self.descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -20)
     
     let descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 50)
     
     let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
     
     self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
-    self.view.addConstraints([descriptionLabelViewCenterXConstraint, descriptionLabelViewTopConstraint])
+    self.view.addConstraints([descriptionLabelViewCenterXConstraint, self.descriptionLabelViewTopConstraint])
     
     // Create and add constraints for descriptionImageView
     
@@ -259,6 +260,24 @@ class TutorialViewController: UIViewController {
       destinationVC.firstTimeUser = true
     }
   }
+    
+    func GoToEditProfile(sender:UITapGestureRecognizer) {
+        
+        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            
+            self.descriptionImageView.alpha = 0.0
+            self.descriptionLabelViewTopConstraint.constant = -100
+            self.tutorialNextButton.setTitle("Set up a Profile", forState: UIControlState.Normal)
+            self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            self.descriptionLabelView.titleLabel.text = "Create and personalise your profile:"
+            self.descriptionLabelView.descriptionLabel.text = "BreakIN2 is not just about preparing for interviews and tests. We also aim to match candidates with open positions. This is why the more information we will get about you, the more accurate will be our professional recommendations and advice."
+            self.descriptionLabelView.titleLabel.font = UIFont(name: "HelveticaNeue-Mediun", size: 18.0)
+            
+            self.view.layoutIfNeeded()
+            
+            }, completion: nil)
+        
+    }
 
     /*
     // MARK: - Navigation

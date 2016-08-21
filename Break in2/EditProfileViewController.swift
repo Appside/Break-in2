@@ -52,15 +52,21 @@ class EditProfileViewController : FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Status Bar Background
+        let NewView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
+        self.view.addSubview(NewView)
+        
         if self.firstTimeUser == true {
             self.skinType = 1
         }
         if self.skinType == 1 {
             self.tableView?.backgroundColor = UIColor.blackColor()
             self.fieldsColor = UIColor(white: 0.0, alpha: 0.0)
+            NewView.backgroundColor = UIColor.blackColor()
         } else {
             self.tableView?.backgroundColor = UIColor.turquoiseColor()
             self.fieldsColor = UIColor(red: 50/255, green: 120/255, blue: 123/255, alpha: 0.35)
+            NewView.backgroundColor = UIColor.turquoiseColor()
         }
         
         self.screenFrame = UIScreen.mainScreen().bounds
@@ -89,25 +95,25 @@ class EditProfileViewController : FormViewController {
             var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
             header.height = {self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40}
             header.onSetupView = { view, _ in
-                self.view.addSubview(self.logoImageView)
+                view.addSubview(self.logoImageView)
                 self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
                 self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
                 self.logoImageView.clipsToBounds = true
                 self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
                 
-                let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+                let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
                 
-                let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+                let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
                 
                 let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
                 
                 let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
                 
                 self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
-                self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
+                view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
                 
                 //Back Button
-                self.view.addSubview(self.backButton)
+                view.addSubview(self.backButton)
                 self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
                 self.backButton.addTarget(self, action: #selector(EditProfileViewController.goBackToSettingsMenu(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 self.backButton.clipsToBounds = true
@@ -119,31 +125,31 @@ class EditProfileViewController : FormViewController {
                 }
                 self.backButton.translatesAutoresizingMaskIntoConstraints = false
                 
-                let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+                let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
                 
-                let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+                let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
                 
                 let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
                 
                 let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
                 
                 self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
-                self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
+                view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
                 
                 //pageDescription set up
-                self.view.addSubview(self.pageDescription)
+                view.addSubview(self.pageDescription)
                 self.pageDescription.translatesAutoresizingMaskIntoConstraints = false
                 
-                let pageDescriptionCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+                let pageDescriptionCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
                 
-                let pageDescriptionTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight)
+                let pageDescriptionTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight)
                 
                 let pageDescriptionHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
                 
                 let pageDescriptionWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
                 
                 self.pageDescription.addConstraints([pageDescriptionHeightConstraint, pageDescriptionWidthConstraint])
-                self.view.addConstraints([pageDescriptionCenterXConstraint, pageDescriptionTopConstraint])
+                view.addConstraints([pageDescriptionCenterXConstraint, pageDescriptionTopConstraint])
                 
                 self.pageDescription.text = "EDIT PROFILE DETAILS"
                 self.pageDescription.textColor = UIColor.whiteColor()
@@ -151,19 +157,19 @@ class EditProfileViewController : FormViewController {
                 self.pageDescription.textAlignment = NSTextAlignment.Center
                 
                 //pageDescriptionSub set up
-                self.view.addSubview(self.pageDescriptionSub)
+                view.addSubview(self.pageDescriptionSub)
                 self.pageDescriptionSub.translatesAutoresizingMaskIntoConstraints = false
                 
-                let pageDescriptionSubCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+                let pageDescriptionSubCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
                 
-                let pageDescriptionSubTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 4*self.minorMargin + self.backButtonHeight + 20)
+                let pageDescriptionSubTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 4*self.minorMargin + self.backButtonHeight + 20)
                 
                 let pageDescriptionSubHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
                 
                 let pageDescriptionSubWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
                 
                 self.pageDescriptionSub.addConstraints([pageDescriptionSubHeightConstraint, pageDescriptionSubWidthConstraint])
-                self.view.addConstraints([pageDescriptionSubCenterXConstraint, pageDescriptionSubTopConstraint])
+                view.addConstraints([pageDescriptionSubCenterXConstraint, pageDescriptionSubTopConstraint])
                 
                 self.pageDescriptionSub.text = "This will help us tailor your experience"
                 self.pageDescriptionSub.textColor = UIColor.whiteColor()
@@ -175,7 +181,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< LabelRow(){
-                $0.title = "Personnal Details"
+                $0.title = "Personal Details (* mandatory fields)"
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
@@ -188,7 +194,7 @@ class EditProfileViewController : FormViewController {
                 }
 
             <<< NameRow("FirstName"){
-                $0.title = "First Name"
+                $0.title = "First Name *"
                 $0.placeholder = "Type Last Name"
                 $0.value = self.profileFirstName
                 }.cellSetup{ cell, row in
@@ -202,7 +208,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< NameRow("LastName"){
-                $0.title = "Last Name"
+                $0.title = "Last Name *"
                 $0.placeholder = "Type Last Name"
                 $0.value = self.profileLastName
                 }.cellSetup{ cell, row in
@@ -216,7 +222,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< EmailRow("Email"){
-                $0.title = "Email Address"
+                $0.title = "Email Address *"
                 $0.placeholder = "Type Email Address"
                 $0.value = self.profileEmail
                 }.cellSetup{ cell, row in
@@ -271,9 +277,9 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("Course") {
-                $0.title = "Course of study"
+                $0.title = "Course Of Study"
                 $0.selectorTitle = "What are you studying ?"
-                $0.options = ["Finance", "Economics", "Mathematics", "Engineering", "Other"]
+                $0.options = ["Economics / Finance", "Engineering", "Mathematics / Sciences", "Computing", "Arts / Languages", "Other"]
                 $0.value = self.profileCourse
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
@@ -286,9 +292,9 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("Degree") {
-                $0.title = "Degree"
+                $0.title = "Degree Type"
                 $0.selectorTitle = "What's your level of study ?"
-                $0.options = ["Bachelor Degree","Master Degree","PhD"]
+                $0.options = ["Bachelors","Masters","PhD"]
                 $0.value = self.profileDegree
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
@@ -415,51 +421,6 @@ class EditProfileViewController : FormViewController {
                 }
             } else {
                 alertMessage = alertMessage + "No name." + "\n"
-                showErrorMessage = true
-            }
-        }
-        
-        if let newRow:PhoneRow = form.rowByTag("Phone") {
-            if let newEntry = newRow.value {
-                self.profilePhone = newEntry
-            } else {
-                alertMessage = alertMessage + "Invalid Phone" + "\n"
-                showErrorMessage = true
-            }
-        }
-        
-        if let newRow:NameRow = form.rowByTag("University") {
-            if let newEntry = newRow.value {
-                self.profileUniversity = newEntry
-            } else {
-                alertMessage = alertMessage + "Invalid University" + "\n"
-                showErrorMessage = true
-            }
-        }
-        
-        if let newRow:ActionSheetRow<String> = form.rowByTag("Degree") {
-            if let newEntry = newRow.value {
-                self.profileDegree = newEntry
-            } else {
-                alertMessage = alertMessage + "Invalid Degree Type" + "\n"
-                showErrorMessage = true
-            }
-        }
-        
-        if let newRow:ActionSheetRow<String> = form.rowByTag("Course") {
-            if let newEntry = newRow.value {
-                self.profileCourse = newEntry
-            } else {
-                alertMessage = alertMessage + "Invalid Course Type" + "\n"
-                showErrorMessage = true
-            }
-        }
-        
-        if let newRow:ActionSheetRow<String> = form.rowByTag("Position") {
-            if let newEntry = newRow.value {
-                self.profilePosition = newEntry
-            } else {
-                alertMessage = alertMessage + "Invalid Position Type" + "\n"
                 showErrorMessage = true
             }
         }
