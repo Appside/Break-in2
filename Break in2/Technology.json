@@ -175,4 +175,44 @@
   "explanation":"In many programming languages, a semicolon is used at the end of each instruction. Omitting a semicolon would lead to a syntax error."
   },
   
+  {
+  "questionType":"Technology",
+  "question":"Which of these protocols is used for sending emails?",
+  "answers":["FTP","SMTP","TCP/IP","HTTP","SSL"],
+  "correctAnswer":0,
+  "explanation":"SMTP (Simple Mail Transfer Protocol) is an Internet standard for electronic mail transmission, frist defined in 1982. SMTP connections may be secured by SSL (the protocol is then known as SMTPS)."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"Which of the following is NOT a function of the Operating System?",
+  "answers":["Process Management","Memory Management","Disk Management","Database Management"],
+  "correctAnswer":3,
+  "explanation":"Database Management is not a function of the Operatin System. The Operating System manages computer hardware and software resources and provides common services for computer programs."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"The translator that converts high-level languages into machine code is know as:",
+  "answers":["VBA","Visual Basic","Compiler","Query Language","Translator"],
+  "correctAnswer":2,
+  "explanation":"A complier is a computer program, or a set of programs, that transforms source code written in a programming language into another computer language often having a binary form know as object code. The most common reason for converting source code is to create an executable program."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"Communication between computers is achieved by connecting devices and setting up strict communication rules within a network. How are these rules more appropriately termed?",
+  "answers":["Protocols","Models","Internet","Network rules","High-level Communication Rules"],
+  "correctAnswer":0,
+  "explanation":"Protocols are a system of rules that allow entities and devices to communicate and transmit information via any kind of variation of a physical quantity. Protocols are important to avoid miscommunication or conflicts within a network."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"Which of the following languages is more suited to a structured program?",
+  "answers":["PL/1","FORTRAN","BASIC","PASCAL","None of the above"],
+  "correctAnswer":3,
+  "explanation":"Structured Programming is a paradigm aimed at improving the clarity, quality and development time of a computer program bu making extensive use of subroutines and loops. PASCAL is the more appropriate for the list we gave."
+  },
+  
   ]
