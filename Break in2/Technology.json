@@ -97,97 +97,82 @@
  
   {
   "questionType":"Technology",
-  "question":"How many bits are in a byte?",
-  "answers":["2","256","8","1,024"],
-  "correctAnswer":2,
-  "explanation":"There are always 8 bits in a byte."
+  "question":"What does 'OS' usually mean ?",
+  "answers":["Open Software","Operating System","Optical System","Operating Software"],
+  "correctAnswer":1,
+  "explanation":"OS is the abreviation for Operating Systems such as Windows, Linux or Mac OSX for example."
   },
   
   {
   "questionType":"Technology",
-  "question":"What does HTTP stand for?",
-  "answers":["Hypertext Transfer Protocol","Hyphenated Teleconference Transfer Procedure","Handset Terminal Timestamp Protocol","Hexadecimal Text Transaction Processing"],
+  "question":"Which of the following is a type of Electrically-Erasable Programmable Read-Only Memory?",
+  "answers":["Flash","Frame","RAM","DOS","ROM"],
   "correctAnswer":0,
-  "explanation":"HTTP stands for Hypertext Transfer Protocol. It is a set of rules used when communicating on the World Wide Web."
+  "explanation":"The correct answer is Flash. It was developed in Japan by Toshiba and has now become  very popoular for products requiring non-volatile erasable memory."
   },
-  
+
   {
   "questionType":"Technology",
-  "question":"What does POP3 stand for?",
-  "answers":["Peer Override Protocol 3 ","Phablet Online Platform 3","Post Office Protocol 3","Podcast Organisation Procedure 3"],
-  "correctAnswer":2,
-  "explanation":"POP3 stands for Post Office Protocol 3. It is the latest protocol used when receiving E-mails."
-  },
-  
-  {
-  "questionType":"Technology",
-  "question":"How many megabytes (MB) are there in a terabyte (TB)?",
-  "answers":["1,024","256,000","2,048,000","1,048,576"],
+  "question":"Who was responsible for breaking the German 'Enigma' code during World War 2?",
+  "answers":["Martin Bool","Jerry Yang","Ken Thompson","Alan Turing","Philip Case"],
   "correctAnswer":3,
-  "explanation":"1 gigabyte contains 1,024 megabytes and 1 terabyte contains 1,024 gigbytes. So there are 1,024 x 1,024 = 1,048,576 megabytes in a terabyte."
+  "explanation":"The correct answer is Alan Turing. He as highly influential in the development of theoretical computer sciencem providing a formalisation of the concepts of algorithm and computation with the Turing machine, considered a model of a general purpose computer."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"Who developed Yahoo?",
+  "answers":["Jerry Yang & Philip Case","David Filo & Jerry Yang","Larry Page & Sergey Brin","Martin Bool","Ken Thompson"],
+  "correctAnswer":3,
+  "explanation":"David Filo & Jerry Yang founded Yahoo in January 1994,"
   },
   
   {
   "questionType":"Technology",
-  "question":"What must an IF statement contain?",
-  "answers":["An integer","A Boolean expression","A conditional statement","A string"],
+  "question":"What frequency range is the High Frequency band?",
+  "answers":["100 kHz","1 GHz","30 to 300 MHz","3 to 30 MHz","10 MHz"],
+  "correctAnswer":3,
+  "explanation":"The High Frequency band is based on frequencies from 3 to 30 MHz. AM radio stations are in the High Frequency band but are normally stated in kilohertz."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"Which element allo user to interactively send instructions to a computer using graphical icons ?",
+  "answers":["Commands","GUI","Printer","Keyboard","Monitor"],
+  "correctAnswer":1,
+  "explanation":"GUI (Graphical User Interface) allow users to interact with electronic devices through graphical icons and visual indicators instead of text-based user interfaces,."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"How would you represent the decimal value of 30 in Hexadecimal?",
+  "answers":["1E","30","1C","11010"],
+  "correctAnswer":0,
+  "explanation":"Hexadecimal is positional numeral system with a base of 16. 0-9 symbols represent values zero to nine, and A-F represent values ten to fifteen."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"How is data represented inside a computer?",
+  "answers":["Logical System","Byte System","Binary Systen","Hexadecimal System","Dual System"],
   "correctAnswer":2,
-  "explanation":"An IF statement is a logical command. It requires a conditional statement to determine whether the following block of code should be executed."
+  "explanation":"Computers are built on a Binary System because of its straightforward implementation in digital electronic circuitry using logic gates. Each digit is referred to as a bit."
   },
   
   {
   "questionType":"Technology",
-  "question":"Is RAM storage volatile?",
-  "answers":["Yes","No","Sometimes","Cannot Say"],
-  "correctAnswer":0,
-  "explanation":"Random Access Memory (RAM) is volatile. Its contents are erased when the system loses power."
-  },
-  
-  {
-  "questionType":"Technology",
-  "question":"Is ROM storage volatile?",
-  "answers":["Yes","No","Sometimes","Cannot Say"],
-  "correctAnswer":0,
-  "explanation":"Read Only Memory (ROM) is non-volatile. Its contents can still be read is the system loses power."
-  },
-  
-  {
-  "questionType":"Technology",
-  "question":"What part of database stores only on type of information?",
-  "answers":["Record","File","Field","Report"],
+  "question":"Testing a program for syntax or logic errors is commonly know as:",
+  "answers":["Double Checking","Editing","Debugging","Decoding","Cleaning"],
   "correctAnswer":2,
-  "explanation":"Fields are used to store a certain type of information. Many fields make a record and many records make a file."
+  "explanation":"Debugging means going through the code to check for potential syntax or logic errors."
   },
   
   {
   "questionType":"Technology",
-  "question":"What does CPU stand for?",
-  "answers":["Computer Preparation Unit","Central Processing Unit","Command Prompt Uninstaller","Cellular Phone Usability"],
+  "question":"The omission of a semicolon at the end of a statement in PHP would lead to which type of error?",
+  "answers":["Loop error","Syntax error","Direct error","Calculation error","Variable Mismatch error"],
   "correctAnswer":1,
-  "explanation":"The Central Processing Unit (CPU) is the electronic circuit board where arithmetic, logical and input/output operations are carried out."
+  "explanation":"In many programming languages, a semicolon is used at the end of each instruction. Omitting a semicolon would lead to a syntax error."
   },
-  
-  {
-  "questionType":"Technology",
-  "question":"Which of the following is a valid e-mail address?",
-  "answers":["info.appside:co:uk","info@appside.co.uk","info/appside.co.uk","www.appside.co.uk"],
-  "correctAnswer":1,
-  "explanation":"E-mail addresses are typically in the format ___@___.___"
-  },
-  {
-  "questionType":"Technology",
-  "question":"In a binary system, what will be the output of 1 ANerD 0?",
-  "answers":["0","1","10","Cannot Say"],
-  "correctAnswer":1,
-  "explanation":"The binary AND operator will only return a 0 when both inputs are 0. Otherwise, the output is 1."
-  },
-  
-  {
-  "questionType":"Technology",
-  "question":"What does SSL stand for?",
-  "answers":[" Secure Socket Layer ","Secure System Login","System Socket Layer","Scalable Serial Link"],
-  "correctAnswer":0,
-  "explanation":"The Secure Socket Layer (SSL) is the basic security technology for establishing a link between a web server and host."
-  }
   
   ]
