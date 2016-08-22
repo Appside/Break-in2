@@ -272,7 +272,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         //Frame 2 -- Content
         let livesUIView:UIView = UIView()
         self.frameMid.addSubview(livesUIView)
-        livesUIView.setConstraintsToSuperview(Int(self.flexibleHeight)/2-30, bottom: Int(self.flexibleHeight)/2, left: 0, right: 0)
+        livesUIView.setConstraintsToSuperview(15, bottom: Int(self.flexibleHeight)/2, left: 0, right: 0)
         
         livesUIView.addSubview(self.life2)
         self.life2.translatesAutoresizingMaskIntoConstraints = false

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "614316431BEF843A0047A37D"
-               BuildableName = "Break in2.app"
+               BuildableName = "BREAKIN2.app"
                BlueprintName = "Break in2"
                ReferencedContainer = "container:Break in2.xcodeproj">
             </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "614316431BEF843A0047A37D"
-            BuildableName = "Break in2.app"
+            BuildableName = "BREAKIN2.app"
             BlueprintName = "Break in2"
             ReferencedContainer = "container:Break in2.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "614316431BEF843A0047A37D"
-            BuildableName = "Break in2.app"
+            BuildableName = "BREAKIN2.app"
             BlueprintName = "Break in2"
             ReferencedContainer = "container:Break in2.xcodeproj">
          </BuildableReference>
@@ -95,7 +95,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "614316431BEF843A0047A37D"
-            BuildableName = "Break in2.app"
+            BuildableName = "BREAKIN2.app"
             BlueprintName = "Break in2"
             ReferencedContainer = "container:Break in2.xcodeproj">
          </BuildableReference>
