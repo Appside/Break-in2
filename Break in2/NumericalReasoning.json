@@ -10,7 +10,7 @@
   "question":"How many Model D cars were sold in April?",
   "answers":["10","1,000","5,000","10,000"],
   "correctAnswer":1,
-  "explaination":"The trick to this question is to recognise that the graph gives sales figures cumulatively. We see from the graph that the cumulative Model D sales at the end of March are 9,000 and 10,000 at the end of April./n/nIf we take the difference between these two numbers, this means that 1,000 Model D cars were sold in April./n/nThe correct answer is 1,000."
+  "explaination":"The trick to this question is to recognise that the graph gives sales figures cumulatively. We see from the graph that the cumulative Model D sales are 9,000 at the end of March and 10,000 at the end of April./n/nIf we take the difference between these two numbers, this means that 1,000 Model D cars were sold in April./n/nThe correct answer is 1,000."
   },
   
   {
@@ -131,7 +131,7 @@
   "question":"What was the compounded annual growth rate in Other expenses between 2006 and 2009, rounded to the nearest integer?",
   "answers":["3%","4%","5%","6%","None of these"],
   "correctAnswer":0,
-  "explaination":"Let's look at the overall growth rate over the period: 4.8 divded by 4.4 gives 1.0909. The length of the period is 3 years. 1.0909 to the power (1/3) gives 1.029./n/nThe correct answer is 2.94%."
+  "explaination":"Let's look at the overall growth rate over the period: 4.8 divded by 4.4 gives 1.0909. The length of the period is 3 years. 1.0909 to the power (1/3) gives 1.0294. Therefore, the compounded growth rate is 2.94%/n/nThe correct answer is 3%."
   },
   
   {
@@ -171,7 +171,7 @@
   "question":"What was the Ratio of Stocks to Cash holdings in October?",
   "answers":["3:2","2:3","4:5","5:4","4:7"],
   "correctAnswer":4,
-  "explaination":"Holdings of Stocks in October were 20% of the total versus 35% for Cash. The ratio is therefore 20/35 also equal to 4/7./n/nThe correct answer is 4:7."
+  "explaination":"Holdings of Stocks in October were 20% of the total versus 35% for Cash. The ratio is therefore 20/35, which is also equal to 4/7./n/nThe correct answer is 4:7."
   },
   
   {
@@ -287,7 +287,7 @@
   "question":"What is the percentage change in total income acrross all sectors between 2014 and 2015?",
   "answers":["1%","2%","3%","4%","5%"],
   "correctAnswer":2,
-  "explaination":"First work out what the total incoe was for 2014 and 2015:/n/n2014: 134,000/n2015: 138,000/n/nThe percentage change is therefore equal to 2.99%./n/nThe correct answer is 3%."
+  "explaination":"First work out what the total income was for 2014 and 2015:/n/n2014: 134,000/n2015: 138,000/n/nThe percentage change is therefore equal to 2.99%./n/nThe correct answer is 3%."
   },
   
   {
@@ -298,7 +298,7 @@
   "barSegmentNames":["Telecom","Utilities","Manufacturing","Financial","Retail"],
   "xAxis":["2014","2015","2016"],
   "yAxis":[[30,35,21,25,23],[27,20,32,29,30],[25,20,30,30,25]],
-  "question":"What is the compounded annual growth rate in Retail income between 2014 and 2016?",
+  "question":"Roughly, what is the compounded annual growth rate in Retail income between 2014 and 2016?",
   "answers":["1%","2%","3%","4%","5%"],
   "correctAnswer":3,
   "explaination":"Retail income in 2016 is 25,000 and was 23,000 in 2014. To calculate the compounded annual growth rate over this 2-year period, use the following formula: divide 25,000 by 23,000 and take this number to the power (1 / number of years)./n/nYou will find that the compounded annual growth rate is 4.25%./n/nThe correct answer is 4%."
@@ -334,11 +334,11 @@
   {
   "questionType":"Numerical Reasoning",
   "chartType":"line",
-  "axisNames":["Month","Monthly Client Visits"],
+  "axisNames":["Month","Monthly Sales Visits"],
   "lineNames":["Jon","Martin","Simon"],
   "xAxis":["June","July","August","September","October"],
   "yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
-  "question":"If the percentage change in sales visits per Sales Manager between September and October continues for November, what will Martin and Simon’s combined number of Sales Visits be in November?",
+  "question":"If the percentage change in sales visits per Sales Manager between September and October continues for November, what will Martin and Simon’s combined number of sales visits be in November?",
   "answers":["148","149","150","151","152"],
   "correctAnswer":4,
   "explaination":"Martin's number of sales visits between September and Octboer decreased by 10% and Simon's number increased by 13%. If trends for November are the same, this would bring Marint's number down to 73 visits and Simon's number up to 79./n/nThe correct answer is 152 (73 plus 79)."
@@ -347,40 +347,40 @@
   {
   "questionType":"Numerical Reasoning",
   "chartType":"line",
-  "axisNames":["Month","Monthly Client Visits"],
+  "axisNames":["Month","Monthly Sales Visits"],
   "lineNames":["Jon","Martin","Simon"],
   "xAxis":["June","July","August","September","October"],
   "yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
   "question":"If Martin's number of visits keeps decreasing at the same pace (in percentage terms) as between September and October, how many months will be required until Martin's number of visits becomes strictly lower than 20?",
   "answers":["10","11","12","13","14"],
   "correctAnswer":4,
-  "explaination":"Martin's number of visits decreased by 10% between September and October, and the number of vistis for the last available month, October, is 81./n/n81 * (0.9)^13 = 20.6/n81 * (0.9)^14 = 18.5"
+  "explaination":"Martin's number of visits decreased by 10% between September and October, and the number of visits for the last available month, October, is 81./n/n81 * (0.9)^13 = 20.6/n81 * (0.9)^14 = 18.5./n/nThe correct answer is 14."
   },
   
   {
   "questionType":"Numerical Reasoning",
   "chartType":"line",
-  "axisNames":["Month","Monthly Client Visits"],
+  "axisNames":["Month","Monthly Sales Visits"],
   "lineNames":["Jon","Martin","Simon"],
   "xAxis":["June","July","August","September","October"],
   "yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
   "question":"Martin, who travelled 3,500 miles in July, travelled an extra 12 miles per client visit compared to Jon. What was the total number of miles Jon travelled in July?",
-  "answers":["2,400","£2,600","2,800","3,000","3,200"],
+  "answers":["2,440","£2,470","2,520","2,560","2,600"],
   "correctAnswer":1,
-  "explaination":"Step 1 – Let x = Jessica’s average mileage per client visit: July visits = 70 = 3,500 / x, x = 3,500 / 70 = 50 miles per visit. Step 2 – Calculate Simon’s average mileage per client visit: 50 – 10 = 40 miles per visit. Step 3 – Calculate the total number of miles Simon travelled in July: 40 x 65 = 2,600 miles. Thus the correct answer is (B) 2,600 miles."
+  "explaination":"Step 1 – Let x = Martin’s average mileage per visit: July visits = 70 = 3,500 / x, x = 3,500 / 70 = 50 miles per visit. Step 2 – Calculate Jon’s average mileage per client visit: 50 – 12 = 38 miles per visit. Step 3 – Calculate the total number of miles Jon travelled in July: 38 x 65 = 2,470 miles./n/nThus the correct answer is 2,470 miles."
   },
   
   {
   "questionType":"Numerical Reasoning",
   "chartType":"line",
-  "axisNames":["Month","Monthly Client Visits"],
+  "axisNames":["Month","Monthly Sales Visits"],
   "lineNames":["Jon","Martin","Simon"],
   "xAxis":["June","July","August","September","October"],
   "yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
-  "question":"The average order value per client visit is £145, £135 and £125 for Simon, Jessica and Kim respectively. Which Sales Managers generate the highest and lowest order values in June?",
-  "answers":["Kim (most); Jessica (least)","Simon (most); Jessica (least)","Jessica (most); Kim (least)","Jessica (most); Simon (least)","Kim (most); Simon (least)"],
+  "question":"The average order value per client visit is £145, £135 and £125 for Jon, Martin and Simon respectively. Which Sales Managers generate the highest and lowest order values in June?",
+  "answers":["Simon (most); Martin (least)","Jon (most); Martin (least)","Martin (most); Simon (least)","Martin (most); Jon (least)","Simon (most); Jon (least)"],
   "correctAnswer":0,
-  "explaination":"Calculate each Sales Manager’s client sales for June, as follows: Simon 50 visits in June 50 x £145 = £7,250, Jessica 45 visits in June 45 x £135 = £6,075, Kim 60 visits in June 60 x £125 = £7,500. Thus the correct answer is (A) Kim (most); Jessica (least)."
+  "explaination":"Calculate each Sales Manager’s client sales for June, as follows: Jon 50 visits in June 50 x £145 = £7,250, Martin 45 visits in June 45 x £135 = £6,075, Simon 60 visits in June 60 x £125 = £7,500./n/nThus the correct answer is Simon (most); Martin (least)."
   },
   
   {
@@ -389,12 +389,12 @@
   "axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
   "barSegmentOrientation":"horizontal",
   "barSegmentNames":["2010","2011"],
-  "xAxis":["A","B","C","D","E"],
+  "xAxis":["V","W","X","Y","Z"],
   "yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
   "question":"Between 2010 and 2011 what is the total cut in the marketing budget across the 5 Brands combined (in €10,000s)?",
   "answers":["135","400","500","1,135","1,535"],
   "correctAnswer":2,
-  "explaination":"Step 1 – Calculate the 2010 total marketing budget: 300 + 410 + 260 + 300 + 365 = 1635. Step 2 – Calculate the 2011 total marketing budget: 225 + 275 + 175 + 210 + 250 = 1135. Step 3 – Calculate cut: 2010 marketing budget – 2011 marketing budget = 1635 – 1135 = 500 (in €10,000s). Thus the correct answer is (C) 500."
+  "explaination":"Step 1 – Calculate the 2010 total marketing budget: 300 + 410 + 260 + 300 + 365 = 1635./n/nStep 2 – Calculate the 2011 total marketing budget: 225 + 275 + 175 + 210 + 250 = 1135./n/nStep 3 – Calculate cut: 2010 marketing budget – 2011 marketing budget = 1635 – 1135 = 500 (in €10,000s)./n/nThus the correct answer is 500."
   },
   
   {
@@ -403,12 +403,12 @@
   "axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
   "barSegmentOrientation":"horizontal",
   "barSegmentNames":["2010","2011"],
-  "xAxis":["A","B","C","D","E"],
+  "xAxis":["V","W","X","Y","Z"],
   "yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
   "question":"Which Brand has suffered the largest percentage cut in its Marketing Budget?",
-  "answers":["Brand A","Brand B","Brand C","Brand D","Brand E"],
+  "answers":["Brand V","Brand W","Brand X","Brand Y","Brand Z"],
   "correctAnswer":1,
-  "explaination":"Step 1 - Calculate the % cut for each branch from 2010 to 2011: Brand A = 75/300 x 100% = 25%, Brand B = 135/410 x100% = 32.9%, Brand C = 85/260 x 100% = 32.7%, Brand D = 90/300 x 100% = 30%, Brand E = 115/365 x 100% = 31.5%. Thus the correct answer is (B) Brand B."
+  "explaination":"Step 1 - Calculate the % cut for each branch from 2010 to 2011: Brand V = 75/300 x 100% = 25%, Brand W = 135/410 x 100% = 32.9%, Brand X = 85/260 x 100% = 32.7%, Brand Y = 90/300 x 100% = 30%, Brand Z = 115/365 x 100% = 31.5%./n/nThus the correct answer is Brand W."
   },
   
   {
@@ -417,12 +417,12 @@
   "axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
   "barSegmentOrientation":"horizontal",
   "barSegmentNames":["2010","2011"],
-  "xAxis":["A","B","C","D","E"],
+  "xAxis":["V","W","X","Y","Z"],
   "yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
   "question":"Between 2010 and 2011 what has been the mean percentage Budget reduction for each of the 5 Brands (to 1 decimal place)?",
   "answers":["30.4%","30.5%","31.4%","31.5%","32.4%"],
   "correctAnswer":0,
-  "explaination":"Step 1 - Calculate the % cut for each Brand. If you still have your notes from the previous question you can re-use those to save time: Brand A = 75/300 x 100 = 25%, Brand B = 135/410 x100 = 32.9%, Brand C = 85/260 x 100 = 32.7%, Brand D = 90/300 x 100 = 30%, Brand E = 115/365 x 100 = 31.5%. Step 2 – Calculate mean reduction: (25 + 32.9 + 32.7 + 30 + 31.5)/5 = 30.42%. Step 3 – Calculate answer to 1 decimal place: 30.4%. Thus the correct answer is (A) 30.4%."
+  "explaination":"Step 1 - Calculate the % cut for each Brand: Brand V = 75/300 x 100 = 25%, Brand W = 135/410 x100 = 32.9%, Brand X = 85/260 x 100 = 32.7%, Brand Y = 90/300 x 100 = 30%, Brand Z = 115/365 x 100 = 31.5%./n/nStep 2 – Calculate mean reduction: (25 + 32.9 + 32.7 + 30 + 31.5)/5 = 30.42%./n/nStep 3 – Calculate answer to 1 decimal place: 30.4%./n/nThus the correct answer is 30.4%."
   },
   
   {
@@ -431,12 +431,12 @@
   "axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £ = €1.2)"],
   "barSegmentOrientation":"horizontal",
   "barSegmentNames":["2010","2011"],
-  "xAxis":["A","B","C","D","E"],
+  "xAxis":["V","W","X","Y","Z"],
   "yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
-  "question":"Brand A and Brand D are to have their number of staff reduced by the same percentage reduction seen by their Marketing Budgets between 2010 and 2011. If the number of staff at Brand A was originally 120 and the number of staff at Brand D triple this, what are the new reduced staff numbers for each Brand?",
-  "answers":["Can’t tell from the data","35 (Brand A); 142 (Brand D)","90 (Brand A); 252 (Brand D)","60 (Brand A); 240 (Brand D)","50 (Brand A); 360 (Brand D)"],
+  "question":"Brand V and Brand Y are to have their number of staff reduced by the same percentage reduction seen by their Marketing Budgets between 2010 and 2011. If the number of staff at Brand V was originally 120 and the number of staff at Brand Y triple this, what are the new reduced staff numbers for each Brand?",
+  "answers":["Can’t tell from the data","35 (Brand V); 142 (Brand Y)","90 (Brand V); 252 (Brand Y)","60 (Brand V); 240 (Brand Y)","50 (Brand V); 360 (Brand Y)"],
   "correctAnswer":3,
-  "explaination":"Step 1 – Calculate the percentage reduction in Marketing Budget for each Brand: Brand A: 225 / 300 = 25% reduction, Brand D: 210 / 300 = 30% reduction. Step 2 – Calculate the new number of staff for Brand A: 120 x 0.75% = 90. Step 3 – Calculate the new number of staff for Brand D: (120 x 3) x 0.7 = 252. Thus the correct answer is (C) 90 (Brand A); 252 (Brand D)."
+  "explaination":"Step 1 – Calculate the percentage reduction in Marketing Budget for each Brand: Brand V: 225 / 300 = 25% reduction, Brand Y: 210 / 300 = 30% reduction./n/nStep 2 – Calculate the new number of staff for Brand V: 120 x 0.75% = 90./n/nStep 3 – Calculate the new number of staff for Brand Y: (120 x 3) x 0.7 = 252./n/nThus the correct answer is 90 (Brand V); 252 (Brand Y)."
   },
   
   {
@@ -445,12 +445,12 @@
   "axisNames":["Brand","Marketing Budget (€10,000s)(Exchange Rate: £=€1.2)"],
   "barSegmentOrientation":"horizontal",
   "barSegmentNames":["2010","2011"],
-  "xAxis":["A","B","C","D","E"],
+  "xAxis":["V","W","X","Y","Z"],
   "yAxis":[[300,225],[410,275],[260,175],[300,210],[365,250]],
   "question":"The total 2011 Marketing Budget for all five Brands is to be cut by a quarter in 2012. In £, what is the 2012 Marketing Budget? (to the nearest £100,000)?",
   "answers":["£3 million","£3.1 million","£5.2 million","£6.2 million","£7.1 million"],
   "correctAnswer":4,
-  "explaination":"Step 1 – Calculate the 2012 marketing budget: 2011 marketing budget (from previous question) = 1135 (€10,000s), 2012 marketing budget = €11.35 million x 75% = €8.5125 million. Step 2 – Convert into £: 8,512,500 / 1.2 = £7.094 million. Step 3 – Put answer into the nearest £100,000: £7.1 million. Thus the correct answer is (E) £7.1 million."
+  "explaination":"Step 1 – Calculate the 2012 marketing budget: 2011 marketing budget = 225 + 275 + 175 + 210 + 250 = 1135 (€10,000s),2012 marketing budget = €11.35 million x 75% = €8.5125 million./n/nStep 2 – Convert into £: 8,512,500 / 1.2 = £7.094 million./n/nStep 3 – Put answer into the nearest £100,000: £7.1 million./n/nThus the correct answer is £7.1 million."
   },
   
   {

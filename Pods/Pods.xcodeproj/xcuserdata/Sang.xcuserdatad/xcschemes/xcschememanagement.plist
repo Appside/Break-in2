@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>Eureka.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
 		<key>FBSDKCoreKit.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -53,6 +58,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>10</integer>
+		</dict>
+		<key>SwiftSpinner.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -97,7 +107,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4332352E97A37C729DC7D9B3B8A4BB15</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4808A808019E0D6C6B6A384BAAD4F8FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4CEEFD083FFAF2B0700E339A4CE8B309</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -113,6 +133,11 @@
 			<true/>
 		</dict>
 		<key>60BFBB9C75F8AE91DE07E0DAA5311096</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CD46AEE6AF2BEAC1476E9064271E418</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -163,6 +188,11 @@
 			<true/>
 		</dict>
 		<key>B8A759F57254B6094CF99273E5ECEE8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BD4EC487BE2C55B1B7F6321A57F87741</key>
 		<dict>
 			<key>primary</key>
 			<true/>
