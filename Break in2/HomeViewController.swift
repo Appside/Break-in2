@@ -816,6 +816,9 @@ class HomeViewController: UIViewController {
     //        alertView.showWarning("Logout", subTitle: "Are You Sure You Want To Exit?")
     
     alertView.addButton("Ok", target:self, selector:#selector(HomeViewController.logOut))
+    alertView.addButton("Cancel", action: {
+        alertView.clearAllNotice()
+    })
     alertView.showTitle(
       "Logout", // Title of view
       subTitle: "Are you sure you want to exit?", // String of view

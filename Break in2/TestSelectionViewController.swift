@@ -1087,6 +1087,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                                         self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
                                         self.membershipType = self.defaults.objectForKey("Membership") as! String
                                         self.paidConduit()
+                                        self.defaults.setInteger(3, forKey: "NoOfBrainBreakerLives")
                                         print(self.membershipType)
                                         
                                         SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
