@@ -34,21 +34,20 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     let swipeMenuTopBar:UIView = UIView()
     let timeLabel:UILabel = UILabel()
     var timeTimer:NSTimer = NSTimer()
-    let descriptionSwipeLabel:UILabel = UILabel()
     let mainView:UIView = UIView()
     let questionView:UIView = UIView()
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[programmingQuestion] = [programmingQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 3
+    var totalNumberOfQuestions:Int = 1
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = Int()
     var allowedMinutes:Int = Int()
     var countSeconds:Int = Int()
     var countMinutes:Int = Int()
     let answerView:UIView = UIView()
-    let nextButton:UILabel = UILabel()
-    var selectedAnswers:[Int] = [Int]()
+    let nextButton:UIButton = UIButton()
+    var selectedAnswers:[Bool] = [Bool]()
     var qViewHeight:NSLayoutConstraint = NSLayoutConstraint()
     let feebdackScreen:UIScrollView = UIScrollView()
     var scoreRatio:Float = Float()
@@ -59,8 +58,9 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     //tableview variables
     let passageView:UIView = UIView()
     var currentIndexPath: NSIndexPath?
-    
+    var correctOrder:[String] = [String]()
     var cellTitles:[String] = [String]()
+    var skipquestion:Bool = false
     
     //Screen size
     var widthRatio:CGFloat = CGFloat()
@@ -82,7 +82,9 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     let tutoDescriptionSep:UIView = UIView()
     let tutoDescriptionSep2:UIView = UIView()
     let whiteBGView:UIView = UIView()
-    let newTutoButton:UILabel = UILabel()
+    let newTutoButton:UIButton = UIButton()
+    var numberOfAttempts:[Int] = [Int]()
+    var passageTableView:TableViewEdited = TableViewEdited()
     
     //ViewDidLoad call
     override func viewDidLoad() {
@@ -183,22 +185,15 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.timeLabel.textAlignment = NSTextAlignment.Center
         self.timeLabel.textColor = UIColor.redColor()
         self.timeLabel.userInteractionEnabled = true
-        self.swipeMenuTopBar.addSubview(self.descriptionSwipeLabel)
-        self.descriptionSwipeLabel.setConstraintsToSuperview(Int(30*self.heightRatio), bottom: 0, left: 0, right: 0)
-        self.descriptionSwipeLabel.text = "Tap for Answers"
-        self.descriptionSwipeLabel.font = UIFont(name: "HelveticaNeue-Medium",size: self.view.getTextSize(14))
-        self.descriptionSwipeLabel.textAlignment = NSTextAlignment.Center
-        self.descriptionSwipeLabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-        self.descriptionSwipeLabel.userInteractionEnabled = true
         self.swipeUIView.addSubview(self.answerView)
         self.answerView.translatesAutoresizingMaskIntoConstraints = false
         self.answerView.setConstraintsToSuperview(Int(80*self.heightRatio), bottom: Int(70*self.heightRatio), left: 0, right: 0)
         
         //Initialize mainView, questionView and passageView
-        let passageTableView = TableViewEdited(frame: view.frame, style: .Plain)
-        passageTableView.delegate = self
-        passageTableView.dataSource = self
-        passageTableView.setRearrangeOptions([.hover, .translucency], dataSource: self)
+        self.passageTableView = TableViewEdited(frame: view.frame, style: .Plain)
+        self.passageTableView.delegate = self
+        self.passageTableView.dataSource = self
+        self.passageTableView.setRearrangeOptions([.hover, .translucency], dataSource: self)
         
         self.view.addSubview(self.mainView)
         self.mainView.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(85*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
@@ -267,53 +262,44 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.mainView.addConstraints([passageViewTop,passageViewRight,passageViewLeft,passageViewBottom])
         
         //Create nextButton
-        let nextUIView:UIView = UIView()
-        self.swipeUIView.addSubview(nextUIView)
-        nextUIView.translatesAutoresizingMaskIntoConstraints = false
+        self.swipeUIView.addSubview(self.nextButton)
         self.nextButton.translatesAutoresizingMaskIntoConstraints = false
         self.nextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-        self.nextButton.textColor = UIColor.whiteColor()
-        self.nextButton.textAlignment = NSTextAlignment.Center
-        self.nextButton.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
-        self.nextButton.text = "Next"
-        let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 320*self.heightRatio)
-        let rightLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20)*self.widthRatio)
-        let leftLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20)*self.widthRatio)
+        self.nextButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.nextButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        self.nextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
+        self.nextButton.setTitle("Next", forState: .Normal)
+        let topLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 50*self.heightRatio)
+        let rightLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20)*self.widthRatio)
+        let leftLabelMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeUIView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20)*self.widthRatio)
         self.swipeUIView.addConstraints([topLabelMargin,rightLabelMargin,leftLabelMargin])
-        let heightLabelConstraint:NSLayoutConstraint = NSLayoutConstraint(item: nextUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 50*self.heightRatio)
-        nextUIView.addConstraint(heightLabelConstraint)
-        nextUIView.addSubview(self.nextButton)
-        self.nextButton.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("nextQuestion:"))
-        tapGestureNext.numberOfTapsRequired = 1
-        nextUIView.addGestureRecognizer(tapGestureNext)
+        let heightLabelConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.nextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 50*self.heightRatio)
+        self.nextButton.addConstraint(heightLabelConstraint)
+        self.nextButton.addTarget(self, action: #selector(programmingViewController.nextQuestion(_:)), forControlEvents: .TouchUpInside)
         
         //Set answersArray
         var answerIndex:Int = 0
         for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex++ {
-            let fixedNumber:Int = 20
-            self.selectedAnswers.append(fixedNumber)
+            self.selectedAnswers.append(false)
+            self.numberOfAttempts.append(0)
         }
         
         //Display questions
         self.displayedQuestionIndex = 0
         self.quizzArray = self.quizzModel.selectProgramming(self.totalNumberOfQuestions+1)
-        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex, feedback: false)
         
         //Initialize swipeUIView
         self.view.addSubview(self.swipeUIView)
         self.swipeUIView.translatesAutoresizingMaskIntoConstraints = false
-        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 390*self.heightRatio)
+        self.swipeMenuHeightConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 120*self.heightRatio)
         self.swipeUIView.addConstraint(self.swipeMenuHeightConstraint)
-        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 320*self.heightRatio)
+        self.swipeMenuBottomConstraint = NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 5*self.heightRatio)
         let leftMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
         let rightMargin:NSLayoutConstraint =  NSLayoutConstraint(item: self.swipeUIView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20*self.widthRatio)
         self.view.addConstraints([leftMargin,rightMargin,self.swipeMenuBottomConstraint])
         self.swipeUIView.backgroundColor = UIColor.whiteColor()
         self.swipeUIView.layer.cornerRadius = 8.0
-        var swipeUpGesture:UITapGestureRecognizer = UITapGestureRecognizer()
-        swipeUpGesture = UITapGestureRecognizer.init(target: self, action: Selector("SwipeMenu:"))
-        self.swipeUIView.addGestureRecognizer(swipeUpGesture)
         
         if self.showTutorial == true {
             
@@ -477,13 +463,12 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             self.view.bringSubviewToFront(self.mainView)
             self.view.bringSubviewToFront(self.swipeUIView)
             self.passageView.alpha = 1.0
-            self.nextButton.text = "Continue"
+            self.nextButton.setTitle("Continue", forState: .Normal)
         }
         if self.tutoPage==4 {
-            self.SwipeMenu(UITapGestureRecognizer())
             self.passageView.alpha = 0.0
             self.view.bringSubviewToFront(self.tutoView)
-            self.nextButton.text = "Next"
+            self.nextButton.setTitle("Next", forState: .Normal)
             self.tutoSkipButton.alpha = 1.0
             self.tutoDescriptionTitle.alpha = 1.0
             self.tutoDescriptionSep.alpha = 1.0
@@ -496,8 +481,8 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         if self.tutoPage==5 {
             self.tutoView.alpha = 0
             self.passageView.alpha = 1.0
-            self.selectedAnswers[self.displayedQuestionIndex] = 20
-            self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+            self.selectedAnswers[self.displayedQuestionIndex] = false
+            self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex, feedback: false)
             self.showTutorial = false
             if self.interstitialAd.isReady && self.membershipType == "Free" {
                 self.interstitialAd.presentFromRootViewController(self)
@@ -525,27 +510,11 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             }, completion: nil)
     }
     
-    func SwipeMenu(sender: UITapGestureRecognizer) {
-        UIView.animateWithDuration(1, animations: {
-            if(self.swipeMenuBottomConstraint.constant == 320*self.heightRatio) {
-                self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
-                self.view.layoutIfNeeded()
-                self.passageView.alpha = 0.0
-                self.descriptionSwipeLabel.text = "Tap here for Question"
-            }
-            else if (self.swipeMenuBottomConstraint.constant == 5*self.heightRatio) {
-                self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
-                self.view.layoutIfNeeded()
-                self.passageView.alpha = 1.0
-                self.descriptionSwipeLabel.text = "Tap here for Answers"            }
-            }, completion: nil)
-    }
-    
     func updateTimer() {
         if self.testEnded {
             self.displayedQuestionIndex = self.totalNumberOfQuestions
-            if self.selectedAnswers[self.displayedQuestionIndex]==20 {
-                self.selectedAnswers[self.displayedQuestionIndex]=21
+            if self.numberOfAttempts[self.displayedQuestionIndex]==0 {
+                self.selectedAnswers[self.displayedQuestionIndex]=false
             }
             self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
             self.timeTimer.invalidate()
@@ -618,7 +587,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         
     }
     
-    func displayQuestion(arrayOfQuestions:[programmingQuestion], indexQuestion:Int) {
+    func displayQuestion(arrayOfQuestions:[programmingQuestion], indexQuestion:Int, feedback:Bool) {
         
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
@@ -632,352 +601,339 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         //Update the view with the new question
         let questionText:String = arrayOfQuestions[indexQuestion].question
         self.questionLabel.text = questionText
-        self.cellTitles = self.quizzArray[indexQuestion].codePassage
         
-        
-//        // add answers to SwipeUIVIew
-//        for answerSubView in self.answerView.subviews {
-//            answerSubView.removeFromSuperview()
-//        }
-//        let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
-//        let buttonHeight:Int = Int(50*self.heightRatio)
-//        var i:Int = 0
-//        
-//        for i=0; i<arrayAnswers.count;i++ {
-//            let answerUIButton:UIView = UIView()
-//            let answerUILabel:UILabel = UILabel()
-//            let answerNumber:UIButton = UIButton()
-//            answerUIButton.translatesAutoresizingMaskIntoConstraints = false
-//            answerUILabel.translatesAutoresizingMaskIntoConstraints = false
-//            answerNumber.translatesAutoresizingMaskIntoConstraints = false
-//            self.answerView.addSubview(answerUIButton)
-//            answerUIButton.addSubview(answerUILabel)
-//            answerUIButton.addSubview(answerNumber)
-//            answerNumber.tag = i
-//            answerNumber.setTitle(String(i+1), forState: .Normal)
-//            answerNumber.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-//            answerNumber.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-//            answerNumber.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-//            answerUILabel.text = String(arrayAnswers[i])
-//            answerUILabel.textAlignment = NSTextAlignment.Center
-//            answerUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-//            answerUILabel.numberOfLines = 0
-//            answerUILabel.adjustsFontSizeToFitWidth = true
-//            answerUIButton.backgroundColor = UIColor.whiteColor()
-//            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
-//            answerUIButton.layer.borderWidth = 3.0
-//            answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-//            
-//            //Set constraints to answerViews
-//            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i)*(CGFloat(buttonHeight)+10*self.heightRatio))
-//            let rightMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: CGFloat(-20)*self.widthRatio)
-//            let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.answerView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(20)*self.widthRatio)
-//            self.answerView.addConstraints([topMargin,rightMargin,leftMargin])
-//            
-//            let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: CGFloat(buttonHeight))
-//            answerUIButton.addConstraint(heightConstraint)
-//            
-//            let topM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-//            let rightM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-//            let leftM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 50*self.widthRatio)
-//            let bottomM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-//            answerUIButton.addConstraints([topM,rightM,leftM,bottomM])
-//            
-//            let topMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-//            let leftMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-//            let bottomMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-//            answerUIButton.addConstraints([topMM,leftMM,bottomMM])
-//            let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
-//            answerNumber.addConstraint(widthMM)
-//            
-//            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
-//            answerUIButton.addGestureRecognizer(tapGesture)
-//        }
-    }
-    
-    func answerIsSelected(gesture:UITapGestureRecognizer) {
-        let buttonTapped:UIView? = gesture.view
-        if let actualButton = buttonTapped {
-            for singleView in self.answerView.subviews {
-                for labelView1 in singleView.subviews {
-                    if let labelsView = labelView1 as? UILabel {
-                        labelsView.backgroundColor = UIColor.whiteColor()
-                        labelsView.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                    }
-                }
-            }
-            UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                for labels in actualButton.subviews {
-                    if let labelView = labels as? UILabel {
-                        labelView.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-                        labelView.textColor = UIColor.whiteColor()
-                    }
-                    if let btnView = labels as? UIButton {
-                        self.selectedAnswers[self.displayedQuestionIndex] = Int(btnView.tag)
-                    }
-                }
-                }, completion: nil)
+        if feedback == false {
+            self.cellTitles = self.randomizeQuestion(self.quizzArray[indexQuestion].codePassage)
+        } else {
+            self.cellTitles = self.quizzArray[indexQuestion].feedback
         }
+        print(self.cellTitles)
+        self.passageTableView.reloadData()
+        
     }
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
         
-//        //Check if button pressed during tutorial ?
-//        if self.tutoPage==3 {
-//            self.tutoNext(UITapGestureRecognizer())
-//        } else {
-//            
-//            // If no answer is selected, show Alert
-//            if self.selectedAnswers[self.displayedQuestionIndex] == 20 {
-//                let exitAlert = SCLAlertView()
-//                exitAlert.showError("No Answer Selected", subTitle: "Please select an answer before proceeding")
-//            }
-//            else {
-//                //Else go to next question
-//                //Go to the feedback screen
-//                if self.displayedQuestionIndex + 1 > self.totalNumberOfQuestions {
-//                    
-//                    if self.resultsUploaded==false {
-//                        //Stop Timer
-//                        self.timeTimer.invalidate()
-//                        
-//                        if self.testStarted == true {
-//                            if self.interstitialAd.isReady && self.membershipType == "Free" {
-//                                self.interstitialAd.presentFromRootViewController(self)
-//                            } else {
-//                                print("Ad wasn't ready")
-//                                self.testStarted = false
-//                                self.nextQuestion(UITapGestureRecognizer())
-//                            }
-//                        } else {
-//                            
-//                        //Upload Results to Parse
-//                        var i:Int = 0
-//                        var nbCorrectAnswers:Int = 0
-//                        for i=0;i<self.selectedAnswers.count;i++ {
-//                            if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
-//                                nbCorrectAnswers++
-//                            }
-//                        }
-//                        self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
-//                        //Add: test type (numerical / verbal ...)
-//                        
-//                        var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
-//                        timeTaken = timeTaken/Float(self.selectedAnswers.count)
-//                        
-//                        SwiftSpinner.show("Saving Results")
-//                        
-//                        let user = PFUser.currentUser()
-//                        let analytics = PFObject(className: PF_PROG_CLASS_NAME)
-//                        analytics[PF_PROG_USER] = user
-//                        analytics[PF_PROG_SCORE] = self.scoreRatio
-//                        analytics[PF_PROG_TIME] = timeTaken
-//                        analytics[PF_PROG_USERNAME] = user![PF_USER_USERNAME]
-//                        
-//                        analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
-//                            if error == nil {
-//                                
-//                                SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
-//                                    SwiftSpinner.hide()
-//                                    self.resultsUploaded = true
-//                                    self.feedbackScreen()
-//                                    }, subtitle: "Tap to proceed to feedback screen")
-//                                
-//                            } else {
-//                                
-//                                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-//                                    
-//                                    SwiftSpinner.hide()
-//                                    self.feedbackScreen()
-//                                    
-//                                    }, subtitle: "Results unsaved, tap to proceed to feedback")
-//                                
-//                            }
-//                        })
-//                    }
-//                    }
-//                    else {
-//                        self.feedbackScreen()
-//                    }
-//                }
-//                    //Continue to the next question
-//                else {
-//                    UIView.animateWithDuration(1, animations: {
-//                        self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
-//                        self.view.layoutIfNeeded()
-//                        self.passageView.alpha = 1.0
-//                        self.descriptionSwipeLabel.text = "Tap for Answers"
-//                        }, completion: nil)
-//                    self.displayedQuestionIndex++
-//                    if self.displayedQuestionIndex==self.totalNumberOfQuestions{
-//                        //Switch Button text to "Complete"
-//                        self.nextButton.text = "Complete Test"
-//                    }
-//                    self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
-//                }
-//            }
-//        }
+        //Check if button pressed during tutorial ?
+        if self.tutoPage==3 {
+            self.tutoNext(UITapGestureRecognizer())
+        } else {
+            
+            // If no answer is selected, show Alert
+            if self.checkAnswer(self.displayedQuestionIndex) == false && self.skipquestion == false {
+                let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
+                let exitAlert = SCLAlertView(appearance:appearance)
+                exitAlert.addButton("Skip question", action: {
+                    self.skipquestion = true
+                    self.numberOfAttempts[self.displayedQuestionIndex] = 1000
+                    self.nextQuestion(UITapGestureRecognizer())
+                })
+                exitAlert.showTitle(
+                    "Incorrect answer", // Title of view
+                    subTitle: "Your answer is incorrect. Do you want to move to the next question?", // String of view
+                    duration: 0.0, // Duration to show before closing automatically, default: 0.0
+                    completeText: "Close", // Optional button value, default: ""
+                    style: .Warning, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                    colorStyle: 0xFFD110,
+                    colorTextButton: 0xFFFFFF
+                )
+            }
+            else {
+                //Else go to next question
+                //Go to the feedback screen
+                if self.displayedQuestionIndex + 1 > self.totalNumberOfQuestions {
+                    
+                    if self.resultsUploaded==false {
+                        //Stop Timer
+                        self.timeTimer.invalidate()
+                        
+                        if self.testStarted == true {
+                            if self.interstitialAd.isReady && self.membershipType == "Free" {
+                                self.interstitialAd.presentFromRootViewController(self)
+                            } else {
+                                print("Ad wasn't ready")
+                                self.testStarted = false
+                                self.nextQuestion(UITapGestureRecognizer())
+                            }
+                        } else {
+                            
+                            //Upload Results to Parse
+                            var i:Int = 0
+                            var nbCorrectAnswers:Double = 0
+                            
+                             for i=0;i<self.selectedAnswers.count;i += 1 {
+                                if self.numberOfAttempts[i] == 1 {
+                                    nbCorrectAnswers += 1
+                                }
+                                else if self.numberOfAttempts[i] == 2 {
+                                    nbCorrectAnswers += 0.5
+                                }
+                             }
+                            
+                            self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.quizzArray.count)) * 100
+                            //Add: test type (numerical / verbal ...)
+                            
+                            var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
+                            timeTaken = timeTaken/Float(self.quizzArray.count)
+                            
+                            SwiftSpinner.show("Saving Results")
+                            
+                            let user = PFUser.currentUser()
+                            let analytics = PFObject(className: PF_PROG_CLASS_NAME)
+                            analytics[PF_PROG_USER] = user
+                            analytics[PF_PROG_SCORE] = self.scoreRatio
+                            analytics[PF_PROG_TIME] = timeTaken
+                            analytics[PF_PROG_USERNAME] = user![PF_USER_USERNAME]
+                            
+                            analytics.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                                if error == nil {
+                                    
+                                    SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
+                                        SwiftSpinner.hide()
+                                        self.resultsUploaded = true
+                                        self.feedbackScreen()
+                                        }, subtitle: "Tap to proceed to feedback screen")
+                                    
+                                } else {
+                                    
+                                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                                        
+                                        SwiftSpinner.hide()
+                                        self.feedbackScreen()
+                                        
+                                        }, subtitle: "Results unsaved, tap to proceed to feedback")
+                                    
+                                }
+                            })
+                        }
+                    }
+                    else {
+                        self.feedbackScreen()
+                    }
+                }
+                    //Continue to the next question
+                else {
+                    if self.skipquestion == true {
+                    
+                        self.skipquestion = false
+                        
+                        UIView.animateWithDuration(1, animations: {
+                            self.passageView.alpha = 1.0
+                            }, completion: nil)
+                        self.displayedQuestionIndex += 1
+                        if self.displayedQuestionIndex==self.totalNumberOfQuestions{
+                            //Switch Button text to "Complete"
+                        self.nextButton.setTitle("Complete Test", forState: .Normal)                        }
+                        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex, feedback: false)
+                        
+                    } else {
+                        
+                    let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+                    let backAlert = SCLAlertView(appearance: appearance)
+                    backAlert.addButton("Ok", action: {
+                        UIView.animateWithDuration(1, animations: {
+                            self.passageView.alpha = 1.0
+                            }, completion: nil)
+                        self.displayedQuestionIndex += 1
+                        if self.displayedQuestionIndex==self.totalNumberOfQuestions{
+                            //Switch Button text to "Complete"
+                            self.nextButton.setTitle("Complete Test", forState: .Normal)
+                        }
+                        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex, feedback: false)
+                    })
+                    backAlert.showTitle(
+                        "Correct Answer", // Title of view
+                        subTitle: "Move to the next question", // String of view
+                        duration: 0.0, // Duration to show before closing automatically, default: 0.0
+                        completeText: "Ok", // Optional button value, default: ""
+                        style: .Success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                        colorStyle: 0x22B573,//0x526B7B,//0xD0021B - RED
+                        colorTextButton: 0xFFFFFF
+                        
+                    )
+                    }
+                }
+            }
+        }
+    }
+    
+    func backFeedbackScreen(sender:UITapGestureRecognizer) {
+        
+        self.mainView.alpha = 0.0
+        self.swipeUIView.alpha = 0.0
+        self.feebdackScreen.alpha = 1.0
+        
     }
     
     func feedbackScreen() {
-//        //Display feedback screen here
-//        self.isTestComplete = true
-//        var i:Int = 0
-//        let buttonHeight:Int = Int(40*self.heightRatio)
-//        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-//            
-//            let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
-//            let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-//            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-//            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
-//            if self.scoreRatio<70 {
-//                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
-//            }
-//            else {
-//                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
-//            }
-//            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: 6))
-//            self.questionMenuLabel.attributedText = attributedString
-//            
-//            self.mainView.alpha = 0.0
-//            self.swipeUIView.alpha = 0.0
-//            self.feebdackScreen.alpha = 1.0
-//            self.view.addSubview(self.feebdackScreen)
-//            self.feebdackScreen.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(20*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
-//            self.feebdackScreen.backgroundColor = UIColor(white: 0, alpha: 0.4)
-//            self.feebdackScreen.layer.cornerRadius = 8.0
-//            }, completion: nil)
-//        
-//        let topComment:UILabel = UILabel()
-//        self.feebdackScreen.addSubview(topComment)
-//        topComment.translatesAutoresizingMaskIntoConstraints = false
-//        let topMg:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10*self.heightRatio)
-//        let leftMg:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
-//        self.feebdackScreen.addConstraints([topMg,leftMg])
-//        
-//        let widthCt:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 80*self.widthRatio)
-//        let heightCt:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 15*self.heightRatio)
-//        topComment.addConstraints([heightCt,widthCt])
-//        topComment.text = "Select Question For Feedback"
-//        topComment.numberOfLines = 0
-//        topComment.textAlignment = NSTextAlignment.Center
-//        topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
-//        topComment.textColor = UIColor.whiteColor()
-//        
-//        for i=0; i<self.selectedAnswers.count;i++ {
-//            let answerUIButton:UIButton = UIButton()
-//            let answerUILabel:UILabel = UILabel()
-//            let answerNumber:UILabel = UILabel()
-//            answerUIButton.translatesAutoresizingMaskIntoConstraints = false
-//            answerUILabel.translatesAutoresizingMaskIntoConstraints = false
-//            answerNumber.translatesAutoresizingMaskIntoConstraints = false
-//            self.feebdackScreen.addSubview(answerUIButton)
-//            answerUIButton.tag = i
-//            answerUIButton.addSubview(answerUILabel)
-//            answerUIButton.addSubview(answerNumber)
-//            answerNumber.text = String(i+1)
-//            answerNumber.textAlignment = NSTextAlignment.Center
-//            answerNumber.textColor = UIColor.whiteColor()
-//            answerUILabel.textAlignment = NSTextAlignment.Center
-//            answerUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-//            answerUILabel.numberOfLines = 0
-//            answerUILabel.adjustsFontSizeToFitWidth = true
-//            answerUIButton.backgroundColor = UIColor.whiteColor()
-//            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
-//            answerUIButton.layer.borderWidth = 3.0
-//            answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
-//            
-//            if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
-//                answerUILabel.text = "Correct Answer"
-//                answerNumber.backgroundColor = UIColor.greenColor()
-//            }
-//            else {
-//                answerUILabel.text = "Wrong Answer"
-//                answerNumber.backgroundColor = UIColor.redColor()
-//            }
-//            
-//            //Set constraints to answerViews
-//            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+Int(10*self.heightRatio)) + 40))
-//            let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
-//            self.feebdackScreen.addConstraints([topMargin,leftMargin])
-//            
-//            let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 80*self.widthRatio)
-//            let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: CGFloat(buttonHeight))
-//            answerUIButton.addConstraints([heightConstraint,widthConstraint])
-//            
-//            let topM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-//            let rightM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-//            let leftM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 50*self.widthRatio)
-//            let bottomM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-//            answerUIButton.addConstraints([topM,rightM,leftM,bottomM])
-//            
-//            let topMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-//            let leftMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-//            let bottomMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-//            answerUIButton.addConstraints([topMM,leftMM,bottomMM])
-//            let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
-//            answerNumber.addConstraint(widthMM)
-//            
-//            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
-//            answerUIButton.addGestureRecognizer(tapGesture)
-//            
-//        }
-//        
-//        self.feebdackScreen.scrollEnabled = true
-//        let totalHeight:CGFloat = CGFloat(self.selectedAnswers.count+1) * (CGFloat(buttonHeight) + 10*self.heightRatio)
-//        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight+30)
-//        
+        //Display feedback screen here
+        
+        self.nextButton.addTarget(self, action: #selector(programmingViewController.backFeedbackScreen(_:)), forControlEvents: .TouchUpInside)
+        
+        self.isTestComplete = true
+        var i:Int = 0
+        let buttonHeight:Int = Int(40*self.heightRatio)
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            
+            let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
+            let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            if self.scoreRatio<70 {
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            }
+            else {
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+            }
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: 6))
+            self.questionMenuLabel.attributedText = attributedString
+            
+            self.mainView.alpha = 0.0
+            self.swipeUIView.alpha = 0.0
+            self.feebdackScreen.alpha = 1.0
+            self.view.addSubview(self.feebdackScreen)
+            self.feebdackScreen.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(20*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
+            self.feebdackScreen.backgroundColor = UIColor(white: 0, alpha: 0.4)
+            self.feebdackScreen.layer.cornerRadius = 8.0
+            }, completion: nil)
+        
+        let topComment:UILabel = UILabel()
+        self.feebdackScreen.addSubview(topComment)
+        topComment.translatesAutoresizingMaskIntoConstraints = false
+        let topMg:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 10*self.heightRatio)
+        let leftMg:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
+        self.feebdackScreen.addConstraints([topMg,leftMg])
+        
+        let widthCt:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 80*self.widthRatio)
+        let heightCt:NSLayoutConstraint = NSLayoutConstraint(item: topComment, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 15*self.heightRatio)
+        topComment.addConstraints([heightCt,widthCt])
+        topComment.text = "Select Question For Feedback"
+        topComment.numberOfLines = 0
+        topComment.textAlignment = NSTextAlignment.Center
+        topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
+        topComment.textColor = UIColor.whiteColor()
+        
+        for i=0; i<self.quizzArray.count;i++ {
+            let answerUIButton:UIButton = UIButton()
+            let answerUILabel:UILabel = UILabel()
+            let answerNumber:UILabel = UILabel()
+            answerUIButton.translatesAutoresizingMaskIntoConstraints = false
+            answerUILabel.translatesAutoresizingMaskIntoConstraints = false
+            answerNumber.translatesAutoresizingMaskIntoConstraints = false
+            self.feebdackScreen.addSubview(answerUIButton)
+            answerUIButton.tag = i
+            answerUIButton.addSubview(answerUILabel)
+            answerUIButton.addSubview(answerNumber)
+            answerNumber.text = String(i+1)
+            answerNumber.textAlignment = NSTextAlignment.Center
+            answerNumber.textColor = UIColor.whiteColor()
+            answerUILabel.textAlignment = NSTextAlignment.Center
+            answerUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
+            answerUILabel.numberOfLines = 0
+            answerUILabel.adjustsFontSizeToFitWidth = true
+            answerUIButton.backgroundColor = UIColor.whiteColor()
+            answerUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
+            answerUIButton.layer.borderWidth = 3.0
+            answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
+            
+             if self.numberOfAttempts[i]==1 {
+                answerUILabel.text = "Attempts: 1"
+                answerNumber.backgroundColor = UIColor.greenColor()
+             }
+             else if self.numberOfAttempts[i]==2 {
+                answerUILabel.text = "Attempts: 2"
+                answerNumber.backgroundColor = UIColor.orangeColor()
+             }
+             else if self.numberOfAttempts[i] < 1000 {
+                answerUILabel.text = "Attempts: " + String(self.numberOfAttempts[i])
+                answerNumber.backgroundColor = UIColor.redColor()
+             } else {
+                answerUILabel.text = "Question skiped"
+                answerNumber.backgroundColor = UIColor.redColor()
+            }
+            
+            //Set constraints to answerViews
+            let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*(buttonHeight+Int(10*self.heightRatio)) + 40))
+            let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.feebdackScreen, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 20*self.widthRatio)
+            self.feebdackScreen.addConstraints([topMargin,leftMargin])
+            
+            let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 80*self.widthRatio)
+            let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: answerUIButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: CGFloat(buttonHeight))
+            answerUIButton.addConstraints([heightConstraint,widthConstraint])
+            
+            let topM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+            let rightM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+            let leftM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 50*self.widthRatio)
+            let bottomM:NSLayoutConstraint = NSLayoutConstraint(item: answerUILabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+            answerUIButton.addConstraints([topM,rightM,leftM,bottomM])
+            
+            let topMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+            let leftMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+            let bottomMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: answerUIButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+            answerUIButton.addConstraints([topMM,leftMM,bottomMM])
+            let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
+            answerNumber.addConstraint(widthMM)
+            
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
+            answerUIButton.addGestureRecognizer(tapGesture)
+            
+        }
+        
+        self.feebdackScreen.scrollEnabled = true
+        let totalHeight:CGFloat = CGFloat(self.selectedAnswers.count+1) * (CGFloat(buttonHeight) + 10*self.heightRatio)
+        self.feebdackScreen.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: totalHeight+30)
+        
     }
     
-//    func displayAnswerWithFeedback(gesture:UITapGestureRecognizer) {
-//        
-//        UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-//            self.mainView.alpha = 1.0
-//            self.swipeUIView.alpha = 1.0
-//            self.feebdackScreen.alpha = 0.0
-//            self.questionMenuLabel.textColor = UIColor.blackColor()
-//            
-//            var questionFeedback:Int = Int()
-//            let buttonTapped:UIView? = gesture.view
-//            if let actualButton = buttonTapped {
-//                questionFeedback = actualButton.tag
-//            }
-//            self.displayQuestion(self.quizzArray, indexQuestion: questionFeedback)
-//            
-//            for answerSubView in self.answerView.subviews {
-//                answerSubView.removeFromSuperview()
-//            }
-//            
-//            UIView.animateWithDuration(1, animations: {
-//                self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
-//                self.view.layoutIfNeeded()
-//                self.passageView.alpha = 1.0
-//                self.descriptionSwipeLabel.text = "Swipe up for Explanation"
-//                self.nextButton.text = "Return to Results"
-//                }, completion: nil)
-//            
-//            let feedbackLabel:UITextView = UITextView()
-//            feedbackLabel.userInteractionEnabled = false
-//            self.answerView.addSubview(feedbackLabel)
-//            
-//            feedbackLabel.setConstraintsToSuperview(Int(10*self.heightRatio), bottom: Int(10*self.heightRatio), left: Int(30*self.widthRatio), right: Int(30*self.widthRatio))
-//            feedbackLabel.text = self.quizzArray[questionFeedback].feedback
-//            feedbackLabel.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(14))
-//            
-//            if self.quizzArray[questionFeedback].correctAnswer == self.selectedAnswers[questionFeedback] {
-//                self.timeLabel.text = "Correct Answer"
-//                self.timeLabel.textColor = UIColor.greenColor()
-//                feedbackLabel.textColor = UIColor.greenColor()
-//            }
-//            else {
-//                self.timeLabel.text = "Wrong Answer"
-//                self.timeLabel.textColor = UIColor.redColor()
-//                feedbackLabel.textColor = UIColor.redColor()
-//            }
-//            
-//            }, completion: nil)
-//        
-//    }
+        func displayAnswerWithFeedback(gesture:UITapGestureRecognizer) {
+    
+            UIView.animateWithDuration(1.0, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.mainView.alpha = 1.0
+                self.swipeUIView.alpha = 1.0
+                self.feebdackScreen.alpha = 0.0
+                self.questionMenuLabel.textColor = UIColor.blackColor()
+    
+                for recognizer in self.nextButton.gestureRecognizers ?? [] {
+                    self.nextButton.removeGestureRecognizer(recognizer)
+                }
+                
+                let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(programmingViewController.backFeedbackScreen(_:)))
+                tapGestureNext.numberOfTapsRequired = 1
+                self.nextButton.addGestureRecognizer(tapGestureNext)
+                
+                var questionFeedback:Int = Int()
+                let buttonTapped:UIView? = gesture.view
+                if let actualButton = buttonTapped {
+                    questionFeedback = actualButton.tag
+                }
+                self.displayQuestion(self.quizzArray, indexQuestion: questionFeedback, feedback: true)
+    
+                let feedbackLabel:UITextView = UITextView()
+                feedbackLabel.userInteractionEnabled = false
+                self.answerView.addSubview(feedbackLabel)
+                
+                feedbackLabel.setConstraintsToSuperview(Int(10*self.heightRatio), bottom: Int(10*self.heightRatio), left: Int(30*self.widthRatio), right: Int(30*self.widthRatio))
+                feedbackLabel.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(14))
+                
+                UIView.animateWithDuration(1, animations: {
+                    self.passageView.alpha = 1.0
+                    self.nextButton.setTitle("Return to Results", forState: .Normal)
+                    }, completion: nil)
+    
+                if self.selectedAnswers[questionFeedback] == true {
+                    self.timeLabel.text = "Correct Answer"
+                    self.timeLabel.textColor = UIColor.greenColor()
+                    feedbackLabel.textColor = UIColor.greenColor()
+                }
+                else {
+                    self.timeLabel.text = "Wrong Answer"
+                    self.timeLabel.textColor = UIColor.redColor()
+                    feedbackLabel.textColor = UIColor.redColor()
+                }
+                
+                }, completion: nil)
+            
+        }
     
     func createAndLoadInterstitial() -> GADInterstitial {
         let interstitial = GADInterstitial(adUnitID: AD_ID_PROGRAMMING)
@@ -1009,6 +965,61 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         // Dispose of any resources that can be recreated.
     }
     
+    func randomizeQuestion(questionArray:[String])  -> [String] {
+        
+        var inputQuestionArray:[String] = [String]()
+        var randomizedArray:[String] = [String]()
+        var i:Int = 0
+        var numberOfCells:Int = questionArray.count
+        var j:Int = numberOfCells
+        
+        inputQuestionArray = questionArray
+        
+        for i = 0;i<numberOfCells;i++ {
+            
+            let randomIndex = arc4random_uniform(UInt32(j))
+            randomizedArray.append(inputQuestionArray[Int(randomIndex)])
+            
+            inputQuestionArray.removeAtIndex(Int(randomIndex))
+            j = j - 1
+            
+            self.correctOrder.append(questionArray[i])
+            
+        }
+        
+        return randomizedArray
+        
+    }
+    
+    func checkAnswer(answerToQuestion:Int) -> Bool {
+        
+        self.numberOfAttempts[answerToQuestion] += 1
+        
+        var i:Int = 0
+        var returnedValue:Bool = true
+        
+        for i=0;i<self.quizzArray[answerToQuestion].codePassage.count;i += 1 {
+            
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            
+            let cell = self.passageTableView.cellForRowAtIndexPath(indexPath)
+
+            print(cell!.textLabel!.text)
+            
+            if self.quizzArray[answerToQuestion].codePassage[i] != cell!.textLabel!.text {
+                
+                returnedValue = false
+                
+            }
+            
+        }
+        
+        self.selectedAnswers[answerToQuestion] = returnedValue
+        
+        return returnedValue
+        
+    }
+    
 }
 
 extension programmingViewController: UITableViewDelegate {
@@ -1017,6 +1028,7 @@ extension programmingViewController: UITableViewDelegate {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+    
 }
 
 extension programmingViewController: UITableViewDataSource {
@@ -1028,7 +1040,8 @@ extension programmingViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
+        print(String(indexPath.row))
         cell.textLabel!.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
         
         if indexPath == currentIndexPath {
@@ -1064,4 +1077,5 @@ extension programmingViewController: RearrangeDataSource {
         cellTitles.removeAtIndex(unwrappedCurrentIndexPath.row)
         cellTitles.insert(object, atIndex: indexPath.row)
     }
+
 }
