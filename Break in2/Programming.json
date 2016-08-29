@@ -1,244 +1,84 @@
-[
- 
- {
- "questionType":"Programming",
- "question":"What type of programming concept is used?",
- "codePassage":"int total = 0;\nfor (int i=0; i < 11; i++)\n{\n//total += i\n}",
- "answers":["Loop","Conditional Statement","Optional Binding","Dictionary"],
- "correctAnswer":0,
- "feedback":"A For Loop repeats some instruction until a condition is met"
- },
- {
- "questionType":"Programming",
- "question":"What does this code do?",
- "codePassage":"int total = 0;\nfor (int i=1; i < 11; i++)\n{\n//total += i\n}",
- "answers":["Count numbers from 1 to 11","Count numbers from 1 to 10","Sum numbers from 1 to 10","Sum numbers from 1 to 11"],
- "correctAnswer":2,
- "feedback":"This code loops through the numbers 1 to 10 and adds each number to the variable 'total'."
- },
- 
- {
- "questionType":"Programming",
- "question":"By how much will this loop increment?",
- "codePassage":"int total = 0;\nfor (int i=1; i < 10; i++)\n{\n//total += i\n}",
- "answers":["0","1","2","10"],
- "correctAnswer":1,
- "feedback":"The third input to the for loop governs the increment. Here '++' means that the increment will be 1."
- },
- 
- {
- "questionType":"Programming",
- "question":"What would you need to write at [insert] for this code to sum the even numbers between 0 and 10?",
- "codePassage":"int total = 0;\nfor ([insert])\n{\n//total += i\n}",
- "answers":["int i=1; i < 10; i++","int i=0; i < 10; i += 3","int i=0; i < 10; i += 2","int i=0; i <= 10; i += 2"],
- "correctAnswer":3,
- "feedback":"Remember to use '<=' to ensure that 10 is captured by the loop."
- },
- 
- {
- "questionType":"Programming",
- "question":"What type of programming concept is used?",
- "codePassage":"if (X < 10)\n{\nprint ''Hello John'';\n}",
- "answers":["Loop","Conditional Statement","Optional Binding","Dictionary"],
- "correctAnswer":1,
- "feedback":"An If Statement performs some instruction if a specified condition is met"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code reverses a string word by word. What does the || mean?",
- "codePassage":"class Solution {\npublic String reverseWords(String inputString) {\nif (inputString == null || inputString.length() == 0)\n{\nreturn \"\";\n}\n\nString[] arr = inputString.split(\" \");\nStringBuilder outputString = new StringBuilder();\nfor (int i = arr.length - 1; i >= 0; i--) {\nif (!arr[i].equals(\"\")) {\noutputString.append(arr[i]).append(\" \");\n}\n}\nreturn outputString.length() == 0 ? \"\" : outputString.substring(0, outputString.length() - 1);\n}\n}",
- "answers":["AND","IF","OR","FOR"],
- "correctAnswer":2,
- "feedback":"|| is the operator for or in a conditional statement"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code reverses a string word by word. Which part of the code checks if the input string is empty",
- "codePassage":"class Solution {\npublic String reverseWords(String inputString) {\nif (inputString == null || inputString.length() == 0)\n{\nreturn \"\";\n}\n\nString[] arr = inputString.split(\" \");\nStringBuilder outputString = new StringBuilder();\nfor (int i = arr.length - 1; i >= 0; i--) {\nif (!arr[i].equals(\"\")) {\noutputString.append(arr[i]).append(\" \");\n}\n}\nreturn outputString.length() == 0 ? \"\" : outputString.substring(0, outputString.length() - 1);\n}\n}",
- "answers":["The for loop","The first if statement","Initialising the array","The second if statement"],
- "correctAnswer":1,
- "feedback":"if (inputString == null || inputString.length() == 0) is the check"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code reverses a string word by word. Why is arr.length - 1 used in the for loop",
- "codePassage":"class Solution {\npublic String reverseWords(String inputString) {\nif (inputString == null || inputString.length() == 0)\n{\nreturn \"\";\n}\n\nString[] arr = inputString.split(\" \");\nStringBuilder outputString = new StringBuilder();\nfor (int i = arr.length - 1; i >= 0; i--) {\nif (!arr[i].equals(\"\")) {\noutputString.append(arr[i]).append(\" \");\n}\n}\nreturn outputString.length() == 0 ? \"\" : outputString.substring(0, outputString.length() - 1);\n}\n}",
- "answers":["The first index of an array is 0","The first index of an array is 1","The first index of an array is empty","It's an error in the code"],
- "correctAnswer":0,
- "feedback":"The first index of an array is 0, therefore you must subtract 1 to obtain the total number of values stored in that array."
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code reverses a string word by word. What does String[] arr = inputString.split(\" \") do?",
- "codePassage":"class Solution {\npublic String reverseWords(String inputString) {\nif (inputString == null || inputString.length() == 0)\n{\nreturn \"\";\n}\n\nString[] arr = inputString.split(\" \");\nStringBuilder outputString = new StringBuilder();\nfor (int i = arr.length - 1; i >= 0; i--) {\nif (!arr[i].equals(\"\")) {\noutputString.append(arr[i]).append(\" \");\n}\n}\nreturn outputString.length() == 0 ? \"\" : outputString.substring(0, outputString.length() - 1);\n}\n}",
- "answers":["Puts each letter of the string into an array index","Puts each word of the string into an array index","Randomises the letters in the string","Randomises the words in the string"],
- "correctAnswer":1,
- "feedback":"This bit of code separates each word by a space and stores that word in an array index."
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code reverses a string word by word. What is the purpose of the ! in the second if statement?",
- "codePassage":"class Solution {\npublic String reverseWords(String inputString) {\nif (inputString == null || inputString.length() == 0)\n{\nreturn \"\";\n}\n\nString[] arr = inputString.split(\" \");\nStringBuilder outputString = new StringBuilder();\nfor (int i = arr.length - 1; i >= 0; i--) {\nif (!arr[i].equals(\"\")) {\noutputString.append(arr[i]).append(\" \");\n}\n}\nreturn outputString.length() == 0 ? \"\" : outputString.substring(0, outputString.length() - 1);\n}\n}",
- "answers":["It bolds the following text","It means 'and'","It means 'not equal to'","It means 'equal to'"],
- "correctAnswer":2,
- "feedback":"The exclamation mark (!) means 'not equal to'"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code prints the Fibonacci series up to a specified number. What is the name of the class?",
- "codePassage":"public class FibonacciCalculator {\n\npublic static void main(String args[]) {\n\nSystem.out.println(\"Enter number upto which Fibonacci series to print:\");\nint number = new Scanner(System.in).nextInt();\n\nSystem.out.println(\"Fibonacci series upto \" + number +\" numbers : \");\nfor(int i=1; i<=number; i++){\nSystem.out.print(fibonacci2(i) +\" \");\n}\n}\n\npublic static int fibonacci2(int number){\nif(number == 1 || number == 2){\n return 1;\n}\nint fibo1=1, fibo2=1, fibonacci=1;\nfor(int i= 3; i<= number; i++){\nfibonacci = fibo1 + fibo2;\nfibo1 = fibo2;\nfibo2 = fibonacci;\n}\nreturn fibonacci;\n}",
- "answers":["FibonacciCalculator","fibo1","fibonacci","fibo2"],
- "correctAnswer":0,
- "feedback":"The name of the class follows the statement 'public class'"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code prints the Fibonacci series up to a specified number. What is a Fibonacci number?",
- "codePassage":"public class FibonacciCalculator {\n\npublic static void main(String args[]) {\n\nSystem.out.println(\"Enter number upto which Fibonacci series to print:\");\nint number = new Scanner(System.in).nextInt();\n\nSystem.out.println(\"Fibonacci series upto \" + number +\" numbers : \");\nfor(int i=1; i<=number; i++){\nSystem.out.print(fibonacci2(i) +\" \");\n}\n}\n\npublic static int fibonacci2(int number){\nif(number == 1 || number == 2){\n return 1;\n}\nint fibo1=1, fibo2=1, fibonacci=1;\nfor(int i= 3; i<= number; i++){\nfibonacci = fibo1 + fibo2;\nfibo1 = fibo2;\nfibo2 = fibonacci;\n}\nreturn fibonacci;\n}",
- "answers":["The product of the previous two Fibonacci numbers","The difference between the two previous Fibonacci numbers","An even number","The sum of the previous two Fibonacci numbers"],
- "correctAnswer":3,
- "feedback":"The first 10 Fibonacci numbers are 1, 1, 2, 3, 5, 8, 13, 21, 34, 55"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code prints the Fibonacci series up to a specified number. What type of variable is fibo1?",
- "codePassage":"public class FibonacciCalculator {\n\npublic static void main(String args[]) {\n\nSystem.out.println(\"Enter number upto which Fibonacci series to print:\");\nint number = new Scanner(System.in).nextInt();\n\nSystem.out.println(\"Fibonacci series upto \" + number +\" numbers : \");\nfor(int i=1; i<=number; i++){\nSystem.out.print(fibonacci2(i) +\" \");\n}\n}\n\npublic static int fibonacci2(int number){\nif(number == 1 || number == 2){\n return 1;\n}\nint fibo1=1, fibo2=1, fibonacci=1;\nfor(int i= 3; i<= number; i++){\nfibonacci = fibo1 + fibo2;\nfibo1 = fibo2;\nfibo2 = fibonacci;\n}\nreturn fibonacci;\n}",
- "answers":["String","Array","Integer","Boolean"],
- "correctAnswer":2,
- "feedback":"fibo1 is declared as an integer using the syntax int"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code prints the Fibonacci series up to a specified number. What is fibonacci2?",
- "codePassage":"public class FibonacciCalculator {\n\npublic static void main(String args[]) {\n\nSystem.out.println(\"Enter number upto which Fibonacci series to print:\");\nint number = new Scanner(System.in).nextInt();\n\nSystem.out.println(\"Fibonacci series upto \" + number +\" numbers : \");\nfor(int i=1; i<=number; i++){\nSystem.out.print(fibonacci2(i) +\" \");\n}\n}\n\npublic static int fibonacci2(int number){\nif(number == 1 || number == 2){\n return 1;\n}\nint fibo1=1, fibo2=1, fibonacci=1;\nfor(int i= 3; i<= number; i++){\nfibonacci = fibo1 + fibo2;\nfibo1 = fibo2;\nfibo2 = fibonacci;\n}\nreturn fibonacci;\n}",
- "answers":["A function that uses iteration to return a Fibonacci number","A function that returns a series","A function that returns an array of Fibonacci numbers","A function that uses recursion to return a Fibonacci number"],
- "correctAnswer":0,
- "feedback":"Fibonacci2 is a function that is called in main to return the next Fibonacci number"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following Java code prints the Fibonacci series up to a specified number. Which variable governs how many Fibonacci numbers are printed?",
- "codePassage":"public class FibonacciCalculator {\n\npublic static void main(String args[]) {\n\nSystem.out.println(\"Enter number upto which Fibonacci series to print:\");\nint number = new Scanner(System.in).nextInt();\n\nSystem.out.println(\"Fibonacci series upto \" + number +\" numbers : \");\nfor(int i=1; i<=number; i++){\nSystem.out.print(fibonacci2(i) +\" \");\n}\n}\n\npublic static int fibonacci2(int number){\nif(number == 1 || number == 2){\n return 1;\n}\nint fibo1=1, fibo2=1, fibonacci=1;\nfor(int i= 3; i<= number; i++){\nfibonacci = fibo1 + fibo2;\nfibo1 = fibo2;\nfibo2 = fibonacci;\n}\nreturn fibonacci;\n}",
- "answers":["FibonacciCalculator","number","fibonacci","fibo2"],
- "correctAnswer":0,
- "feedback":"Number is received as an input and is the upper limit to which the for loop, loops through the fibonacci2 function"
- },
- 
- {
- "questionType":"Programming",
- "question":"The following java code checks if the input is a palindrome. By assessing the code, how would you describe a palindrome?",
- "codePassage":"private static boolean isPalindrome(int number) {\nif(number == reverse(number)){\nreturn true;\n}/nreturn false;\n}",
- "answers":["An even number","An odd number","A number that is the sum of the previous two numbers","A number that is equal to the reverse of itself"],
- "correctAnswer":3,
- "feedback":"A palindrome is a number that is equal to the reverse of itself (e.g. 101)."
- },
- 
- {
- "questionType":"Programming",
- "question":"The following java code checks if the input is a palindrome. What type of data is returned from this code?",
- "codePassage":"private static boolean isPalindrome(int number) {\nif(number == reverse(number)){\nreturn true;\n}/nreturn false;\n}",
- "answers":["String","Array","Integer","Boolean"],
- "correctAnswer":3,
- "feedback":"The syntax that follows 'private static' defines the type of output."
- },
- 
- {
- "questionType":"Programming",
- "question":"The following java code checks if the input is a palindrome. What type of data is input to this function?",
- "codePassage":"private static boolean isPalindrome(int number) {\nif(number == reverse(number)){\nreturn true;\n}/nreturn false;\n}",
- "answers":["String","Array","Integer","Boolean"],
- "correctAnswer":2,
- "feedback":"The syntax that follows the name of the function isPalindrome( defines the type of input required."
- },
- 
- {
- "questionType":"Programming",
- "question":"What would be the output of the following java code if the input was 24?",
- "codePassage":"private static int reverse(int number){\nint reverse = 0;\nwhile(number != 0){\nreverse = reverse*10 + number%10;\nnumber = number/10;\n}\nreturn reverse;\n}",
- "answers":["0","42","Error","2.4"],
- "correctAnswer":1,
- "feedback":"This function creates a Palindrome by reversing the number input."
- },
- 
- {
- "questionType":"Programming",
- "question":"What would be the output of the following java code if the input was 'Duck'?",
- "codePassage":"private static int reverse(int number){\nint reverse = 0;\nwhile(number != 0){\nreverse = reverse*10 + number%10;\nnumber = number/10;\n}\nreturn reverse;\n}",
- "answers":["kcuD","Duck","Error","1,024"],
- "correctAnswer":2,
- "feedback":"The function requires an integer as an input. Therefore the input 'Duck' would give an error."
- },
- 
- {
- "questionType":"Programming",
- "question":"What would be the output of the following java code if the input was 0?",
- "codePassage":"private static int reverse(int number){\nint reverse = 0;\nwhile(number != 0){\nreverse = reverse*10 + number%10;\nnumber = number/10;\n}\nreturn reverse;\n}",
- "answers":["0","42","Error","2.4"],
- "correctAnswer":0,
- "feedback":"This function creates a Palindrome by reversing the number input."
- },
- 
- {
- "questionType":"Programming",
- "question":"What does the % operator mean?",
- "codePassage":"private static int reverse(int number){\nint reverse = 0;\nwhile(number != 0){\nreverse = reverse*10 + number%10;\nnumber = number/10;\n}\nreturn reverse;\n}",
- "answers":["Sum","And","Product","Modulus"],
- "correctAnswer":3,
- "feedback":"This modulus operator allows you to find the remainder following a division."
- },
- 
- {
- "questionType":"Programming",
- "question":"How does 'while' differ from 'if'?",
- "codePassage":"private static int reverse(int number){\nint reverse = 0;\nwhile(number != 0){\nreverse = reverse*10 + number%10;\nnumber = number/10;\n}\nreturn reverse;\n}",
- "answers":["It never does","It wouldn't in this instance","A while statement is a loop, whereas an if statement only executes a block of code once.","An if statement is a loop, whereas a while statement only executes a block of code once."],
- "correctAnswer":2,
- "feedback":"If statements, when true, will only execute the inner block of code once. While statements will continue to execute the inner block of code as long as the condition is true."
- },
- 
- {
- "questionType":"Programming",
- "question":"What will this Java code return if the input is '50'?",
- "codePassage":"public static boolean check(String[] input) {\nfor (int i = 0; i < input.length; i++) {\nfor (int j = 0; j < input.length; j++) {\nif (input[i].equals(input[j]) && i != j) {\nreturn true;\n}\n}\n}\nreturn false;\n}",
- "answers":["true","false","50","error"],
- "correctAnswer":3,
- "feedback":"Error given that the function requires an array as an input."
- },
- 
- {
- "questionType":"Programming",
- "question":"What will this Java code return if the input is [1,2,3,4,5]?",
- "codePassage":"public static boolean check(String[] input) {\nfor (int i = 0; i < input.length; i++) {\nfor (int j = 0; j < input.length; j++) {\nif (input[i].equals(input[j]) && i != j) {\nreturn true;\n}\n}\n}\nreturn false;\n}",
- "answers":["true","false","50","error"],
- "correctAnswer":1,
- "feedback":"This function looks for duplicates in an array"
- },
- 
- {
- "questionType":"Programming",
- "question":"What will this Java code return if the input is [1,2,3,3,5]?",
- "codePassage":"public static boolean check(String[] input) {\nfor (int i = 0; i < input.length; i++) {\nfor (int j = 0; j < input.length; j++) {\nif (input[i].equals(input[j]) && i != j) {\nreturn true;\n}\n}\n}\nreturn false;\n}",
- "answers":["true","false","50","error"],
- "correctAnswer":0,
- "feedback":"This function looks for duplicates in an array"
- },
- 
- {
- "questionType":"Programming",
- "question":"Would the following Java code be considered efficient?",
- "codePassage":"public static boolean check(String[] input) {\nfor (int i = 0; i < input.length; i++) {\nfor (int j = 0; j < input.length; j++) {\nif (input[i].equals(input[j]) && i != j) {\nreturn true;\n}\n}\n}\nreturn false;\n}",
- "answers":["Yes, given it's o(n)","No, given it's o(n^2)","Yes, given it's o(n^2)","Cannot tell"],
- "correctAnswer":1,
- "feedback":"The complexity of o(n^2) is not advised in production"
- }
- ]
+ [
+  
+  {
+  "questionType":"Programming",
+  "question":"Reorder the code below blablabla?",
+  "codePassage": ["//Initialise variable",
+                  "int total = 0;",
+                  "//Use for loop",
+                  "for (int i=0; i < 11; i++)",
+                  "{",
+                  "//Increment i by 1;",
+                  "total += i",
+                  "}"],
+  "feedback": ["//Initialise variable",
+               "int total = 0;",
+               "//Use for loop",
+               "for (int i=0; i < 11; i++)",
+               "{",
+               "//Increment i by 1;",
+               "total += i",
+               "}"],
+
+  },
+  
+  {
+  "questionType":"Programming",
+  "question":"Reorder the code below blablabla?",
+  "codePassage": ["//Initialise variable",
+                  "int total = 0;",
+                  "//Use for loop",
+                  "for (int i=0; i < 11; i++)",
+                  "{",
+                  "//Increment i by 1;",
+                  "total += i",
+                  "}"],
+  "feedback": ["//Initialise variable",
+               "int total = 0;",
+               "//Use for loop",
+               "for (int i=0; i < 11; i++)",
+               "{",
+               "//Increment i by 1",
+               "total += i;",
+               "}"],
+  
+  },
+  
+  {
+  "questionType":"Programming",
+  "question":"Reorder the code below blablabla?",
+  "codePassage": ["int total = 0;",
+                  "for (int i=0; i < 11; i++)",
+                  "{",
+                  "total += i;",
+                  "}"],
+  "feedback": ["//Initialise variable",
+               "int total = 0;",
+               "//Use for loop",
+               "for (int i=0; i < 11; i++)",
+               "{",
+               "//Increment i by 1",
+               "total += i;",
+               "}"],
+  
+  },
+  
+  {
+  "questionType":"Programming",
+  "question":"Reorder the code below blablabla?",
+  "codePassage": ["int total = 0;",
+                  "for (int i=0; i < 11; i++)",
+                  "{",
+                  "total += i;",
+                  "}"],
+  "feedback": ["//Initialise variable",
+               "int total = 0;",
+               "//Use for loop",
+               "for (int i=0; i < 11; i++)",
+               "{",
+               "//Increment i by 1",
+               "total += i;",
+               "}"],
+  
+  }
+  ]

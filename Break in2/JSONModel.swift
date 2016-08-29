@@ -197,10 +197,8 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
             let newQuestion:programmingQuestion = programmingQuestion()
             //Assign values to the newQuestion
             newQuestion.question = currentJsonDictionary["question"] as! String
-            newQuestion.codePassage = currentJsonDictionary["codePassage"] as! String
-            newQuestion.answers = currentJsonDictionary["answers"] as! [String]
-            newQuestion.correctAnswer = currentJsonDictionary["correctAnswer"] as! Int
-            newQuestion.feedback = currentJsonDictionary["feedback"] as! String
+            newQuestion.codePassage = currentJsonDictionary["codePassage"] as! [String]
+            newQuestion.feedback = currentJsonDictionary["feedback"] as! [String]
             //Add the new Question to the returned array
             arrayOfQuestions.append(newQuestion)
         }

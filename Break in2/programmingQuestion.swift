@@ -11,9 +11,7 @@ import UIKit
 class programmingQuestion {
     
     var question:String = String()
-    var codePassage:String = String()
-    var answers:[String] = [String]()
-    var correctAnswer:Int = Int()
-    var feedback:String = String()
+    var codePassage:[String] = [String]()
+    var feedback:[String] = [String]()
     
 }

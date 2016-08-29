@@ -21,7 +21,7 @@ class TableViewEdited: UITableView {
         layoutMargins = UIEdgeInsetsZero
         separatorInset = UIEdgeInsetsZero
         
-        rowHeight = frame.height/10.0
+        rowHeight = frame.height/15.0
     }
     
     required init?(coder aDecoder: NSCoder) {
