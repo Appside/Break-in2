@@ -17,7 +17,7 @@ class TableViewEdited: UITableView {
         super.init(frame: frame, style: style)
         
         tableFooterView = UIView()
-        backgroundColor = .grayColor()
+        backgroundColor = UIColor(white: 0.0, alpha: 0.0)
         layoutMargins = UIEdgeInsetsZero
         separatorInset = UIEdgeInsetsZero
         

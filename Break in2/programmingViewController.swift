@@ -37,7 +37,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     let descriptionSwipeLabel:UILabel = UILabel()
     let mainView:UIView = UIView()
     let questionView:UIView = UIView()
-    let passageLabel:UITextView = UITextView()
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[programmingQuestion] = [programmingQuestion]()
     var displayedQuestionIndex:Int = 0
@@ -61,10 +60,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     let passageView:UIView = UIView()
     var currentIndexPath: NSIndexPath?
     
-    var cellTitles = ["0x15", "0x2", "0x3", "0x4", "0x5", "0x6", "0x7", "0x8", "0x9", "0xA", "0xB",
-                      "0xC", "0xD", "0xE", "0xF", "0x10", "0x11", "0x12", "0x13", "0x14", "0x1"]
-    
-
+    var cellTitles = ["0x15", "0x2", "0x3", "0x4", "0x5", "0x6", "0x7", "0x8", "0x9", "0xA", "0xB","0xC", "0xD", "0xE", "0xF", "0x10", "0x11", "0x12", "0x13", "0x14", "0x1"]
     
     //Screen size
     var widthRatio:CGFloat = CGFloat()
@@ -96,7 +92,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
         self.questionLabel.userInteractionEnabled = false
-        self.passageLabel.userInteractionEnabled = false
         
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -210,7 +205,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.mainView.addSubview(self.questionView)
         self.mainView.addSubview(self.passageView)
         self.passageView.addSubview(passageTableView)
-        passageTableView.translatesAutoresizingMaskIntoConstraints = false
+        passageTableView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         self.questionView.translatesAutoresizingMaskIntoConstraints = false
         self.passageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -244,27 +239,14 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.passageView.addConstraints([layer2left,layer2right,layer2top])
         layer2.addConstraint(layer2height)
         
-        layer1.backgroundColor = UIColor.blackColor()
-        layer2.backgroundColor = UIColor.blackColor()
+        layer1.backgroundColor = UIColor.whiteColor()
+        layer1.alpha = 0.0
+        layer2.backgroundColor = UIColor.whiteColor()
+        layer2.alpha = 0.0
         layer1.layer.cornerRadius = 8.0
         
-        let passageText:UILabel = UILabel()
-        layer2.addSubview(passageText)
-        passageText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        passageText.textColor = UIColor.whiteColor()
-        passageText.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(16))
-        passageText.textAlignment = NSTextAlignment.Center
-        passageText.text = ""
-        
-        //Design of passageView
-        self.passageView.addSubview(self.passageLabel)
-        self.passageLabel.setConstraintsToSuperview(Int(50*self.heightRatio), bottom: Int(40*self.heightRatio), left: Int(40*self.widthRatio), right: Int(40*self.widthRatio))
-        self.passageLabel.textColor = UIColor.whiteColor()
-        self.passageView.backgroundColor = UIColor.blackColor()
-        self.passageLabel.font = UIFont(name: "HelveticaNeue", size: self.view.getTextSize(16))
-        self.passageLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
+        //Design of passageVie
         self.passageView.layer.cornerRadius = 10.0
-        self.passageLabel.textAlignment = NSTextAlignment.Justified
         
         //update questionView
         self.questionView.addSubview(self.questionLabel)
@@ -645,7 +627,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.questionMenuLabel.attributedText = attributedString
         self.questionMenuLabel.attributedText = attributedString
-        self.passageLabel.text = self.quizzArray[indexQuestion].codePassage
         
         //Update the view with the new question
         let questionText:String = arrayOfQuestions[indexQuestion].question
@@ -1060,6 +1041,7 @@ extension programmingViewController: UITableViewDataSource {
         
         return cell
     }
+    
 }
 
 extension programmingViewController: RearrangeDataSource {
