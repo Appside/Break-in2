@@ -181,7 +181,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< LabelRow(){
-                $0.title = "Personal Details (* mandatory fields)"
+                $0.title = "Personal Details"
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {

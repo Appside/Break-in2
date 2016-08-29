@@ -60,6 +60,9 @@
 		49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */; };
 		49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
+		611220241D7428620014F576 /* programmingVCDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611220231D7428620014F576 /* programmingVCDuplicate.swift */; };
+		611220261D7428CB0014F576 /* QuickRearrangeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611220251D7428CB0014F576 /* QuickRearrangeTableView.swift */; };
+		611220281D742A350014F576 /* TableViewEdited.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611220271D742A350014F576 /* TableViewEdited.swift */; };
 		614316481BEF843A0047A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614316471BEF843A0047A37D /* AppDelegate.swift */; };
 		6143164D1BEF843A0047A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6143164B1BEF843A0047A37D /* Main.storyboard */; };
 		6143164F1BEF843A0047A37D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6143164E1BEF843A0047A37D /* Assets.xcassets */; };
@@ -164,6 +167,9 @@
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
 		49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticQuestion.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
+		611220231D7428620014F576 /* programmingVCDuplicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = programmingVCDuplicate.swift; sourceTree = "<group>"; };
+		611220251D7428CB0014F576 /* QuickRearrangeTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickRearrangeTableView.swift; sourceTree = "<group>"; };
+		611220271D742A350014F576 /* TableViewEdited.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewEdited.swift; sourceTree = "<group>"; };
 		614316441BEF843A0047A37D /* BREAKIN2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BREAKIN2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		614316471BEF843A0047A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6143164C1BEF843A0047A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -284,6 +290,8 @@
 				49929D9F1C42E95700527929 /* sequencesViewController.swift */,
 				49929DA51C42FDC300527929 /* fractionViewController.swift */,
 				494AE5451D3B91C30086D261 /* programmingViewController.swift */,
+				611220231D7428620014F576 /* programmingVCDuplicate.swift */,
+				6188FF821D74304D00C4B490 /* TableView */,
 				49B391A51D450E1D00D45444 /* technologyViewController.swift */,
 				499E46D91C7137FC00540159 /* BrainBreakerViewController.swift */,
 				25E4ACCB1C552C9800C49551 /* LogicalPictureView.swift */,
@@ -451,6 +459,15 @@
 			);
 			name = Extensions;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		6188FF821D74304D00C4B490 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				611220251D7428CB0014F576 /* QuickRearrangeTableView.swift */,
+				611220271D742A350014F576 /* TableViewEdited.swift */,
+			);
+			name = TableView;
 			sourceTree = "<group>";
 		};
 		61E582651C70AD9500ED7901 /* In App Purchases */ = {
@@ -770,6 +787,7 @@
 				610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */,
 				61FCAED31C0518740072FDFB /* Constants.swift in Sources */,
 				497A515F1C39B10C004B325C /* LabelPointerView.swift in Sources */,
+				611220241D7428620014F576 /* programmingVCDuplicate.swift in Sources */,
 				49A05D311C1EA49100A50BCF /* verbalReasoningViewController.swift in Sources */,
 				25ADC3AD1C052BA4004465FF /* CareerButton.swift in Sources */,
 				25E4ACCE1C552C9800C49551 /* LogicalModel.swift in Sources */,
@@ -805,10 +823,12 @@
 				61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */,
 				2526701B1C2378A6007D55BE /* CalendarMonthTitleView.swift in Sources */,
 				253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */,
+				611220261D7428CB0014F576 /* QuickRearrangeTableView.swift in Sources */,
 				2526701E1C2378A6007D55BE /* CalendarDayButton.swift in Sources */,
 				25ACFC791C42A3AA00699604 /* TutorialViewController.swift in Sources */,
 				2514F16D1C1F13B1003E8001 /* ChooseCareerView.swift in Sources */,
 				4993753A1C02573100AA0588 /* numericalReasoningViewController.swift in Sources */,
+				611220281D742A350014F576 /* TableViewEdited.swift in Sources */,
 				499E46DA1C7137FC00540159 /* BrainBreakerViewController.swift in Sources */,
 				617FC6451BEF92310019AE9B /* RegisterViewController.swift in Sources */,
 				61E582671C70ADFC00ED7901 /* Products.swift in Sources */,
@@ -972,7 +992,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Break in2/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
 				PRODUCT_NAME = BREAKIN2;
@@ -989,7 +1009,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Break in2/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
 				PRODUCT_NAME = BREAKIN2;

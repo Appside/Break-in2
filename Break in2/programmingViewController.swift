@@ -24,7 +24,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     var membershipType:String = String()
     
     //Declare variables
-    let backgroungUIView:UIView = UIView()
+    let backgroundUIView:UIView = UIView()
     let swipeUIView:UIView = UIView()
     var swipeMenuHeightConstraint:NSLayoutConstraint = NSLayoutConstraint()
     var swipeMenuBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
@@ -37,7 +37,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     let descriptionSwipeLabel:UILabel = UILabel()
     let mainView:UIView = UIView()
     let questionView:UIView = UIView()
-    let passageView:UIView = UIView()
     let passageLabel:UITextView = UITextView()
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[programmingQuestion] = [programmingQuestion]()
@@ -57,6 +56,15 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     var isTestComplete:Bool = false
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
+    
+    //tableview variables
+    let passageView:UIView = UIView()
+    var currentIndexPath: NSIndexPath?
+    
+    var cellTitles = ["0x15", "0x2", "0x3", "0x4", "0x5", "0x6", "0x7", "0x8", "0x9", "0xA", "0xB",
+                      "0xC", "0xD", "0xE", "0xF", "0x10", "0x11", "0x12", "0x13", "0x14", "0x1"]
+    
+
     
     //Screen size
     var widthRatio:CGFloat = CGFloat()
@@ -114,15 +122,15 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.countMinutes = self.allowedMinutes
         
         //Initialize backgroun UIView
-        self.view.addSubview(self.backgroungUIView)
-        self.backgroungUIView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+        self.view.addSubview(self.backgroundUIView)
+        self.backgroundUIView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         let width = UIScreen.mainScreen().bounds.size.width
         let height = UIScreen.mainScreen().bounds.size.height
         let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
         imageViewBackground.image = UIImage(named: "hexagonBGDark")
         imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
-        self.backgroungUIView.addSubview(imageViewBackground)
-        self.backgroungUIView.sendSubviewToBack(imageViewBackground)
+        self.backgroundUIView.addSubview(imageViewBackground)
+        self.backgroundUIView.sendSubviewToBack(imageViewBackground)
         
         //Initialize menuBackButton UIView
         self.view.addSubview(self.menuBackButton)
@@ -192,10 +200,17 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.answerView.setConstraintsToSuperview(Int(80*self.heightRatio), bottom: Int(70*self.heightRatio), left: 0, right: 0)
         
         //Initialize mainView, questionView and passageView
+        let passageTableView = TableViewEdited(frame: view.frame, style: .Plain)
+        passageTableView.delegate = self
+        passageTableView.dataSource = self
+        passageTableView.setRearrangeOptions([.hover, .translucency], dataSource: self)
+        
         self.view.addSubview(self.mainView)
         self.mainView.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(85*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
         self.mainView.addSubview(self.questionView)
         self.mainView.addSubview(self.passageView)
+        self.passageView.addSubview(passageTableView)
+        passageTableView.translatesAutoresizingMaskIntoConstraints = false
         self.questionView.translatesAutoresizingMaskIntoConstraints = false
         self.passageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -1010,4 +1025,52 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         // Dispose of any resources that can be recreated.
     }
     
+}
+
+extension programmingViewController: UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+
+extension programmingViewController: UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return cellTitles.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+        
+        if indexPath == currentIndexPath {
+            
+            cell.backgroundColor = nil
+        }
+        else {
+            
+            cell.textLabel?.text = cellTitles[indexPath.row]
+        }
+        
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
+        
+        return cell
+    }
+}
+
+extension programmingViewController: RearrangeDataSource {
+    
+    func moveObjectAtCurrentIndexPath(to indexPath: NSIndexPath) {
+        
+        guard let unwrappedCurrentIndexPath = currentIndexPath else { return }
+        
+        let object = cellTitles[unwrappedCurrentIndexPath.row]
+        
+        cellTitles.removeAtIndex(unwrappedCurrentIndexPath.row)
+        cellTitles.insert(object, atIndex: indexPath.row)
+    }
 }

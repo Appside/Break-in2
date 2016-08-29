@@ -269,9 +269,9 @@ class TutorialViewController: UIViewController {
             self.descriptionLabelViewTopConstraint.constant = -100
             self.tutorialNextButton.setTitle("Set up a Profile", forState: UIControlState.Normal)
             self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            self.descriptionLabelView.titleLabel.text = "Create and personalise your profile:"
-            self.descriptionLabelView.descriptionLabel.text = "BreakIN2 is not just about preparing for interviews and tests. We also aim to match candidates with open positions. This is why the more information we will get about you, the more accurate will be our professional recommendations and advice."
-            self.descriptionLabelView.titleLabel.font = UIFont(name: "HelveticaNeue-Mediun", size: 18.0)
+            self.descriptionLabelView.titleLabel.text = "CREATE A PROFILE"
+            self.descriptionLabelView.descriptionLabel.text = "We'd like to get to know you a little better. Feel free to tell us about yourself on the next page; that way we can let you know about (or even put you in touch with!) open positions that may suit you. You can edit this at any time."
+            self.descriptionLabelView.titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
             
             self.view.layoutIfNeeded()
             
