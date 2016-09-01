@@ -81,7 +81,7 @@
   },
   {
   "questionType":"Technology",
-  "question":"In a binary system, what will be the output of 1 ANerD 0?",
+  "question":"In a binary system, what will be the output of 1 AND 0?",
   "answers":["0","1","10","Cannot Say"],
   "correctAnswer":1,
   "explanation":"The binary AND operator will only return a 0 when both inputs are 0. Otherwise, the output is 1."
@@ -137,7 +137,7 @@
 
   {
   "questionType":"Technology",
-  "question":"Which element allo user to interactively send instructions to a computer using graphical icons ?",
+  "question":"Which element allows user to interactively send instructions to a computer using graphical icons ?",
   "answers":["Commands","GUI","Printer","Keyboard","Monitor"],
   "correctAnswer":1,
   "explanation":"GUI (Graphical User Interface) allow users to interact with electronic devices through graphical icons and visual indicators instead of text-based user interfaces,."
@@ -210,9 +210,280 @@
   {
   "questionType":"Technology",
   "question":"Which of the following languages is more suited to a structured program?",
-  "answers":["PL/1","FORTRAN","BASIC","PASCAL","None of the above"],
+  "answers":["PL/1","FORTRAN","BASIC","PASCAL","None Of The Above"],
   "correctAnswer":3,
   "explanation":"Structured Programming is a paradigm aimed at improving the clarity, quality and development time of a computer program by making extensive use of subroutines and loops. PASCAL is the more appropriate for the list we gave."
   },
   
+  {
+  "questionType":"Technology",
+  "question":"FTP moves a file between a computer and server, but what does it stand for?",
+  "answers":["Format Transfer Procedure","File Transfer Protocol","Frequent Torrent Practice","Firewire Transfer Port","None Of The Above"],
+  "correctAnswer":1,
+  "explanation":"The File Transfer Protocol (FTP) is a common network protocol used for the transfer of computer files between a server and a client in a computer network. FTP is based on the client-server model architecture and utilises unique control and data connections between the client and the server."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What gave rise to the \"second generation\" of computers by replacing vacuum tubes in computer designs?",
+  "answers":["Transistors","Magnetic Hard Drives","Serial Buses","Cathode Ray Tubes","None Of The Above"],
+  "correctAnswer":0,
+  "explanation":"The \"first generation\" of electronic computers used vacuum tubes, which generated large amounts of heat, were bulky, and were unreliable. In the late 1950s, a \"second generation\" of computers featured boards filled with individual transistors that became the conventional computer design until the end of the 1960s. Thereafter, the \"third generation\" of computers used integrated circuits."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is the name given to the sending of unsolicited e-mail messages?",
+  "answers":["Hacking","Phishing","Spamming","Pharming","Trojaning"],
+  "correctAnswer":2,
+  "explanation":"Spamming is the sending of unsolicited e-mail messages using an electronic messaging system, usually on a mass scale. Reasons for spamming include advertising and causing systems to crash. Spamming is not limited to e-mails and can performed with other forms of electronic media, for example, instant messaging services."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does the \"S\" stand for in the programming language BASIC?",
+  "answers":["Simple","Symbolic","Sequential","Supporting","Serial"],
+  "correctAnswer":1,
+  "explanation":"BASIC stands for Beginner's All-purpose Symbolic Instruction Code. BASIC is a collection of programming languages that are designed around ease of use in order to enable students in the fields of mathematics and science to use computers."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does the acronym LCD stand for??",
+  "answers":["Lossless Cell Display","Light Capturing Display","Long Cathode Display","Liquid Crystal Display","None Of The Above"],
+  "correctAnswer":3,
+  "explanation":"A Liquid Crystal Display (LCD) is an electronic visual display that uses the light-modulating properties of liquid crystals. LCDs are used in a large variety of devices such as televisions, computer monitors and smartphones."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which of the following is not a type of web image?",
+  "answers":["JPG","LPG","PNG","GIF","BMP"],
+  "correctAnswer":1,
+  "explanation":"The main formats of web images are JPG, PNG, BMP, GIF and TIFF. LPG stands for Liquid Petroleum Gas."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does the \"F\" stand for in the acronym FORTRAN?",
+  "answers":["Formula","File","Formatting","Fast","Flexible"],
+  "correctAnswer":0,
+  "explanation":"The FORTRAN name is derived from \"Formula Translation\". It is a general purpose, imperative programming language that is used for scientific and numerical purposes. Designed by IBM in the 1950s, it is still used today for many engineering applications such as computational fluid dynamics and finite element analysis."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does DVD stand for?",
+  "answers":["Downloadable Virtual Disk","Document Virus Disk","Digital Versatile Disk","Dual Version Disk","Direct Video Disk"],
+  "correctAnswer":2,
+  "explanation":"DVD stands for Digital Versatile Disk. DVDs are an optical disk storage format that can store any kind of digital data. They have become popular for distributing movies and computer software as they can store more information than compact disks (CDs)."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Firefox and Safari are types of what?",
+  "answers":["Media Players","Calculators","Word Processors","Operating Systems","Web Browsers"],
+  "correctAnswer":4,
+  "explanation":"Firefox and Safari are both types of web browsers. Firefox was created by Mozilla and Safari was created by Apple, both being released in 2003."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is the highest digit that can appear in an Octal number system?",
+  "answers":["5","6","7","8","9"],
+  "correctAnswer":2,
+  "explanation":"The octal numeral system, or oct for short, is the base-8 number system, and uses the digits 0 to 7. Therfore, the highest DIGIT that can be used is 7."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which of the following devices is an output device?",
+  "answers":["Printer","Mouse","Keyboard","Scanner","None Of The Above"],
+  "correctAnswer":0,
+  "explanation":"An output device is any kind of computer hardware that communicates the results of data processing performed by an information processing system (e.g. a computer) and converts the electronic information produced into human-readable form."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What are the set of instructions that tells a computer what to do?",
+  "answers":["Inputs","Software","Hardware","Outputs","None Of The Above"],
+  "correctAnswer":1,
+  "explanation":"Software is the part of a computer system that instructs the computer on what to do. Computer software can include computer programs, libraries and related non-executable data (such as online documentation or digital media)."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which of the following stores the most data?",
+  "answers":["Floppy Disk","Blu-Ray Disk","CD-ROM","DVD","CD-RW"],
+  "correctAnswer":1,
+  "explanation":"Blu-ray is a digital format for storing data on optical disks. It has the largest storage capacity for optical storage, with up to 128GB per disk."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which of the following stores the most data?",
+  "answers":["Floppy Disk","Blu-Ray Disk","CD-ROM","DVD","CD-RW"],
+  "correctAnswer":1,
+  "explanation":"Blu-ray is a digital format for storing data on optical disks. It has the largest storage capacity for optical storage, with up to 128GB per disk."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is the base of the hexadecimal numbering system?",
+  "answers":["6","10","15","16","60"],
+  "correctAnswer":3,
+  "explanation":"Hexadecimal is positional numeral system with a base of 16. 0-9 symbols represent values zero to nine, and A-F represent values ten to fifteen."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"The ability to recover and read deleted or damaged files from a criminals computer is an example of a law enforcement specialty called:",
+  "answers":["Hacking","Simulation","Computer Forensics","Phishing","None Of The Above"],
+  "correctAnswer":3,
+  "explanation":"Computer forensics is the collection, analysis and reporting of digital data in a way that is legally admissible. It is usually used for the detection and prevention of crime and in cases where evidence is stored digitally."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What does the Operating System manage?",
+  "answers":["Memory","I/O Devices","GUI","Processes","All Of The Above"],
+  "correctAnswer":4,
+  "explanation":"An Operating System (OS) is software that manages the computer system. This includes memeory allocation/deallocation, understanding user inputs, processing software commands and communicating with peripheral devices."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Allocation of a resources in a time dependent manner to several program simultaneously is called:",
+  "answers":["Time Sharing","Multitasking","Parallel Processing","Multithreading","None Of The Above"],
+  "correctAnswer":0,
+  "explanation":"In computing, time sharing is the apportionment of computer resources (according to processing time) to several users. By allowing a large number of users to interact concurrently with a single computer, time-sharing dramatically lowered the cost of providing computing capability and made it possible for individuals and organisations to use a computer without owning one."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is it called when instructions are accumulated and processed in a group?",
+  "answers":["Time Sharing","Batch Processing","Group Processing","Multithreading","None Of The Above"],
+  "correctAnswer":1,
+  "explanation":"Batch processing is the execution of a series of jobs in a program on a computer without manual intervention (non-interactive). Strictly speaking, it is a processing mode: the execution of a series of programs each on a set or \"batch\" of inputs, rather than a single input (which would instead be a custom job). However, this distinction has largely been lost, and the series of steps in a batch process are often called a \"job\" or \"batch job\"."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"The process of transferring files from your computer to a computer on the Internet is called:",
+  "answers":["Updating","Forwarding","Uploading","Downloading","None Of The Above"],
+  "correctAnswer":2,
+  "explanation":"To upload is to send data to a remote system such as a server or another client so that the remote system can store a copy. In this case, your computer is the remote system and the computer on the Internet is the server/another client."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is the commonly used unit for measuring the speed of data transmission?",
+  "answers":["Seconds Per Byte","Bytes","Signals Per Second","Hertz","Bits Per Second"],
+  "correctAnswer":4,
+  "explanation":"In computing, the Bit Rate is the number of bits that are transmitted or processed per unit of time. The units are Bits Per Secong (bit/s or bps)."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"The term \"Pentium\" is related to:",
+  "answers":["Peripherals","Mainframe Computers","Laptops","Microprocessors","Operating Systems"],
+  "correctAnswer":3,
+  "explanation":"Pentium is a brand used for a series of x86-compatible microprocessors produced by Intel since 1993. In its current form, Pentium processors are considered entry-level products."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which of the following is a valid IPv4 address?",
+  "answers":["192.168.100.1","192.168.256.1","192.168.111.1111","168.192.1.1","None Of The Above"],
+  "correctAnswer":3,
+  "explanation":"An Internet Protocol address (IP address) is a numerical label assigned to each device (e.g., computer, printer) participating in a computer network that uses the Internet Protocol for communication."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is the name of the tracks on a disk which can be accessed without repositioning the R/W heads?",
+  "answers":["Surface","Cylinder","Cluster","Circle","None Of The Above"],
+  "correctAnswer":1,
+  "explanation":"Cylinder-head-sector, also known as CHS, is a method for giving addresses to each physical block of data on a disk. Cylinders are consecutive tracks on a disk. The concept is concentric, hollow, cylindrical slices through the physical disks (platters). Cyclinders can be read from or written to without moving the read/write (R/W) head."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"Which part of a computer interprets program instructions and initiates control operations?",
+  "answers":["Central Processing Unit","Logic Unit","A Peripheral","Storage Unit","None Of The Above"],
+  "correctAnswer":0,
+  "explanation":"The Central Processing Unit (CPU) is the electronic circuit board where programatic instructions and control operations are performed. This is done by carrying out arithmetic, logical and input/output operations."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"If an input electrical signal 10100 is applied to a NOT gate, what is the output signal?",
+  "answers":["11010","00101","00000","11111","01011"],
+  "correctAnswer":4,
+  "explanation":"A NOT gate is an inverter circuit where main function is to invert the input signal applied. Inverter circuits output a voltage representing the opposite logic-level to their input. If the applied input is low then the output becomes high and vice versa. Hence, the answer is 01011."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is meant by quad-density (QD) diskette?",
+  "answers":["A Double-density Disk","Double The Number Of Tracks Per Inch","A Double-sided Disk","All Of The Above","None Of The Above"],
+  "correctAnswer":3,
+  "explanation":"Quad-density diskettes are 5 1/4\" floopy disks with a storage capacity of 720kB. They have double the number of tracks compared to regular floppy disks and are double-sided rather than single-sided leading to them being known as double-density disks."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"When the time to establish link is large and the size of data is small, the preferred mode of data transfer is:",
+  "answers":["Time Dependent Packaging","Packet Switching","Circuit Switching","Bit Multiplexing","None Of The Above"],
+  "correctAnswer":1,
+  "explanation":"Packet switching is a digital networking communications method that groups all transmitted data into suitably sized blocks, called packets, which are transmitted via a medium that may be shared by multiple simultaneous communication sessions. Packet switching increases network efficiency, robustness and enables technological convergence of many applications operating on the same network."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"In negative logic, the logic state 1 corresponds to:",
+  "answers":["A Lower Voltage Level","Zero Voltage","Negative Voltage","A Higher Voltage Level","None Of The Above"],
+  "correctAnswer":0,
+  "explanation":"In negative logic, higher voltage levels are used to denote the Boolean value 0 and lower voltage levels are used to denote the Boolean value 1. Lower voltages does not mean the voltage is zero."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"The time required for the fetching and execution of one simple machine instruction is called what?",
+  "answers":["Read Time","Seek Time","Instruction Cycle","Retrieve Cycle","None Of The Above"],
+  "correctAnswer":2,
+  "explanation":"Instruction Cycle (sometimes called a fetch–decode–execute cycle) is the basic operational process of a computer. It is the process by which a computer retrieves a program instruction from its memory, determines what actions the instruction dictates, and carries out those actions."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"What is the name of the technique used by codes to convert an analog signal into a digital bit stream?",
+  "answers":["Analogue Management","Analogue To Digital Analysis","Analogue Signal Processing","Pulse Width Modulation","None Of The Above"],
+  "correctAnswer":3,
+  "explanation":"In electronics and telecommunications, modulation is the process of varying one or more properties of a periodic waveform, called the carrier signal, with a modulating signal that typically contains information to be transmitted. Pulse-width modulation (PWM), is a modulation technique used to encode an analogue message into a  digital pulsing signal."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"When compared to diskettes, hard disks are:",
+  "answers":["Less Heavy","More Expensive","Read Slower","More Portable","None Of The Above"],
+  "correctAnswer":1,
+  "explanation":"Diskettes are floppy disks. They are lighter, more portable, have less storage and are slower to read than hard disks."
+  },
+
+  {
+  "questionType":"Technology",
+  "question":"What is the name given to the molecular-scale computer?",
+  "answers":["Femtocomputer","Supercomputer","Nanocomputer","Microcomputer","None Of The Above"],
+  "correctAnswer":2,
+  "explanation":"Nanocomputer is the logical name for a computer smaller than the microcomputer, which is smaller than the minicomputer (the minicomputer is called \"mini\" because it was a lot smaller than the original mainframe computers)."
+  },
+  
+  {
+  "questionType":"Technology",
+  "question":"The arranging of data in a logical sequence is called:",
+  "answers":["Summarising","Classifying","Arranging","Sorting","None Of The Above"],
+  "correctAnswer":3,
+  "explanation":"In computer science, arranging in an ordered sequence is called \"sorting\". Sorting is a common operation in many applications, and efficient algorithms to perform it have been developed."
+  }
   ]
