@@ -10,7 +10,7 @@
   "question":"How many Model D cars were sold in April?",
   "answers":["10","1,000","5,000","10,000"],
   "correctAnswer":1,
-  "explaination":"The trick to this question is to recognise that the graph gives sales figures cumulatively. We see from the graph that the cumulative Model D sales are 9,000 at the end of March and 10,000 at the end of April./n/nIf we take the difference between these two numbers, this means that 1,000 Model D cars were sold in April./n/nThe correct answer is 1,000."
+  "explaination":"The trick to this question is to recognise that the graph gives sales figures cumulatively. We see from the graph that the cumulative Model D sales are 9,000 at the end of March and 10,000 at the end of April.\n\nIf we take the difference between these two numbers, this means that 1,000 Model D cars were sold in April.\n\nThe correct answer is 1,000."
   },
   
   {
@@ -23,7 +23,7 @@
   "question":"What were the total sales of Model B cars for April, May and June combined?",
   "answers":["22,000","21,000","16,000","6,000"],
   "correctAnswer":3,
-  "explaination":"Don’t waste time working out the sales for each month. Since the data is cumulative, we just need to look at the difference between cumulative sales for Model B cars at the end of June and at the end of March (21,000 minus 15,000)./n/nThe correct answer is 6,000."
+  "explaination":"Don’t waste time working out the sales for each month. Since the data is cumulative, we just need to look at the difference between cumulative sales for Model B cars at the end of June and at the end of March (21,000 minus 15,000).\n\nThe correct answer is 6,000."
   },
   
   {
@@ -36,7 +36,7 @@
   "question":"If the number of Model D cars sold in June had been equal to the number of Model D cars sold in May, how many Model D cars would have been sold during June?",
   "answers":["1,000","2,000","5,000","10,000"],
   "correctAnswer":0,
-  "explaination":"This question only consists in finding out the number of Model D cars sold in May. From the cumulative graph, we see that this number is 1,000./n/nThe correct answer is 1,000."
+  "explaination":"This question only consists in finding out the number of Model D cars sold in May. From the cumulative graph, we see that this number is 1,000.\n\nThe correct answer is 1,000."
   },
   
   {
@@ -47,9 +47,9 @@
   "xAxis":["Feb","Mar","Apr","May","Jun"],
   "yAxis":[[2,3,5,5,6],[12,15,18,20,21],[5,9,11,12,14],[9,9,10,11,11]],
   "question":"How many cars (all models combined) have been sold in March and June together?",
-  "answers":["10,000","11,000","12,000","Cannot say"],
+  "answers":["10,000","11,000","12,000","Cannot Say From The Data"],
   "correctAnswer":2,
-  "explaination":"Since the graph shows cumulative sales, the number of cars sold in any month is the difference between cumulative sales at the end of this month minus cumulative sales at the end of the previous month./n/nSuming all the numbers for both March and June for each Model gives us:/n/nModel A: 2,000/nModel B: 4,000/nModel C: 6,000/nModel D: 0/n/nThe correct answer is 12,000."
+  "explaination":"Since the graph shows cumulative sales, the number of cars sold in any month is the difference between cumulative sales at the end of this month minus cumulative sales at the end of the previous month.\n\nSuming all the numbers for both March and June for each Model gives us:\n\nModel A: 2,000\nModel B: 4,000\nModel C: 6,000\nModel D: 0\n\nThe correct answer is 12,000."
   },
   
   {
@@ -60,9 +60,9 @@
   "xAxis":["Feb","Mar","Apr","May","Jun"],
   "yAxis":[[2,3,5,5,6],[12,15,18,20,21],[5,9,11,12,14],[9,9,10,11,11]],
   "question":"If the number of Model C cars sold for each month from July to December is the same as the number of Model A cars sold in April, how many Model C cars will be sold over the year?",
-  "answers":["22,000","24,000","26,000","Cannot say"],
+  "answers":["22,000","24,000","26,000","Cannot Say From The Data"],
   "correctAnswer":2,
-  "explaination":"The number of Model A cars sold in April is 2,000. There are 6 months remaining until the end of the year, which means 12,000 cars sold between July and December./n/nAdding 12,000 to the number of Model C cars sold until June - 14,000 - gives you the correct answer./n/nThe correct answer is 26,000."
+  "explaination":"The number of Model A cars sold in April is 2,000. There are 6 months remaining until the end of the year, which means 12,000 cars sold between July and December.\n\nAdding 12,000 to the number of Model C cars sold until June - 14,000 - gives you the correct answer.\n\nThe correct answer is 26,000."
   },
   
   {
@@ -73,9 +73,9 @@
   "xAxis":["Feb","Mar","Apr","May","Jun"],
   "yAxis":[[2,3,5,5,6],[12,15,18,20,21],[5,9,11,12,14],[9,9,10,11,11]],
   "question":"How many Model B cars were sold in January?",
-  "answers":["4,000","5,000","9,000","Cannot say"],
+  "answers":["4,000","5,000","9,000","Cannot Say From The Data"],
   "correctAnswer":3,
-  "explaination":"The only information available is the number of Model B cars sold until the end of February this year, which is 12,000./n/nHowever, there is not enough information allowing us to know the split of sales between January and February./n/nThe correct answer is \"Cannot say\"."
+  "explaination":"The only information available is the number of Model B cars sold until the end of February this year, which is 12,000.\n\nHowever, there is not enough information allowing us to know the split of sales between January and February.\n\nThe correct answer is \"Cannot Say From The Data\"."
   },
   
   {
@@ -89,7 +89,7 @@
   "question":"How much did the combined expenses from Television and Internet differ from that of Other over the period from 2006 (included) until 2009 (included), in millions?",
   "answers":["0.90","0.92","9.20","920,0000","None of these"],
   "correctAnswer":1,
-  "explaination":"First calculate the total over the whole period for each segment:/n/nTelevision: 270,000/nInternet: 600,000/nOther: 1,790,000/n/nThe difference between (Television+Internet) and Other gives you the right answer./n/nThe correct answer, in millions, is 0.92."
+  "explaination":"First calculate the total over the whole period for each segment:\n\nTelevision: 270,000\nInternet: 600,000\nOther: 1,790,000\n\nThe difference between (Television+Internet) and Other gives you the right answer.\n\nThe correct answer, in millions, is 0.92."
   },
   
   {
@@ -101,9 +101,9 @@
   "xAxis":["2006","2007","2008","2009"],
   "yAxis":[[0.8,1.3,4.4],[0.6,1.4,4.2],[0.6,1.8,4.5],[0.7,1.5,4.8]],
   "question":"How much were the total Market expenses in 2006 and 2009 combined ?",
-  "answers":["1,000,000","1,350,000","135,000","Cannot say","None of these"],
+  "answers":["1,000,000","1,350,000","135,000","Cannot Say From The Data","None of these"],
   "correctAnswer":1,
-  "explaination":"Just sum the numbers for Television, Internet and Other in 2006 and 2009, and be careful with the units. This gives us 650,000 in total for 2006 and 700,000 in total for 2009./n/nThe correct answer is 1,350,000."
+  "explaination":"Just sum the numbers for Television, Internet and Other in 2006 and 2009, and be careful with the units. This gives us 650,000 in total for 2006 and 700,000 in total for 2009.\n\nThe correct answer is 1,350,000."
   },
   
   {
@@ -115,9 +115,9 @@
   "xAxis":["2006","2007","2008","2009"],
   "yAxis":[[0.8,1.3,4.4],[0.6,1.4,4.2],[0.6,1.8,4.5],[0.7,1.5,4.8]],
   "question":"If Internet expenses increase every year at the same pace as between 2007 and 2008, what will be the total Television expenses in 2016?",
-  "answers":["677,576","871,169","1,120,074","None of these","Cannot say"],
+  "answers":["677,576","871,169","1,120,074","None of these","Cannot Say From The Data"],
   "correctAnswer":1,
-  "explaination":"First, calculate what was the increase in Television expenses between 2007 and 2008. To do so, simply divide 1.8 by 1.4, which gives us a year on year increase of 28.6%. Then, look at the Television expenses as they were the last available year (2009): 150,000. Increase this number by 28.6% every year for the next 7 years and you will find the correct answer (to do so, take 150,000 multiplied by (1 + 28.6% to the power 7)./n/nThe correct answer is 871,169."
+  "explaination":"First, calculate what was the increase in Television expenses between 2007 and 2008. To do so, simply divide 1.8 by 1.4, which gives us a year on year increase of 28.6%. Then, look at the Television expenses as they were the last available year (2009): 150,000. Increase this number by 28.6% every year for the next 7 years and you will find the correct answer (to do so, take 150,000 multiplied by (1 + 28.6% to the power 7).\n\nThe correct answer is 871,169."
   },
   
   {
@@ -131,7 +131,7 @@
   "question":"What was the compounded annual growth rate in Other expenses between 2006 and 2009, rounded to the nearest integer?",
   "answers":["3%","4%","5%","6%","None of these"],
   "correctAnswer":0,
-  "explaination":"Let's look at the overall growth rate over the period: 4.8 divded by 4.4 gives 1.0909. The length of the period is 3 years. 1.0909 to the power (1/3) gives 1.0294. Therefore, the compounded growth rate is 2.94%/n/nThe correct answer is 3%."
+  "explaination":"Let's look at the overall growth rate over the period: 4.8 divded by 4.4 gives 1.0909. The length of the period is 3 years. 1.0909 to the power (1/3) gives 1.0294. Therefore, the compounded growth rate is 2.94%\n\nThe correct answer is 3%."
   },
   
   {
@@ -143,9 +143,9 @@
   "xAxis":["2006","2007","2008","2009"],
   "yAxis":[[0.8,1.3,4.4],[0.6,1.4,4.2],[0.6,1.8,4.5],[0.7,1.5,4.8]],
   "question":"In which year was the total expenses the highest?",
-  "answers":["2006","2007","2008","2009","Cannot say"],
+  "answers":["2006","2007","2008","2009","Cannot Say From The Data"],
   "correctAnswer":3,
-  "explaination":"Just work out the total expenses for each year by summing Television, Internet & Other./n/n2006: 650,000/n2007: 620,000/n2008: 690,000/n2009: 700,000/n/nThe correct answer is 2009."
+  "explaination":"Just work out the total expenses for each year by summing Television, Internet & Other.\n\n2006: 650,000\n2007: 620,000\n2008: 690,000\n2009: 700,000\n\nThe correct answer is 2009."
   },
   
   {
@@ -159,7 +159,7 @@
   "question":"What was the change in Total expenses between 2006 and 2007?",
   "answers":["-6.1%","-5.3%","-4.6%","+4.6%","None of these"],
   "correctAnswer":2,
-  "explaination":"Total expenses were 650,000 in 2006 and 620,000 in 2007. Dividing the two numbers give you the rate of increase over the two years./n/nThe correct answer is -4.6%."
+  "explaination":"Total expenses were 650,000 in 2006 and 620,000 in 2007. Dividing the two numbers give you the rate of increase over the two years.\n\nThe correct answer is -4.6%."
   },
   
   {
@@ -171,7 +171,7 @@
   "question":"What was the Ratio of Stocks to Cash holdings in October?",
   "answers":["3:2","2:3","4:5","5:4","4:7"],
   "correctAnswer":4,
-  "explaination":"Holdings of Stocks in October were 20% of the total versus 35% for Cash. The ratio is therefore 20/35, which is also equal to 4/7./n/nThe correct answer is 4:7."
+  "explaination":"Holdings of Stocks in October were 20% of the total versus 35% for Cash. The ratio is therefore 20/35, which is also equal to 4/7.\n\nThe correct answer is 4:7."
   },
   
   {
@@ -183,7 +183,7 @@
   "question":"In October, which two fund holdings had the same combined value as Cash?",
   "answers":["Bonds & Stocks", "Bonds & Cash", "Stocks & Cash","Stocks & Derivatives","Cash & Currencies"],
   "correctAnswer":3,
-  "explaination":"The value of Cash is 35%. If we look at the combination of two holdings that gives us 35%, the only available combination is Stocks (20%) and Derivaties (15%)./n/nThe correct answer is Stocks & Derivatives."
+  "explaination":"The value of Cash is 35%. If we look at the combination of two holdings that gives us 35%, the only available combination is Stocks (20%) and Derivaties (15%).\n\nThe correct answer is Stocks & Derivatives."
   },
   
   {
@@ -195,7 +195,7 @@
   "question":"In October, what fraction of the total holdings did Bonds and Derivatives represent?",
   "answers":["20%","25%","27%","38%","50%"],
   "correctAnswer":2,
-  "explaination":"The information that you need is shown in the pie-chart. Add the values for Bonds (12%) and Derivatives (15%) to find the correct answer./n/nThe correct answer is 27%."
+  "explaination":"The information that you need is shown in the pie-chart. Add the values for Bonds (12%) and Derivatives (15%) to find the correct answer.\n\nThe correct answer is 27%."
   },
   
   {
@@ -207,7 +207,7 @@
   "question":"If that share of each category in November remains the same but the total Fund value increases by 90%, how much will Currencies be worth in November?",
   "answers":["13m","16m","18m","22m","26m"],
   "correctAnswer":0,
-  "explaination":"The total Fund Value in October is 37.5m. If this value in November increases by 90%, the total Fund Value will increase to 71.25m. If the share of Currencies remain the same (18%), the fund will be holding 12.825m of Currencies in November./n/nThe correst answer is 13m."
+  "explaination":"The total Fund Value in October is 37.5m. If this value in November increases by 90%, the total Fund Value will increase to 71.25m. If the share of Currencies remain the same (18%), the fund will be holding 12.825m of Currencies in November.\n\nThe correst answer is 13m."
   },
   
   {
@@ -217,9 +217,9 @@
   "pieSegmentNames":["Bonds","Stocks","Cash","Currencies","Derivatives"],
   "pieSegmentPercentages":[0.12,0.2,0.35,0.18,0.15],
   "question":"In November, 3.0m previously invested in Stocks are now invested in Derivatives, while the Total Fund Value remains unchanged. What proportion of the total Fund Value will Stocks represent in November?",
-  "answers":["5%","12%","15%","20%","Cannot say"],
+  "answers":["5%","12%","15%","20%","Cannot Say From The Data"],
   "correctAnswer":1,
-  "explaination":"In October, Stocks currently represent 20% of the total Fund Value, meaning 7.5m. If we take out 3.0m from this value, this brings the value of Stocks to 4.5m. Dividing 4.5m by the new Total Fund Value, unchanged at 37.5m, gives 12%./n/nThe correct answer is 12%."
+  "explaination":"In October, Stocks currently represent 20% of the total Fund Value, meaning 7.5m. If we take out 3.0m from this value, this brings the value of Stocks to 4.5m. Dividing 4.5m by the new Total Fund Value, unchanged at 37.5m, gives 12%.\n\nThe correct answer is 12%."
   },
   
   {
@@ -231,7 +231,7 @@
   "question":"If we assume that the value of Bonds holdings increases by 20% every month while all other holdings keep the same value, what will be the proportion of Bonds holdings in 6 months?",
   "answers":["24%","29%","35%","40%","45%"],
   "correctAnswer":1,
-  "explaination":"The current value of Bonds holdings is 4.5m. If we multiply this amount by 1.2 to the power 6, we get to 13.4m, meaning a 8.9m increase. At the same time, the Total Fund Value will have increased by this same amount, bringing it to 46.4m. Taking the ratio of 13.4m over 50.9m, we find that Bonds holdings would represent around 29% of the total Fund holdings./n/nThe correct answer is 29%."
+  "explaination":"The current value of Bonds holdings is 4.5m. If we multiply this amount by 1.2 to the power 6, we get to 13.4m, meaning a 8.9m increase. At the same time, the Total Fund Value will have increased by this same amount, bringing it to 46.4m. Taking the ratio of 13.4m over 50.9m, we find that Bonds holdings would represent around 29% of the total Fund holdings.\n\nThe correct answer is 29%."
   },
   
   {
@@ -245,7 +245,7 @@
   "question":"Which sector experienced the highest sales for 2014, 2015 and 2016 combined?",
   "answers":["Telecomm","Utilities","Manufacturing","Financial","Retail"],
   "correctAnswer":3,
-  "explaination":"Calculate each sector’s sales for 2014, 2015 and 2016 combined:/n/nTelecom: 82,000/nUtilities: 75,000/nManufacturing: 83,000/nFinancial: 84,000/nRetail: 78,000/n/nThe correct answer is Financial."
+  "explaination":"Calculate each sector’s sales for 2014, 2015 and 2016 combined:\nTelecom: 82,000\nUtilities: 75,000\nManufacturing: 83,000\nFinancial: 84,000\nRetail: 78,000\n\nThe correct answer is Financial."
   },
   
   {
@@ -259,7 +259,7 @@
   "question":"Which sector experienced the highest sales increase, in percentage terms, between 2015 and 2016?",
   "answers":["Telecom","Utilities","Manufacturing","Financial","Retail"],
   "correctAnswer":3,
-  "explaination":"The only sector that saw its total Sales increasing between 2015 and 2016 is the Financial sector; all other sectors saw their total number of Sales decreasing./n/nThe correct answer is Financial."
+  "explaination":"The only sector that saw its total Sales increasing between 2015 and 2016 is the Financial sector; all other sectors saw their total number of Sales decreasing.\n\nThe correct answer is Financial."
   },
   
   {
@@ -271,9 +271,9 @@
   "xAxis":["2014","2015","2016"],
   "yAxis":[[30,35,21,25,23],[27,20,32,29,30],[25,20,30,30,25]],
   "question":"If Telecom income between 2014 and 2015 had increased by the same absolute amount as the Manufacturing income between 2014 and 2015, what would be the Telecom income in 2015?",
-  "answers":["41,000","38,000","30,000","27,000","Cannot say"],
+  "answers":["41,000","38,000","30,000","27,000","Cannot Say From The Data"],
   "correctAnswer":0,
-  "explaination":"Income from Manufacturing was 32,000 in 2015 versus 21,000 in 2014, meaning a 11,000 increase. Income from Telecom in 2014 was 30,000 in 2014. Therefore, increase it by 11,000 would bring Telecom incom in 2015 to 41,000./n/nThe correct answer is 41,000."
+  "explaination":"Income from Manufacturing was 32,000 in 2015 versus 21,000 in 2014, meaning a 11,000 increase. Income from Telecom in 2014 was 30,000 in 2014. Therefore, increase it by 11,000 would bring Telecom incom in 2015 to 41,000.\n\nThe correct answer is 41,000."
   },
   
   {
@@ -287,7 +287,7 @@
   "question":"What is the percentage change in total income acrross all sectors between 2014 and 2015?",
   "answers":["1%","2%","3%","4%","5%"],
   "correctAnswer":2,
-  "explaination":"First work out what the total income was for 2014 and 2015:/n/n2014: 134,000/n2015: 138,000/n/nThe percentage change is therefore equal to 2.99%./n/nThe correct answer is 3%."
+  "explaination":"First work out what the total income was for 2014 and 2015:\n2014: 134,000\n2015: 138,000\n\nThe percentage change is therefore equal to 2.99%.\n\nThe correct answer is 3%."
   },
   
   {
@@ -301,7 +301,7 @@
   "question":"Roughly, what is the compounded annual growth rate in Retail income between 2014 and 2016?",
   "answers":["1%","2%","3%","4%","5%"],
   "correctAnswer":3,
-  "explaination":"Retail income in 2016 is 25,000 and was 23,000 in 2014. To calculate the compounded annual growth rate over this 2-year period, use the following formula: divide 25,000 by 23,000 and take this number to the power (1 / number of years)./n/nYou will find that the compounded annual growth rate is 4.25%./n/nThe correct answer is 4%."
+  "explaination":"Retail income in 2016 is 25,000 and was 23,000 in 2014. To calculate the compounded annual growth rate over this 2-year period, use the following formula: divide 25,000 by 23,000 and take this number to the power (1 / number of years).\n\nYou will find that the compounded annual growth rate is 4.25%.\n\nThe correct answer is 4%."
   },
   
   {
@@ -315,7 +315,7 @@
   "question":"What are the total Utilities income for the three years combined?",
   "answers":["75,000","78,000","82,000","83,000","84,000"],
   "correctAnswer":0,
-  "explaination":"Just sum the Utilities income for each of the three years:/n/n2014: 35,000/n2015: 20,000/n2016: 20,000/n/nThis gives a total income over the three-year period of 75,000./n/nThe correct answer is 75,000."
+  "explaination":"Just sum the Utilities income for each of the three years:\n\n2014: 35,000\n2015: 20,000\n2016: 20,000\n\nThis gives a total income over the three-year period of 75,000.\n\nThe correct answer is 75,000."
   },
   
   {
@@ -328,7 +328,7 @@
   "question":"Jon and Martin have travel allowances of 61p and 47p per mile respectively. They travel on average 21 miles and 27 miles respectively per sales visit. How much travel allowance would they be able to claim in August?",
   "answers":["£1,050","£1,122","£1,975","£2,172","£2,272"],
   "correctAnswer":2,
-  "explaination":"Jon made 70 client visits in August and can claim 70*21*61p so £896. Martin made 85 client visits in August and can claim 85*27*47p = £1,079./n/nThe correct answer is £1,975."
+  "explaination":"Jon made 70 client visits in August and can claim 70 x 21 x 61p so £896. Martin made 85 client visits in August and can claim 85 x 27 x 47p = £1,079.\n\nThe correct answer is £1,975."
   },
   
   {
@@ -341,7 +341,7 @@
   "question":"If the percentage change in sales visits per Sales Manager between September and October continues for November, what will Martin and Simon’s combined number of sales visits be in November?",
   "answers":["148","149","150","151","152"],
   "correctAnswer":4,
-  "explaination":"Martin's number of sales visits between September and Octboer decreased by 10% and Simon's number increased by 13%. If trends for November are the same, this would bring Marint's number down to 73 visits and Simon's number up to 79./n/nThe correct answer is 152 (73 plus 79)."
+  "explaination":"Martin's number of sales visits between September and Octboer decreased by 10% and Simon's number increased by 13%. If trends for November are the same, this would bring Marint's number down to 73 visits and Simon's number up to 79.\n\nThe correct answer is 152 (73 plus 79)."
   },
   
   {
@@ -354,7 +354,7 @@
   "question":"If Martin's number of visits keeps decreasing at the same pace (in percentage terms) as between September and October, how many months will be required until Martin's number of visits becomes strictly lower than 20?",
   "answers":["10","11","12","13","14"],
   "correctAnswer":4,
-  "explaination":"Martin's number of visits decreased by 10% between September and October, and the number of visits for the last available month, October, is 81./n/n81 * (0.9)^13 = 20.6/n81 * (0.9)^14 = 18.5./n/nThe correct answer is 14."
+  "explaination":"Martin's number of visits decreased by 10% between September and October, and the number of visits for the last available month, October, is 81.\n\n81 x (0.9)^13 = 20.6\n81 x (0.9)^14 = 18.5.\n\nThe correct answer is 14."
   },
   
   {
@@ -364,10 +364,10 @@
   "lineNames":["Jon","Martin","Simon"],
   "xAxis":["June","July","August","September","October"],
   "yAxis":[[50,65,70,55,95],[45,70,85,90,81],[60,50,55,62,70]],
-  "question":"Martin, who travelled 3,500 miles in July, travelled an extra 12 miles per client visit compared to Jon. What was the total number of miles Jon travelled in July?",
+  "question":"Martin, who travelled 3,500 miles in July, travelled an extra 12 miles per client visit compared to Jon. What was the total number of miles Jon traveeled in July?",
   "answers":["2,440","£2,470","2,520","2,560","2,600"],
   "correctAnswer":1,
-  "explaination":"Step 1 – Let x = Martin’s average mileage per visit: July visits = 70 = 3,500 / x, x = 3,500 / 70 = 50 miles per visit. Step 2 – Calculate Jon’s average mileage per client visit: 50 – 12 = 38 miles per visit. Step 3 – Calculate the total number of miles Jon travelled in July: 38 x 65 = 2,470 miles./n/nThus the correct answer is 2,470 miles."
+  "explaination":"Step 1 – Let x = Martin’s average mileage per visit: July visits = 70 = 3,500 / x\nx = 3,500 / 70 = 50 miles per visit. Step 2 – Calculate Jon’s average mileage per client visit: 50 – 12 = 38 miles per visit. Step 3 – Calculate the total number of miles Jon travelled in July: 38 x 65 = 2,470 miles.\n\nThus the correct answer is 2,470 miles."
   },
   
   {
@@ -380,7 +380,7 @@
   "question":"The average order value per client visit is £145, £135 and £125 for Jon, Martin and Simon respectively. Which Sales Managers generate the highest and lowest order values in June?",
   "answers":["Simon (most); Martin (least)","Jon (most); Martin (least)","Martin (most); Simon (least)","Martin (most); Jon (least)","Simon (most); Jon (least)"],
   "correctAnswer":0,
-  "explaination":"Calculate each Sales Manager’s client sales for June, as follows: Jon 50 visits in June 50 x £145 = £7,250, Martin 45 visits in June 45 x £135 = £6,075, Simon 60 visits in June 60 x £125 = £7,500./n/nThus the correct answer is Simon (most); Martin (least)."
+  "explaination":"Calculate each Sales Manager’s client sales for June, as follows: Jon 50 visits in June 50 x £145 = £7,250, Martin 45 visits in June 45 x £135 = £6,075, Simon 60 visits in June 60 x £125 = £7,500.\n\nThus the correct answer is Simon (most); Martin (least)."
   },
   
   {
@@ -394,7 +394,7 @@
   "question":"Between 2010 and 2011 what is the total cut in the marketing budget across the 5 Brands combined (in €10,000s)?",
   "answers":["135","400","500","1,135","1,535"],
   "correctAnswer":2,
-  "explaination":"Step 1 – Calculate the 2010 total marketing budget: 300 + 410 + 260 + 300 + 365 = 1635./n/nStep 2 – Calculate the 2011 total marketing budget: 225 + 275 + 175 + 210 + 250 = 1135./n/nStep 3 – Calculate cut: 2010 marketing budget – 2011 marketing budget = 1635 – 1135 = 500 (in €10,000s)./n/nThus the correct answer is 500."
+  "explaination":"Step 1 – Calculate the 2010 total marketing budget: 300 + 410 + 260 + 300 + 365 = 1635.\n\nStep 2 – Calculate the 2011 total marketing budget: 225 + 275 + 175 + 210 + 250 = 1135.\n\nStep 3 – Calculate cut: 2010 marketing budget – 2011 marketing budget = 1635 – 1135 = 500 (in €10,000s).\n\nThus the correct answer is 500."
   },
   
   {
@@ -408,7 +408,7 @@
   "question":"Which Brand has suffered the largest percentage cut in its Marketing Budget?",
   "answers":["Brand V","Brand W","Brand X","Brand Y","Brand Z"],
   "correctAnswer":1,
-  "explaination":"Step 1 - Calculate the % cut for each branch from 2010 to 2011: Brand V = 75/300 x 100% = 25%, Brand W = 135/410 x 100% = 32.9%, Brand X = 85/260 x 100% = 32.7%, Brand Y = 90/300 x 100% = 30%, Brand Z = 115/365 x 100% = 31.5%./n/nThus the correct answer is Brand W."
+  "explaination":"Step 1 - Calculate the % cut for each brand from 2010 to 2011:\nBrand V = 75/300 x 100% = 25%\nBrand W = 135/410 x 100% = 32.9%\nBrand X = 85/260 x 100% = 32.7%\nBrand Y = 90/300 x 100% = 30%\nBrand Z = 115/365 x 100% = 31.5%.\n\nThus the correct answer is Brand W."
   },
   
   {
@@ -422,7 +422,7 @@
   "question":"Between 2010 and 2011 what has been the mean percentage Budget reduction for each of the 5 Brands (to 1 decimal place)?",
   "answers":["30.4%","30.5%","31.4%","31.5%","32.4%"],
   "correctAnswer":0,
-  "explaination":"Step 1 - Calculate the % cut for each Brand: Brand V = 75/300 x 100 = 25%, Brand W = 135/410 x100 = 32.9%, Brand X = 85/260 x 100 = 32.7%, Brand Y = 90/300 x 100 = 30%, Brand Z = 115/365 x 100 = 31.5%./n/nStep 2 – Calculate mean reduction: (25 + 32.9 + 32.7 + 30 + 31.5)/5 = 30.42%./n/nStep 3 – Calculate answer to 1 decimal place: 30.4%./n/nThus the correct answer is 30.4%."
+  "explaination":"Step 1 - Calculate the % cut for each Brand:\nBrand V = 75/300 x 100 = 25%\nBrand W = 135/410 x100 = 32.9%\nBrand X = 85/260 x 100 = 32.7%\nBrand Y = 90/300 x 100 = 30%\nBrand Z = 115/365 x 100 = 31.5%.\n\nStep 2 – Calculate mean reduction: (25 + 32.9 + 32.7 + 30 + 31.5)/5 = 30.42%.\n\nStep 3 – Calculate answer to 1 decimal place: 30.4%.\n\nThus the correct answer is 30.4%."
   },
   
   {
@@ -436,7 +436,7 @@
   "question":"Brand V and Brand Y are to have their number of staff reduced by the same percentage reduction seen by their Marketing Budgets between 2010 and 2011. If the number of staff at Brand V was originally 120 and the number of staff at Brand Y triple this, what are the new reduced staff numbers for each Brand?",
   "answers":["Can’t tell from the data","35 (Brand V); 142 (Brand Y)","90 (Brand V); 252 (Brand Y)","60 (Brand V); 240 (Brand Y)","50 (Brand V); 360 (Brand Y)"],
   "correctAnswer":3,
-  "explaination":"Step 1 – Calculate the percentage reduction in Marketing Budget for each Brand: Brand V: 225 / 300 = 25% reduction, Brand Y: 210 / 300 = 30% reduction./n/nStep 2 – Calculate the new number of staff for Brand V: 120 x 0.75% = 90./n/nStep 3 – Calculate the new number of staff for Brand Y: (120 x 3) x 0.7 = 252./n/nThus the correct answer is 90 (Brand V); 252 (Brand Y)."
+  "explaination":"Step 1 – Calculate the percentage reduction in Marketing Budget for each Brand:\nBrand V: 225 / 300 = 25% reduction\nBrand Y: 210 / 300 = 30% reduction.\n\nStep 2 – Calculate the new number of staff for Brand V: 120 x 0.75% = 90.\n\nStep 3 – Calculate the new number of staff for Brand Y: (120 x 3) x 0.7 = 252.\n\nThus the correct answer is 90 (Brand V); 252 (Brand Y)."
   },
   
   {
@@ -450,7 +450,7 @@
   "question":"The total 2011 Marketing Budget for all five Brands is to be cut by a quarter in 2012. In £, what is the 2012 Marketing Budget? (to the nearest £100,000)?",
   "answers":["£3 million","£3.1 million","£5.2 million","£6.2 million","£7.1 million"],
   "correctAnswer":4,
-  "explaination":"Step 1 – Calculate the 2012 marketing budget: 2011 marketing budget = 225 + 275 + 175 + 210 + 250 = 1135 (€10,000s),2012 marketing budget = €11.35 million x 75% = €8.5125 million./n/nStep 2 – Convert into £: 8,512,500 / 1.2 = £7.094 million./n/nStep 3 – Put answer into the nearest £100,000: £7.1 million./n/nThus the correct answer is £7.1 million."
+  "explaination":"Step 1 – Calculate the 2012 marketing budget: 2011 marketing budget = 225 + 275 + 175 + 210 + 250 = 1135 (€10,000s),2012 marketing budget = €11.35 million x 75% = €8.5125 million.\n\nStep 2 – Convert into £: 8,512,500 / 1.2 = £7.094 million.\n\nStep 3 – Put answer into the nearest £100,000: £7.1 million.\n\nThus the correct answer is £7.1 million."
   },
   
   {
@@ -464,6 +464,251 @@
   "question":"If 2009’s total costs were £250,000, what were the Production costs?",
   "answers":["£80,000","£75,000","£70,000","£65,000","£60,000"],
   "correctAnswer":3,
-  "explaination":"The information that you need is shown in the graph. Step 1 - Production costs = 26% = £250,000 x 26% = £65,000. Thus the correct answer is (D) £65,000."
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Production costs: £250,000 x 26% = £65,000.\n\nThus the correct answer is £65,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Quarter","Rachet & Clank's Quarterly Clothing Sales 2014 (£1,000s)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["Brand X","Brand Y","Brand Z"],
+  "xAxis":["1st","2nd","3rd","4th"],
+  "yAxis":[[57,63,75],[59,66,73],[74,79,73],[56,71,67]],
+  "question":"If the annual sales target for Brand Y is £837,000, what percentage of this is actual sales?",
+  "answers":["32.66%","33.00%","33.11%","33.33%","33.66%"],
+  "correctAnswer":3,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the total annual sales for Brand Y: 63 + 66 + 79 + 71 = 279.\n\nStep 2 - Calculate this as a fraction of the sales target: 279/837 = 1/3.\n\nThus the correct answer is 33.33%."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Quarter","Rachet & Clank's Quarterly Clothing Sales 2014 (£1,000s)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["Brand X","Brand Y","Brand Z"],
+  "xAxis":["1st","2nd","3rd","4th"],
+  "yAxis":[[57,63,75],[59,66,73],[74,79,73],[56,71,67]],
+  "question":"For each brand (Brand X, Brand Y, Brand Z), what are the average sales per quarter?",
+  "answers":["£61,000, £70,000, £72,000","£61,500, £69,750, £72,000","£61,500, £70,000, £72,000","£61,000, £69,750, £71,000","£61,500, £69,000, £70,000"],
+  "correctAnswer":1,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the total sales for each Brand:\nBrand X = 57 + 59 + 74 + 56 = 246\nBrand Y = 63 + 66 + 79 + 71 = 279\nBrand Z = 75 + 73 + 73 + 67 = 288.\n\nStep 2 - Calculate the average sales per quarter by dividing by 4:\nBrand X = 246/4 = 61.5\nBrand Y = 279/4 = 69.75\nBrand Z = 72.\n\nThus the correct answer is £61,500, £69,750, £72,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"pie",
+  "chartTitle":"Gretmer Ltd. - 2015 US Electrical Goods Sales",
+  "pieSegmentNames":["Cameras","Computers","Game Consoles","TVs","Other"],
+  "pieSegmentPercentages":[0.14,0.43,0.06,0.25,0.12],
+  "question":"Gretmer Ltd.'s annual revenue in 2015 was £15,000,000. If the sale of electrical goods provided 60% of the revenue, what was the total value of Computer sales?",
+  "answers":["£3,820,000","£3,850,000","£3,870,000","£3,880,000","Cannot Say From The Data"],
+  "correctAnswer":2,
+  "explaination":"The information that you need is in the pie chart.\n\n Step 1 - Calculate the amount of revenue that electrical sales brought in: £15,000,000 x 0.6 = £9,000,000.\n\nStep 2 - Calculate the proportion of electrical sales that were Computer sales: £9,000,000 x 0.43 = £3,870,000. \n\nThe correst answer is £3,870,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Country","Maxlet Plc's 2015 Sales Revenue (£100,000s)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["Sales Revenue"],
+  "xAxis":["UK","Germany","France","Spain","US","Russia"],
+  "yAxis":[[10.4],[19.2],[52.3],[46.7],[36.6],[28.9]],
+  "question":"If the total worldwide sales revenue of Maxlet Plc was £28.24 million, how much revenue was brought in by countries other than those shown in the bar chart?",
+  "answers":["£8,830,000","£8,850,000","£8,870,000","£8,880,000","Cannot Say From The Data"],
+  "correctAnswer":0,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the total sales for the countries that ARE shown: 10.4 + 19.2 + 52.3 + 46.7 + 36.6 + 28.9 = 194.1.\n\nStep 2 - Convert this value to £ millions: 194.1 (£100,000s) = £19.41 million.\n\nStep 3 - Subtract this value from the global sales revenue: 28.24 - 19.41 = £8.83 million.\n\nThus the correct answer is £8,830,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Country","Maxlet Plc's 2015 Sales Revenue (£100,000s)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["Sales Revenue"],
+  "xAxis":["UK","Germany","France","Spain","US","Russia"],
+  "yAxis":[[10.4],[19.2],[52.3],[46.7],[36.6],[28.9]],
+  "question":"Maxlet Plc's US sales are split into Western US and Eastern US regions. The Western US region has 3 times the sales revenue than the Eastern US region. What are the Western US region's sales revenue?",
+  "answers":["£2,700,000","£2,735,000","£2,745,000","£2,755,000","Cannot Say From The Data"],
+  "correctAnswer":2,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the total US sales revenue in £ millions: 36.6 (£100,000s) = £3.66 million.\n\nStep 2 - Calculate the proportion of Western US sales revenue to the total US sales revenue: 3/(3+1) = 3/4 = 0.75.\n\nStep 3 - Calculate the value of Western US sales revenue: £3,660,000 x 0.75 = £2,745,000.\n\nThus the correct answer is £2,745,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Country","Maxlet Plc's 2015 Sales Revenue (£100,000s)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["Sales Revenue"],
+  "xAxis":["UK","Germany","France","Spain","US","Russia"],
+  "yAxis":[[10.4],[19.2],[52.3],[46.7],[36.6],[28.9]],
+  "question":"Maxlet Plc's German sales department only reached 80% of their sales revenue target. If the German sales are split equally into 6 regions, what was each region's sales revenue?",
+  "answers":["£360,000","£400,000","£440,000","£540,000","Cannot Say From The Data"],
+  "correctAnswer":1,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the total German sales revenue in £ millions: 19.2 (£100,000s) = £1.92 million.\n\nStep 2 - Calculate the sales revenue target: £1,920,000/0.8 = £2,400,000.\n\nStep 3 - Divide this between the 6 regions: £2,400,000/6 = £400,000.\n\nThus the correct answer is £400,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"line",
+  "axisNames":["Month","US Beverage Sales in 2016 ($1,000s)"],
+  "lineNames":["DS Beverages","Tamam Drinks","Prezze"],
+  "xAxis":["Jan","Feb","Mar","Apr","May"],
+  "yAxis":[[52,75,81,99,116],[60,75,59,107,122],[48,52,87,69,108]],
+  "question":"In which month were the sales of Tamam Drinks 37.5% of the total sales?",
+  "answers":["January","February","March","April","May"],
+  "correctAnswer":0,
+  "explaination":"Step 1 – For every month, calculate the proportion of Tamam Drinks' sales to the total sales that month:\nJanuary = 60 / (52 + 60 + 48) = 0.375\nFebruary = 75 / (75 + 75 + 52) = 0.371\nMarch = 81 / (81 + 59 + 87) = 0.357\nApril = 99 / (99 + 107 + 69) = 0.360\nMay = 116 / (116 + 122 + 108) = 0.335\n\nThus the correct answer is January."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"line",
+  "axisNames":["Month","US Beverage Sales in 2016 ($1,000s)"],
+  "lineNames":["DS Beverages","Tamam Drinks","Prezze"],
+  "xAxis":["Jan","Feb","Mar","Apr","May"],
+  "yAxis":[[52,75,81,99,116],[60,75,59,107,122],[48,52,87,69,108]],
+  "question":"If DS Beverages' sales continued to increase as it did from April to May, what would DS Beverages' sales be in September?",
+  "answers":["$217,115","$218,105","$218,115","$218,155","Cannot Say From The Data"],
+  "correctAnswer":2,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the percentage increase from April to May for DS Beverages: (116 - 99)/99 = 0.171.\n\nStep 2 - Multiply the May sales by 1 + 0.171 = 1.171 for each month until September : 116 x (1.171^4) = 218.115.\n\nThus the correct answer is $218,115."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"line",
+  "axisNames":["Month","US Beverage Sales in 2016 ($1,000s)"],
+  "lineNames":["DS Beverages","Tamam Drinks","Prezze"],
+  "xAxis":["Jan","Feb","Mar","Apr","May"],
+  "yAxis":[[52,75,81,99,116],[60,75,59,107,122],[48,52,87,69,108]],
+  "question":"In the period February-May, what was the difference in beverage sales between Prezze and DS Beverages?",
+  "answers":["Prezze less by $55,000","Prezze less by $56,000","Prezze more by $55,000","Prezze more by $56,000","Cannot Say From The Data"],
+  "correctAnswer":0,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the total sales for Prezze between February and May: 52 + 87 + 69 + 108 = 316.\n\nStep 2 - Calculate the total sales for DS Beverages between February and May: 75 + 81 + 99 + 116 = 371.\n\nStep 3 - Subtract Prezze's sales from DS Beverages' sales: 316 - 371 = -55 = $55,000 less.\n\nThus the correct answer is Prezze less by $55,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"line",
+  "axisNames":["Month","US Beverage Sales in 2016 ($1,000s)"],
+  "lineNames":["DS Beverages","Tamam Drinks","Prezze"],
+  "xAxis":["Jan","Feb","Mar","Apr","May"],
+  "yAxis":[[52,75,81,99,116],[60,75,59,107,122],[48,52,87,69,108]],
+  "question":"Between which months did Tamam Drinks show it's greatest change in proportion of total sales?",
+  "answers":["January-February","February-March","March-April","April-May","Cannot Say From The Data"],
+  "correctAnswer":2,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate Tamam Drinks' sales for each month as a proportion of sales in that month:\nJanuary = 60/(52 + 60 + 48) = 0.375\nFebruary = 75/(75 + 75 + 52) = 0.371\nMarch = 59/(81 + 59 + 87) = 0.260\nApril = 107/(99 + 107 + 69) = 0.389\nMay = 122/(116 + 122 + 108) = 0.353.\n\nStep 2 - Calculate the differences between consecutive months:\nJanuary-February = 0.375 - 0.371 = -0.004\nFebruary-March = 0.371 - 0.260 = 0.111\nMarch-April = 0.260 - 0.389 = -0.129\nApril-May = 0.389 - 0.353 = 0.036.\n\nStep 3 - Choose the months with the biggest absolute difference: 0.129.\n\nThus the correct answer is March-April."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"line",
+  "axisNames":["Month","US Beverage Sales in 2016 ($1,000s)"],
+  "lineNames":["DS Beverages","Tamam Drinks","Prezze"],
+  "xAxis":["Jan","Feb","Mar","Apr","May"],
+  "yAxis":[[52,75,81,99,116],[60,75,59,107,122],[48,52,87,69,108]],
+  "question":"If between May and June, all three companies have the same percentage change in beverage sales as they did between April and May, what will be teh total value of sales in June (to the nearest $100)?",
+  "answers":["$422,900","$432,700","$437,700","$438,400","Cannot Say From The Data"],
+  "correctAnswer":1,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate each company's percentage change in sale between April and May:\nDS Beverages = 116/99 = 1.172 = +17.2%\nTamam Drinks = 122/107 = 1.140 = +14.0%\nPrezze = 108/69 = 1.565 = +56.5%.\n\nStep 2 - Calculate the beverage sales in June for all three companies:DS Beverages = 116 x 1.172 = 136.0\nTamam Drinks = 122 x 1.140 = 127.7\nPrezze = 108 x 1.565 = 169.0.\n\nStep 3 - Calculate the total sales in June: 136.0 + 127.7 + 169.0 = $432,700.\n\nThus the correct answer is $432,700."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Quarter","High Street Footwear Brands - 2015 Sales ($1,000,000s)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["V","W","X","Y","Z"],
+  "xAxis":["First","Second","Third","Fourth"],
+  "yAxis":[[10,11,8,12,9],[10,9,13,8,10],[11,7,8,12,9],[9,12,8,9,11]],
+  "question":"Which brand had the best quarterly average of sales and what was the quarterly average value of sales for that brand?",
+  "answers":["Z with $10,250,000","V with $10,000,000","Y with $10,000,000","Y with $10,250,000","Cannot Say From The Data"],
+  "correctAnswer":3,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the total sales in 2015 for each brand:\nV = 10 + 10 + 11 + 9 = 40\nW = 11 + 9 + 7 + 12 = 39\nX = 8 + 13 + 8 + 8 = 37\nY = 12 + 8 + 12 + 9 = 41\nZ = 9 + 10 + 9 + 11 = 39.\n\nStep 2 - Convert the value of the brand with the highest total sales into $1,000,000s: Y = 41 = $41,000,000.\n\nStep 3 - Divide this by the number of quarters (4): $41,000,000/4 = $10,250,000.\n\nThus the correct answer is Y with $10,250,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Quarter","High Street Footwear Brands - 2015 Sales ($1,000,000s)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["V","W","X","Y","Z"],
+  "xAxis":["First","Second","Third","Fourth"],
+  "yAxis":[[10,11,8,12,9],[10,9,13,8,10],[11,7,8,12,9],[9,12,8,9,11]],
+  "question":"If every brand has the same percentage change in sales between the Fourth Quarter 2015 and the First Quarter 2016 as they dis between the Third Quarter 2015 and the Fourth Quarter 2015, what is the total value of sales in the First Quarter 2016?",
+  "answers":["$55,628,000","$55,728,000","$55,828,000","$55,928,000","Cannot Say From The Data"],
+  "correctAnswer":0,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the percentage change in sales for each brand between the Third and Fourth Quarters 2015:\nV = 9/11 = 0.812 = -18.2%\nW = 12/7 = 1.714 = +71.4%\nX = 8/8 = 1.000 = 0%\nY = 9/12 = 0.750 = -25.0%\nZ = 11/9 = 1.182 = +18.2%.\n\nStep 2 - Calculate the sales for each brand in the First Quarter 2016:\nV = 9 x 0.812 = 7.308\nW = 12 x 1.714 = 20.568\nX = 8 x 1.000 = 8\nY = 9 x 0.750 = 6.750\nZ = 11 x 1.182 = 13.002.\n\nStep 3 - Calculate the total sales in the First Quarter 2016: 7.308 + 20.568 + 8 + 6.750 + 13.002 = 55.628 = $55,628,000.\n\nThus the correct answer is $55,628,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Quarter","High Street Footwear Brands - 2015 Sales ($1,000,000)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["V","W","X","Y","Z"],
+  "xAxis":["First Quarter","Second Quarter","Third Quarter","Fourth Quarter"],
+  "yAxis":[[10,11,8,12,9],[10,9,13,8,10],[11,7,8,12,9],[9,12,8,9,11]],
+  "question":"If Brand W has 14 stores and Brand Z has 18 stores, what is the difference in average sales per store between the brands in the Second Quarter 2015 (to the nearest $1,000)?",
+  "answers":["Z less by $77,000","Z less by $87,000","Z more by $87,000","Z more by $97,000","Cannot Say From The Data"],
+  "correctAnswer":0,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the average sales per store for both brands in the Second Quarter 2015:\nW = 9/14 = 0.643 = $643,000\nZ = 10/18 = 0.556 = $556,000.\n\nStep 2 - Subtract Brand W's sales from Brand Z's sales: $556,000 - $643,000 = -$87,000.\n\nThus the correct answer is Z less by $87,000."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Quarter","High Street Footwear Brands - 2015 Sales ($1,000,000)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["V","W","X","Y","Z"],
+  "xAxis":["First Quarter","Second Quarter","Third Quarter","Fourth Quarter"],
+  "yAxis":[[10,11,8,12,9],[10,9,13,8,10],[11,7,8,12,9],[9,12,8,9,11]],
+  "question":"Which brand has a Second Quarter:Third Quarter sales ratio of 2:3?",
+  "answers":["V","W","X","Y","Z"],
+  "correctAnswer":3,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the Second Quarter:Third Quarter for all brands:\nV = = 10/11 = 10:11\nW = 7/9 = 9:7\nX = 13/8 = 13:8\nY = 8/12 = 2:3\nZ = 10/9 = 10:9.\n\nThus the correct answer is Y."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Country","Equity Fund Components (%)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["US","UK","Germany","Japan","India"],
+  "xAxis":["Stocks","Cash","Bonds","Derivatives","Other"],
+  "yAxis":[[35,4,19,40,2],[28,14,31,7,20],[16,17,34,23,10],[42,10,22,12,14],[21,48,5,15,11]],
+  "question":"Which country has a Stocks:Cash ratio of 21:5?",
+  "answers":["US","UK","Germany","Japan","India"],
+  "correctAnswer":3,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the Stocks:Cash for all countries:\nUS = = 35/4 = 35:4\nUK = 28/14 = 2:1\nGermany = 16/17 = 16:17\nJapan = 42/10 = 21:5\nIndia = 21/48 = 7:16.\n\nThus the correct answer is Japan."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Country","Equity Fund Components (%)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["US","UK","Germany","Japan","India"],
+  "xAxis":["Stocks","Cash","Bonds","Derivatives","Other"],
+  "yAxis":[[35,4,19,40,2],[28,14,31,7,20],[16,17,34,23,10],[42,10,22,12,14],[21,48,5,15,11]],
+  "question":"If 8% of equity was taken from UK Bonds and redistributed amongst the remaining UK equity components proportionately to their current percentages, what will the new percentage be for the Stocks component?",
+  "answers":["28.53%","29.79%","30.24%","30.83%","31.28%"],
+  "correctAnswer":2,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the proportion of the 8% that will be allocated to the Stocks component: 8 x (28/100) = 2.24.\n\nStep 2 - Add this to the current Stocks component: 28 + 2.24 = 30.24.\n\nThus the correct answer is 30.24%."
+  },
+  
+  {
+  "questionType":"Numerical Reasoning",
+  "chartType":"bar",
+  "axisNames":["Country","Equity Fund Components (%)"],
+  "barSegmentOrientation":"vertical",
+  "barSegmentNames":["US","UK","Germany","Japan","India"],
+  "xAxis":["Stocks","Cash","Bonds","Derivatives","Other"],
+  "yAxis":[[35,4,19,40,2],[28,14,31,7,20],[16,17,34,23,10],[42,10,22,12,14],[21,48,5,15,11]],
+  "question":"The value of the  ?",
+  "answers":["28.53%","29.79%","30.24%","30.83%","31.28%"],
+  "correctAnswer":2,
+  "explaination":"The information that you need is shown in the graph.\n\nStep 1 - Calculate the proportion of the 8% that will be allocated to the Stocks component: 8 x (28/100) = 2.24.\n\nStep 2 - Add this to the current Stocks component: 28 + 2.24 = 30.24.\n\nThus the correct answer is 30.24%."
   }
   ]

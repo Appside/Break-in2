@@ -212,7 +212,7 @@
   "question":"Which of the following languages is more suited to a structured program?",
   "answers":["PL/1","FORTRAN","BASIC","PASCAL","None of the above"],
   "correctAnswer":3,
-  "explanation":"Structured Programming is a paradigm aimed at improving the clarity, quality and development time of a computer program bu making extensive use of subroutines and loops. PASCAL is the more appropriate for the list we gave."
+  "explanation":"Structured Programming is a paradigm aimed at improving the clarity, quality and development time of a computer program by making extensive use of subroutines and loops. PASCAL is the more appropriate for the list we gave."
   },
   
   ]
