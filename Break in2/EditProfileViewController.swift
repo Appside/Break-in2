@@ -40,6 +40,9 @@ class EditProfileViewController : FormViewController {
     var profileCourse:String = String()
     var profileDegree:String = String()
     var profilePosition:String = String()
+    var shareInfoAllowed:String = String()
+    var recommendedBy:String = String()
+    var sourceRecommendation:[String] = [String]()
     
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -51,6 +54,20 @@ class EditProfileViewController : FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let textString1:String = "We speak to potential employers and headhunters on a regular basis. Would you accept for us to share your personnal details and test results with them? We would contact you should they show any direct interest in your profile."
+        let textHeight1:CGFloat = self.view.heightForView(textString1, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
+        
+        let textString2:String = "If you discovered and installed BreakIN2 through a recommendation, let us know the promotion code."
+        let textHeight2:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
+        
+        let textString3:String = "The information below is not mandatory but will help us select appropriate job offers for you and send accurate information to potential employers or recruiters."
+        let textHeight3:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
+        
+        let textString4:String = "Fields marked as * are mandatory. Remaining date is optional but will help us match you to the right job offers and opportunities."
+        let textHeight4:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
+        
+        self.sourceRecommendation = ["No one","Jon","Sangeet","JC"]
         
         //Status Bar Background
         let NewView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
@@ -88,6 +105,8 @@ class EditProfileViewController : FormViewController {
         self.profileCourse = self.defaults.objectForKey("profileCourse") as? String ?? String()
         self.profileDegree = self.defaults.objectForKey("profileDegree") as? String ?? String()
         self.profilePosition = self.defaults.objectForKey("profilePosition") as? String ?? String()
+        self.shareInfoAllowed = self.defaults.objectForKey("shareInfoAllowed") as? String ?? String()
+        self.recommendedBy = self.defaults.objectForKey("recommendedBy") as? String ?? String()
         
         form =
 
@@ -192,6 +211,23 @@ class EditProfileViewController : FormViewController {
                 }.cellUpdate { cell, row in
                     cell.textLabel?.textColor = UIColor.whiteColor()
                 }
+            
+            +++ Section { section in
+                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                header.height = {textHeight4+15}
+                header.onSetupView = { view, _ in
+                    // Commonly used to setup texts inside the view
+                    // Don't change the view hierarchy or size here!
+                    let textView:UILabel = UILabel()
+                    textView.numberOfLines = 0
+                    textView.text = textString4
+                    view.addSubview(textView)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+                }
+                section.header = header
+            }
 
             <<< NameRow("FirstName"){
                 $0.title = "First Name *"
@@ -262,6 +298,23 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.textColor = UIColor.whiteColor()
                 }
             
+            +++ Section { section in
+                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                header.height = {textHeight3+15}
+                header.onSetupView = { view, _ in
+                    // Commonly used to setup texts inside the view
+                    // Don't change the view hierarchy or size here!
+                    let textView:UILabel = UILabel()
+                    textView.numberOfLines = 0
+                    textView.text = textString3
+                    view.addSubview(textView)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+                }
+                section.header = header
+            }
+            
             <<< NameRow("University"){
                 $0.title = "University"
                 $0.placeholder = "Type Univeristy"
@@ -320,6 +373,83 @@ class EditProfileViewController : FormViewController {
                     cell.detailTextLabel?.textColor = UIColor.whiteColor()
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
             }
+        
+            +++ LabelRow(){
+                $0.title = "Account Information"
+                }.cellSetup{ cell, row in
+                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
+                    if self.skinType == 1 {
+                        cell.backgroundColor = UIColor.blackColor()
+                    } else if self.skinType == 2{
+                        cell.backgroundColor = UIColor.turquoiseColor()
+                    }
+                }.cellUpdate { cell, row in
+                    cell.textLabel?.textColor = UIColor.whiteColor()
+            }
+
+            +++ Section { section in
+                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                header.height = {textHeight1+15}
+                header.onSetupView = { view, _ in
+                    // Commonly used to setup texts inside the view
+                    // Don't change the view hierarchy or size here!
+                    let textView:UILabel = UILabel()
+                    textView.numberOfLines = 0
+                    textView.text = textString1
+                    view.addSubview(textView)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+                }
+                section.header = header
+            }
+            
+            <<< ActionSheetRow<String>("AllowSharing") {
+                $0.title = "Allow Sharing"
+                $0.selectorTitle = "Share your details ?"
+                $0.options = ["Yes","No"]
+                $0.value = self.shareInfoAllowed
+                }.cellSetup{ cell, row in
+                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+                    cell.backgroundColor = self.fieldsColor
+                }.cellUpdate { cell, row in
+                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.tintColor = UIColor.whiteColor()
+                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                    cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+        }
+        
+            +++ Section { section in
+                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                header.height = {textHeight2+15}
+                header.onSetupView = { view, _ in
+                    // Commonly used to setup texts inside the view
+                    // Don't change the view hierarchy or size here!
+                    let textView:UILabel = UILabel()
+                    textView.numberOfLines = 0
+                    textView.text = textString2
+                    view.addSubview(textView)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+                }
+                section.header = header
+            }
+            
+            <<< ActionSheetRow<String>("RecommendedBy") {
+                $0.title = "Recommended by:"
+                $0.selectorTitle = "Who recommended you?"
+                $0.options = self.sourceRecommendation
+                $0.value = self.recommendedBy
+                }.cellSetup{ cell, row in
+                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+                    cell.backgroundColor = self.fieldsColor
+                }.cellUpdate { cell, row in
+                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.tintColor = UIColor.whiteColor()
+                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                    cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+                }
             
             +++ ButtonRow() { (row: ButtonRow) -> Void in
                 row.title = self.buttonTitle
@@ -382,17 +512,6 @@ class EditProfileViewController : FormViewController {
         
         var alertMessage:String = String()
         var showErrorMessage:Bool = false
-        
-        /*
-        self.profileFirstName = form.rowByTag("FirstName")!.value!
-        self.profileLastName = form.rowByTag("LastName")!.value!
-        self.profileEmail = form.rowByTag("Email")!.value!
-        self.profilePhone = form.rowByTag("Phone")!.value!
-        self.profileUniversity = form.rowByTag("University")!.value!
-        self.profileCourse = form.rowByTag("Course")!.value!
-        self.profileDegree = form.rowByTag("Degree")!.value!
-        self.profilePosition = form.rowByTag("Position")!.value!
-        */
         
         if let newRow:NameRow = form.rowByTag("FirstName") {
             if let newEntry = newRow.value {
@@ -462,6 +581,8 @@ class EditProfileViewController : FormViewController {
                     user![PF_USER_COURSE] = self.profileCourse
                     user![PF_USER_DEGREE] = self.profileDegree
                     user![PF_USER_POSITION] = self.profilePosition
+                    user![PF_USER_SHARE_INFO_ALLOWED] = self.shareInfoAllowed
+                    user![PF_USER_RECOMMENDED_BY] = self.recommendedBy
                     
                     user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
@@ -474,6 +595,8 @@ class EditProfileViewController : FormViewController {
                             self.defaults.setObject(self.profileCourse, forKey: "profileCourse")
                             self.defaults.setObject(self.profileDegree, forKey: "profileDegree")
                             self.defaults.setObject(self.profilePosition, forKey: "profilePosition")
+                            self.defaults.setObject(self.shareInfoAllowed, forKey: "shareInfoAllowed")
+                            self.defaults.setObject(self.recommendedBy, forKey: "recommendedBy")
                             
                             SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
                                 
@@ -534,6 +657,12 @@ class EditProfileViewController : FormViewController {
             destinationVC.firstTimeUser = true
             destinationVC.segueFromLoginView = false
         }
+    }
+    
+    func multipleSelectorDone(item:UIBarButtonItem) {
+     
+        navigationController?.popViewControllerAnimated(true)
+        
     }
 
 }

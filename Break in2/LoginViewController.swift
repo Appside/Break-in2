@@ -199,6 +199,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     self.defaults.setObject(user![PF_USER_COURSE] as! String, forKey: "profileCourse")
                     self.defaults.setObject(user![PF_USER_DEGREE] as! String, forKey: "profileDegree")
                     self.defaults.setObject(user![PF_USER_POSITION] as! String, forKey: "profilePosition")
+                    self.defaults.setObject(user![PF_USER_SHARE_INFO_ALLOWED], forKey: "shareInfoAllowed")
+                    self.defaults.setObject(user![PF_USER_RECOMMENDED_BY], forKey: "recommendedBy")
                     
                 SwiftSpinner.hide()
                 self.userLoggedIn((user)!)

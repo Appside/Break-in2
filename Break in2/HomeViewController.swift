@@ -799,7 +799,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate {
         
         let bannerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
         
-        let bannerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+        let bannerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.logOutButton.frame.height)
         
         let bannerViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.logOutButton.frame.width)
         
