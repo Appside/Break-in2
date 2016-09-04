@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Start and setup Firebase
         FIRApp.configure()
+        GADMobileAds.configureWithApplicationID("1:879532337664:ios:3de52aa15ba8e3f1");
         
         // [Optional] Parse also lets you store objects in a local datastore on the device itself
         Parse.enableLocalDatastore()
