@@ -57,6 +57,7 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Firebase
   - Firebase/AdMob
+  - Google-Mobile-Ads-SDK
   - Parse
   - ParseFacebookUtilsV4
   - ParseUI
@@ -83,6 +84,6 @@ SPEC CHECKSUMS:
   SCLAlertView: d7c6a48c7d340e60206d4ed0e8ebcbff3b9d2a44
   SwiftSpinner: c6585a0ae5c67eb33e737695cce88f0262008cce
 
-PODFILE CHECKSUM: 1ce61e467f268bf07ae27c4aa70f532ed82b9946
+PODFILE CHECKSUM: 9ed666858518a5537dac551e69e692d79b1cb7d4
 
 COCOAPODS: 1.0.1

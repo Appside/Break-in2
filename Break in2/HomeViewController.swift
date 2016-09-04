@@ -12,8 +12,9 @@ import Parse
 import ParseUI
 import SCLAlertView
 import SwiftSpinner
+import GoogleMobileAds
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, GADBannerViewDelegate {
   
   var newSwitch:Bool = Bool()
   
@@ -74,7 +75,10 @@ class HomeViewController: UIViewController {
   var segueFromLoginView:Bool = true
   var firstTimeUser:Bool = false
   var tutorialPageNumber:Int = 0
-  
+    
+    //Admob banner
+    var bannerView:DFPBannerView = DFPBannerView()
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     self.userLoggedIn()
@@ -112,6 +116,7 @@ class HomeViewController: UIViewController {
     self.careersBackgroundView.addSubview(self.logOutButton)
     self.careersBackgroundView.addSubview(self.careersScrollView)
     self.careersBackgroundView.addSubview(self.scrollInfoLabel)
+    self.careersBackgroundView.addSubview(self.bannerView)
     self.view.addSubview(self.tutorialView)
     self.view.addSubview(self.tutorialNextButton)
     self.view.addSubview(self.tutorialFingerImageView)
@@ -782,6 +787,45 @@ class HomeViewController: UIViewController {
       self.showCareersBackgroundView()
     }
     
+    let membershipType = self.defaults.objectForKey("Membership") as! String
+    
+    if (membershipType == "Free") {
+    
+        self.bannerView.alpha = 0.0
+        
+        self.bannerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let bannerViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+        
+        let bannerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+        
+        let bannerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+        
+        let bannerViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.logOutButton.frame.width)
+        
+        self.bannerView.addConstraints([bannerViewHeightConstraint,bannerViewWidthConstraint])
+        self.view.addConstraints([bannerViewLeftConstraint, bannerViewBottomConstraint])
+        
+        let customSize = CGSize(width: self.logOutButton.frame.width, height: self.logOutButton.frame.height)
+        let customAdSize = GADAdSizeFromCGSize(customSize)
+        self.bannerView.adUnitID = AD_ID_HOMEVIEW_BANNER
+        self.bannerView.rootViewController = self
+        self.bannerView.delegate = self
+        self.bannerView.loadRequest(DFPRequest())
+
+    } else {
+        
+        self.bannerView.removeFromSuperview()
+        
+    }
+    
+    if (PFUser.currentUser() != nil) {
+        self.loadUser(PFUser.currentUser()!)
+    }
+    else {
+        self.view.loginUser(self)
+    }
+    
     // Show tutorial to first time users
     
     if self.firstTimeUser {
@@ -1139,9 +1183,14 @@ class HomeViewController: UIViewController {
   */
     
     func isBrainBreakerDone() {
+    }
+    
+    func adViewDidReceiveAd(bannerView: GADBannerView!) {
         
-        
+        self.logOutButton.alpha = 0.0
+        self.bannerView.alpha = 1.0
+        self.careersBackgroundView.bringSubviewToFront(self.bannerView)
         
     }
-  
+    
 }

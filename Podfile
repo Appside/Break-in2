@@ -14,6 +14,8 @@ pod 'SCLAlertView'
 pod "SwiftSpinner"
 pod “Firebase”
 pod “Firebase/AdMob”
+pod 'Google-Mobile-Ads-SDK'
+
 pod 'Eureka', '~> 1.7'
 
 end

@@ -162,7 +162,7 @@ let PF_CALENDAR_COMPANY                 = "company"                 //	String
 let PF_CALENDAR_JOBTITLE                = "position"                //	String
 
 /* Add AD IDs from FIREBASE here */
-let AD_ID_HOMEVIEW_BANNER           = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_HOMEVIEW_BANNER           = "ca-app-pub-3940256099942544/2934735716"
 let AD_ID_NUMERICAL                 = "ca-app-pub-3940256099942544/4411468910"
 let AD_ID_LOGICAL                   = "ca-app-pub-3940256099942544/4411468910"
 let AD_ID_VERBAL                    = "ca-app-pub-3940256099942544/4411468910"
