@@ -14,10 +14,11 @@ import SCLAlertView
 import SwiftSpinner
 import GoogleMobileAds
 
-class HomeViewController: UIViewController, GADBannerViewDelegate {
+class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
   
   var newSwitch:Bool = Bool()
-  
+  var membershipCounter:Int = Int()
+    
   // Declare and initialize types of careers
   
   var careerTypes:[String] = [String]()
@@ -27,6 +28,14 @@ class HomeViewController: UIViewController, GADBannerViewDelegate {
   var careerColors:[String:UIColor] = [String:UIColor]()
   var tutorialViews:[UIView] = [UIView]()
   var tutorialDescriptions:[UIView:[String]] = [UIView:[String]]()
+    
+    //in app purchase initialisation
+    
+    let productIdentifiers = Set(["com.APPSIDE.Breakin2.ExtraLives1", "com.APPSIDE.Breakin2.UnlimitedLives1"])
+    var product: SKProduct?
+    var productsArray = Array<SKProduct>()
+    var list = [SKProduct]()
+    var p = SKProduct()
   
   // Declare and initialize views and models
   
@@ -790,6 +799,8 @@ class HomeViewController: UIViewController, GADBannerViewDelegate {
     let membershipType = self.defaults.objectForKey("Membership") as! String
     
     if (membershipType == "Free") {
+        
+        self.count()
     
         self.bannerView.alpha = 0.0
         
@@ -1192,5 +1203,195 @@ class HomeViewController: UIViewController, GADBannerViewDelegate {
         self.careersBackgroundView.bringSubviewToFront(self.bannerView)
         
     }
+    
+    func count(){
+        
+        self.membershipCounter = self.defaults.objectForKey("MembershipCounter") as? Int ?? Int()
+        
+        print(membershipCounter)
+        
+        if self.membershipCounter < 10 {
+            
+            self.membershipCounter++
+            self.defaults.setInteger(membershipCounter, forKey: "MembershipCounter")
+            
+        }else{
+            
+            let appearance = SCLAlertView.SCLAppearance(
+                kTitleFont: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))!,
+                kTextFont: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(14))!,
+                kButtonFont: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(14))!,
+                showCloseButton: false
+            )
+            
+            let alertView = SCLAlertView(appearance: appearance)
+            
+            alertView.addButton("Yes") {
+                SwiftSpinner.show("Purchasing")
+                self.unlimitedLivesTapped()
+            }
+            alertView.addButton("Close") {
+            }
+            
+            alertView.showSuccess("Message", subTitle: "Premium subscription provides unlimited tests, 3 attempts at the Brainbreaker and removes all ads! \n\n Would you like to upgrade?")
+            
+            self.membershipCounter = 0
+            self.defaults.setInteger(membershipCounter, forKey: "MembershipCounter")
+        }
+        
+    }
+    
+    func premiumMembership(){
+        
+        SwiftSpinner.show("Purchasing")
+        
+        if let currentUser = PFUser.currentUser(){
+            currentUser[PF_USER_MEMBERSHIP] = "Premium"
+            //set other fields the same way....
+            currentUser.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                if error == nil {
+                    
+                    self.defaults.setObject("Premium", forKey: "Membership")
+                    let membershipType = self.defaults.objectForKey("Membership") as! String
+                    self.defaults.setInteger(3, forKey: "NoOfBrainBreakerLives")
+                    print(membershipType)
+                    
+                    SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
+                        SwiftSpinner.hide()
+                        }, subtitle: "This means you can practice an unlimited number of tests! You also have 3 attempts at each Brain Breaker question, beginning from the next one!")
+                    
+                } else {
+                    
+                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                        
+                        SwiftSpinner.hide()
+                        
+                        }, subtitle: "Payment error, tap to return home")
+                    
+                }
+                
+            })
+        }
+        
+    }
+    
+    func requestProductData()
+    {
+        if SKPaymentQueue.canMakePayments() {
+            print("IAP is enabled, loading")
+            let productID:NSSet = NSSet(objects: "com.APPSIDE.Breakin2.ExtraLives1", "com.APPSIDE.Breakin2.UnlimitedLives1")
+            let request: SKProductsRequest = SKProductsRequest(productIdentifiers: productID as! Set<String>)
+            print(productID as! Set<String>)
+            request.delegate = self
+            request.start()
+        } else {
+            let alert = UIAlertController(title: "In-App Purchases Not Enabled", message: "Please enable In App Purchase in Settings", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { alertAction in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+                
+                let url: NSURL? = NSURL(string: UIApplicationOpenSettingsURLString)
+                if url != nil
+                {
+                    UIApplication.sharedApplication().openURL(url!)
+                }
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { alertAction in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+        print("product request")
+        let myProduct = response.products
+        //print(myProduct)
+        
+        for product in myProduct {
+            list.append(product)
+        }
+        
+    }
+    
+    func unlimitedLivesTapped(){
+        
+        for product in list {
+            let prodID = product.productIdentifier
+            if(prodID == "com.APPSIDE.Breakin2.UnlimitedLives1") {
+                p = product
+                buyProduct()
+                break;
+            }
+        }
+        
+    }
+    
+    func buyProduct(){
+        
+        print("buy " + p.productIdentifier)
+        let pay = SKPayment(product: p)
+        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
+        SKPaymentQueue.defaultQueue().addPayment(pay as SKPayment)
+        
+    }
+    
+    
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        print("add payment")
+        
+        for transaction:AnyObject in transactions {
+            let trans = transaction as! SKPaymentTransaction
+            print(trans.error)
+            
+            switch trans.transactionState {
+                
+            case .Purchased:
+                //print("buy, ok unlock iap here")
+                //print(p.productIdentifier)
+                
+                let prodID = p.productIdentifier as String
+                switch prodID {
+                case "com.APPSIDE.Breakin2.ExtraLives1":
+                    break
+                    //print("extra lives bought")
+                case "com.APPSIDE.Breakin2.UnlimitedLives1":
+                    //print("unlimited lives bought")
+                    premiumMembership()
+                default:
+                    print("IAP not setup")
+                }
+                
+                queue.finishTransaction(trans)
+                break;
+            case .Failed:
+                print("buy error")
+                
+                SwiftSpinner.show("Purchase Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                    }, subtitle: "Tap to return home")
+                
+                queue.finishTransaction(trans)
+                break;
+            default:
+                print("default")
+                break;
+                
+            }
+        }
+    }
+    
+    func finishTransaction(trans:SKPaymentTransaction)
+    {
+        print("finish transaction")
+        SKPaymentQueue.defaultQueue().finishTransaction(trans)
+    }
+    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
+    {
+        print("remove trans");
+    }
+
     
 }
