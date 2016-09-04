@@ -87,6 +87,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         self.widthRatio = screenFrame.size.width / 414
         self.heightRatio = screenFrame.size.height / 736
         
+        
         //Initialize difficulty level
         self.setDifficultyLevel()
         

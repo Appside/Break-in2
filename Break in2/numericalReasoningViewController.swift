@@ -87,7 +87,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
-        self.questionLabel.userInteractionEnabled = false
+        self.questionLabel.editable = false
         
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds

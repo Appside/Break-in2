@@ -39,7 +39,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     var quizzModel:JSONModel = JSONModel()
     var quizzArray:[programmingQuestion] = [programmingQuestion]()
     var displayedQuestionIndex:Int = 0
-    var totalNumberOfQuestions:Int = 1
+    var totalNumberOfQuestions:Int = 9
     let questionLabel:UITextView = UITextView()
     var allowedSeconds:Int = Int()
     var allowedMinutes:Int = Int()
@@ -93,7 +93,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.membershipType = defaults.objectForKey("Membership") as! String
         self.interstitialAd = self.createAndLoadInterstitial()
         self.testStarted = false
-        self.questionLabel.userInteractionEnabled = false
+        self.questionLabel.editable = false
         
         //Screen size and constraints
         let screenFrame:CGRect = UIScreen.mainScreen().bounds
@@ -196,7 +196,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.passageTableView.setRearrangeOptions([.hover, .translucency], dataSource: self)
         
         self.view.addSubview(self.mainView)
-        self.mainView.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(85*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
+        self.mainView.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(135*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
         self.mainView.addSubview(self.questionView)
         self.mainView.addSubview(self.passageView)
         self.passageView.addSubview(passageTableView)
@@ -589,6 +589,8 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     
     func displayQuestion(arrayOfQuestions:[programmingQuestion], indexQuestion:Int, feedback:Bool) {
         
+        self.passageTableView.answerArray = []
+        
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
@@ -836,19 +838,15 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             answerUIButton.layer.borderWidth = 3.0
             answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             
-             if self.numberOfAttempts[i]==1 {
-                answerUILabel.text = "Attempts: 1"
+             if self.numberOfAttempts[i] < 3 {
+                answerUILabel.text = "Attempts: " + String(self.numberOfAttempts[i])
                 answerNumber.backgroundColor = UIColor.greenColor()
              }
-             else if self.numberOfAttempts[i]==2 {
-                answerUILabel.text = "Attempts: 2"
-                answerNumber.backgroundColor = UIColor.orangeColor()
-             }
-             else if self.numberOfAttempts[i] < 1000 {
+             else if self.numberOfAttempts[i] > 2 && self.numberOfAttempts[i] < 1000 {
                 answerUILabel.text = "Attempts: " + String(self.numberOfAttempts[i])
-                answerNumber.backgroundColor = UIColor.redColor()
+                answerNumber.backgroundColor = UIColor.orangeColor()
              } else {
-                answerUILabel.text = "Question skiped"
+                answerUILabel.text = "Question skipped"
                 answerNumber.backgroundColor = UIColor.redColor()
             }
             
@@ -987,6 +985,8 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             
         }
         
+        self.passageTableView.answerArray = randomizedArray
+        
         return randomizedArray
         
     }
@@ -995,26 +995,36 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         
         self.numberOfAttempts[answerToQuestion] += 1
         
-        var i:Int = 0
         var returnedValue:Bool = true
         
-        for i=0;i<self.quizzArray[answerToQuestion].codePassage.count;i += 1 {
-            
-            let indexPath = NSIndexPath(forRow: i, inSection: 0)
-            
-            let cell = self.passageTableView.cellForRowAtIndexPath(indexPath)
-
-            print(cell!.textLabel!.text)
-            
-            if self.quizzArray[answerToQuestion].codePassage[i] != cell!.textLabel!.text {
-                
-                returnedValue = false
-                
-            }
-            
-        }
+//        var i:Int = 0
+//        var returnedValue:Bool = true
+//        
+//        for i=0;i<self.quizzArray[answerToQuestion].codePassage.count;i += 1 {
+//            
+//            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+//            
+//            let cell = self.passageTableView.cellForRowAtIndexPath(indexPath)
+//
+//            //print(cell!.textLabel!.text)
+//            
+//            if self.quizzArray[answerToQuestion].codePassage[i] != cell!.textLabel!.text {
+//                
+//                returnedValue = false
+//                
+//            }
+//            
+//        }
+//        
+//        self.selectedAnswers[answerToQuestion] = returnedValue
         
-        self.selectedAnswers[answerToQuestion] = returnedValue
+        if self.passageTableView.answerArray == self.quizzArray[answerToQuestion].codePassage {
+            
+            returnedValue = true
+        }
+        else {
+            returnedValue = false
+        }
         
         return returnedValue
         
@@ -1050,6 +1060,7 @@ extension programmingViewController: UITableViewDataSource {
         }
         else {
             
+            cell.textLabel?.numberOfLines = 0
             cell.textLabel?.text = cellTitles[indexPath.row]
             if (cell.textLabel!.text?.hasPrefix("//") == true) {
                 cell.textLabel?.textColor = UIColor(red: 1/255, green: 121/255, blue: 111/255, alpha: 1.0)

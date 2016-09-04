@@ -71,6 +71,7 @@ extension TableViewEdited: Rearrangable {
     catchedView.center.y = min(max(y, bounds.origin.y), bounds.origin.y + bounds.height)
 
     moveDummyRowIfNeeded()
+    
   }
 
   private func moveDummyRowIfNeeded() {
@@ -86,6 +87,9 @@ extension TableViewEdited: Rearrangable {
     deleteRowsAtIndexPaths([currentIndexPath], withRowAnimation: .Top)
     insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Top)
     endUpdates()
+    
+    swap(&self.answerArray[currentIndexPath.row], &self.answerArray[newIndexPath.row])
+    
   }
 
   func longPress() {

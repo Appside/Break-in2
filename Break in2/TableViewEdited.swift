@@ -11,6 +11,7 @@ import UIKit
 class TableViewEdited: UITableView {
     
     var rearrange: RearrangeProperties!
+    var answerArray:[String] = [String]()
     
     override init(frame: CGRect, style: UITableViewStyle) {
         
@@ -21,7 +22,8 @@ class TableViewEdited: UITableView {
         layoutMargins = UIEdgeInsetsZero
         separatorInset = UIEdgeInsetsZero
         
-        rowHeight = frame.height/15.0
+        self.estimatedRowHeight = frame.height/15.0
+        rowHeight = UITableViewAutomaticDimension
     }
     
     required init?(coder aDecoder: NSCoder) {
