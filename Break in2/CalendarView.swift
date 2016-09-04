@@ -69,14 +69,14 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     self.nextMonthButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
     self.nextMonthButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.nextMonthButton.addTarget(self, action: #selector(NewCalendarView.nextMonthButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.nextMonthButton.addTarget(self, action: #selector(CalendarView.nextMonthButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     self.addSubview(self.nextMonthButton)
     
     // Set previousMonthButton properties and add as subview to self
     
     self.previousMonthButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
     self.previousMonthButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.previousMonthButton.addTarget(self, action: #selector(NewCalendarView.previousMonthButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.previousMonthButton.addTarget(self, action: #selector(CalendarView.previousMonthButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     self.addSubview(self.previousMonthButton)
     
     // Set monthScrollView properties and add as subview to self

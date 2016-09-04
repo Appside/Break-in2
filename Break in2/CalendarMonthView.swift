@@ -22,8 +22,6 @@ class CalendarMonthView: UIView {
   
   var delegate:CalendarMonthViewDelegate?
   
-  let calendarDaysTitleView:CalendarDaysTitleView = CalendarDaysTitleView()
-  
   var daysOfTheWeek:[String] = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
   
   var daysOfTheWeekLabels:[UILabel] = [UILabel]()
@@ -83,7 +81,7 @@ class CalendarMonthView: UIView {
         }
         
         // Add target
-        dayButtonAtIndex.addTarget(self, action: #selector(NewMonthView.calendarDayButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        dayButtonAtIndex.addTarget(self, action: #selector(CalendarMonthView.calendarDayButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(dayButtonAtIndex)
         
         // Add button to dayButtons array
