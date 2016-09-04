@@ -1030,7 +1030,11 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         self.performSegueWithIdentifier("goToProfilePage", sender: nil)
         
-    }else{
+    }
+    else if sender.currentTitle == "Log Out" {
+      self.logoutBtnPressed(sender)
+    }
+    else{
     
     UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
       
@@ -1166,6 +1170,41 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   // ADD NOTIFICATIONS HERE
       
       
+  }
+  
+  func logoutBtnPressed(sender: UIButton!){
+    
+    let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+    let alertView = SCLAlertView(appearance: appearance)
+    //        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
+    //        alertView.addButton("Cancel") {
+    //            alertView.clearAllNotice()
+    //        }
+    //        alertView.showCloseButton = false
+    //        alertView.showViewController(<#T##vc: UIViewController##UIViewController#>, sender: <#T##AnyObject?#>)
+    //        alertView.showWarning("Logout", subTitle: "Are You Sure You Want To Exit?")
+    
+    alertView.addButton("Ok", target:self, selector:#selector(SettingsViewController.logOut))
+    alertView.addButton("Cancel", action: {
+      alertView.clearAllNotice()
+    })
+    alertView.showTitle(
+      "Logout", // Title of view
+      subTitle: "Are you sure you want to exit?", // String of view
+      duration: 0.0, // Duration to show before closing automatically, default: 0.0
+      completeText: "Cancel", // Optional button value, default: ""
+      style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+      colorStyle: 0x526B7B,//0xD0021B - RED
+      colorTextButton: 0xFFFFFF
+    )
+    
+  }
+  
+  func logOut(){
+    
+    PFUser.logOut()
+    self.view.loginUser(self)
+    
   }
   
   func showTutorial() {
