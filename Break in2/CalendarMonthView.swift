@@ -157,8 +157,6 @@ class CalendarMonthView: UIView {
     
     self.setConstraints()
     
-    
-    
     // Highlight today's date
     let todaysDay:Int = self.userCalendar.component(NSCalendarUnit.Day, fromDate: self.todaysDate)
     
@@ -173,11 +171,9 @@ class CalendarMonthView: UIView {
         
         if self.startingWeekday == 1 {
           self.dayButtons[todaysDay + 5].today = true
-          self.dayButtons[todaysDay + 5].setNeedsDisplay()
         }
         else {
           self.dayButtons[todaysDay + self.startingWeekday - 3].today = true
-          self.dayButtons[todaysDay + self.startingWeekday - 3].setNeedsDisplay()
         }
         
       }
@@ -203,26 +199,23 @@ class CalendarMonthView: UIView {
     
     for index:Int in 0.stride(to: self.deadlines.count, by: 1) {
       
+      let deadline:[String:AnyObject] = self.deadlines[index]
+      
+      let day:Int = deadline["day"] as! Int
+      let company:String = deadline["company"] as! String
+      let career:String = deadline["career"] as! String
+      let position:String = deadline["position"] as! String
+      
       if self.startingWeekday == 1 {
         
-        let deadline:[String:AnyObject] = self.deadlines[index]
-        self.dayButtons[(deadline["day"] as! Int) + 5].clicked = true
-        
-        let company:String = deadline["company"] as! String
-        let career:String = deadline["career"] as! String
-        let position:String = deadline["position"] as! String
-        self.dayButtons[(deadline["day"] as! Int) + 5].deadlines.append([company,career,position])
+        self.dayButtons[day + 5].clicked = true
+        self.dayButtons[day + 5].deadlines.append([company,career,position])
         
       }
       else {
         
-        let deadline:[String:AnyObject] = self.deadlines[index]
-        self.dayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].clicked = true
-        
-        let company:String = deadline["company"] as! String
-        let career:String = deadline["career"] as! String
-        let position:String = deadline["position"] as! String
-        self.dayButtons[(deadline["day"] as! Int) + self.startingWeekday - 3].deadlines.append([company,career,position])
+        self.dayButtons[day + self.startingWeekday - 3].clicked = true
+        self.dayButtons[day + self.startingWeekday - 3].deadlines.append([company,career,position])
         
       }
       
