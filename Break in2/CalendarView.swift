@@ -33,6 +33,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   let monthScrollView:UIScrollView = UIScrollView()
   var monthViews:[CalendarMonthView] = [CalendarMonthView]()
   let deadlinesView:UIView = UIView()
+  var careerTypes:[String] = [String]()
+  var careerColors:[String:UIColor] = [String:UIColor]()
   
   let todaysDate:NSDate = NSDate()
   let userCalendar:NSCalendar = NSCalendar.currentCalendar()
@@ -42,6 +44,13 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    
+    self.careerTypes = self.calendarModel.getAppVariables("careerTypes") as! [String]
+    
+    let appColors:[UIColor] = self.calendarModel.getAppColors()
+    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
+      self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
+    }
     
     // Set deadlinesView properties and add as subview to self
     self.deadlinesView.backgroundColor = UIColor.whiteColor()
@@ -470,7 +479,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     deadlineTitle.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     deadlineTitle.textAlignment = NSTextAlignment.Center
     
-    deadlineScrollView.setConstraintsToSuperview(Int(((self.frame.height/9)*2)+5), bottom: 0, left: 0, right: 0)
+    deadlineScrollView.setConstraintsToSuperview(Int(((self.frame.height/12)*2)+5), bottom: 0, left: 0, right: 0)
     
     //Initalize Date
     let dateFormatter:NSDateFormatter = NSDateFormatter()
@@ -480,53 +489,82 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     //Initialize Deadline Table
     var i:Int = 0
-    let cellHeight:Int = 70
+    var j:Int = 0
+    var currentCareer:String = ""
+    let cellHeight:Int = 50
 
     for elementArray in sender.deadlines {
       
-      let tableCell:UIView = UIView()
+      if elementArray[1] != currentCareer {
+        
+        currentCareer = elementArray[1]
+        
+        let tableCell:UIView = UIView()
+        let careerName:UILabel = UILabel()
+        
+        deadlineScrollView.addSubview(tableCell)
+        tableCell.translatesAutoresizingMaskIntoConstraints = false
+        let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat((i+j)*cellHeight))
+        let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
+        deadlineScrollView.addConstraints([tableCellTop,tableCellLeft])
+        let tableCellWidth:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(self.deadlinesView.bounds.width))
+        let tableCellHeight:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(cellHeight))
+        tableCell.addConstraints([tableCellHeight,tableCellWidth])
+        
+        tableCell.backgroundColor = UIColor.whiteColor()
+        
+        tableCell.addSubview(careerName)
+
+        careerName.translatesAutoresizingMaskIntoConstraints = false
+        careerName.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
+        careerName.numberOfLines = 0
+        let textSize2 = self.getTextSize(15)
+        careerName.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
+        careerName.textAlignment = NSTextAlignment.Left
+        careerName.textColor = self.careerColors[currentCareer]
+        careerName.text = elementArray[1].uppercaseString
+
+        j += 1
+      }
+      
+      let tableCell:JobDeadlineView = JobDeadlineView()
       let companyName:UILabel = UILabel()
-      let careerName:UILabel = UILabel()
       let positionName:UILabel = UILabel()
       
       deadlineScrollView.addSubview(tableCell)
       tableCell.translatesAutoresizingMaskIntoConstraints = false
-      let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(i*cellHeight))
-      let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-      deadlineScrollView.addConstraints([tableCellTop,tableCellLeft])
       let tableCellWidth:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(self.deadlinesView.bounds.width))
       let tableCellHeight:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(cellHeight))
       tableCell.addConstraints([tableCellHeight,tableCellWidth])
+      let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat((i+j)*cellHeight))
+      let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      deadlineScrollView.addConstraints([tableCellTop,tableCellLeft])
       
-      if (i%2==0) {
-        tableCell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-      }
-      else {
-        tableCell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.2)
-      }
+//      if (i%2==0) {
+//        tableCell.backgroundColor = UIColor.whiteColor()
+//      }
+//      else {
+//        tableCell.backgroundColor = UIColor.whiteColor()
+//      }
+      
+      tableCell.careerColorView.backgroundColor = self.careerColors[currentCareer]
       
       tableCell.addSubview(companyName)
-      tableCell.addSubview(careerName)
       tableCell.addSubview(positionName)
       companyName.translatesAutoresizingMaskIntoConstraints = false
-      careerName.translatesAutoresizingMaskIntoConstraints = false
       positionName.translatesAutoresizingMaskIntoConstraints = false
-      companyName.setConstraintsToSuperview(5, bottom: 45, left: 10, right: 5)
-      careerName.setConstraintsToSuperview(25, bottom: 25, left: 10, right: 5)
-      positionName.setConstraintsToSuperview(45, bottom: 5, left: 10, right: 5)
+      companyName.setConstraintsToSuperview(5, bottom: 25, left: 10, right: 5)
+      positionName.setConstraintsToSuperview(25, bottom: 5, left: 10, right: 5)
       companyName.numberOfLines = 0
-      careerName.numberOfLines = 0
       positionName.numberOfLines = 0
-      let textSize2 = self.getTextSize(15)
+      let textSize2 = self.getTextSize(14)
       companyName.font = UIFont(name: "HelveticaNeue-MediumBold", size: textSize2)
       companyName.textAlignment = NSTextAlignment.Left
-      careerName.font = UIFont(name: "HelveticaNeue-LightItalic", size: textSize2)
-      careerName.textAlignment = NSTextAlignment.Left
       positionName.font = UIFont(name: "HelveticaNeue-LightItalic", size: textSize2)
       positionName.textAlignment = NSTextAlignment.Left
+      positionName.textColor = UIColor.grayColor().colorWithAlphaComponent(1)
       
       companyName.text = elementArray[0]
-      careerName.text = elementArray[1]
       positionName.text = elementArray[2]
       
       i += 1
@@ -534,7 +572,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     }
     
     //Set content size
-    deadlineScrollView.contentSize = CGSize(width: Int(self.deadlinesView.bounds.width), height: Int(i*cellHeight))
+    deadlineScrollView.contentSize = CGSize(width: Int(self.deadlinesView.bounds.width), height: Int((i+j)*cellHeight))
     
   }
   
@@ -574,9 +612,13 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     var deadlinesTemp:[[String:AnyObject]] = [[String:AnyObject]]()
     deadlinesTemp.removeAll()
     
-    let query = PFQuery(className: PF_CALENDAR_CLASS_NAME)
-    query.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
-    query.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
+    let query1 = PFQuery(className: PF_CALENDAR_CLASS_NAME)
+    let query2 = PFQuery(className: PF_CALENDAR_CLASS_NAME)
+    query1.whereKey(PF_CALENDAR_DEADLINEMONTH, equalTo: self.currentMonth)
+    query1.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
+    query2.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: 2000)
+    
+    let query = PFQuery.orQueryWithSubqueries([query1, query2])
     
     query.findObjectsInBackgroundWithBlock {
       (objects: [PFObject]?, error: NSError?) -> Void in
@@ -589,6 +631,8 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         // Do something with the found objects
         if let objects = objects {
           
+          let todaysMonth:Int = self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate)
+          
           for object in objects {
             
             if objects.count >= 0 {
@@ -600,14 +644,29 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
               
               if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
                 
-                deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
-                deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
-                deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
-                deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
-                deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
-                deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+                if object[PF_CALENDAR_DEADLINEYEAR] as! Int == 2000 {
+                  if self.currentMonth == todaysMonth {
+                    deadlinesIndividual.updateValue(self.userCalendar.component(NSCalendarUnit.Year, fromDate: self.todaysDate), forKey: "year")
+                    deadlinesIndividual.updateValue(todaysMonth, forKey: "month")
+                    deadlinesIndividual.updateValue(self.userCalendar.component(NSCalendarUnit.Day, fromDate: self.todaysDate), forKey: "day")
+                    deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
+                    deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
+                    deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+                    
+                    deadlinesTemp.append(deadlinesIndividual)
+                  }
+                }
+                else {
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+                  
+                  deadlinesTemp.append(deadlinesIndividual)
+                }
                 
-                deadlinesTemp.append(deadlinesIndividual)
                 //self.monthViews[1].deadlines.append(deadlinesIndividual)
                 
               }else{
@@ -625,9 +684,19 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         //print(self.monthViews[1].deadlines)
         
         self.monthViews[1].deadlines.removeAll()
-        print(self.monthViews[1].deadlines)
-        self.monthViews[1].deadlines = deadlinesTemp
-        print(self.monthViews[1].deadlines)
+        self.monthViews[1].deadlines = deadlinesTemp.sort {
+          if ($0["career"] as? String) == ($1["career"] as? String) {
+            if ($0["company"] as? String) == ($1["company"] as? String) {
+              return ($0["position"] as? String) < ($1["position"] as? String)
+            }
+            else {
+              return ($0["company"] as? String) < ($1["company"] as? String)
+            }
+          }
+          else {
+            return ($0["career"] as? String) < ($1["career"] as? String)
+          }
+        }
         self.monthViews[1].displayView()
         
         let dateFormatter:NSDateFormatter = NSDateFormatter()

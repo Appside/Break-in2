@@ -12,6 +12,7 @@
 		2510B6E41C021C24005AE520 /* TestSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */; };
 		2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510B6E21C021C24005AE520 /* TestTypeView.swift */; };
 		2514F16D1C1F13B1003E8001 /* ChooseCareerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2514F16C1C1F13B1003E8001 /* ChooseCareerView.swift */; };
+		251CEC6C1D7C9614005FECDF /* JobDeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251CEC6B1D7C9614005FECDF /* JobDeadlineView.swift */; };
 		251D4BBE1C11FBD5004A6715 /* NumericalReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */; };
 		251D4BC01C11FBEB004A6715 /* VerbalReasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = 251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */; };
 		2526701A1C2378A6007D55BE /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252670151C2378A6007D55BE /* CalendarView.swift */; };
@@ -114,6 +115,7 @@
 		2510B6E11C021C24005AE520 /* TestSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSelectionViewController.swift; sourceTree = "<group>"; };
 		2510B6E21C021C24005AE520 /* TestTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTypeView.swift; sourceTree = "<group>"; };
 		2514F16C1C1F13B1003E8001 /* ChooseCareerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCareerView.swift; sourceTree = "<group>"; };
+		251CEC6B1D7C9614005FECDF /* JobDeadlineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobDeadlineView.swift; sourceTree = "<group>"; };
 		251D4BBD1C11FBD5004A6715 /* NumericalReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NumericalReasoning.json; sourceTree = "<group>"; };
 		251D4BBF1C11FBEB004A6715 /* VerbalReasoning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = VerbalReasoning.json; sourceTree = "<group>"; };
 		252670151C2378A6007D55BE /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				252670151C2378A6007D55BE /* CalendarView.swift */,
+				251CEC6B1D7C9614005FECDF /* JobDeadlineView.swift */,
 				252670171C2378A6007D55BE /* CalendarMonthView.swift */,
 				252670191C2378A6007D55BE /* CalendarDayButton.swift */,
 			);
@@ -806,6 +809,7 @@
 				25E4ACCD1C552C9800C49551 /* LogicalPictureView.swift in Sources */,
 				617FC6471BEF92450019AE9B /* ForgotPasswordViewController.swift in Sources */,
 				2510B6E51C021C24005AE520 /* TestTypeView.swift in Sources */,
+				251CEC6C1D7C9614005FECDF /* JobDeadlineView.swift in Sources */,
 				49A05D331C1EA4C300A50BCF /* verbalQuestion.swift in Sources */,
 				494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */,
 				49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */,
