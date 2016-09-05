@@ -58,17 +58,20 @@ class EditProfileViewController : FormViewController {
         
         let textString4:String = "Fields marked as * are mandatory. Remaining date is optional but will help us match you to the right job offers and opportunities."
         let textHeight4:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
-
-        let query = PFQuery(className: PF_USER_RECOMMENDATIONS_CLASS)
-        query.limit = 50
-        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+        
+        let query = PFQuery(className:"Recommendations")
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
-                for object in objects! {
-                    let newID = object[PF_USER_RECOMMENDATION_IDNAME] as? String ?? String()
-                    self.sourceRecommendation.append(newID)
+                if let objects = objects {
+                    for object in objects {
+                        let name = object["IDName"] as! String
+                        self.sourceRecommendation.append(name)
+                    }
                 }
             } else {
-                print(error)
+                // Log details of the failure
+                print("error")
             }
         }
         
@@ -286,6 +289,8 @@ class EditProfileViewController : FormViewController {
                     cell.tintColor = UIColor.whiteColor()
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.textField.textColor = UIColor.whiteColor()
+                }.onChange { row in
+                    self.profilePhone = row.value!
             }
             
             +++ LabelRow(){
@@ -330,6 +335,8 @@ class EditProfileViewController : FormViewController {
                     cell.tintColor = UIColor.whiteColor()
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.textField.textColor = UIColor.whiteColor()
+                }.onChange { row in
+                    self.profileUniversity = row.value!
             }
             
             <<< ActionSheetRow<String>("Course") {
@@ -345,6 +352,8 @@ class EditProfileViewController : FormViewController {
                     cell.tintColor = UIColor.whiteColor()
                     cell.detailTextLabel?.textColor = UIColor.whiteColor()
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+                }.onChange { row in
+                    self.profileCourse = row.value!
             }
             
             <<< ActionSheetRow<String>("Degree") {
@@ -360,6 +369,8 @@ class EditProfileViewController : FormViewController {
                     cell.tintColor = UIColor.whiteColor()
                     cell.detailTextLabel?.textColor = UIColor.whiteColor()
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+                }.onChange { row in
+                    self.profileDegree = row.value!
             }
             
             <<< ActionSheetRow<String>("Position") {
@@ -375,6 +386,8 @@ class EditProfileViewController : FormViewController {
                     cell.tintColor = UIColor.whiteColor()
                     cell.detailTextLabel?.textColor = UIColor.whiteColor()
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+                }.onChange { row in
+                    self.profilePosition = row.value!
             }
         
             +++ LabelRow(){
@@ -420,7 +433,9 @@ class EditProfileViewController : FormViewController {
                     cell.tintColor = UIColor.whiteColor()
                     cell.detailTextLabel?.textColor = UIColor.whiteColor()
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-        }
+                }.onChange { row in
+                    self.shareInfoAllowed = row.value!
+            }
         
             +++ Section { section in
                 var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
@@ -447,12 +462,16 @@ class EditProfileViewController : FormViewController {
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
+                    row.options = self.sourceRecommendation
                 }.cellUpdate { cell, row in
                     cell.textLabel?.textColor = UIColor.whiteColor()
                     cell.tintColor = UIColor.whiteColor()
                     cell.detailTextLabel?.textColor = UIColor.whiteColor()
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                }
+                    row.options = self.sourceRecommendation
+                }.onChange { row in
+                    self.recommendedBy = row.value!
+            }
             
             +++ ButtonRow() { (row: ButtonRow) -> Void in
                 row.title = self.buttonTitle
@@ -562,48 +581,6 @@ class EditProfileViewController : FormViewController {
                 colorTextButton: 0xFFFFFF
             )
         } else{
-            
-            if let newRow:EmailRow = form.rowByTag("Phone") {
-                if let newEntry = newRow.value {
-                    self.profilePhone = newEntry
-                }
-            }
-            
-            if let newRow:EmailRow = form.rowByTag("University") {
-                if let newEntry = newRow.value {
-                    self.profileUniversity = newEntry
-                }
-            }
-            
-            if let newRow:EmailRow = form.rowByTag("CourseOfStudy") {
-                if let newEntry = newRow.value {
-                    self.profileCourse = newEntry
-                }
-            }
-            
-            if let newRow:EmailRow = form.rowByTag("DegreeType") {
-                if let newEntry = newRow.value {
-                    self.profileDegree = newEntry
-                }
-            }
-            
-            if let newRow:EmailRow = form.rowByTag("PositionLooked") {
-                if let newEntry = newRow.value {
-                    self.profilePosition = newEntry
-                }
-            }
-            
-            if let newRow:EmailRow = form.rowByTag("AllowSharing") {
-                if let newEntry = newRow.value {
-                    self.shareInfoAllowed = newEntry
-                }
-            }
-            
-            if let newRow:EmailRow = form.rowByTag("RecommendedBy") {
-                if let newEntry = newRow.value {
-                    self.recommendedBy = newEntry
-                }
-            }
             
             SwiftSpinner.show("Saving changes")
             
