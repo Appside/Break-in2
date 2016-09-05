@@ -44,14 +44,6 @@ class EditProfileViewController : FormViewController {
     var recommendedBy:String = String()
     var sourceRecommendation:[String] = [String]()
     
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        return cell
-    }
-     */
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,8 +58,19 @@ class EditProfileViewController : FormViewController {
         
         let textString4:String = "Fields marked as * are mandatory. Remaining date is optional but will help us match you to the right job offers and opportunities."
         let textHeight4:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
-        
-        self.sourceRecommendation = ["No one","Jon","Sangeet","JC"]
+
+        let query = PFQuery(className: PF_USER_RECOMMENDATIONS_CLASS)
+        query.limit = 50
+        query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            if error == nil {
+                for object in objects! {
+                    let newID = object[PF_USER_RECOMMENDATION_IDNAME] as? String ?? String()
+                    self.sourceRecommendation.append(newID)
+                }
+            } else {
+                print(error)
+            }
+        }
         
         //Status Bar Background
         let NewView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
@@ -330,7 +333,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("Course") {
-                $0.title = "Course Of Study"
+                $0.title = "CourseOfStudy"
                 $0.selectorTitle = "What are you studying ?"
                 $0.options = ["Economics / Finance", "Engineering", "Mathematics / Sciences", "Computing", "Arts / Languages", "Other"]
                 $0.value = self.profileCourse
@@ -345,7 +348,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("Degree") {
-                $0.title = "Degree Type"
+                $0.title = "DegreeType"
                 $0.selectorTitle = "What's your level of study ?"
                 $0.options = ["Bachelors","Masters","PhD"]
                 $0.value = self.profileDegree
@@ -360,7 +363,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("Position") {
-                $0.title = "Position Looked For"
+                $0.title = "PositionLooked"
                 $0.selectorTitle = "Summer Internship"
                 $0.options = ["Summer Internship","Off-cycle Internship","Full Time"]
                 $0.value = self.profilePosition
@@ -405,7 +408,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("AllowSharing") {
-                $0.title = "Allow Sharing"
+                $0.title = "AllowSharing"
                 $0.selectorTitle = "Share your details ?"
                 $0.options = ["Yes","No"]
                 $0.value = self.shareInfoAllowed
@@ -437,7 +440,7 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("RecommendedBy") {
-                $0.title = "Recommended by:"
+                $0.title = "RecommendedBy"
                 $0.selectorTitle = "Who recommended you?"
                 $0.options = self.sourceRecommendation
                 $0.value = self.recommendedBy
@@ -559,6 +562,48 @@ class EditProfileViewController : FormViewController {
                 colorTextButton: 0xFFFFFF
             )
         } else{
+            
+            if let newRow:EmailRow = form.rowByTag("Phone") {
+                if let newEntry = newRow.value {
+                    self.profilePhone = newEntry
+                }
+            }
+            
+            if let newRow:EmailRow = form.rowByTag("University") {
+                if let newEntry = newRow.value {
+                    self.profileUniversity = newEntry
+                }
+            }
+            
+            if let newRow:EmailRow = form.rowByTag("CourseOfStudy") {
+                if let newEntry = newRow.value {
+                    self.profileCourse = newEntry
+                }
+            }
+            
+            if let newRow:EmailRow = form.rowByTag("DegreeType") {
+                if let newEntry = newRow.value {
+                    self.profileDegree = newEntry
+                }
+            }
+            
+            if let newRow:EmailRow = form.rowByTag("PositionLooked") {
+                if let newEntry = newRow.value {
+                    self.profilePosition = newEntry
+                }
+            }
+            
+            if let newRow:EmailRow = form.rowByTag("AllowSharing") {
+                if let newEntry = newRow.value {
+                    self.shareInfoAllowed = newEntry
+                }
+            }
+            
+            if let newRow:EmailRow = form.rowByTag("RecommendedBy") {
+                if let newEntry = newRow.value {
+                    self.recommendedBy = newEntry
+                }
+            }
             
             SwiftSpinner.show("Saving changes")
             

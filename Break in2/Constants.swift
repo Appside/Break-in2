@@ -32,6 +32,8 @@ let PF_USER_DEGREE                      = "degree"                  //  String
 let PF_USER_POSITION                    = "position"                //  String
 let PF_USER_SHARE_INFO_ALLOWED          = "shareInfoAllowed"        //  String
 let PF_USER_RECOMMENDED_BY              = "recommendedBy"           //  String
+let PF_USER_RECOMMENDATIONS_CLASS       = "Recommendations"         //  Class name
+let PF_USER_RECOMMENDATION_IDNAME       = "IDName"                  //  String
 
 /* Analytics class in Parse*/
 let PF_ANALYTICS_CLASS_NAME				= "Analytics"				//	Class name
