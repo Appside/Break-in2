@@ -40,24 +40,25 @@ class EditProfileViewController : FormViewController {
     var profileCourse:String = String()
     var profileDegree:String = String()
     var profilePosition:String = String()
-    var shareInfoAllowed:String = String()
+    var shareInfoAllowed:Bool? = Bool()
     var recommendedBy:String = String()
     var sourceRecommendation:[String] = [String]()
+    var check:Int = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let textString1:String = "We speak to potential employers and headhunters on a regular basis. Would you accept for us to share your personnal details and test results with them? We would contact you should they show any direct interest in your profile."
+        let textString1:String = "WHO TOLD YOU ABOUT US?"
         let textHeight1:CGFloat = self.view.heightForView(textString1, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
         
-        let textString2:String = "If you discovered and installed BreakIN2 through a recommendation, let us know the promotion code."
+        let textString2:String = "SHARE YOUR PROFILE WITH PROSPECTIVE EMPLOYERS"
         let textHeight2:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
         
-        let textString3:String = "The information below is not mandatory but will help us select appropriate job offers for you and send accurate information to potential employers or recruiters."
-        let textHeight3:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
+        let textString3:String = "TELL US ABOUT YOURSELF"
+        let textHeight3:CGFloat = self.view.heightForView(textString3, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
         
-        let textString4:String = "Fields marked as * are mandatory. Remaining date is optional but will help us match you to the right job offers and opportunities."
-        let textHeight4:CGFloat = self.view.heightForView(textString2, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
+        let textString4:String = "FIELDS MARKED AS (*) ARE MANDATORY"
+        let textHeight4:CGFloat = self.view.heightForView(textString4, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
         
         let query = PFQuery(className:"Recommendations")
         query.findObjectsInBackgroundWithBlock {
@@ -111,7 +112,7 @@ class EditProfileViewController : FormViewController {
         self.profileCourse = self.defaults.objectForKey("profileCourse") as? String ?? String()
         self.profileDegree = self.defaults.objectForKey("profileDegree") as? String ?? String()
         self.profilePosition = self.defaults.objectForKey("profilePosition") as? String ?? String()
-        self.shareInfoAllowed = self.defaults.objectForKey("shareInfoAllowed") as? String ?? String()
+        self.shareInfoAllowed = self.defaults.objectForKey("shareInfoAllowed") as? Bool ?? Bool()
         self.recommendedBy = self.defaults.objectForKey("recommendedBy") as? String ?? String()
         
         form =
@@ -206,7 +207,8 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< LabelRow(){
-                $0.title = "Personal Details"
+                $0.title = "Personal Details\n" +
+                            "line 2"
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
@@ -220,7 +222,7 @@ class EditProfileViewController : FormViewController {
             
             +++ Section { section in
                 var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
-                header.height = {textHeight4+15}
+                header.height = {textHeight4}
                 header.onSetupView = { view, _ in
                     // Commonly used to setup texts inside the view
                     // Don't change the view hierarchy or size here!
@@ -228,9 +230,9 @@ class EditProfileViewController : FormViewController {
                     textView.numberOfLines = 0
                     textView.text = textString4
                     view.addSubview(textView)
-                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
                     textView.textColor = UIColor(white: 1.0, alpha: 0.5)
-                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
                 }
                 section.header = header
             }
@@ -290,7 +292,9 @@ class EditProfileViewController : FormViewController {
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.textField.textColor = UIColor.whiteColor()
                 }.onChange { row in
+                    if row.value != nil{
                     self.profilePhone = row.value!
+                    }
             }
             
             +++ LabelRow(){
@@ -308,7 +312,7 @@ class EditProfileViewController : FormViewController {
             
             +++ Section { section in
                 var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
-                header.height = {textHeight3+15}
+                header.height = {textHeight3}
                 header.onSetupView = { view, _ in
                     // Commonly used to setup texts inside the view
                     // Don't change the view hierarchy or size here!
@@ -316,16 +320,16 @@ class EditProfileViewController : FormViewController {
                     textView.numberOfLines = 0
                     textView.text = textString3
                     view.addSubview(textView)
-                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
                     textView.textColor = UIColor(white: 1.0, alpha: 0.5)
-                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
                 }
                 section.header = header
             }
             
             <<< NameRow("University"){
                 $0.title = "University"
-                $0.placeholder = "Type Univeristy"
+                $0.placeholder = "Type here"
                 $0.value = self.profileUniversity
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
@@ -336,12 +340,15 @@ class EditProfileViewController : FormViewController {
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.textField.textColor = UIColor.whiteColor()
                 }.onChange { row in
+                    if row.value != nil {
                     self.profileUniversity = row.value!
+                    }
             }
             
             <<< ActionSheetRow<String>("Course") {
-                $0.title = "CourseOfStudy"
-                $0.selectorTitle = "What are you studying ?"
+                $0.title = "Course Of Study"
+                $0.baseValue = "click here"
+                $0.selectorTitle = "What are you studying?"
                 $0.options = ["Economics / Finance", "Engineering", "Mathematics / Sciences", "Computing", "Arts / Languages", "Other"]
                 $0.value = self.profileCourse
                 }.cellSetup{ cell, row in
@@ -353,12 +360,14 @@ class EditProfileViewController : FormViewController {
                     cell.detailTextLabel?.textColor = UIColor.whiteColor()
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                 }.onChange { row in
+                    if row.value != nil {
                     self.profileCourse = row.value!
+                    }
             }
             
             <<< ActionSheetRow<String>("Degree") {
-                $0.title = "DegreeType"
-                $0.selectorTitle = "What's your level of study ?"
+                $0.title = "Degree Type"
+                $0.selectorTitle = "What's your level of study?"
                 $0.options = ["Bachelors","Masters","PhD"]
                 $0.value = self.profileDegree
                 }.cellSetup{ cell, row in
@@ -374,8 +383,8 @@ class EditProfileViewController : FormViewController {
             }
             
             <<< ActionSheetRow<String>("Position") {
-                $0.title = "PositionLooked"
-                $0.selectorTitle = "Summer Internship"
+                $0.title = "Desired Position"
+                $0.selectorTitle = "What are you looking for?"
                 $0.options = ["Summer Internship","Off-cycle Internship","Full Time"]
                 $0.value = self.profilePosition
                 }.cellSetup{ cell, row in
@@ -405,41 +414,7 @@ class EditProfileViewController : FormViewController {
 
             +++ Section { section in
                 var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
-                header.height = {textHeight1+15}
-                header.onSetupView = { view, _ in
-                    // Commonly used to setup texts inside the view
-                    // Don't change the view hierarchy or size here!
-                    let textView:UILabel = UILabel()
-                    textView.numberOfLines = 0
-                    textView.text = textString1
-                    view.addSubview(textView)
-                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
-                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
-                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
-                }
-                section.header = header
-            }
-            
-            <<< ActionSheetRow<String>("AllowSharing") {
-                $0.title = "AllowSharing"
-                $0.selectorTitle = "Share your details ?"
-                $0.options = ["Yes","No"]
-                $0.value = self.shareInfoAllowed
-                }.cellSetup{ cell, row in
-                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                    cell.backgroundColor = self.fieldsColor
-                }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
-                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
-                    cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                }.onChange { row in
-                    self.shareInfoAllowed = row.value!
-            }
-        
-            +++ Section { section in
-                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
-                header.height = {textHeight2+15}
+                header.height = {textHeight2}
                 header.onSetupView = { view, _ in
                     // Commonly used to setup texts inside the view
                     // Don't change the view hierarchy or size here!
@@ -447,15 +422,89 @@ class EditProfileViewController : FormViewController {
                     textView.numberOfLines = 0
                     textView.text = textString2
                     view.addSubview(textView)
-                    textView.setConstraintsToSuperview(0, bottom: 0, left: 15, right: 15)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
                     textView.textColor = UIColor(white: 1.0, alpha: 0.5)
-                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 12.0)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
+                }
+                section.header = header
+            }
+            
+//            <<< ActionSheetRow<String>("AllowSharing") {
+//                $0.title = "Share My Profile"
+//                $0.selectorTitle = "Would you like us to share your details?"
+//                $0.options = ["Yes","No"]
+//                
+//                if self.shareInfoAllowed == "" {
+//                    $0.value = "Yes"
+//                }
+//                
+//                $0.value = self.shareInfoAllowed
+//                }.cellSetup{ cell, row in
+//                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+//                    cell.backgroundColor = self.fieldsColor
+//                }.cellUpdate { cell, row in
+//                    cell.textLabel?.textColor = UIColor.whiteColor()
+//                    cell.tintColor = UIColor.whiteColor()
+//                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+//                    cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+//                }.onChange { row in
+//                    self.shareInfoAllowed = row.value!
+//            }
+            
+            <<< SwitchRow("switchRowTag"){
+                $0.title = "Share My Profile"
+                
+                self.check = self.defaults.objectForKey("checkSwitch") as? Int ?? Int()
+                
+                if self.check != 63 {
+                    $0.value = true
+                }else{
+                    $0.value = self.shareInfoAllowed
+                }
+                
+                }.cellSetup{ cell, row in
+                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
+                }.cellUpdate { cell, row in
+                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.backgroundColor = self.fieldsColor
+                }.onChange { row in
+                    
+                    self.check = 63
+                    self.defaults.setObject(self.check, forKey: "checkSwitch")
+                    self.shareInfoAllowed = row.value!
+            }
+            <<< LabelRow(){
+                
+                $0.hidden = Condition.Function(["switchRowTag"], { form in
+                    return !((form.rowByTag("switchRowTag") as? SwitchRow)?.value ?? false)
+                })
+                $0.title = "We will never share without your permission."
+                }.cellSetup{ cell, row in
+                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: 12.0)
+                }.cellUpdate { cell, row in
+                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.backgroundColor = self.fieldsColor
+            }
+        
+            +++ Section { section in
+                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                header.height = {textHeight1}
+                header.onSetupView = { view, _ in
+                    // Commonly used to setup texts inside the view
+                    // Don't change the view hierarchy or size here!
+                    let textView:UILabel = UILabel()
+                    textView.numberOfLines = 0
+                    textView.text = textString1
+                    view.addSubview(textView)
+                    textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
                 }
                 section.header = header
             }
             
             <<< ActionSheetRow<String>("RecommendedBy") {
-                $0.title = "RecommendedBy"
+                $0.title = "Recommendation"
                 $0.selectorTitle = "Who recommended you?"
                 $0.options = self.sourceRecommendation
                 $0.value = self.recommendedBy

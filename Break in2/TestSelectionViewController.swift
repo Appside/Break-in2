@@ -477,7 +477,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             } else {
                 newLabel2 = "\(newHour)h \(newMin)min"
             }
-            self.alertLivesString = "You can purchase some now, opt for a Premium Membership and get unlimited access, or wait for your next free life.\n\nTime to next free life:\n\(newLabel2)"
+            self.alertLivesString = "You can purchase some now, gain unlimited lives with premium subscription, or wait for...\n\n\(newLabel2)\n\n...to get your next free life."
             
         }
         
