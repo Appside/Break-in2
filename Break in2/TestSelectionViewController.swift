@@ -42,7 +42,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var productsArray = Array<SKProduct>()
   var list = [SKProduct]()
   var p = SKProduct()
-  
+    var alertLivesString:String = String()
+    
   // Declare and initialize types of tests and difficulties available for selected career
     
   var testTypes:[String] = [String]()
@@ -466,6 +467,17 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             let newSec:String = String(format: "%02d", (self.secondsRemaining % 3600) % 60)
             let newLabel:String = "\(newHour) : \(newMin) : \(newSec)"
             self.testLivesSubtitleLabel.text = newLabel
+            var newLabel2:String = String()
+            if (self.secondsRemaining / 3600) == 0 {
+                if ((self.secondsRemaining % 3600) % 60) == 0 {
+                    newLabel2 = "\(newSec)s"
+                } else {
+                    newLabel2 = "\(newMin)min"
+                }
+            } else {
+                newLabel2 = "\(newHour)h \(newMin)min"
+            }
+            self.alertLivesString = "You can purchase some now, opt for a Premium Membership and get unlimited access, or wait for your next free life.\n\nTime to next free life:\n\(newLabel2)"
             
         }
         
@@ -769,12 +781,18 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             
         }))
         
+        backAlert.addButton("Upgrade to Premium") {
+            SwiftSpinner.show("Upgrading Membership to Premium")
+            self.unlimitedLivesTapped(UIButton())
+        }
+        
         backAlert.addButton("Wait", action: ({
             
             //self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
             
         }))
-        backAlert.showSuccess("OUT OF LIVES", subTitle: "You can purchase some now.")
+        
+        backAlert.showSuccess("OUT OF LIVES", subTitle: self.alertLivesString)
         
     }else{
     
@@ -841,7 +859,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                 self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
                 
               }))
-              backAlert.showSuccess("OUT OF LIVES", subTitle: "You can purchase some now.")
+                
+                backAlert.addButton("Upgrade to Premium") {
+                    SwiftSpinner.show("Upgrading Membership to Premium")
+                    self.unlimitedLivesTapped(UIButton())
+                }
+                
+              backAlert.showSuccess("OUT OF LIVES", subTitle: self.alertLivesString)
               
             }
           }
