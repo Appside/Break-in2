@@ -57,11 +57,9 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     let jsonObject:[NSDictionary] = self.getjsonfile("NumericalReasoning")
     var randomNumber:Int = Int()
     var selectedQuestions:[Int] = [Int]()
-    var index:Int = 0
     var y:Int = 0
-    var z:Int = 0
     
-    for index in 0.stride(to: nbOfQuestions, by: 1) {
+    for _ in 0.stride(to: nbOfQuestions, by: 1) {
       
       y = 0
       while y==0 {
@@ -125,11 +123,9 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     let jsonObject:[NSDictionary] = self.getjsonfile("VerbalReasoning")
     var randomNumber:Int = Int()
     var selectedQuestions:[Int] = [Int]()
-    var index:Int = 0
     var y:Int = 0
-    var z:Int = 0
     
-    for index in 0.stride(to: nbOfQuestions, by: 1) {
+    for _ in 0.stride(to: nbOfQuestions, by: 1) {
       
       y = 0
       while y==0 {
@@ -172,11 +168,9 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         let jsonObject:[NSDictionary] = self.getjsonfile("Programming")
         var randomNumber:Int = Int()
         var selectedQuestions:[Int] = [Int]()
-        var index:Int = 0
         var y:Int = 0
-        var z:Int = 0
-        
-        for index in 0.stride(to: nbOfQuestions, by: 1) {
+      
+        for _ in 0.stride(to: nbOfQuestions, by: 1) {
             
             y = 0
             while y==0 {
@@ -216,11 +210,9 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         let jsonObject:[NSDictionary] = self.getjsonfile("Technology")
         var randomNumber:Int = Int()
         var selectedQuestions:[Int] = [Int]()
-        var index:Int = 0
         var y:Int = 0
-        var z:Int = 0
-        
-        for index in 0.stride(to: nbOfQuestions, by: 1) {
+      
+        for _ in 0.stride(to: nbOfQuestions, by: 1) {
             
             y = 0
             while y==0 {

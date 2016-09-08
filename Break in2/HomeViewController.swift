@@ -102,7 +102,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     self.comingSoonTestTypes = self.homeViewModel.getAppVariables("comingSoonTestTypes") as! [String:[String]]
     
     let appColors:[UIColor] = self.homeViewModel.getAppColors()
-    for var index:Int = 0 ; index < self.careerTypes.count ; index += 1 {
+    for index:Int in 0  ..< self.careerTypes.count  {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
     
@@ -135,7 +135,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     // Create careerButtons for each careerType
     
-    for var index:Int = 0 ; index < self.careerTypes.count ; index += 1 {
+    for index:Int in 0  ..< self.careerTypes.count  {
       
       let careerButtonAtIndex:CareerButton = CareerButton()
       
@@ -327,7 +327,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         }
       }
       let appColors:[UIColor] = self.homeViewModel.getAppColors()
-      for var index:Int = 0 ; index < testTypes.count ; index += 1 {
+      for index:Int in 0  ..< testTypes.count  {
         testColors.updateValue(appColors[index], forKey: testTypes[index])
       }
       destinationVC.testTypes = testTypes
@@ -549,7 +549,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     // Create and add constraints for each careerButton and set content size for careersScrollView
     
-    for var index:Int = 0 ; index < self.careerButtons.count ; index += 1 {
+    for index:Int in 0  ..< self.careerButtons.count  {
       
       self.careerButtons[index].translatesAutoresizingMaskIntoConstraints = false
       
@@ -1013,7 +1013,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
           self.descriptionLabelView.alpha = 0
           }, completion: {(Bool) in
             self.descriptionLabelView.removeFromSuperview()
-            for var index:Int = 0 ; index < self.tutorialViews.count ; index += 1 {
+            for index:Int in 0  ..< self.tutorialViews.count  {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
                 self.tutorialViews[index].userInteractionEnabled = false
@@ -1075,7 +1075,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
             self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
           }
           else {
-            for var index:Int = 0 ; index < self.tutorialViews.count ; index += 1 {
+            for index:Int in 0  ..< self.tutorialViews.count  {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
                 self.tutorialViews[index].userInteractionEnabled = false
@@ -1212,7 +1212,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
         if self.membershipCounter < 10 {
             
-            self.membershipCounter++
+            self.membershipCounter += 1
             self.defaults.setInteger(membershipCounter, forKey: "MembershipCounter")
             
         }else{

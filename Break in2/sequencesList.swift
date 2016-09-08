@@ -104,13 +104,12 @@ class sequencesList {
     func primeNumberSequence(requestIndex:Int) -> Int {
         
         var prime: Int
-        var divisor: Int
         var isPrime: Bool
         var counter = 0
         for (prime = 2;  prime <= 50 && counter < requestIndex;  prime += 1 )
         {
             isPrime = true;
-            for (divisor = 2;  divisor < prime;  divisor += 1 )
+          for divisor:Int in 2.stride(to: prime, by: 1)
             {
                 if ((prime % divisor) == 0 )
                 {

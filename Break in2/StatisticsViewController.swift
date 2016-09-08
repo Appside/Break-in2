@@ -1096,12 +1096,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         let colors:[UIColor] = self.appVariablesModel.getAppColors()
         let xValues = ["T1","T2","T3","T4","T5","T6"]
         var dataEntries: [ChartDataEntry] = []
-        var y:Int = 0
         
         //Graph 2 - Test Time
         let xValues2 = ["T1","T2","T3","T4","T5","T6"]
         var dataEntries2: [ChartDataEntry] = []
-        var y2:Int = 0
         
         for y in 0.stride(to: yUnits.count, by: 1) {
             let dataEntry = BarChartDataEntry(value: round(yUnits[y]), xIndex: y)

@@ -268,12 +268,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         nextUIView.addGestureRecognizer(tapGestureNext)
         
         //Set answersArray
-        var answerIndex:Int = 0
-        for answerIndex in 0.stride(through: self.totalNumberOfQuestions, by: 1) {
+      for _:Int in 0.stride(through: self.totalNumberOfQuestions, by: 1) {
             let fixedNumber:Int = 20
             self.selectedAnswers.append(fixedNumber)
         }
-        
+      
         //Display questions
         self.displayedQuestionIndex = 0
         self.quizzArray = self.quizzModel.selectNumericalReasoning(self.totalNumberOfQuestions+1)

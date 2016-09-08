@@ -234,8 +234,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
         nextUIView.addGestureRecognizer(tapGestureNext)
       
         //Set answersArray
-        var answerIndex:Int = 0
-        for answerIndex in 0.stride(through: self.totalNumberOfQuestions, by: 1) {
+      for _:Int in 0.stride(through: self.totalNumberOfQuestions, by: 1) {
             let fixedNumber:Int = 20
             self.selectedAnswers.append(fixedNumber)
         }
@@ -669,7 +668,6 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
                         } else {
                             
                         //Upload Results to Parse
-                        var i:Int = 0
                         var nbCorrectAnswers:Int = 0
                         for i in 0.stride(to: self.selectedAnswers.count, by: 1) {
                             if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
@@ -733,7 +731,6 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
     func feedbackScreen() {
         //Display feedback screen here
         self.isTestComplete = true
-        var i:Int = 0
         let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             

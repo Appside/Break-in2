@@ -66,7 +66,7 @@ class CalendarMonthView: UIView {
     
     // Create dayButtons
     
-    for i:Int in 0.stride(through: 5, by: 1) {
+    for _:Int in 0.stride(through: 5, by: 1) {
       for j:Int in 0.stride(through: 6, by: 1) {
         
         let dayButtonAtIndex:CalendarDayButton = CalendarDayButton()

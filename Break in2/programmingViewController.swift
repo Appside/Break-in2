@@ -149,7 +149,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         let arrowWidth:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35*self.heightRatio)
         self.menuBackButton.addConstraints([arrowTop,arrowLeft])
         menuBackImageVIew.addConstraints([arrowHeight,arrowWidth])
-        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("backHome:"))
+        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(programmingViewController.backHome(_:)))
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
         
@@ -278,8 +278,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.nextButton.addTarget(self, action: #selector(programmingViewController.nextQuestion(_:)), forControlEvents: .TouchUpInside)
         
         //Set answersArray
-        var answerIndex:Int = 0
-        for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex++ {
+      for _:Int in 0...self.totalNumberOfQuestions {
             self.selectedAnswers.append(false)
             self.numberOfAttempts.append(0)
         }
@@ -413,13 +412,13 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             self.tutoNextButton.setTitle("Continue", forState: .Normal)
             self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext:"))
+            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(programmingViewController.tutoNext(_:)))
             self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
             self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoSkipButton.setTitle("Skip the Tutorial", forState: .Normal)
             self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(15))
             self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoSkip:"))
+            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(programmingViewController.tutoSkip(_:)))
             self.tutoSkipButton.addGestureRecognizer(tutoSkipButtonTap)
             
             //Set tutorial text
@@ -446,7 +445,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     }
     
     func tutoNext(sender:UITapGestureRecognizer) {
-        self.tutoPage++
+        self.tutoPage += 1
         if self.tutoPage==2 {
             self.tutoDescriptionSep2.alpha = 0
             self.tutoDescriptionText2.alpha = 0
@@ -516,7 +515,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             if self.numberOfAttempts[self.displayedQuestionIndex]==0 {
                 self.selectedAnswers[self.displayedQuestionIndex]=false
             }
-            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: #selector(programmingViewController.nextQuestion(_:))))
             self.timeTimer.invalidate()
         }
         else {
@@ -525,12 +524,12 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
                     self.timeTimer.invalidate()
                 }
                 else {
-                    self.countMinutes--
+                    self.countMinutes -= 1
                     self.countSeconds = 59
                 }
             }
             else {
-                self.countSeconds--
+                self.countSeconds -= 1
             }
             let newMin:String = String(format: "%02d", self.countMinutes)
             let newSec:String = String(format: "%02d", self.countSeconds)
@@ -552,7 +551,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let backAlert = SCLAlertView(appearance: appearance)
-        backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
+        backAlert.addButton("Yes", target:self, selector:#selector(programmingViewController.goBack))
         backAlert.showTitle(
             "Return to Menu", // Title of view
             subTitle: alertMessage, // String of view
@@ -660,10 +659,9 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
                         } else {
                             
                             //Upload Results to Parse
-                            var i:Int = 0
                             var nbCorrectAnswers:Double = 0
                             
-                             for i=0;i<self.selectedAnswers.count;i += 1 {
+                          for i:Int in 0..<self.selectedAnswers.count {
                                 if self.numberOfAttempts[i] == 1 {
                                     nbCorrectAnswers += 1
                                 }
@@ -773,7 +771,6 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.nextButton.addTarget(self, action: #selector(programmingViewController.backFeedbackScreen(_:)), forControlEvents: .TouchUpInside)
         
         self.isTestComplete = true
-        var i:Int = 0
         let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
@@ -815,7 +812,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         topComment.textColor = UIColor.whiteColor()
         
-        for i=0; i<self.quizzArray.count;i++ {
+      for i:Int in 0..<self.quizzArray.count {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UILabel = UILabel()
@@ -872,7 +869,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(programmingViewController.displayAnswerWithFeedback(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
             
         }
@@ -967,13 +964,12 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         
         var inputQuestionArray:[String] = [String]()
         var randomizedArray:[String] = [String]()
-        var i:Int = 0
-        var numberOfCells:Int = questionArray.count
+        let numberOfCells:Int = questionArray.count
         var j:Int = numberOfCells
         
         inputQuestionArray = questionArray
         
-        for i = 0;i<numberOfCells;i++ {
+      for i:Int in 0..<numberOfCells {
             
             let randomIndex = arc4random_uniform(UInt32(j))
             randomizedArray.append(inputQuestionArray[Int(randomIndex)])

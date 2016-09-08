@@ -190,15 +190,13 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         nextUIView.addGestureRecognizer(tapGestureNext)
         
         //Set answersArray
-        var answerIndex:Int = 0
         let fixedNumber:Int = 20
-        for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex += 1 {
+      for _:Int in 0...self.totalNumberOfQuestions {
             self.selectedAnswers.append(fixedNumber)
         }
         
         //Generate random questions for the test
-        var questionNew:Int = Int()
-        for questionNew=0;questionNew<=self.totalNumberOfQuestions;questionNew += 1 {
+        for _:Int in 0...self.totalNumberOfQuestions {
             self.addNewQuestion()
         }
         
@@ -535,14 +533,12 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         let arrayAnswers:[Int] = self.quizzArray[indexQuestion].answers
         let questionAsked:[Int] = self.quizzArray[indexQuestion].question
         let buttonHeight:Int = Int((self.view.frame.height-250*self.heightRatio)/6)
-        var i:Int = 0
-        
+      
         var reshapedQuestion:String = String(questionAsked[0])
-        for i=1;i<questionAsked.count;i += 1 {
+        for i:Int in 1..<questionAsked.count {
             reshapedQuestion = "\(String(reshapedQuestion)), \(String(questionAsked[i]))"
         }
-        i=0
-        for i=0; i<arrayAnswers.count;i += 1 {
+        for i:Int in 0..<arrayAnswers.count {
             let answerRow:UIButton = UIButton()
             let answerNumber:UIButton = UIButton()
             let matchingQuestionLabel:UIButton = UIButton()
@@ -687,9 +683,8 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
                     } else {
                         
                     //Upload Results to Parse
-                    var i:Int = 0
                     var nbCorrectAnswers:Int = 0
-                    for i=0;i<self.quizzArray.count;i += 1 {
+                      for i:Int in 0..<self.quizzArray.count {
                         if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
                             nbCorrectAnswers += 1
                         }
@@ -750,7 +745,6 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         
         //Display feedback screen here
         self.isTestComplete = true
-        var i:Int = 0
         let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
@@ -792,7 +786,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         topComment.textColor = UIColor.whiteColor()
         
-        for i=0; i<self.selectedAnswers.count;i += 1 {
+      for i:Int in 0..<self.selectedAnswers.count {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UILabel = UILabel()
@@ -927,7 +921,6 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         var correctIndex:Int = Int()
         var randomIndex:Int = Int()
         var correctIndexSet:Bool = false
-        var i:Int = 0
         
         //Randomize first number
         sequenceNumber = Int(arc4random_uniform(6) + 1)
@@ -944,7 +937,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         a = Int(arc4random_uniform(2))
         
         if (a==0) {
-            for i=0;i<5;i += 1 {
+          for i:Int in 0..<5 {
                 questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i))
                 self.listOfSequences.memory2 = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+i)
                 if i==0 {
@@ -955,7 +948,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
                 rightAnswer = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+5)
             }
         } else {
-            for i=0;i<5;i += 1 {
+            for i:Int in 0..<5 {
                 questionArray.append(self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+(5-i)))
                 self.listOfSequences.memory2 = self.listOfSequences.runSequence(sequenceNumber, initialNumber: initialNumber+(5-i))
                 if i==0 {
@@ -968,7 +961,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         }
         
         answersArray.append(rightAnswer)
-        for i=6;i<11;i += 1 {
+        for i:Int in 6..<11 {
             a = Int(arc4random_uniform(2))
             if a==0 {
                 answersArray.append(rightAnswer+(i-5))
@@ -982,7 +975,7 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
         feedbackString = self.listOfSequences.addFeedback(sequenceNumber)
         
         //Shuffle array of answers
-        for i=0;i<6;i += 1 {
+        for i:Int in 0..<6 {
             randomIndex = Int(arc4random_uniform(UInt32(6-i)))
             returnedArray.append(answersArray[randomIndex])
             answersArray.removeAtIndex(randomIndex)

@@ -144,7 +144,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         let arrowWidth:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35*self.heightRatio)
         self.menuBackButton.addConstraints([arrowTop,arrowLeft])
         menuBackImageVIew.addConstraints([arrowHeight,arrowWidth])
-        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("backHome:"))
+        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.backHome(_:)))
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
         
@@ -286,13 +286,12 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         nextUIView.addConstraint(heightLabelConstraint)
         nextUIView.addSubview(self.nextButton)
         self.nextButton.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("nextQuestion:"))
+        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.nextQuestion(_:)))
         tapGestureNext.numberOfTapsRequired = 1
         nextUIView.addGestureRecognizer(tapGestureNext)
         
         //Set answersArray
-        var answerIndex:Int = 0
-        for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex++ {
+      for _:Int in 0...self.totalNumberOfQuestions {
             let fixedNumber:Int = 20
             self.selectedAnswers.append(fixedNumber)
         }
@@ -314,7 +313,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         self.swipeUIView.backgroundColor = UIColor.whiteColor()
         self.swipeUIView.layer.cornerRadius = 8.0
         var swipeUpGesture:UITapGestureRecognizer = UITapGestureRecognizer()
-        swipeUpGesture = UITapGestureRecognizer.init(target: self, action: Selector("SwipeMenu:"))
+        swipeUpGesture = UITapGestureRecognizer.init(target: self, action: #selector(verbalReasoningViewController.SwipeMenu(_:)))
         self.swipeUIView.addGestureRecognizer(swipeUpGesture)
         
         if self.showTutorial == true {
@@ -429,13 +428,13 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             self.tutoNextButton.setTitle("Continue", forState: .Normal)
             self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext:"))
+            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.tutoNext(_:)))
             self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
             self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoSkipButton.setTitle("Skip the Tutorial", forState: .Normal)
             self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(15))
             self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoSkip:"))
+            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.tutoSkip(_:)))
             self.tutoSkipButton.addGestureRecognizer(tutoSkipButtonTap)
             
             //Set tutorial text
@@ -462,7 +461,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     }
     
     func tutoNext(sender:UITapGestureRecognizer) {
-        self.tutoPage++
+        self.tutoPage += 1
         if self.tutoPage==2 {
             self.tutoDescriptionSep2.alpha = 0
             self.tutoDescriptionText2.alpha = 0
@@ -551,7 +550,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
                 self.selectedAnswers[self.displayedQuestionIndex]=21
             }
-            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.nextQuestion(_:))))
             self.timeTimer.invalidate()
         }
         else {
@@ -560,12 +559,12 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
                     self.timeTimer.invalidate()
                 }
                 else {
-                    self.countMinutes--
+                    self.countMinutes -= 1
                     self.countSeconds = 59
                 }
             }
             else {
-                self.countSeconds--
+                self.countSeconds -= 1
             }
             let newMin:String = String(format: "%02d", self.countMinutes)
             let newSec:String = String(format: "%02d", self.countSeconds)
@@ -587,7 +586,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let backAlert = SCLAlertView(appearance: appearance)
-        backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
+        backAlert.addButton("Yes", target:self, selector:#selector(verbalReasoningViewController.goBack))
         backAlert.showTitle(
             "Return to Menu", // Title of view
             subTitle: alertMessage, // String of view
@@ -645,9 +644,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         }
         let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
         let buttonHeight:Int = Int(50*self.heightRatio)
-        var i:Int = 0
-        
-        for i=0; i<arrayAnswers.count;i++ {
+      
+      for i:Int in 0..<arrayAnswers.count {
             let answerUIButton:UIView = UIView()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UIButton = UIButton()
@@ -694,7 +692,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.answerIsSelected(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
         }
     }
@@ -756,11 +754,10 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
                     } else {
                         
                     //Upload Results to Parse
-                    var i:Int = 0
                     var nbCorrectAnswers:Int = 0
-                    for i=0;i<self.selectedAnswers.count;i++ {
+                      for i:Int in 0..<self.selectedAnswers.count {
                         if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
-                            nbCorrectAnswers++
+                            nbCorrectAnswers += 1
                         }
                     }
                     self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
@@ -812,7 +809,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
                     self.passageView.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Tap here for Answers"
                     }, completion: nil)
-                self.displayedQuestionIndex++
+                self.displayedQuestionIndex += 1
                 if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                     //Switch Button text to "Complete"
                     self.nextButton.text = "Complete Test"
@@ -826,7 +823,6 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     func feedbackScreen() {
         //Display feedback screen here
         self.isTestComplete = true
-        var i:Int = 0
         let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
@@ -868,7 +864,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
         topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         topComment.textColor = UIColor.whiteColor()
         
-        for i=0; i<self.selectedAnswers.count;i++ {
+      for i:Int in 0..<self.selectedAnswers.count {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UILabel = UILabel()
@@ -922,7 +918,7 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.displayAnswerWithFeedback(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
             
         }

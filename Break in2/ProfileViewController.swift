@@ -227,9 +227,9 @@ class ProfileViewController: UIViewController {
     
     func saveProfile(sender: UIButton) {
         
-        var entry1Value:String = String()
-        var entry2Value:String = String()
-        var entry3Value:String = String()
+        let entry1Value:String = String()
+        let entry2Value:String = String()
+        let entry3Value:String = String()
         var alertMessage:String = String()
         var showErrorMessage:Bool = false
         

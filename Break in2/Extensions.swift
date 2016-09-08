@@ -78,7 +78,7 @@ extension Int {
         if newInt==9 {
             newInt = 0
         } else {
-            newInt++
+            newInt += 1
         }
         return newInt
     }
@@ -87,7 +87,7 @@ extension Int {
         if newInt==0 {
             newInt = 9
         } else {
-            newInt--
+            newInt -= 1
         }
         return newInt
     }
@@ -102,7 +102,7 @@ extension String {
 
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     

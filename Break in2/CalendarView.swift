@@ -97,7 +97,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Create current, next and previous monthViews
     
-    for index:Int in 0.stride(through: 2, by: 1) {
+    for _:Int in 0.stride(through: 2, by: 1) {
       
       let monthViewAtIndex:CalendarMonthView = CalendarMonthView()
       

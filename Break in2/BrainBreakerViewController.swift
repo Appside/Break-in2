@@ -126,7 +126,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         self.attemptsRemaining = self.defaults.integerForKey("NoOfBrainBreakerLives")
         self.currentPrize = self.defaults.objectForKey("BrainBreakerTestPrize") as? String ?? String()
         self.questionNumber = self.defaults.integerForKey("BrainBreakerQuestionNumber")
-        self.brainBreakerAlreadySolved = self.defaults.boolForKey("brainBreakerAnsweredCorrectly") as? Bool ?? Bool()
+        self.brainBreakerAlreadySolved = self.defaults.boolForKey("brainBreakerAnsweredCorrectly") as Bool ?? Bool()
         
         //Background Image
         let backgroundImageView = UIImageView(frame: CGRectMake(0, 0, width, height))
@@ -510,13 +510,12 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         nextUIView.addConstraint(heightLabelConstraint)
         nextUIView.addSubview(self.submitButton)
         self.submitButton.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("nextQuestion:"))
+        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(BrainBreakerViewController.nextQuestion(_:)))
         tapGestureNext.numberOfTapsRequired = 1
         nextUIView.addGestureRecognizer(tapGestureNext)
         
         //Set answersArray
-        var answerIndex:Int = 0
-        for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex++ {
+      for _:Int in 0...self.totalNumberOfQuestions {
             let fixedNumber:Int = 20
             self.selectedAnswers.append(fixedNumber)
         }
@@ -541,7 +540,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let alertMessage:String = "Are you sure you want to return home?"
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let backAlert = SCLAlertView(appearance: appearance)
-        backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
+        backAlert.addButton("Yes", target:self, selector:#selector(BrainBreakerViewController.goBack))
         backAlert.showTitle(
             "Return to Menu", // Title of view
             subTitle: alertMessage, // String of view
@@ -602,7 +601,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let alertMessage:String = "You are about to take a chance at the Brain Breaker. Are you ready ?"
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let backAlert = SCLAlertView(appearance: appearance)
-        backAlert.addButton("Yes", target:self, selector:Selector("setUpTest"))
+        backAlert.addButton("Yes", target:self, selector:#selector(BrainBreakerViewController.setUpTest))
         backAlert.showTitle(
             "Start the Challenge", // Title of view
             subTitle: alertMessage, // String of view
@@ -619,7 +618,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
         if (self.attemptsRemaining > 0) {
             
-            self.attemptsRemaining--
+            self.attemptsRemaining -= 1
             self.defaults.setInteger(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
             
             if self.interstitialAd.isReady && self.membershipType == "Free" {
@@ -627,7 +626,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             } else {
                 print("Ad wasn't ready")
                 self.testStarted = true
-                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+                self.timeTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(BrainBreakerViewController.updateTimer), userInfo: nil, repeats: true)
             }
             
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
@@ -649,7 +648,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             
             let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
             let backAlert = SCLAlertView(appearance: appearance)
-            backAlert.addButton("Return Home", target:self, selector:Selector("goBack"))
+            backAlert.addButton("Return Home", target:self, selector:#selector(BrainBreakerViewController.goBack))
             backAlert.showTitle(
                 "Sorry", // Title of view
                 subTitle: alertMessage, // String of view
@@ -692,9 +691,8 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         }
         let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
         let buttonHeight:Int = Int(50*self.heightRatio)
-        var i:Int = 0
         
-        for i=0; i<arrayAnswers.count;i++ {
+      for i:Int in 0..<arrayAnswers.count {
             let answerUIButton:UIView = UIView()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UIButton = UIButton()
@@ -741,7 +739,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(BrainBreakerViewController.answerIsSelected(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
         }
     }
@@ -777,7 +775,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
                 self.selectedAnswers[self.displayedQuestionIndex]=21
             }
-            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: #selector(BrainBreakerViewController.nextQuestion(_:))))
             self.timeTimer.invalidate()
         }
         else {
@@ -786,12 +784,12 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
                     self.timeTimer.invalidate()
                 }
                 else {
-                    self.countMinutes--
+                    self.countMinutes -= 1
                     self.countSeconds = 59
                 }
             }
             else {
-                self.countSeconds--
+                self.countSeconds -= 1
             }
             let newMin:String = String(format: "%02d", self.countMinutes)
             let newSec:String = String(format: "%02d", self.countSeconds)
@@ -878,7 +876,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
     override func viewDidAppear(animated: Bool) {
         //Call tutoNextPage
         let dateBB = NSDate().dateByAddingTimeInterval(0)
-        self.timer = NSTimer(fireDate: dateBB, interval: 1, target: self, selector: "brainBreakerTimer", userInfo: nil, repeats: true)
+        self.timer = NSTimer(fireDate: dateBB, interval: 1, target: self, selector: #selector(BrainBreakerViewController.brainBreakerTimer), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(self.timer, forMode: NSRunLoopCommonModes)
         
         if self.brainBreakerAlreadySolved == true {
@@ -997,7 +995,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
                     //Upload Results to Parse
                     var nbCorrectAnswers:Int = 0
                     if self.quizzArray[0].correctAnswer == self.selectedAnswers[0] {
-                        nbCorrectAnswers++
+                        nbCorrectAnswers += 1
                         self.defaults.setBool(true, forKey: "brainBreakerAnsweredCorrectly")
                     }
                     SwiftSpinner.show("Saving Results")
@@ -1028,7 +1026,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
                                     
                                     SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                         
-                                        self.attemptsRemaining++
+                                        self.attemptsRemaining += 1
                                         self.defaults.setInteger(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
                                         self.goBack()
                                         SwiftSpinner.hide()
@@ -1042,7 +1040,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
                             
                             SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                 
-                                self.attemptsRemaining++
+                                self.attemptsRemaining += 1
                                 self.defaults.setInteger(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
                                 self.goBack()
                                 SwiftSpinner.hide()
@@ -1065,7 +1063,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
                     self.passageView.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Tap for Answers"
                     }, completion: nil)
-                self.displayedQuestionIndex++
+                self.displayedQuestionIndex += 1
                 if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                     //Switch Button text to "Complete"
                     self.submitButton.text = "Complete Test"

@@ -188,16 +188,10 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         tapGestureNext.numberOfTapsRequired = 1
         nextUIView.addGestureRecognizer(tapGestureNext)
         
-        //Set answersArray
-        var answerIndex:Int = 0
+        //Set answersArray & Generate random questions for the test
         let fixedNumber:Int = 20
-        for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex += 1 {
+        for _:Int in 0.stride(through: self.totalNumberOfQuestions, by: 1) {
             self.selectedAnswers.append(fixedNumber)
-        }
-        
-        //Generate random questions for the test
-        var questionNew:Int = Int()
-        for questionNew=0;questionNew<=self.totalNumberOfQuestions;questionNew += 1 {
             self.addNewQuestion()
         }
         
@@ -535,9 +529,8 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         let arrayAnswers:[String] = self.quizzArray[indexQuestion].answers
         let questionAsked:String = self.quizzArray[indexQuestion].question
         let buttonHeight:Int = Int((self.view.frame.height-250*self.heightRatio)/6)
-        var i:Int = 0
-        
-        for i=0; i<arrayAnswers.count;i += 1 {
+      
+      for i:Int in 0.stride(to: arrayAnswers.count, by: 1) {
             let answerRow:UIButton = UIButton()
             let answerNumber:UIButton = UIButton()
             let matchingQuestionLabel:UIButton = UIButton()
@@ -675,9 +668,8 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
                     } else {
                         
                     //Upload Results to Parse
-                    var i:Int = 0
                     var nbCorrectAnswers:Int = 0
-                    for i=0;i<self.quizzArray.count;i += 1 {
+                      for i:Int in 0.stride(to: self.quizzArray.count, by: 1) {
                         if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
                             nbCorrectAnswers += 1
                         }
@@ -738,7 +730,6 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
     func feedbackScreen() {
         //Display feedback screen here
         self.isTestComplete = true
-        var i:Int = 0
         let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
@@ -764,7 +755,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             self.feebdackScreen.layer.cornerRadius = 8.0
             }, completion: nil)
         
-        for i=0; i<self.selectedAnswers.count;i += 1 {
+      for i:Int in 0.stride(to: self.selectedAnswers.count, by: 1) {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UILabel = UILabel()
@@ -854,22 +845,20 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
         var correctIndex:Int = Int()
         var randomIndex:Int = Int()
         var correctIndexSet:Bool = false
-        var i:Int = 0
         var newQuestion:String = String()
         if operation=="+" {
             number1 = Float(arc4random_uniform(100))
             number2 = Float(arc4random_uniform(100))
             answersArray.append(String(format:"%g", number1+number2))
-            for i=0;i<5;i += 1 {
+          for i:Int in 0.stride(to: 5, by: 1) {
                 answersArray.append(String(Int(number1+number2)+i+1))
             }
-        i=0
         }
         if operation=="-" {
             number1 = Float(arc4random_uniform(100))
             number2 = Float(arc4random_uniform(100))
             answersArray.append(String(format:"%g", number1-number2))
-            for i=0;i<5;i += 1 {
+            for i:Int in 0.stride(to: 5, by: 1) {
                 answersArray.append(String(Int(number1-number2)+i+1))
             }
         }
@@ -888,12 +877,12 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
                 answerSplit.append(String(character))
             }
             if sizeInt==1 || sizeInt==2 {
-                for i=0;i<5;i += 1 {
+                for i:Int in 0.stride(to: 5, by: 1) {
                     answersArray.append(String(Int(number1*number2)+i+1))
                 }
             }
             if sizeInt==3 {
-                for i=0;i<5;i += 1 {
+                for i:Int in 0.stride(to: 5, by: 1) {
                     answersArray.append("\(answerSplit[0]) \(i) \(answerSplit[2])".removeSpaces())
                 }
             }
@@ -917,8 +906,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             answersArray.append(String(firstAnswer-0.4))
             answersArray.append(String(firstAnswer+0.5))
         }
-        i=0
-        for i=0;i<6;i += 1 {
+        for i:Int in 0.stride(to: 6, by: 1) {
                 randomIndex = Int(arc4random_uniform(UInt32(6-i)))
                 returnedArray.append(answersArray[randomIndex])
                 answersArray.removeAtIndex(randomIndex)

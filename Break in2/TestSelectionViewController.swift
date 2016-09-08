@@ -168,7 +168,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
     // Create testTypeViews for each testType
     
-    for var index:Int = 0 ; index < self.testTypes.count ; index++ {
+    for index:Int in 0  ..< self.testTypes.count  {
       
       // Create each testTypeView
       
@@ -256,10 +256,10 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
     self.testStartButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testStartButton.backgroundColor = UIColor.turquoiseColor()
-    self.testStartButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.testStartButton.addTarget(self, action: #selector(TestSelectionViewController.hideTestSelectionView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: "hideTestSelectionView:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.addTarget(self, action: #selector(TestSelectionViewController.hideTestSelectionView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
@@ -267,13 +267,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.testLivesUpgradeButton1.setTitle("Buy \(self.noAddtlLives) Lives", forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton1.backgroundColor = UIColor.turquoiseColor()
-    self.testLivesUpgradeButton1.addTarget(self, action: "addLives:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.testLivesUpgradeButton1.addTarget(self, action: #selector(TestSelectionViewController.addLives(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     self.testLivesUpgradeButton2.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.testLivesUpgradeButton2.setTitle("Buy Unlimited Lives", forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
     self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
-    self.testLivesUpgradeButton2.addTarget(self, action: "unlimitedLivesTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+    self.testLivesUpgradeButton2.addTarget(self, action: #selector(TestSelectionViewController.unlimitedLivesTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
     //********************************************************************
     //NUMBER 1: CHECK MEMBERSHIP TYPE
@@ -297,7 +297,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
         freeConduit()
         let date = NSDate().dateByAddingTimeInterval(0)
-        timer = NSTimer(fireDate: date, interval: 1, target: self, selector: "freeConduit", userInfo: nil, repeats: true)
+        timer = NSTimer(fireDate: date, interval: 1, target: self, selector: #selector(TestSelectionViewController.freeConduit), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
         
     }
@@ -356,7 +356,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     func freeConduit(){
         
         self.numberOfTestsTotal = defaults.integerForKey("Lives")
-        self.testsTotal.addTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.testsTotal.addTarget(self, action: #selector(TestSelectionViewController.showTestLives(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.testsTotal.setTitle(String(self.numberOfTestsTotal), forState: UIControlState.Normal)
         
         if self.numberOfTestsTotal == 1 {
@@ -570,7 +570,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     // Create and add constraints for each testTypeView and set content size for testScrollView
     
-    for var index:Int = 0 ; index < self.testTypes.count ; index++ {
+    for index:Int in 0  ..< self.testTypes.count  {
       
       self.testTypeViews[index].translatesAutoresizingMaskIntoConstraints = false
       
@@ -828,13 +828,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
               
               let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
               self.defaults.setObject(now, forKey: "LivesTimer")
-              self.numberOfTestsTotal--
+              self.numberOfTestsTotal -= 1
               self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
               self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
               
             }else if (self.numberOfTestsTotal > 0 && self.numberOfTestsTotal != 3) {
               
-              self.numberOfTestsTotal--
+              self.numberOfTestsTotal -= 1
               self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
               self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
               
@@ -1083,7 +1083,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
         self.numberOfTestsTotal = self.numberOfTestsTotal + noAddtlLives
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
-        self.numberOfTestsTotal--
+        self.numberOfTestsTotal -= 1
         self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
         
         SwiftSpinner.show("You Have Purchased \(self.noAddtlLives) Additional Lives", animated: false).addTapHandler({
@@ -1107,7 +1107,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                                         self.defaults.setObject("Premium", forKey: "Membership")
                                         self.testLivesBackgroundView.alpha = 0
                                         self.testLivesBackgroudViewVisible = false
-                                        self.testsTotal.removeTarget(self, action: "showTestLives:", forControlEvents: UIControlEvents.TouchUpInside)
+                                        self.testsTotal.removeTarget(self, action: #selector(TestSelectionViewController.showTestLives(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                                         self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
                                         self.membershipType = self.defaults.objectForKey("Membership") as! String
                                         self.paidConduit()

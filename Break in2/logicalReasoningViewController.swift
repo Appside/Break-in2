@@ -126,7 +126,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         let arrowWidth:NSLayoutConstraint = NSLayoutConstraint(item: menuBackImageVIew, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35*self.heightRatio)
         self.menuBackButton.addConstraints([arrowTop,arrowLeft])
         menuBackImageVIew.addConstraints([arrowHeight,arrowWidth])
-        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("backHome:"))
+        let tapGestureBackHome:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(logicalReasoningViewController.backHome(_:)))
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
         
@@ -186,21 +186,19 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         nextUIView.addConstraint(heightLabelConstraint)
         nextUIView.addSubview(self.nextButton)
         self.nextButton.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("nextQuestion:"))
+        let tapGestureNext:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(logicalReasoningViewController.nextQuestion(_:)))
         tapGestureNext.numberOfTapsRequired = 1
         nextUIView.addGestureRecognizer(tapGestureNext)
         
         //Set answersArray
-        var answerIndex:Int = 0
         let fixedNumber:Int = 20
-        for answerIndex=0;answerIndex<=self.totalNumberOfQuestions;answerIndex++ {
+        for _:Int in 0...self.totalNumberOfQuestions {
             self.selectedAnswers.append(fixedNumber)
         }
         
         //Generate random questions for the test
         self.logicModel = LogicalModel()
-        var questionNew:Int = Int()
-        for questionNew=0;questionNew<=self.totalNumberOfQuestions;questionNew++ {
+        for _:Int in 0...self.totalNumberOfQuestions {
             self.addNewQuestion()
         }
         
@@ -332,13 +330,13 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             self.tutoNextButton.setTitle("Continue", forState: .Normal)
             self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoNext:"))
+            let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(logicalReasoningViewController.tutoNext(_:)))
             self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
             self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             self.tutoSkipButton.setTitle("Skip the Tutorial", forState: .Normal)
             self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(15))
             self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
-            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("tutoSkip:"))
+            let tutoSkipButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(logicalReasoningViewController.tutoSkip(_:)))
             self.tutoSkipButton.addGestureRecognizer(tutoSkipButtonTap)
             
             //Set tutorial text
@@ -364,7 +362,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
     }
     
     func tutoNext(sender:UITapGestureRecognizer) {
-        self.tutoPage++
+        self.tutoPage += 1
         if self.tutoPage==2 {
             self.tutoDescriptionSep2.alpha = 0
             self.tutoDescriptionText2.alpha = 0
@@ -440,7 +438,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             if self.selectedAnswers[self.displayedQuestionIndex]==20 {
                 self.selectedAnswers[self.displayedQuestionIndex]=21
             }
-            self.nextQuestion(UITapGestureRecognizer(target: self, action: Selector("nextQuestion:")))
+            self.nextQuestion(UITapGestureRecognizer(target: self, action: #selector(logicalReasoningViewController.nextQuestion(_:))))
             self.timeTimer.invalidate()
         }
         else {
@@ -449,12 +447,12 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                     self.timeTimer.invalidate()
                 }
                 else {
-                    self.countMinutes--
+                    self.countMinutes -= 1
                     self.countSeconds = 59
                 }
             }
             else {
-                self.countSeconds--
+                self.countSeconds -= 1
             }
             let newMin:String = String(format: "%02d", self.countMinutes)
             let newSec:String = String(format: "%02d", self.countSeconds)
@@ -476,7 +474,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let backAlert = SCLAlertView(appearance: appearance)
-        backAlert.addButton("Yes", target:self, selector:Selector("goBack"))
+        backAlert.addButton("Yes", target:self, selector:#selector(logicalReasoningViewController.goBack))
         backAlert.showTitle(
             "Return to Menu", // Title of view
             subTitle: alertMessage, // String of view
@@ -536,10 +534,8 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         let shapesMargin:Int = Int(10*self.widthRatio)
         let minMax:CGFloat = max(self.widthRatio,self.heightRatio)
         let shapesWidth:Int = Int((self.view.frame.width)-75*minMax-4*CGFloat(shapesMargin))/5
-        var i:Int = 0
-        var j:Int = 0
-        
-        for i=0; i<arrayAnswers.count;i++ {
+      
+      for i:Int in 0..<arrayAnswers.count {
             let answerRow:UIButton = UIButton()
             let answerNumber:UIButton = UIButton()
             let matchingQuestionLabel:UIButton = UIButton()
@@ -577,9 +573,8 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                 matchingQuestionLabel.alpha = 1.0
                 
                 //Set constraints for the shapes
-                j = 0
                 let questionAsked:[LogicalPictureView] = self.quizzArray[indexQuestion].question
-                for j=0;j<4;j++ {
+              for j:Int in 0..<4 {
                     matchingQuestionLabel.addSubview(questionAsked[j])
                     questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
                     let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: matchingQuestionLabel, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
@@ -614,7 +609,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             answerNumber.addConstraint(widthMM)
             
             if self.isTestComplete==false {
-                let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("answerIsSelected:"))
+                let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(logicalReasoningViewController.answerIsSelected(_:)))
                 answerNumber.addGestureRecognizer(tapGesture)
             }
         }
@@ -667,9 +662,8 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                                         let shapesMargin:Int = Int(10*self.widthRatio)
                                         let minMax:CGFloat = max(self.widthRatio,self.heightRatio)
                                         let shapesWidth:Int = Int((self.view.frame.width)-75*minMax-4*CGFloat(shapesMargin))/5
-                                        var j:Int = 0
                                         let questionAsked:[LogicalPictureView] = self.quizzArray[self.displayedQuestionIndex].question
-                                        for j=0;j<4;j++ {
+                                      for j:Int in 0..<4 {
                                             actualSubButton.addSubview(questionAsked[j])
                                             questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
                                             let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: actualSubButton, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
@@ -718,11 +712,10 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                     } else {
                         
                     //Upload Results to Parse
-                    var i:Int = 0
                     var nbCorrectAnswers:Int = 0
-                    for i=0;i<self.quizzArray.count;i++ {
+                      for i:Int in 0..<self.quizzArray.count {
                         if self.quizzArray[i].correctAnswer == self.selectedAnswers[i] {
-                            nbCorrectAnswers++
+                            nbCorrectAnswers += 1
                         }
                     }
                     self.scoreRatio = (Float(nbCorrectAnswers) / Float(self.selectedAnswers.count)) * 100
@@ -767,7 +760,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             }
                 //Continue to the next question
             else {
-                self.displayedQuestionIndex++
+                self.displayedQuestionIndex += 1
                 if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                     //Switch Button text to "Complete"
                     self.nextButton.text = "Complete Test"
@@ -781,7 +774,6 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         
         //Display feedback screen here
         self.isTestComplete = true
-        var i:Int = 0
         let buttonHeight:Int = Int(40*self.heightRatio)
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
@@ -823,7 +815,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         topComment.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
         topComment.textColor = UIColor.whiteColor()
         
-        for i=0; i<self.selectedAnswers.count;i++ {
+      for i:Int in 0..<self.selectedAnswers.count {
             let answerUIButton:UIButton = UIButton()
             let answerUILabel:UILabel = UILabel()
             let answerNumber:UILabel = UILabel()
@@ -881,7 +873,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             let widthMM:NSLayoutConstraint = NSLayoutConstraint(item: answerNumber, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.widthRatio)
             answerNumber.addConstraint(widthMM)
             
-            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("displayAnswerWithFeedback:"))
+            let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(logicalReasoningViewController.displayAnswerWithFeedback(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
             
         }
@@ -944,9 +936,8 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
                                     answerRow.alpha = 1.0
                                     let shapesMargin:Int = Int(10*self.widthRatio)
                                     let shapesWidth:Int = (Int(self.view.frame.width)-Int(170*self.widthRatio)-4*shapesMargin)/4
-                                    var j:Int = 0
                                     let questionAsked:[LogicalPictureView] = self.quizzArray[questionFeedback].question
-                                    for j=0;j<4;j++ {
+                                  for j:Int in 0..<4 {
                                         answerRow.addSubview(questionAsked[j])
                                         questionAsked[j].translatesAutoresizingMaskIntoConstraints = false
                                         let topMMM:NSLayoutConstraint = NSLayoutConstraint(item: questionAsked[j], attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: answerRow, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
@@ -992,7 +983,6 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         var correctIndex:Int = Int()
         var randomIndex:Int = Int()
         var correctIndexSet:Bool = false
-        var i:Int = 0
         
         //Generate Question and Answers
         let logicalProblem:[[LogicalPictureView]] = self.logicModel.getLogicalProblem()
@@ -1000,7 +990,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
         answersArray = logicalProblem[1]
         
         //Shuffle array of answers
-        for i=0;i<4;i++ {
+      for i:Int in 0..<4 {
             randomIndex = Int(arc4random_uniform(UInt32(4-i)))
             returnedArray.append(answersArray[randomIndex])
             answersArray.removeAtIndex(randomIndex)

@@ -79,7 +79,7 @@ class TestTypeView: UIView {
     
     // Create testTypeDifficultyButtons for each testDifficulty
     
-    for var index:Int = 0 ; index < self.testDifficulties.count ; index++ {
+    for index:Int in 0..<self.testDifficulties.count {
       
       let difficultyButton:UIButton = UIButton(type: UIButtonType.System)
       
@@ -99,7 +99,7 @@ class TestTypeView: UIView {
         difficultyButton.setTitleColor(self.mainLineColor, forState: UIControlState.Normal)
       }
       
-      difficultyButton.addTarget(self, action: Selector("difficultyButtonTapped:"), forControlEvents: UIControlEvents.TouchUpInside)
+      difficultyButton.addTarget(self, action: #selector(TestTypeView.difficultyButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
       
       self.testTypeDifficultyButtons.append(difficultyButton)
       self.testTypeDifficultyView.addSubview(self.testTypeDifficultyButtons[index])
@@ -165,7 +165,7 @@ class TestTypeView: UIView {
     
     // Set constraints for each testTypeDifficultyButton
     
-    for var index:Int = 0 ; index < self.testTypeDifficultyButtons.count ; index++ {
+    for index:Int in 0..<self.testTypeDifficultyButtons.count {
       
       self.testTypeDifficultyButtons[index].translatesAutoresizingMaskIntoConstraints = false
       

@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         FBSDKAppEvents.activateApp()
         //FBAppCall.handleDidBecomeActiveWithSession(PFFacebookUtils.session())
-        var currentInstallation = PFInstallation.currentInstallation()
+        let currentInstallation = PFInstallation.currentInstallation()
         if currentInstallation!.badge != 0 {
             currentInstallation!.badge = 0
             currentInstallation!.saveEventually()
