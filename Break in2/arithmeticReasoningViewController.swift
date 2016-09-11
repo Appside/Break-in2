@@ -301,7 +301,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             
             //Design
             self.logoImageView.textAlignment = NSTextAlignment.Center
-            self.tutoView.backgroundColor = UIColor(white: 0.0, alpha: 0.9)
+            self.tutoView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
             self.tutoDescriptionTitle.textColor = UIColor.whiteColor()
             self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
             self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Justified
