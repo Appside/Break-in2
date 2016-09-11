@@ -841,7 +841,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     if self.firstTimeUser {
       self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton, self.membershipButton])
-      self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. Hopefully, the calender we have provided will help!\n\nDeadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
+      self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. The calender we have provided will help!\n\nDeadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
       self.tutorialDescriptions.updateValue(["PRACTICE APTITUDE TESTS...", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n...OR HAVE SOME FUN!\n\nClick on the light bulb to try our Brain Breaker question. If you get the answer right, you will be in with a chance to win a special prize!"], forKey: self.careersBackgroundView)
       self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
       self.tutorialDescriptions.updateValue(["STATISTICS", "We've also added analytics which will allow you to track your progress.\n\nAfter you have taken a few practice tests, return here to monitor your performance and track your improvement over time."], forKey: self.statsButton)
@@ -1086,7 +1086,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
               }
             }
             if self.tutorialViews[self.tutorialPageNumber] == self.settingsButton {
-              self.tutorialNextButton.setTitle("Continue To Settings", forState: UIControlState.Normal)
+              self.tutorialNextButton.setTitle("Select Careers", forState: UIControlState.Normal)
               self.displayFinger(true)
               UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.tutorialFingerImageView.alpha = 1
