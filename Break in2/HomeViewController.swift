@@ -42,7 +42,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   let homeViewModel:JSONModel = JSONModel()
   let defaults = NSUserDefaults.standardUserDefaults()
     
-  let logoImageView:UIImageView = UIImageView()
+  let logoImageView:UILabel = UILabel()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
   let calendarBackgroundView:UIView = UIView()
@@ -168,8 +168,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     // Customize and add content to imageViews
     
+    let labelString:String = String("BREAKIN2")
+    let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
+    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+    self.logoImageView.attributedText = attributedString
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-    self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
     self.logoImageView.clipsToBounds = true
     
     self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -1024,10 +1029,8 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
               }
             }
             if self.tutorialViews[self.tutorialPageNumber] == self.statsButton {
-              self.displayFinger(false)
-              UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.tutorialFingerImageView.alpha = 1
-                }, completion: nil)
+                self.tutorialFingerImageView.alpha = 0
+                UIView.animateWithDuration(1, delay: 0, options: [UIViewAnimationOptions.CurveLinear,UIViewAnimationOptions.Repeat,UIViewAnimationOptions.Autoreverse], animations: {self.statsButton.alpha=0.2}, completion: nil)
             }
             self.updateDescriptionLabelView()
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
@@ -1039,19 +1042,29 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   }
   
   func hideTutorial() {
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-      
-      self.tutorialView.alpha = 0
-      self.tutorialNextButton.alpha = 0
-      self.view.layoutIfNeeded()
-      
-      }, completion: {(Bool) in
-        
-        self.view.insertSubview(self.tutorialViews[self.tutorialPageNumber - 1], belowSubview: self.tutorialView)
-        self.view.insertSubview(self.logoImageView, belowSubview: self.tutorialView)
-        self.tutorialViews[self.tutorialPageNumber - 1].userInteractionEnabled = true
-        
-    })
+    
+//    self.statsButton.imageView?.layer.removeAllAnimations()
+//    self.statsButton.alpha = 1.0
+//    self.membershipButton.removeFromSuperview()
+//    self.statsButton.userInteractionEnabled = true
+//    
+//    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+//      
+//      self.tutorialView.alpha = 0
+//      self.tutorialNextButton.alpha = 0
+//      self.view.layoutIfNeeded()
+//      
+//      }, completion: {(Bool) in
+//        
+//        self.view.insertSubview(self.tutorialViews[self.tutorialPageNumber - 1], belowSubview: self.tutorialView)
+//        self.view.insertSubview(self.logoImageView, belowSubview: self.tutorialView)
+//        //self.tutorialViews[self.tutorialPageNumber - 1].userInteractionEnabled = true
+//        
+//    })
+
+    let homeVC = storyboard?.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
+    presentViewController(homeVC, animated: false, completion: nil)
+    
   }
   
   func nextTutorialButtonClicked(sender:UIButton) {
@@ -1087,10 +1100,9 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
             }
             if self.tutorialViews[self.tutorialPageNumber] == self.settingsButton {
               self.tutorialNextButton.setTitle("Select Careers", forState: UIControlState.Normal)
-              self.displayFinger(true)
-              UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.tutorialFingerImageView.alpha = 1
-                }, completion: nil)
+              //self.displayFinger(true)
+                self.tutorialFingerImageView.alpha = 0
+                UIView.animateWithDuration(1, delay: 0, options: [UIViewAnimationOptions.CurveLinear,UIViewAnimationOptions.Repeat,UIViewAnimationOptions.Autoreverse], animations: {self.settingsButton.alpha=0.2}, completion: nil)
             }
           }
           if self.tutorialPageNumber != self.tutorialViews.count {
@@ -1102,9 +1114,6 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
           
       })
 
-//      else if self.tutorialViews[self.tutorialPageNumber] == self.statsButton {
-//        self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
-//      }
     
   }
   
@@ -1120,12 +1129,11 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     descriptionLabelView.translatesAutoresizingMaskIntoConstraints = false
     
     if self.tutorialViews[self.tutorialPageNumber] == self.membershipButton {
-        self.displayFinger(false)
-        self.tutorialFingerImageView.alpha = 1.0
+        self.tutorialFingerImageView.alpha = 0.0
         self.membershipButton.alpha = 1.0
         self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
-        
         self.descriptionLabelView.setConstraintsToSuperview(75, bottom: 150, left: Int(2*self.majorMargin), right: Int(2*self.majorMargin))
+        UIView.animateWithDuration(1, delay: 0, options: [UIViewAnimationOptions.CurveLinear,UIViewAnimationOptions.Repeat,UIViewAnimationOptions.Autoreverse], animations: {self.membershipButton.alpha=0.2}, completion: nil)
         
     } else {
         

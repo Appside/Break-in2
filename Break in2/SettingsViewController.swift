@@ -65,7 +65,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   // Declare and initialize views
   
-  let logoImageView:UIImageView = UIImageView()
+  let logoImageView:UILabel = UILabel()
   let backButton:UIButton = UIButton()
   let settingsMenuView:UIView = UIView()
   let chooseCareersView:UIView = UIView()
@@ -183,8 +183,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Customize and add content to imageViews
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-    self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
-    
+    let labelString:String = String("BREAKIN2")
+    let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
+    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+    self.logoImageView.attributedText = attributedString
     // Customize settingMenuView, chooseCareersView and tutorialView
     
     self.settingsMenuView.backgroundColor = UIColor.whiteColor()
@@ -1239,9 +1243,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
             if self.tutorialViews[self.tutorialPageNumber] == self.chooseCareersView {
               self.view.insertSubview(self.backButton, belowSubview: self.tutorialNextButton)
               self.displayFinger(true)
-              UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.tutorialFingerImageView.alpha = 1
-                }, completion: nil)
+                self.tutorialFingerImageView.alpha = 0
+                self.backButton.alpha = 0.0
             }
             self.updateDescriptionLabelView()
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {

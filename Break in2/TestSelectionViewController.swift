@@ -56,7 +56,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   
   var backgroundImageView:UIImageView = UIImageView()
   var backgroundImageView2:UIImageView = UIImageView()
-  let logoImageView:UIImageView = UIImageView()
+  let logoImageView:UILabel = UILabel()
   let testSelectionView:UIView = UIView()
   var testPageControllerView:PageControllerView = PageControllerView()
   let testScrollView:UIScrollView = UIScrollView()
@@ -303,7 +303,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     }
     
     self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-    self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
+    let labelString:String = String("BREAKIN2")
+    let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
+    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+    self.logoImageView.attributedText = attributedString
     
     // Adjust swipeInfoLabel, testLivesTitleLabel and testLivesSubtitleLabel appearance
     

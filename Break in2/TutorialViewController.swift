@@ -14,7 +14,7 @@ class TutorialViewController: UIViewController {
 
   let backgroundImageView:UIImageView = UIImageView()
   let backgroundView2:UIView = UIView()
-  let logoImageView:UIImageView = UIImageView()
+  let logoImageView:UILabel = UILabel()
   let profilePictureImageView:UIImageView = UIImageView()
   let sloganImageView:UIImageView = UIImageView()
   let tutorialNextButton:UIButton = UIButton()
@@ -67,7 +67,12 @@ class TutorialViewController: UIViewController {
       self.backgroundView2.alpha = 0
 
       self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-      self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
+        let labelString:String = String("BREAKIN2")
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        self.logoImageView.attributedText = attributedString
       
       self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
       self.profilePictureImageView.image = UIImage.init(named: "planeLogo")!

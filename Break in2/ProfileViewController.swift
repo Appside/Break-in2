@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
     // Declare and intialize views
     var backgroundImageView:UIImageView = UIImageView()
     var mainView:UIView = UIView()
-    var logoImageView:UIImageView = UIImageView()
+    var logoImageView:UILabel = UILabel()
     var backButtonImageVIew:UIImageView = UIImageView()
     var screenFrame:CGRect = CGRect()
     var statusBarFrame:CGRect = CGRect()
@@ -69,7 +69,12 @@ class ProfileViewController: UIViewController {
         //Logo ImageVIew
         self.view.addSubview(self.logoImageView)
         self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        self.logoImageView.image = UIImage.init(named: "textBreakIn2Small")
+        let labelString:String = String("BREAKIN2")
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        self.logoImageView.attributedText = attributedString
         self.logoImageView.clipsToBounds = true
         self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
