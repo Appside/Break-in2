@@ -58,7 +58,7 @@
   
   {
   "questionType":"Technology",
-  "question":"What part of database stores only on type of information?",
+  "question":"What part of database stores only one type of information?",
   "answers":["Record","File","Field","Report"],
   "correctAnswer":2,
   "explanation":"Fields are used to store a certain type of information. Many fields make a record and many records make a file."
@@ -123,7 +123,7 @@
   "questionType":"Technology",
   "question":"Who developed Yahoo?",
   "answers":["Jerry Yang & Philip Case","David Filo & Jerry Yang","Larry Page & Sergey Brin","Martin Bool","Ken Thompson"],
-  "correctAnswer":3,
+  "correctAnswer":2,
   "explanation":"David Filo & Jerry Yang founded Yahoo in January 1994,"
   },
   
@@ -154,7 +154,7 @@
   {
   "questionType":"Technology",
   "question":"How is data represented inside a computer?",
-  "answers":["Logical System","Byte System","Binary Systen","Hexadecimal System","Dual System"],
+  "answers":["Logical System","Byte System","Binary System","Hexadecimal System","Dual System"],
   "correctAnswer":2,
   "explanation":"Computers are built on a Binary System because of its straightforward implementation in digital electronic circuitry using logic gates. Each digit is referred to as a bit."
   },
@@ -188,7 +188,7 @@
   "question":"Which of the following is NOT a function of the Operating System?",
   "answers":["Process Management","Memory Management","Disk Management","Database Management"],
   "correctAnswer":3,
-  "explanation":"Database Management is not a function of the Operatin System. The Operating System manages computer hardware and software resources and provides common services for computer programs."
+  "explanation":"Database Management is not a function of the Operating System. The Operating System manages computer hardware and software resources and provides common services for computer programs."
   },
 
   {
@@ -353,7 +353,7 @@
   
   {
   "questionType":"Technology",
-  "question":"Allocation of a resources in a time dependent manner to several program simultaneously is called:",
+  "question":"Allocation of a resources in a time dependent manner to several programmes simultaneously is called:",
   "answers":["Time Sharing","Multitasking","Parallel Processing","Multithreading","None Of The Above"],
   "correctAnswer":0,
   "explanation":"In computing, time sharing is the apportionment of computer resources (according to processing time) to several users. By allowing a large number of users to interact concurrently with a single computer, time-sharing dramatically lowered the cost of providing computing capability and made it possible for individuals and organisations to use a computer without owning one."
