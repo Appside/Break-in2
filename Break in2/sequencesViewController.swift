@@ -887,7 +887,6 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
                 self.timeLabel.text = "Wrong Answer"
                 self.timeLabel.textColor = UIColor.redColor()
                 feedbackLabel.text = "Your answer was \(self.quizzArray[questionFeedback].answers[self.selectedAnswers[questionFeedback]]).\nThis is a wrong answer.\n\n\(self.quizzArray[questionFeedback].feedback)\n\nThe correct answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer])."
-              feedbackLabel.text = "Your answer was .\nThis is a wrong answer.\n\n\(self.quizzArray[questionFeedback].feedback)\n\nThe correct answer was \(self.quizzArray[questionFeedback].answers[self.quizzArray[questionFeedback].correctAnswer])."
             }
             
             }, completion: nil)
