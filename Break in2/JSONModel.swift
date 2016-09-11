@@ -65,11 +65,11 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
       while y==0 {
         randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
         if selectedQuestions.count>0 {
-          for z in 0.stride(to: selectedQuestions.count, by: 1) {
-            if selectedQuestions[z] != randomNumber {
-              y = 1
+            if selectedQuestions.contains(randomNumber) {
+                y = 0
+            } else {
+                y = 1
             }
-          }
         } else {
           y = 1
         }
@@ -131,11 +131,11 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
       while y==0 {
         randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
         if selectedQuestions.count>0 {
-          for z in 0.stride(to: selectedQuestions.count, by: 1) {
-            if selectedQuestions[z] != randomNumber {
-              y = 1
+            if selectedQuestions.contains(randomNumber) {
+                y = 0
+            } else {
+                y = 1
             }
-          }
         } else {
           y = 1
         }
@@ -176,10 +176,10 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
             while y==0 {
                 randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
                 if selectedQuestions.count>0 {
-                    for z in 0.stride(to: selectedQuestions.count, by: 1) {
-                        if selectedQuestions[z] != randomNumber {
-                            y = 1
-                        }
+                    if selectedQuestions.contains(randomNumber) {
+                        y = 0
+                    } else {
+                        y = 1
                     }
                 } else {
                     y = 1
@@ -218,10 +218,10 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
             while y==0 {
                 randomNumber = Int(arc4random_uniform(UInt32(jsonObject.count-1)))
                 if selectedQuestions.count>0 {
-                    for z in 0.stride(to: selectedQuestions.count, by: 1) {
-                        if selectedQuestions[z] != randomNumber {
-                            y = 1
-                        }
+                    if selectedQuestions.contains(randomNumber) {
+                        y = 0
+                    } else {
+                        y = 1
                     }
                 } else {
                     y = 1

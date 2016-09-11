@@ -102,8 +102,8 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         
         //Initialize timer depending on difficulty
         if self.difficulty == "H" {
-            self.allowedSeconds = 00
-            self.allowedMinutes = 5
+            self.allowedSeconds = 15
+            self.allowedMinutes = 00
         }
         else if self.difficulty == "M" {
             self.allowedSeconds = 00
