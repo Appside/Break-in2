@@ -270,7 +270,7 @@ class TutorialViewController: UIViewController {
             self.tutorialNextButton.setTitle("Set up a Profile", forState: UIControlState.Normal)
             self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.descriptionLabelView.titleLabel.text = "CREATE A PROFILE"
-            self.descriptionLabelView.descriptionLabel.text = "We'd like to get to know you a little better. Feel free to tell us about yourself on the next page; that way we can let you know about (or even put you in touch with!) open positions that may suit you. You can edit this at any time."
+            self.descriptionLabelView.descriptionLabel.text = "That way we can get in touch if you win a prize or tell you about suitable open positions. You can edit this at any time."
             self.descriptionLabelView.titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
             
             self.view.layoutIfNeeded()

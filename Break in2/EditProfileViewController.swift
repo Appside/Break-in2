@@ -213,6 +213,7 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
                         cell.backgroundColor = UIColor.blackColor()
+                        cell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.8)
                     } else if self.skinType == 2{
                         cell.backgroundColor = UIColor.turquoiseColor()
                     }
@@ -231,7 +232,7 @@ class EditProfileViewController : FormViewController {
                     textView.text = textString4
                     view.addSubview(textView)
                     textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
-                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.8)
                     textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
                 }
                 section.header = header
@@ -303,6 +304,7 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
                         cell.backgroundColor = UIColor.blackColor()
+                        cell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.8)
                     } else if self.skinType == 2{
                         cell.backgroundColor = UIColor.turquoiseColor()
                     }
@@ -321,7 +323,7 @@ class EditProfileViewController : FormViewController {
                     textView.text = textString3
                     view.addSubview(textView)
                     textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
-                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.8)
                     textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
                 }
                 section.header = header
@@ -405,6 +407,7 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
                         cell.backgroundColor = UIColor.blackColor()
+                        cell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.8)
                     } else if self.skinType == 2{
                         cell.backgroundColor = UIColor.turquoiseColor()
                     }
@@ -423,7 +426,7 @@ class EditProfileViewController : FormViewController {
                     textView.text = textString2
                     view.addSubview(textView)
                     textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
-                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.8)
                     textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
                 }
                 section.header = header
@@ -497,7 +500,7 @@ class EditProfileViewController : FormViewController {
                     textView.text = textString1
                     view.addSubview(textView)
                     textView.setConstraintsToSuperview(0, bottom: 0, left: 13, right: 13)
-                    textView.textColor = UIColor(white: 1.0, alpha: 0.5)
+                    textView.textColor = UIColor(white: 1.0, alpha: 0.8)
                     textView.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
                 }
                 section.header = header

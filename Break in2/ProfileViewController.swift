@@ -235,7 +235,7 @@ class ProfileViewController: UIViewController {
         
         //Check entry1Value (Name)
         if entry3Value.isEmpty {
-            alertMessage = alertMessage + "No email address" + "\n"
+            alertMessage = alertMessage + "Please fill in your email address." + "\n"
             showErrorMessage = true
         } else {
             if !isValidEmail(entry3Value) {
@@ -244,15 +244,15 @@ class ProfileViewController: UIViewController {
             }
         }
         if entry2Value.isEmpty {
-            alertMessage = alertMessage + "No surname." + "\n"
+            alertMessage = alertMessage + "Please fill in your surname." + "\n"
             showErrorMessage = true
         }
         if entry1Value.isEmpty {
-            alertMessage = alertMessage + "No name." + "\n"
+            alertMessage = alertMessage + "Please fill in your first name." + "\n"
             showErrorMessage = true
         }
         if !checkName(entry1Value) {
-            alertMessage = alertMessage + "Invalid name." + "\n"
+            alertMessage = alertMessage + "Invalid first name." + "\n"
             showErrorMessage = true
         }
         if !checkName(entry2Value) {
@@ -265,7 +265,7 @@ class ProfileViewController: UIViewController {
             let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
             let backAlert = SCLAlertView(appearance: appearance)
             backAlert.showTitle(
-                "Return", // Title of view
+                "Mandatory Fields Incomplete", // Title of view
                 subTitle: alertMessage, // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "Cancel", // Optional button value, default: ""
