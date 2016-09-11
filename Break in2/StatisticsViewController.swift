@@ -169,14 +169,14 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         //Graph 1 (constraints and colors)
         self.graphView1.addSubview(chartObject)
         self.chartObject.setConstraintsToSuperview(40, bottom: 0, left: 0, right: 0)
-        self.barChartText.setConstraintsToSuperview(5, bottom: 5, left: 0, right: 0)
+        self.barChartText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         self.chartObject.delegate = self
         self.chartObject.noDataText = ""
         
         //Graph 2 (constraints and colors)
         self.graphView2.addSubview(chartObject2)
         self.chartObject2.setConstraintsToSuperview(40, bottom: 0, left: 0, right: 0)
-        self.lineChartText.setConstraintsToSuperview(5, bottom: 5, left: 0, right: 0)
+        self.lineChartText.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         self.chartObject2.delegate = self
         self.chartObject2.noDataText = ""
         
@@ -1243,7 +1243,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     
     func clearStatsWarning(sender:UIButton){
         
-        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let alertView = SCLAlertView(appearance: appearance)
         if self.noDataUILabel.text == "No Score Available" {
             alertView.showTitle(
@@ -1260,6 +1260,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         
         if sender == self.clearStatsButton {
             
+            let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
+            let alertView = SCLAlertView(appearance: appearance)
             alertView.addButton("Ok", target:self, selector:#selector(StatisticsViewController.clearParseStatistics(_:)))
             alertView.showTitle(
                 "Clear All Statistics", // Title of view
