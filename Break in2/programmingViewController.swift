@@ -512,9 +512,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
     func updateTimer() {
         if self.testEnded {
             self.displayedQuestionIndex = self.totalNumberOfQuestions
-            if self.numberOfAttempts[self.displayedQuestionIndex]==0 {
-                self.selectedAnswers[self.displayedQuestionIndex]=false
-            }
+            self.skipquestion = true
             self.nextQuestion(UITapGestureRecognizer(target: self, action: #selector(programmingViewController.nextQuestion(_:))))
             self.timeTimer.invalidate()
         }
@@ -662,10 +660,10 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
                             var nbCorrectAnswers:Double = 0
                             
                           for i:Int in 0..<self.selectedAnswers.count {
-                                if self.numberOfAttempts[i] == 1 {
+                                if self.selectedAnswers[i] && self.numberOfAttempts[i] == 1 {
                                     nbCorrectAnswers += 1
                                 }
-                                else if self.numberOfAttempts[i] == 2 {
+                                else if self.selectedAnswers[i] && self.numberOfAttempts[i] == 2 {
                                     nbCorrectAnswers += 0.5
                                 }
                              }
@@ -763,6 +761,19 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
         self.swipeUIView.alpha = 0.0
         self.feebdackScreen.alpha = 1.0
         
+        let labelString:String = String("SCORE: \(round(self.scoreRatio))%")
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+        if self.scoreRatio<70 {
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+        }
+        else {
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.greenColor(), range: NSRange(location: 6, length: NSString(string: labelString).length-6))
+        }
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: 6))
+        self.questionMenuLabel.attributedText = attributedString
+        
     }
     
     func feedbackScreen() {
@@ -835,14 +846,19 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             answerUIButton.layer.borderWidth = 3.0
             answerUIButton.layer.borderColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0).CGColor
             
-             if self.numberOfAttempts[i] < 3 {
-                answerUILabel.text = "Attempts: " + String(self.numberOfAttempts[i])
+             if self.numberOfAttempts[i] < 3 && self.numberOfAttempts[i] > 0 && self.selectedAnswers[i] {
+                answerUILabel.text = "Correct (" + String(self.numberOfAttempts[i]) + " attemps)"
                 answerNumber.backgroundColor = UIColor.greenColor()
              }
-             else if self.numberOfAttempts[i] > 2 && self.numberOfAttempts[i] < 1000 {
-                answerUILabel.text = "Attempts: " + String(self.numberOfAttempts[i])
+             else if self.numberOfAttempts[i] > 2 && self.numberOfAttempts[i] < 1000 && self.selectedAnswers[i] {
+                answerUILabel.text = "Correct (" + String(self.numberOfAttempts[i]) + " attemps)"
                 answerNumber.backgroundColor = UIColor.orangeColor()
-             } else {
+             }
+             else if self.numberOfAttempts[i] > 2 && self.numberOfAttempts[i] < 1000 && !self.selectedAnswers[i] {
+                answerUILabel.text = "Incorrect (" + String(self.numberOfAttempts[i]) + " attemps)"
+                answerNumber.backgroundColor = UIColor.redColor()
+             }
+             else {
                 answerUILabel.text = "Question skipped"
                 answerNumber.backgroundColor = UIColor.redColor()
             }
@@ -1015,7 +1031,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
 //        self.selectedAnswers[answerToQuestion] = returnedValue
         
         if self.passageTableView.answerArray == self.quizzArray[answerToQuestion].codePassage {
-            
+            self.selectedAnswers[answerToQuestion] = true
             returnedValue = true
         }
         else {
