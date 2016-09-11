@@ -359,7 +359,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     if self.firstTimeUser {
       self.tutorialViews.appendContentsOf([self.chooseCareersView, self.backButton])
-      self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "This is where you can select the careers that are most appropriate to you. Have a go now! \n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
+      self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "Select the careers that are most appropriate to you.\n\nHave a go now!\n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
       self.showTutorial()
     }
   }
