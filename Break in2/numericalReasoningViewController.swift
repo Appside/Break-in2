@@ -418,7 +418,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.tutoDescriptionTitle.text = "Test Description:"
             self.tutoDescriptionText.text = "You will be tested on your ability to read and understand numerical data in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
-            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
+            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on medium difficulty before taking a real test."
             self.graphView.alpha = 0.0
             
             //Set Tutorial page
@@ -446,7 +446,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.alpha = 0.0
             self.tutorialFingerImageView.alpha = 0.0
-            self.tutoDescriptionText.text = "A graph will appear with a question at the top of the screen. To answer it, swipe up the answer menu at the bottom of the screen and select an answer."
+            self.tutoDescriptionText.text = "A graph will appear with a question at the top of the screen. To answer it, tap the answer menu at the bottom of the screen and select an answer.\n\nHave a go on the next page..."
         }
         if self.tutoPage==3 {
             self.tutoSkipButton.alpha = 0.0
@@ -467,8 +467,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.tutoDescriptionSep.alpha = 1.0
             self.tutoDescriptionText.alpha = 1.0
             self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Center
-            self.tutoDescriptionTitle.text = "Ready to Start ?"
-            self.tutoDescriptionText.text = "You are now ready to Start the test. Practice hard, and remember: both your final score and speed matter when it comes to selecting candidates !"
+            self.tutoDescriptionTitle.text = "Ready to start?"
+            self.tutoDescriptionText.text = "You are now ready to start the test. Practice hard, and remember - both your final score and speed matter in the candidate selection process!"
             self.tutoNextButton.setTitle("Start Test", forState: .Normal)
         }
         if self.tutoPage==5 {
