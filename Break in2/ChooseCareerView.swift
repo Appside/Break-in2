@@ -77,11 +77,27 @@ class ChooseCareerView: UIView {
     
     let careerImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
     
-    let careerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
+    if self.screenFrame.height <= 738 {
+      
+      let careerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
+      
+      let careerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
+      
+      self.careerImageView.addConstraints([careerImageViewHeightConstraint, careerImageViewWidthConstraint])
+
+    }
+    else {
+      
+      let careerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/3)
+      
+      let careerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/3)
+      
+      self.careerImageView.addConstraints([careerImageViewHeightConstraint, careerImageViewWidthConstraint])
+
+    }
     
-    let careerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
     
-    self.careerImageView.addConstraints([careerImageViewHeightConstraint, careerImageViewWidthConstraint])
+    
     self.addConstraints([careerImageViewCenterXConstraint, careerImageViewCenterYConstraint])
     
     // Create and add constraints for careerColorView
@@ -94,9 +110,16 @@ class ChooseCareerView: UIView {
     
     let careerColorViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 5)
     
-    let careerColorViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
+    if self.screenFrame.height <= 738 {
+      let careerColorViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/2)
+      self.careerColorView.addConstraint(careerColorViewWidthConstraint)
+    }
+    else {
+      let careerColorViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerColorView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.height/3)
+      self.careerColorView.addConstraint(careerColorViewWidthConstraint)
+    }
     
-    self.careerColorView.addConstraints([careerColorViewHeightConstraint, careerColorViewWidthConstraint])
+    self.careerColorView.addConstraints([careerColorViewHeightConstraint])
     self.addConstraints([careerColorViewCenterXConstraint, careerColorViewTopConstraint])
 
     // Create and add constraints for tickButton
