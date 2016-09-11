@@ -624,6 +624,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
     
     func displayQuestion(arrayOfQuestions:[verbalQuestion], indexQuestion:Int) {
         
+        self.swipeMenuBottomConstraint.constant == 320*self.heightRatio
+        
         //Initialize labels
         let labelString:String = String("QUESTION \(indexQuestion+1)/\(self.totalNumberOfQuestions+1)")
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
@@ -808,13 +810,15 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
                     self.view.layoutIfNeeded()
                     self.passageView.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Tap here for Answers"
-                    }, completion: nil)
+                    }, completion: {(bool) in
+                        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+                })
+                self.passageLabel.setContentOffset(CGPointZero, animated: false)
                 self.displayedQuestionIndex += 1
                 if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                     //Switch Button text to "Complete"
                     self.nextButton.text = "Complete Test"
                 }
-                self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             }
         }
         }
@@ -920,6 +924,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
             
             let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(verbalReasoningViewController.displayAnswerWithFeedback(_:)))
             answerUIButton.addGestureRecognizer(tapGesture)
+        self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
+        self.passageLabel.setContentOffset(CGPointZero, animated: false)
             
         }
         
@@ -948,8 +954,8 @@ class verbalReasoningViewController: QuestionViewController, UIScrollViewDelegat
                 answerSubView.removeFromSuperview()
             }
             
+            self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
             UIView.animateWithDuration(1, animations: {
-                self.swipeMenuBottomConstraint.constant = 315*self.heightRatio
                 self.view.layoutIfNeeded()
                 self.passageView.alpha = 1.0
                 self.descriptionSwipeLabel.text = "Tap here for Explanation"
