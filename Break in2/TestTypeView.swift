@@ -250,13 +250,13 @@ class TestTypeView: UIView {
       }
       else if self.testType == "Fractions" {
         if self.difficultySelected == "E" {
-          self.testTypeTimeLabel.text = "Easy"
+          self.testTypeTimeLabel.text = "Easy (Operators: *, /)"
         }
         if self.difficultySelected == "M" {
-          self.testTypeTimeLabel.text = "Medium"
+          self.testTypeTimeLabel.text = "Medium (Operators: *, /, +)"
         }
         if self.difficultySelected == "H" {
-          self.testTypeTimeLabel.text = "Hard"
+          self.testTypeTimeLabel.text = "Hard (Operators: *, /, +, -)"
         }
       }
       else if self.testType == "Programming" {
