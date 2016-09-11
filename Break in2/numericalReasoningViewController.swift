@@ -804,13 +804,14 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     self.graphContent.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Tap here for Answers"
                     self.graphTitle.alpha = 1.0
-                    }, completion: nil)
+                    }, completion: {(bool) in
+                        self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
+                    })
                 self.displayedQuestionIndex += 1
                 if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                     //Switch Button text to "Complete"
                     self.nextButton.text = "Complete Test"
                 }
-                self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
             }
         }
         }
@@ -1165,7 +1166,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         }
         
         self.feebdackScreen.scrollEnabled = true
-        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count+1) * (buttonHeight + Int(10*self.heightRatio)))
+        let totalHeight:CGFloat = CGFloat((self.selectedAnswers.count) * (buttonHeight + Int(10*self.heightRatio)))
         self.feebdackScreen.contentSize = CGSize(width: self.view.frame.width - 40*self.widthRatio, height: totalHeight)
         
     }
