@@ -341,7 +341,19 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     if user.isNew{
                     
                     let userData = result as! [String: AnyObject]!
-                    user[PF_USER_EMAILCOPY] = userData["email"]
+                        let declinedPerm = FBSDKAccessToken.currentAccessToken().declinedPermissions
+                        print(declinedPerm)
+                        
+                        if declinedPerm.contains("email"){
+                            
+                        }else{
+                            
+                            user[PF_USER_EMAILCOPY] = userData["email"]
+                            self.defaults.setObject(userData["email"], forKey: "profileEmail")
+                            
+                        }
+                        
+                    
                     user[PF_USER_FULLNAME] = userData["name"]
                     user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
                     user[PF_USER_FIRST_NAME] = userData["first_name"]
@@ -353,12 +365,10 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     self.defaults.setObject("Free", forKey: "Membership")
                     self.defaults.setObject(userData["first_name"], forKey: "profileFirstName")
                     self.defaults.setObject(userData["last_name"], forKey: "profileLastName")
-                    self.defaults.setObject(userData["email"], forKey: "profileEmail")
                     self.defaults.setInteger(self.setNumberOfLivesFree, forKey: "Lives")
                     
                     let token = FBSDKAccessToken.currentAccessToken().tokenString
                     let permissions = FBSDKAccessToken.currentAccessToken().permissions
-                    let declinedPerm = FBSDKAccessToken.currentAccessToken().declinedPermissions
                     let appId = FBSDKAccessToken.currentAccessToken().appID
                     let userId = FBSDKAccessToken.currentAccessToken().userID
                     let expiration = FBSDKAccessToken.currentAccessToken().expirationDate

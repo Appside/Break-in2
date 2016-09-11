@@ -961,11 +961,14 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
             let alertView = SCLAlertView(appearance: appearance)
             
             alertView.addButton("Ok", target:self, selector:#selector(SettingsViewController.conduit))
+            alertView.addButton("Cancel", action: {
+                alertView.clearAllNotice()
+            })
             alertView.showTitle(
                 "Deactivate", // Title of view
                 subTitle: "Are you sure? Deactivation will delete all of your statistics, preferences and user data.", // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
-                completeText: "Cancel", // Optional button value, default: ""
+                completeText: "", // Optional button value, default: ""
                 style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                 colorStyle: 0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
