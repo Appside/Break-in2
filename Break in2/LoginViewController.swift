@@ -431,7 +431,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                     
                                     self.defaults.setObject(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
                                     self.defaults.setObject(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
-                                    self.defaults.setObject(user![PF_USER_EMAILCOPY] as! String, forKey: "profileEmail")
+                                    self.defaults.setObject(user![PF_USER_EMAIL] as! String, forKey: "profileEmail")
                                     
                                     print(membership)
                                     self.defaults.setObject(membership, forKey: "Membership")

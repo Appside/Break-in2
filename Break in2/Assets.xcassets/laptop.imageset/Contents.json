@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "laptop.png",
+      "filename" : "laptop@3x-1.png",
       "scale" : "1x"
     },
     {
@@ -17,6 +17,7 @@
     },
     {
       "idiom" : "ipad",
+      "filename" : "laptop-iPad-1.png",
       "scale" : "1x"
     },
     {
