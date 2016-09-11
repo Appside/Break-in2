@@ -446,7 +446,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.alpha = 0.0
             self.tutorialFingerImageView.alpha = 0.0
-            self.tutoDescriptionText.text = "A graph will appear with a question at the top of the screen. To answer it, tap the answer menu at the bottom of the screen and select an answer.\n\nHave a go on the next page..."
+            self.tutoDescriptionText.text = "A graph will appear with a question at the top of the screen. Tap the answer menu at the bottom of the screen and select from the options provided.\n\nHave a go on the next page..."
         }
         if self.tutoPage==3 {
             self.tutoSkipButton.alpha = 0.0
