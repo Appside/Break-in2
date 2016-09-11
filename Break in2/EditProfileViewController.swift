@@ -481,7 +481,7 @@ class EditProfileViewController : FormViewController {
                 $0.hidden = Condition.Function(["switchRowTag"], { form in
                     return !((form.rowByTag("switchRowTag") as? SwitchRow)?.value ?? false)
                 })
-                $0.title = "We will never share without your permission."
+                $0.title = "You have allowed us to share your profile."
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: 12.0)
                 }.cellUpdate { cell, row in
@@ -618,6 +618,16 @@ class EditProfileViewController : FormViewController {
             }
         }
         
+        if let newRow:PhoneRow = form.rowByTag("Phone") {
+            if let newEntry = newRow.value {
+                self.profilePhone = newEntry
+                if self.profilePhone != "" && !phoneNumberValidation(self.profilePhone) {
+                    alertMessage = alertMessage + "Invalid Phone Number" + "\n"
+                    showErrorMessage = true
+                }
+            }
+        }
+        
         if showErrorMessage == true {
             
             //Show Error Message
@@ -672,7 +682,7 @@ class EditProfileViewController : FormViewController {
                             self.defaults.setObject(self.shareInfoAllowed, forKey: "shareInfoAllowed")
                             self.defaults.setObject(self.recommendedBy, forKey: "recommendedBy")
                             
-                            SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
+                            SwiftSpinner.show("Preferences Saved", animated: false).addTapHandler({
                                 
                                 SwiftSpinner.hide()
                                 self.goBackToSettings(sender)
@@ -724,6 +734,15 @@ class EditProfileViewController : FormViewController {
         let result = emailTest.evaluateWithObject(testStr)
         return result
     }
+    
+    func phoneNumberValidation(value: String) -> Bool {
+        var charcter  = NSCharacterSet(charactersInString: "0123456789").invertedSet
+        var filtered:NSString!
+        var inputString:NSArray = value.componentsSeparatedByCharactersInSet(charcter)
+        filtered = inputString.componentsJoinedByString("")
+        return  value == filtered
+    }
+
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "tutorialEnded" {

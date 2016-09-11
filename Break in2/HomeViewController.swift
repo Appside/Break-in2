@@ -843,8 +843,8 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton, self.membershipButton])
       self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. The calender we have provided will help!\n\nDeadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
       self.tutorialDescriptions.updateValue(["PRACTICE APTITUDE TESTS...", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n...OR HAVE SOME FUN!\n\nClick on the light bulb to try our Brain Breaker question. If you get the answer right, you will be in with a chance to win a special prize!"], forKey: self.careersBackgroundView)
-      self.tutorialDescriptions.updateValue(["SETTINGS", "While we're on that subject, go to the settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
-      self.tutorialDescriptions.updateValue(["STATISTICS", "We've also added analytics which will allow you to track your progress.\n\nAfter you have taken a few practice tests, return here to monitor your performance and track your improvement over time."], forKey: self.statsButton)
+      self.tutorialDescriptions.updateValue(["", "SETTINGS\n\nWhile we're on that subject, go to the settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
+      self.tutorialDescriptions.updateValue(["", "STATISTICS\n\nWe've also added analytics which will allow you to track your progress.\n\nAfter you have taken a few practice tests, return here to monitor your performance and track your improvement over time."], forKey: self.statsButton)
         self.tutorialDescriptions.updateValue(["", "FREE SUBSCRIPTION\n\nAs a new user, you will automatically receive 3 free lives which you can use to practice tests. We will also renew a free life every 24 hours.\n\nPREMIUM SUBSCRIPTION\n\nIf you need a little more practice, you may purchase additional tests. However, Premium membership provides you with unlimited lives, removes all advertising and gives you a couple of extra chances at the Brain Breaker."], forKey: self.membershipButton)
 
       self.showTutorial()
@@ -1128,6 +1128,12 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         self.descriptionLabelView.setConstraintsToSuperview(75, bottom: 150, left: Int(2*self.majorMargin), right: Int(2*self.majorMargin))
         
     } else {
+        
+        if self.tutorialViews[self.tutorialPageNumber] == self.statsButton || self.tutorialViews[self.tutorialPageNumber] == self.settingsButton {
+            
+                self.descriptionLabelView.setConstraintsToSuperview(75, bottom: 150, left: Int(2*self.majorMargin), right: Int(2*self.majorMargin))
+            
+        } else {
     
     let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
     
@@ -1136,6 +1142,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       self.view.addConstraint(descriptionLabelViewTopConstraint)
     }
     else {
+        
       let descriptionLabelViewBottomConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Top, multiplier: 1, constant: -20)
       self.view.addConstraint(descriptionLabelViewBottomConstraint)
     }
@@ -1146,7 +1153,8 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
     self.view.addConstraints([descriptionLabelViewCenterXConstraint])
-    
+
+    }
     }
     
   }
