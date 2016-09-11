@@ -1098,6 +1098,15 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             }
         }
     }
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+    if segue.identifier == "backHomeSegue" {
+      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      destinationVC.segueFromLoginView = false
+    }
+    
+  }
     
 }
     
