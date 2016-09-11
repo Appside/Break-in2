@@ -36,7 +36,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
   let clearStatsButton:UIButton = UIButton()
   let tutorialView:UIView = UIView()
   let tutorialNextButton:UIButton = UIButton()
-    
+
+    var clearDataConfirmed:Bool = false
     let pointerView1:LabelPointerView = LabelPointerView()
     let pointerView2:LabelPointerView = LabelPointerView()
     let graphView1:UIView = UIView()
@@ -1189,15 +1190,22 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         }
         //Menu - Buttons background
         
-        for button in self.testTypeButtons {
-            if button.tag == sender.tag {
-                self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-                self.selectedTest = sender.currentTitle!
-                print(self.selectedTest)
+        if !self.clearDataConfirmed {
+            for button in self.testTypeButtons {
+                if button.tag == sender.tag {
+                    self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+                    self.selectedTest = sender.currentTitle!
+                    print(self.selectedTest)
+                }
+                else {
+                    self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+                }
             }
-            else {
-                self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        } else {
+            for button in self.testTypeButtons {
+                    self.testTypeButtons[button.tag].backgroundColor = UIColor(white: 1.0, alpha: 1.0)
             }
+            self.clearDataConfirmed = false
         }
     }
   
@@ -1282,6 +1290,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     }
     
     func clearParseStatistics(sender: UIButton){
+        
+        self.clearDataConfirmed = true
         
         if self.selectedTest == "Numerical Reasoning" {
             
