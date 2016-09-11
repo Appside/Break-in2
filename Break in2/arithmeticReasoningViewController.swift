@@ -336,7 +336,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             self.tutoDescriptionTitle.text = "Test Description:"
             self.tutoDescriptionText.text = "You will be tested on your ability to answer simple arithmetic questions in a limited amount of time. You will have \(self.allowedMinutes) minutes to answer up to \(self.totalNumberOfQuestions+1) questions."
             self.tutoDescriptionTitle2.text = "Our Recommendation:"
-            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on Medium difficulty before taking the actual test."
+            self.tutoDescriptionText2.text = "We recommend that you are able to score at least 85% on medium difficulty before taking the actual test."
             
             //Set Tutorial page
             self.tutoPage = 1
@@ -362,7 +362,7 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             self.tutoDescriptionTitle2.alpha = 0
             self.tutoDescriptionText.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.alpha = 0.0
-            self.tutoDescriptionText.text = "Questions will appear here. You can select from a range of answers on the right."
+            self.tutoDescriptionText.text = "The questions will be displayed in this format. Select your answer from the options in boxes on the right hand side."
             self.tutorialFingerImageView.alpha = 0.0
             self.tutoSkipButton.alpha = 0.0
             for answerView in self.mainView.subviews {
@@ -390,8 +390,8 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
             self.view.bringSubviewToFront(self.tutoView)
             self.tutoDescriptionTitle.alpha = 1.0
             self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Center
-            self.tutoDescriptionTitle.text = "Ready to Start ?"
-            self.tutoDescriptionText.text = "You are now ready to Start the test. Practice hard, and remember: both your final score and speed matter when it comes to selecting candidates !"
+            self.tutoDescriptionTitle.text = "Ready to start?"
+            self.tutoDescriptionText.text = "You are now ready to start the test. Practice hard, and remember that both speed AND accuracy in the candidate selection process!"
             self.tutoNextButton.setTitle("Start Test", forState: .Normal)
         }
         if self.tutoPage==5 {

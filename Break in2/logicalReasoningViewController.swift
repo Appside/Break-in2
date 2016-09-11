@@ -398,7 +398,7 @@ class logicalReasoningViewController: QuestionViewController, UIScrollViewDelega
             self.tutoDescriptionTitle.alpha = 1.0
             self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Center
             self.tutoDescriptionTitle.text = "Ready to start?"
-            self.tutoDescriptionText.text = "You are now ready to start the test. Practice hard, and remember - both your final score and speed matter in the candidate selection process!"
+            self.tutoDescriptionText.text = "You are now ready to start the test. Practice hard, and remember that both speed AND accuracy in the candidate selection process!"
             self.tutoNextButton.setTitle("Start Test", forState: .Normal)
         }
         if self.tutoPage==5 {

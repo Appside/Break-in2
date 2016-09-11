@@ -202,7 +202,6 @@
                   "name1 = name2",
                   "name2 = oldName1",
                   "}",
-                  "}",
                   "nameSwap(&name1, &name2)"],
   "feedback": ["// Initialise variables",
                "var name1 = \"Giando\"",
@@ -426,7 +425,7 @@
   },
   {
   "questionType":"Programming",
-  "question":"Reorder the following to build a Swift program that performs a binary search on a list of numbers.",
+  "question":"Reorder the following to build a Swift program that performs a binary search on a list of numbers. HINT: lowerbound is always handled first.",
   "codePassage": ["func binarySearch(numberArray:[Double], numberToBeFound:Double) -> Bool",
                   "{",
                   "var lowerBound = 0",
