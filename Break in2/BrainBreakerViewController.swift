@@ -389,7 +389,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let attributedString2 = NSMutableAttributedString(string:"The Brain Breaker is a regular challenge which gives you the chance to win great prizes! Free users are provided with one attempt at answering correctly, whilst Premium users are given 3 additional attempts. Get the question right and you will be entered into a prize draw; we will announce the winner on our Facebook page shortly after the deadline.\n\nFind us here...")
         
         attributedString2.setAsLink("Find us here...", linkURL: UIApplication.tryURL([
-            "fb://profile/116374146706", // App
+            "fb://profile/1586553761670526", // App
             "https://www.facebook.com/breakin2app" // Website if app fails
             ]))
         
