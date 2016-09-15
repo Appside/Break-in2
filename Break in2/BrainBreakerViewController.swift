@@ -390,7 +390,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
         attributedString2.setAsLink("Find us here...", linkURL: UIApplication.tryURL([
             "fb://profile/116374146706", // App
-            "http://www.facebook.com/116374146706" // Website if app fails
+            "https://www.facebook.com/breakin2app" // Website if app fails
             ]))
         
         explanation.attributedText = attributedString2
