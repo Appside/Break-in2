@@ -57,6 +57,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     var resultsUploaded:Bool = false
     var testEnded:Bool = false
     var graphContent:UIView = UIView()
+    var calculatorButton:UIButton = UIButton()
+    var calculatorView:CalculatorView = CalculatorView()
+    var showCalculator:Bool = false
     
     //Screen size
     var widthRatio:CGFloat = CGFloat()
@@ -147,13 +150,33 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         tapGestureBackHome.numberOfTapsRequired = 1
         self.menuBackButton.addGestureRecognizer(tapGestureBackHome)
         
+        //Initialize calculator Button and UIView
+        self.view.addSubview(self.calculatorButton)
+        self.calculatorButton.translatesAutoresizingMaskIntoConstraints = false
+        let calculatorButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.calculatorButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30*self.heightRatio)
+        let calculatorButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.calculatorButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 35*self.heightRatio)
+        let calculatorButtonTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.calculatorButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 35*self.heightRatio)
+        let calculatorButtonRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.calculatorButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20*self.widthRatio)
+        self.calculatorButton.addConstraints([calculatorButtonHeight, calculatorButtonWidth])
+        self.view.addConstraints([calculatorButtonRightMargin,calculatorButtonTopMargin])
+        self.calculatorButton.layer.cornerRadius = 8.0
+        self.calculatorButton.setImage(UIImage(named: "calculator"), forState: UIControlState.Normal)
+        self.calculatorButton.addTarget(self, action: #selector(numericalReasoningViewController.calculatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.bringSubviewToFront(self.calculatorView)
+        
+        self.view.addSubview(self.calculatorView)
+        self.calculatorView.setConstraintsToSuperview(Int(75*self.heightRatio), bottom: Int(85*self.heightRatio), left: Int(20*self.widthRatio), right: Int(20*self.widthRatio))
+        //self.calculatorView.backgroundColor = UIColor.blackColor()
+        self.calculatorView.alpha = 0.0
+        self.calculatorView.layer.cornerRadius = 8.0
+        
         //Initialize questionMenu UIView
         self.view.addSubview(self.questionMenu)
         self.questionMenu.translatesAutoresizingMaskIntoConstraints = false
         let questionViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25*self.heightRatio)
-        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 40*self.widthRatio)
+        let questionViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 120*self.widthRatio)
         let questionViewTopMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 35*self.heightRatio)
-        let questionViewRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -20*self.widthRatio)
+        let questionViewRightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self.questionMenu, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -65*self.widthRatio)
         self.questionMenu.addConstraints([questionViewHeight, questionViewWidth])
         self.view.addConstraints([questionViewRightMargin,questionViewTopMargin])
         self.view.bringSubviewToFront(self.menuBackButton)
@@ -513,6 +536,8 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                 self.descriptionSwipeLabel.text = "Tap here for Question"
                 self.graphTitle.alpha = 0.0
                 self.graphContent.alpha = 0.0
+                self.questionView.alpha = 1.0
+                self.calculatorView.alpha = 0.0
             }
             else if (self.swipeMenuBottomConstraint.constant == 5*self.heightRatio) {
                 self.swipeMenuBottomConstraint.constant = 320*self.heightRatio
@@ -520,7 +545,15 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                 self.graphView.alpha = 1.0
                 self.descriptionSwipeLabel.text = "Tap here for Answers"
                 self.graphTitle.alpha = 1.0
-                self.graphContent.alpha = 1.0
+                if self.showCalculator == true {
+                    self.calculatorView.alpha = 1.0
+                    self.graphContent.alpha = 0.0
+                    self.questionView.alpha = 0.0
+                } else {
+                    self.calculatorView.alpha = 0.0
+                    self.graphContent.alpha = 1.0
+                    self.questionView.alpha = 1.0
+                }
             }
         }, completion: nil)
     }
@@ -714,6 +747,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
         
+        self.calculatorView.alpha = 0.0
+        self.questionView.alpha = 1.0
+        
         //Check if button pressed during tutorial ?
         if self.tutoPage==3 {
             self.tutoNext(UITapGestureRecognizer())
@@ -802,8 +838,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     self.view.layoutIfNeeded()
                     self.graphView.alpha = 1.0
                     self.graphContent.alpha = 1.0
+                    self.questionView.alpha = 1.0
                     self.descriptionSwipeLabel.text = "Tap here for Answers"
                     self.graphTitle.alpha = 1.0
+                    self.calculatorView.alpha = 0.0
+                    self.calculatorButton.setImage(UIImage(named: "calculator"), forState: UIControlState.Normal)
                     }, completion: {(bool) in
                         self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex)
                     })
@@ -1244,6 +1283,43 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.nextQuestion(UITapGestureRecognizer())
         }
         }
+    }
+    
+    func calculatorPressed(sender:UIButton) {
+        
+        if self.calculatorView.alpha == 0.0 {
+            
+            UIView.animateWithDuration(0.5, animations: {
+                self.calculatorView.alpha = 1.0
+                self.graphContent.alpha = 0.0
+                self.questionView.alpha = 0.0
+                }, completion: {(bool) in
+                self.calculatorButton.setImage(UIImage(named: "statistics"), forState: UIControlState.Normal)
+            })
+            self.showCalculator = true
+            
+        } else {
+            
+            UIView.animateWithDuration(0.5, animations: {
+                self.calculatorView.alpha = 0.0
+                self.graphContent.alpha = 1.0
+                self.questionView.alpha = 1.0
+                }, completion: {(bool) in
+                self.calculatorButton.setImage(UIImage(named: "calculator"), forState: UIControlState.Normal)
+            })
+            self.showCalculator = false
+        
+        }
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(Bool())
+        self.calculatorView.prepareCalculator(self.calculatorView.frame.height, width: self.calculatorView.frame.width)
+        self.calculatorView.userInteractionEnabled = true
+        self.view.bringSubviewToFront(self.calculatorView)
+        
     }
     
     override func didReceiveMemoryWarning() {
