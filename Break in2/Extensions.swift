@@ -111,31 +111,3 @@ extension UIViewController {
     }
 }
 
-extension UIApplication {
-    class func tryURL(urls: [String])->String {
-        let application = UIApplication.sharedApplication()
-        var urlReturned:String = String()
-        for url in urls {
-            if application.canOpenURL(NSURL(string: url)!) {
-                //application.openURL(NSURL(string: url)!)
-                
-                urlReturned = url
-            }
-        }
-        return urlReturned
-    }
-}
-
-extension NSMutableAttributedString {
-    
-    public func setAsLink(textToFind:String, linkURL:String) -> Bool {
-        
-        let foundRange = self.mutableString.rangeOfString(textToFind)
-        if foundRange.location != NSNotFound {
-            self.addAttribute(NSLinkAttributeName, value: linkURL, range: foundRange)
-            return true
-        }
-        return false
-    }
-}
-

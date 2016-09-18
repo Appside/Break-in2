@@ -378,7 +378,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let explanationLeft:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.minorMargin)
         let explanationRight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -4*self.minorMargin)
         self.helpMenu.addConstraints([explanationCenterX,explanationTop,explanationLeft,explanationRight])
-        let explanationHeight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight)
+        let explanationHeight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight+80)
         explanation.addConstraint(explanationHeight)
 
         explanation.font = UIFont(name: "HelveticaNeue-Light", size: 15)
@@ -386,14 +386,15 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         explanation.textColor = UIColor.turquoiseColor()
         explanation.numberOfLines = 0
         
-        let attributedString2 = NSMutableAttributedString(string:"The Brain Breaker is a regular challenge which gives you the chance to win great prizes! Free users are provided with one attempt at answering correctly, whilst Premium users are given 3 additional attempts. Get the question right and you will be entered into a prize draw; we will announce the winner on our Facebook page shortly after the deadline.\n\nFind us here...")
+        let attributedString2 = NSMutableAttributedString(string:"The Brain Breaker is a regular challenge which gives you the chance to win great prizes! Free users are provided with one attempt at answering correctly, whilst Premium users are given 3 additional attempts. Get the question right and you will be entered into a prize draw; we will announce the winner on our Facebook page shortly after the deadline.")
         
-        attributedString2.setAsLink("Find us here...", linkURL: UIApplication.tryURL([
-            "fb://profile/1586553761670526", // App
-            "https://www.facebook.com/breakin2app" // Website if app fails
-            ]))
+//        attributedString2.setAsLink("Find us here...", linkURL: UIApplication.tryURL([
+//            "fb://profile/1586553761670526", // App
+//            "https://www.facebook.com/breakin2app" // Website if app fails
+//            ]))
         
         explanation.attributedText = attributedString2
+        explanation.userInteractionEnabled = true
         
         //Set Up QUestion Menu
         self.mainView.alpha = 0.0
@@ -543,7 +544,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
     }
     
-    func backHome(sender:UITapGestureRecognizer) {
+    func backHome(sender: UITapGestureRecognizer) {
 
         let alertMessage:String = "Are you sure you want to return home?"
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
@@ -584,6 +585,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.HideHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.helpButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             self.helpButton.backgroundColor = UIColor.turquoiseColor()
+            self.nextButton.setTitle("Find Us On Facebook", forState: UIControlState.Normal)
             
             }, completion: nil)
         
@@ -599,6 +601,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.ShowHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.helpButton.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
             self.helpButton.backgroundColor = UIColor.clearColor()
+            self.nextButton.setTitle("Return Home", forState: UIControlState.Normal)
             
             }, completion: nil)
         
@@ -995,9 +998,17 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
     }
     
-    func goBackHome(sender:UITapGestureRecognizer) {
-
-        self.goBack()
+    func goBackHome(sender: UIButton) {
+        
+        if nextButton.currentTitle == "Find Us On Facebook" {
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/breakin2app")!)
+        
+        }else{
+            
+            self.goBack()
+            
+        }
 
     }
     
