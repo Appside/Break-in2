@@ -368,7 +368,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         pageTitle.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         pageTitle.textAlignment = NSTextAlignment.Center
         pageTitle.textColor = UIColor.turquoiseColor()
-        pageTitle.text = "What is the BrainBreaker?"
+        pageTitle.text = "What is the Brain Breaker?"
         
         let explanation:UILabel = UILabel()
         self.helpMenu.addSubview(explanation)
@@ -378,14 +378,23 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let explanationLeft:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.minorMargin)
         let explanationRight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.helpMenu, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -4*self.minorMargin)
         self.helpMenu.addConstraints([explanationCenterX,explanationTop,explanationLeft,explanationRight])
-        let explanationHeight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight)
+        let explanationHeight:NSLayoutConstraint = NSLayoutConstraint(item: explanation, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.flexibleHeight+80)
         explanation.addConstraint(explanationHeight)
 
         explanation.font = UIFont(name: "HelveticaNeue-Light", size: 15)
         explanation.textAlignment = NSTextAlignment.Center
         explanation.textColor = UIColor.turquoiseColor()
         explanation.numberOfLines = 0
-        explanation.text = "The BrainBreaker is a challenge giving you the chance to win great prizes. For each new challenge you will get one chance to answer correctly, with 3 additional chances if you opted for our Premium version."
+        
+        let attributedString2 = NSMutableAttributedString(string:"The Brain Breaker is a regular challenge which gives you the chance to win great prizes! Free users are provided with one attempt at answering correctly, whilst Premium users are given 3 additional attempts. Get the question right and you will be entered into a prize draw; we will announce the winner on our Facebook page shortly after the deadline.")
+        
+//        attributedString2.setAsLink("Find us here...", linkURL: UIApplication.tryURL([
+//            "fb://profile/1586553761670526", // App
+//            "https://www.facebook.com/breakin2app" // Website if app fails
+//            ]))
+        
+        explanation.attributedText = attributedString2
+        explanation.userInteractionEnabled = true
         
         //Set Up QUestion Menu
         self.mainView.alpha = 0.0
@@ -535,7 +544,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
     }
     
-    func backHome(sender:UITapGestureRecognizer) {
+    func backHome(sender: UITapGestureRecognizer) {
 
         let alertMessage:String = "Are you sure you want to return home?"
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
@@ -576,6 +585,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.HideHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.helpButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             self.helpButton.backgroundColor = UIColor.turquoiseColor()
+            self.nextButton.setTitle("Find Us On Facebook", forState: UIControlState.Normal)
             
             }, completion: nil)
         
@@ -591,6 +601,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.ShowHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.helpButton.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
             self.helpButton.backgroundColor = UIColor.clearColor()
+            self.nextButton.setTitle("Return Home", forState: UIControlState.Normal)
             
             }, completion: nil)
         
@@ -598,7 +609,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
     
     func StartTest(sender:UITapGestureRecognizer) {
 
-        let alertMessage:String = "You are about to take a chance at the Brain Breaker. Are you ready ?"
+        let alertMessage:String = "Are you ready?"
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
         let backAlert = SCLAlertView(appearance: appearance)
         backAlert.addButton("Yes", target:self, selector:#selector(BrainBreakerViewController.setUpTest))
@@ -607,8 +618,8 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             subTitle: alertMessage, // String of view
             duration: 0.0, // Duration to show before closing automatically, default: 0.0
             completeText: "Cancel", // Optional button value, default: ""
-            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
-            colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
+            style: .Success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            colorStyle: 0x22B573,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
         
@@ -841,9 +852,21 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
             feedbackDescription = "Well done, you are now in with a chance of winning the Brain Breaker prize! The winner(s) will be announced on our social media pages and we will be in touch by email."
         
-        } else {
+        } else if (self.membershipType == "Premium" && self.attemptsRemaining > 1){
         
-            feedbackDescription = "Unlucky, please try again to be in with a chance of winning a great prize!\n\nJust to let you know, if you sign up for our premium membership, you are allowed up to three attempts every new Question."
+            feedbackDescription = "Unlucky, please try again to be in with a chance of winning a great prize!\n\nAs a premium user, you have \(self.attemptsRemaining) lives remaining."
+        
+        } else if (self.membershipType == "Premium" && self.attemptsRemaining == 1){
+            
+            feedbackDescription = "Unlucky, please try again to be in with a chance of winning a great prize!\n\nAs a premium user, you have \(self.attemptsRemaining) life remaining."
+            
+        } else if (self.membershipType == "Premium" && self.attemptsRemaining == 0){
+            
+            feedbackDescription = "Unlucky, there will always be another chance to win when the next Brain Breaker is released"
+            
+        } else {
+            
+            feedbackDescription = "Unlucky, there will always be another chance to win when the next Brain Breaker is released\n\nJust to let you know, if you sign up for premium membership, you will be granted 3 fresh attempts."
         }
 
         attemptsLabel.text = feedbackDescription
@@ -975,9 +998,17 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
     }
     
-    func goBackHome(sender:UITapGestureRecognizer) {
-
-        self.goBack()
+    func goBackHome(sender: UIButton) {
+        
+        if nextButton.currentTitle == "Find Us On Facebook" {
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/breakin2app")!)
+        
+        }else{
+            
+            self.goBack()
+            
+        }
 
     }
     

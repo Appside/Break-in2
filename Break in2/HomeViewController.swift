@@ -91,6 +91,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   override func viewDidLoad() {
     super.viewDidLoad()
     self.userLoggedIn()
+    self.requestProductData()
     
     // Do any additional setup after loading the view.
     

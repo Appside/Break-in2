@@ -1122,7 +1122,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                                         SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
                                             self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
                                             SwiftSpinner.hide()
-                                            }, subtitle: "This means you can practice an unlimited number of tests! You also have 3 attempts at each Brain Breaker question, beginning from the next one!")
+                                            }, subtitle: "This means you can practice an unlimited number of tests! You also have 3 attempts at each Brain Breaker question, beginning from now...")
                 
                                     } else {
                 
