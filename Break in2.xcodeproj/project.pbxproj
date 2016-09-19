@@ -55,6 +55,7 @@
 		49B391A41D450E0400D45444 /* technologyQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A31D450E0400D45444 /* technologyQuestion.swift */; };
 		49B391A61D450E1D00D45444 /* technologyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A51D450E1D00D45444 /* technologyViewController.swift */; };
 		49B391A81D4520ED00D45444 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B391A71D4520ED00D45444 /* EditProfileViewController.swift */; };
+		49E60DB31D89F8C500D2A4B2 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E60DB21D89F8C500D2A4B2 /* CalculatorView.swift */; };
 		49EB4A7F1C2882A200F3AC68 /* arithmeticReasoningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */; };
 		49EB4A811C28866B00F3AC68 /* arithmeticQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */; };
 		610AE5FB1C14A28A00A2FF88 /* ParseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */; };
@@ -160,6 +161,7 @@
 		49B391A31D450E0400D45444 /* technologyQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = technologyQuestion.swift; sourceTree = "<group>"; };
 		49B391A51D450E1D00D45444 /* technologyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = technologyViewController.swift; sourceTree = "<group>"; };
 		49B391A71D4520ED00D45444 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		49E60DB21D89F8C500D2A4B2 /* CalculatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticReasoningViewController.swift; sourceTree = "<group>"; };
 		49EB4A801C28866B00F3AC68 /* arithmeticQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arithmeticQuestion.swift; sourceTree = "<group>"; };
 		610AE5FA1C14A28A00A2FF88 /* ParseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseExtensions.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				499375351C02573100AA0588 /* numericalReasoningViewController.swift */,
+				49E60DB21D89F8C500D2A4B2 /* CalculatorView.swift */,
 				49A05D301C1EA49100A50BCF /* verbalReasoningViewController.swift */,
 				490CB4071C552E6700A68493 /* logicalReasoningViewController.swift */,
 				49EB4A7E1C2882A200F3AC68 /* arithmeticReasoningViewController.swift */,
@@ -580,10 +583,12 @@
 					};
 					614316571BEF843A0047A37D = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 614316431BEF843A0047A37D;
 					};
 					614316621BEF843A0047A37D = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 614316431BEF843A0047A37D;
 					};
 				};
@@ -814,6 +819,7 @@
 				494AE5461D3B91C30086D261 /* programmingViewController.swift in Sources */,
 				49929DA01C42E95700527929 /* sequencesViewController.swift in Sources */,
 				614316481BEF843A0047A37D /* AppDelegate.swift in Sources */,
+				49E60DB31D89F8C500D2A4B2 /* CalculatorView.swift in Sources */,
 				61CAD3471C2760B100B8D887 /* Person+CoreDataProperties.swift in Sources */,
 				253AC83F1C27218100495DF5 /* JSONModel.swift in Sources */,
 				611220261D7428CB0014F576 /* QuickRearrangeTableView.swift in Sources */,
@@ -989,6 +995,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
 				PRODUCT_NAME = BREAKIN2;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1006,6 +1013,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.APPSIDE.Breakin2;
 				PRODUCT_NAME = BREAKIN2;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1019,7 +1027,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Break in2.app/Break in2";
+				SWIFT_VERSION = 2.3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BREAKIN2.app/BREAKIN2";
 			};
 			name = Debug;
 		};
@@ -1032,7 +1041,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Break in2.app/Break in2";
+				SWIFT_VERSION = 2.3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BREAKIN2.app/BREAKIN2";
 			};
 			name = Release;
 		};
@@ -1044,6 +1054,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = "Break in2";
 				USES_XCTRUNNER = YES;
 			};
@@ -1057,6 +1068,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Break-in2UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = "Break in2";
 				USES_XCTRUNNER = YES;
 			};
