@@ -380,7 +380,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         pageTitle.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         pageTitle.textAlignment = NSTextAlignment.Center
         pageTitle.textColor = UIColor.turquoiseColor()
-        pageTitle.text = "What is the Brain Breaker?"
+        pageTitle.text = "WHAT IS THE BRAIN BREAKER?"
         
         let explanation:UILabel = UILabel()
         self.helpMenu.addSubview(explanation)
