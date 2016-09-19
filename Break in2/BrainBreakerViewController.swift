@@ -200,7 +200,19 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         self.nextButton.backgroundColor = UIColor.turquoiseColor()
         self.nextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.nextButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        self.nextButton.setTitle("START", forState: UIControlState.Normal)
+        
+        if (self.attemptsRemaining > 0) {
+            
+            self.nextButton.setTitle("START", forState: UIControlState.Normal)
+            self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.StartTest(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            
+        }else{
+            
+            self.nextButton.setTitle("RETURN HOME", forState: UIControlState.Normal)
+            self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.goBack), forControlEvents: UIControlEvents.TouchUpInside)
+            
+        }
+        
         self.nextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
         self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.StartTest(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -585,7 +597,9 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.HideHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.helpButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             self.helpButton.backgroundColor = UIColor.turquoiseColor()
-            self.nextButton.setTitle("Find Us On Facebook", forState: UIControlState.Normal)
+            self.nextButton.setTitle("FIND US ON FACEBOOK", forState: UIControlState.Normal)
+            self.nextButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
+            self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.goBackHome(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
             }, completion: nil)
         
@@ -601,7 +615,22 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.helpButton.addTarget(self, action: #selector(BrainBreakerViewController.ShowHelpScreen(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             self.helpButton.setTitleColor(UIColor.turquoiseColor(), forState: UIControlState.Normal)
             self.helpButton.backgroundColor = UIColor.clearColor()
-            self.nextButton.setTitle("Return Home", forState: UIControlState.Normal)
+            //self.nextButton.setTitle("RETURN HOME", forState: UIControlState.Normal)
+            
+            //let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(BrainBreakerViewController.StartTest(_:)))
+            //self.nextButton.addGestureRecognizer(tapGesture)
+            self.nextButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
+            if (self.attemptsRemaining > 0) {
+                
+                self.nextButton.setTitle("START", forState: UIControlState.Normal)
+                self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.StartTest(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                
+            }else{
+                
+                self.nextButton.setTitle("RETURN HOME", forState: UIControlState.Normal)
+                self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.goBack), forControlEvents: UIControlEvents.TouchUpInside)
+                
+            }
             
             }, completion: nil)
         
@@ -659,7 +688,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             
             let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
             let backAlert = SCLAlertView(appearance: appearance)
-            backAlert.addButton("Return Home", target:self, selector:#selector(BrainBreakerViewController.goBack))
+            backAlert.addButton("RETURN HOME", target:self, selector:#selector(BrainBreakerViewController.goBack))
             backAlert.showTitle(
                 "Sorry", // Title of view
                 subTitle: alertMessage, // String of view
@@ -834,7 +863,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         
         self.nextButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
         self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.goBackHome(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        self.nextButton.setTitle("Return Home", forState: UIControlState.Normal)
+        self.nextButton.setTitle("RETURN HOME", forState: UIControlState.Normal)
         
         for view in self.frameMid.subviews {
             view.removeFromSuperview()
@@ -926,25 +955,27 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             
             let Label1:UILabel =  UILabel()
             self.frameMid.addSubview(Label1)
-            Label1.setConstraintsToSuperview(Int(self.flexibleHeight)/2-30, bottom: Int(self.flexibleHeight)/2, left: 0, right: 0)
+            Label1.setConstraintsToSuperview(Int(self.flexibleHeight)/2-10, bottom: Int(self.flexibleHeight)/2-10, left: 0, right: 0)
             Label1.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
             Label1.textAlignment = NSTextAlignment.Center
             Label1.textColor = UIColor.turquoiseColor()
             Label1.numberOfLines = 0
-            Label1.text = "Congratulations !"
+            Label1.text = "CONGRATULATIONS"
 
             let Label2:UILabel =  UILabel()
             self.frameMid.addSubview(Label2)
-            Label2.setConstraintsToSuperview(Int(self.flexibleHeight)/2, bottom: 10, left: 0, right: 0)
+            Label2.setConstraintsToSuperview(Int(self.flexibleHeight)/2, bottom: Int(self.flexibleHeight)/2-70, left: 0, right: 0)
             Label2.font = UIFont(name: "HelveticaNeue-Light", size: 15)
             Label2.textAlignment = NSTextAlignment.Center
             Label2.textColor = UIColor.turquoiseColor()
             Label2.numberOfLines = 0
-            Label2.text = "Results will be showed on our Social Media pages soon and we will get in touch by email with the winners."
+            Label2.text = "PRIZEWINNER(S) WILL BE ANNOUNCED ON OUR FACEBOOK PAGE (SELECT THE \"?\" BUTTON)"
+            
+            self.frameMid.bringSubviewToFront(Label1)
             
             self.nextButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
             self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.goBackHome(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            self.nextButton.setTitle("Return Home", forState: UIControlState.Normal)
+            self.nextButton.setTitle("RETURN HOME", forState: UIControlState.Normal)
             
             self.frameMid.alpha = 1.0
             
@@ -977,7 +1008,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
             self.frameBottom.alpha = 0.0
             self.nextButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
             self.nextButton.addTarget(self, action: #selector(BrainBreakerViewController.goBackHome(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-            self.nextButton.setTitle("Return Home", forState: UIControlState.Normal)
+            self.nextButton.setTitle("RETURN HOME", forState: UIControlState.Normal)
             
             for view in self.frameMid.subviews {
                 view.removeFromSuperview()
@@ -1000,7 +1031,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
     
     func goBackHome(sender: UIButton) {
         
-        if nextButton.currentTitle == "Find Us On Facebook" {
+        if nextButton.currentTitle == "FIND US ON FACEBOOK" {
             
             UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/breakin2app")!)
         
