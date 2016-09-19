@@ -377,7 +377,7 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
         let pageTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: pageTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
         pageTitle.addConstraint(pageTitleHeight)
         
-        pageTitle.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        pageTitle.font = UIFont(name: "HelveticaNeue-MEDIUM", size: 18)
         pageTitle.textAlignment = NSTextAlignment.Center
         pageTitle.textColor = UIColor.turquoiseColor()
         pageTitle.text = "WHAT IS THE BRAIN BREAKER?"
