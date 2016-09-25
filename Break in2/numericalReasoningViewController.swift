@@ -1118,6 +1118,14 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     }
     
     func feedbackScreen() {
+        
+        self.calculatorView.alpha = 0.0
+        self.graphContent.alpha = 1.0
+        self.questionView.alpha = 1.0
+        self.calculatorButton.removeFromSuperview()
+        self.showCalculator = false
+        self.SwipeMenu(UITapGestureRecognizer())
+        
         //Display feedback screen here
         self.isTestComplete = true
         var i:Int = 0

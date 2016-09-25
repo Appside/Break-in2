@@ -14,6 +14,7 @@ import ParseFacebookUtilsV4
 import FBSDKCoreKit
 import FBSDKLoginKit
 import Firebase
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
