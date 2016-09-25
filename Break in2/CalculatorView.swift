@@ -18,10 +18,24 @@ class CalculatorView:UIView {
     let touchColor:UIColor = UIColor(white: 1.0, alpha: 0.2)
     var TopPane:UILabel = UILabel()
     var BottomPane:UILabel = UILabel()
-    var isTypingNumber = false
     var firstNumber = 0
     var secondNumber = 0
     var operation = ""
+    var memory1:Double = 0
+    var memory2:Double = 0
+    var memory3:Double = 0
+    var firstNumberTyped:Bool = true
+    var decimalPressed:Bool = false
+    var decimalPoints1:Int = 0
+    var decimalPoints2:Int = 0
+    var numbersTyped:Int = 0
+    var operatorPress:Bool = false
+    var operatorMemory:String = String()
+    var equalPress:Bool = false
+    var lastPress:String = String()
+    var line1Top:String = ""
+    var line2Top:String = ""
+    var line3Top:String = ""
     
     let touch0:UIButton = UIButton()            //0
     let touch1:UIButton = UIButton()            //1
@@ -73,6 +87,10 @@ class CalculatorView:UIView {
         
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func prepareCalculator(height:CGFloat, width:CGFloat) {
         
         self.ViewHeight = height
@@ -101,6 +119,8 @@ class CalculatorView:UIView {
         self.ResultsView.addSubview(self.BottomPane)
         self.TopPane.setConstraintsToSuperview(10, bottom: Int(2*self.ButtonSize+self.ButtonMargin)/2-10, left: 10, right: 10)
         self.BottomPane.setConstraintsToSuperview(Int(2*self.ButtonSize+self.ButtonMargin)/2+10, bottom: 10, left: 10, right: 10)
+        self.TopPane.text = ""
+        self.TopPane.lineBreakMode = .ByTruncatingTail
         
         self.BottomPane.textAlignment = NSTextAlignment.Center
         self.BottomPane.textColor = UIColor.whiteColor()
@@ -109,11 +129,12 @@ class CalculatorView:UIView {
         self.BottomPane.lineBreakMode = NSLineBreakMode.ByTruncatingHead
         self.BottomPane.backgroundColor = UIColor(white: 1.0, alpha: 0.1)
         self.BottomPane.layer.cornerRadius = 10.0
+        self.BottomPane.text = "0"
         
         self.TopPane.textAlignment = NSTextAlignment.Right
         self.TopPane.textColor = UIColor.whiteColor()
         self.TopPane.font = UIFont(name: "HelveticaNeue-Bold", size: UIView().getTextSize(15))
-        self.TopPane.numberOfLines = 0
+        self.TopPane.numberOfLines = 3
         
         for button in self.touchArray {
             
@@ -259,7 +280,7 @@ class CalculatorView:UIView {
                 button.addConstraints([heightConstraint,widthConstraint])
                 button.setTitle("+", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.calculationTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             } else if buttonIndex == 11 {
                 
@@ -272,7 +293,7 @@ class CalculatorView:UIView {
                 button.addConstraints([heightConstraint,widthConstraint])
                 button.setTitle("-", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.calculationTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             } else if buttonIndex == 12 {
                 
@@ -285,7 +306,7 @@ class CalculatorView:UIView {
                 button.addConstraints([heightConstraint,widthConstraint])
                 button.setTitle("x", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.calculationTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             } else if buttonIndex == 13 {
                 
@@ -298,7 +319,7 @@ class CalculatorView:UIView {
                 button.addConstraints([heightConstraint,widthConstraint])
                 button.setTitle("/", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.calculationTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             } else if buttonIndex == 14 {
                 
@@ -310,6 +331,7 @@ class CalculatorView:UIView {
                 let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
                 button.setTitle(".", forState: UIControlState.Normal)
+                button.addTarget(self, action: #selector(CalculatorView.decimalPress(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             } else if buttonIndex == 15 {
                 
@@ -320,8 +342,9 @@ class CalculatorView:UIView {
                 let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("+/-", forState: UIControlState.Normal)
+                button.setTitle("C", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
+                button.addTarget(self, action: #selector(CalculatorView.resetCalculator(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             } else if buttonIndex == 16 {
                 
@@ -344,8 +367,9 @@ class CalculatorView:UIView {
                 let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("C", forState: UIControlState.Normal)
+                button.setTitle("Rst", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
+                button.addTarget(self, action: #selector(CalculatorView.fullReset(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             } else if buttonIndex == 18 {
                 
@@ -358,7 +382,7 @@ class CalculatorView:UIView {
                 button.addConstraints([heightConstraint,widthConstraint])
                 button.setTitle("=", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.equalsTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.equalPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
             }
             
@@ -368,44 +392,258 @@ class CalculatorView:UIView {
     
     func numberTapped(sender:UIButton) {
         
-        let number = sender.currentTitle
+        if self.operatorPress == true || self.equalPress == true {
+            
+            let buttonTest:UIButton = UIButton()
+            buttonTest.setTitle(self.lastPress, forState: UIControlState.Normal)
+            self.resetCalculator(buttonTest)
+        
+        }
+        
+        if self.lastPress == "=" {
+            
+            let buttonTest:UIButton = UIButton()
+            buttonTest.setTitle("C", forState: UIControlState.Normal)
+            self.resetCalculator(buttonTest)
+            
+        }
+        
+        self.numbersTyped += 1
+        
+        if self.numbersTyped <= 15 {
+        
+        let numberStrings = ["0","1","2","3","4","5","6","7","8","9"]
+        let numberInt:[Double] = [0,1,2,3,4,5,6,7,8,9]
+        let number = numberInt[numberStrings.indexOf(sender.currentTitle!)!]
         
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .DecimalStyle
-        formatter.maximumFractionDigits = 0;
-        
-        if isTypingNumber {
-            let currentText = String(formatter.numberFromString(self.BottomPane.text!)) + number!
-            self.BottomPane.text = formatter.stringFromNumber(Double(currentText)!)
+        formatter.usesSignificantDigits = true
+        formatter.maximumSignificantDigits = 12;
+            
+        if self.firstNumberTyped == true {
+            
+            if self.decimalPressed == true {
+                formatter.minimumFractionDigits = 1
+                self.decimalPoints1 += 1
+                self.memory1 = number / 10
+            } else {
+                self.memory1 = number
+            }
+            self.firstNumberTyped = false
+            
         } else {
-            self.BottomPane.text = formatter.stringFromNumber(Double(number!)!)
-            isTypingNumber = true
-        }
-    }
-    
-    func calculationTapped(sender: AnyObject) {
-        isTypingNumber = false
-        firstNumber = Int(self.BottomPane.text!)!
-        operation = sender.currentTitle!!
-    }
-    
-    func equalsTapped(sender: AnyObject) {
-        isTypingNumber = false
-        var result = 0
-        secondNumber = Int(self.BottomPane.text!)!
-        
-        if operation == "+" {
-            result = firstNumber + secondNumber
-        } else if operation == "-" {
-            result = firstNumber - secondNumber
+
+            if self.decimalPressed == true {
+                self.decimalPoints1 += 1
+                let toAdd:Double = number / pow(10,Double(self.decimalPoints1))
+                self.memory1 = self.memory1 + toAdd
+                formatter.minimumFractionDigits = self.decimalPoints1
+            } else {
+                self.memory1 = self.memory1*10 + number
+            }
+            
         }
         
-        self.BottomPane.text = "\(result)"
+        self.BottomPane.text = formatter.stringFromNumber(self.memory1)
+        
+        }
+        
+        self.lastPress = sender.currentTitle!
+        
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func decimalPress(sender:UIButton) {
+        
+        if self.operatorPress == true || self.equalPress == true {
+            
+            self.BottomPane.text = "0"
+            let buttonTest:UIButton = UIButton()
+            buttonTest.setTitle(self.lastPress, forState: UIControlState.Normal)
+            self.resetCalculator(buttonTest)
+            
+        }
+        
+        if self.lastPress == "=" {
+            
+            let buttonTest:UIButton = UIButton()
+            buttonTest.setTitle("C", forState: UIControlState.Normal)
+            self.resetCalculator(buttonTest)
+            
+        }
+        
+        self.decimalPressed = true
+        self.lastPress = sender.currentTitle!
+        self.BottomPane.textColor = UIColor.whiteColor()
+        
     }
     
+    func resetCalculator(sender:UIButton) {
+        
+        self.decimalPoints1 = 0
+        self.decimalPressed = false
+        self.memory1 = 0
+        self.firstNumberTyped = true
+        self.numbersTyped = 0
+        
+        if self.operatorPress == true || self.equalPress {
+            
+            self.BottomPane.textColor = UIColor.whiteColor()
+            self.operatorPress = false
+            self.equalPress = false
+            
+        } else {
+         
+            self.operatorPress = false
+            self.memory2 = 0
+            self.memory3 = 0
+            self.decimalPoints2 = 0
+            self.equalPress = false
+            
+        }
+        
+        if sender.currentTitle == "C" {
+            self.BottomPane.text = "0"
+            self.memory2 = 0
+            self.memory3 = 0
+            self.decimalPoints2 = 0
+            self.equalPress = false
+            self.operatorPress = false
+            
+        }
+        
+        self.lastPress = sender.currentTitle!
+        
+    }
+    
+    func operatorPressed(sender:UIButton) {
+        
+        
+        if self.firstNumberTyped == false {
+            
+            if self.equalPress == true {
+                
+                    self.memory1 = self.memory3
+                    self.memory2 = self.memory3
+                
+            } else {
+                
+                self.memory2 = self.memory1
+                
+            }
+            
+            self.BottomPane.textColor = UIColor.grayColor()
+            self.operatorPress = true
+            self.operatorMemory = sender.currentTitle!
+            
+        }
+        
+        self.decimalPoints1 = 0
+        self.decimalPoints2 = 0
+        self.lastPress = sender.currentTitle!
+        
+    }
+    
+    func equalPressed(sender:UIButton) {
+        
+        if self.memory2 != 0  && self.lastPress != "=" {
+        
+        if self.operatorMemory == "+" {
+            self.memory3 = self.memory2 + self.memory1
+        }
+        if self.operatorMemory == "-" {
+            self.memory3 = self.memory2 - self.memory1
+        }
+        if self.operatorMemory == "x" {
+            self.memory3 = self.memory2 * self.memory1
+        }
+        if self.operatorMemory == "/" {
+            self.memory3 = self.memory2 / self.memory1
+        }
+
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .DecimalStyle
+        formatter.usesSignificantDigits = true
+        formatter.maximumSignificantDigits = 12;
+        
+        let nombre1:String = formatter.stringFromNumber(self.memory2)!
+        let nombre2:String = formatter.stringFromNumber(self.memory1)!
+        let nombre3:String = formatter.stringFromNumber(self.memory3)!
+            
+        if self.TopPane.text == "" {
+            self.line1Top = "\(nombre1) \(self.operatorMemory) \(nombre2) = \(nombre3)"
+        } else {
+            if self.line2Top == "" {
+                self.line2Top = "\(nombre1) \(self.operatorMemory) \(nombre2) = \(nombre3)"
+            } else {
+                if self.line3Top != "" {
+                    self.line1Top = self.line2Top
+                    self.line2Top = self.line3Top
+                }
+                self.line3Top = "\(nombre1) \(self.operatorMemory) \(nombre2) = \(nombre3)"
+            }
+        }
+            
+        self.TopPane.text = "\(self.line1Top)\n\(self.line2Top)\n\(self.line3Top)"
+        
+        self.BottomPane.text = formatter.stringFromNumber(self.memory3)
+        
+        self.operatorPress = false
+        self.equalPress = true
+            
+        self.decimalPoints1 = 0
+            
+        }
+        
+        if self.lastPress == "=" {
+            
+            if self.operatorMemory == "+" {
+                self.memory3 = self.memory3 + self.memory1
+            }
+            if self.operatorMemory == "-" {
+                self.memory3 = self.memory3 - self.memory1
+            }
+            if self.operatorMemory == "x" {
+                self.memory3 = self.memory3 * self.memory1
+            }
+            if self.operatorMemory == "/" {
+                self.memory3 = self.memory3 / self.memory1
+            }
+            
+            let formatter = NSNumberFormatter()
+            formatter.numberStyle = .DecimalStyle
+            formatter.maximumFractionDigits = 6
+            formatter.usesSignificantDigits = true
+            formatter.maximumSignificantDigits = 12;
+            
+            self.BottomPane.text = formatter.stringFromNumber(self.memory3)
+            
+            if self.operatorPress == true {
+            
+                self.operatorPress = false
+                self.equalPress = true
+                self.decimalPoints1 = 0
+                
+            }
+            
+        }
+        
+        self.lastPress = sender.currentTitle!
+        self.BottomPane.textColor = UIColor.whiteColor()
+        
+    }
+    
+    func fullReset(sender:UIButton) {
+        
+        self.line1Top = ""
+        self.line2Top = ""
+        self.line3Top = ""
+        self.TopPane.text = ""
+        
+        let buttonTest:UIButton = UIButton()
+        buttonTest.setTitle("C", forState: UIControlState.Normal)
+        self.resetCalculator(buttonTest)
+        
+    }
     
 }

@@ -528,6 +528,13 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     //Show Swipe Menu
     func SwipeMenu(sender: UITapGestureRecognizer) {
+        
+        UIView.animateWithDuration(1, animations: {
+            
+            self.calculatorView.alpha = 0.0
+            
+        }, completion: nil)
+            
         UIView.animateWithDuration(1, animations: {
             if(self.swipeMenuBottomConstraint.constant == 320*self.heightRatio) {
                 self.swipeMenuBottomConstraint.constant = 5*self.heightRatio
@@ -555,7 +562,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     self.questionView.alpha = 1.0
                 }
             }
-        }, completion: nil)
+            }, completion: {(bool) in
+                //self.calculatorView.alpha = variableAlpha
+        })
     }
 
     func updateTimer() {
@@ -746,6 +755,14 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     }
     
     func nextQuestion(gesture:UITapGestureRecognizer) {
+        
+        let buttonTest:UIButton = UIButton()
+        buttonTest.setTitle("C", forState: UIControlState.Normal)
+        self.calculatorView.resetCalculator(buttonTest)
+        self.calculatorView.TopPane.text = ""
+        self.calculatorView.line1Top = ""
+        self.calculatorView.line2Top = ""
+        self.calculatorView.line3Top = ""
         
         self.calculatorView.alpha = 0.0
         self.questionView.alpha = 1.0
@@ -1287,12 +1304,18 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
     
     func calculatorPressed(sender:UIButton) {
         
-        if self.calculatorView.alpha == 0.0 {
+        if (self.swipeMenuBottomConstraint.constant == 5*self.heightRatio) {
+            self.SwipeMenu(UITapGestureRecognizer())
+        }
+        
+        if self.showCalculator == false {
             
             UIView.animateWithDuration(0.5, animations: {
+                
                 self.calculatorView.alpha = 1.0
                 self.graphContent.alpha = 0.0
                 self.questionView.alpha = 0.0
+                
                 }, completion: {(bool) in
                 self.calculatorButton.setImage(UIImage(named: "statistics"), forState: UIControlState.Normal)
             })
