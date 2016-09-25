@@ -52,9 +52,8 @@ class CalculatorView:UIView {
     let touchDivide:UIButton = UIButton()       //12
     let toucheMultiply:UIButton = UIButton()    //13
     let touchPoint:UIButton = UIButton()        //14
-    let touchPercent:UIButton = UIButton()      //15
     let touchC:UIButton = UIButton()            //16
-    let touchAC:UIButton = UIButton()           //17
+    let touchReset:UIButton = UIButton()           //17
     let touchEqual:UIButton = UIButton()        //18
     
     var touchArray:[UIButton] = [UIButton]()
@@ -78,9 +77,8 @@ class CalculatorView:UIView {
         self.touchArray.append(self.touchDivide)
         self.touchArray.append(self.toucheMultiply)
         self.touchArray.append(self.touchPoint)
-        self.touchArray.append(self.touchPercent)
         self.touchArray.append(self.touchC)
-        self.touchArray.append(self.touchAC)
+        self.touchArray.append(self.touchReset)
         self.touchArray.append(self.touchEqual)
         
         self.userInteractionEnabled = true
@@ -137,7 +135,6 @@ class CalculatorView:UIView {
         self.TopPane.numberOfLines = 3
         
         for button in self.touchArray {
-            
             
             self.addSubview(button)
             button.backgroundColor = self.touchColor
@@ -336,7 +333,7 @@ class CalculatorView:UIView {
             } else if buttonIndex == 15 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 2*self.ButtonMargin+self.ButtonSize+additionalLeftMargin)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
                 let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
                 let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
@@ -349,29 +346,17 @@ class CalculatorView:UIView {
             } else if buttonIndex == 16 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
-                self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("%", forState: UIControlState.Normal)
-                button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                
-            } else if buttonIndex == 17 {
-                
-                button.translatesAutoresizingMaskIntoConstraints = false
                 let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
                 let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
                 let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 2*self.ButtonSize+self.ButtonMargin)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("Rst", forState: UIControlState.Normal)
+                button.setTitle("Reset", forState: UIControlState.Normal)
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
                 button.addTarget(self, action: #selector(CalculatorView.fullReset(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
-            } else if buttonIndex == 18 {
+            } else if buttonIndex == 17 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
                 let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
