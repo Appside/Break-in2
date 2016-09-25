@@ -12,8 +12,8 @@ pod 'FBSDKLoginKit’
 pod 'Alamofire', '~> 3.0'
 pod 'SCLAlertView'
 pod "SwiftSpinner"
-pod “Firebase”
-pod “Firebase/AdMob”
+pod 'Firebase'
+pod 'Firebase/AdMob'
 pod 'Google-Mobile-Ads-SDK'
 
 pod 'Eureka', '~> 1.7'
