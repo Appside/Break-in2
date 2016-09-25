@@ -166,13 +166,13 @@ let PF_CALENDAR_COMPANY                 = "company"                 //	String
 let PF_CALENDAR_JOBTITLE                = "position"                //	String
 
 /* Add AD IDs from FIREBASE here */
-let AD_ID_HOMEVIEW_BANNER           = "ca-app-pub-3940256099942544/2934735716"
-let AD_ID_NUMERICAL                 = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_LOGICAL                   = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_VERBAL                    = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_ARITHMETIC                = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_SEQUENCES                 = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_FRACTIONS                 = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_PROGRAMMING               = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_TECHNOLOGY                = "ca-app-pub-3940256099942544/4411468910"
-let AD_ID_BRAINBREAKER              = "ca-app-pub-3940256099942544/4411468910"
+let AD_ID_HOMEVIEW_BANNER           = "ca-app-pub-4854749430333488/2684866458"
+let AD_ID_NUMERICAL                 = "ca-app-pub-4854749430333488/4066565655"
+let AD_ID_LOGICAL                   = "ca-app-pub-4854749430333488/3190420452"
+let AD_ID_VERBAL                    = "ca-app-pub-4854749430333488/6283487655"
+let AD_ID_ARITHMETIC                = "ca-app-pub-4854749430333488/5067656052"
+let AD_ID_SEQUENCES                 = "ca-app-pub-4854749430333488/6143886856"
+let AD_ID_FRACTIONS                 = "ca-app-pub-4854749430333488/6544389258"
+let AD_ID_PROGRAMMING               = "ca-app-pub-4854749430333488/8021122454"
+let AD_ID_TECHNOLOGY                = "ca-app-pub-4854749430333488/9497855652"
+let AD_ID_BRAINBREAKER              = "ca-app-pub-4854749430333488/9236954050"
