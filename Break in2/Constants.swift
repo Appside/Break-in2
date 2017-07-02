@@ -14,7 +14,7 @@ let PF_USER_OBJECTID					= "objectId"				//	String
 let PF_USER_USERNAME					= "username"				//	String
 let PF_USER_PASSWORD					= "password"				//	String
 let PF_USER_EMAIL						= "email"                   //	String
-let PF_USER_EMAILCOPY					= "emailCopy"               //	String
+let PF_USER_EMAILCOPY					= "emailVerified"           //	String
 let PF_USER_FULLNAME					= "fullname"				//	String
 let PF_USER_FULLNAME_LOWER				= "fullname_lower"          //	String
 let PF_USER_FACEBOOKID					= "facebookId"              //	String
@@ -32,8 +32,10 @@ let PF_USER_DEGREE                      = "degree"                  //  String
 let PF_USER_POSITION                    = "position"                //  String
 let PF_USER_SHARE_INFO_ALLOWED          = "shareInfoAllowed"        //  Bool
 let PF_USER_RECOMMENDED_BY              = "recommendedBy"           //  String
-let PF_USER_RECOMMENDATIONS_CLASS       = "Recommendations"         //  Class name
-let PF_USER_RECOMMENDATION_IDNAME       = "IDName"                  //  String
+
+/* Recommendations class in Parse*/
+let PF_RECOMMENDATIONS_CLASS            = "Recommendations"         //  Class name
+let PF_RECOMMENDATION_IDNAME            = "IDName"                  //  String
 
 /* Analytics class in Parse*/
 let PF_ANALYTICS_CLASS_NAME				= "Analytics"				//	Class name
