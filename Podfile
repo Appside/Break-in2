@@ -9,14 +9,13 @@ pod 'ParseUI'
 pod 'ParseFacebookUtilsV4'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit’
-pod 'Alamofire', '~> 3.0'
+pod 'Alamofire', '~> 4.4’
 pod 'SCLAlertView'
-pod "SwiftSpinner"
+pod 'SwiftSpinner'
 pod 'Firebase'
 pod 'Firebase/AdMob'
 pod 'Google-Mobile-Ads-SDK'
-
-pod 'Eureka', '~> 1.7'
+pod 'Eureka'
 
 end
 
