@@ -23,19 +23,19 @@ class StatisticsTitleView: UIView {
     
     // Customize statisticsTitleLabel
     let textSize:CGFloat = self.getTextSize(18)
-    self.statisticsTitleLabel.textAlignment = NSTextAlignment.Center
+    self.statisticsTitleLabel.textAlignment = NSTextAlignment.center
     self.statisticsTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     self.statisticsTitleLabel.text = "SCORES"
     
     // Customize nextStatisticButton and previousStatisticButton
     
-    self.nextStatisticButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
-    self.nextStatisticButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.nextStatisticButton.addTarget(self.superview, action: #selector(StatisticsViewController.nextStatButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.nextStatisticButton.setImage(UIImage.init(named: "nextButton"), for: UIControlState())
+    self.nextStatisticButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+    self.nextStatisticButton.addTarget(self.superview, action: #selector(StatisticsViewController.nextStatButtonClicked(_:)), for: UIControlEvents.touchUpInside)
     
-    self.previousStatisticButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
-    self.previousStatisticButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.previousStatisticButton.addTarget(self.superview, action: #selector(StatisticsViewController.previousStatButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.previousStatisticButton.setImage(UIImage.init(named: "prevButton"), for: UIControlState())
+    self.previousStatisticButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+    self.previousStatisticButton.addTarget(self.superview, action: #selector(StatisticsViewController.previousStatButtonClicked(_:)), for: UIControlEvents.touchUpInside)
 
   }
 
@@ -59,13 +59,13 @@ class StatisticsTitleView: UIView {
     
     self.statisticsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let statisticsTitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let statisticsTitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let statisticsTitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let statisticsTitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let statisticsTitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.width * 8)/10)
+    let statisticsTitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.width * 8)/10)
     
-    let statisticsTitleLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let statisticsTitleLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statisticsTitleLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
     self.statisticsTitleLabel.addConstraint(statisticsTitleLabelWidthConstraint)
     self.addConstraints([statisticsTitleLabelTopConstraint, statisticsTitleLabelCenterXConstraint, statisticsTitleLabelBottomConstraint])
@@ -74,13 +74,13 @@ class StatisticsTitleView: UIView {
     
     self.nextStatisticButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let nextStatisticButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    let nextStatisticButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
     
-    let nextStatisticButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let nextStatisticButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let nextStatisticButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
+    let nextStatisticButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let nextStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
+    let nextStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextStatisticButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.nextStatisticButton.addConstraints([nextStatisticButtonWidthConstraint, nextStatisticButtonHeightConstraint])
     self.addConstraints([nextStatisticButtonCenterYConstraint, nextStatisticButtonRightConstraint])
@@ -89,13 +89,13 @@ class StatisticsTitleView: UIView {
     
     self.previousStatisticButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let previousStatisticButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    let previousStatisticButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
     
-    let previousStatisticButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let previousStatisticButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let previousStatisticButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
+    let previousStatisticButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let previousStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
+    let previousStatisticButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousStatisticButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.previousStatisticButton.addConstraints([previousStatisticButtonWidthConstraint, previousStatisticButtonHeightConstraint])
     self.addConstraints([previousStatisticButtonCenterYConstraint, previousStatisticButtonLeftConstraint])

@@ -40,7 +40,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   // Declare and initialize views and models
   
   let homeViewModel:JSONModel = JSONModel()
-  let defaults = NSUserDefaults.standardUserDefaults()
+  let defaults = UserDefaults.standard
     
   let logoImageView:UILabel = UILabel()
   let profilePictureImageView:UIImageView = UIImageView()
@@ -70,14 +70,14 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   
   // Declare and initialize design constants
   
-  let screenFrame:CGRect = UIScreen.mainScreen().bounds
-  let statusBarFrame:CGRect = UIApplication.sharedApplication().statusBarFrame
+  let screenFrame:CGRect = UIScreen.main.bounds
+  let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
   
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
   
   var menuButtonHeight:CGFloat = 50
-  var backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
+  var backButtonHeight:CGFloat = UIScreen.main.bounds.width/12
   var calendarBackgroundViewHeight:CGFloat = 300
   var textSize:CGFloat = 15
 
@@ -132,7 +132,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     self.view.addSubview(self.tutorialFingerImageView)
     self.careersBackgroundView.addSubview(self.brainBreakerQuestionButton)
     self.careersBackgroundView.addSubview(self.brainBreakerNewLabel)
-    self.careersBackgroundView.bringSubviewToFront(self.brainBreakerQuestionButton)
+    self.careersBackgroundView.bringSubview(toFront: self.brainBreakerQuestionButton)
     
     // Create careerButtons for each careerType
     
@@ -156,7 +156,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       
       // Make each button perform a segue to the TestSelectionViewController
       
-      self.careerButtons[index].addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+      self.careerButtons[index].addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: UIControlEvents.touchUpInside)
     }
     
     // Add careerButtons to careersScrollView
@@ -173,55 +173,55 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
     self.logoImageView.attributedText = attributedString
-    self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
     self.logoImageView.clipsToBounds = true
     
-    self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.profilePictureImageView.contentMode = UIViewContentMode.scaleAspectFit
     self.profilePictureImageView.image = UIImage.init(named: "planeLogo")!
     
-    self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.sloganImageView.contentMode = UIViewContentMode.scaleAspectFit
     self.sloganImageView.image = UIImage.init(named: "asSlogan")
     
-    self.statsButton.contentMode = UIViewContentMode.ScaleAspectFit
-    self.statsButton.setImage(UIImage.init(named: "statistics"), forState: UIControlState.Normal)
+    self.statsButton.contentMode = UIViewContentMode.scaleAspectFit
+    self.statsButton.setImage(UIImage.init(named: "statistics"), for: UIControlState())
     self.statsButton.alpha = 0
     
-    self.settingsButton.contentMode = UIViewContentMode.ScaleAspectFit
-    self.settingsButton.setImage(UIImage.init(named: "settings"), forState: UIControlState.Normal)
+    self.settingsButton.contentMode = UIViewContentMode.scaleAspectFit
+    self.settingsButton.setImage(UIImage.init(named: "settings"), for: UIControlState())
     self.settingsButton.alpha = 0
     
     self.logOutButton.backgroundColor = UIColor.turquoiseColor()
     self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.logOutButton.setTitle("Log Out", forState: UIControlState.Normal)
-    self.logOutButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.logOutButton.setTitle("Log Out", for: UIControlState())
+    self.logOutButton.setTitleColor(UIColor.white, for: UIControlState())
     
     self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
-    self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
+    self.scrollInfoLabel.textAlignment = NSTextAlignment.center
+    self.scrollInfoLabel.textColor = UIColor.lightGray
     self.scrollInfoLabel.text = "Scroll For More Careers"
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-      self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
-    self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+      self.tutorialNextButton.setTitle("Next", for: UIControlState())
+    self.tutorialNextButton.setTitleColor(UIColor.white, for: UIControlState())
     
     self.descriptionLabelView.clipsToBounds = false
     
-    self.brainBreakerQuestionButton.setImage(UIImage.init(named: "brainBreakerLogo"), forState: UIControlState.Normal)
+    self.brainBreakerQuestionButton.setImage(UIImage.init(named: "brainBreakerLogo"), for: UIControlState())
     
     self.brainBreakerNewLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.brainBreakerNewLabel.textAlignment = NSTextAlignment.Right
-    self.brainBreakerNewLabel.textColor = UIColor.redColor()
+    self.brainBreakerNewLabel.textAlignment = NSTextAlignment.right
+    self.brainBreakerNewLabel.textColor = UIColor.red
     self.brainBreakerNewLabel.text = "New!"
     
-    self.newSwitch = defaults.boolForKey("newSwitchBB")
+    self.newSwitch = defaults.bool(forKey: "newSwitchBB")
     
     if self.newSwitch == true{
     
       self.brainBreakerNewLabel.alpha = 1
-      self.defaults.setBool(false, forKey: "brainBreakerAnsweredCorrectly")
+      self.defaults.set(false, forKey: "brainBreakerAnsweredCorrectly")
       
     }else{
       
@@ -231,14 +231,14 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     // Add actions to buttons
     
-    self.logOutButton.addTarget(self, action: #selector(HomeViewController.logoutBtnPressed(_:)), forControlEvents: .TouchUpInside)
-    self.settingsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), forControlEvents: .TouchUpInside)
-    self.statsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), forControlEvents: .TouchUpInside)
-    self.tutorialNextButton.addTarget(self, action: #selector(HomeViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.logOutButton.addTarget(self, action: #selector(HomeViewController.logoutBtnPressed(_:)), for: .touchUpInside)
+    self.settingsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: .touchUpInside)
+    self.statsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: .touchUpInside)
+    self.tutorialNextButton.addTarget(self, action: #selector(HomeViewController.nextTutorialButtonClicked(_:)), for: UIControlEvents.touchUpInside)
 
     // Customize careersBackgroundView, deadlinesView and statsView
     
-    self.careersBackgroundView.backgroundColor = UIColor.whiteColor()
+    self.careersBackgroundView.backgroundColor = UIColor.white
     self.careersBackgroundView.layer.cornerRadius = self.minorMargin
     if self.segueFromLoginView {
       self.careersBackgroundView.alpha = 1
@@ -247,21 +247,21 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       self.careersBackgroundView.alpha = 0
     }
     
-    self.calendarBackgroundView.backgroundColor = UIColor.whiteColor()
+    self.calendarBackgroundView.backgroundColor = UIColor.white
     self.calendarBackgroundView.layer.cornerRadius = self.minorMargin
     self.calendarBackgroundView.alpha = 0
     self.calendarBackgroundView.clipsToBounds = true
     
-    self.calendarView.backgroundColor = UIColor.whiteColor()
+    self.calendarView.backgroundColor = UIColor.white
     self.calendarView.layer.cornerRadius = self.minorMargin
     self.calendarView.clipsToBounds = true
     
-    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+    self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
     
     // Set tutorialView and tutorialNextButton alpha values
     
     if self.firstTimeUser {
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+      self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
       self.tutorialNextButton.alpha = 1
     }
     else {
@@ -305,16 +305,16 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     self.checkNewBrainBreaker()
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
     if segue.identifier == "careerClicked" {
-      let destinationVC:TestSelectionViewController = segue.destinationViewController as! TestSelectionViewController
-      destinationVC.testTypes = self.careersTestTypes[sender!.careerTitle]!
-      destinationVC.comingSoonTestTypes = self.comingSoonTestTypes[sender!.careerTitle]!
-      destinationVC.selectedCareer = sender!.careerTitle
+      let destinationVC:TestSelectionViewController = segue.destination as! TestSelectionViewController
+      destinationVC.testTypes = self.careersTestTypes[(sender! as AnyObject).careerTitle]!
+      destinationVC.comingSoonTestTypes = self.comingSoonTestTypes[(sender! as AnyObject).careerTitle]!
+      destinationVC.selectedCareer = (sender! as AnyObject).careerTitle
     }
     if segue.identifier == "settingsClicked" {
-      let destinationVC:SettingsViewController = segue.destinationViewController as! SettingsViewController
+      let destinationVC:SettingsViewController = segue.destination as! SettingsViewController
       destinationVC.careerTypes = self.careerTypes
       destinationVC.careerTypeImages = self.careerTypeImages
       if sender as! UIButton == self.tutorialNextButton {
@@ -322,7 +322,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       }
     }
     if segue.identifier == "statsClicked" {
-      let destinationVC:StatisticsViewController = segue.destinationViewController as! StatisticsViewController
+      let destinationVC:StatisticsViewController = segue.destination as! StatisticsViewController
       var testTypes:[String] = [String]()
       var testColors:[String:UIColor] = [String:UIColor]()
       for career in self.careerTypes {
@@ -341,7 +341,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     }
   }
   
-    func didSelectDate(date: NSDate) {
+    func didSelectDate(_ date: Date) {
         //print("(date.year)-(date.month)-(date.day)")
     }
     
@@ -351,18 +351,18 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
     if segueFromLoginView {
-      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
     }
     else {
-      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12))
+      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12))
     }
     
-    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
-    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
     self.view.addConstraints([logoImageViewCenterXConstraint, self.logoImageViewBottomConstraint])
@@ -372,17 +372,17 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
     
     if self.segueFromLoginView {
-      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     }
     else {
-      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1)
+      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1)
     }
     
-    let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
-    let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.screenFrame.height - (50 + self.menuButtonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
+    let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: (self.screenFrame.height - (50 + self.menuButtonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
     
-    let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.profilePictureImageView.addConstraints([profilePictureImageViewWidthConstraint, profilePictureImageViewHeightConstraint])
     self.view.addConstraints([self.profilePictureImageViewCenterXConstraint, profilePictureImageViewCenterYConstraint])
@@ -392,17 +392,17 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
     
     if self.segueFromLoginView {
-      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     }
     else {
-      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: self.screenFrame.width + (self.logoImageView.frame.width/2))
+      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: self.screenFrame.width + (self.logoImageView.frame.width/2))
     }
     
-    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([self.sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
@@ -411,13 +411,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.calendarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let calendarBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    let calendarBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.settingsButton, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.majorMargin)
     
-    let calendarBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let calendarBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let calendarBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let calendarBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let calendarBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.calendarBackgroundViewHeight)
+    let calendarBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.calendarBackgroundViewHeight)
     
     self.calendarBackgroundView.addConstraint(calendarBackgroundViewHeightConstraint)
     self.view.addConstraints([calendarBackgroundViewTopConstraint, calendarBackgroundViewLeftConstraint, calendarBackgroundViewRightConstraint])
@@ -426,13 +426,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.calendarView.translatesAutoresizingMaskIntoConstraints = false
     
-    let calendarViewTopConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let calendarViewTopConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let calendarViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let calendarViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let calendarViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let calendarViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let calendarViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    let calendarViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
     
     self.view.addConstraints([calendarViewTopConstraint, calendarViewLeftConstraint, calendarViewRightConstraint, calendarViewBottomConstraint])
     
@@ -440,13 +440,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let settingsButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let settingsButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
-    let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
     self.settingsButton.addConstraints([settingsButtonHeightConstraint, settingsButtonWidthConstraint])
     self.view.addConstraints([settingsButtonLeftConstraint, settingsButtonTopConstraint])
@@ -455,13 +455,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.statsButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let statsButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let statsButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let statsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let statsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let statsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let statsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
-    let statsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let statsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
     self.statsButton.addConstraints([statsButtonHeightConstraint, statsButtonWidthConstraint])
     self.view.addConstraints([statsButtonRightConstraint, statsButtonTopConstraint])
@@ -474,17 +474,17 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     self.membershipButton.clipsToBounds = true
     self.membershipButton.layer.cornerRadius = self.screenFrame.width/24
     self.membershipButton.layer.borderWidth = 2
-    self.membershipButton.layer.borderColor = UIColor.whiteColor().CGColor
-    self.membershipButton.setTitle("3", forState: UIControlState.Normal)
+    self.membershipButton.layer.borderColor = UIColor.white.cgColor
+    self.membershipButton.setTitle("3", for: UIControlState())
 
     
-    let membershipButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let membershipButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let membershipButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let membershipButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let membershipButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let membershipButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
-    let membershipButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let membershipButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
     self.membershipButton.addConstraints([membershipButtonHeightConstraint, membershipButtonWidthConstraint])
     self.view.addConstraints([membershipButtonRightConstraint, membershipButtonTopConstraint])
@@ -493,17 +493,17 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.careersBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let careersBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin) + self.minorMargin)
+    let careersBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin) + self.minorMargin)
     
-    let careersBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let careersBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
     if self.segueFromLoginView {
-      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.screenFrame.height)
+      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.screenFrame.height)
     }
     else {
-      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
+      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
     }
     
     self.careersBackgroundView.addConstraint(careersBackgroundViewHeightConstraint)
@@ -513,13 +513,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.logOutButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let logOutButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let logOutButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let logOutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+    let logOutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
     
-    let logOutButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let logOutButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let logOutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let logOutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
     self.logOutButton.addConstraint(logOutButtonHeightConstraint)
     self.view.addConstraints([logOutButtonLeftConstraint, logOutButtonBottomConstraint, logOutButtonRightConstraint])
@@ -528,13 +528,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.scrollInfoLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
     
-    let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
     
     self.scrollInfoLabel.addConstraint(scrollInfoLabelHeightConstraint)
     self.view.addConstraints([scrollInfoLabelLeftConstraint, scrollInfoLabelTopConstraint, scrollInfoLabelRightConstraint])
@@ -543,13 +543,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.careersScrollView.translatesAutoresizingMaskIntoConstraints = false
     
-    let careersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let careersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
     
-    let careersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let careersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
     
     self.view.addConstraints([careersScrollViewLeftConstraint, careersScrollViewBottomConstraint, careersScrollViewRightConstraint, careersScrollViewTopConstraint])
     
@@ -559,22 +559,22 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       
       self.careerButtons[index].translatesAutoresizingMaskIntoConstraints = false
       
-      let careerButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      let careerButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
       
-      let careerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+      let careerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
       
-      let careerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
+      let careerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
       
       if index == 0 {
         
-        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
         
         self.view.addConstraint(careerButtonTopConstraint)
         
       }
       else {
         
-        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careerButtons[index - 1], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careerButtons[index - 1], attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
         
         self.view.addConstraint(careerButtonTopConstraint)
         
@@ -585,7 +585,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       
       if index == self.careerButtons.count - 1 {
         
-        let careerButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        let careerButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
         
         self.view.addConstraint(careerButtonBottomConstraint)
         
@@ -597,13 +597,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.tutorialView.translatesAutoresizingMaskIntoConstraints = false
     
-    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    self.tutorialViewTopConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    self.tutorialViewTopConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height)
+    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height)
     
-    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width)
+    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width)
     
     self.tutorialView.addConstraints([tutorialViewHeightConstraint, tutorialViewWidthConstraint])
     self.view.addConstraints([tutorialViewLeftConstraint, tutorialViewTopConstraint])
@@ -612,13 +612,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
     
-    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
     
-    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
     
-    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
     self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
     self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
@@ -627,13 +627,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.brainBreakerQuestionButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let brainBreakerQuestionButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let brainBreakerQuestionButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let brainBreakerQuestionButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    let brainBreakerQuestionButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
     
-    let brainBreakerQuestionButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let brainBreakerQuestionButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
     
-    let brainBreakerQuestionButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+    let brainBreakerQuestionButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
     
     self.brainBreakerQuestionButton.addConstraints([brainBreakerQuestionButtonHeightConstraint, brainBreakerQuestionButtonWidthConstraint])
     self.view.addConstraints([brainBreakerQuestionButtonRightConstraint, brainBreakerQuestionButtonTopConstraint])
@@ -646,13 +646,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.brainBreakerNewLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let brainBreakerNewLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: -5)
+    let brainBreakerNewLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.left, multiplier: 1, constant: -5)
     
-    let brainBreakerNewLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    let brainBreakerNewLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
     
-    let brainBreakerNewLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let brainBreakerNewLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
     
-    let brainBreakerNewLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80)
+    let brainBreakerNewLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 80)
     
     self.brainBreakerNewLabel.addConstraints([brainBreakerNewLabelHeightConstraint, brainBreakerNewLabelWidthConstraint])
     self.view.addConstraints([brainBreakerNewLabelRightConstraint, brainBreakerNewLabelTopConstraint])
@@ -660,34 +660,34 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
   }
     
-    func brainBreakerSegue(sender:UITapGestureRecognizer) {
+    func brainBreakerSegue(_ sender:UITapGestureRecognizer) {
         
         SwiftSpinner.show("Loading")
       
         //self.newSwitch = false
-        self.defaults.setBool(false, forKey: "newSwitchBB")
+        self.defaults.set(false, forKey: "newSwitchBB")
         
         let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
         //let currentUser = PFUser.currentUser()!
         //let username = currentUser.username
         //query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
         //query.limit = 6
-        query.getFirstObjectInBackgroundWithBlock({ (question: PFObject?, error: NSError?) -> Void in
+        query.getFirstObjectInBackground(block: { (question: PFObject?, error: NSError?) -> Void in
             
             if error == nil {
                 
                 self.isBrainBreakerDone()
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_QUESTION], forKey: "BrainBreakerQuestion")
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_QUESTION_TYPE], forKey: "BrainBreakerQuestionType")
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_PASSAGE], forKey: "BrainBreakerPassage")
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_ANSWERS], forKey: "BrainBreakerAnswers")
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_CORRECT_ANSWER], forKey: "BrainBreakerCorrectAnswerIndex")
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_EXPLANATION], forKey: "BrainBreakerExplanation")
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_EXPIRATION_DATE] as? NSDate ?? NSDate(), forKey: "BrainBreakerExpirationDate")
-                self.defaults.setObject(question![PF_BRAINBREAKER_Q_TEST_PRIZE], forKey: "BrainBreakerTestPrize")
-                self.defaults.setInteger(question![PF_BRAINBREAKER_Q_TIME_REQUIRED] as? Int ?? Int(), forKey: "MinutesToAnswerBrainBreaker")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_QUESTION], forKey: "BrainBreakerQuestion")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_QUESTION_TYPE], forKey: "BrainBreakerQuestionType")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_PASSAGE], forKey: "BrainBreakerPassage")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_ANSWERS], forKey: "BrainBreakerAnswers")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_CORRECT_ANSWER], forKey: "BrainBreakerCorrectAnswerIndex")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_EXPLANATION], forKey: "BrainBreakerExplanation")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_EXPIRATION_DATE] as? Date ?? Date(), forKey: "BrainBreakerExpirationDate")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_TEST_PRIZE], forKey: "BrainBreakerTestPrize")
+                self.defaults.set(question![PF_BRAINBREAKER_Q_TIME_REQUIRED] as? Int ?? Int(), forKey: "MinutesToAnswerBrainBreaker")
                 
-                let numberCheck = self.defaults.integerForKey("BrainBreakerQuestionNumber")
+                let numberCheck = self.defaults.integer(forKey: "BrainBreakerQuestionNumber")
                 let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
                 
                 print(numberCheck)
@@ -695,19 +695,19 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                 
                 if (numberCheck2 != numberCheck){
                     
-                    let membershipType = self.defaults.objectForKey("Membership") as! String
+                    let membershipType = self.defaults.object(forKey: "Membership") as! String
                     
                     if (membershipType == "Premium") {
                         
-                        self.defaults.setInteger(3, forKey: "NoOfBrainBreakerLives")
+                        self.defaults.set(3, forKey: "NoOfBrainBreakerLives")
                         
                     }else{
                         
-                        self.defaults.setInteger(1, forKey: "NoOfBrainBreakerLives")
+                        self.defaults.set(1, forKey: "NoOfBrainBreakerLives")
                         
                     }
                     
-                     self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
+                     self.defaults.set(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
                     
                 }
                 
@@ -715,7 +715,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                 
                 SwiftSpinner.show("Tap to Proceed", animated: false).addTapHandler({
                     
-                    self.performSegueWithIdentifier("BrainBreakerSegue", sender: nil)
+                    self.performSegue(withIdentifier: "BrainBreakerSegue", sender: nil)
                     SwiftSpinner.hide()
                     
                     }, subtitle: "Good luck!")
@@ -729,26 +729,26 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                     }, subtitle: "Tap to return to home screen")
                 
             }
-        })
+        } as! (PFObject?, Error?) -> Void)
         
     }
   
     func checkNewBrainBreaker(){
         
         let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
-        query.getFirstObjectInBackgroundWithBlock({ (question: PFObject?, error: NSError?) -> Void in
+        query.getFirstObjectInBackground(block: { (question: PFObject?, error: NSError?) -> Void in
             
             if error == nil {
                 
-                let numberCheckNew = self.defaults.integerForKey("BrainBreakerQuestionNumber")
+                let numberCheckNew = self.defaults.integer(forKey: "BrainBreakerQuestionNumber")
                 let numberCheck2New = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
                 
                 if (numberCheck2New != numberCheckNew){
                   
                     print("YES")
                     self.brainBreakerNewLabel.alpha = 1
-                    self.defaults.setBool(true, forKey: "newSwitchBB")
-                    self.defaults.setBool(false, forKey: "brainBreakerAnsweredCorrectly")
+                    self.defaults.set(true, forKey: "newSwitchBB")
+                    self.defaults.set(false, forKey: "brainBreakerAnsweredCorrectly")
                     //self.newSwitch = true
                         
                     }else{
@@ -762,7 +762,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                     
                 }
             
-        })
+        } as! (PFObject?, Error?) -> Void)
 
         
     }
@@ -772,11 +772,11 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     // Dispose of any resources that can be recreated.
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    if (PFUser.currentUser() != nil) {
-      self.loadUser(PFUser.currentUser()!)
+    if (PFUser.current() != nil) {
+      self.loadUser(PFUser.current()!)
     }
     else {
       self.view.loginUser(self)
@@ -784,7 +784,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     if self.segueFromLoginView {
       
-      UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+      UIView.animate(withDuration: 1, delay: 0.5, options: UIViewAnimationOptions(), animations: {
         
         self.logoImageViewBottomConstraint.constant = self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12) - self.profilePictureImageView.frame.minY
         self.profilePictureImageViewCenterXConstraint.constant = (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1
@@ -802,7 +802,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       self.showCareersBackgroundView()
     }
     
-    let membershipType = self.defaults.objectForKey("Membership") as! String
+    let membershipType = self.defaults.object(forKey: "Membership") as! String
     
     if (membershipType == "Free") {
         
@@ -812,13 +812,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
         self.bannerView.translatesAutoresizingMaskIntoConstraints = false
         
-        let bannerViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+        let bannerViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
         
-        let bannerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+        let bannerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
         
-        let bannerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.logOutButton.frame.height)
+        let bannerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.logOutButton.frame.height)
         
-        let bannerViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.logOutButton.frame.width)
+        let bannerViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.bannerView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.logOutButton.frame.width)
         
         self.bannerView.addConstraints([bannerViewHeightConstraint,bannerViewWidthConstraint])
         self.view.addConstraints([bannerViewLeftConstraint, bannerViewBottomConstraint])
@@ -828,7 +828,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         self.bannerView.adUnitID = AD_ID_HOMEVIEW_BANNER
         self.bannerView.rootViewController = self
         self.bannerView.delegate = self
-        self.bannerView.loadRequest(DFPRequest())
+        self.bannerView.load(DFPRequest())
 
     } else {
         
@@ -836,8 +836,8 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
     }
     
-    if (PFUser.currentUser() != nil) {
-        self.loadUser(PFUser.currentUser()!)
+    if (PFUser.current() != nil) {
+        self.loadUser(PFUser.current()!)
     }
     else {
         self.view.loginUser(self)
@@ -846,7 +846,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     // Show tutorial to first time users
     
     if self.firstTimeUser {
-      self.tutorialViews.appendContentsOf([self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton, self.membershipButton])
+      self.tutorialViews.append(contentsOf: [self.careersBackgroundView, self.calendarBackgroundView, self.settingsButton, self.statsButton, self.membershipButton])
       self.tutorialDescriptions.updateValue(["DEADLINE CALENDAR", "Staying on top of job deadlines can be tricky. The calender we have provided will help!\n\nDeadlines are colour coordinated with the industries to which they apply."], forKey: self.calendarBackgroundView)
       self.tutorialDescriptions.updateValue(["PRACTICE APTITUDE TESTS...", "Depending on which career you'd like to pursue, there are a number of mandatory tests. We've provided some practice for you across a range of industries.\n\n...OR HAVE SOME FUN!\n\nClick on the light bulb to try our Brain Breaker question. If you get the answer right, you will be in with a chance to win a special prize!"], forKey: self.careersBackgroundView)
       self.tutorialDescriptions.updateValue(["", "SETTINGS\n\nWhile we're on that subject, go to the settings page to select which careers you would like to see deadlines for."], forKey: self.settingsButton)
@@ -858,13 +858,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
   }
   
-    func loadUser(user: PFUser) {
+    func loadUser(_ user: PFUser) {
     
     //
     
   }
   
-  func logoutBtnPressed(sender: UIButton!){
+  func logoutBtnPressed(_ sender: UIButton!){
     
     let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
     let alertView = SCLAlertView(appearance: appearance)
@@ -901,19 +901,19 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     func userLoggedIn(){
         
-        if PFUser.currentUser() == nil {
+        if PFUser.current() == nil {
           
-            let navigationVC = self.storyboard!.instantiateViewControllerWithIdentifier("navigationVC") as! LoginViewController
-            self.presentViewController(navigationVC, animated: false, completion: nil)
+            let navigationVC = self.storyboard!.instantiateViewController(withIdentifier: "navigationVC") as! LoginViewController
+            self.present(navigationVC, animated: false, completion: nil)
             
         }else{
             
         }
     }
   
-  func settingsBtnPressed(sender: UIButton!){
+  func settingsBtnPressed(_ sender: UIButton!){
     
-    self.performSegueWithIdentifier("settingsClicked", sender: nil)
+    self.performSegue(withIdentifier: "settingsClicked", sender: nil)
     
   }
   
@@ -921,7 +921,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     if self.segueFromLoginView {
       
-      UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      UIView.animate(withDuration: 1, delay: 0.5, options: UIViewAnimationOptions.curveEaseOut, animations: {
         
         self.settingsButton.alpha = 1
         self.statsButton.alpha = 1
@@ -930,7 +930,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
         }, completion: {(Bool) in
           
-          UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+          UIView.animate(withDuration: 0.5, delay: 0.25, options: UIViewAnimationOptions.curveEaseOut, animations: {
             
             self.calendarBackgroundView.alpha = 1
             self.view.layoutIfNeeded()
@@ -942,7 +942,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     }
     else {
       
-      UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+      UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
         
         self.settingsButton.alpha = 1
         self.statsButton.alpha = 1
@@ -958,9 +958,9 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
   }
   
-  func hideCareersBackgroundView(sender: UIButton) {
+  func hideCareersBackgroundView(_ sender: UIButton) {
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
       
       self.calendarBackgroundView.alpha = 0
       self.settingsButton.alpha = 0
@@ -972,16 +972,16 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
       }, completion: {(Bool) in
         
         if sender == self.settingsButton {
-          self.performSegueWithIdentifier("settingsClicked", sender: sender)
+          self.performSegue(withIdentifier: "settingsClicked", sender: sender)
         }
         else if sender == self.statsButton {
-          self.performSegueWithIdentifier("statsClicked", sender: sender)
+          self.performSegue(withIdentifier: "statsClicked", sender: sender)
         }
         else if sender == self.tutorialNextButton {
-          self.performSegueWithIdentifier("settingsClicked", sender: sender)
+          self.performSegue(withIdentifier: "settingsClicked", sender: sender)
         }
         else if sender == self.logOutButton {
-          UIView.animateWithDuration(1, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+          UIView.animate(withDuration: 1, delay: 0.5, options: UIViewAnimationOptions(), animations: {
             if self.segueFromLoginView {
               self.logoImageViewBottomConstraint.constant = self.minorMargin * -1
             }
@@ -996,7 +996,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
           })
         }
         else {
-          self.performSegueWithIdentifier("careerClicked", sender: sender)
+          self.performSegue(withIdentifier: "careerClicked", sender: sender)
         }
         
     })
@@ -1007,34 +1007,34 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     self.view.insertSubview(self.logoImageView, aboveSubview: self.tutorialView)
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
       
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+      self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
       self.tutorialNextButton.alpha = 1
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in
         
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
           self.descriptionLabelView.alpha = 0
           }, completion: {(Bool) in
             self.descriptionLabelView.removeFromSuperview()
             for index:Int in 0  ..< self.tutorialViews.count  {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
-                self.tutorialViews[index].userInteractionEnabled = false
+                self.tutorialViews[index].isUserInteractionEnabled = false
               }
               else {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
-                self.tutorialViews[index].userInteractionEnabled = true
+                self.tutorialViews[index].isUserInteractionEnabled = true
               }
             }
             if self.tutorialViews[self.tutorialPageNumber] == self.statsButton {
                 self.tutorialFingerImageView.alpha = 0
-                UIView.animateWithDuration(1, delay: 0, options: [UIViewAnimationOptions.CurveLinear,UIViewAnimationOptions.Repeat,UIViewAnimationOptions.Autoreverse], animations: {self.statsButton.alpha=0.2}, completion: nil)
+                UIView.animate(withDuration: 1, delay: 0, options: [UIViewAnimationOptions.curveLinear,UIViewAnimationOptions.repeat,UIViewAnimationOptions.autoreverse], animations: {self.statsButton.alpha=0.2}, completion: nil)
             }
             self.updateDescriptionLabelView()
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
               self.descriptionLabelView.alpha = 1
               }, completion: nil)
 
@@ -1063,52 +1063,52 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
 //        
 //    })
 
-    let homeVC = storyboard?.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
-    presentViewController(homeVC, animated: false, completion: nil)
+    let homeVC = storyboard?.instantiateViewController(withIdentifier: "homeVC") as! HomeViewController
+    present(homeVC, animated: false, completion: nil)
     
   }
   
-  func nextTutorialButtonClicked(sender:UIButton) {
+  func nextTutorialButtonClicked(_ sender:UIButton) {
     
     self.tutorialPageNumber += 1
     
     // Bring correct view to front or perform segues to other viewcontrollers
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
         self.descriptionLabelView.alpha = 0
         self.tutorialFingerImageView.alpha = 0
         }, completion: {(Bool) in
           self.descriptionLabelView.removeFromSuperview()
           if self.tutorialViews[self.tutorialPageNumber - 1] == self.settingsButton {
-            self.performSegueWithIdentifier("settingsClicked", sender: sender)
+            self.performSegue(withIdentifier: "settingsClicked", sender: sender)
           }
           else if self.tutorialViews[self.tutorialPageNumber - 1] == self.membershipButton {
             self.tutorialFingerImageView.alpha = 0.0
             self.membershipButton.alpha = 0.0
             self.hideTutorial()
-            self.tutorialNextButton.setTitle("Next", forState: UIControlState.Normal)
+            self.tutorialNextButton.setTitle("Next", for: UIControlState())
           }
           else {
             for index:Int in 0  ..< self.tutorialViews.count  {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
-                self.tutorialViews[index].userInteractionEnabled = false
+                self.tutorialViews[index].isUserInteractionEnabled = false
               }
               else {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
-                self.tutorialViews[index].userInteractionEnabled = true
+                self.tutorialViews[index].isUserInteractionEnabled = true
               }
             }
             if self.tutorialViews[self.tutorialPageNumber] == self.settingsButton {
-              self.tutorialNextButton.setTitle("Select Careers", forState: UIControlState.Normal)
+              self.tutorialNextButton.setTitle("Select Careers", for: UIControlState())
               //self.displayFinger(true)
                 self.tutorialFingerImageView.alpha = 0
-                UIView.animateWithDuration(1, delay: 0, options: [UIViewAnimationOptions.CurveLinear,UIViewAnimationOptions.Repeat,UIViewAnimationOptions.Autoreverse], animations: {self.settingsButton.alpha=0.2}, completion: nil)
+                UIView.animate(withDuration: 1, delay: 0, options: [UIViewAnimationOptions.curveLinear,UIViewAnimationOptions.repeat,UIViewAnimationOptions.autoreverse], animations: {self.settingsButton.alpha=0.2}, completion: nil)
             }
           }
           if self.tutorialPageNumber != self.tutorialViews.count {
             self.updateDescriptionLabelView()
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
               self.descriptionLabelView.alpha = 1
               }, completion: nil)
           }
@@ -1132,9 +1132,9 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     if self.tutorialViews[self.tutorialPageNumber] == self.membershipButton {
         self.tutorialFingerImageView.alpha = 0.0
         self.membershipButton.alpha = 1.0
-        self.tutorialNextButton.setTitle("End Walkthrough", forState: UIControlState.Normal)
+        self.tutorialNextButton.setTitle("End Walkthrough", for: UIControlState())
         self.descriptionLabelView.setConstraintsToSuperview(75, bottom: 150, left: Int(2*self.majorMargin), right: Int(2*self.majorMargin))
-        UIView.animateWithDuration(1, delay: 0, options: [UIViewAnimationOptions.CurveLinear,UIViewAnimationOptions.Repeat,UIViewAnimationOptions.Autoreverse], animations: {self.membershipButton.alpha=0.2}, completion: nil)
+        UIView.animate(withDuration: 1, delay: 0, options: [UIViewAnimationOptions.curveLinear,UIViewAnimationOptions.repeat,UIViewAnimationOptions.autoreverse], animations: {self.membershipButton.alpha=0.2}, completion: nil)
         
     } else {
         
@@ -1144,21 +1144,21 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
             
         } else {
     
-    let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
     if self.tutorialViews[self.tutorialPageNumber].frame.maxY < (self.screenFrame.height) {
-      let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 20)
+      let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 20)
       self.view.addConstraint(descriptionLabelViewTopConstraint)
     }
     else {
         
-      let descriptionLabelViewBottomConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Top, multiplier: 1, constant: -20)
+      let descriptionLabelViewBottomConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.top, multiplier: 1, constant: -20)
       self.view.addConstraint(descriptionLabelViewBottomConstraint)
     }
     
-    let descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
+    let descriptionLabelViewHeightConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
     
-    let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
+    let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
     
     self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
     self.view.addConstraints([descriptionLabelViewCenterXConstraint])
@@ -1168,31 +1168,31 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
   }
   
-  func displayFinger(pointingLeft:Bool) {
+  func displayFinger(_ pointingLeft:Bool) {
     
-    self.tutorialFingerImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.tutorialFingerImageView.contentMode = UIViewContentMode.scaleAspectFit
     //self.tutorialFingerImageView.alpha = 0
     self.view.addSubview(self.tutorialFingerImageView)
     
     tutorialFingerImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let tutorialFingerImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let tutorialFingerImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
     if pointingLeft {
       self.tutorialFingerImageView.image = UIImage.init(named: "fingerSideways")
-      let tutorialFingerImageViewLeftConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+      let tutorialFingerImageViewLeftConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
       self.view.addConstraint(tutorialFingerImageViewLeftConstraint)
     }
     else {
       let image:UIImage = UIImage.init(named: "fingerSideways")!
-      self.tutorialFingerImageView.image = UIImage.init(CGImage: image.CGImage!, scale: image.scale, orientation: UIImageOrientation.UpMirrored)
-      let tutorialFingerImageViewRightConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      self.tutorialFingerImageView.image = UIImage.init(cgImage: image.cgImage!, scale: image.scale, orientation: UIImageOrientation.upMirrored)
+      let tutorialFingerImageViewRightConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
       self.view.addConstraint(tutorialFingerImageViewRightConstraint)
     }
     
-    let tutorialFingerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let tutorialFingerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let tutorialFingerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/6)
+    let tutorialFingerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/6)
     
     self.tutorialFingerImageView.addConstraints([tutorialFingerImageViewHeightConstraint, tutorialFingerImageViewWidthConstraint])
     self.view.addConstraints([tutorialFingerImageViewTopConstraint])
@@ -1213,24 +1213,24 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     func isBrainBreakerDone() {
     }
     
-    func adViewDidReceiveAd(bannerView: GADBannerView!) {
+    func adViewDidReceiveAd(_ bannerView: GADBannerView!) {
         
         self.logOutButton.alpha = 0.0
         self.bannerView.alpha = 1.0
-        self.careersBackgroundView.bringSubviewToFront(self.bannerView)
+        self.careersBackgroundView.bringSubview(toFront: self.bannerView)
         
     }
     
     func count(){
         
-        self.membershipCounter = self.defaults.objectForKey("MembershipCounter") as? Int ?? Int()
+        self.membershipCounter = self.defaults.object(forKey: "MembershipCounter") as? Int ?? Int()
         
         print(membershipCounter)
         
         if self.membershipCounter < 10 {
             
             self.membershipCounter += 1
-            self.defaults.setInteger(membershipCounter, forKey: "MembershipCounter")
+            self.defaults.set(membershipCounter, forKey: "MembershipCounter")
             
         }else{
             
@@ -1253,7 +1253,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
             alertView.showSuccess("Message", subTitle: "Premium subscription provides unlimited tests, 3 attempts at the Brainbreaker and removes all ads! \n\n Would you like to upgrade?")
             
             self.membershipCounter = 0
-            self.defaults.setInteger(membershipCounter, forKey: "MembershipCounter")
+            self.defaults.set(membershipCounter, forKey: "MembershipCounter")
         }
         
     }
@@ -1262,15 +1262,15 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
         SwiftSpinner.show("Purchasing")
         
-        if let currentUser = PFUser.currentUser(){
+        if let currentUser = PFUser.current(){
             currentUser[PF_USER_MEMBERSHIP] = "Premium"
             //set other fields the same way....
-            currentUser.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+            currentUser.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
                 if error == nil {
                     
-                    self.defaults.setObject("Premium", forKey: "Membership")
-                    let membershipType = self.defaults.objectForKey("Membership") as! String
-                    self.defaults.setInteger(3, forKey: "NoOfBrainBreakerLives")
+                    self.defaults.set("Premium", forKey: "Membership")
+                    let membershipType = self.defaults.object(forKey: "Membership") as! String
+                    self.defaults.set(3, forKey: "NoOfBrainBreakerLives")
                     print(membershipType)
                     
                     SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
@@ -1287,7 +1287,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                     
                 }
                 
-            })
+            } as! PFBooleanResultBlock)
         }
         
     }
@@ -1302,25 +1302,25 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
             request.delegate = self
             request.start()
         } else {
-            let alert = UIAlertController(title: "In-App Purchases Not Enabled", message: "Please enable In App Purchase in Settings", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { alertAction in
-                alert.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: "In-App Purchases Not Enabled", message: "Please enable In App Purchase in Settings", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.default, handler: { alertAction in
+                alert.dismiss(animated: true, completion: nil)
                 
-                let url: NSURL? = NSURL(string: UIApplicationOpenSettingsURLString)
+                let url: URL? = URL(string: UIApplicationOpenSettingsURLString)
                 if url != nil
                 {
-                    UIApplication.sharedApplication().openURL(url!)
+                    UIApplication.shared.openURL(url!)
                 }
                 
             }))
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { alertAction in
-                alert.dismissViewControllerAnimated(true, completion: nil)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { alertAction in
+                alert.dismiss(animated: true, completion: nil)
             }))
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
-    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         print("product request")
         let myProduct = response.products
         //print(myProduct)
@@ -1348,13 +1348,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
         print("buy " + p.productIdentifier)
         let pay = SKPayment(product: p)
-        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
-        SKPaymentQueue.defaultQueue().addPayment(pay as SKPayment)
+        SKPaymentQueue.default().add(self)
+        SKPaymentQueue.default().add(pay as SKPayment)
         
     }
     
     
-    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         print("add payment")
         
         for transaction:AnyObject in transactions {
@@ -1363,7 +1363,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
             
             switch trans.transactionState {
                 
-            case .Purchased:
+            case .purchased:
                 //print("buy, ok unlock iap here")
                 //print(p.productIdentifier)
                 
@@ -1381,7 +1381,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                 
                 queue.finishTransaction(trans)
                 break;
-            case .Failed:
+            case .failed:
                 print("buy error")
                 
                 SwiftSpinner.show("Purchase Error", animated: false).addTapHandler({
@@ -1400,12 +1400,12 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         }
     }
     
-    func finishTransaction(trans:SKPaymentTransaction)
+    func finishTransaction(_ trans:SKPaymentTransaction)
     {
         print("finish transaction")
-        SKPaymentQueue.defaultQueue().finishTransaction(trans)
+        SKPaymentQueue.default().finishTransaction(trans)
     }
-    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
+    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
     {
         print("remove trans");
     }

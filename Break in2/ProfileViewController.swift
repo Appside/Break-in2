@@ -39,7 +39,7 @@ class ProfileViewController: UIViewController {
     var tutorialPageNumber:Int = 0
     var textSize:CGFloat = 15
     
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,9 +50,9 @@ class ProfileViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         
         //Initialize size variables
-        self.screenFrame = UIScreen.mainScreen().bounds
-        self.statusBarFrame = UIApplication.sharedApplication().statusBarFrame
-        self.backButtonHeight = UIScreen.mainScreen().bounds.width/12
+        self.screenFrame = UIScreen.main.bounds
+        self.statusBarFrame = UIApplication.shared.statusBarFrame
+        self.backButtonHeight = UIScreen.main.bounds.width/12
         
         //Background View
         self.view.addSubview(self.backgroundImageView)
@@ -62,37 +62,37 @@ class ProfileViewController: UIViewController {
         
         //Main View
         self.mainView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
-        self.mainView.backgroundColor = UIColor.blackColor()
+        self.mainView.backgroundColor = UIColor.black
         self.mainView.alpha = 0.8
-        self.view.sendSubviewToBack(self.backgroundImageView)
+        self.view.sendSubview(toBack: self.backgroundImageView)
         
         //Logo ImageVIew
         self.view.addSubview(self.logoImageView)
-        self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
         let labelString:String = String("BREAKIN2")
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.logoImageView.attributedText = attributedString
         self.logoImageView.clipsToBounds = true
         self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
         
-        let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+        let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
         
-        let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
         
-        let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+        let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
         
         self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
         self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
         
         //Back Button
         self.view.addSubview(self.backButton)
-        self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-        self.backButton.addTarget(self, action: #selector(ProfileViewController.goBackToSettingsMenu(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        self.backButton.setImage(UIImage.init(named: "back")!, for: UIControlState())
+        self.backButton.addTarget(self, action: #selector(ProfileViewController.goBackToSettingsMenu(_:)), for: UIControlEvents.touchUpInside)
         self.backButton.clipsToBounds = true
         if self.firstTimeUser {
             self.backButton.alpha = 0
@@ -102,13 +102,13 @@ class ProfileViewController: UIViewController {
         }
         self.backButton.translatesAutoresizingMaskIntoConstraints = false
         
-        let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+        let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
         
-        let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+        let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
         
-        let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
         
-        let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
         
         self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
         self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
@@ -117,53 +117,53 @@ class ProfileViewController: UIViewController {
         self.view.addSubview(self.pageDescription)
         self.pageDescription.translatesAutoresizingMaskIntoConstraints = false
         
-        let pageDescriptionCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let pageDescriptionCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
         
-        let pageDescriptionTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight)
+        let pageDescriptionTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight)
         
-        let pageDescriptionHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+        let pageDescriptionHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
         
-        let pageDescriptionWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
+        let pageDescriptionWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
         
         self.pageDescription.addConstraints([pageDescriptionHeightConstraint, pageDescriptionWidthConstraint])
         self.view.addConstraints([pageDescriptionCenterXConstraint, pageDescriptionTopConstraint])
         
         self.pageDescription.text = "EDIT PROFILE DETAILS"
-        self.pageDescription.textColor = UIColor.whiteColor()
+        self.pageDescription.textColor = UIColor.white
         self.pageDescription.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
-        self.pageDescription.textAlignment = NSTextAlignment.Center
+        self.pageDescription.textAlignment = NSTextAlignment.center
         
         //pageDescriptionSub set up
         self.view.addSubview(self.pageDescriptionSub)
         self.pageDescriptionSub.translatesAutoresizingMaskIntoConstraints = false
         
-        let pageDescriptionSubCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let pageDescriptionSubCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
         
-        let pageDescriptionSubTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 4*self.minorMargin + self.backButtonHeight + 20)
+        let pageDescriptionSubTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + 4*self.minorMargin + self.backButtonHeight + 20)
         
-        let pageDescriptionSubHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+        let pageDescriptionSubHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
         
-        let pageDescriptionSubWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
+        let pageDescriptionSubWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
         
         self.pageDescriptionSub.addConstraints([pageDescriptionSubHeightConstraint, pageDescriptionSubWidthConstraint])
         self.view.addConstraints([pageDescriptionSubCenterXConstraint, pageDescriptionSubTopConstraint])
         
         self.pageDescriptionSub.text = "This will help us tailor your experience"
-        self.pageDescriptionSub.textColor = UIColor.whiteColor()
+        self.pageDescriptionSub.textColor = UIColor.white
         self.pageDescriptionSub.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-        self.pageDescriptionSub.textAlignment = NSTextAlignment.Center
+        self.pageDescriptionSub.textAlignment = NSTextAlignment.center
         
         //Save Button
         self.view.addSubview(self.saveProfileButton)
         self.saveProfileButton.translatesAutoresizingMaskIntoConstraints = false
         
-        let saveProfileButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+        let saveProfileButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
         
-        let saveProfileButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 2*self.minorMargin)
+        let saveProfileButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 2*self.minorMargin)
         
-        let saveProfileButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 2*self.minorMargin * -1)
+        let saveProfileButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 2*self.minorMargin * -1)
         
-        let saveProfileButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+        let saveProfileButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveProfileButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
         
         self.saveProfileButton.addConstraint(saveProfileButtonHeightConstraint)
         self.view.addConstraints([saveProfileButtonLeftConstraint, saveProfileButtonRightConstraint, saveProfileButtonBottomConstraint])
@@ -171,30 +171,30 @@ class ProfileViewController: UIViewController {
         self.saveProfileButton.backgroundColor = UIColor.turquoiseColor()
         self.saveProfileButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
         if self.firstTimeUser {
-            self.saveProfileButton.setTitle("Save & Continue", forState: UIControlState.Normal)
+            self.saveProfileButton.setTitle("Save & Continue", for: UIControlState())
         }
         else {
-            self.saveProfileButton.setTitle("Save Profile", forState: UIControlState.Normal)
+            self.saveProfileButton.setTitle("Save Profile", for: UIControlState())
         }
-        self.saveProfileButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.saveProfileButton.addTarget(self, action: #selector(ProfileViewController.saveProfile(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        self.saveProfileButton.setTitleColor(UIColor.white, for: UIControlState())
+        self.saveProfileButton.addTarget(self, action: #selector(ProfileViewController.saveProfile(_:)), for: UIControlEvents.touchUpInside)
         
         //Create profile entries - just copy past to add a new entry
         
-        let profileFirstName = self.defaults.objectForKey("profileFirstName") as? String ?? String()
-        let profileLastName = self.defaults.objectForKey("profileLastName") as? String ?? String()
-        let profileEmail = self.defaults.objectForKey("profileEmail") as? String ?? String()
+        let profileFirstName = self.defaults.object(forKey: "profileFirstName") as? String ?? String()
+        let profileLastName = self.defaults.object(forKey: "profileLastName") as? String ?? String()
+        let profileEmail = self.defaults.object(forKey: "profileEmail") as? String ?? String()
         
         self.addChildViewController(self.ProfileForm)
         self.view.addSubview(self.ProfileForm.view)
-        self.ProfileForm.didMoveToParentViewController(self)
+        self.ProfileForm.didMove(toParentViewController: self)
         self.ProfileForm.view.setConstraintsToSuperview(Int(self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40), bottom: 3*Int(self.minorMargin)+Int(self.menuButtonHeight), left: Int(self.minorMargin*2), right: Int(self.minorMargin*2))
      
         
         
     }
     
-    func goBackToSettingsMenu(sender: UIButton) {
+    func goBackToSettingsMenu(_ sender: UIButton) {
         var alertMessage:String = String()
         alertMessage = "Any unsaved change will be lost."
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
@@ -205,15 +205,15 @@ class ProfileViewController: UIViewController {
             subTitle: alertMessage, // String of view
             duration: 0.0, // Duration to show before closing automatically, default: 0.0
             completeText: "Cancel", // Optional button value, default: ""
-            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            style: .error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
     }
     
-    func goBackToSettings(sender: UIButton) {
+    func goBackToSettings(_ sender: UIButton) {
         
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             
             //self.chooseCareersView.alpha = 0
             self.backButton.alpha = 0
@@ -224,13 +224,13 @@ class ProfileViewController: UIViewController {
             
             }, completion: {(Bool) in
                 
-                self.performSegueWithIdentifier("toSettings", sender: nil)
+                self.performSegue(withIdentifier: "toSettings", sender: nil)
                 
         })
         
     }
     
-    func saveProfile(sender: UIButton) {
+    func saveProfile(_ sender: UIButton) {
         
         let entry1Value:String = String()
         let entry2Value:String = String()
@@ -274,7 +274,7 @@ class ProfileViewController: UIViewController {
                 subTitle: alertMessage, // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "Cancel", // Optional button value, default: ""
-                style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                style: .error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                 colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
@@ -287,13 +287,13 @@ class ProfileViewController: UIViewController {
             
             SwiftSpinner.show("Saving changes")
             
-            let currentUser = PFUser.currentUser()!
+            let currentUser = PFUser.current()!
             //let objID = currentUser.objectId
             let username = currentUser.username
             let query = PFQuery(className: PF_USER_CLASS_NAME)
             query.whereKey(PF_USER_USERNAME, equalTo: username!)
             //query.getObjectInBackgroundWithId(objID!)
-            query.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
+            query.getFirstObjectInBackground(block: { (user: PFObject?, error: NSError?) -> Void in
                 
                 if error == nil {
                     
@@ -302,12 +302,12 @@ class ProfileViewController: UIViewController {
                     user![PF_USER_FIRST_NAME] = entry1Value
                     user![PF_USER_SURNAME] = entry2Value
                     
-                    user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                    user?.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
                             
-                            self.defaults.setObject(entry1Value, forKey: "profileFirstName")
-                            self.defaults.setObject(entry2Value, forKey: "profileLastName")
-                            self.defaults.setObject(entry3Value, forKey: "profileEmail")
+                            self.defaults.set(entry1Value, forKey: "profileFirstName")
+                            self.defaults.set(entry2Value, forKey: "profileLastName")
+                            self.defaults.set(entry3Value, forKey: "profileEmail")
                             
                             SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
                                 
@@ -328,7 +328,7 @@ class ProfileViewController: UIViewController {
                             
                         }
                         
-                    })
+                    } as! PFBooleanResultBlock)
                     
                 }else{
                     
@@ -340,12 +340,12 @@ class ProfileViewController: UIViewController {
                         }, subtitle: "Preferences unsaved, to return to settings")
                     
                 }
-            })
+            } as! (PFObject?, Error?) -> Void)
             
             
             
             if self.firstTimeUser {
-                self.performSegueWithIdentifier("tutorialEnded", sender: sender)
+                self.performSegue(withIdentifier: "tutorialEnded", sender: sender)
             }
             else {
                 // Segue back to Settings?
@@ -357,22 +357,22 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(_ testStr:String) -> Bool {
         let emailRegEx = "^(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?(?:(?:(?:[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+(?:\\.[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+)*)|(?:\"(?:(?:(?:(?: )*(?:(?:[!#-Z^-~]|\\[|\\])|(?:\\\\(?:\\t|[ -~]))))+(?: )*)|(?: )+)\"))(?:@)(?:(?:(?:[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)(?:\\.[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)*)|(?:\\[(?:(?:(?:(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))\\.){3}(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))))|(?:(?:(?: )*[!-Z^-~])*(?: )*)|(?:[Vv][0-9A-Fa-f]+\\.[-A-Za-z0-9._~!$&'()*+,;=:]+))\\])))(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?$"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        let result = emailTest.evaluateWithObject(testStr)
+        let result = emailTest.evaluate(with: testStr)
         return result
     }
     
-    func checkName(testStr:String) -> Bool {
-        let letters = NSCharacterSet.letterCharacterSet()
-        let digits = NSCharacterSet.decimalDigitCharacterSet()
+    func checkName(_ testStr:String) -> Bool {
+        let letters = CharacterSet.letters
+        let digits = CharacterSet.decimalDigits
         var letterCount = 0
         var digitCount = 0
         for uni in testStr.unicodeScalars {
-            if letters.longCharacterIsMember(uni.value) {
+            if letters.contains(UnicodeScalar(uni.value)!) {
                 letterCount += 1
-            } else if digits.longCharacterIsMember(uni.value) {
+            } else if digits.contains(UnicodeScalar(uni.value)!) {
                 digitCount += 1
             }
         }
@@ -383,9 +383,9 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tutorialEnded" {
-            let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+            let destinationVC:HomeViewController = segue.destination as! HomeViewController
             destinationVC.firstTimeUser = true
             destinationVC.segueFromLoginView = false
         }

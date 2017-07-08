@@ -14,50 +14,50 @@ extension UIView {
     //this function adds any BGImage called
     func addHomeBG() {
         // screen width and height:
-        let width = UIScreen.mainScreen().bounds.size.width
-        let height = UIScreen.mainScreen().bounds.size.height
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
       
-        let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
+        let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         imageViewBackground.image = UIImage(named: "homeBG")
         
         // you can change the content mode:
-        imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
+        imageViewBackground.contentMode = UIViewContentMode.scaleAspectFill
         
         self.addSubview(imageViewBackground)
-        self.sendSubviewToBack(imageViewBackground)
+        self.sendSubview(toBack: imageViewBackground)
     }
     
     
-    func loginUser(target: AnyObject) {
+    func loginUser(_ target: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let welcomeVC = storyboard.instantiateViewControllerWithIdentifier("navigationVC")
-        target.presentViewController(welcomeVC, animated: false, completion: nil)
+        let welcomeVC = storyboard.instantiateViewController(withIdentifier: "navigationVC")
+        target.present(welcomeVC, animated: false, completion: nil)
         
     }
     
-    func setConstraintsToSuperview(top:Int, bottom:Int, left:Int, right:Int) {
+    func setConstraintsToSuperview(_ top:Int, bottom:Int, left:Int, right:Int) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat(top))
-        let bottomMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -CGFloat(bottom))
-        let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: CGFloat(left))
-        let rightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.superview, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -CGFloat(right))
+        let topMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.superview, attribute: NSLayoutAttribute.top, multiplier: 1, constant: CGFloat(top))
+        let bottomMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.superview, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -CGFloat(bottom))
+        let leftMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.superview, attribute: NSLayoutAttribute.left, multiplier: 1, constant: CGFloat(left))
+        let rightMargin:NSLayoutConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.superview, attribute: NSLayoutAttribute.right, multiplier: 1, constant: -CGFloat(right))
         self.superview!.addConstraints([topMargin,bottomMargin,leftMargin,rightMargin])
     }
   
-  func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat{
-    let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+  func heightForView(_ text:String, font:UIFont, width:CGFloat) -> CGFloat{
+    let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
     label.numberOfLines = 0
-    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+    label.lineBreakMode = NSLineBreakMode.byWordWrapping
     label.font = font
     label.text = text
-    label.textAlignment = NSTextAlignment.Center
+    label.textAlignment = NSTextAlignment.center
     
     label.sizeToFit()
     return label.frame.height
   }
   
-  func getTextSize(iPhone6TextSize:CGFloat) -> CGFloat {
-    let screenFrame:CGRect = UIScreen.mainScreen().bounds
+  func getTextSize(_ iPhone6TextSize:CGFloat) -> CGFloat {
+    let screenFrame:CGRect = UIScreen.main.bounds
     return ((iPhone6TextSize/667) * screenFrame.size.height)
   }
   
@@ -95,8 +95,8 @@ extension Int {
 
 extension String {
     func removeSpaces()-> String {
-        let components = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).filter { !$0.isEmpty }
-        return components.joinWithSeparator("")
+        let components = self.components(separatedBy: CharacterSet.whitespaces).filter { !$0.isEmpty }
+        return components.joined(separator: "")
     }
 }
 

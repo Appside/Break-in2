@@ -18,7 +18,7 @@ class sequencesList {
     var memory1:Int = Int()
     var memory2:Int = Int()
     
-    func runSequence(sequenceNB:Int, initialNumber:Int) -> Int {
+    func runSequence(_ sequenceNB:Int, initialNumber:Int) -> Int {
         
         var returnInt:Int = Int()
         
@@ -44,7 +44,7 @@ class sequencesList {
         
     }
     
-    func addFeedback(sequenceNB:Int) -> String {
+    func addFeedback(_ sequenceNB:Int) -> String {
         
         var feedbackString:String = String()
         
@@ -66,7 +66,7 @@ class sequencesList {
         
     }
     
-    func fibonacciSequence(requestedIndex:Int) -> Int {
+    func fibonacciSequence(_ requestedIndex:Int) -> Int {
         
         let alpha:Float = 1/sqrt(5)
         let beta:Float = -1*alpha
@@ -78,7 +78,7 @@ class sequencesList {
     
     }
     
-    func arithmeticSequence(requestIndex:Int) -> Int {
+    func arithmeticSequence(_ requestIndex:Int) -> Int {
         
         let returnNumber:Int = Int(requestIndex * self.arithmeticReason)
         
@@ -86,7 +86,7 @@ class sequencesList {
         
     }
     
-    func geometricSequence(requestIndex:Int) -> Int {
+    func geometricSequence(_ requestIndex:Int) -> Int {
         
         let returnNumber:Int = Int(Float(self.sequenceFirstTerm) * powf(Float(self.geometricReason), Float(requestIndex)))
         
@@ -94,14 +94,14 @@ class sequencesList {
         
     }
     
-    func squareSequence(requestIndex:Int) -> Int {
+    func squareSequence(_ requestIndex:Int) -> Int {
         
         let returnNumber:Int = requestIndex * requestIndex
         return returnNumber
         
     }
     
-    func primeNumberSequence(requestIndex:Int) -> Int {
+    func primeNumberSequence(_ requestIndex:Int) -> Int {
         
         var prime: Int
         var isPrime: Bool
@@ -109,7 +109,7 @@ class sequencesList {
         for (prime = 2;  prime <= 50 && counter < requestIndex;  prime += 1 )
         {
             isPrime = true;
-          for divisor:Int in 2.stride(to: prime, by: 1)
+          for divisor:Int in stride(from: 2, to: prime, by: 1)
             {
                 if ((prime % divisor) == 0 )
                 {
@@ -126,7 +126,7 @@ class sequencesList {
         
     }
     
-    func fixedStepsSequence(requestIndex:Int) -> Int {
+    func fixedStepsSequence(_ requestIndex:Int) -> Int {
         
         var returnNumber:Int = Int()
         

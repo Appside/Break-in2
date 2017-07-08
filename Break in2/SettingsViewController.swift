@@ -27,7 +27,7 @@ NUMBER 1: ACCOUNT STATUS
 class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCareerViewDelegate, MFMailComposeViewControllerDelegate {
   
   let settingsModel:JSONModel = JSONModel()
-  let defaults = NSUserDefaults.standardUserDefaults()
+  let defaults = UserDefaults.standard
     
     //****************************************************************************************************
     //NUMBER 1: VARIABLES
@@ -92,8 +92,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   // Declare and initialize design constants
   
-  let screenFrame:CGRect = UIScreen.mainScreen().bounds
-  let statusBarFrame:CGRect = UIApplication.sharedApplication().statusBarFrame
+  let screenFrame:CGRect = UIScreen.main.bounds
+  let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
   
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
@@ -101,7 +101,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let borderWidth:CGFloat = 3
   
   var menuButtonHeight:CGFloat = 50
-  let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
+  let backButtonHeight:CGFloat = UIScreen.main.bounds.width/12
   var chooseCareersViewHeight:CGFloat = 300
   var chooseCareersInfoLabelHeight:CGFloat = 50
   var textSize:CGFloat = 15
@@ -130,7 +130,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
     //self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
     let appColors:[UIColor] = self.settingsModel.getAppColors()
-    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
+    for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
     
@@ -155,24 +155,24 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     // Adjust backButton appearance
     
-    self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.setImage(UIImage.init(named: "back")!, for: UIControlState())
+    self.backButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), for: UIControlEvents.touchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.tutorialNextButton.setTitle("Save Preferences", forState: UIControlState.Normal)
-    self.tutorialNextButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.tutorialNextButton.setTitle("Save Preferences", for: UIControlState())
+    self.tutorialNextButton.setTitleColor(UIColor.white, for: UIControlState())
     self.tutorialNextButton.alpha = 0
-    self.tutorialNextButton.addTarget(self, action: #selector(SettingsViewController.nextTutorialButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.tutorialNextButton.addTarget(self, action: #selector(SettingsViewController.nextTutorialButtonClicked(_:)), for: UIControlEvents.touchUpInside)
     
-    self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+    self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
     
     // Set tutorialView and tutorialNextButton alpha values
     
     if self.firstTimeUser {
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+      self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
       self.tutorialNextButton.alpha = 1
     }
     else {
@@ -182,20 +182,20 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
 
     // Customize and add content to imageViews
     
-    self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
     let labelString:String = String("BREAKIN2")
     let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
     self.logoImageView.attributedText = attributedString
     // Customize settingMenuView, chooseCareersView and tutorialView
     
-    self.settingsMenuView.backgroundColor = UIColor.whiteColor()
+    self.settingsMenuView.backgroundColor = UIColor.white
     self.settingsMenuView.layer.cornerRadius = self.minorMargin
     self.settingsMenuView.alpha = 0
     
-    self.chooseCareersView.backgroundColor = UIColor.whiteColor()
+    self.chooseCareersView.backgroundColor = UIColor.white
     self.chooseCareersView.layer.cornerRadius = self.minorMargin
     self.chooseCareersView.clipsToBounds = true
     self.chooseCareersView.alpha = 0
@@ -204,24 +204,24 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.facebookLogoutButton.facebookButtonTitle = "Deactivate"
     self.facebookLogoutButton.displayButton()
-    self.facebookLogoutButton.addTarget(self, action: #selector(SettingsViewController.deactivateFB(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.facebookLogoutButton.addTarget(self, action: #selector(SettingsViewController.deactivateFB(_:)), for: UIControlEvents.touchUpInside)
     
     self.saveCareersChoicesButton.backgroundColor = UIColor.turquoiseColor()
     self.saveCareersChoicesButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.saveCareersChoicesButton.setTitle("Save Career Preferences", forState: UIControlState.Normal)
-    self.saveCareersChoicesButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-    self.saveCareersChoicesButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.saveCareersChoicesButton.setTitle("Save Career Preferences", for: UIControlState())
+    self.saveCareersChoicesButton.setTitleColor(UIColor.white, for: UIControlState())
+    self.saveCareersChoicesButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), for: UIControlEvents.touchUpInside)
     
     // Customize scrollInfoLabel and chooseCareersInfoLabel
     
     self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.scrollInfoLabel.textAlignment = NSTextAlignment.Center
-    self.scrollInfoLabel.textColor = UIColor.lightGrayColor()
+    self.scrollInfoLabel.textAlignment = NSTextAlignment.center
+    self.scrollInfoLabel.textColor = UIColor.lightGray
     self.scrollInfoLabel.text = "Scroll For More Settings"
     
     self.chooseCareersInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.chooseCareersInfoLabel.textAlignment = NSTextAlignment.Center
-    self.chooseCareersInfoLabel.textColor = UIColor.lightGrayColor()
+    self.chooseCareersInfoLabel.textAlignment = NSTextAlignment.center
+    self.chooseCareersInfoLabel.textColor = UIColor.lightGray
     self.chooseCareersInfoLabel.numberOfLines = 0
     self.chooseCareersInfoLabel.text = "Select The Careers You Are Interested In"
     
@@ -229,7 +229,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.settingsScrollView.showsVerticalScrollIndicator = false
     
-    self.chooseCareersScrollView.pagingEnabled = true
+    self.chooseCareersScrollView.isPagingEnabled = true
     self.chooseCareersScrollView.showsHorizontalScrollIndicator = false
     self.chooseCareersScrollView.delegate = self
     
@@ -237,7 +237,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // INITIATE THE CHOSEN CAREERS
     //********************************************************************************
     
-    if (PFUser.currentUser() != nil) {
+    if (PFUser.current() != nil) {
         self.loadUser()
     }
     else {
@@ -250,13 +250,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.chooseCareersTitleView.previousCareerButton.alpha = 0
     
     self.currentCareerLabel.backgroundColor = UIColor.turquoiseColor()
-    self.currentCareerLabel.textAlignment = NSTextAlignment.Center
-    self.currentCareerLabel.textColor = UIColor.whiteColor()
+    self.currentCareerLabel.textAlignment = NSTextAlignment.center
+    self.currentCareerLabel.textColor = UIColor.white
     self.currentCareerLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     
     // Create settingsButtons for each setting
     
-    for index:Int in 0.stride(to: self.settings.count, by: 1) {
+    for index:Int in stride(from: 0, to: self.settings.count, by: 1) {
       
       let settingsButtonAtIndex:CareerButton = CareerButton()
       
@@ -276,13 +276,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       // Make each button perform a segue to the TestSelectionViewController
       
-      settingsButtonAtIndex.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+      settingsButtonAtIndex.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), for: UIControlEvents.touchUpInside)
     }
     
     self.settingsScrollView.addSubview(self.facebookLogoutButton)
     self.settingsButtons.append(self.facebookLogoutButton)
     
-    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
+    for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       
       // Create each chooseCareerView
       
@@ -354,7 +354,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Dispose of any resources that can be recreated.
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     self.showSettingsMenuView()
@@ -362,7 +362,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Show tutorial to first time users
     
     if self.firstTimeUser {
-      self.tutorialViews.appendContentsOf([self.chooseCareersView, self.backButton])
+      self.tutorialViews.append(contentsOf: [self.chooseCareersView, self.backButton])
       self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "Select the careers that are most appropriate to you.\n\nHave a go now!\n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
       self.showTutorial()
     }
@@ -373,21 +373,21 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     //********************************************************************************
     
     
-  @IBAction func deleteFBTapped(sender: AnyObject) {
+  @IBAction func deleteFBTapped(_ sender: AnyObject) {
     
     SwiftSpinner.show("Deactivating account", animated: true)
     
-    let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, HTTPMethod: "DELETE")
+    let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, httpMethod: "DELETE")
     
-    facebookRequest.startWithCompletionHandler { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
+    facebookRequest.start { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
       
       if(error == nil && result != nil){
         
-        let user = PFUser.currentUser()!
+        let user = PFUser.current()!
         ParseExtensions.deleteUserFB(user)
         
         //self.deleteFromCoreData()
-        let date:NSDate = NSDate()
+        let date:Date = Date()
         self.saveToCoreData("", p: [], dP: [], aI: "", uI: "", ex: date, r: date)
         self.view.loginUser(self)
         SwiftSpinner.hide()
@@ -401,24 +401,24 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
           self.noticeOnlyText("Please try again")
         }
       }
-    }
+    } as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler
     
   }
     
     func deleteFromCoreData() {
     
-        let PersonFetch = NSFetchRequest(entityName: "Person")
+        let PersonFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
         PersonFetch.returnsObjectsAsFaults = false
         
         do {
-            let details = try moc.executeFetchRequest(PersonFetch)
+            let details = try moc.fetch(PersonFetch)
             
             if details.count > 0 {
                 
                 for item in details as! [NSManagedObject] {
                     
                     let itemData:NSManagedObject = item 
-                    moc.deleteObject(itemData)
+                    moc.delete(itemData)
                     
                 }
                 
@@ -435,9 +435,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }
     
-    func saveToCoreData(t: String, p: AnyObject, dP: AnyObject, aI:String, uI: String, ex: NSDate, r: NSDate) {
+    func saveToCoreData(_ t: String, p: AnyObject, dP: AnyObject, aI:String, uI: String, ex: Date, r: Date) {
         
-        let entity = NSEntityDescription.insertNewObjectForEntityForName("Person", inManagedObjectContext: moc) as! Person
+        let entity = NSEntityDescription.insertNewObject(forEntityName: "Person", into: moc) as! Person
         entity.setValue(t, forKey: "token")
         entity.setValue(p, forKey: "permissions")
         entity.setValue(dP, forKey: "declinedPermissions")
@@ -494,17 +494,17 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         self.noDataUILabel.textColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
         let textSize2:CGFloat = self.view.getTextSize(14)
         self.noDataUILabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
-        self.noDataUILabel.textAlignment = NSTextAlignment.Center
+        self.noDataUILabel.textAlignment = NSTextAlignment.center
         self.noDataUILabel.numberOfLines = 0
         //self.noDataLabel.alpha = 0
         self.noDataLabel.alpha = 1.0
         
         let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
-        let currentUser = PFUser.currentUser()!
+        let currentUser = PFUser.current()!
         let username = currentUser.username
         //let usernameString = username as! String
         query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
-        query.findObjectsInBackgroundWithBlock {
+        query.findObjectsInBackground {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
             if error == nil {
@@ -517,7 +517,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                     for object in objects {
                         self.chosenCareers = object[PF_PREFERENCES_CAREERPREFS] as! [String]
                         print(self.chosenCareers)
-                        for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
+                        for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
                             
                             if self.chosenCareers.contains(self.careerTypes[index]) {
                                 self.chooseCareerViews[index].careerChosen = true
@@ -540,31 +540,31 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 // Log details of the failure
                 self.noDataUILabel.text = "Connection Error"
             }
-        }
+        } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
         
         
         
     }
     
-    func savePrefsToParse(sender:UIButton){
+    func savePrefsToParse(_ sender:UIButton){
         
         SwiftSpinner.show("Saving career preferences")
-        let currentUser = PFUser.currentUser()!
+        let currentUser = PFUser.current()!
         //let objID = currentUser.objectId
         let username = currentUser.username
         let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
         query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
         //query.getObjectInBackgroundWithId(objID!)
-        query.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
+        query.getFirstObjectInBackground(block: { (user: PFObject?, error: NSError?) -> Void in
             
             if error == nil {
                 
                 user![PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
-                user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                user?.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
                     if error == nil {
                         
-                        self.defaults.setObject(self.chosenCareers, forKey: "SavedCareerPreferences")
-                        let array = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
+                        self.defaults.set(self.chosenCareers, forKey: "SavedCareerPreferences")
+                        let array = self.defaults.object(forKey: "SavedCareerPreferences") as? [String] ?? [String]()
                         
                         SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
                             
@@ -585,7 +585,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                         
                     }
                     
-                })
+                } as! PFBooleanResultBlock)
                 
             }else{
                 
@@ -597,7 +597,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                     }, subtitle: "Preferences unsaved, to return to settings")
                 
             }
-        })
+        } as! (PFObject?, Error?) -> Void)
         
 //        SwiftSpinner.show("Saving career preferences")
 //        
@@ -635,16 +635,16 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }
     
-    func savePrefsToParse2(sender:UIButton){
+    func savePrefsToParse2(_ sender:UIButton){
         
         SwiftSpinner.show("Saving career preferences")
         
-        let user = PFUser.currentUser()
+        let user = PFUser.current()
         let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
         careerPrefs[PF_PREFERENCES_USER] = user!
         careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
         
-        careerPrefs.saveInBackgroundWithBlock({ (succeeded, error: NSError?) -> Void in
+        careerPrefs.saveInBackground(block: { (succeeded, error: NSError?) -> Void in
             if error == nil {
                 
                 SwiftSpinner.hide()
@@ -672,13 +672,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
-    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
     self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
@@ -687,13 +687,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.backButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
-    let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+    let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
     
     self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
     self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
@@ -702,13 +702,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.settingsMenuView.translatesAutoresizingMaskIntoConstraints = false
     
-    let settingsMenuViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.chooseCareersViewHeight + self.minorMargin) + self.minorMargin)
+    let settingsMenuViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.chooseCareersViewHeight + self.minorMargin) + self.minorMargin)
     
-    let settingsMenuViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let settingsMenuViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let settingsMenuViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let settingsMenuViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.settingsMenuViewTopConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.chooseCareersViewHeight + self.minorMargin)
+    self.settingsMenuViewTopConstraint = NSLayoutConstraint.init(item: self.settingsMenuView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.chooseCareersViewHeight + self.minorMargin)
     
     self.settingsMenuView.addConstraint(settingsMenuViewHeightConstraint)
     self.view.addConstraints([settingsMenuViewRightConstraint, settingsMenuViewLeftConstraint, self.settingsMenuViewTopConstraint])
@@ -717,13 +717,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.chooseCareersView.translatesAutoresizingMaskIntoConstraints = false
     
-    let chooseCareersViewTopConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    let chooseCareersViewTopConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.backButton, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.majorMargin)
     
-    let chooseCareersViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let chooseCareersViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let chooseCareersViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let chooseCareersViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let chooseCareersViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.chooseCareersViewHeight)
+    let chooseCareersViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.chooseCareersViewHeight)
     
     self.chooseCareersView.addConstraint(chooseCareersViewHeightConstraint)
     self.view.addConstraints([chooseCareersViewTopConstraint, chooseCareersViewLeftConstraint, chooseCareersViewRightConstraint])
@@ -732,13 +732,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.saveCareersChoicesButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let saveCareersChoicesButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let saveCareersChoicesButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
-    let saveCareersChoicesButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let saveCareersChoicesButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let saveCareersChoicesButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let saveCareersChoicesButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let saveCareersChoicesButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+    let saveCareersChoicesButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
     
     self.saveCareersChoicesButton.addConstraint(saveCareersChoicesButtonHeightConstraint)
     self.view.addConstraints([saveCareersChoicesButtonLeftConstraint, saveCareersChoicesButtonRightConstraint, saveCareersChoicesButtonBottomConstraint])
@@ -747,13 +747,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.scrollInfoLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
     
-    let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
     
     self.scrollInfoLabel.addConstraint(scrollInfoLabelHeightConstraint)
     self.view.addConstraints([scrollInfoLabelLeftConstraint, scrollInfoLabelTopConstraint, scrollInfoLabelRightConstraint])
@@ -762,38 +762,38 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.settingsScrollView.translatesAutoresizingMaskIntoConstraints = false
     
-    let settingsScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let settingsScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let settingsScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    let settingsScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.saveCareersChoicesButton, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
     
-    let settingsScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let settingsScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.settingsMenuView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let settingsScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    let settingsScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsScrollView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
     
     self.view.addConstraints([settingsScrollViewLeftConstraint, settingsScrollViewBottomConstraint, settingsScrollViewRightConstraint, settingsScrollViewTopConstraint])
     
     // Create and add constraints for each settingsButton and set content size for settingsScrollView
     
-    for index:Int in 0.stride(to: self.settingsButtons.count, by: 1) {
+    for index:Int in stride(from: 0, to: self.settingsButtons.count, by: 1) {
       
       self.settingsButtons[index].translatesAutoresizingMaskIntoConstraints = false
       
-      let settingsButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      let settingsButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
       
-      let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+      let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
       
-      let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
+      let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
       
       if index == 0 {
         
-        let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+        let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
         
         self.view.addConstraint(settingsButtonTopConstraint)
         
       }
       else {
         
-        let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsButtons[index - 1], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+        let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.settingsButtons[index - 1], attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
         
         self.view.addConstraint(settingsButtonTopConstraint)
         
@@ -804,7 +804,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       if index == self.settingsButtons.count - 1 {
         
-        let settingsButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+        let settingsButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButtons[index], attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.settingsScrollView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
         
         self.view.addConstraint(settingsButtonBottomConstraint)
         
@@ -816,13 +816,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.chooseCareersTitleView.translatesAutoresizingMaskIntoConstraints = false
     
-    let chooseCareersTitleViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let chooseCareersTitleViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let chooseCareersTitleViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let chooseCareersTitleViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let chooseCareersTitleViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let chooseCareersTitleViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let chooseCareersTitleViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: ((self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight)) * 2)/9)
+    let chooseCareersTitleViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersTitleView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: ((self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight)) * 2)/9)
     
     self.chooseCareersTitleView.addConstraint(chooseCareersTitleViewHeightConstraint)
     self.view.addConstraints([chooseCareersTitleViewTopConstraint, chooseCareersTitleViewLeftConstraint, chooseCareersTitleViewRightConstraint])
@@ -831,13 +831,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.currentCareerLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let currentCareerLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersTitleView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let currentCareerLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersTitleView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let currentCareerLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let currentCareerLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let currentCareerLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let currentCareerLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let currentCareerLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))/9)
+    let currentCareerLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.currentCareerLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))/9)
     
     self.currentCareerLabel.addConstraint(currentCareerLabelHeightConstraint)
     self.view.addConstraints([currentCareerLabelTopConstraint, currentCareerLabelLeftConstraint, currentCareerLabelRightConstraint])
@@ -846,13 +846,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.chooseCareersInfoLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let chooseCareersInfoLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let chooseCareersInfoLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let chooseCareersInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let chooseCareersInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let chooseCareersInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let chooseCareersInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let chooseCareersInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.chooseCareersInfoLabelHeight)
+    let chooseCareersInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.chooseCareersInfoLabelHeight)
     
     self.chooseCareersInfoLabel.addConstraint(chooseCareersInfoLabelHeightConstraint)
     self.view.addConstraints([chooseCareersInfoLabelBottomConstraint, chooseCareersInfoLabelLeftConstraint, chooseCareersInfoLabelRightConstraint])
@@ -861,38 +861,38 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.chooseCareersScrollView.translatesAutoresizingMaskIntoConstraints = false
     
-    let chooseCareersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let chooseCareersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let chooseCareersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let chooseCareersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let chooseCareersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let chooseCareersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let chooseCareersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.currentCareerLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let chooseCareersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareersScrollView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.currentCareerLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
     self.view.addConstraints([chooseCareersScrollViewLeftConstraint, chooseCareersScrollViewBottomConstraint, chooseCareersScrollViewRightConstraint, chooseCareersScrollViewTopConstraint])
     
     // Create and add constraints for each chooseCareerView and set content size for chooseCareersScrollView
     
-    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
+    for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       
       self.chooseCareerViews[index].translatesAutoresizingMaskIntoConstraints = false
       
-      let chooseCareerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+      let chooseCareerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
       
-      let chooseCareerViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+      let chooseCareerViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersInfoLabel, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
       
-      let chooseCareerViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
+      let chooseCareerViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
       
       if index == 0 {
         
-        let chooseCareerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let chooseCareerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
         
         self.view.addConstraint(chooseCareerViewLeftConstraint)
         
       }
       else {
         
-        let chooseCareerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareerViews[index - 1], attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let chooseCareerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareerViews[index - 1], attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         
         self.view.addConstraint(chooseCareerViewLeftConstraint)
         
@@ -903,7 +903,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       if index == self.chooseCareerViews.count - 1 {
         
-        let chooseCareersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.chooseCareersScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let chooseCareersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.chooseCareerViews[index], attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.chooseCareersScrollView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         
         self.view.addConstraint(chooseCareersScrollViewRightConstraint)
         
@@ -915,13 +915,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.tutorialView.translatesAutoresizingMaskIntoConstraints = false
     
-    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let tutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let tutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height)
+    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height)
     
-    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width)
+    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width)
     
     self.tutorialView.addConstraints([tutorialViewHeightConstraint, tutorialViewWidthConstraint])
     self.view.addConstraints([tutorialViewLeftConstraint, tutorialViewTopConstraint])
@@ -930,13 +930,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
     
-    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
     
-    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
     
-    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
     self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
     self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
@@ -945,7 +945,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   func showSettingsMenuView() {
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
       
       self.backButton.alpha = 1
       self.settingsMenuView.alpha = 1
@@ -957,7 +957,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
   }
     
-    func deactivateFB(sender:UIButton){
+    func deactivateFB(_ sender:UIButton){
         
         if sender == self.facebookLogoutButton {
             
@@ -984,7 +984,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }
 
-  func hideSettingsMenuView(sender:UIButton) {
+  func hideSettingsMenuView(_ sender:UIButton) {
     
     if sender.currentTitle == "Contact Us" {
         
@@ -992,7 +992,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }else if sender.currentTitle == "About" {
         
-      UIApplication.sharedApplication().openURL(NSURL(string: "http://www.appside.co.uk")!)
+      UIApplication.shared.openURL(URL(string: "http://www.appside.co.uk")!)
         
     }else if sender.currentTitle == "Refresh Job Deadlines" {
       
@@ -1035,7 +1035,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }else if sender.currentTitle == "Profile" {
         
-        self.performSegueWithIdentifier("goToProfilePage", sender: nil)
+        self.performSegue(withIdentifier: "goToProfilePage", sender: nil)
         
     }
     else if sender.currentTitle == "Log Out" {
@@ -1043,7 +1043,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     }
     else{
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
       
       self.chooseCareersView.alpha = 0
       self.backButton.alpha = 0
@@ -1054,13 +1054,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       }, completion: {(Bool) in
         
         if sender == self.backButton {
-          self.performSegueWithIdentifier("backFromEditProfile", sender: self.backButton)
+          self.performSegue(withIdentifier: "backFromEditProfile", sender: self.backButton)
         }
         else if sender == self.tutorialNextButton {
-          self.performSegueWithIdentifier("backFromEditProfile", sender: self.tutorialNextButton)
+          self.performSegue(withIdentifier: "backFromEditProfile", sender: self.tutorialNextButton)
         }
         else if sender.currentTitle == "Show Walkthrough" {
-          self.performSegueWithIdentifier("showTutorialFromSettings", sender: self.settingsButtons[0])
+          self.performSegue(withIdentifier: "showTutorialFromSettings", sender: self.settingsButtons[0])
         }
         else if sender == self.facebookLogoutButton {
             
@@ -1075,7 +1075,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     func conduit(){
         
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             
             self.chooseCareersView.alpha = 0
             self.backButton.alpha = 0
@@ -1090,10 +1090,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 })
     }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
     if segue.identifier == "backFromEditProfile" {
-      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      let destinationVC:HomeViewController = segue.destination as! HomeViewController
       destinationVC.segueFromLoginView = false
       if sender as! UIButton == self.tutorialNextButton {
         destinationVC.firstTimeUser = true
@@ -1103,7 +1103,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
   }
   
-  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     
     self.currentChooseCareersScrollViewPage = Int(self.chooseCareersScrollView.contentOffset.x / self.chooseCareersScrollView.frame.size.width)
     self.chooseCareersTitleView.careerSelectedLabel.text = self.careerTypes[self.currentChooseCareersScrollViewPage]
@@ -1136,16 +1136,16 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   
   func removeChosenCareer() {
     
-    self.chosenCareers.removeAtIndex(self.chosenCareers.indexOf(self.chooseCareersTitleView.careerSelectedLabel.text!)!)
+    self.chosenCareers.remove(at: self.chosenCareers.index(of: self.chooseCareersTitleView.careerSelectedLabel.text!)!)
     self.currentCareerLabel.text = "Career Unselected"
 
   }
   
-  func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+  func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     self.scrollViewDidEndDecelerating(scrollView)
   }
   
-  func nextCareerButtonClicked(sender:UIButton) {
+  func nextCareerButtonClicked(_ sender:UIButton) {
     
     if self.currentChooseCareersScrollViewPage < self.careerTypes.count - 1 {
       let nextCareerView:ChooseCareerView = self.chooseCareerViews[self.currentChooseCareersScrollViewPage + 1]
@@ -1154,7 +1154,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
   }
   
-  func previousCareerButtonClicked(sender:UIButton) {
+  func previousCareerButtonClicked(_ sender:UIButton) {
     
     if self.currentChooseCareersScrollViewPage > 0 {
       let previousCareerView:ChooseCareerView = self.chooseCareerViews[self.currentChooseCareersScrollViewPage - 1]
@@ -1168,7 +1168,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     let jobDeadlines:[[String:AnyObject]] = self.settingsModel.getJobDeadlines()
     var deadlines:[[String:AnyObject]] = [[String:AnyObject]]()
     
-    for index:Int in 0.stride(to: jobDeadlines.count, by: 1) {
+    for index:Int in stride(from: 0, to: jobDeadlines.count, by: 1) {
       if self.chosenCareers.contains(jobDeadlines[index]["career"] as! String) {
         deadlines.append(jobDeadlines[index])
       }
@@ -1179,7 +1179,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
   }
   
-  func logoutBtnPressed(sender: UIButton!){
+  func logoutBtnPressed(_ sender: UIButton!){
     
     let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
     let alertView = SCLAlertView(appearance: appearance)
@@ -1218,26 +1218,26 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     self.view.insertSubview(self.logoImageView, aboveSubview: self.tutorialView)
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
       
-      self.tutorialView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(1)
+      self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
       self.tutorialNextButton.alpha = 1
       self.view.layoutIfNeeded()
       
       }, completion: {(Bool) in
         
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
           self.descriptionLabelView.alpha = 0
           }, completion: {(Bool) in
             self.descriptionLabelView.removeFromSuperview()
-            for index:Int in 0.stride(to: self.tutorialViews.count, by: 1) {
+            for index:Int in stride(from: 0, to: self.tutorialViews.count, by: 1) {
               if index == self.tutorialPageNumber {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialNextButton)
-                self.tutorialViews[index].userInteractionEnabled = true
+                self.tutorialViews[index].isUserInteractionEnabled = true
               }
               else {
                 self.view.insertSubview(self.tutorialViews[index], belowSubview: self.tutorialView)
-                self.tutorialViews[index].userInteractionEnabled = false
+                self.tutorialViews[index].isUserInteractionEnabled = false
               }
             }
             if self.tutorialViews[self.tutorialPageNumber] == self.chooseCareersView {
@@ -1247,7 +1247,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 self.backButton.alpha = 0.0
             }
             self.updateDescriptionLabelView()
-            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
               self.descriptionLabelView.alpha = 1
               }, completion: nil)
             
@@ -1256,7 +1256,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
 
 }
   
-  func nextTutorialButtonClicked(sender:UIButton) {
+  func nextTutorialButtonClicked(_ sender:UIButton) {
     
     self.tutorialPageNumber += 1
     
@@ -1278,60 +1278,60 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     descriptionLabelView.translatesAutoresizingMaskIntoConstraints = false
     
-    let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let descriptionLabelViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
     if self.tutorialViews[self.tutorialPageNumber].frame.maxY < (self.screenFrame.height) {
-      let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 20)
+      let descriptionLabelViewTopConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 20)
       self.view.addConstraint(descriptionLabelViewTopConstraint)
     }
     else {
-      let descriptionLabelViewBottomConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.Top, multiplier: 1, constant: -20)
+      let descriptionLabelViewBottomConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.tutorialViews[self.tutorialPageNumber], attribute: NSLayoutAttribute.top, multiplier: 1, constant: -20)
       self.view.addConstraint(descriptionLabelViewBottomConstraint)
     }
     
-    let descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
+    let descriptionLabelViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.descriptionLabelView.heightForView(self.descriptionLabelView.descriptionLabel.text!, font: self.descriptionLabelView.descriptionLabel.font, width: self.screenFrame.width - (self.majorMargin * 2)) + 60)
     
-    let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
+    let descriptionLabelViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabelView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2))
     
     self.descriptionLabelView.addConstraints([descriptionLabelViewHeightConstraint, descriptionLabelViewWidthConstraint])
     self.view.addConstraints([descriptionLabelViewCenterXConstraint])
   }
   
-  func displayFinger(pointingLeft:Bool) {
+  func displayFinger(_ pointingLeft:Bool) {
     
-    self.tutorialFingerImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.tutorialFingerImageView.contentMode = UIViewContentMode.scaleAspectFit
     self.tutorialFingerImageView.alpha = 0
     self.view.addSubview(self.tutorialFingerImageView)
     
     tutorialFingerImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let tutorialFingerImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let tutorialFingerImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
     if pointingLeft {
       self.tutorialFingerImageView.image = UIImage.init(named: "fingerSideways")
-      let tutorialFingerImageViewLeftConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+      let tutorialFingerImageViewLeftConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.backButton, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
       self.view.addConstraint(tutorialFingerImageViewLeftConstraint)
     }
     else {
       let image:UIImage = UIImage.init(named: "fingerSideways")!
-      self.tutorialFingerImageView.image = UIImage.init(CGImage: image.CGImage!, scale: image.scale, orientation: UIImageOrientation.UpMirrored)
-      let tutorialFingerImageViewRightConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      self.tutorialFingerImageView.image = UIImage.init(cgImage: image.cgImage!, scale: image.scale, orientation: UIImageOrientation.upMirrored)
+      let tutorialFingerImageViewRightConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.backButton, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
       self.view.addConstraint(tutorialFingerImageViewRightConstraint)
     }
     
-    let tutorialFingerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let tutorialFingerImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let tutorialFingerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/6)
+    let tutorialFingerImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/6)
     
     self.tutorialFingerImageView.addConstraints([tutorialFingerImageViewHeightConstraint, tutorialFingerImageViewWidthConstraint])
     self.view.addConstraints([tutorialFingerImageViewTopConstraint])
     
   }
 
-    func sendEmailButtonTapped(sender: AnyObject) {
+    func sendEmailButtonTapped(_ sender: AnyObject) {
         let mailComposeViewController = configuredMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
-            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+            self.present(mailComposeViewController, animated: true, completion: nil)
         } else {
             let emailError = SCLAlertView()
             emailError.showError("Could Not Send Email", subTitle: "Try Again")
@@ -1349,8 +1349,8 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         return mailComposerVC
     }
 
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
         
     }
     
@@ -1374,9 +1374,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         self.conduitView.addSubview(self.tutoDescriptionTitle2)
         self.conduitView.addSubview(self.tutoDescriptionText2)
         self.conduitView.addSubview(self.tutoDescriptionSep)
-        self.tutoDescriptionSep.backgroundColor = UIColor.whiteColor()
+        self.tutoDescriptionSep.backgroundColor = UIColor.white
         self.conduitView.addSubview(self.tutoDescriptionSep2)
-        self.tutoDescriptionSep2.backgroundColor = UIColor.whiteColor()
+        self.tutoDescriptionSep2.backgroundColor = UIColor.white
         
         self.tutoView.setConstraintsToSuperview(0, bottom: 0, left: 0, right: 0)
         
@@ -1385,10 +1385,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //***************************
         
         self.conduitView.translatesAutoresizingMaskIntoConstraints = false
-        let conduitViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let conduitViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-        let conduitViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 300*self.heightRatio)
-        let conduitViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.view.frame.width - 100*self.widthRatio))
+        let conduitViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        let conduitViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutoDescription, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        let conduitViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 300*self.heightRatio)
+        let conduitViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.conduitView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.view.frame.width - 100*self.widthRatio))
         
         self.tutoDescription.addConstraints([conduitViewTop, conduitViewLeft])
         self.conduitView.addConstraints([conduitViewHeight, conduitViewWidth])
@@ -1399,14 +1399,14 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         self.tutoDescription.translatesAutoresizingMaskIntoConstraints = false
         self.tutoDescription.contentSize = CGSize(width: (self.view.frame.width - 40*self.widthRatio), height: 500)
-        let tutoDescriptionCenterY:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: (300/2-60)*self.heightRatio)
-        let tutoDescriptionLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 50*self.widthRatio)
-        let tutoDescriptionRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -50*self.widthRatio)
+        let tutoDescriptionCenterY:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: (300/2-60)*self.heightRatio)
+        let tutoDescriptionLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 50*self.widthRatio)
+        let tutoDescriptionRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: -50*self.widthRatio)
         
         self.tutoView.addConstraints([tutoDescriptionCenterY,tutoDescriptionLeft,tutoDescriptionRight])
         
-        let tutoDescriptionHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 300*self.heightRatio)
-        let tutoDescriptionWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.view.frame.width - 40*self.widthRatio))
+        let tutoDescriptionHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 300*self.heightRatio)
+        let tutoDescriptionWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescription, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.view.frame.width - 40*self.widthRatio))
         
         self.tutoDescription.addConstraints([tutoDescriptionHeight, tutoDescriptionWidth])
         self.tutoDescription.contentSize = CGSize(width: 300*self.heightRatio, height: self.view.frame.width - 40*self.widthRatio)
@@ -1416,11 +1416,11 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //***************************
         
         self.tutoNextButton.translatesAutoresizingMaskIntoConstraints = false
-        let tutoNextButtonBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -10*self.heightRatio)
-        let tutoNextButtonLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 40*self.widthRatio)
-        let tutoNextButtonRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: -40*self.widthRatio)
+        let tutoNextButtonBottom:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -10*self.heightRatio)
+        let tutoNextButtonLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 40*self.widthRatio)
+        let tutoNextButtonRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: -40*self.widthRatio)
         self.tutoView.addConstraints([tutoNextButtonBottom,tutoNextButtonLeft,tutoNextButtonRight])
-        let tutoNextButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 50*self.heightRatio)
+        let tutoNextButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoNextButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 50*self.heightRatio)
         self.tutoNextButton.addConstraint(tutoNextButtonHeight)
         
         //***************************
@@ -1428,11 +1428,11 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //***************************
         
         self.tutoSkipButton.translatesAutoresizingMaskIntoConstraints = false
-        let tutoSkipButtonTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.view.frame.width/12+50*self.heightRatio)
-        let tutoSkipButtonCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        let tutoSkipButtonTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.view.frame.width/12+50*self.heightRatio)
+        let tutoSkipButtonCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
         self.tutoView.addConstraints([tutoSkipButtonTop,tutoSkipButtonCenterX])
-        let tutoSkipButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20*self.heightRatio)
-        let tutoSkipButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 200*self.widthRatio)
+        let tutoSkipButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20*self.heightRatio)
+        let tutoSkipButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoSkipButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 200*self.widthRatio)
         self.tutoSkipButton.addConstraints([tutoSkipButtonHeight,tutoSkipButtonWidth])
         
         //***************************
@@ -1440,27 +1440,27 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //***************************
         
         self.tutoDescriptionTitle.translatesAutoresizingMaskIntoConstraints = false
-        let tutoDescriptionTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let tutoDescriptionTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-        let tutoDescriptionTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-        let tutoDescriptionTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+        let tutoDescriptionTitleLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        let tutoDescriptionTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        let tutoDescriptionTitleRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        let tutoDescriptionTitleHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
         
         self.conduitView.addConstraints([tutoDescriptionTitleTop, tutoDescriptionTitleLeft, tutoDescriptionTitleRight])
         self.tutoDescriptionTitle.addConstraints([tutoDescriptionTitleHeight])
         
         self.tutoDescriptionSep.translatesAutoresizingMaskIntoConstraints = false
-        let tutoDescriptionSepLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let tutoDescriptionSepTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        let tutoDescriptionSepRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let tutoDescriptionSepHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 3)
+        let tutoDescriptionSepLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        let tutoDescriptionSepTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutoDescriptionTitle, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+        let tutoDescriptionSepRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
+        let tutoDescriptionSepHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 3)
         
         self.conduitView.addConstraints([tutoDescriptionSepLeft, tutoDescriptionSepRight, tutoDescriptionSepTop])
         self.tutoDescriptionSep.addConstraints([tutoDescriptionSepHeight])
         
         self.tutoDescriptionText.translatesAutoresizingMaskIntoConstraints = false
-        let tutoDescriptionTextTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tutoDescriptionSep, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 10)
-        let tutoDescriptionTextLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let tutoDescriptionTextRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let tutoDescriptionTextTop:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: tutoDescriptionSep, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 10)
+        let tutoDescriptionTextLeft:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        let tutoDescriptionTextRight:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         
         self.conduitView.addConstraints([tutoDescriptionTextTop,tutoDescriptionTextLeft,tutoDescriptionTextRight])
         
@@ -1469,47 +1469,47 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //***************************
         
         self.tutoDescriptionTitle2.translatesAutoresizingMaskIntoConstraints = false
-        let tutoDescriptionTitle2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let tutoDescriptionTitle2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescriptionText, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 10)
-        let tutoDescriptionTitle2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-        let tutoDescriptionTitle2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+        let tutoDescriptionTitle2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        let tutoDescriptionTitle2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutoDescriptionText, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 10)
+        let tutoDescriptionTitle2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        let tutoDescriptionTitle2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
         
         self.conduitView.addConstraints([tutoDescriptionTitle2Top, tutoDescriptionTitle2Left, tutoDescriptionTitle2Right])
         self.tutoDescriptionTitle2.addConstraints([tutoDescriptionTitle2Height])
         
         self.tutoDescriptionSep2.translatesAutoresizingMaskIntoConstraints = false
-        let tutoDescriptionSep2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let tutoDescriptionSep2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-        let tutoDescriptionSep2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-        let tutoDescriptionSep2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 3)
+        let tutoDescriptionSep2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        let tutoDescriptionSep2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutoDescriptionTitle2, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+        let tutoDescriptionSep2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
+        let tutoDescriptionSep2Height:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionSep2, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 3)
         
         self.conduitView.addConstraints([tutoDescriptionSep2Left, tutoDescriptionSep2Right, tutoDescriptionSep2Top])
         self.tutoDescriptionSep2.addConstraints([tutoDescriptionSep2Height])
         
         self.tutoDescriptionText2.translatesAutoresizingMaskIntoConstraints = false
-        let tutoDescriptionText2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tutoDescriptionSep2, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 10)
-        let tutoDescriptionText2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-        let tutoDescriptionText2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.conduitView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let tutoDescriptionText2Top:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: tutoDescriptionSep2, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 10)
+        let tutoDescriptionText2Left:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        let tutoDescriptionText2Right:NSLayoutConstraint = NSLayoutConstraint(item: self.tutoDescriptionText2, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.conduitView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         
         self.conduitView.addConstraints([tutoDescriptionText2Top,tutoDescriptionText2Left,tutoDescriptionText2Right])
         
 
         self.logoImageViewMembership.translatesAutoresizingMaskIntoConstraints = false
-        let logoImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-        let logoImageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 25*self.heightRatio)
-        let logoImageViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width/12)
-        let logoImageViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width-40)
+        let logoImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+        let logoImageViewTop:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 25*self.heightRatio)
+        let logoImageViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.width/12)
+        let logoImageViewWidth:NSLayoutConstraint = NSLayoutConstraint(item: self.logoImageViewMembership, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.width-40)
         self.logoImageViewMembership.addConstraints([logoImageViewHeight, logoImageViewWidth])
         self.tutoView.addConstraints([logoImageViewCenterX, logoImageViewTop])
         
         //Finger ImageView
         self.tutorialFingerImageView.image = UIImage.init(named: "fingbutton")
-        self.tutorialFingerImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        self.tutorialFingerImageView.contentMode = UIViewContentMode.scaleAspectFit
         self.tutorialFingerImageView.translatesAutoresizingMaskIntoConstraints = false
-        let descriptionImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-        let descriptionImageViewCenterY:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.tutoView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: -self.view.frame.width/8-100*self.heightRatio)
-        let descriptionImageViewHeight:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width/4)
-        let descriptionImageViewWidth:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.width - 10*self.widthRatio)
+        let descriptionImageViewCenterX:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+        let descriptionImageViewCenterY:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.tutoView, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: -self.view.frame.width/8-100*self.heightRatio)
+        let descriptionImageViewHeight:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.width/4)
+        let descriptionImageViewWidth:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialFingerImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.width - 10*self.widthRatio)
         self.tutorialFingerImageView.addConstraints([descriptionImageViewHeight, descriptionImageViewWidth])
         self.tutoView.addConstraints([descriptionImageViewCenterX, descriptionImageViewCenterY])
         
@@ -1518,39 +1518,39 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(25))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
         attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(25))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
         self.logoImageViewMembership.attributedText = attributedString
         
         //Design
-        self.logoImageViewMembership.textAlignment = NSTextAlignment.Center
+        self.logoImageViewMembership.textAlignment = NSTextAlignment.center
         self.tutoView.backgroundColor = UIColor(white: 0.0, alpha: 0.9)
-        self.tutoDescriptionTitle.textColor = UIColor.whiteColor()
+        self.tutoDescriptionTitle.textColor = UIColor.white
         self.tutoDescriptionTitle.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
-        self.tutoDescriptionTitle.textAlignment = NSTextAlignment.Justified
+        self.tutoDescriptionTitle.textAlignment = NSTextAlignment.justified
         self.tutoDescriptionTitle.numberOfLines = 0
-        self.tutoDescriptionText.textColor = UIColor.whiteColor()
+        self.tutoDescriptionText.textColor = UIColor.white
         self.tutoDescriptionText.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
-        self.tutoDescriptionText.textAlignment = NSTextAlignment.Left
+        self.tutoDescriptionText.textAlignment = NSTextAlignment.left
         self.tutoDescriptionText.numberOfLines = 0
-        self.tutoDescriptionTitle2.textColor = UIColor.whiteColor()
+        self.tutoDescriptionTitle2.textColor = UIColor.white
         self.tutoDescriptionTitle2.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
-        self.tutoDescriptionTitle2.textAlignment = NSTextAlignment.Justified
+        self.tutoDescriptionTitle2.textAlignment = NSTextAlignment.justified
         self.tutoDescriptionTitle2.numberOfLines = 0
-        self.tutoDescriptionText2.textColor = UIColor.whiteColor()
+        self.tutoDescriptionText2.textColor = UIColor.white
         self.tutoDescriptionText2.font = UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(15))
-        self.tutoDescriptionText2.textAlignment = NSTextAlignment.Left
+        self.tutoDescriptionText2.textAlignment = NSTextAlignment.left
         self.tutoDescriptionText2.numberOfLines = 0
         self.tutoNextButton.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0)
-        self.tutoNextButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        self.tutoNextButton.setTitle("Close", forState: .Normal)
+        self.tutoNextButton.setTitleColor(UIColor.white, for: UIControlState())
+        self.tutoNextButton.setTitle("Close", for: UIControlState())
         self.tutoNextButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(15))
-        self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        self.tutoNextButton.titleLabel?.textAlignment = NSTextAlignment.center
         let tutoNextButtonTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.tutoNext))
         self.tutoNextButton.addGestureRecognizer(tutoNextButtonTap)
-        self.tutoSkipButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        self.tutoSkipButton.setTitle(self.defaults.objectForKey("Membership") as? String, forState: .Normal)
+        self.tutoSkipButton.setTitleColor(UIColor.white, for: UIControlState())
+        self.tutoSkipButton.setTitle(self.defaults.object(forKey: "Membership") as? String, for: UIControlState())
         self.tutoSkipButton.titleLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.view.getTextSize(20))
-        self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        self.tutoSkipButton.titleLabel?.textAlignment = NSTextAlignment.center
         
         //Set tutorial text
         self.tutoDescriptionTitle.text = "Free Subscription:"

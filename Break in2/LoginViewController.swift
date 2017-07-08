@@ -54,15 +54,15 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     var PdeclinedPerm:AnyObject?
     var PappId:String = ""
     var PuserId:String = ""
-    var Pexpiration:NSDate?
-    var Prefresh:NSDate?
+    var Pexpiration:Date?
+    var Prefresh:Date?
     
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
   
   // Declare and initialize design constants
   
-  let screenFrame:CGRect = UIScreen.mainScreen().bounds
-  let statusBarFrame:CGRect = UIApplication.sharedApplication().statusBarFrame
+  let screenFrame:CGRect = UIScreen.main.bounds
+  let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
   
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
@@ -95,31 +95,31 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     // Customize and add content to imageViews
     
-    self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
     let labelString:String = String("BREAKIN2")
     let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
     self.logoImageView.attributedText = attributedString
     
-    self.profilePictureImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.profilePictureImageView.contentMode = UIViewContentMode.scaleAspectFit
     self.profilePictureImageView.image = UIImage.init(named: "planeLogo")
     
-    self.sloganImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.sloganImageView.contentMode = UIViewContentMode.scaleAspectFit
     self.sloganImageView.image = UIImage.init(named: "asSlogan")
     
     // Customize loginView and it's subviews
     
     self.loginView.layer.cornerRadius = self.minorMargin
-    self.loginView.backgroundColor = UIColor.whiteColor()
+    self.loginView.backgroundColor = UIColor.white
     
     self.facebookLoginButton.facebookButtonTitle = "Login With Facebook"
     self.facebookLoginButton.displayButton()
     
     // Add target for facebookLoginButton
     
-    self.facebookLoginButton.addTarget(self, action: #selector(LoginViewController.hideLoginView), forControlEvents: UIControlEvents.TouchUpInside)
+    self.facebookLoginButton.addTarget(self, action: #selector(LoginViewController.hideLoginView), for: UIControlEvents.touchUpInside)
     
     // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
     
@@ -151,7 +151,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
    // VIEW DID APPEAR
    //---------------------------------------------------------------
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     //self.profilePictureImageViewCenterYConstraint.constant = (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2
@@ -168,7 +168,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   // TAP FACEBOOK BUTTON
   //---------------------------------------------------------------
   
-    func buttonFBTapped(sender: AnyObject) {
+    func buttonFBTapped(_ sender: AnyObject) {
         
         //self.pleaseWait()
         SwiftSpinner.show("Logging in...")
@@ -187,25 +187,25 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             let arr2 = set2.allObjects
             
             let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
-            PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
+            PFFacebookUtils.logInInBackground(with: token!, block: {(user: PFUser?, error: NSError?) -> Void in
                 
                 if user != nil {
                     
                     let membership = user![PF_USER_MEMBERSHIP] as! String
                     
                     print(membership)
-                    self.defaults.setObject(membership, forKey: "Membership")
+                    self.defaults.set(membership, forKey: "Membership")
                     
-                    self.defaults.setObject(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
-                    self.defaults.setObject(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
-                    self.defaults.setObject(user![PF_USER_EMAILCOPY] as! String, forKey: "profileEmail")
-                    self.defaults.setObject(user![PF_USER_PHONE] as! String, forKey: "profilePhone")
-                    self.defaults.setObject(user![PF_USER_UNIVERSITY] as! String, forKey: "profileUniversity")
-                    self.defaults.setObject(user![PF_USER_COURSE] as! String, forKey: "profileCourse")
-                    self.defaults.setObject(user![PF_USER_DEGREE] as! String, forKey: "profileDegree")
-                    self.defaults.setObject(user![PF_USER_POSITION] as! String, forKey: "profilePosition")
-                    self.defaults.setObject(user![PF_USER_SHARE_INFO_ALLOWED], forKey: "shareInfoAllowed")
-                    self.defaults.setObject(user![PF_USER_RECOMMENDED_BY], forKey: "recommendedBy")
+                    self.defaults.set(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
+                    self.defaults.set(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
+                    self.defaults.set(user![PF_USER_EMAILCOPY] as! String, forKey: "profileEmail")
+                    self.defaults.set(user![PF_USER_PHONE] as! String, forKey: "profilePhone")
+                    self.defaults.set(user![PF_USER_UNIVERSITY] as! String, forKey: "profileUniversity")
+                    self.defaults.set(user![PF_USER_COURSE] as! String, forKey: "profileCourse")
+                    self.defaults.set(user![PF_USER_DEGREE] as! String, forKey: "profileDegree")
+                    self.defaults.set(user![PF_USER_POSITION] as! String, forKey: "profilePosition")
+                    self.defaults.set(user![PF_USER_SHARE_INFO_ALLOWED], forKey: "shareInfoAllowed")
+                    self.defaults.set(user![PF_USER_RECOMMENDED_BY], forKey: "recommendedBy")
                     
                 SwiftSpinner.hide()
                 self.userLoggedIn((user)!)
@@ -216,11 +216,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     
                 }
                 
-            })
+            } as! PFUserResultBlock)
         }else{
             
             SwiftSpinner.hide()
-            PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
+            PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
                 
                 //self.clearAllNotice()
                 SwiftSpinner.show("Creating profile...")
@@ -247,7 +247,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                         
                         }, subtitle: "Please try again. Tap to dismiss")
                 }
-            })
+            } as! PFUserResultBlock)
             
         }
         
@@ -258,14 +258,14 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     //---------------------------------------------------------------
 
     
-  func startFB(user: PFUser){
+  func startFB(_ user: PFUser){
     
     let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
     
-    fbLoginManager.logInWithReadPermissions(["public_profile", "email", "user_friends"], fromViewController: self.parentViewController, handler: { (result, error) -> Void in
+    fbLoginManager.logIn(withReadPermissions: ["public_profile", "email", "user_friends"], from: self.parent, handler: { (result, error) -> Void in
       
       if (error == nil){
-        let fbloginresult:FBSDKLoginManagerLoginResult = result
+        let fbloginresult:FBSDKLoginManagerLoginResult = result!
         if(fbloginresult.grantedPermissions.contains("email")){
           self.getFBUserData(user)
           fbLoginManager.logOut()
@@ -281,9 +281,9 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
   }
   
-    func saveToCoreData(t: String, p: AnyObject, dP: AnyObject, aI:String, uI: String, ex: NSDate, r: NSDate) {
+    func saveToCoreData(_ t: String, p: AnyObject, dP: AnyObject, aI:String, uI: String, ex: Date, r: Date) {
     
-        let entity = NSEntityDescription.insertNewObjectForEntityForName("Person", inManagedObjectContext: moc) as! Person
+        let entity = NSEntityDescription.insertNewObject(forEntityName: "Person", into: moc) as! Person
         entity.setValue(t, forKey: "token")
         entity.setValue(p, forKey: "permissions")
         entity.setValue(dP, forKey: "declinedPermissions")
@@ -305,22 +305,22 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     func fetchLoginCreds() {
         
-        let PersonFetch = NSFetchRequest(entityName: "Person")
+        let PersonFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
         
         do {
-            let fetchedPerson = try moc.executeFetchRequest(PersonFetch)
+            let fetchedPerson = try moc.fetch(PersonFetch)
             
             if fetchedPerson.count > 0 {
                 
                 for item in fetchedPerson as! [NSManagedObject]{
                     
-                    Ptoken = item.valueForKey("token") as! String
-                    Ppermissions = item.valueForKey("permissions") as AnyObject!
-                    PdeclinedPerm = item.valueForKey("declinedPermissions") as AnyObject!
-                    PappId = item.valueForKey("appID") as! String
-                    PuserId = item.valueForKey("userID") as! String
-                    Pexpiration = (item.valueForKey("expirationDate") as! NSDate)
-                    Prefresh = (item.valueForKey("refreshDate") as! NSDate)
+                    Ptoken = item.value(forKey: "token") as! String
+                    Ppermissions = item.value(forKey: "permissions") as AnyObject!
+                    PdeclinedPerm = item.value(forKey: "declinedPermissions") as AnyObject!
+                    PappId = item.value(forKey: "appID") as! String
+                    PuserId = item.value(forKey: "userID") as! String
+                    Pexpiration = (item.value(forKey: "expirationDate") as! Date)
+                    Prefresh = (item.value(forKey: "refreshDate") as! Date)
                 }
                 
             }
@@ -338,51 +338,51 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     // FIRST LOGIN TO APP
     //---------------------------------------------------------------
 
-    func getFBUserData(user: PFUser){
-        if((FBSDKAccessToken.currentAccessToken()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+    func getFBUserData(_ user: PFUser){
+        if((FBSDKAccessToken.current()) != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
                 if (error == nil){
                     
                     if user.isNew{
                     
                     let userData = result as! [String: AnyObject]!
-                        let declinedPerm = FBSDKAccessToken.currentAccessToken().declinedPermissions
+                        let declinedPerm = FBSDKAccessToken.current().declinedPermissions
                         print(declinedPerm)
                         
-                        if declinedPerm.contains("email"){
+                        if (declinedPerm?.contains("email"))!{
                             
                         }else{
                             
-                            user[PF_USER_EMAILCOPY] = userData["email"]
-                            self.defaults.setObject(userData["email"], forKey: "profileEmail")
+                            user[PF_USER_EMAILCOPY] = userData?["email"]
+                            self.defaults.set(userData?["email"], forKey: "profileEmail")
                             
                         }
                         
                     
-                    user[PF_USER_FULLNAME] = userData["name"]
-                    user[PF_USER_FULLNAME_LOWER] = (userData["name"] as! String).lowercaseString
-                    user[PF_USER_FIRST_NAME] = userData["first_name"]
-                    user[PF_USER_SURNAME] = userData["last_name"]
-                    user[PF_USER_FACEBOOKID] = userData["id"]
+                    user[PF_USER_FULLNAME] = userData?["name"]
+                    user[PF_USER_FULLNAME_LOWER] = (userData?["name"] as! String).lowercased()
+                    user[PF_USER_FIRST_NAME] = userData?["first_name"]
+                    user[PF_USER_SURNAME] = userData?["last_name"]
+                    user[PF_USER_FACEBOOKID] = userData?["id"]
                     user[PF_USER_MEMBERSHIP] = "Free"
                     user[PF_USER_NUMBER_LIVES] = self.setNumberOfLivesFree
                     
-                    self.defaults.setObject("Free", forKey: "Membership")
-                    self.defaults.setObject(userData["first_name"], forKey: "profileFirstName")
-                    self.defaults.setObject(userData["last_name"], forKey: "profileLastName")
-                    self.defaults.setInteger(self.setNumberOfLivesFree, forKey: "Lives")
+                    self.defaults.set("Free", forKey: "Membership")
+                    self.defaults.set(userData?["first_name"], forKey: "profileFirstName")
+                    self.defaults.set(userData?["last_name"], forKey: "profileLastName")
+                    self.defaults.set(self.setNumberOfLivesFree, forKey: "Lives")
                     
-                    let token = FBSDKAccessToken.currentAccessToken().tokenString
-                    let permissions = FBSDKAccessToken.currentAccessToken().permissions
-                    let appId = FBSDKAccessToken.currentAccessToken().appID
-                    let userId = FBSDKAccessToken.currentAccessToken().userID
-                    let expiration = FBSDKAccessToken.currentAccessToken().expirationDate
-                    let refresh = FBSDKAccessToken.currentAccessToken().refreshDate
+                    let token = FBSDKAccessToken.current().tokenString
+                    let permissions = FBSDKAccessToken.current().permissions
+                    let appId = FBSDKAccessToken.current().appID
+                    let userId = FBSDKAccessToken.current().userID
+                    let expiration = FBSDKAccessToken.current().expirationDate
+                    let refresh = FBSDKAccessToken.current().refreshDate
                     
                     
-                    self.saveToCoreData(token, p: permissions, dP: declinedPerm, aI: appId, uI: userId, ex: expiration, r: refresh)
+                    self.saveToCoreData(token!, p: permissions as AnyObject, dP: declinedPerm as AnyObject, aI: appId!, uI: userId!, ex: expiration!, r: refresh!)
                     
-                    user.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                    user.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
                           
                             self.createCareerPrefs(user)
@@ -399,18 +399,18 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                             }
                         }
                       
-                    })
+                    } as! PFBooleanResultBlock)
                     }else{
                         
-                        let token = FBSDKAccessToken.currentAccessToken().tokenString
-                        let permissions = FBSDKAccessToken.currentAccessToken().permissions
-                        let declinedPerm = FBSDKAccessToken.currentAccessToken().declinedPermissions
-                        let appId = FBSDKAccessToken.currentAccessToken().appID
-                        let userId = FBSDKAccessToken.currentAccessToken().userID
-                        let expiration = FBSDKAccessToken.currentAccessToken().expirationDate
-                        let refresh = FBSDKAccessToken.currentAccessToken().refreshDate
+                        let token = FBSDKAccessToken.current().tokenString
+                        let permissions = FBSDKAccessToken.current().permissions
+                        let declinedPerm = FBSDKAccessToken.current().declinedPermissions
+                        let appId = FBSDKAccessToken.current().appID
+                        let userId = FBSDKAccessToken.current().userID
+                        let expiration = FBSDKAccessToken.current().expirationDate
+                        let refresh = FBSDKAccessToken.current().refreshDate
                         
-                        self.saveToCoreData(token, p: permissions, dP: declinedPerm, aI: appId, uI: userId, ex: expiration, r: refresh)
+                        self.saveToCoreData(token!, p: permissions as AnyObject, dP: declinedPerm as AnyObject, aI: appId!, uI: userId!, ex: expiration!, r: refresh!)
                         
                         self.fetchLoginCreds()
                         
@@ -422,7 +422,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                             let arr2 = set2.allObjects
                             
                             let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
-                            PFFacebookUtils.logInInBackgroundWithAccessToken(token, block: {(user: PFUser?, error: NSError?) -> Void in
+                            PFFacebookUtils.logInInBackground(with: token!, block: {(user: PFUser?, error: NSError?) -> Void in
                                 
                                 if user != nil {
                                     
@@ -430,16 +430,16 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                     
                                     if membership == "Free" {
                                         
-                                        self.defaults.setInteger(self.setNumberOfLivesFree, forKey: "Lives")
+                                        self.defaults.set(self.setNumberOfLivesFree, forKey: "Lives")
                                         
                                     }
                                     
-                                    self.defaults.setObject(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
-                                    self.defaults.setObject(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
-                                    self.defaults.setObject(user![PF_USER_EMAIL] as! String, forKey: "profileEmail")
+                                    self.defaults.set(user![PF_USER_FIRST_NAME] as! String, forKey: "profileFirstName")
+                                    self.defaults.set(user![PF_USER_SURNAME] as! String, forKey: "profileLastName")
+                                    self.defaults.set(user![PF_USER_EMAIL] as! String, forKey: "profileEmail")
                                     
                                     print(membership)
-                                    self.defaults.setObject(membership, forKey: "Membership")
+                                    self.defaults.set(membership, forKey: "Membership")
                                     
                                     SwiftSpinner.hide()
                                     self.userLoggedIn((user)!)
@@ -450,7 +450,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                     
                                 }
                                 
-                            })
+                            } as! PFUserResultBlock)
                         }else{
                             //error handle if nothing happens when device change
                         }
@@ -465,7 +465,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     // CREATE ARRAY IN PARSE
     //---------------------------------------------------------------
   
-    func createCareerPrefs(user: PFUser){
+    func createCareerPrefs(_ user: PFUser){
       
         //let user = PFUser.currentUser()
         let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
@@ -473,7 +473,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.loginViewModel.getAppVariables("careerTypes") as! [String]
         careerPrefs[PF_PREFERENCES_USERNAME] = user[PF_USER_USERNAME]
         
-        careerPrefs.saveInBackgroundWithBlock({ (succeeded, error: NSError?) -> Void in
+        careerPrefs.saveInBackground(block: { (succeeded, error: NSError?) -> Void in
             if error == nil {
                 
                 SwiftSpinner.hide()
@@ -497,16 +497,16 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     // USER LOGGED IN
     //---------------------------------------------------------------
   
-  func userLoggedIn(user: PFUser) {
+  func userLoggedIn(_ user: PFUser) {
     //let storyboard = UIStoryboard(name: "Main", bundle: nil)
     if self.firstTimeUser {
       
       //self.loginViewModel.updateQuestions()
       
-      performSegueWithIdentifier("showTutorial", sender: self)
+      performSegue(withIdentifier: "showTutorial", sender: self)
     }
     else {
-      performSegueWithIdentifier("userLoggedOn", sender: self)
+      performSegue(withIdentifier: "userLoggedOn", sender: self)
     }
     //let homeVC = storyboard.instantiateViewControllerWithIdentifier("homeVC") as! HomeViewController
     //presentViewController(homeVC, animated: false, completion: nil)
@@ -524,13 +524,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    let logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
     
-    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
     self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewBottomConstraint])
@@ -539,13 +539,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
-    self.profilePictureImageViewCenterYConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
+    self.profilePictureImageViewCenterYConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: (self.screenFrame.height - (self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
     
-    let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.profilePictureImageView.addConstraints([profilePictureImageViewWidthConstraint, profilePictureImageViewHeightConstraint])
     self.view.addConstraints([profilePictureImageViewCenterXConstraint, self.profilePictureImageViewCenterYConstraint])
@@ -554,13 +554,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.loginView.translatesAutoresizingMaskIntoConstraints = false
     
-    self.loginViewHeightConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight + (self.minorMargin * 3))
+    self.loginViewHeightConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.buttonHeight + (self.minorMargin * 3))
     
-    let loginViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let loginViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let loginViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let loginViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.loginViewBottomConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.buttonHeight + (self.minorMargin * 3))
+    self.loginViewBottomConstraint = NSLayoutConstraint.init(item: self.loginView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.buttonHeight + (self.minorMargin * 3))
     
     self.loginView.addConstraint(self.loginViewHeightConstraint)
     self.view.addConstraints([loginViewLeftConstraint, loginViewRightConstraint, self.loginViewBottomConstraint])
@@ -569,13 +569,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.facebookLoginButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let facebookLoginButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.buttonHeight)
+    let facebookLoginButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.buttonHeight)
     
-    let facebookLoginButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let facebookLoginButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.loginView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let facebookLoginButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let facebookLoginButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.loginView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let facebookLoginButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.loginView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+    let facebookLoginButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.facebookLoginButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.loginView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
     
     self.facebookLoginButton.addConstraint(facebookLoginButtonHeightConstraint)
     self.view.addConstraints([facebookLoginButtonLeftConstraint, facebookLoginButtonRightConstraint, facebookLoginButtonBottomConstraint])
@@ -584,13 +584,13 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
     
     self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
     self.view.addConstraints([sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
@@ -599,7 +599,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   func showLoginView() {
     
-    UIView.animateWithDuration(0.5, delay: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0.5, options: UIViewAnimationOptions.curveEaseOut, animations: {
       
       self.loginViewBottomConstraint.constant = self.minorMargin
       self.view.layoutIfNeeded()
@@ -610,7 +610,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
   
   func hideLoginView() {
       
-      UIView.animateWithDuration(1, animations: {
+      UIView.animate(withDuration: 1, animations: {
         
         if self.loginTutorialViewVisible {
           
@@ -624,7 +624,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         
         }, completion: {(Bool) in
       
-          UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+          UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             
             self.loginViewBottomConstraint.constant = self.loginPageControllerViewHeight + self.buttonHeight + (self.minorMargin * 3)
             self.view.layoutIfNeeded()

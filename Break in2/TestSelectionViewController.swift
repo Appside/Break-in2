@@ -22,8 +22,8 @@ import Parse
 class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
   
   // Timer stuff
-  let defaults = NSUserDefaults.standardUserDefaults()
-  var timer = NSTimer()
+  let defaults = UserDefaults.standard
+  var timer = Timer()
   var numberOfTestsTotal:Int = Int()
   var membershipType:String = String()
   var maxNumberOfTests:Int = 3
@@ -61,7 +61,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   var testPageControllerView:PageControllerView = PageControllerView()
   let testScrollView:UIScrollView = UIScrollView()
   var testTypeViews:[TestTypeView] = [TestTypeView]()
-  let testStartButton:UIButton = UIButton(type: UIButtonType.System)
+  let testStartButton:UIButton = UIButton(type: UIButtonType.system)
   var backButton:UIButton = UIButton()
   let swipeInfoLabel:UILabel = UILabel()
   var testsTotal:UIButton = UIButton()
@@ -85,20 +85,20 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   
   // Declare and initialize design constants
   
-  let screenFrame:CGRect = UIScreen.mainScreen().bounds
-  let statusBarFrame:CGRect = UIApplication.sharedApplication().statusBarFrame
+  let screenFrame:CGRect = UIScreen.main.bounds
+  let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
   
   let mainLineColor:UIColor = UIColor.turquoiseColor()
-  let mainBackgroundColor:UIColor = UIColor.whiteColor()
+  let mainBackgroundColor:UIColor = UIColor.white
   let secondaryBackgroundColor:UIColor = UIColor.turquoiseColor()
   
   let majorMargin:CGFloat = 20
   let minorMargin:CGFloat = 10
   
-  let testPageControllerViewHeight:CGFloat = UIScreen.mainScreen().bounds.height/16
+  let testPageControllerViewHeight:CGFloat = UIScreen.main.bounds.height/16
   
   var menuButtonHeight:CGFloat = 50
-  let backButtonHeight:CGFloat = UIScreen.mainScreen().bounds.width/12
+  let backButtonHeight:CGFloat = UIScreen.main.bounds.width/12
   var testSelectionBackgroundViewHeight:CGFloat = 300
   var textSize:CGFloat = 15
 
@@ -181,7 +181,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
       if self.testTypes[index] == "Help Us Add More Tests:" {
         var testDifficultiesArray:[String] = [String]()
         for comingSoonTestType in self.comingSoonTestTypes {
-          let firstChar:String = String(comingSoonTestType[comingSoonTestType.startIndex.advancedBy(0)])
+          let firstChar:String = String(comingSoonTestType[comingSoonTestType.characters.index(comingSoonTestType.startIndex, offsetBy: 0)])
           testDifficultiesArray.append(firstChar)
         }
         testTypeViewAtIndex.testDifficulties = testDifficultiesArray
@@ -230,7 +230,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     // Adjust testScrollView characteristics
     
-    self.testScrollView.pagingEnabled = true
+    self.testScrollView.isPagingEnabled = true
     self.testScrollView.showsHorizontalScrollIndicator = false
     
     self.testScrollView.delegate = self
@@ -245,7 +245,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.testSelectionView.layer.cornerRadius = self.minorMargin
     self.testSelectionView.alpha = 0
     
-    self.testLivesBackgroundView.backgroundColor = UIColor.whiteColor()
+    self.testLivesBackgroundView.backgroundColor = UIColor.white
     self.testLivesBackgroundView.layer.cornerRadius = self.minorMargin
     self.testLivesBackgroundView.clipsToBounds = true
     self.testLivesBackgroundView.alpha = 0
@@ -253,33 +253,33 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     // Adjust testStartButton, backButton and testLivesUpgradeButtons appearances
     
     self.testStartButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
-    self.testStartButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.testStartButton.setTitle("Start Test", for: UIControlState())
+    self.testStartButton.setTitleColor(UIColor.white, for: UIControlState())
     self.testStartButton.backgroundColor = UIColor.turquoiseColor()
-    self.testStartButton.addTarget(self, action: #selector(TestSelectionViewController.hideTestSelectionView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.testStartButton.addTarget(self, action: #selector(TestSelectionViewController.hideTestSelectionView(_:)), for: UIControlEvents.touchUpInside)
     
-    self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-    self.backButton.addTarget(self, action: #selector(TestSelectionViewController.hideTestSelectionView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.backButton.setImage(UIImage.init(named: "back")!, for: UIControlState())
+    self.backButton.addTarget(self, action: #selector(TestSelectionViewController.hideTestSelectionView(_:)), for: UIControlEvents.touchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
     
     self.testLivesUpgradeButton1.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.testLivesUpgradeButton1.setTitle("Buy \(self.noAddtlLives) Lives", forState: UIControlState.Normal)
-    self.testLivesUpgradeButton1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.testLivesUpgradeButton1.setTitle("Buy \(self.noAddtlLives) Lives", for: UIControlState())
+    self.testLivesUpgradeButton1.setTitleColor(UIColor.white, for: UIControlState())
     self.testLivesUpgradeButton1.backgroundColor = UIColor.turquoiseColor()
-    self.testLivesUpgradeButton1.addTarget(self, action: #selector(TestSelectionViewController.addLives(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.testLivesUpgradeButton1.addTarget(self, action: #selector(TestSelectionViewController.addLives(_:)), for: UIControlEvents.touchUpInside)
     
     self.testLivesUpgradeButton2.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.testLivesUpgradeButton2.setTitle("Buy Unlimited Lives", forState: UIControlState.Normal)
-    self.testLivesUpgradeButton2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    self.testLivesUpgradeButton2.setTitle("Buy Unlimited Lives", for: UIControlState())
+    self.testLivesUpgradeButton2.setTitleColor(UIColor.white, for: UIControlState())
     self.testLivesUpgradeButton2.backgroundColor = UIColor.turquoiseColor()
-    self.testLivesUpgradeButton2.addTarget(self, action: #selector(TestSelectionViewController.unlimitedLivesTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.testLivesUpgradeButton2.addTarget(self, action: #selector(TestSelectionViewController.unlimitedLivesTapped(_:)), for: UIControlEvents.touchUpInside)
     
     //********************************************************************
     //NUMBER 1: CHECK MEMBERSHIP TYPE
     //********************************************************************
     
-    membershipType = defaults.objectForKey("Membership") as! String
+    membershipType = defaults.object(forKey: "Membership") as! String
     
     if (membershipType == "Premium") {
         
@@ -296,38 +296,38 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         //********************************************************************
         
         freeConduit()
-        let date = NSDate().dateByAddingTimeInterval(0)
-        timer = NSTimer(fireDate: date, interval: 1, target: self, selector: #selector(TestSelectionViewController.freeConduit), userInfo: nil, repeats: true)
-        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+        let date = Date().addingTimeInterval(0)
+        timer = Timer(fireAt: date, interval: 1, target: self, selector: #selector(TestSelectionViewController.freeConduit), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
         
     }
     
-    self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+    self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
     let labelString:String = String("BREAKIN2")
     let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
     attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
     self.logoImageView.attributedText = attributedString
     
     // Adjust swipeInfoLabel, testLivesTitleLabel and testLivesSubtitleLabel appearance
     
     self.swipeInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.swipeInfoLabel.textAlignment = NSTextAlignment.Center
-    self.swipeInfoLabel.textColor = UIColor.lightGrayColor()
+    self.swipeInfoLabel.textAlignment = NSTextAlignment.center
+    self.swipeInfoLabel.textColor = UIColor.lightGray
     self.swipeInfoLabel.text = "Swipe For More Tests"
     
     let textSize2:CGFloat = self.view.getTextSize(18)
-    self.testLivesTitleLabel.textAlignment = NSTextAlignment.Center
+    self.testLivesTitleLabel.textAlignment = NSTextAlignment.center
     self.testLivesTitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
     self.testLivesTitleLabel.text = "TIME TO NEXT FREE LIFE:"
     
     self.testLivesSubtitleLabel.backgroundColor = UIColor.turquoiseColor()
-    self.testLivesSubtitleLabel.textAlignment = NSTextAlignment.Center
+    self.testLivesSubtitleLabel.textAlignment = NSTextAlignment.center
     self.testLivesSubtitleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
-    self.testLivesSubtitleLabel.textColor = UIColor.whiteColor()
+    self.testLivesSubtitleLabel.textColor = UIColor.white
     
-    self.testLivesInfoLabel.textAlignment = NSTextAlignment.Center
+    self.testLivesInfoLabel.textAlignment = NSTextAlignment.center
     self.testLivesInfoLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
     
     // Display each testTypeView
@@ -340,7 +340,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     // Show Test Selection screen with animation
@@ -360,9 +360,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     func freeConduit(){
         
-        self.numberOfTestsTotal = defaults.integerForKey("Lives")
-        self.testsTotal.addTarget(self, action: #selector(TestSelectionViewController.showTestLives(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        self.testsTotal.setTitle(String(self.numberOfTestsTotal), forState: UIControlState.Normal)
+        self.numberOfTestsTotal = defaults.integer(forKey: "Lives")
+        self.testsTotal.addTarget(self, action: #selector(TestSelectionViewController.showTestLives(_:)), for: UIControlEvents.touchUpInside)
+        self.testsTotal.setTitle(String(self.numberOfTestsTotal), for: UIControlState())
         
         if self.numberOfTestsTotal == 1 {
             lifeOrLives = "life"
@@ -374,7 +374,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         self.testsTotal.clipsToBounds = true
         self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
         self.testsTotal.layer.borderWidth = 2
-        self.testsTotal.layer.borderColor = UIColor.whiteColor().CGColor
+        self.testsTotal.layer.borderColor = UIColor.white.cgColor
         
         //********************************************************************
         //NUMBER 3B: IF NUMBER OF LIVES IS LESS THAN MAX, CHECK HOW MANY...
@@ -398,11 +398,11 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     func paidConduit(){
         
-        self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
+        self.testsTotal.setTitle("∞", for: UIControlState())
         self.testsTotal.clipsToBounds = true
         self.testsTotal.layer.cornerRadius = self.screenFrame.width/24
         self.testsTotal.layer.borderWidth = 2
-        self.testsTotal.layer.borderColor = UIColor.whiteColor().CGColor
+        self.testsTotal.layer.borderColor = UIColor.white.cgColor
         
     }
     
@@ -413,7 +413,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     func checkLives(){
         
         startTime = CFAbsoluteTimeGetCurrent()
-        let initialTime: CFAbsoluteTime = defaults.objectForKey("LivesTimer") as! CFAbsoluteTime
+        let initialTime: CFAbsoluteTime = defaults.object(forKey: "LivesTimer") as! CFAbsoluteTime
         let diff = startTime - initialTime
         let timeBetweenLives = Double(self.secondsBetweenLives)
         var numberToAdd = floor(diff / timeBetweenLives)
@@ -429,8 +429,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         if numberToAdd > 0 && self.numberOfTestsTotal < self.maxNumberOfTests {
             
             self.numberOfTestsTotal = min(newLives, 3)
-            self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
-            self.testsTotal.setTitle(String(self.numberOfTestsTotal), forState: UIControlState.Normal)
+            self.defaults.set(self.numberOfTestsTotal, forKey: "Lives")
+            self.testsTotal.setTitle(String(self.numberOfTestsTotal), for: UIControlState())
             
             if self.numberOfTestsTotal == 1 {
                 lifeOrLives = "life"
@@ -443,7 +443,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
             numberToAdd = 0
             let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
-            self.defaults.setObject(now, forKey: "LivesTimer")
+            self.defaults.set(now, forKey: "LivesTimer")
             
             if self.numberOfTestsTotal == self.maxNumberOfTests {
                 
@@ -503,13 +503,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
     
     self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
     self.view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
@@ -518,13 +518,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testSelectionView.translatesAutoresizingMaskIntoConstraints = false
     
-    self.testSelectionViewBottomConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: /*self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7)*/ self.minorMargin)
+    self.testSelectionViewBottomConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: /*self.testPageControllerViewHeight + self.testTypeTitleLabelHeight + self.testTypeTimeLabelHeight + self.testTypeDifficultyViewHeight + (self.menuButtonHeight * 1.5) + (self.minorMargin * 7)*/ self.minorMargin)
     
-    let testSelectionViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let testSelectionViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let testSelectionViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let testSelectionViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    self.testSelectionViewHeightConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.testSelectionBackgroundViewHeight + self.minorMargin) + self.minorMargin)
+    self.testSelectionViewHeightConstraint = NSLayoutConstraint.init(item: self.testSelectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.testSelectionBackgroundViewHeight + self.minorMargin) + self.minorMargin)
     
     self.testSelectionView.addConstraint(self.testSelectionViewHeightConstraint)
     self.view.addConstraints([self.testSelectionViewBottomConstraint, testSelectionViewLeftConstraint, testSelectionViewRightConstraint])
@@ -533,13 +533,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.swipeInfoLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let swipeInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin)
+    let swipeInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
     
-    let swipeInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let swipeInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let swipeInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let swipeInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let swipeInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 25)
+    let swipeInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.swipeInfoLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
     
     self.swipeInfoLabel.addConstraint(swipeInfoLabelHeightConstraint)
     self.view.addConstraints([swipeInfoLabelTopConstraint, swipeInfoLabelLeftConstraint, swipeInfoLabelRightConstraint])
@@ -548,13 +548,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testPageControllerView.translatesAutoresizingMaskIntoConstraints = false
     
-    let testPageControllerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.swipeInfoLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let testPageControllerViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.swipeInfoLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let testPageControllerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let testPageControllerViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let testPageControllerViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let testPageControllerViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let testPageControllerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testPageControllerViewHeight)
+    let testPageControllerViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testPageControllerView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.testPageControllerViewHeight)
     
     self.testPageControllerView.addConstraint(testPageControllerViewHeightConstraint)
     self.view.addConstraints([testPageControllerViewTopConstraint, testPageControllerViewLeftConstraint, testPageControllerViewRightConstraint])
@@ -563,13 +563,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testScrollView.translatesAutoresizingMaskIntoConstraints = false
     
-    let testScrollViewTopConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testPageControllerView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let testScrollViewTopConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.testPageControllerView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let testScrollViewLeftConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let testScrollViewLeftConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let testScrollViewRightConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let testScrollViewRightConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let testScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    let testScrollViewBottomConstraint = NSLayoutConstraint.init(item: self.testScrollView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
     
     self.view.addConstraints([testScrollViewTopConstraint, testScrollViewLeftConstraint, testScrollViewRightConstraint, testScrollViewBottomConstraint])
     
@@ -579,22 +579,22 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
       
       self.testTypeViews[index].translatesAutoresizingMaskIntoConstraints = false
       
-      let testTypeViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+      let testTypeViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
       
-      let testTypeViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+      let testTypeViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.testStartButton, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
       
-      let testTypeViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
+      let testTypeViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * self.majorMargin))
       
       if index == 0 {
         
-        let testTypeViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let testTypeViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
         
         self.view.addConstraint(testTypeViewLeftConstraint)
         
       }
       else {
         
-        let testTypeViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testTypeViews[index - 1], attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let testTypeViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.testTypeViews[index - 1], attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         
         self.view.addConstraint(testTypeViewLeftConstraint)
         
@@ -605,7 +605,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
       
       if index == self.testTypes.count - 1 {
         
-        let testScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let testScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testTypeViews[index], attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.testScrollView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         
         self.view.addConstraint(testScrollViewRightConstraint)
         
@@ -617,13 +617,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testStartButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let testStartButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let testStartButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
-    let testStartButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin)
+    let testStartButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
     
-    let testStartButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.minorMargin * -1)
+    let testStartButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
     
-    let testStartButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+    let testStartButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testStartButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.testSelectionView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
     
     self.testStartButton.addConstraint(testStartButtonHeightConstraint)
     self.view.addConstraints([testStartButtonLeftConstraint, testStartButtonRightConstraint, testStartButtonBottomConstraint])
@@ -632,13 +632,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.backButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
     self.view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
@@ -647,13 +647,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testsTotal.translatesAutoresizingMaskIntoConstraints = false
     
-    let testsTotalRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let testsTotalRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let testsTotalTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+    let testsTotalTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
     
-    let testsTotalHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let testsTotalHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
-    let testsTotalWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+    let testsTotalWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testsTotal, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
     
     self.testsTotal.addConstraints([testsTotalHeightConstraint, testsTotalWidthConstraint])
     self.view.addConstraints([testsTotalRightConstraint, testsTotalTopConstraint])
@@ -662,13 +662,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testLivesBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     
-    let testLivesBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.backButton, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.majorMargin)
+    let testLivesBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.backButton, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.majorMargin)
     
-    let testLivesBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+    let testLivesBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
     
-    let testLivesBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: self.majorMargin * -1)
+    let testLivesBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
     
-    let testLivesBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.testSelectionBackgroundViewHeight)
+    let testLivesBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesBackgroundView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.testSelectionBackgroundViewHeight)
     
     self.testLivesBackgroundView.addConstraint(testLivesBackgroundViewHeightConstraint)
     self.view.addConstraints([testLivesBackgroundViewTopConstraint, testLivesBackgroundViewLeftConstraint, testLivesBackgroundViewRightConstraint])
@@ -677,13 +677,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testLivesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let testLivesTitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let testLivesTitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let testLivesTitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let testLivesTitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let testLivesTitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: ((self.screenFrame.width - (self.majorMargin * 2)) * 8)/10)
+    let testLivesTitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: ((self.screenFrame.width - (self.majorMargin * 2)) * 8)/10)
     
-    let testLivesTitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: ((self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight)) * 2)/9)
+    let testLivesTitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesTitleLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: ((self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight)) * 2)/9)
     
     self.testLivesTitleLabel.addConstraints([testLivesTitleLabelWidthConstraint, testLivesTitleLabelHeightConstraint])
     self.testLivesBackgroundView.addConstraints([testLivesTitleLabelTopConstraint, testLivesTitleLabelCenterXConstraint])
@@ -692,13 +692,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testLivesSubtitleLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let testLivesSubtitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesTitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let testLivesSubtitleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesTitleLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let testLivesSubtitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesTitleLabel, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let testLivesSubtitleLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesTitleLabel, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let testLivesSubtitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2) - (self.minorMargin * 2))
+    let testLivesSubtitleLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2) - (self.minorMargin * 2))
     
-    let testLivesSubtitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))/9)
+    let testLivesSubtitleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.screenFrame.height - (self.statusBarFrame.height + (self.minorMargin * 9) + (self.menuButtonHeight * 4.5) + (self.majorMargin * 2) + self.backButtonHeight))/9)
     
     self.testLivesSubtitleLabel.addConstraints([testLivesSubtitleLabelWidthConstraint, testLivesSubtitleLabelHeightConstraint])
     self.testLivesBackgroundView.addConstraints([testLivesSubtitleLabelTopConstraint, testLivesSubtitleLabelCenterXConstraint])
@@ -707,13 +707,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testLivesUpgradeButton1.translatesAutoresizingMaskIntoConstraints = false
     
-    let testLivesUpgradeButton1LeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+    let testLivesUpgradeButton1LeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
     
-    let testLivesUpgradeButton1BottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    let testLivesUpgradeButton1BottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
     
-    let testLivesUpgradeButton1RightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: self.minorMargin * -0.5)
+    let testLivesUpgradeButton1RightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: self.minorMargin * -0.5)
     
-    let testLivesUpgradeButton1HeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let testLivesUpgradeButton1HeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
     self.testLivesUpgradeButton1.addConstraint(testLivesUpgradeButton1HeightConstraint)
     self.view.addConstraints([testLivesUpgradeButton1LeftConstraint, testLivesUpgradeButton1BottomConstraint, testLivesUpgradeButton1RightConstraint])
@@ -722,13 +722,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testLivesUpgradeButton2.translatesAutoresizingMaskIntoConstraints = false
     
-    let testLivesUpgradeButton2RightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+    let testLivesUpgradeButton2RightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
     
-    let testLivesUpgradeButton2BottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin * -1)
+    let testLivesUpgradeButton2BottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
     
-    let testLivesUpgradeButton2LeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: self.minorMargin * 0.5)
+    let testLivesUpgradeButton2LeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: self.minorMargin * 0.5)
     
-    let testLivesUpgradeButton2HeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+    let testLivesUpgradeButton2HeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesUpgradeButton2, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
     
     self.testLivesUpgradeButton2.addConstraint(testLivesUpgradeButton2HeightConstraint)
     self.view.addConstraints([testLivesUpgradeButton2LeftConstraint, testLivesUpgradeButton2BottomConstraint, testLivesUpgradeButton2RightConstraint])
@@ -737,13 +737,13 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     self.testLivesInfoLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let testLivesInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: self.minorMargin)
+    let testLivesInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesSubtitleLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
     
-    let testLivesInfoLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let testLivesInfoLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesBackgroundView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let testLivesInfoLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2) - (self.minorMargin * 2))
+    let testLivesInfoLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (self.majorMargin * 2) - (self.minorMargin * 2))
     
-    let testLivesInfoLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.minorMargin * -1)
+    let testLivesInfoLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.testLivesInfoLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.testLivesUpgradeButton1, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
     
     self.testLivesInfoLabel.addConstraint(testLivesInfoLabelWidthConstraint)
     self.testLivesBackgroundView.addConstraints([testLivesInfoLabelTopConstraint, testLivesInfoLabelCenterXConstraint, testLivesInfoLabelBottomConstraint])
@@ -752,7 +752,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   
   func showTestSelectionView() {
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
       
       if !self.testSelectionViewVisible {
         
@@ -772,7 +772,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   }
   
-  func hideTestSelectionView(sender:UIButton) {
+  func hideTestSelectionView(_ sender:UIButton) {
     
     if (membershipType != "Premium" && self.numberOfTestsTotal == 0 && sender.titleLabel?.text == "Start Test"){
         
@@ -801,7 +801,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
     }else{
     
-    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
       
       if self.testSelectionViewVisible {
         
@@ -824,7 +824,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
       }, completion: {(Bool) in
         
         if sender == self.backButton {
-          self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+          self.performSegue(withIdentifier: "backFromTestSelection", sender: nil)
         }
         else if sender == self.testStartButton {
           
@@ -832,20 +832,20 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             if (self.numberOfTestsTotal == 3) {
               
               let now:CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
-              self.defaults.setObject(now, forKey: "LivesTimer")
+              self.defaults.set(now, forKey: "LivesTimer")
               self.numberOfTestsTotal -= 1
-              self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
-              self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+              self.defaults.set(self.numberOfTestsTotal, forKey: "Lives")
+              self.performSegue(withIdentifier: self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
               
             }else if (self.numberOfTestsTotal > 0 && self.numberOfTestsTotal != 3) {
               
               self.numberOfTestsTotal -= 1
-              self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
-              self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+              self.defaults.set(self.numberOfTestsTotal, forKey: "Lives")
+              self.performSegue(withIdentifier: self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
               
             }else if (self.membershipType == "Premium"){
               
-              self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+              self.performSegue(withIdentifier: self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
               
             }else{
               
@@ -854,14 +854,14 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                 backAlert.addButton("Buy \(self.noAddtlLives) Lives", action: ({
                     
                     SwiftSpinner.show("Purchasing")
-                    self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                    self.performSegue(withIdentifier: "backFromTestSelection", sender: nil)
                     self.addLivesTapped()
                     
                 }))
 
               backAlert.addButton("Wait", action: ({
                 
-                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                self.performSegue(withIdentifier: "backFromTestSelection", sender: nil)
                 
               }))
                 
@@ -882,19 +882,19 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             query.whereKey(PF_TESTVOTE_CAREER, equalTo: self.selectedCareer)
             query.whereKey(PF_TESTVOTE_TEST, equalTo: self.testTypeViews[self.currentScrollViewPage].testTypeTimeLabel.text!)
 
-            query.getFirstObjectInBackgroundWithBlock({ (votes: PFObject?, error: NSError?) -> Void in
+            query.getFirstObjectInBackground(block: { (votes: PFObject?, error: NSError?) -> Void in
                 
                 if error == nil {
                     
                     votes?.incrementKey(PF_TESTVOTE_VOTES)
                     
-                        votes?.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        votes?.saveInBackground(block: { (success, error) -> Void in
                             
                         if error == nil {
 
                             SwiftSpinner.show("Vote Submitted", animated: false).addTapHandler({
                                 
-                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                                self.performSegue(withIdentifier: "backFromTestSelection", sender: nil)
                                 
                                 SwiftSpinner.hide()
                                 
@@ -904,7 +904,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                             
                             SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                 
-                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                                self.performSegue(withIdentifier: "backFromTestSelection", sender: nil)
                                 
                                 SwiftSpinner.hide()
                                 
@@ -923,18 +923,18 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                     voteSubmission[PF_TESTVOTE_TEST] = self.testTypeViews[self.currentScrollViewPage].testTypeTimeLabel.text!
                     voteSubmission[PF_TESTVOTE_VOTES] = 1
                     
-                    voteSubmission.saveInBackgroundWithBlock({ (succeeded, error) -> Void in
+                    voteSubmission.saveInBackground(block: { (succeeded, error) -> Void in
                         if error == nil {
                             
                             SwiftSpinner.show("Vote Submitted", animated: false).addTapHandler({
-                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                                self.performSegue(withIdentifier: "backFromTestSelection", sender: nil)
                                 SwiftSpinner.hide()
                                 }, subtitle: "Tap to return home")
                             
                         } else {
                             
                             SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                self.performSegueWithIdentifier("backFromTestSelection", sender: nil)
+                                self.performSegue(withIdentifier: "backFromTestSelection", sender: nil)
                                 SwiftSpinner.hide()
                                 }, subtitle: "Try again later. Tap to return home")
                             
@@ -943,7 +943,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
 
                     
                 }
-            })
+            } as! (PFObject?, Error?) -> Void)
             }
         }
         })
@@ -952,24 +952,24 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     }
         
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
     if segue.identifier == "backFromTestSelection" {
-      let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+      let destinationVC:HomeViewController = segue.destination as! HomeViewController
       destinationVC.segueFromLoginView = false
     }
     else {
-      let destinationVC:QuestionViewController = segue.destinationViewController as! QuestionViewController
+      let destinationVC:QuestionViewController = segue.destination as! QuestionViewController
       let currentTestTypeView:TestTypeView = self.testTypeViews[self.currentScrollViewPage]
       destinationVC.difficulty = currentTestTypeView.difficultySelected
     }
   }
   
-  func showStats(sender: UISwipeGestureRecognizer) {
+  func showStats(_ sender: UISwipeGestureRecognizer) {
     
     if !self.statsViewVisible {
       
-      UIView.animateWithDuration(1, animations: {
+      UIView.animate(withDuration: 1, animations: {
         
         self.testSelectionViewHeightConstraint.constant = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + self.majorMargin)
         self.view.layoutIfNeeded()
@@ -987,7 +987,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
   }
   
   
-  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     
     self.currentScrollViewPage = Int(self.testScrollView.contentOffset.x / self.testScrollView.frame.size.width)
     self.testPageControllerView.updatePageController(self.currentScrollViewPage)
@@ -996,15 +996,15 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     self.backgroundImageView2.alpha = 0
     
     if self.currentScrollViewPage == self.testTypes.count - 1 {
-      self.testStartButton.setTitle("Vote For This Test", forState: UIControlState.Normal)
+      self.testStartButton.setTitle("Vote For This Test", for: UIControlState())
     }
     else {
-      self.testStartButton.setTitle("Start Test", forState: UIControlState.Normal)
+      self.testStartButton.setTitle("Start Test", for: UIControlState())
     }
     
   }
   
-  func scrollViewDidScroll(scrollView: UIScrollView) {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
     
     if self.testScrollView.contentOffset.x > (self.testScrollView.frame.size.width * CGFloat(self.currentScrollViewPage)) {
       
@@ -1033,9 +1033,9 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   }
   
-  func showTestLives(sender:UIButton) {
+  func showTestLives(_ sender:UIButton) {
     
-    numberOfTestsTotal = defaults.integerForKey("Lives")
+    numberOfTestsTotal = defaults.integer(forKey: "Lives")
     if self.numberOfTestsTotal == 1 {
         lifeOrLives = "life"
     }else{
@@ -1043,7 +1043,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     }
     self.testLivesInfoLabel.text = "You have \(self.numberOfTestsTotal) \(lifeOrLives) left."
     
-    UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0.25, options: UIViewAnimationOptions.curveEaseOut, animations: {
       
       if self.testLivesBackgroudViewVisible == false {
         self.testLivesBackgroundView.alpha = 1
@@ -1060,7 +1060,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
   }
     
-    func addLives(sender: UIButton){
+    func addLives(_ sender: UIButton){
         
         SwiftSpinner.show("Purchasing")
         addLivesTapped()
@@ -1070,7 +1070,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     func extraLives(){
         
         self.numberOfTestsTotal = self.numberOfTestsTotal + self.noAddtlLives
-        self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+        self.defaults.set(self.numberOfTestsTotal, forKey: "Lives")
         
         SwiftSpinner.show("You Have Purchased 5 Additional Lives", animated: false).addTapHandler({
             SwiftSpinner.hide()
@@ -1080,19 +1080,19 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
     
     //if lives are bought when out of lives
     
-    func extraLives2(sender: UIButton){
+    func extraLives2(_ sender: UIButton){
         
         SwiftSpinner.show("Purchasing")
         
         addLivesTapped()
         
         self.numberOfTestsTotal = self.numberOfTestsTotal + noAddtlLives
-        self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+        self.defaults.set(self.numberOfTestsTotal, forKey: "Lives")
         self.numberOfTestsTotal -= 1
-        self.defaults.setInteger(self.numberOfTestsTotal, forKey: "Lives")
+        self.defaults.set(self.numberOfTestsTotal, forKey: "Lives")
         
         SwiftSpinner.show("You Have Purchased \(self.noAddtlLives) Additional Lives", animated: false).addTapHandler({
-            self.performSegueWithIdentifier(self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
+            self.performSegue(withIdentifier: self.testTypeSegues[self.testTypes[self.currentScrollViewPage]]!, sender: sender)
             SwiftSpinner.hide()
             }, subtitle: "We encourage you to put them to good use!")
         
@@ -1102,25 +1102,25 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
         SwiftSpinner.show("Purchasing")
         
-        if let currentUser = PFUser.currentUser(){
+        if let currentUser = PFUser.current(){
             currentUser[PF_USER_MEMBERSHIP] = "Premium"
             //set other fields the same way....
-            currentUser.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+            currentUser.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
                                     if error == nil {
                 
                                         self.timer.invalidate()
-                                        self.defaults.setObject("Premium", forKey: "Membership")
+                                        self.defaults.set("Premium", forKey: "Membership")
                                         self.testLivesBackgroundView.alpha = 0
                                         self.testLivesBackgroudViewVisible = false
-                                        self.testsTotal.removeTarget(self, action: #selector(TestSelectionViewController.showTestLives(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                                        self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
-                                        self.membershipType = self.defaults.objectForKey("Membership") as! String
+                                        self.testsTotal.removeTarget(self, action: #selector(TestSelectionViewController.showTestLives(_:)), for: UIControlEvents.touchUpInside)
+                                        self.testsTotal.setTitle("∞", for: UIControlState())
+                                        self.membershipType = self.defaults.object(forKey: "Membership") as! String
                                         self.paidConduit()
-                                        self.defaults.setInteger(3, forKey: "NoOfBrainBreakerLives")
+                                        self.defaults.set(3, forKey: "NoOfBrainBreakerLives")
                                         print(self.membershipType)
                                         
                                         SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
-                                            self.testsTotal.setTitle("∞", forState: UIControlState.Normal)
+                                            self.testsTotal.setTitle("∞", for: UIControlState.Normal)
                                             SwiftSpinner.hide()
                                             }, subtitle: "This means you can practice an unlimited number of tests! You also have 3 attempts at each Brain Breaker question, beginning from now...")
                 
@@ -1134,7 +1134,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                                         
                                     }
                                     
-                                })
+                                } as! PFBooleanResultBlock)
         }
         
     }
@@ -1149,25 +1149,25 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             request.delegate = self
             request.start()
         } else {
-            let alert = UIAlertController(title: "In-App Purchases Not Enabled", message: "Please enable In App Purchase in Settings", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { alertAction in
-                alert.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: "In-App Purchases Not Enabled", message: "Please enable In App Purchase in Settings", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.default, handler: { alertAction in
+                alert.dismiss(animated: true, completion: nil)
                 
-                let url: NSURL? = NSURL(string: UIApplicationOpenSettingsURLString)
+                let url: URL? = URL(string: UIApplicationOpenSettingsURLString)
                 if url != nil
                 {
-                    UIApplication.sharedApplication().openURL(url!)
+                    UIApplication.shared.openURL(url!)
                 }
                 
             }))
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { alertAction in
-                alert.dismissViewControllerAnimated(true, completion: nil)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { alertAction in
+                alert.dismiss(animated: true, completion: nil)
             }))
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
   
-    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         print("product request")
         let myProduct = response.products
         //print(myProduct)
@@ -1196,7 +1196,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
     }
     
-    func unlimitedLivesTapped(sender: UIButton){
+    func unlimitedLivesTapped(_ sender: UIButton){
         
         for product in list {
             let prodID = product.productIdentifier
@@ -1213,8 +1213,8 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         
         print("buy " + p.productIdentifier)
         let pay = SKPayment(product: p)
-        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
-        SKPaymentQueue.defaultQueue().addPayment(pay as SKPayment)
+        SKPaymentQueue.default().add(self)
+        SKPaymentQueue.default().add(pay as SKPayment)
         
     }
     
@@ -1241,7 +1241,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
 //    }
     
     
-    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         print("add payment")
         
         for transaction:AnyObject in transactions {
@@ -1250,7 +1250,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
             
             switch trans.transactionState {
                 
-            case .Purchased:
+            case .purchased:
                 //print("buy, ok unlock iap here")
                 //print(p.productIdentifier)
                 
@@ -1268,7 +1268,7 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
                 
                 queue.finishTransaction(trans)
                 break;
-            case .Failed:
+            case .failed:
                 print("buy error")
                 
                 SwiftSpinner.show("Purchase Error", animated: false).addTapHandler({
@@ -1287,12 +1287,12 @@ class TestSelectionViewController: UIViewController, UIScrollViewDelegate, SKPro
         }
     }
     
-    func finishTransaction(trans:SKPaymentTransaction)
+    func finishTransaction(_ trans:SKPaymentTransaction)
     {
         print("finish transaction")
-        SKPaymentQueue.defaultQueue().finishTransaction(trans)
+        SKPaymentQueue.default().finishTransaction(trans)
     }
-    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
+    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
     {
         print("remove trans");
     }

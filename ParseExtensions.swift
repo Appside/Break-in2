@@ -12,14 +12,14 @@ import ParseUI
 
 class ParseExtensions: UIView {
 
-    class func deleteUserFB(user: PFUser){
+    class func deleteUserFB(_ user: PFUser){
         
-        user.deleteInBackgroundWithBlock({(succeeded: Bool, error: NSError?) -> Void in
+        user.deleteInBackground(block: {(succeeded: Bool, error: NSError?) -> Void in
             if error != nil {
             print(error)
             }
         
-    })
+    } as! PFBooleanResultBlock)
 
 }
 }

@@ -12,16 +12,16 @@ import QuartzCore
 class segueFromLeft: UIStoryboardSegue {
     
     override func perform() {
-        let src: UIViewController = self.sourceViewController
-        let dst: UIViewController = self.destinationViewController
+        let src: UIViewController = self.source
+        let dst: UIViewController = self.destination
         let transition: CATransition = CATransition()
         let timeFunc : CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.duration = 5
         transition.timingFunction = timeFunc
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromLeft
-        src.view.layer.addAnimation(transition, forKey: kCATransition)
-        src.presentViewController(dst, animated: false, completion: nil)
+        src.view.layer.add(transition, forKey: kCATransition)
+        src.present(dst, animated: false, completion: nil)
     }
 
 }

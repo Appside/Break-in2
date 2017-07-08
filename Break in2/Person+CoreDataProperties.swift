@@ -19,7 +19,7 @@ extension Person {
     @NSManaged var token: String?
     @NSManaged var appID: String?
     @NSManaged var userID: String?
-    @NSManaged var expirationDate: NSDate?
-    @NSManaged var refreshDate: NSDate?
+    @NSManaged var expirationDate: Date?
+    @NSManaged var refreshDate: Date?
 
 }

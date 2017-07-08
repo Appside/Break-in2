@@ -27,14 +27,14 @@ class PageControllerView: UIView {
   
   var minorMargin:CGFloat = CGFloat()
   
-  var pageControllerCircleHeight:CGFloat = UIScreen.mainScreen().bounds.height/60
-  var pageControllerSelectedCircleHeight:CGFloat = (UIScreen.mainScreen().bounds.height/60) + 8
+  var pageControllerCircleHeight:CGFloat = UIScreen.main.bounds.height/60
+  var pageControllerSelectedCircleHeight:CGFloat = (UIScreen.main.bounds.height/60) + 8
   var pageControllerSelectedCircleThickness:CGFloat = 2
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.opaque = false
+    self.isOpaque = false
     
     // Get colors
     
@@ -49,31 +49,31 @@ class PageControllerView: UIView {
     /* Only override drawRect: if you perform custom drawing.
     An empty implementation adversely affects performance during animation. */
   
-  override func drawRect(rect: CGRect) {
+  override func draw(_ rect: CGRect) {
       
     // Drawing code
     
     // Get graphics context
     
-    let pageControllerContext:CGContextRef = UIGraphicsGetCurrentContext()!
+    let pageControllerContext:CGContext = UIGraphicsGetCurrentContext()!
     
     // Create as many page controller circles as there are types of test
     
-    for index:Int in 0.stride(to: self.numberOfPages, by: 1) {
+    for index:Int in stride(from: 0, to: self.numberOfPages, by: 1) {
       
       // Set the fill color to randomColor
       
       if index < self.pageControllerColors.count {
-        CGContextSetFillColorWithColor(pageControllerContext, self.pageControllerColors[index].CGColor)
-        CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerColors[index].CGColor)
+        pageControllerContext.setFillColor(self.pageControllerColors[index].cgColor)
+        pageControllerContext.setStrokeColor(self.pageControllerColors[index].cgColor)
         
-        CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerColors[index].CGColor)
+        pageControllerContext.setStrokeColor(self.pageControllerColors[index].cgColor)
       }
       else {
-        CGContextSetFillColorWithColor(pageControllerContext, UIColor.turquoiseColor().CGColor)
-        CGContextSetStrokeColorWithColor(pageControllerContext, UIColor.turquoiseColor().CGColor)
+        pageControllerContext.setFillColor(UIColor.turquoiseColor().cgColor)
+        pageControllerContext.setStrokeColor(UIColor.turquoiseColor().cgColor)
         
-        CGContextSetStrokeColorWithColor(pageControllerContext, UIColor.turquoiseColor().CGColor)
+        pageControllerContext.setStrokeColor(UIColor.turquoiseColor().cgColor)
         
         self.pageControllerColors.append(UIColor.turquoiseColor())
       }
@@ -83,28 +83,28 @@ class PageControllerView: UIView {
       let leftmostCircleLeadingEdgeXCoordinate:CGFloat = (self.bounds.size.width / 2) - (self.pageControllerCircleHeight * CGFloat(self.numberOfPages) / 2) - (CGFloat(self.numberOfPages - 1) * self.minorMargin)
       let circleSpacing:CGFloat = (CGFloat(index) * (self.pageControllerCircleHeight + (2 * self.minorMargin)))
       
-      let circleRect:CGRect = CGRectMake(leftmostCircleLeadingEdgeXCoordinate + circleSpacing, (self.bounds.size.height / 2) - (self.pageControllerCircleHeight / 2), self.pageControllerCircleHeight, self.pageControllerCircleHeight)
+      let circleRect:CGRect = CGRect(x: leftmostCircleLeadingEdgeXCoordinate + circleSpacing, y: (self.bounds.size.height / 2) - (self.pageControllerCircleHeight / 2), width: self.pageControllerCircleHeight, height: self.pageControllerCircleHeight)
       self.pageControllerCircleRects.append(circleRect)
       
       // Draw page controller circles
       
-      CGContextFillEllipseInRect(pageControllerContext, circleRect)
+      pageControllerContext.fillEllipse(in: circleRect)
       
     }
     
     // Set the stroke color and thickness to the color of the leftmost circle
     
-    CGContextSetStrokeColorWithColor(pageControllerContext, self.pageControllerColors[self.selectedPageIndex].CGColor)
-    CGContextSetLineWidth(pageControllerContext, self.pageControllerSelectedCircleThickness)
+    pageControllerContext.setStrokeColor(self.pageControllerColors[self.selectedPageIndex].cgColor)
+    pageControllerContext.setLineWidth(self.pageControllerSelectedCircleThickness)
     
     // Draw outer circle for selected circle
     
-    let strokeRect:CGRect = CGRectMake(self.pageControllerCircleRects[self.selectedPageIndex].origin.x - ((self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight) / 2), self.pageControllerCircleRects[self.selectedPageIndex].origin.y - ((self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight) / 2), self.pageControllerCircleRects[self.selectedPageIndex].width + (self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight), self.pageControllerCircleRects[self.selectedPageIndex].height + (self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight))
-    CGContextStrokeEllipseInRect(pageControllerContext, strokeRect)
+    let strokeRect:CGRect = CGRect(x: self.pageControllerCircleRects[self.selectedPageIndex].origin.x - ((self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight) / 2), y: self.pageControllerCircleRects[self.selectedPageIndex].origin.y - ((self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight) / 2), width: self.pageControllerCircleRects[self.selectedPageIndex].width + (self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight), height: self.pageControllerCircleRects[self.selectedPageIndex].height + (self.pageControllerSelectedCircleHeight - self.pageControllerCircleHeight))
+    pageControllerContext.strokeEllipse(in: strokeRect)
     
  }
   
-  func updatePageController (selectedPageIndex: Int) {
+  func updatePageController (_ selectedPageIndex: Int) {
     
     self.selectedPageIndex = selectedPageIndex
     self.setNeedsDisplay()

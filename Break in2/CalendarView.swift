@@ -10,6 +10,19 @@ import UIKit
 import SwiftSpinner
 import Parse
 import ParseUI
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
@@ -24,7 +37,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   // Declare and initialize views and models
   
   let calendarModel:JSONModel = JSONModel()
-  let defaults = NSUserDefaults.standardUserDefaults()
+  let defaults = UserDefaults.standard
   
   let monthTitleButton:UIButton = UIButton()
   let updateDeadlinesButton:UIButton = UIButton()
@@ -36,9 +49,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   var careerTypes:[String] = [String]()
   var careerColors:[String:UIColor] = [String:UIColor]()
   
-  let todaysDate:NSDate = NSDate()
-  let userCalendar:NSCalendar = NSCalendar.currentCalendar()
-  let dateFormatter:NSDateFormatter = NSDateFormatter()
+  let todaysDate:Date = Date()
+  let userCalendar:Calendar = Calendar.current
+  let dateFormatter:DateFormatter = DateFormatter()
   var currentYear = 0
   var currentMonth:Int = 0
   
@@ -48,56 +61,56 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     self.careerTypes = self.calendarModel.getAppVariables("careerTypes") as! [String]
     
     let appColors:[UIColor] = self.calendarModel.getAppColors()
-    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
+    for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
     
     // Set deadlinesView properties and add as subview to self
-    self.deadlinesView.backgroundColor = UIColor.whiteColor()
+    self.deadlinesView.backgroundColor = UIColor.white
     self.deadlinesView.alpha = 0
     self.addSubview(self.deadlinesView)
     
     // Set monthTitleButton properties and add as subview to self
     
-    self.monthTitleButton.titleLabel?.textAlignment = NSTextAlignment.Center
+    self.monthTitleButton.titleLabel?.textAlignment = NSTextAlignment.center
     self.monthTitleButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.getTextSize(18))
-    self.monthTitleButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-    self.monthTitleButton.addTarget(self, action: #selector(self.downloadAndDisplayJobDeadlinesForCurrentMonth), forControlEvents: UIControlEvents.TouchUpInside)
+    self.monthTitleButton.setTitleColor(UIColor.black, for: UIControlState())
+    self.monthTitleButton.addTarget(self, action: #selector(self.downloadAndDisplayJobDeadlinesForCurrentMonth), for: UIControlEvents.touchUpInside)
     self.addSubview(self.monthTitleButton)
     
     // Set updateDeadlinesButton properties and add as subview to self
     
-    self.updateDeadlinesButton.titleLabel?.textAlignment = NSTextAlignment.Center
+    self.updateDeadlinesButton.titleLabel?.textAlignment = NSTextAlignment.center
     self.updateDeadlinesButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: self.getTextSize(14))
-    self.updateDeadlinesButton.setTitle("Tap Here To Refresh", forState: UIControlState.Normal)
-    self.updateDeadlinesButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-    self.updateDeadlinesButton.addTarget(self, action: #selector(self.downloadAndDisplayJobDeadlinesForCurrentMonth), forControlEvents: UIControlEvents.TouchUpInside)
+    self.updateDeadlinesButton.setTitle("Tap Here To Refresh", for: UIControlState())
+    self.updateDeadlinesButton.setTitleColor(UIColor.gray, for: UIControlState())
+    self.updateDeadlinesButton.addTarget(self, action: #selector(self.downloadAndDisplayJobDeadlinesForCurrentMonth), for: UIControlEvents.touchUpInside)
     self.addSubview(self.updateDeadlinesButton)
     
     // Set nextMonthButton properties and add as subview to self
     
-    self.nextMonthButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
-    self.nextMonthButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.nextMonthButton.addTarget(self, action: #selector(CalendarView.nextMonthButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.nextMonthButton.setImage(UIImage.init(named: "nextButton"), for: UIControlState())
+    self.nextMonthButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+    self.nextMonthButton.addTarget(self, action: #selector(CalendarView.nextMonthButtonClicked(_:)), for: UIControlEvents.touchUpInside)
     self.addSubview(self.nextMonthButton)
     
     // Set previousMonthButton properties and add as subview to self
     
-    self.previousMonthButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
-    self.previousMonthButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.previousMonthButton.addTarget(self, action: #selector(CalendarView.previousMonthButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.previousMonthButton.setImage(UIImage.init(named: "prevButton"), for: UIControlState())
+    self.previousMonthButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+    self.previousMonthButton.addTarget(self, action: #selector(CalendarView.previousMonthButtonClicked(_:)), for: UIControlEvents.touchUpInside)
     self.addSubview(self.previousMonthButton)
     
     // Set monthScrollView properties and add as subview to self
     
-    self.monthScrollView.pagingEnabled = true
+    self.monthScrollView.isPagingEnabled = true
     self.monthScrollView.delegate = self
     self.monthScrollView.showsHorizontalScrollIndicator = false
     self.addSubview(self.monthScrollView)
     
     // Create current, next and previous monthViews
     
-    for _:Int in 0.stride(through: 2, by: 1) {
+    for _:Int in stride(from: 0, through: 2, by: 1) {
       
       let monthViewAtIndex:CalendarMonthView = CalendarMonthView()
       
@@ -114,11 +127,11 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Get present year and present month
     
-    self.currentYear = self.userCalendar.component(NSCalendarUnit.Year, fromDate: self.todaysDate)
-    self.currentMonth = self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate)
+    self.currentYear = (self.userCalendar as NSCalendar).component(NSCalendar.Unit.year, from: self.todaysDate)
+    self.currentMonth = (self.userCalendar as NSCalendar).component(NSCalendar.Unit.month, from: self.todaysDate)
     
     // Get user's chosen careers
-    self.chosenCareers = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
+    self.chosenCareers = self.defaults.object(forKey: "SavedCareerPreferences") as? [String] ?? [String]()
     
   }
   
@@ -181,10 +194,10 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Set monthTitleButton
     
-    let dateFormatter:NSDateFormatter = NSDateFormatter()
+    let dateFormatter:DateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MMMM"
     let monthTitleString:String = dateFormatter.monthSymbols[self.currentMonth - 1] + " " + String(self.currentYear)
-    self.monthTitleButton.setTitle(monthTitleString.uppercaseString, forState: UIControlState.Normal)
+    self.monthTitleButton.setTitle(monthTitleString.uppercased(), for: UIControlState())
     
     // Set constraints
     
@@ -198,7 +211,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Move monthScrollView to the middle of the content size
     
-    self.monthScrollView.setContentOffset(CGPointMake(self.monthScrollView.frame.width, 0), animated: false)
+    self.monthScrollView.setContentOffset(CGPoint(x: self.monthScrollView.frame.width, y: 0), animated: false)
     
   }
   
@@ -253,10 +266,10 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Set monthTitleButton
     
-    let dateFormatter:NSDateFormatter = NSDateFormatter()
+    let dateFormatter:DateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MMMM"
     let monthTitleString:String = dateFormatter.monthSymbols[self.currentMonth - 1] + " " + String(self.currentYear)
-    self.monthTitleButton.setTitle(monthTitleString.uppercaseString, forState: UIControlState.Normal)
+    self.monthTitleButton.setTitle(monthTitleString.uppercased(), for: UIControlState())
     
     // Give deadlines array to monthView[1] (current month)
     
@@ -267,7 +280,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     // Move monthScrollView to the middle of the content size
     
-    self.monthScrollView.setContentOffset(CGPointMake(self.monthScrollView.frame.width, 0), animated: false)
+    self.monthScrollView.setContentOffset(CGPoint(x: self.monthScrollView.frame.width, y: 0), animated: false)
     
   }
   
@@ -276,67 +289,67 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     // Set constraints for monthTitleButton
     
     self.monthTitleButton.translatesAutoresizingMaskIntoConstraints = false
-    let monthTitleButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-    let monthTitleButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: (self.frame.width/10) * 2)
-    let monthTitleButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.width/10) * 6)
-    let monthTitleButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9) * 1.5)
+    let monthTitleButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+    let monthTitleButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: (self.frame.width/10) * 2)
+    let monthTitleButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.width/10) * 6)
+    let monthTitleButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthTitleButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.height/9) * 1.5)
     self.addConstraints([monthTitleButtonTopConstraint,monthTitleButtonLeftConstraint])
     self.monthTitleButton.addConstraints([monthTitleButtonWidthConstraint,monthTitleButtonHeightConstraint])
     
     // Set constraints for updateDeadlinesButton
     
     self.updateDeadlinesButton.translatesAutoresizingMaskIntoConstraints = false
-    let updateDeadlinesButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.frame.height/9) * 1.2)
-    let updateDeadlinesButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: (self.frame.width/10) * 2)
-    let updateDeadlinesButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.width/10) * 6)
-    let updateDeadlinesButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9) * 0.5)
+    let updateDeadlinesButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: (self.frame.height/9) * 1.2)
+    let updateDeadlinesButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: (self.frame.width/10) * 2)
+    let updateDeadlinesButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.width/10) * 6)
+    let updateDeadlinesButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.updateDeadlinesButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.height/9) * 0.5)
     self.addConstraints([updateDeadlinesButtonTopConstraint,updateDeadlinesButtonLeftConstraint])
     self.updateDeadlinesButton.addConstraints([updateDeadlinesButtonWidthConstraint,updateDeadlinesButtonHeightConstraint])
     // Set constraints for nextMonthButton
     
     self.nextMonthButton.translatesAutoresizingMaskIntoConstraints = false
-    let nextMonthButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.frame.height/9)
-    let nextMonthButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
-    let nextMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
-    let nextMonthButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
+    let nextMonthButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.frame.height/9)
+    let nextMonthButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
+    let nextMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/10)
+    let nextMonthButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextMonthButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/20)
     self.addConstraints([nextMonthButtonCenterYConstraint,nextMonthButtonRightConstraint])
     self.nextMonthButton.addConstraints([nextMonthButtonWidthConstraint,nextMonthButtonHeightConstraint])
     
     // Set constraints for previousMonthButton
     
     self.previousMonthButton.translatesAutoresizingMaskIntoConstraints = false
-    let previousMonthButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.frame.height/9)
-    let previousMonthButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    let previousMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
-    let previousMonthButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
+    let previousMonthButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.frame.height/9)
+    let previousMonthButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+    let previousMonthButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/10)
+    let previousMonthButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousMonthButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/20)
     self.addConstraints([previousMonthButtonCenterYConstraint,previousMonthButtonLeftConstraint])
     self.previousMonthButton.addConstraints([previousMonthButtonWidthConstraint,previousMonthButtonHeightConstraint])
     
     // Set constraints for monthScrollView
     
     self.monthScrollView.translatesAutoresizingMaskIntoConstraints = false
-    let monthScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: (self.frame.height/9)*2)
-    let monthScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    let monthScrollViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width)
-    let monthScrollViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9)*7)
+    let monthScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: (self.frame.height/9)*2)
+    let monthScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+    let monthScrollViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width)
+    let monthScrollViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthScrollView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.height/9)*7)
     self.addConstraints([monthScrollViewTopConstraint,monthScrollViewLeftConstraint])
     self.monthScrollView.addConstraints([monthScrollViewWidthConstraint,monthScrollViewHeightConstraint])
     
     // Set constraints for monthViews
     
-    for index:Int in 0.stride(through: 2, by: 1) {
+    for index:Int in stride(from: 0, through: 2, by: 1) {
       
       self.monthViews[index].translatesAutoresizingMaskIntoConstraints = false
-      let monthViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.monthScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-      let monthViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width)
-      let monthViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9)*7)
+      let monthViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.monthScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+      let monthViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width)
+      let monthViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.height/9)*7)
       
       if index == 0 {
-        let monthViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.monthScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+        let monthViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.monthScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
         self.monthScrollView.addConstraint(monthViewLeftConstraint)
       }
       else {
-        let monthViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.monthViews[index-1], attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let monthViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.monthViews[index-1], attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         self.monthScrollView.addConstraint(monthViewLeftConstraint)
       }
       
@@ -344,7 +357,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       self.monthScrollView.addConstraints([monthViewTopConstraint])
       
       if index == 2 {
-        let monthScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.monthScrollView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+        let monthScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.monthViews[index], attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.monthScrollView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         self.monthScrollView.addConstraint(monthScrollViewRightConstraint)
       }
       
@@ -354,19 +367,19 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
     self.deadlinesView.translatesAutoresizingMaskIntoConstraints = false
     
-    let deadlinesViewTopConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let deadlinesViewTopConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let deadlinesViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let deadlinesViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let deadlinesViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let deadlinesViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let deadlinesViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let deadlinesViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.deadlinesView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
     self.addConstraints([deadlinesViewTopConstraint, deadlinesViewLeftConstraint, deadlinesViewRightConstraint, deadlinesViewBottomConstraint])
     
   }
   
-  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     
     if self.monthScrollView.contentOffset.x == (self.monthScrollView.frame.width * 2) {
       
@@ -383,38 +396,38 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       
     }
     
-    self.nextMonthButton.userInteractionEnabled = true
-    self.previousMonthButton.userInteractionEnabled = true
+    self.nextMonthButton.isUserInteractionEnabled = true
+    self.previousMonthButton.isUserInteractionEnabled = true
     
   }
   
-  func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+  func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
     self.scrollViewDidEndDecelerating(scrollView)
   }
   
-  func nextMonthButtonClicked(sender: UIButton) {
+  func nextMonthButtonClicked(_ sender: UIButton) {
     
-    self.nextMonthButton.userInteractionEnabled = false
-    self.previousMonthButton.userInteractionEnabled = false
-    self.monthScrollView.setContentOffset(CGPointMake(self.frame.width*2, 0), animated: true)
-    
-  }
-  
-  func previousMonthButtonClicked(sender: UIButton) {
-    
-    self.nextMonthButton.userInteractionEnabled = false
-    self.previousMonthButton.userInteractionEnabled = false
-    self.monthScrollView.setContentOffset(CGPointMake(0, 0), animated: true)
+    self.nextMonthButton.isUserInteractionEnabled = false
+    self.previousMonthButton.isUserInteractionEnabled = false
+    self.monthScrollView.setContentOffset(CGPoint(x: self.frame.width*2, y: 0), animated: true)
     
   }
   
-  func calendarDayButtonClicked(sender: CalendarDayButton) {
+  func previousMonthButtonClicked(_ sender: UIButton) {
+    
+    self.nextMonthButton.isUserInteractionEnabled = false
+    self.previousMonthButton.isUserInteractionEnabled = false
+    self.monthScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    
+  }
+  
+  func calendarDayButtonClicked(_ sender: CalendarDayButton) {
     
     if sender.clicked {
       
       self.deadlinesViewInitialize(sender)
       
-      UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+      UIView.animate(withDuration: 0.5, delay: 0.25, options: UIViewAnimationOptions(), animations: {
         
         self.monthTitleButton.alpha = 0
         self.nextMonthButton.alpha = 0
@@ -429,7 +442,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
   }
   
-  func deadlinesViewInitialize(sender: CalendarDayButton) {
+  func deadlinesViewInitialize(_ sender: CalendarDayButton) {
     
     //Clean existing views
     for singleView in self.deadlinesView.subviews {
@@ -449,43 +462,43 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     titleView.addSubview(deadlineTitle)
     
     titleView.translatesAutoresizingMaskIntoConstraints = false
-    let titleViewTop:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-    let titleViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
-    let titleViewRight:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let titleViewTop:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+    let titleViewLeft:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+    let titleViewRight:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.deadlinesView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     self.deadlinesView.addConstraints([titleViewTop,titleViewLeft, titleViewRight])
-    let titleViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.height/9)*2)
+    let titleViewHeight:NSLayoutConstraint = NSLayoutConstraint(item: titleView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.height/9)*2)
     titleView.addConstraint(titleViewHeight)
     
     backButton.translatesAutoresizingMaskIntoConstraints = false
-    let backButtonCenterY:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
-    let backButtonLeft:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let backButtonCenterY:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: titleView, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
+    let backButtonLeft:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: titleView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     titleView.addConstraints([backButtonLeft,backButtonCenterY])
-    let backButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width/20)
-    let backButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width/10)
+    let backButtonHeight:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width/20)
+    let backButtonWidth:NSLayoutConstraint = NSLayoutConstraint(item: backButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width/10)
     backButton.addConstraints([backButtonHeight,backButtonWidth])
-    backButton.setImage(UIImage(named: "prevButton"), forState: UIControlState.Normal)
-    backButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    backButton.addTarget(self, action: #selector(CalendarView.backToCalendarView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    backButton.setImage(UIImage(named: "prevButton"), for: UIControlState())
+    backButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+    backButton.addTarget(self, action: #selector(CalendarView.backToCalendarView(_:)), for: UIControlEvents.touchUpInside)
     
     deadlineTitle.translatesAutoresizingMaskIntoConstraints = false
-    let deadlineTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
-    let deadlineTitleBottom:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
-    let deadlineTitleCenterX:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: titleView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let deadlineTitleTop:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: titleView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+    let deadlineTitleBottom:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: titleView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+    let deadlineTitleCenterX:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: titleView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     titleView.addConstraints([deadlineTitleTop,deadlineTitleBottom,deadlineTitleCenterX])
-    let deadlineTitleWidth:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width*8/10)
+    let deadlineTitleWidth:NSLayoutConstraint = NSLayoutConstraint(item: deadlineTitle, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.deadlinesView.bounds.width*8/10)
     deadlineTitle.addConstraint(deadlineTitleWidth)
-    deadlineTitle.textColor = UIColor.blackColor()
+    deadlineTitle.textColor = UIColor.black
     let textSize = self.getTextSize(18)
     deadlineTitle.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
-    deadlineTitle.textAlignment = NSTextAlignment.Center
+    deadlineTitle.textAlignment = NSTextAlignment.center
     
     deadlineScrollView.setConstraintsToSuperview(Int(((self.frame.height/12)*2)+5), bottom: 0, left: 0, right: 0)
     
     //Initalize Date
-    let dateFormatter:NSDateFormatter = NSDateFormatter()
+    let dateFormatter:DateFormatter = DateFormatter()
     dateFormatter.dateFormat = "MMMM"
     let monthString:String = dateFormatter.monthSymbols[sender.month - 1]
-    deadlineTitle.text = String(sender.day) + " " + monthString.uppercaseString + " " + String(sender.year)
+    deadlineTitle.text = String(sender.day) + " " + monthString.uppercased() + " " + String(sender.year)
     
     //Initialize Deadline Table
     var i:Int = 0
@@ -504,14 +517,14 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         
         deadlineScrollView.addSubview(tableCell)
         tableCell.translatesAutoresizingMaskIntoConstraints = false
-        let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat((i+j)*cellHeight))
-        let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 10)
+        let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: CGFloat((i+j)*cellHeight))
+        let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 10)
         deadlineScrollView.addConstraints([tableCellTop,tableCellLeft])
-        let tableCellWidth:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(self.deadlinesView.bounds.width))
-        let tableCellHeight:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(cellHeight))
+        let tableCellWidth:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(self.deadlinesView.bounds.width))
+        let tableCellHeight:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(cellHeight))
         tableCell.addConstraints([tableCellHeight,tableCellWidth])
         
-        tableCell.backgroundColor = UIColor.whiteColor()
+        tableCell.backgroundColor = UIColor.white
         
         tableCell.addSubview(careerName)
 
@@ -520,9 +533,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         careerName.numberOfLines = 0
         let textSize2 = self.getTextSize(15)
         careerName.font = UIFont(name: "HelveticaNeue-Medium", size: textSize2)
-        careerName.textAlignment = NSTextAlignment.Left
+        careerName.textAlignment = NSTextAlignment.left
         careerName.textColor = self.careerColors[currentCareer]
-        careerName.text = elementArray[1].uppercaseString
+        careerName.text = elementArray[1].uppercased()
 
         j += 1
       }
@@ -533,11 +546,11 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       
       deadlineScrollView.addSubview(tableCell)
       tableCell.translatesAutoresizingMaskIntoConstraints = false
-      let tableCellWidth:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(self.deadlinesView.bounds.width))
-      let tableCellHeight:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: CGFloat(cellHeight))
+      let tableCellWidth:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(self.deadlinesView.bounds.width))
+      let tableCellHeight:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(cellHeight))
       tableCell.addConstraints([tableCellHeight,tableCellWidth])
-      let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: CGFloat((i+j)*cellHeight))
-      let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+      let tableCellTop:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: CGFloat((i+j)*cellHeight))
+      let tableCellLeft:NSLayoutConstraint = NSLayoutConstraint(item: tableCell, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: deadlineScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
       deadlineScrollView.addConstraints([tableCellTop,tableCellLeft])
       
 //      if (i%2==0) {
@@ -559,10 +572,10 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       positionName.numberOfLines = 0
       let textSize2 = self.getTextSize(14)
       companyName.font = UIFont(name: "HelveticaNeue-MediumBold", size: textSize2)
-      companyName.textAlignment = NSTextAlignment.Left
+      companyName.textAlignment = NSTextAlignment.left
       positionName.font = UIFont(name: "HelveticaNeue-LightItalic", size: textSize2)
-      positionName.textAlignment = NSTextAlignment.Left
-      positionName.textColor = UIColor.grayColor().colorWithAlphaComponent(1)
+      positionName.textAlignment = NSTextAlignment.left
+      positionName.textColor = UIColor.gray.withAlphaComponent(1)
       
       companyName.text = elementArray[0]
       positionName.text = elementArray[2]
@@ -576,11 +589,11 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     
   }
   
-  func backToCalendarView(sender: UITapGestureRecognizer) {
+  func backToCalendarView(_ sender: UITapGestureRecognizer) {
     
     self.flushCounter += 1
     
-    UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0.25, options: UIViewAnimationOptions(), animations: {
       
       self.monthTitleButton.alpha = 1
       self.nextMonthButton.alpha = 1
@@ -592,9 +605,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
       }, completion: nil)
   }
   
-  func deadlinesViewTapped(sender: UITapGestureRecognizer) {
+  func deadlinesViewTapped(_ sender: UITapGestureRecognizer) {
     
-    UIView.animateWithDuration(0.5, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+    UIView.animate(withDuration: 0.5, delay: 0.25, options: UIViewAnimationOptions(), animations: {
       
       self.monthTitleButton.alpha = 1
       self.nextMonthButton.alpha = 1
@@ -618,9 +631,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     query1.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: self.currentYear)
     query2.whereKey(PF_CALENDAR_DEADLINEYEAR, equalTo: 2000)
     
-    let query = PFQuery.orQueryWithSubqueries([query1, query2])
+    let query = PFQuery.orQuery(withSubqueries: [query1, query2])
     
-    query.findObjectsInBackgroundWithBlock {
+    query.findObjectsInBackground {
       (objects: [PFObject]?, error: NSError?) -> Void in
       
       if error == nil {
@@ -631,7 +644,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         // Do something with the found objects
         if let objects = objects {
           
-          let todaysMonth:Int = self.userCalendar.component(NSCalendarUnit.Month, fromDate: self.todaysDate)
+          let todaysMonth:Int = (self.userCalendar as NSCalendar).component(NSCalendar.Unit.month, from: self.todaysDate)
           
           for object in objects {
             
@@ -646,9 +659,9 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
                 
                 if object[PF_CALENDAR_DEADLINEYEAR] as! Int == 2000 {
                   if self.currentMonth == todaysMonth {
-                    deadlinesIndividual.updateValue(self.userCalendar.component(NSCalendarUnit.Year, fromDate: self.todaysDate), forKey: "year")
+                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.year, from: self.todaysDate), forKey: "year")
                     deadlinesIndividual.updateValue(todaysMonth, forKey: "month")
-                    deadlinesIndividual.updateValue(self.userCalendar.component(NSCalendarUnit.Day, fromDate: self.todaysDate), forKey: "day")
+                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.day, from: self.todaysDate), forKey: "day")
                     deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
                     deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
                     deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
@@ -684,7 +697,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         //print(self.monthViews[1].deadlines)
         
         self.monthViews[1].deadlines.removeAll()
-        self.monthViews[1].deadlines = deadlinesTemp.sort {
+        self.monthViews[1].deadlines = deadlinesTemp.sorted {
           if ($0["career"] as? String) == ($1["career"] as? String) {
             if ($0["company"] as? String) == ($1["company"] as? String) {
               return ($0["position"] as? String) < ($1["position"] as? String)
@@ -699,7 +712,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         }
         self.monthViews[1].displayView()
         
-        let dateFormatter:NSDateFormatter = NSDateFormatter()
+        let dateFormatter:DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "Mmmm"
         let monthTitleString1:String = dateFormatter.monthSymbols[self.currentMonth - 1]
         
@@ -717,7 +730,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
           
           }, subtitle: "Tap to dismiss")
       }
-    }
+    } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
     
   }
   

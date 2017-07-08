@@ -21,14 +21,14 @@ class TutorialDescriptionView: UIView {
     
     // Customize Labels
     let textSize:CGFloat = self.getTextSize(15)
-    self.titleLabel.textColor = UIColor.whiteColor()
-    self.titleLabel.textAlignment = NSTextAlignment.Center
+    self.titleLabel.textColor = UIColor.white
+    self.titleLabel.textAlignment = NSTextAlignment.center
     self.titleLabel.font = UIFont(name: "HelveticaNeue-Light", size: textSize)
     self.titleLabel.numberOfLines = 0
     self.titleLabel.clipsToBounds = false
     
-    self.descriptionLabel.textColor = UIColor.whiteColor()
-    self.descriptionLabel.textAlignment = NSTextAlignment.Center
+    self.descriptionLabel.textColor = UIColor.white
+    self.descriptionLabel.textAlignment = NSTextAlignment.center
     self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: textSize)
     self.descriptionLabel.numberOfLines = 0
     self.descriptionLabel.clipsToBounds = false
@@ -49,13 +49,13 @@ class TutorialDescriptionView: UIView {
     
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let titleLabelLeftConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let titleLabelLeftConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let titleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let titleLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let titleLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let titleLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let titleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 40)
+    let titleLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.titleLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 40)
     
     self.titleLabel.addConstraint(titleLabelHeightConstraint)
     self.addConstraints([titleLabelLeftConstraint, titleLabelTopConstraint, titleLabelRightConstraint])
@@ -64,13 +64,13 @@ class TutorialDescriptionView: UIView {
     
     self.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let descriptionLabelLeftConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let descriptionLabelLeftConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let descriptionLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.titleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let descriptionLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.titleLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
-    let descriptionLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let descriptionLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let descriptionLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let descriptionLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.descriptionLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
     self.addConstraints([descriptionLabelLeftConstraint, descriptionLabelTopConstraint, descriptionLabelRightConstraint, descriptionLabelBottomConstraint])
     

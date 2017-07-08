@@ -22,12 +22,12 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     return jobDeadlines
   }
   
-  func getAppVariables(outputField:String) -> AnyObject {
+  func getAppVariables(_ outputField:String) -> AnyObject {
     
     //Initialize variables
     var careerTypesArray:AnyObject
-    let jsonObject:[NSDictionary] = self.getjsonfile("AppVariables")
-    careerTypesArray = jsonObject[0].objectForKey(outputField)!
+    let jsonObject:[NSDictionary] = self.getjsonfile("AppVariables") as [NSDictionary]
+    careerTypesArray = jsonObject[0].object(forKey: outputField)! as AnyObject
     
     //Return final array
     return careerTypesArray
@@ -38,8 +38,8 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     //Initialize variables
     var colors:[UIColor] = [UIColor]()
     var colorsRGBAlpha:[[CGFloat]] = [[CGFloat]]()
-    let jsonObject:[NSDictionary] = self.getjsonfile("AppVariables")
-    colorsRGBAlpha = jsonObject[0].objectForKey("colorsRGBAlpha") as! [[CGFloat]]
+    let jsonObject:[NSDictionary] = self.getjsonfile("AppVariables") as [NSDictionary]
+    colorsRGBAlpha = jsonObject[0].object(forKey: "colorsRGBAlpha") as! [[CGFloat]]
     for RGBAlpha in colorsRGBAlpha {
       colors.append(UIColor.init(red: RGBAlpha[0]/255, green: RGBAlpha[1]/255, blue: RGBAlpha[2]/255, alpha: RGBAlpha[3]))
     }
@@ -48,18 +48,18 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     return colors
   }
   
-  func selectNumericalReasoning(nbOfQuestions:Int) -> [numericalQuestion] {
+  func selectNumericalReasoning(_ nbOfQuestions:Int) -> [numericalQuestion] {
     
     //Initialize variables
     var arrayOfQuestions:[numericalQuestion] = [numericalQuestion]()
     
     //Get JSon file
-    let jsonObject:[NSDictionary] = self.getjsonfile("NumericalReasoning")
+    let jsonObject:[NSDictionary] = self.getjsonfile("NumericalReasoning") as [NSDictionary]
     var randomNumber:Int = Int()
     var selectedQuestions:[Int] = [Int]()
     var y:Int = 0
     
-    for _ in 0.stride(to: nbOfQuestions, by: 1) {
+    for _ in stride(from: 0, to: nbOfQuestions, by: 1) {
       
       y = 0
       while y==0 {
@@ -114,18 +114,18 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     return arrayOfQuestions
   }
   
-  func selectVerbalReasoning(nbOfQuestions:Int) -> [verbalQuestion] {
+  func selectVerbalReasoning(_ nbOfQuestions:Int) -> [verbalQuestion] {
     
     //Initialize variables
     var arrayOfQuestions:[verbalQuestion] = [verbalQuestion]()
     
     //Get JSon file
-    let jsonObject:[NSDictionary] = self.getjsonfile("VerbalReasoning")
+    let jsonObject:[NSDictionary] = self.getjsonfile("VerbalReasoning") as [NSDictionary]
     var randomNumber:Int = Int()
     var selectedQuestions:[Int] = [Int]()
     var y:Int = 0
     
-    for _ in 0.stride(to: nbOfQuestions, by: 1) {
+    for _ in stride(from: 0, to: nbOfQuestions, by: 1) {
       
       y = 0
       while y==0 {
@@ -159,18 +159,18 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     return arrayOfQuestions
   }
     
-    func selectProgramming(nbOfQuestions:Int) -> [programmingQuestion] {
+    func selectProgramming(_ nbOfQuestions:Int) -> [programmingQuestion] {
         
         //Initialize variables
         var arrayOfQuestions:[programmingQuestion] = [programmingQuestion]()
         
         //Get JSon file
-        let jsonObject:[NSDictionary] = self.getjsonfile("Programming")
+        let jsonObject:[NSDictionary] = self.getjsonfile("Programming") as [NSDictionary]
         var randomNumber:Int = Int()
         var selectedQuestions:[Int] = [Int]()
         var y:Int = 0
       
-        for _ in 0.stride(to: nbOfQuestions, by: 1) {
+        for _ in stride(from: 0, to: nbOfQuestions, by: 1) {
             
             y = 0
             while y==0 {
@@ -201,18 +201,18 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         return arrayOfQuestions
     }
     
-    func selectTechnology(nbOfQuestions:Int) -> [technologyQuestion] {
+    func selectTechnology(_ nbOfQuestions:Int) -> [technologyQuestion] {
         
         //Initialize variables
         var arrayOfQuestions:[technologyQuestion] = [technologyQuestion]()
         
         //Get JSon file
-        let jsonObject:[NSDictionary] = self.getjsonfile("Technology")
+        let jsonObject:[NSDictionary] = self.getjsonfile("Technology") as [NSDictionary]
         var randomNumber:Int = Int()
         var selectedQuestions:[Int] = [Int]()
         var y:Int = 0
       
-        for _ in 0.stride(to: nbOfQuestions, by: 1) {
+        for _ in stride(from: 0, to: nbOfQuestions, by: 1) {
             
             y = 0
             while y==0 {
@@ -244,22 +244,22 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         return arrayOfQuestions
     }
     
-  func getjsonfile(jsonFileName:String) -> [[String:AnyObject]] {
+  func getjsonfile(_ jsonFileName:String) -> [[String:AnyObject]] {
     
     if jsonFileName == "JobDeadlines" {
-      let fileManager = NSFileManager.defaultManager()
-      let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+      let fileManager = FileManager.default
+      let directoryURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
       
       if let directoryURL = directoryURLs.first {
         
-        let fileURL = directoryURL.URLByAppendingPathComponent(jsonFileName + ".json")
+        let fileURL = directoryURL.appendingPathComponent(jsonFileName + ".json")
                 
-        let jsonData:NSData? = NSData(contentsOfURL: fileURL)
+        let jsonData:Data? = Data(contentsOfURL: fileURL)
         if let actualJsonData = jsonData {
           //NSData exist so use NSJSONerialization to parse data
           do {
             //Data correctly parsed
-            let arrayOfDictionaries:[[String:AnyObject]] = try NSJSONSerialization.JSONObjectWithData(actualJsonData, options: NSJSONReadingOptions.MutableContainers) as! [[String:AnyObject]]
+            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: actualJsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
             //print(jsonFileName + " JSON file retrieved")
             return arrayOfDictionaries
           }
@@ -277,15 +277,15 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     }
     else {
       
-      let fileURL = NSBundle.mainBundle().URLForResource(jsonFileName, withExtension: "json")
+      let fileURL = Bundle.main.url(forResource: jsonFileName, withExtension: "json")
       
       if let actualfileURL = fileURL {
-        let jsonData:NSData? = NSData(contentsOfURL: actualfileURL)
+        let jsonData:Data? = try? Data(contentsOf: actualfileURL)
         if let actualJsonData = jsonData {
           //NSData exist so use NSJSONerialization to parse data
           do {
             //Data correctly parsed
-            let arrayOfDictionaries:[[String:AnyObject]] = try NSJSONSerialization.JSONObjectWithData(actualJsonData, options: NSJSONReadingOptions.MutableContainers) as! [[String:AnyObject]]
+            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: actualJsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
             //print(jsonFileName + " JSON file retrieved")
             return arrayOfDictionaries
           }
@@ -307,21 +307,21 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
     return [[String:AnyObject]]()
   }
 
-  func saveJSONFile(jsonFileName:String, completion:(() -> Void)?) {
-    let fileManager = NSFileManager.defaultManager()
-    let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+  func saveJSONFile(_ jsonFileName:String, completion:(() -> Void)?) {
+    let fileManager = FileManager.default
+    let directoryURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
     
     if let directoryURL = directoryURLs.first {
       
-      let fileURL = directoryURL.URLByAppendingPathComponent(jsonFileName + ".json")
+      let fileURL = directoryURL.appendingPathComponent(jsonFileName + ".json")
       
-      if !fileManager.fileExistsAtPath(fileURL.path!) {
-        fileManager.createFileAtPath(fileURL.path!, contents: nil, attributes: nil)
+      if !fileManager.fileExists(atPath: fileURL.path) {
+        fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
       }else{
         
         do {
-            try fileManager.removeItemAtPath(fileURL.path!)
-            fileManager.createFileAtPath(fileURL.path!, contents: nil, attributes: nil)
+            try fileManager.removeItem(atPath: fileURL.path)
+            fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
         }
         catch let error as NSError {
             print("Ooops! Something went wrong: \(error)")
@@ -329,21 +329,21 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         
         }
         
-      let requestURL: NSURL = NSURL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/" + jsonFileName + ".json")!
-      let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-      let session = NSURLSession.sharedSession()
+      let requestURL: URL = URL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/" + jsonFileName + ".json")!
+      let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL)
+      let session = URLSession.shared
       
-      let task = session.dataTaskWithRequest(urlRequest) {
+      let task = session.dataTask(with: urlRequest, completionHandler: {
         (data, response, error) -> Void in
         
-        let httpResponse = response as! NSHTTPURLResponse
+        let httpResponse = response as! HTTPURLResponse
         let statusCode = httpResponse.statusCode
         
         if (statusCode == 200) {
           
           do {
             if let downloadedData = data {
-              let file = try NSFileHandle(forWritingToURL: fileURL)
+              let file = try FileHandle(forWritingToURL: fileURL)
               file.writeData(downloadedData)
               print(jsonFileName + " JSON file overwritten!")
             }
@@ -358,7 +358,7 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         else {
           print("Problem opening " + jsonFileName + " URL (httpResponse: " + String(statusCode) + ")")
         }
-      }
+      }) 
       task.resume()
     }
   }

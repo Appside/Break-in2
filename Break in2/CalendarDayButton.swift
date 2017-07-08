@@ -27,7 +27,7 @@ class CalendarDayButton: UIButton {
     super.init(frame: frame)
     
     let textSize:CGFloat = self.getTextSize(14)
-    self.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+    self.setTitleColor(UIColor.black, for: UIControlState())
     self.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: textSize)
     
     // Get app variables
@@ -35,7 +35,7 @@ class CalendarDayButton: UIButton {
     self.careerTypes = self.calendarModel.getAppVariables("careerTypes") as! [String]
     
     let appColors:[UIColor] = self.calendarModel.getAppColors()
-    for index:Int in 0.stride(to: self.careerTypes.count, by: 1) {
+    for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       self.circleColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
 
@@ -45,25 +45,25 @@ class CalendarDayButton: UIButton {
       fatalError("init(coder:) has not been implemented")
   }
 
-  override func drawRect(rect: CGRect) {
+  override func draw(_ rect: CGRect) {
         // Drawing code
     
     if self.today {
       
-      let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
+      let contextRef:CGContext = UIGraphicsGetCurrentContext()!
       
-      CGContextSetFillColorWithColor(contextRef, UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.5).CGColor)
+      contextRef.setFillColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.5).cgColor)
       
-      CGContextFillEllipseInRect(contextRef, CGRectMake((self.bounds.width - (self.bounds.height - 2))/2, 1, self.bounds.height - 2, self.bounds.height - 2))
+      contextRef.fillEllipse(in: CGRect(x: (self.bounds.width - (self.bounds.height - 2))/2, y: 1, width: self.bounds.height - 2, height: self.bounds.height - 2))
       
     }
     
     if self.clicked {
       
-      let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
+      let contextRef:CGContext = UIGraphicsGetCurrentContext()!
       var careers:[String] = [String]()
       
-      for index:Int in 0.stride(to: self.deadlines.count, by: 1) {
+      for index:Int in stride(from: 0, to: self.deadlines.count, by: 1) {
         
         if !careers.contains(self.deadlines[index][1]) {
           careers.append(self.deadlines[index][1])
@@ -71,36 +71,36 @@ class CalendarDayButton: UIButton {
         
       }
       
-      for index:Int in 0.stride(to: careers.count, by: 1) {
+      for index:Int in stride(from: 0, to: careers.count, by: 1) {
         
-        CGContextSetFillColorWithColor(contextRef, self.circleColors[careers[index]]!.CGColor)
+        contextRef.setFillColor(self.circleColors[careers[index]]!.cgColor)
         
-        CGContextBeginPath(contextRef)
+        contextRef.beginPath()
         let arcSegmentAngle:Double = (2 * M_PI) / Double(careers.count)
-        CGContextMoveToPoint(contextRef, self.bounds.width/2, self.bounds.height/2)
+        contextRef.move(to: CGPoint(x: self.bounds.width/2, y: self.bounds.height/2))
         if self.today {
           CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 3, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
         }
         else {
           CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 1, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
         }
-        CGContextFillPath(contextRef)
+        contextRef.fillPath()
       }
       
     }
     else {
       
-      let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
+      let contextRef:CGContext = UIGraphicsGetCurrentContext()!
       
-      CGContextSetFillColorWithColor(contextRef, UIColor.clearColor().CGColor)
+      contextRef.setFillColor(UIColor.clear.cgColor)
       
-      CGContextFillEllipseInRect(contextRef, CGRectMake((self.bounds.width - self.bounds.height)/2, 0, self.bounds.height, self.bounds.height))
+      contextRef.fillEllipse(in: CGRect(x: (self.bounds.width - self.bounds.height)/2, y: 0, width: self.bounds.height, height: self.bounds.height))
       
     }
     
   }
   
-  func convertDegreesToRadians(degrees:Double) -> Double {
+  func convertDegreesToRadians(_ degrees:Double) -> Double {
     
     return degrees * (M_PI/180)
   

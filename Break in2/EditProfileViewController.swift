@@ -27,7 +27,7 @@ class EditProfileViewController : FormViewController {
     var pageDescriptionSub:UILabel = UILabel()
     var saveProfileButton:UIButton = UIButton()
     let menuButtonHeight:CGFloat = 50
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     var buttonTitle:String = String()
     var fieldsColor:UIColor = UIColor()
     var skinType:Int = 2
@@ -61,7 +61,7 @@ class EditProfileViewController : FormViewController {
         let textHeight4:CGFloat = self.view.heightForView(textString4, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
         
         let query = PFQuery(className:"Recommendations")
-        query.findObjectsInBackgroundWithBlock {
+        query.findObjectsInBackground {
             (objects: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
                 if let objects = objects {
@@ -74,28 +74,28 @@ class EditProfileViewController : FormViewController {
                 // Log details of the failure
                 print("error")
             }
-        }
+        } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
         
         //Status Bar Background
-        let NewView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
+        let NewView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 20.0))
         self.view.addSubview(NewView)
         
         if self.firstTimeUser == true {
             self.skinType = 1
         }
         if self.skinType == 1 {
-            self.tableView?.backgroundColor = UIColor.blackColor()
+            self.tableView?.backgroundColor = UIColor.black
             self.fieldsColor = UIColor(white: 0.0, alpha: 0.0)
-            NewView.backgroundColor = UIColor.blackColor()
+            NewView.backgroundColor = UIColor.black
         } else {
             self.tableView?.backgroundColor = UIColor.turquoiseColor()
             self.fieldsColor = UIColor(red: 50/255, green: 120/255, blue: 123/255, alpha: 0.35)
             NewView.backgroundColor = UIColor.turquoiseColor()
         }
         
-        self.screenFrame = UIScreen.mainScreen().bounds
-        self.statusBarFrame = UIApplication.sharedApplication().statusBarFrame
-        self.backButtonHeight = UIScreen.mainScreen().bounds.width/12
+        self.screenFrame = UIScreen.main.bounds
+        self.statusBarFrame = UIApplication.shared.statusBarFrame
+        self.backButtonHeight = UIScreen.main.bounds.width/12
         
         if self.firstTimeUser {
             self.buttonTitle = "Save & Continue"
@@ -104,16 +104,16 @@ class EditProfileViewController : FormViewController {
             self.buttonTitle = "Save Profile"
         }
         
-        self.profileFirstName = self.defaults.objectForKey("profileFirstName") as? String ?? String()
-        self.profileLastName = self.defaults.objectForKey("profileLastName") as? String ?? String()
-        self.profileEmail = self.defaults.objectForKey("profileEmail") as? String ?? String()
-        self.profilePhone = self.defaults.objectForKey("profilePhone") as? String ?? String()
-        self.profileUniversity = self.defaults.objectForKey("profileUniversity") as? String ?? String()
-        self.profileCourse = self.defaults.objectForKey("profileCourse") as? String ?? String()
-        self.profileDegree = self.defaults.objectForKey("profileDegree") as? String ?? String()
-        self.profilePosition = self.defaults.objectForKey("profilePosition") as? String ?? String()
-        self.shareInfoAllowed = self.defaults.objectForKey("shareInfoAllowed") as? Bool ?? Bool()
-        self.recommendedBy = self.defaults.objectForKey("recommendedBy") as? String ?? String()
+        self.profileFirstName = self.defaults.object(forKey: "profileFirstName") as? String ?? String()
+        self.profileLastName = self.defaults.object(forKey: "profileLastName") as? String ?? String()
+        self.profileEmail = self.defaults.object(forKey: "profileEmail") as? String ?? String()
+        self.profilePhone = self.defaults.object(forKey: "profilePhone") as? String ?? String()
+        self.profileUniversity = self.defaults.object(forKey: "profileUniversity") as? String ?? String()
+        self.profileCourse = self.defaults.object(forKey: "profileCourse") as? String ?? String()
+        self.profileDegree = self.defaults.object(forKey: "profileDegree") as? String ?? String()
+        self.profilePosition = self.defaults.object(forKey: "profilePosition") as? String ?? String()
+        self.shareInfoAllowed = self.defaults.object(forKey: "shareInfoAllowed") as? Bool ?? Bool()
+        self.recommendedBy = self.defaults.object(forKey: "recommendedBy") as? String ?? String()
         
         form =
 
@@ -217,13 +217,13 @@ class EditProfileViewController : FormViewController {
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
-                        cell.backgroundColor = UIColor.blackColor()
+                        cell.backgroundColor = UIColor.black
                         cell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.8)
                     } else if self.skinType == 2{
                         cell.backgroundColor = UIColor.turquoiseColor()
                     }
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
                 }
             
             +++ Section { section in
@@ -251,10 +251,10 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                    cell.textField.textColor = UIColor.whiteColor()
+                    cell.textField.textColor = UIColor.white
             }
             
             <<< NameRow("LastName"){
@@ -265,10 +265,10 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                    cell.textField.textColor = UIColor.whiteColor()
+                    cell.textField.textColor = UIColor.white
             }
             
             <<< EmailRow("Email"){
@@ -279,10 +279,10 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                    cell.textField.textColor = UIColor.whiteColor()
+                    cell.textField.textColor = UIColor.white
             }
             
             <<< PhoneRow("Phone"){
@@ -293,10 +293,10 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                    cell.textField.textColor = UIColor.whiteColor()
+                    cell.textField.textColor = UIColor.white
                 }.onChange { row in
                     if row.value != nil{
                     self.profilePhone = row.value!
@@ -308,13 +308,13 @@ class EditProfileViewController : FormViewController {
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
-                        cell.backgroundColor = UIColor.blackColor()
+                        cell.backgroundColor = UIColor.black
                         cell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.8)
                     } else if self.skinType == 2{
                         cell.backgroundColor = UIColor.turquoiseColor()
                     }
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
                 }
             
             +++ Section { section in
@@ -342,10 +342,10 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
                     cell.textField.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                    cell.textField.textColor = UIColor.whiteColor()
+                    cell.textField.textColor = UIColor.white
                 }.onChange { row in
                     if row.value != nil {
                     self.profileUniversity = row.value!
@@ -362,9 +362,9 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
-                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
+                    cell.detailTextLabel?.textColor = UIColor.white
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                 }.onChange { row in
                     if row.value != nil {
@@ -381,9 +381,9 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
-                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
+                    cell.detailTextLabel?.textColor = UIColor.white
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                 }.onChange { row in
                     self.profileDegree = row.value!
@@ -398,9 +398,9 @@ class EditProfileViewController : FormViewController {
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     cell.backgroundColor = self.fieldsColor
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
-                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
+                    cell.detailTextLabel?.textColor = UIColor.white
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                 }.onChange { row in
                     self.profilePosition = row.value!
@@ -411,13 +411,13 @@ class EditProfileViewController : FormViewController {
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 16.0)
                     if self.skinType == 1 {
-                        cell.backgroundColor = UIColor.blackColor()
+                        cell.backgroundColor = UIColor.black
                         cell.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.8)
                     } else if self.skinType == 2{
                         cell.backgroundColor = UIColor.turquoiseColor()
                     }
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
             }
 
             +++ Section { section in
@@ -462,7 +462,7 @@ class EditProfileViewController : FormViewController {
             <<< SwitchRow("switchRowTag"){
                 $0.title = "Share My Profile"
                 
-                self.check = self.defaults.objectForKey("checkSwitch") as? Int ?? Int()
+                self.check = self.defaults.object(forKey: "checkSwitch") as? Int ?? Int()
                 
                 if self.check != 63 {
                     $0.value = true
@@ -473,24 +473,24 @@ class EditProfileViewController : FormViewController {
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
                     cell.backgroundColor = self.fieldsColor
                 }.onChange { row in
                     
                     self.check = 63
-                    self.defaults.setObject(self.check, forKey: "checkSwitch")
+                    self.defaults.set(self.check, forKey: "checkSwitch")
                     self.shareInfoAllowed = row.value!
             }
             <<< LabelRow(){
                 
-                $0.hidden = Condition.Function(["switchRowTag"], { form in
+                $0.hidden = Condition.function(["switchRowTag"], { form in
                     return !((form.rowByTag("switchRowTag") as? SwitchRow)?.value ?? false)
                 })
                 $0.title = "You have allowed us to share your profile."
                 }.cellSetup{ cell, row in
                     cell.textLabel?.font = UIFont(name: "HelveticaNeue-LightItalic", size: 12.0)
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
                     cell.backgroundColor = self.fieldsColor
             }
         
@@ -521,9 +521,9 @@ class EditProfileViewController : FormViewController {
                     cell.backgroundColor = self.fieldsColor
                     row.options = self.sourceRecommendation
                 }.cellUpdate { cell, row in
-                    cell.textLabel?.textColor = UIColor.whiteColor()
-                    cell.tintColor = UIColor.whiteColor()
-                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+                    cell.textLabel?.textColor = UIColor.white
+                    cell.tintColor = UIColor.white
+                    cell.detailTextLabel?.textColor = UIColor.white
                     cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
                     row.options = self.sourceRecommendation
                 }.onChange { row in
@@ -543,7 +543,7 @@ class EditProfileViewController : FormViewController {
                     }
                 }.cellUpdate { cell, row in
                     if self.skinType == 1 {
-                        cell.textLabel?.textColor = UIColor.whiteColor()
+                        cell.textLabel?.textColor = UIColor.white
                     } else if self.skinType == 2{
                         cell.textLabel?.textColor = UIColor.turquoiseColor()
                     }
@@ -551,7 +551,7 @@ class EditProfileViewController : FormViewController {
     
     }
 
-    func goBackToSettingsMenu(sender: UIButton) {
+    func goBackToSettingsMenu(_ sender: UIButton) {
         var alertMessage:String = String()
         alertMessage = "Any unsaved change will be lost."
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: true)
@@ -562,15 +562,15 @@ class EditProfileViewController : FormViewController {
             subTitle: alertMessage, // String of view
             duration: 0.0, // Duration to show before closing automatically, default: 0.0
             completeText: "Cancel", // Optional button value, default: ""
-            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            style: .error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
     }
     
-    func goBackToSettings(sender: UIButton) {
+    func goBackToSettings(_ sender: UIButton) {
         
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             
             //self.chooseCareersView.alpha = 0
             self.backButton.alpha = 0
@@ -581,13 +581,13 @@ class EditProfileViewController : FormViewController {
             
             }, completion: {(Bool) in
                 
-                self.performSegueWithIdentifier("toSettings", sender: nil)
+                self.performSegue(withIdentifier: "toSettings", sender: nil)
                 
         })
         
     }
     
-    func saveProfile(sender: UIButton) {
+    func saveProfile(_ sender: UIButton) {
         
         var alertMessage:String = String()
         var showErrorMessage:Bool = false
@@ -643,7 +643,7 @@ class EditProfileViewController : FormViewController {
                 subTitle: alertMessage, // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "Cancel", // Optional button value, default: ""
-                style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                style: .error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                 colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
@@ -651,13 +651,13 @@ class EditProfileViewController : FormViewController {
             
             SwiftSpinner.show("Saving changes")
             
-            let currentUser = PFUser.currentUser()!
+            let currentUser = PFUser.current()!
             //let objID = currentUser.objectId
             let username = currentUser.username
             let query = PFQuery(className: PF_USER_CLASS_NAME)
             query.whereKey(PF_USER_USERNAME, equalTo: username!)
             //query.getObjectInBackgroundWithId(objID!)
-            query.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
+            query.getFirstObjectInBackground(block: { (user: PFObject?, error: NSError?) -> Void in
                 
                 if error == nil {
                     
@@ -673,19 +673,19 @@ class EditProfileViewController : FormViewController {
                     user![PF_USER_SHARE_INFO_ALLOWED] = self.shareInfoAllowed
                     user![PF_USER_RECOMMENDED_BY] = self.recommendedBy
                     
-                    user?.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError?) -> Void in
+                    user?.saveInBackground(block: ({ (succeeded: Bool, error: NSError?) -> Void in
                         if error == nil {
                             
-                            self.defaults.setObject(self.profileFirstName, forKey: "profileFirstName")
-                            self.defaults.setObject(self.profileLastName, forKey: "profileLastName")
-                            self.defaults.setObject(self.profileEmail, forKey: "profileEmail")
-                            self.defaults.setObject(self.profilePhone, forKey: "profilePhone")
-                            self.defaults.setObject(self.profileUniversity, forKey: "profileUniversity")
-                            self.defaults.setObject(self.profileCourse, forKey: "profileCourse")
-                            self.defaults.setObject(self.profileDegree, forKey: "profileDegree")
-                            self.defaults.setObject(self.profilePosition, forKey: "profilePosition")
-                            self.defaults.setObject(self.shareInfoAllowed, forKey: "shareInfoAllowed")
-                            self.defaults.setObject(self.recommendedBy, forKey: "recommendedBy")
+                            self.defaults.set(self.profileFirstName, forKey: "profileFirstName")
+                            self.defaults.set(self.profileLastName, forKey: "profileLastName")
+                            self.defaults.set(self.profileEmail, forKey: "profileEmail")
+                            self.defaults.set(self.profilePhone, forKey: "profilePhone")
+                            self.defaults.set(self.profileUniversity, forKey: "profileUniversity")
+                            self.defaults.set(self.profileCourse, forKey: "profileCourse")
+                            self.defaults.set(self.profileDegree, forKey: "profileDegree")
+                            self.defaults.set(self.profilePosition, forKey: "profilePosition")
+                            self.defaults.set(self.shareInfoAllowed, forKey: "shareInfoAllowed")
+                            self.defaults.set(self.recommendedBy, forKey: "recommendedBy")
                             
                             SwiftSpinner.show("Preferences Saved", animated: false).addTapHandler({
                                 
@@ -706,7 +706,7 @@ class EditProfileViewController : FormViewController {
                             
                         }
                         
-                    })
+                    } as! PFBooleanResultBlock)k))
                     
                 }else{
                     
@@ -718,12 +718,12 @@ class EditProfileViewController : FormViewController {
                         }, subtitle: "Preferences unsaved, to return to settings")
                     
                 }
-            })
+            } as! (PFObject?, Error?) -> Void)
             
             
             
             if self.firstTimeUser {
-                self.performSegueWithIdentifier("tutorialEnded", sender: sender)
+                self.performSegue(withIdentifier: "tutorialEnded", sender: sender)
             }
             else {
                 // Segue back to Settings?
@@ -733,33 +733,33 @@ class EditProfileViewController : FormViewController {
         }
     }
     
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(_ testStr:String) -> Bool {
         let emailRegEx = "^(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?(?:(?:(?:[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+(?:\\.[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+)*)|(?:\"(?:(?:(?:(?: )*(?:(?:[!#-Z^-~]|\\[|\\])|(?:\\\\(?:\\t|[ -~]))))+(?: )*)|(?: )+)\"))(?:@)(?:(?:(?:[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)(?:\\.[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)*)|(?:\\[(?:(?:(?:(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))\\.){3}(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))))|(?:(?:(?: )*[!-Z^-~])*(?: )*)|(?:[Vv][0-9A-Fa-f]+\\.[-A-Za-z0-9._~!$&'()*+,;=:]+))\\])))(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?$"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        let result = emailTest.evaluateWithObject(testStr)
+        let result = emailTest.evaluate(with: testStr)
         return result
     }
     
-    func phoneNumberValidation(value: String) -> Bool {
-        var charcter  = NSCharacterSet(charactersInString: "0123456789").invertedSet
+    func phoneNumberValidation(_ value: String) -> Bool {
+        var charcter  = CharacterSet(charactersIn: "0123456789").inverted
         var filtered:NSString!
-        var inputString:NSArray = value.componentsSeparatedByCharactersInSet(charcter)
-        filtered = inputString.componentsJoinedByString("")
+        var inputString:NSArray = value.components(separatedBy: charcter)
+        filtered = inputString.componentsJoined(by: "") as NSString
         return  value == filtered
     }
 
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tutorialEnded" {
-            let destinationVC:HomeViewController = segue.destinationViewController as! HomeViewController
+            let destinationVC:HomeViewController = segue.destination as! HomeViewController
             destinationVC.firstTimeUser = true
             destinationVC.segueFromLoginView = false
         }
     }
     
-    func multipleSelectorDone(item:UIBarButtonItem) {
+    func multipleSelectorDone(_ item:UIBarButtonItem) {
      
-        navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewController(animated: true)
         
     }
 

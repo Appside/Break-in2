@@ -81,7 +81,7 @@ class CalculatorView:UIView {
         self.touchArray.append(self.touchReset)
         self.touchArray.append(self.touchEqual)
         
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
         
     }
     
@@ -89,7 +89,7 @@ class CalculatorView:UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func prepareCalculator(height:CGFloat, width:CGFloat) {
+    func prepareCalculator(_ height:CGFloat, width:CGFloat) {
         
         self.ViewHeight = height
         self.ViewWidth = width
@@ -103,14 +103,14 @@ class CalculatorView:UIView {
         self.addSubview(self.ResultsView)
         self.ResultsView.backgroundColor = self.touchColor
         self.ResultsView.translatesAutoresizingMaskIntoConstraints = false
-        let topConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.ButtonMargin)
-        let centerXConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant:0)
+        let topConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.ButtonMargin)
+        let centerXConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant:0)
         self.addConstraints([topConstraint,centerXConstraint])
-        let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 2*self.ButtonSize+self.ButtonMargin)
-        let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 4*self.ButtonSize+3*self.ButtonMargin)
+        let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 2*self.ButtonSize+self.ButtonMargin)
+        let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: self.ResultsView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 4*self.ButtonSize+3*self.ButtonMargin)
         self.ResultsView.addConstraints([heightConstraint,widthConstraint])
         self.ResultsView.layer.cornerRadius = 8.0
-        self.ResultsView.layer.borderColor = UIColor(white: 1.0, alpha: 0.4).CGColor
+        self.ResultsView.layer.borderColor = UIColor(white: 1.0, alpha: 0.4).cgColor
         self.ResultsView.layer.borderWidth = 2.0
         
         self.ResultsView.addSubview(self.TopPane)
@@ -118,19 +118,19 @@ class CalculatorView:UIView {
         self.TopPane.setConstraintsToSuperview(10, bottom: Int(2*self.ButtonSize+self.ButtonMargin)/2-10, left: 10, right: 10)
         self.BottomPane.setConstraintsToSuperview(Int(2*self.ButtonSize+self.ButtonMargin)/2+10, bottom: 10, left: 10, right: 10)
         self.TopPane.text = ""
-        self.TopPane.lineBreakMode = .ByTruncatingTail
+        self.TopPane.lineBreakMode = .byTruncatingTail
         
-        self.BottomPane.textAlignment = NSTextAlignment.Center
-        self.BottomPane.textColor = UIColor.whiteColor()
+        self.BottomPane.textAlignment = NSTextAlignment.center
+        self.BottomPane.textColor = UIColor.white
         self.BottomPane.font = UIFont(name: "HelveticaNeue-Bold", size: UIView().getTextSize(25))
         self.BottomPane.numberOfLines = 1
-        self.BottomPane.lineBreakMode = NSLineBreakMode.ByTruncatingHead
+        self.BottomPane.lineBreakMode = NSLineBreakMode.byTruncatingHead
         self.BottomPane.backgroundColor = UIColor(white: 1.0, alpha: 0.1)
         self.BottomPane.layer.cornerRadius = 10.0
         self.BottomPane.text = "0"
         
-        self.TopPane.textAlignment = NSTextAlignment.Right
-        self.TopPane.textColor = UIColor.whiteColor()
+        self.TopPane.textAlignment = NSTextAlignment.right
+        self.TopPane.textColor = UIColor.white
         self.TopPane.font = UIFont(name: "HelveticaNeue-Bold", size: UIView().getTextSize(15))
         self.TopPane.numberOfLines = 3
         
@@ -139,235 +139,235 @@ class CalculatorView:UIView {
             self.addSubview(button)
             button.backgroundColor = self.touchColor
             button.layer.cornerRadius = 8.0
-            button.titleLabel?.textAlignment = NSTextAlignment.Center
-            button.titleLabel?.textColor = UIColor.whiteColor()
+            button.titleLabel?.textAlignment = NSTextAlignment.center
+            button.titleLabel?.textColor = UIColor.white
             button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: UIView().getTextSize(25))
             
-            let buttonIndex = self.touchArray.indexOf(button)
+            let buttonIndex = self.touchArray.index(of: button)
             
             if buttonIndex == 0 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -self.ButtonMargin)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -self.ButtonMargin)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 2*self.ButtonSize+self.ButtonMargin)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: 2*self.ButtonSize+self.ButtonMargin)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.titleLabel?.textAlignment = NSTextAlignment.Center
-                button.setTitle("0", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.titleLabel?.textAlignment = NSTextAlignment.center
+                button.setTitle("0", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 1 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -self.ButtonSize-2*self.ButtonMargin)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -self.ButtonSize-2*self.ButtonMargin)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("1", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("1", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 2 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 2*self.ButtonMargin+self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -2*self.ButtonMargin-self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 2*self.ButtonMargin+self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -2*self.ButtonMargin-self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("2", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("2", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 3 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -2*self.ButtonMargin-self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -2*self.ButtonMargin-self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("3", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("3", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 4 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -2*self.ButtonSize-3*self.ButtonMargin)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -2*self.ButtonSize-3*self.ButtonMargin)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("4", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("4", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 5 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 2*self.ButtonMargin+self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -3*self.ButtonMargin-2*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 2*self.ButtonMargin+self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -3*self.ButtonMargin-2*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("5", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("5", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 6 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -3*self.ButtonMargin-2*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -3*self.ButtonMargin-2*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("6", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("6", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 7 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -3*self.ButtonSize-4*self.ButtonMargin)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -3*self.ButtonSize-4*self.ButtonMargin)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("7", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("7", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 8 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 2*self.ButtonMargin+self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -4*self.ButtonMargin-3*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 2*self.ButtonMargin+self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -4*self.ButtonMargin-3*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("8", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("8", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 9 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -4*self.ButtonMargin-3*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -4*self.ButtonMargin-3*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("9", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle("9", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.numberTapped(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 10 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -2*self.ButtonMargin-self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -2*self.ButtonMargin-self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("+", forState: UIControlState.Normal)
+                button.setTitle("+", for: UIControlState())
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 11 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -3*self.ButtonMargin-2*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -3*self.ButtonMargin-2*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("-", forState: UIControlState.Normal)
+                button.setTitle("-", for: UIControlState())
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 12 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -4*self.ButtonMargin-3*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -4*self.ButtonMargin-3*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("x", forState: UIControlState.Normal)
+                button.setTitle("x", for: UIControlState())
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 13 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("/", forState: UIControlState.Normal)
+                button.setTitle("/", for: UIControlState())
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.operatorPressed(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 14 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -self.ButtonMargin)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -self.ButtonMargin)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle(".", forState: UIControlState.Normal)
-                button.addTarget(self, action: #selector(CalculatorView.decimalPress(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.setTitle(".", for: UIControlState())
+                button.addTarget(self, action: #selector(CalculatorView.decimalPress(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 15 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 3*self.ButtonMargin+2*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("C", forState: UIControlState.Normal)
+                button.setTitle("C", for: UIControlState())
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.resetCalculator(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.resetCalculator(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 16 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.ButtonMargin+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -5*self.ButtonMargin-4*self.ButtonSize)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: 2*self.ButtonSize+self.ButtonMargin)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: 2*self.ButtonSize+self.ButtonMargin)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("Reset", forState: UIControlState.Normal)
+                button.setTitle("Reset", for: UIControlState())
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.fullReset(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.fullReset(_:)), for: UIControlEvents.touchUpInside)
                 
             } else if buttonIndex == 17 {
                 
                 button.translatesAutoresizingMaskIntoConstraints = false
-                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
-                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: -self.ButtonMargin)
+                let leftConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 4*self.ButtonMargin+3*self.ButtonSize+additionalLeftMargin)
+                let bottomConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: -self.ButtonMargin)
                 self.addConstraints([leftConstraint,bottomConstraint])
-                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
-                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let heightConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
+                let widthConstraint:NSLayoutConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0, constant: self.ButtonSize)
                 button.addConstraints([heightConstraint,widthConstraint])
-                button.setTitle("=", forState: UIControlState.Normal)
+                button.setTitle("=", for: UIControlState())
                 button.backgroundColor = UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 0.4)
-                button.addTarget(self, action: #selector(CalculatorView.equalPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(CalculatorView.equalPressed(_:)), for: UIControlEvents.touchUpInside)
                 
             }
             
@@ -375,12 +375,12 @@ class CalculatorView:UIView {
         
     }
     
-    func numberTapped(sender:UIButton) {
+    func numberTapped(_ sender:UIButton) {
         
         if self.operatorPress == true || self.equalPress == true {
             
             let buttonTest:UIButton = UIButton()
-            buttonTest.setTitle(self.lastPress, forState: UIControlState.Normal)
+            buttonTest.setTitle(self.lastPress, for: UIControlState())
             self.resetCalculator(buttonTest)
         
         }
@@ -388,7 +388,7 @@ class CalculatorView:UIView {
         if self.lastPress == "=" {
             
             let buttonTest:UIButton = UIButton()
-            buttonTest.setTitle("C", forState: UIControlState.Normal)
+            buttonTest.setTitle("C", for: UIControlState())
             self.resetCalculator(buttonTest)
             
         }
@@ -399,10 +399,10 @@ class CalculatorView:UIView {
         
         let numberStrings = ["0","1","2","3","4","5","6","7","8","9"]
         let numberInt:[Double] = [0,1,2,3,4,5,6,7,8,9]
-        let number = numberInt[numberStrings.indexOf(sender.currentTitle!)!]
+        let number = numberInt[numberStrings.index(of: sender.currentTitle!)!]
         
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .DecimalStyle
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.usesSignificantDigits = true
         formatter.maximumSignificantDigits = 12;
             
@@ -430,7 +430,7 @@ class CalculatorView:UIView {
             
         }
         
-        self.BottomPane.text = formatter.stringFromNumber(self.memory1)
+        self.BottomPane.text = formatter.string(from: NSNumber(self.memory1))
         
         }
         
@@ -438,13 +438,13 @@ class CalculatorView:UIView {
         
     }
     
-    func decimalPress(sender:UIButton) {
+    func decimalPress(_ sender:UIButton) {
         
         if self.operatorPress == true || self.equalPress == true {
             
             self.BottomPane.text = "0"
             let buttonTest:UIButton = UIButton()
-            buttonTest.setTitle(self.lastPress, forState: UIControlState.Normal)
+            buttonTest.setTitle(self.lastPress, for: UIControlState())
             self.resetCalculator(buttonTest)
             
         }
@@ -452,18 +452,18 @@ class CalculatorView:UIView {
         if self.lastPress == "=" {
             
             let buttonTest:UIButton = UIButton()
-            buttonTest.setTitle("C", forState: UIControlState.Normal)
+            buttonTest.setTitle("C", for: UIControlState())
             self.resetCalculator(buttonTest)
             
         }
         
         self.decimalPressed = true
         self.lastPress = sender.currentTitle!
-        self.BottomPane.textColor = UIColor.whiteColor()
+        self.BottomPane.textColor = UIColor.white
         
     }
     
-    func resetCalculator(sender:UIButton) {
+    func resetCalculator(_ sender:UIButton) {
         
         self.decimalPoints1 = 0
         self.decimalPressed = false
@@ -473,7 +473,7 @@ class CalculatorView:UIView {
         
         if self.operatorPress == true || self.equalPress {
             
-            self.BottomPane.textColor = UIColor.whiteColor()
+            self.BottomPane.textColor = UIColor.white
             self.operatorPress = false
             self.equalPress = false
             
@@ -501,7 +501,7 @@ class CalculatorView:UIView {
         
     }
     
-    func operatorPressed(sender:UIButton) {
+    func operatorPressed(_ sender:UIButton) {
         
         
         if self.firstNumberTyped == false {
@@ -517,7 +517,7 @@ class CalculatorView:UIView {
                 
             }
             
-            self.BottomPane.textColor = UIColor.grayColor()
+            self.BottomPane.textColor = UIColor.gray
             self.operatorPress = true
             self.operatorMemory = sender.currentTitle!
             
@@ -529,7 +529,7 @@ class CalculatorView:UIView {
         
     }
     
-    func equalPressed(sender:UIButton) {
+    func equalPressed(_ sender:UIButton) {
         
         if self.memory2 != 0  && self.lastPress != "=" {
         
@@ -546,14 +546,14 @@ class CalculatorView:UIView {
             self.memory3 = self.memory2 / self.memory1
         }
 
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .DecimalStyle
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.usesSignificantDigits = true
         formatter.maximumSignificantDigits = 12;
         
-        let nombre1:String = formatter.stringFromNumber(self.memory2)!
-        let nombre2:String = formatter.stringFromNumber(self.memory1)!
-        let nombre3:String = formatter.stringFromNumber(self.memory3)!
+        let nombre1:String = formatter.string(from: NSNumber(self.memory2))!
+        let nombre2:String = formatter.string(from: NSNumber(self.memory1))!
+        let nombre3:String = formatter.string(from: NSNumber(self.memory3))!
             
         if self.TopPane.text == "" {
             self.line1Top = "\(nombre1) \(self.operatorMemory) \(nombre2) = \(nombre3)"
@@ -571,7 +571,7 @@ class CalculatorView:UIView {
             
         self.TopPane.text = "\(self.line1Top)\n\(self.line2Top)\n\(self.line3Top)"
         
-        self.BottomPane.text = formatter.stringFromNumber(self.memory3)
+        self.BottomPane.text = formatter.string(from: NSNumber(self.memory3))
         
         self.operatorPress = false
         self.equalPress = true
@@ -595,13 +595,13 @@ class CalculatorView:UIView {
                 self.memory3 = self.memory3 / self.memory1
             }
             
-            let formatter = NSNumberFormatter()
-            formatter.numberStyle = .DecimalStyle
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 6
             formatter.usesSignificantDigits = true
             formatter.maximumSignificantDigits = 12;
             
-            self.BottomPane.text = formatter.stringFromNumber(self.memory3)
+            self.BottomPane.text = formatter.string(from: NSNumber(self.memory3))
             
             if self.operatorPress == true {
             
@@ -614,11 +614,11 @@ class CalculatorView:UIView {
         }
         
         self.lastPress = sender.currentTitle!
-        self.BottomPane.textColor = UIColor.whiteColor()
+        self.BottomPane.textColor = UIColor.white
         
     }
     
-    func fullReset(sender:UIButton) {
+    func fullReset(_ sender:UIButton) {
         
         self.line1Top = ""
         self.line2Top = ""
@@ -626,7 +626,7 @@ class CalculatorView:UIView {
         self.TopPane.text = ""
         
         let buttonTest:UIButton = UIButton()
-        buttonTest.setTitle("C", forState: UIControlState.Normal)
+        buttonTest.setTitle("C", for: UIControlState())
         self.resetCalculator(buttonTest)
         
     }

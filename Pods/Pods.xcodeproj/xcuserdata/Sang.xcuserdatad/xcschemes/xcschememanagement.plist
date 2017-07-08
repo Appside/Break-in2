@@ -34,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
 		<key>Parse.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -54,6 +59,16 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Pods-Break in2Tests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
+		<key>Pods-Break in2UITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
 		<key>SCLAlertView.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -67,6 +82,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>00103D6C821BE85971C563025527BA5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0456113D1D7FFA7E7453ABDD4CE3FC57</key>
 		<dict>
 			<key>primary</key>
@@ -87,12 +107,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1CA83A68F151B400E06D70D897090864</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>24090FBCEF7A50AE384678B5C071804B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>28429323D0C345E6588036987FA1B043</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2A52779AA0BD86BA0CEB8753126ED2FE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -108,6 +138,11 @@
 			<true/>
 		</dict>
 		<key>4332352E97A37C729DC7D9B3B8A4BB15</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>44CAD6CE523055ED339E87154473A254</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -137,6 +172,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>675A114988AE198732ED4AD726408964</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6CD46AEE6AF2BEAC1476E9064271E418</key>
 		<dict>
 			<key>primary</key>
@@ -157,12 +197,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>80ADFF8985157FB8EEA790DE22F1CA77</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>88BAD93DB2B7FC1E63416522906F3965</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8978C7FB7007A28B676AB1EA004C3923</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8B1ABF8D9CA2A9251DB39CC0757A4400</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -187,12 +242,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A760316124FD796EF09C09479E9F0021</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B8A759F57254B6094CF99273E5ECEE8B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BC5000D645EEAF961C85907CDC796FE1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>BD4EC487BE2C55B1B7F6321A57F87741</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BEF7E6E85DB5CDE5D7A18F4F2EB8494B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -207,7 +277,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>CAA2CFB1B0A3BD8DAA556B81A3C3D4C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CC26CA94EAA8BAD4B569FE9365193047</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D641932CD2ABE8DFE877E8BDCC6ECCC1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DD0041CE7775B7C7BEBA89C84488DDCB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -218,6 +303,11 @@
 			<true/>
 		</dict>
 		<key>EDB8B3100BEB4218F84D15D28BA0347E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F307B842FF76B2DE6C55DB67C0885325</key>
 		<dict>
 			<key>primary</key>
 			<true/>

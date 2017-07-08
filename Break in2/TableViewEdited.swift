@@ -19,8 +19,8 @@ class TableViewEdited: UITableView {
         
         tableFooterView = UIView()
         backgroundColor = UIColor(white: 0.0, alpha: 0.0)
-        layoutMargins = UIEdgeInsetsZero
-        separatorInset = UIEdgeInsetsZero
+        layoutMargins = UIEdgeInsets.zero
+        separatorInset = UIEdgeInsets.zero
         
         self.estimatedRowHeight = frame.height/15.0
         rowHeight = UITableViewAutomaticDimension

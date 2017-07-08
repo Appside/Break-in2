@@ -25,19 +25,19 @@ class ChooseCareerTitleView: UIView {
     
     // Customize careerTitleLabel
     let textSize:CGFloat = self.getTextSize(18)
-    self.careerSelectedLabel.textAlignment = NSTextAlignment.Center
+    self.careerSelectedLabel.textAlignment = NSTextAlignment.center
     self.careerSelectedLabel.font = UIFont(name: "HelveticaNeue-Medium", size: textSize)
     self.careerSelectedLabel.text = "Career"
     
     // Customize nextStatisticButton and previousStatisticButton
     
-    self.nextCareerButton.setImage(UIImage.init(named: "nextButton"), forState: UIControlState.Normal)
-    self.nextCareerButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.nextCareerButton.addTarget(self.superview, action: #selector(SettingsViewController.nextCareerButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.nextCareerButton.setImage(UIImage.init(named: "nextButton"), for: UIControlState())
+    self.nextCareerButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+    self.nextCareerButton.addTarget(self.superview, action: #selector(SettingsViewController.nextCareerButtonClicked(_:)), for: UIControlEvents.touchUpInside)
     
-    self.previousCareerButton.setImage(UIImage.init(named: "prevButton"), forState: UIControlState.Normal)
-    self.previousCareerButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-    self.previousCareerButton.addTarget(self.superview, action: #selector(SettingsViewController.previousCareerButtonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    self.previousCareerButton.setImage(UIImage.init(named: "prevButton"), for: UIControlState())
+    self.previousCareerButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+    self.previousCareerButton.addTarget(self.superview, action: #selector(SettingsViewController.previousCareerButtonClicked(_:)), for: UIControlEvents.touchUpInside)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -60,13 +60,13 @@ class ChooseCareerTitleView: UIView {
     
     self.careerSelectedLabel.translatesAutoresizingMaskIntoConstraints = false
     
-    let careerSelectedLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
+    let careerSelectedLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
     
-    let careerSelectedLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+    let careerSelectedLabelCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
     
-    let careerSelectedLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: (self.frame.width * 8)/10)
+    let careerSelectedLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: (self.frame.width * 8)/10)
     
-    let careerSelectedLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0)
+    let careerSelectedLabelBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerSelectedLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
     
     self.careerSelectedLabel.addConstraint(careerSelectedLabelWidthConstraint)
     self.addConstraints([careerSelectedLabelTopConstraint, careerSelectedLabelCenterXConstraint, careerSelectedLabelBottomConstraint])
@@ -75,13 +75,13 @@ class ChooseCareerTitleView: UIView {
     
     self.nextCareerButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let nextCareerButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    let nextCareerButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
     
-    let nextCareerButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0)
+    let nextCareerButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
     
-    let nextCareerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
+    let nextCareerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let nextCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
+    let nextCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.nextCareerButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.nextCareerButton.addConstraints([nextCareerButtonWidthConstraint, nextCareerButtonHeightConstraint])
     self.addConstraints([nextCareerButtonCenterYConstraint, nextCareerButtonRightConstraint])
@@ -90,13 +90,13 @@ class ChooseCareerTitleView: UIView {
     
     self.previousCareerButton.translatesAutoresizingMaskIntoConstraints = false
     
-    let previousCareerButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+    let previousCareerButtonCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
     
-    let previousCareerButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+    let previousCareerButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
     
-    let previousCareerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/10)
+    let previousCareerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/10)
     
-    let previousCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.frame.width/20)
+    let previousCareerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.previousCareerButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.frame.width/20)
     
     self.previousCareerButton.addConstraints([previousCareerButtonWidthConstraint, previousCareerButtonHeightConstraint])
     self.addConstraints([previousCareerButtonCenterYConstraint, previousCareerButtonLeftConstraint])

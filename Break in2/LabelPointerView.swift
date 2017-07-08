@@ -18,7 +18,7 @@ class LabelPointerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
         
     }
     
@@ -26,22 +26,22 @@ class LabelPointerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
-        let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
+        let contextRef:CGContext = UIGraphicsGetCurrentContext()!
         
-        CGContextSetFillColorWithColor(contextRef, UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1).CGColor)
+        contextRef.setFillColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1).cgColor)
         
-        CGContextBeginPath(contextRef)
-        CGContextMoveToPoint(contextRef, self.labelPointerMidX - (self.labelPointerBaseWidth/2), 0)
-        CGContextAddLineToPoint(contextRef, self.labelPointerMidX, self.frame.height)
-        CGContextAddLineToPoint(contextRef, self.labelPointerMidX + (self.labelPointerBaseWidth/2), 0)
-        CGContextAddLineToPoint(contextRef, self.labelPointerMidX - (self.labelPointerBaseWidth/2), 0)
-        CGContextFillPath(contextRef)
+        contextRef.beginPath()
+        contextRef.move(to: CGPoint(x: self.labelPointerMidX - (self.labelPointerBaseWidth/2), y: 0))
+        contextRef.addLine(to: CGPoint(x: self.labelPointerMidX, y: self.frame.height))
+        contextRef.addLine(to: CGPoint(x: self.labelPointerMidX + (self.labelPointerBaseWidth/2), y: 0))
+        contextRef.addLine(to: CGPoint(x: self.labelPointerMidX - (self.labelPointerBaseWidth/2), y: 0))
+        contextRef.fillPath()
         
     }
     
-    func moveLabelPointer(xPosition:CGFloat) {
+    func moveLabelPointer(_ xPosition:CGFloat) {
         
         self.labelPointerMidX = xPosition
         self.setNeedsDisplay()

@@ -26,7 +26,7 @@ class LogicalPictureView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.backgroundColor = UIColor.clearColor()
+    self.backgroundColor = UIColor.clear
     
   }
   
@@ -34,26 +34,26 @@ class LogicalPictureView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  override func drawRect(rect: CGRect) {
-    super.drawRect(rect)
+  override func draw(_ rect: CGRect) {
+    super.draw(rect)
     
     var drawRect:CGRect = CGRect()
     
-    let contextRef:CGContextRef = UIGraphicsGetCurrentContext()!
-    CGContextSetStrokeColorWithColor(contextRef, self.drawingColor.CGColor)
-    CGContextSetFillColorWithColor(contextRef, self.drawingColor.CGColor)
-    CGContextSetLineWidth(contextRef, 2)
+    let contextRef:CGContext = UIGraphicsGetCurrentContext()!
+    contextRef.setStrokeColor(self.drawingColor.cgColor)
+    contextRef.setFillColor(self.drawingColor.cgColor)
+    contextRef.setLineWidth(2)
     
     if self.shapeToDraw.count == 1 {
       
       if self.shapeSize == 1 {
-        drawRect = CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.1, self.bounds.width * 0.8, self.bounds.height * 0.8)
+        drawRect = CGRect(x: self.bounds.width * 0.1, y: self.bounds.height * 0.1, width: self.bounds.width * 0.8, height: self.bounds.height * 0.8)
       }
       else if self.shapeSize == 2 {
-        drawRect = CGRectMake(self.bounds.width * 0.2, self.bounds.height * 0.2, self.bounds.width * 0.6, self.bounds.height * 0.6)
+        drawRect = CGRect(x: self.bounds.width * 0.2, y: self.bounds.height * 0.2, width: self.bounds.width * 0.6, height: self.bounds.height * 0.6)
       }
       else if self.shapeSize == 3 {
-        drawRect = CGRectMake(self.bounds.width * 0.3, self.bounds.height * 0.3, self.bounds.width * 0.4, self.bounds.height * 0.4)
+        drawRect = CGRect(x: self.bounds.width * 0.3, y: self.bounds.height * 0.3, width: self.bounds.width * 0.4, height: self.bounds.height * 0.4)
       }
       
       if self.shapeToDraw[0] == "Circle" {
@@ -76,20 +76,20 @@ class LogicalPictureView: UIView {
     else if self.shapeToDraw.count == 3 {
       
       var drawRects:[CGRect] = [CGRect]()
-      drawRects.append(CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.1, self.bounds.width * 0.8, self.bounds.height * 0.8))
-      drawRects.append(CGRectMake(self.bounds.width * 0.25, self.bounds.height * 0.25, self.bounds.width * 0.5, self.bounds.height * 0.5))
-      drawRects.append(CGRectMake(self.bounds.width * 0.4, self.bounds.height * 0.4, self.bounds.width * 0.2, self.bounds.height * 0.2))
+      drawRects.append(CGRect(x: self.bounds.width * 0.1, y: self.bounds.height * 0.1, width: self.bounds.width * 0.8, height: self.bounds.height * 0.8))
+      drawRects.append(CGRect(x: self.bounds.width * 0.25, y: self.bounds.height * 0.25, width: self.bounds.width * 0.5, height: self.bounds.height * 0.5))
+      drawRects.append(CGRect(x: self.bounds.width * 0.4, y: self.bounds.height * 0.4, width: self.bounds.width * 0.2, height: self.bounds.height * 0.2))
       if self.shapeToDraw[0] == "Rhombus" {
-        drawRects[0] = CGRectMake(self.bounds.width * 0.05, self.bounds.height * 0.05, self.bounds.width * 0.9, self.bounds.height * 0.9)
+        drawRects[0] = CGRect(x: self.bounds.width * 0.05, y: self.bounds.height * 0.05, width: self.bounds.width * 0.9, height: self.bounds.height * 0.9)
         if self.shapeToDraw[1] == "Square" {
-          drawRects[1] = CGRectMake(self.bounds.width * 0.3, self.bounds.height * 0.3, self.bounds.width * 0.4, self.bounds.height * 0.4)
+          drawRects[1] = CGRect(x: self.bounds.width * 0.3, y: self.bounds.height * 0.3, width: self.bounds.width * 0.4, height: self.bounds.height * 0.4)
         }
       }
       if self.shapeToDraw[1] == "Rhombus" {
-        drawRects[1] = CGRectMake(self.bounds.width * 0.2, self.bounds.height * 0.2, self.bounds.width * 0.6, self.bounds.height * 0.6)
+        drawRects[1] = CGRect(x: self.bounds.width * 0.2, y: self.bounds.height * 0.2, width: self.bounds.width * 0.6, height: self.bounds.height * 0.6)
       }
       
-      for index:Int in 0.stride(to: self.shapeToDraw.count, by: 1) {
+      for index:Int in stride(from: 0, to: self.shapeToDraw.count, by: 1) {
         
         if self.shapeToDraw[index] == "Circle" {
           self.drawCircle(contextRef, inRect: drawRects[index])
@@ -113,12 +113,12 @@ class LogicalPictureView: UIView {
     else if self.shapeToDraw.count == 4 {
       
       var drawRects:[CGRect] = [CGRect]()
-      drawRects.append(CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.1, self.bounds.width * 0.3, self.bounds.height * 0.3))
-      drawRects.append(CGRectMake(self.bounds.width * 0.6, self.bounds.height * 0.1, self.bounds.width * 0.3, self.bounds.height * 0.3))
-      drawRects.append(CGRectMake(self.bounds.width * 0.1, self.bounds.height * 0.6, self.bounds.width * 0.3, self.bounds.height * 0.3))
-      drawRects.append(CGRectMake(self.bounds.width * 0.6, self.bounds.height * 0.6, self.bounds.width * 0.3, self.bounds.height * 0.3))
+      drawRects.append(CGRect(x: self.bounds.width * 0.1, y: self.bounds.height * 0.1, width: self.bounds.width * 0.3, height: self.bounds.height * 0.3))
+      drawRects.append(CGRect(x: self.bounds.width * 0.6, y: self.bounds.height * 0.1, width: self.bounds.width * 0.3, height: self.bounds.height * 0.3))
+      drawRects.append(CGRect(x: self.bounds.width * 0.1, y: self.bounds.height * 0.6, width: self.bounds.width * 0.3, height: self.bounds.height * 0.3))
+      drawRects.append(CGRect(x: self.bounds.width * 0.6, y: self.bounds.height * 0.6, width: self.bounds.width * 0.3, height: self.bounds.height * 0.3))
       
-      for index:Int in 0.stride(to: self.shapeToDraw.count, by: 1) {
+      for index:Int in stride(from: 0, to: self.shapeToDraw.count, by: 1) {
         
         if self.shapeToDraw[index] == "Circle" {
           self.drawCircle(contextRef, inRect: drawRects[index])
@@ -142,84 +142,84 @@ class LogicalPictureView: UIView {
     
   }
   
-  func drawCircle(contextRef:CGContextRef, inRect:CGRect) {
+  func drawCircle(_ contextRef:CGContext, inRect:CGRect) {
     
     if self.isShaded {
-      CGContextFillEllipseInRect(contextRef, inRect)
+      contextRef.fillEllipse(in: inRect)
     }
     else {
-      CGContextStrokeEllipseInRect(contextRef, inRect)
+      contextRef.strokeEllipse(in: inRect)
     }
     
   }
   
-  func drawSquare(contextRef:CGContextRef, inRect:CGRect) {
+  func drawSquare(_ contextRef:CGContext, inRect:CGRect) {
     
-    CGContextBeginPath(contextRef)
-    CGContextMoveToPoint(contextRef, inRect.origin.x, inRect.origin.y)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + inRect.width, inRect.origin.y)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + inRect.width, inRect.origin.y + inRect.height)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x, inRect.origin.y + inRect.height)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x, inRect.origin.y)
+    contextRef.beginPath()
+    contextRef.move(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + inRect.width, y: inRect.origin.y))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + inRect.width, y: inRect.origin.y + inRect.height))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y + inRect.height))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y))
     if self.isShaded {
-      CGContextFillPath(contextRef)
+      contextRef.fillPath()
     }
     else {
-      CGContextStrokePath(contextRef)
+      contextRef.strokePath()
     }
   }
   
-  func drawTriangle(contextRef:CGContextRef, inRect:CGRect) {
+  func drawTriangle(_ contextRef:CGContext, inRect:CGRect) {
     
-    CGContextBeginPath(contextRef)
-    CGContextMoveToPoint(contextRef, inRect.origin.x, inRect.origin.y + inRect.height)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + (inRect.width/2), inRect.origin.y)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + inRect.width, inRect.origin.y + inRect.height)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x, inRect.origin.y + inRect.height)
+    contextRef.beginPath()
+    contextRef.move(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y + inRect.height))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + (inRect.width/2), y: inRect.origin.y))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + inRect.width, y: inRect.origin.y + inRect.height))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y + inRect.height))
     if self.isShaded {
-      CGContextFillPath(contextRef)
+      contextRef.fillPath()
     }
     else {
-      CGContextStrokePath(contextRef)
+      contextRef.strokePath()
     }
   }
   
-  func drawOctagon(contextRef:CGContextRef, inRect:CGRect) {
+  func drawOctagon(_ contextRef:CGContext, inRect:CGRect) {
     
     let octagonSideLength:CGFloat = inRect.width/(1 + (2 * cos(45)))
     let rectOctagonGap:CGFloat = (inRect.width - octagonSideLength)/2
     
-    CGContextBeginPath(contextRef)
-    CGContextMoveToPoint(contextRef, inRect.origin.x + rectOctagonGap, inRect.origin.y)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + rectOctagonGap + octagonSideLength, inRect.origin.y)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + inRect.width, inRect.origin.y + rectOctagonGap)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + inRect.width, inRect.origin.y + rectOctagonGap + octagonSideLength)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + rectOctagonGap + octagonSideLength, inRect.origin.y + inRect.height)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + rectOctagonGap, inRect.origin.y + inRect.height)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x, inRect.origin.y + rectOctagonGap + octagonSideLength)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x, inRect.origin.y + rectOctagonGap)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + rectOctagonGap, inRect.origin.y)
+    contextRef.beginPath()
+    contextRef.move(to: CGPoint(x: inRect.origin.x + rectOctagonGap, y: inRect.origin.y))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + rectOctagonGap + octagonSideLength, y: inRect.origin.y))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + inRect.width, y: inRect.origin.y + rectOctagonGap))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + inRect.width, y: inRect.origin.y + rectOctagonGap + octagonSideLength))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + rectOctagonGap + octagonSideLength, y: inRect.origin.y + inRect.height))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + rectOctagonGap, y: inRect.origin.y + inRect.height))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y + rectOctagonGap + octagonSideLength))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y + rectOctagonGap))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + rectOctagonGap, y: inRect.origin.y))
     if self.isShaded {
-      CGContextFillPath(contextRef)
+      contextRef.fillPath()
     }
     else {
-      CGContextStrokePath(contextRef)
+      contextRef.strokePath()
     }
   }
   
-  func drawRhombus(contextRef:CGContextRef, inRect:CGRect) {
+  func drawRhombus(_ contextRef:CGContext, inRect:CGRect) {
     
-    CGContextBeginPath(contextRef)
-    CGContextMoveToPoint(contextRef, inRect.origin.x + (inRect.width/2), inRect.origin.y)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + inRect.width, inRect.origin.y + (inRect.height/2))
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + (inRect.width/2), inRect.origin.y + inRect.height)
-    CGContextAddLineToPoint(contextRef, inRect.origin.x, inRect.origin.y + (inRect.height/2))
-    CGContextAddLineToPoint(contextRef, inRect.origin.x + (inRect.width/2), inRect.origin.y)
+    contextRef.beginPath()
+    contextRef.move(to: CGPoint(x: inRect.origin.x + (inRect.width/2), y: inRect.origin.y))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + inRect.width, y: inRect.origin.y + (inRect.height/2)))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + (inRect.width/2), y: inRect.origin.y + inRect.height))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x, y: inRect.origin.y + (inRect.height/2)))
+    contextRef.addLine(to: CGPoint(x: inRect.origin.x + (inRect.width/2), y: inRect.origin.y))
     if self.isShaded {
-      CGContextFillPath(contextRef)
+      contextRef.fillPath()
     }
     else {
-      CGContextStrokePath(contextRef)
+      contextRef.strokePath()
     }
   }
   
