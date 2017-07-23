@@ -76,13 +76,13 @@ class CalendarDayButton: UIButton {
         contextRef.setFillColor(self.circleColors[careers[index]]!.cgColor)
         
         contextRef.beginPath()
-        let arcSegmentAngle:Double = (2 * M_PI) / Double(careers.count)
+        let arcSegmentAngle:Double = (2 * Double.pi) / Double(careers.count)
         contextRef.move(to: CGPoint(x: self.bounds.width/2, y: self.bounds.height/2))
         if self.today {
-          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 3, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+          contextRef.addArc(center: CGPoint(x: self.bounds.width/2, y: self.bounds.height/2), radius: (self.bounds.height/2) - 3, startAngle: CGFloat(((Double.pi/2) * -1) + (arcSegmentAngle * Double(index))), endAngle: CGFloat(((Double.pi/2) * -1) + (arcSegmentAngle * Double(index + 1))), clockwise: false)
         }
         else {
-          CGContextAddArc(contextRef, self.bounds.width/2, self.bounds.height/2, (self.bounds.height/2) - 1, CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index))), CGFloat((M_PI_2 * -1) + (arcSegmentAngle * Double(index + 1))), 0)
+          contextRef.addArc(center: CGPoint(x: self.bounds.width/2, y: self.bounds.height/2), radius: (self.bounds.height/2) - 1, startAngle: CGFloat(((Double.pi/2) * -1) + (arcSegmentAngle * Double(index))), endAngle: CGFloat(((Double.pi/2) * -1) + (arcSegmentAngle * Double(index + 1))), clockwise: false)
         }
         contextRef.fillPath()
       }

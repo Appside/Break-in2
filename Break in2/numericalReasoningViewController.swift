@@ -1025,9 +1025,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         var y:Int = 0
         var chartDataSets:[BarChartDataSet] = [BarChartDataSet]()
         
-      for y:Int in 0.stride(to: values.count, by: 1) {
+      for y:Int in stride(from: 0, to: values.count, by: 1) {
             for i in 0..<dataPoints.count {
-                let dataEntry = BarChartDataEntry(value: values[y][i], x: i)
+                let dataEntry = BarChartDataEntry(x: Double(i), y: values[y][i])
                 dataEntries.append(dataEntry)
             }
             let chartDataSet = BarChartDataSet(values: dataEntries, label: setLegendNames[y])
@@ -1037,10 +1037,10 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             chartDataSets.append(chartDataSet)
             dataEntries.removeAll()
         }
-        
-        let chartData = BarChartData(xVals: dataPoints, dataSets: chartDataSets)
+      
+        let chartData = BarChartData(dataSets: chartDataSets)
         chartView.data = chartData
-        chartData.setValueTextColor(UIColor.whiteColor())
+        chartData.setValueTextColor(UIColor.white)
         chartData.setValueFont(UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13)))
         chartView.autoScaleMinMaxEnabled = true
         
@@ -1067,7 +1067,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         }
         
         let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
-        let pieChartData = PieChartData(xVals: dataPoints, dataSet: pieChartDataSet)
+        let pieChartData = PieChartData(dataSet: pieChartDataSet)
         var colors: [UIColor] = []
         for y in 0..<dataPoints.count {
             colors.append(colorsChart[y])
@@ -1093,7 +1093,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         var y:Int = 0
         var lineChartDataSets:[LineChartDataSet] = [LineChartDataSet]()
         
-        for y:Int in 0.stride(to: values.count, by: 1) {
+        for y:Int in stride(from: 0, to: values.count, by: 1) {
             for i in 0..<dataPoints.count {
                 let dataEntry = ChartDataEntry(x: values[y][i], y: Double(i))
                 dataEntries.append(dataEntry)
@@ -1106,10 +1106,10 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             dataEntries.removeAll()
         }
         
-        let lineChartData = LineChartData(xVals: dataPoints, dataSets: lineChartDataSets)
+        let lineChartData = LineChartData(dataSets: lineChartDataSets)
         
         chartView.data = lineChartData
-        lineChartData.setValueTextColor(UIColor.whiteColor())
+        lineChartData.setValueTextColor(UIColor.white)
         lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13)))
         chartView.data?.highlightEnabled = true
         chartView.autoScaleMinMaxEnabled = true

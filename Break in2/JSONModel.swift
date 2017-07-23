@@ -331,7 +331,7 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
       let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL)
       let session = URLSession.shared
       
-      let task = session.dataTask(with: urlRequest, completionHandler: {
+      let task = URLSession.shared.dataTask(with: urlRequest as URLRequest, completionHandler: {
         (data, response, error) -> Void in
         
         let httpResponse = response as! HTTPURLResponse
@@ -341,8 +341,8 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
           
           do {
             if let downloadedData = data {
-              let file = try FileHandle(forWritingToURL: fileURL)
-              file.writeData(downloadedData)
+              let file = try FileHandle(forWritingTo: fileURL)
+              file.write(downloadedData)
               print(jsonFileName + " JSON file overwritten!")
             }
             else {

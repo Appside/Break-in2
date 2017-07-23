@@ -140,7 +140,7 @@ class SwiftNotice: NSObject {
                 iv.contentMode = UIViewContentMode.scaleAspectFit
                 mainView.addSubview(iv)
                 timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags(rawValue: 0), queue: DispatchQueue.main) /*Migrator FIXME: Use DispatchSourceTimer to avoid the cast*/ as! DispatchSource
-                timer.setTimer(start: DispatchTime.now(), interval: UInt64(timeInterval) * NSEC_PER_MSEC, leeway: 0)
+                timer.scheduleRepeating(deadline: DispatchTime.now(), interval: Double(UInt64(timeInterval) * NSEC_PER_MSEC))
                 timer.setEventHandler(handler: { () -> Void in
                     let name = imageNames[timerTimes % imageNames.count]
                     iv.image = name

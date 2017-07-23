@@ -633,8 +633,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: Highlight) {
         self.pointerView1.alpha = 1.0
         self.pointerView2.alpha = 1.0
-        self.barChartText.text = "\(self.dateTests[0] = entry.x) - \(round(entry.value))%"
-        self.lineChartText.text = "\(self.dateTests[0] = entry.x) - \(round(entry.value))s"
+        self.barChartText.text = "\(self.dateTests[0] = String(entry.x)) - \(round(entry.value))%"
+        self.lineChartText.text = "\(self.dateTests[0] = String(entry.x)) - \(round(entry.value))s"
         self.pointerView1.moveLabelPointer((self.pointerView1.frame.width/6 * (CGFloat(entry.x))) * 1.0150 + self.pointerView1.labelPointerBaseWidth)
         self.pointerView2.moveLabelPointer((self.pointerView2.frame.width/6 * (CGFloat(entry.x))) * 1.100 + self.pointerView2.labelPointerBaseWidth/2)
     
@@ -1107,12 +1107,12 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         var dataEntries2: [ChartDataEntry] = []
         
         for y in stride(from: 0, to: yUnits.count, by: 1) {
-            let dataEntry = BarChartDataEntry(value: round(yUnits[y]), x: y)
+            let dataEntry = BarChartDataEntry()
             dataEntries.append(dataEntry)
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Test Results")
-        let chartData = BarChartData(xVals: xValues, dataSet: chartDataSet)
+        let chartData = BarChartData()
         self.chartObject.data = chartData
         
         self.chartObject.highlightValue(Highlight(x: 5, dataSetIndex: 0))
@@ -1149,7 +1149,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         }
         
         let chartDataSet2 = LineChartDataSet(values: dataEntries2, label: "Test Time")
-        let chartData2 = LineChartData(xVals: xValues2, dataSet: chartDataSet2)
+          let chartData2 = LineChartData(dataSets: [chartDataSet2])
         self.chartObject2.data = chartData2
         
         chartDataSet2.drawCubicEnabled = true
