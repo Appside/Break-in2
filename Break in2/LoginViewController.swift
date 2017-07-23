@@ -473,7 +473,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
         careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.loginViewModel.getAppVariables("careerTypes") as! [String]
         careerPrefs[PF_PREFERENCES_USERNAME] = user[PF_USER_USERNAME]
         
-        careerPrefs.saveInBackground(block: { (succeeded, error: NSError?) -> Void in
+        careerPrefs.saveInBackground(block: { (succeeded, error: Error?) -> Void in
             if error == nil {
                 
                 SwiftSpinner.hide()

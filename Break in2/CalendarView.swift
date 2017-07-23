@@ -634,7 +634,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     let query = PFQuery.orQuery(withSubqueries: [query1, query2])
     
     query.findObjectsInBackground {
-      (objects: [PFObject]?, error: NSError?) -> Void in
+      (objects: [PFObject]?, error: Error?) -> Void in
       
       if error == nil {
         
@@ -659,23 +659,23 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
                 
                 if object[PF_CALENDAR_DEADLINEYEAR] as! Int == 2000 {
                   if self.currentMonth == todaysMonth {
-                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.year, from: self.todaysDate), forKey: "year")
-                    deadlinesIndividual.updateValue(todaysMonth, forKey: "month")
-                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.day, from: self.todaysDate), forKey: "day")
-                    deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
-                    deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
-                    deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.year, from: self.todaysDate) as AnyObject, forKey: "year")
+                    deadlinesIndividual.updateValue(todaysMonth as AnyObject, forKey: "month")
+                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.day, from: self.todaysDate) as AnyObject, forKey: "day")
+                    deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String as AnyObject, forKey: "company")
+                    deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String as AnyObject, forKey: "career")
+                    deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String as AnyObject, forKey: "position")
                     
                     deadlinesTemp.append(deadlinesIndividual)
                   }
                 }
                 else {
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int, forKey: "year")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int, forKey: "month")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int, forKey: "day")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String, forKey: "company")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String, forKey: "career")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String, forKey: "position")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int as AnyObject, forKey: "year")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int as AnyObject, forKey: "month")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int as AnyObject, forKey: "day")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String as AnyObject, forKey: "company")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String as AnyObject, forKey: "career")
+                  deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String as AnyObject, forKey: "position")
                   
                   deadlinesTemp.append(deadlinesIndividual)
                 }
@@ -730,8 +730,7 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
           
           }, subtitle: "Tap to dismiss")
       }
-    } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
-    
-  }
+    }
+    }
   
 }

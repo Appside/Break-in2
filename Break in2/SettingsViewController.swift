@@ -377,31 +377,31 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     
     SwiftSpinner.show("Deactivating account", animated: true)
     
-    let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, httpMethod: "DELETE")
-    
-    facebookRequest.start { (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-      
-      if(error == nil && result != nil){
-        
-        let user = PFUser.current()!
-        ParseExtensions.deleteUserFB(user)
-        
-        //self.deleteFromCoreData()
-        let date:Date = Date()
-        self.saveToCoreData("", p: [], dP: [], aI: "", uI: "", ex: date, r: date)
-        self.view.loginUser(self)
-        SwiftSpinner.hide()
-        
-      } else {
-        if let error: NSError = error {
-          if let errorString = error.userInfo["error"] as? String {
-            self.noticeOnlyText("Please try again \(errorString)")
-          }
-        } else {
-          self.noticeOnlyText("Please try again")
-        }
-      }
-    } as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler as! FBSDKGraphRequestHandler
+//    let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, httpMethod: "DELETE")
+//    
+//    facebookRequest.start (completionHandler: { connection, result, error in
+//      
+//      if(error == nil && result != nil){
+//        
+//        let user = PFUser.current()!
+//        ParseExtensions.deleteUserFB(user)
+//        
+//        //self.deleteFromCoreData()
+//        let date:Date = Date()
+//        self.saveToCoreData("", p: [], dP: [], aI: "", uI: "", ex: date, r: date)
+//        self.view.loginUser(self)
+//        SwiftSpinner.hide()
+//        
+//      } else {
+//        if let error: Error = error {
+//          if let errorString = error.userInfo["error"] as? String {
+//            self.noticeOnlyText("Please try again \(errorString)")
+//          }
+//        } else {
+//          self.noticeOnlyText("Please try again")
+//        }
+//      }
+//    })
     
   }
     
@@ -435,7 +435,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
     }
     
-    func saveToCoreData(_ t: String, p: AnyObject, dP: AnyObject, aI:String, uI: String, ex: Date, r: Date) {
+    func saveToCoreData(_ t: String, p: Any, dP: Any, aI:String, uI: String, ex: Date, r: Date) {
         
         let entity = NSEntityDescription.insertNewObject(forEntityName: "Person", into: moc) as! Person
         entity.setValue(t, forKey: "token")
@@ -461,7 +461,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //    //query.whereKey(PF_PREFERENCES_USERNAME, equalTo: currentUser.username!)
         //    query.includeKey()
         //
-        //    query.findObjectsInBackgroundWithBlock{(objects:[PFObject]?, error:NSError?) -> Void in
+        //    query.findObjectsInBackgroundWithBlock{(objects:[PFObject]?, error:Error?) -> Void in
         //
         //        if error == nil {
         //
@@ -505,7 +505,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //let usernameString = username as! String
         query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
         query.findObjectsInBackground {
-            (objects: [PFObject]?, error: NSError?) -> Void in
+            (objects: [PFObject]?, error: Error?) -> Void in
             
             if error == nil {
                 // The find succeeded.
@@ -540,8 +540,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 // Log details of the failure
                 self.noDataUILabel.text = "Connection Error"
             }
-        } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
-        
+        }         
         
         
     }
@@ -555,12 +554,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
         query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
         //query.getObjectInBackgroundWithId(objID!)
-        query.getFirstObjectInBackground(block: { (user: PFObject?, error: NSError?) -> Void in
+        query.getFirstObjectInBackground(block: { (user: PFObject?, error: Error?) -> Void in
             
             if error == nil {
                 
                 user![PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
-                user?.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
+                user?.saveInBackground(block: { (succeeded: Bool, error: Error?) -> Void in
                     if error == nil {
                         
                         self.defaults.set(self.chosenCareers, forKey: "SavedCareerPreferences")
@@ -585,7 +584,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                         
                     }
                     
-                } as! PFBooleanResultBlock)
+                } )
                 
             }else{
                 
@@ -597,7 +596,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                     }, subtitle: "Preferences unsaved, to return to settings")
                 
             }
-        } as! (PFObject?, Error?) -> Void)
+        } )
         
 //        SwiftSpinner.show("Saving career preferences")
 //        
@@ -607,7 +606,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
 //        //let usernameString = username as! String
 //        query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
 //        query.findObjectsInBackgroundWithBlock {
-//            (objects: [PFObject]?, error: NSError?) -> Void in
+//            (objects: [PFObject]?, error: Error?) -> Void in
 //            
 //            if error == nil {
 //                // The find succeeded.
@@ -644,7 +643,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         careerPrefs[PF_PREFERENCES_USER] = user!
         careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
         
-        careerPrefs.saveInBackground(block: { (succeeded, error: NSError?) -> Void in
+        careerPrefs.saveInBackground(block: { (succeeded, error: Error?) -> Void in
             if error == nil {
                 
                 SwiftSpinner.hide()
@@ -973,7 +972,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 subTitle: "Are you sure? Deactivation will delete all of your statistics, preferences and user data.", // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "", // Optional button value, default: ""
-                style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                style: .notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                 colorStyle: 0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
@@ -1200,7 +1199,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       subTitle: "Are you sure you want to exit?", // String of view
       duration: 0.0, // Duration to show before closing automatically, default: 0.0
       completeText: "Cancel", // Optional button value, default: ""
-      style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+      style: .notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
       colorStyle: 0x526B7B,//0xD0021B - RED
       colorTextButton: 0xFFFFFF
     )

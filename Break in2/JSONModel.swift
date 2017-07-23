@@ -253,13 +253,17 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
       if let directoryURL = directoryURLs.first {
         
         let fileURL = directoryURL.appendingPathComponent(jsonFileName + ".json")
-                
-        let jsonData:Data? = Data(contentsOfURL: fileURL)
-        if let actualJsonData = jsonData {
+        
+        
+        
+        //if let actualJsonData = jsonData {
           //NSData exist so use NSJSONerialization to parse data
           do {
+            
+            let actualJsonData:Data? = try Data(contentsOf: fileURL)
+            
             //Data correctly parsed
-            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: actualJsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
+            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: actualJsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
             //print(jsonFileName + " JSON file retrieved")
             return arrayOfDictionaries
           }
@@ -268,14 +272,8 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
             print("Problem reading " + jsonFileName + " JSON Serialization")
           }
         }
-        else {
-          //NSData does not exist
-          print("Problem reading " + jsonFileName + " NSData")
-        }
         
-      }
-    }
-    else {
+    }else {
       
       let fileURL = Bundle.main.url(forResource: jsonFileName, withExtension: "json")
       

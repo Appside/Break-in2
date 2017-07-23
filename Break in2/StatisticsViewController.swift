@@ -633,10 +633,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: Highlight) {
         self.pointerView1.alpha = 1.0
         self.pointerView2.alpha = 1.0
-        self.barChartText.text = "\(self.dateTests[entry.xIndex]) - \(round(entry.value))%"
-        self.lineChartText.text = "\(self.dateTests[entry.xIndex]) - \(round(entry.value))s"
-        self.pointerView1.moveLabelPointer((self.pointerView1.frame.width/6 * (CGFloat(entry.xIndex))) * 1.0150 + self.pointerView1.labelPointerBaseWidth)
-        self.pointerView2.moveLabelPointer((self.pointerView2.frame.width/6 * (CGFloat(entry.xIndex))) * 1.100 + self.pointerView2.labelPointerBaseWidth/2)
+        self.barChartText.text = "\(self.dateTests[0] = entry.x) - \(round(entry.value))%"
+        self.lineChartText.text = "\(self.dateTests[0] = entry.x) - \(round(entry.value))s"
+        self.pointerView1.moveLabelPointer((self.pointerView1.frame.width/6 * (CGFloat(entry.x))) * 1.0150 + self.pointerView1.labelPointerBaseWidth)
+        self.pointerView2.moveLabelPointer((self.pointerView2.frame.width/6 * (CGFloat(entry.x))) * 1.100 + self.pointerView2.labelPointerBaseWidth/2)
     
     }
     
@@ -651,8 +651,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             self.statisticsTitleView.statisticsTitleLabel.text = "TIME PER QUESTION"
             self.lineChartText.text = "Select a test from the graph"
             self.barChartText.text = "Select a test from the graph"
-            self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
-            self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+            self.chartObject.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
+            self.chartObject2.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
             self.pointerView1.moveLabelPointer(-10000)
             self.pointerView2.moveLabelPointer(-10000)
         } else {
@@ -661,8 +661,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             self.statisticsTitleView.statisticsTitleLabel.text = "SCORES"
             self.lineChartText.text = "Select a test from the graph"
             self.barChartText.text = "Select a test from the graph"
-            self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
-            self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+            self.chartObject.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
+            self.chartObject2.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
             self.pointerView1.moveLabelPointer(-10000)
             self.pointerView2.moveLabelPointer(-10000)
         }
@@ -675,8 +675,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.statisticsTitleView.statisticsTitleLabel.text = "TIME PER QUESTION"
         self.lineChartText.text = "Select a test from the graph"
         self.barChartText.text = "Select a test from the graph"
-        self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
-        self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+        self.chartObject.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
+        self.chartObject2.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
         self.pointerView1.moveLabelPointer(-10000)
         self.pointerView2.moveLabelPointer(-10000)
     }
@@ -688,8 +688,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.statisticsTitleView.statisticsTitleLabel.text = "SCORES"
         self.lineChartText.text = "Select a test from the graph"
         self.barChartText.text = "Select a test from the graph"
-        self.chartObject.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
-        self.chartObject2.highlightValue(xIndex: -1, dataSetIndex: -1, callDelegate: true)
+        self.chartObject.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
+        self.chartObject2.highlightValue(x: -1, dataSetIndex: -1, callDelegate: true)
         self.pointerView1.moveLabelPointer(-10000)
         self.pointerView2.moveLabelPointer(-10000)
     }
@@ -713,7 +713,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_NUMREAS_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -747,7 +747,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                     
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
         }else if (sender.currentTitle == "Verbal Reasoning"){
             
@@ -758,7 +758,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -792,8 +792,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
-
+            }
             
         }else if (sender.currentTitle == "Arithmetic Reasoning"){
             
@@ -804,7 +803,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_ARITHMETIC_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -838,7 +837,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
             
         }else if (sender.currentTitle == "Logical Reasoning"){
@@ -850,7 +849,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_LOGICAL_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -884,7 +883,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
         }else if (sender.currentTitle == "Fractions"){
             
@@ -895,7 +894,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_FRACTIONS_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -929,7 +928,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
         }else if (sender.currentTitle == "Sequences"){
             
@@ -940,7 +939,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_SEQUENCE_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -974,7 +973,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
 
 
         }else if (sender.currentTitle == "Programming"){
@@ -986,7 +985,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_PROG_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1020,7 +1019,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
             
         }else if (sender.currentTitle == "Technology"){
@@ -1032,7 +1031,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             query.whereKey(PF_TECH_USERNAME, equalTo: username!)
             query.limit = 6
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1066,7 +1065,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
             
         }
@@ -1108,7 +1107,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         var dataEntries2: [ChartDataEntry] = []
         
         for y in stride(from: 0, to: yUnits.count, by: 1) {
-            let dataEntry = BarChartDataEntry(value: round(yUnits[y]), xIndex: y)
+            let dataEntry = BarChartDataEntry(value: round(yUnits[y]), x: y)
             dataEntries.append(dataEntry)
         }
         
@@ -1116,7 +1115,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         let chartData = BarChartData(xVals: xValues, dataSet: chartDataSet)
         self.chartObject.data = chartData
         
-        self.chartObject.highlightValue(Highlight(xIndex: 5, dataSetIndex: 0))
+        self.chartObject.highlightValue(Highlight(x: 5, dataSetIndex: 0))
         chartDataSet.setColor(UIColor(white: 0.5, alpha: 0.5))
         chartDataSet.highlightColor = colors[sender.tag]
         chartDataSet.highlightAlpha = 1.0
@@ -1125,7 +1124,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         let textSize3:CGFloat = self.view.getTextSize(13)
         chartData.setValueFont(UIFont(name: "HelveticaNeue", size: textSize3))
         self.chartObject.xAxis.enabled = false
-        self.chartObject.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+        self.chartObject.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
         self.chartObject.legend.enabled = false
         self.chartObject.isUserInteractionEnabled = true
         self.chartObject.pinchZoomEnabled = false
@@ -1172,7 +1171,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         chartDataSet2.valueFormatter = NumberFormatter() as! IValueFormatter
         chartDataSet2.valueFormatter?.minimumFractionDigits = 0
         self.chartObject2.xAxis.enabled = false
-        self.chartObject2.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+        self.chartObject2.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
         self.chartObject2.legend.enabled = false
         self.chartObject2.isUserInteractionEnabled = true
         self.chartObject2.pinchZoomEnabled = false
@@ -1259,7 +1258,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                 subTitle: "Statistics already deleted.", // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "Close", // Optional button value, default: ""
-                style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                style: .notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                 colorStyle: 0x9B9B9B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
@@ -1276,7 +1275,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                 subTitle: "Are you sure? You will be unable to recover these.", // String of view
                 duration: 0.0, // Duration to show before closing automatically, default: 0.0
                 completeText: "Cancel", // Optional button value, default: ""
-                style: .Notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                style: .notice, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                 colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
                 colorTextButton: 0xFFFFFF
             )
@@ -1301,7 +1300,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_NUMREAS_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1327,7 +1326,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
 
             
         }else if (self.selectedTest == "Verbal Reasoning"){
@@ -1338,7 +1337,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1366,7 +1365,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
             
         }else if (self.selectedTest == "Arithmetic Reasoning"){
@@ -1377,7 +1376,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_ARITHMETIC_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1404,7 +1403,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
             
         }else if (self.selectedTest == "Logical Reasoning"){
@@ -1415,7 +1414,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_LOGICAL_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1442,7 +1441,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
         }else if (self.selectedTest == "Fractions"){
             
@@ -1452,7 +1451,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_FRACTIONS_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1479,7 +1478,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
         }else if (self.selectedTest == "Sequences"){
             
@@ -1489,7 +1488,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_SEQUENCE_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1516,7 +1515,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
         }else if (self.selectedTest == "Programming"){
             
             SwiftSpinner.show("Loading statistics")
@@ -1525,7 +1524,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_PROG_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1553,7 +1552,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
             
         }else if (self.selectedTest == "Technology"){
@@ -1564,7 +1563,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
             let username = currentUser.username
             query.whereKey(PF_TECH_USERNAME, equalTo: username!)
             query.findObjectsInBackground {
-                (objects: [PFObject]?, error: NSError?) -> Void in
+                (objects: [PFObject]?, error: Error?) -> Void in
                 
                 if error == nil {
                     
@@ -1592,7 +1591,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+            }
             
             
         }

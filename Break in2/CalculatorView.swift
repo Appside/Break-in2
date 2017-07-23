@@ -430,7 +430,7 @@ class CalculatorView:UIView {
             
         }
         
-        self.BottomPane.text = formatter.string(from: NSNumber(self.memory1))
+            self.BottomPane.text = formatter.string(from: NSNumber(value: memory1))
         
         }
         
@@ -551,9 +551,9 @@ class CalculatorView:UIView {
         formatter.usesSignificantDigits = true
         formatter.maximumSignificantDigits = 12;
         
-        let nombre1:String = formatter.string(from: NSNumber(self.memory2))!
-        let nombre2:String = formatter.string(from: NSNumber(self.memory1))!
-        let nombre3:String = formatter.string(from: NSNumber(self.memory3))!
+        let nombre1:String = formatter.string(from: NSNumber(value: memory2))!
+        let nombre2:String = formatter.string(from: NSNumber(value: memory1))!
+        let nombre3:String = formatter.string(from: NSNumber(value: memory3))!
             
         if self.TopPane.text == "" {
             self.line1Top = "\(nombre1) \(self.operatorMemory) \(nombre2) = \(nombre3)"
@@ -571,7 +571,7 @@ class CalculatorView:UIView {
             
         self.TopPane.text = "\(self.line1Top)\n\(self.line2Top)\n\(self.line3Top)"
         
-        self.BottomPane.text = formatter.string(from: NSNumber(self.memory3))
+        self.BottomPane.text = formatter.string(from: NSNumber(value: memory3))
         
         self.operatorPress = false
         self.equalPress = true
@@ -601,7 +601,7 @@ class CalculatorView:UIView {
             formatter.usesSignificantDigits = true
             formatter.maximumSignificantDigits = 12;
             
-            self.BottomPane.text = formatter.string(from: NSNumber(self.memory3))
+            self.BottomPane.text = formatter.string(from: NSNumber(value: memory3))
             
             if self.operatorPress == true {
             

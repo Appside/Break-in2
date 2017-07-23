@@ -62,7 +62,7 @@ class EditProfileViewController : FormViewController {
         
         let query = PFQuery(className:"Recommendations")
         query.findObjectsInBackground {
-            (objects: [PFObject]?, error: NSError?) -> Void in
+            (objects: [PFObject]?, error: Error?) -> Void in
             if error == nil {
                 if let objects = objects {
                     for object in objects {
@@ -74,7 +74,7 @@ class EditProfileViewController : FormViewController {
                 // Log details of the failure
                 print("error")
             }
-        } as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void as! ([PFObject]?, Error?) -> Void
+        }
         
         //Status Bar Background
         let NewView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 20.0))
@@ -118,35 +118,35 @@ class EditProfileViewController : FormViewController {
         form =
 
         Section(){ section in
-            var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+            var header = HeaderFooterView<ProfileHeaderUIView>(.class)
             header.height = {self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40}
             header.onSetupView = { view, _ in
                 view.addSubview(self.logoImageView)
-                self.logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
                 let labelString:String = String("BREAKIN2")
                 let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
                 attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
                 attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location: 0, length: NSString(string: labelString).length))
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
                 self.logoImageView.attributedText = attributedString
                 self.logoImageView.clipsToBounds = true
                 self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
                 
-                let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+                let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
                 
-                let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+                let logoImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
                 
-                let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+                let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
                 
-                let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+                let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
                 
                 self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
                 view.addConstraints([logoImageViewCenterXConstraint, logoImageViewTopConstraint])
                 
                 //Back Button
                 view.addSubview(self.backButton)
-                self.backButton.setImage(UIImage.init(named: "back")!, forState: UIControlState.Normal)
-                self.backButton.addTarget(self, action: #selector(EditProfileViewController.goBackToSettingsMenu(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                self.backButton.setImage(UIImage.init(named: "back")!, for: UIControlState.normal)
+                self.backButton.addTarget(self, action: #selector(EditProfileViewController.goBackToSettingsMenu(_:)), for: UIControlEvents.touchUpInside)
                 self.backButton.clipsToBounds = true
                 if self.firstTimeUser {
                     self.backButton.alpha = 0
@@ -156,13 +156,13 @@ class EditProfileViewController : FormViewController {
                 }
                 self.backButton.translatesAutoresizingMaskIntoConstraints = false
                 
-                let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: self.majorMargin)
+                let backButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
                 
-                let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+                let backButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
                 
-                let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+                let backButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
                 
-                let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+                let backButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.backButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
                 
                 self.backButton.addConstraints([backButtonHeightConstraint, backButtonWidthConstraint])
                 view.addConstraints([backButtonLeftConstraint, backButtonTopConstraint])
@@ -171,41 +171,41 @@ class EditProfileViewController : FormViewController {
                 view.addSubview(self.pageDescription)
                 self.pageDescription.translatesAutoresizingMaskIntoConstraints = false
                 
-                let pageDescriptionCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+                let pageDescriptionCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
                 
-                let pageDescriptionTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight)
+                let pageDescriptionTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + 3*self.minorMargin + self.backButtonHeight)
                 
-                let pageDescriptionHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+                let pageDescriptionHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
                 
-                let pageDescriptionWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
+                let pageDescriptionWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescription, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
                 
                 self.pageDescription.addConstraints([pageDescriptionHeightConstraint, pageDescriptionWidthConstraint])
                 view.addConstraints([pageDescriptionCenterXConstraint, pageDescriptionTopConstraint])
                 
                 self.pageDescription.text = "EDIT PROFILE DETAILS"
-                self.pageDescription.textColor = UIColor.whiteColor()
+                self.pageDescription.textColor = UIColor.white
                 self.pageDescription.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
-                self.pageDescription.textAlignment = NSTextAlignment.Center
+                self.pageDescription.textAlignment = NSTextAlignment.center
                 
                 //pageDescriptionSub set up
                 view.addSubview(self.pageDescriptionSub)
                 self.pageDescriptionSub.translatesAutoresizingMaskIntoConstraints = false
                 
-                let pageDescriptionSubCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+                let pageDescriptionSubCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
                 
-                let pageDescriptionSubTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: self.statusBarFrame.height + 4*self.minorMargin + self.backButtonHeight + 20)
+                let pageDescriptionSubTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + 4*self.minorMargin + self.backButtonHeight + 20)
                 
-                let pageDescriptionSubHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 20)
+                let pageDescriptionSubHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
                 
-                let pageDescriptionSubWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
+                let pageDescriptionSubWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.pageDescriptionSub, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - self.minorMargin*2)
                 
                 self.pageDescriptionSub.addConstraints([pageDescriptionSubHeightConstraint, pageDescriptionSubWidthConstraint])
                 view.addConstraints([pageDescriptionSubCenterXConstraint, pageDescriptionSubTopConstraint])
                 
                 self.pageDescriptionSub.text = "This will help us tailor your experience"
-                self.pageDescriptionSub.textColor = UIColor.whiteColor()
+                self.pageDescriptionSub.textColor = UIColor.white
                 self.pageDescriptionSub.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-                self.pageDescriptionSub.textAlignment = NSTextAlignment.Center
+                self.pageDescriptionSub.textAlignment = NSTextAlignment.center
                 
             }
             section.header = header
@@ -227,7 +227,7 @@ class EditProfileViewController : FormViewController {
                 }
             
             +++ Section { section in
-                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                var header = HeaderFooterView<ProfileHeaderUIView>(.class)
                 header.height = {textHeight4}
                 header.onSetupView = { view, _ in
                     // Commonly used to setup texts inside the view
@@ -318,7 +318,7 @@ class EditProfileViewController : FormViewController {
                 }
             
             +++ Section { section in
-                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                var header = HeaderFooterView<ProfileHeaderUIView>(.class)
                 header.height = {textHeight3}
                 header.onSetupView = { view, _ in
                     // Commonly used to setup texts inside the view
@@ -421,7 +421,7 @@ class EditProfileViewController : FormViewController {
             }
 
             +++ Section { section in
-                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                var header = HeaderFooterView<ProfileHeaderUIView>(.class)
                 header.height = {textHeight2}
                 header.onSetupView = { view, _ in
                     // Commonly used to setup texts inside the view
@@ -451,9 +451,9 @@ class EditProfileViewController : FormViewController {
 //                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
 //                    cell.backgroundColor = self.fieldsColor
 //                }.cellUpdate { cell, row in
-//                    cell.textLabel?.textColor = UIColor.whiteColor()
-//                    cell.tintColor = UIColor.whiteColor()
-//                    cell.detailTextLabel?.textColor = UIColor.whiteColor()
+//                    cell.textLabel?.textColor = UIColor.white
+//                    cell.tintColor = UIColor.white
+//                    cell.detailTextLabel?.textColor = UIColor.white
 //                    cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
 //                }.onChange { row in
 //                    self.shareInfoAllowed = row.value!
@@ -484,7 +484,7 @@ class EditProfileViewController : FormViewController {
             <<< LabelRow(){
                 
                 $0.hidden = Condition.function(["switchRowTag"], { form in
-                    return !((form.rowByTag("switchRowTag") as? SwitchRow)?.value ?? false)
+                    return !((form.rowBy(tag:"switchRowTag") as? SwitchRow)?.value ?? false)
                 })
                 $0.title = "You have allowed us to share your profile."
                 }.cellSetup{ cell, row in
@@ -495,7 +495,7 @@ class EditProfileViewController : FormViewController {
             }
         
             +++ Section { section in
-                var header = HeaderFooterView<ProfileHeaderUIView>(.Class)
+                var header = HeaderFooterView<ProfileHeaderUIView>(.class)
                 header.height = {textHeight1}
                 header.onSetupView = { view, _ in
                     // Commonly used to setup texts inside the view
@@ -592,7 +592,7 @@ class EditProfileViewController : FormViewController {
         var alertMessage:String = String()
         var showErrorMessage:Bool = false
         
-        if let newRow:NameRow = form.rowByTag("FirstName") {
+        if let newRow:NameRow = form.rowBy(tag:"FirstName") {
             if let newEntry = newRow.value {
                 self.profileFirstName = newEntry
             } else {
@@ -601,7 +601,7 @@ class EditProfileViewController : FormViewController {
             }
         }
         
-        if let newRow:NameRow = form.rowByTag("LastName") {
+        if let newRow:NameRow = form.rowBy(tag:"LastName") {
             if let newEntry = newRow.value {
                 self.profileLastName = newEntry
             } else {
@@ -610,7 +610,7 @@ class EditProfileViewController : FormViewController {
             }
         }
         
-        if let newRow:EmailRow = form.rowByTag("Email") {
+        if let newRow:EmailRow = form.rowBy(tag:"Email") {
             if let newEntry = newRow.value {
                 self.profileEmail = newEntry
                 if !isValidEmail(self.profileEmail) {
@@ -623,10 +623,10 @@ class EditProfileViewController : FormViewController {
             }
         }
         
-        if let newRow:PhoneRow = form.rowByTag("Phone") {
+        if let newRow:PhoneRow = form.rowBy(tag:"Phone") {
             if let newEntry = newRow.value {
                 self.profilePhone = newEntry
-                if self.profilePhone != "" && !phoneNumberValidation(self.profilePhone) {
+                if self.profilePhone != "" && !phoneNumberValidation(value: self.profilePhone) {
                     alertMessage = alertMessage + "Invalid Phone Number" + "\n"
                     showErrorMessage = true
                 }
@@ -706,7 +706,7 @@ class EditProfileViewController : FormViewController {
                             
                         }
                         
-                    } as! PFBooleanResultBlock)k))
+                    } as! PFBooleanResultBlock))
                     
                 }else{
                     
@@ -740,12 +740,11 @@ class EditProfileViewController : FormViewController {
         return result
     }
     
-    func phoneNumberValidation(_ value: String) -> Bool {
-        var charcter  = CharacterSet(charactersIn: "0123456789").inverted
-        var filtered:NSString!
-        var inputString:NSArray = value.components(separatedBy: charcter)
-        filtered = inputString.componentsJoined(by: "") as NSString
-        return  value == filtered
+    func phoneNumberValidation(value: String) -> Bool {
+        let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        let result =  phoneTest.evaluate(with: value)
+        return result
     }
 
     

@@ -555,7 +555,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
             subTitle: alertMessage, // String of view
             duration: 0.0, // Duration to show before closing automatically, default: 0.0
             completeText: "Cancel", // Optional button value, default: ""
-            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            style: .error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
@@ -632,7 +632,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
                     subTitle: "Your answer is incorrect. Do you want to move to the next question?", // String of view
                     duration: 0.0, // Duration to show before closing automatically, default: 0.0
                     completeText: "Close", // Optional button value, default: ""
-                    style: .Warning, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                    style: .warning, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                     colorStyle: 0xFFD110,
                     colorTextButton: 0xFFFFFF
                 )
@@ -735,7 +735,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
                         self.displayedQuestionIndex += 1
                         if self.displayedQuestionIndex==self.totalNumberOfQuestions{
                             //Switch Button text to "Complete"
-                            self.nextButton.setTitle("Complete Test", for: .Normal)
+                            self.nextButton.setTitle("Complete Test", for: .normal)
                         }
                         self.displayQuestion(self.quizzArray, indexQuestion: self.displayedQuestionIndex, feedback: false)
                     })
@@ -744,7 +744,7 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
                         subTitle: "Move to the next question", // String of view
                         duration: 0.0, // Duration to show before closing automatically, default: 0.0
                         completeText: "Ok", // Optional button value, default: ""
-                        style: .Success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+                        style: .success, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
                         colorStyle: 0x22B573,//0x526B7B,//0xD0021B - RED
                         colorTextButton: 0xFFFFFF
                         

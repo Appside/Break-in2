@@ -508,7 +508,7 @@ class technologyViewController: QuestionViewController, UIScrollViewDelegate, GA
             subTitle: alertMessage, // String of view
             duration: 0.0, // Duration to show before closing automatically, default: 0.0
             completeText: "Cancel", // Optional button value, default: ""
-            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            style: .error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )

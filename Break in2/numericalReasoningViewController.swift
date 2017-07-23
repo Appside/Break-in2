@@ -615,7 +615,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             subTitle: alertMessage, // String of view
             duration: 0.0, // Duration to show before closing automatically, default: 0.0
             completeText: "Cancel", // Optional button value, default: ""
-            style: .Error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
+            style: .error, // Styles - Success, Error, Notice, Warning, Info, Edit, Wait
             colorStyle: 0xD0021B,//0x526B7B,//0xD0021B - RED
             colorTextButton: 0xFFFFFF
         )
@@ -886,11 +886,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
             chartObject.descriptionText = ""
             
-            chartObject.xAxis.labelPosition = .Top
+            chartObject.xAxis.labelPosition = .top
             chartObject.xAxis.setLabelsToSkip(0)
             chartObject.xAxis.avoidFirstLastClippingEnabled = true
             
-            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
             chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
             chartObject.xAxis.labelTextColor = UIColor.white
@@ -906,9 +906,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             //Return chart UIView
             chartObject.legend.textColor = UIColor.white
-            chartObject.legend.position = Legend.Position.BelowChartCenter
-            chartObject.legend.form = Legend.Form.Circle
-            chartObject.legend.direction = Legend.Direction.LeftToRight
+            chartObject.legend.position = Legend.Position.belowChartCenter
+            chartObject.legend.form = Legend.Form.circle
+            chartObject.legend.direction = Legend.Direction.leftToRight
             chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
@@ -933,7 +933,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             chartObject.noDataText = "Error while loading data."
             self.graphTitle.text = self.quizzArray[questionIndex].chartTitle
             chartObject.descriptionText = ""
-            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
             chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             
             //Add Pie Chart
@@ -944,9 +944,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             //Return chart UIView
             chartObject.legend.textColor = UIColor.white
-            chartObject.legend.position = Legend.Position.BelowChartCenter
-            chartObject.legend.form = Legend.Form.Circle
-            chartObject.legend.direction = Legend.Direction.LeftToRight
+            chartObject.legend.position = Legend.Position.belowChartCenter
+            chartObject.legend.form = Legend.Form.circle
+            chartObject.legend.direction = Legend.Direction.leftToRight
             chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
@@ -964,11 +964,11 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             chartObject.noDataText = "Error while loading data."
             self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
             chartObject.descriptionText = ""
-            chartObject.xAxis.labelPosition = .Top
+            chartObject.xAxis.labelPosition = .top
             chartObject.xAxis.setLabelsToSkip(0)
             chartObject.xAxis.avoidFirstLastClippingEnabled = true
             
-            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .EaseInBounce)
+            chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
             chartObject.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
             chartObject.gridBackgroundColor = UIColor(white: 0, alpha: 0)
             chartObject.xAxis.labelTextColor = UIColor.white
@@ -984,9 +984,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             
             //Return chart UIView
             chartObject.legend.textColor = UIColor.white
-            chartObject.legend.position = Legend.Position.BelowChartCenter
-            chartObject.legend.form = Legend.Form.Circle
-            chartObject.legend.direction = Legend.Direction.LeftToRight
+            chartObject.legend.position = Legend.Position.belowChartCenter
+            chartObject.legend.form = Legend.Form.circle
+            chartObject.legend.direction = Legend.Direction.leftToRight
             chartObject.legend.wordWrapEnabled = true
             self.graphView.addSubview(chartObject)
             
@@ -1027,7 +1027,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         
       for y:Int in 0.stride(to: values.count, by: 1) {
             for i in 0..<dataPoints.count {
-                let dataEntry = BarChartDataEntry(value: values[y][i], xIndex: i)
+                let dataEntry = BarChartDataEntry(value: values[y][i], x: i)
                 dataEntries.append(dataEntry)
             }
             let chartDataSet = BarChartDataSet(values: dataEntries, label: setLegendNames[y])

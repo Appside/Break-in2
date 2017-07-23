@@ -43,7 +43,7 @@ class Images {
         let rect = CGRect(x: x, y: y, width: width, height: height)
 
         let imageRef = (image.cgImage)?.cropping(to: rect)
-        let cropped = UIImage(CGImage: imageRef!)
+        let cropped = UIImage(cgImage: imageRef!)
 
         return cropped
     }

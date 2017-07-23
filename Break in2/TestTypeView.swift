@@ -106,7 +106,8 @@ class TestTypeView: UIView {
       
     }
     
-    if testTypeDifficultyButtons != [String]() {
+    //if testTypeDifficultyButtons as! [String] != [String]() {
+    if testTypeDifficultyButtons.count > 1 {
       self.difficultyButtonTapped(self.testTypeDifficultyButtons[0])
     }
     
