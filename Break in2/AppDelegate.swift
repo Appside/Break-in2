@@ -31,8 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.enableLocalDatastore()
         
         // Initialize Parse
-        Parse.setApplicationId("lyBSquMqLt6vuW5bL6ZB3TP37cGpDDZ3Vvqt13S5",
-            clientKey: "kMneqHnKIjyIRg9qJlgRhLkh5hrzl7eAWxl8YHGm")
+        //Parse.setApplicationId("ozM4oOdsSv4fbQKqQr58hZcdxdksmbL46Mphmwcf", clientKey: "JgkKIpcJNYTp8VvTwIyifxNh5bnNC1OVUCsiFT7q")
+        
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = "ozM4oOdsSv4fbQKqQr58hZcdxdksmbL46Mphmwcf"
+            $0.clientKey = "JgkKIpcJNYTp8VvTwIyifxNh5bnNC1OVUCsiFT7q"
+            $0.server = "https://parseapi.back4app.com"
+        }
+        Parse.initialize(with: configuration)
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpened(launchOptions: launchOptions)

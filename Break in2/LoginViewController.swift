@@ -187,7 +187,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
             let arr2 = set2.allObjects
             
             let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
-            PFFacebookUtils.logInInBackground(with: token!, block: {(user: PFUser?, error: NSError?) -> Void in
+            PFFacebookUtils.logInInBackground(with: token!, block: {(user: PFUser?, error: Error?) -> Void in
                 
                 if user != nil {
                     
@@ -216,11 +216,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     
                 }
                 
-            } as! PFUserResultBlock)
+            })
         }else{
             
             SwiftSpinner.hide()
-            PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: NSError?) -> Void in
+            PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile", "email", "user_friends"], block: { (user: PFUser?, error: Error?) -> Void in
                 
                 //self.clearAllNotice()
                 SwiftSpinner.show("Creating profile...")
@@ -247,7 +247,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                         
                         }, subtitle: "Please try again. Tap to dismiss")
                 }
-            } as! PFUserResultBlock)
+            })
             
         }
         
@@ -382,7 +382,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                     
                     self.saveToCoreData(token!, p: permissions as AnyObject, dP: declinedPerm as AnyObject, aI: appId!, uI: userId!, ex: expiration!, r: refresh!)
                     
-                    user.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
+                    user.saveInBackground(block: { (succeeded: Bool, error: Error?) -> Void in
                         if error == nil {
                           
                             self.createCareerPrefs(user)
@@ -390,7 +390,8 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                           
                         } else {
                             PFUser.logOut()
-                            if let _ = error?.userInfo {
+                            //if let errorString = (error! as NSError).userInfo {
+                                if error != nil {
                                 SwiftSpinner.show("Login Error FBKSI", animated: false).addTapHandler({
                                     
                                     SwiftSpinner.hide()
@@ -399,7 +400,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                             }
                         }
                       
-                    } as! PFBooleanResultBlock)
+                    })
                     }else{
                         
                         let token = FBSDKAccessToken.current().tokenString
@@ -422,7 +423,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                             let arr2 = set2.allObjects
                             
                             let token = FBSDKAccessToken.init(tokenString: self.Ptoken, permissions: arr, declinedPermissions: arr2, appID: self.PappId, userID: self.PuserId, expirationDate: self.Pexpiration, refreshDate: self.Prefresh)
-                            PFFacebookUtils.logInInBackground(with: token!, block: {(user: PFUser?, error: NSError?) -> Void in
+                            PFFacebookUtils.logInInBackground(with: token!, block: {(user: PFUser?, error: Error?) -> Void in
                                 
                                 if user != nil {
                                     
@@ -450,7 +451,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                     
                                 }
                                 
-                            } as! PFUserResultBlock)
+                            })
                         }else{
                             //error handle if nothing happens when device change
                         }

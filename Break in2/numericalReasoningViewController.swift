@@ -887,7 +887,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             chartObject.descriptionText = ""
             
             chartObject.xAxis.labelPosition = .top
-            chartObject.xAxis.setLabelsToSkip(0)
+            //chartObject.xAxis.setLabelsToSkip(0) // no longer availbe in new charts
             chartObject.xAxis.avoidFirstLastClippingEnabled = true
             
             chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
@@ -965,7 +965,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
             self.graphTitle.text = self.quizzArray[questionIndex].axisNames[1]
             chartObject.descriptionText = ""
             chartObject.xAxis.labelPosition = .top
-            chartObject.xAxis.setLabelsToSkip(0)
+            //chartObject.xAxis.setLabelsToSkip(0) // no longer available
             chartObject.xAxis.avoidFirstLastClippingEnabled = true
             
             chartObject.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)

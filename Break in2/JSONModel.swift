@@ -11,7 +11,7 @@ import UIKit
 class JSONModel: NSObject, NSURLConnectionDelegate {
   
   var downloadData:NSMutableData = NSMutableData()
-
+    
   func getJobDeadlines() -> [[String:AnyObject]] {
     
     //Initialize variables
@@ -254,16 +254,31 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         
         let fileURL = directoryURL.appendingPathComponent(jsonFileName + ".json")
         
+          do {
+            
+            let JsonData:Data? = try Data(contentsOf: fileURL)
+            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: JsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
+            //print(jsonFileName + " JSON file retrieved")
+            return arrayOfDictionaries
+            
+          }catch{
+            //Error parsing JSON data
+            print("Problem reading " + jsonFileName + " JSON Serialization")
+          }
         
+    }else{
+      
+      let fileURL = Bundle.main.url(forResource: jsonFileName, withExtension: "json")
+      
+      if let actualfileURL = fileURL {
         
         //if let actualJsonData = jsonData {
           //NSData exist so use NSJSONerialization to parse data
           do {
             
-            let actualJsonData:Data? = try Data(contentsOf: fileURL)
-            
+            let jsonData:Data? = try? Data(contentsOf: actualfileURL)
             //Data correctly parsed
-            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: actualJsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
+            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
             //print(jsonFileName + " JSON file retrieved")
             return arrayOfDictionaries
           }
@@ -271,98 +286,78 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
             //Error parsing JSON data
             print("Problem reading " + jsonFileName + " JSON Serialization")
           }
-        }
-        
-    }else {
-      
-      let fileURL = Bundle.main.url(forResource: jsonFileName, withExtension: "json")
-      
-      if let actualfileURL = fileURL {
-        let jsonData:Data? = try? Data(contentsOf: actualfileURL)
-        if let actualJsonData = jsonData {
-          //NSData exist so use NSJSONerialization to parse data
-          do {
-            //Data correctly parsed
-            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: actualJsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
-            //print(jsonFileName + " JSON file retrieved")
-            return arrayOfDictionaries
-          }
-          catch {
-            //Error parsing JSON data
-            print("Problem reading " + jsonFileName + " JSON Serialization")
-          }
-        }
-        else {
-          //NSData does not exist
-          print("Problem reading " + jsonFileName + " NSData")
-        }
-      }
-      else {
+//        }
+//        else {
+//          //NSData does not exist
+//          print("Problem reading " + jsonFileName + " NSData")
+//        }
+      }else {
         print("Problem reading " + jsonFileName + " JSON file")
       }
     }
     
     return [[String:AnyObject]]()
   }
-
-  func saveJSONFile(_ jsonFileName:String, completion:(() -> Void)?) {
-    let fileManager = FileManager.default
-    let directoryURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-    
-    if let directoryURL = directoryURLs.first {
-      
-      let fileURL = directoryURL.appendingPathComponent(jsonFileName + ".json")
-      
-      if !fileManager.fileExists(atPath: fileURL.path) {
-        fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
-      }else{
-        
-        do {
-            try fileManager.removeItem(atPath: fileURL.path)
-            fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
-        }
-        catch let error as NSError {
-            print("Ooops! Something went wrong: \(error)")
-        }
-        
-        }
-        
-      let requestURL: URL = URL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/" + jsonFileName + ".json")!
-      let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL)
-      let session = URLSession.shared
-      
-      let task = URLSession.shared.dataTask(with: urlRequest as URLRequest, completionHandler: {
-        (data, response, error) -> Void in
-        
-        let httpResponse = response as! HTTPURLResponse
-        let statusCode = httpResponse.statusCode
-        
-        if (statusCode == 200) {
-          
-          do {
-            if let downloadedData = data {
-              let file = try FileHandle(forWritingTo: fileURL)
-              file.write(downloadedData)
-              print(jsonFileName + " JSON file overwritten!")
-            }
-            else {
-              print("Problem writing " + jsonFileName + " downloaded data")
-            }
-          }
-          catch {
-            print("Problem writing " + jsonFileName + " JSON Serialization")
-          }
-        }
-        else {
-          print("Problem opening " + jsonFileName + " URL (httpResponse: " + String(statusCode) + ")")
-        }
-      }) 
-      task.resume()
+    return [[String:AnyObject]]()
     }
-  }
   
-  func refreshJobDeadlines() {
-    self.saveJSONFile("JobDeadlines", completion: nil)
-  }
-  
+    func saveJSONFile(_ jsonFileName:String, completion:(() -> Void)?) {
+        let fileManager = FileManager.default
+        let directoryURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        
+        if let directoryURL = directoryURLs.first {
+            
+            let fileURL = directoryURL.appendingPathComponent(jsonFileName + ".json")
+            
+            if !fileManager.fileExists(atPath: fileURL.path) {
+                fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+            }else{
+                
+                do {
+                    try fileManager.removeItem(atPath: fileURL.path)
+                    fileManager.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+                }
+                catch let error as NSError {
+                    print("Ooops! Something went wrong: \(error)")
+                }
+                
+            }
+            
+            let requestURL: URL = URL(string: "http://www.appside.co.uk/48fec57fc197cfebc72982e2ca5fd4625688a533/fb3a346e67946a927bc3d523dd88d61e6aea85f6/" + jsonFileName + ".json")!
+            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(url: requestURL)
+            let session = URLSession.shared
+            
+            let task = URLSession.shared.dataTask(with: urlRequest as URLRequest, completionHandler: {
+                (data, response, error) -> Void in
+                
+                let httpResponse = response as! HTTPURLResponse
+                let statusCode = httpResponse.statusCode
+                
+                if (statusCode == 200) {
+                    
+                    do {
+                        if let downloadedData = data {
+                            let file = try FileHandle(forWritingTo: fileURL)
+                            file.write(downloadedData)
+                            print(jsonFileName + " JSON file overwritten!")
+                        }
+                        else {
+                            print("Problem writing " + jsonFileName + " downloaded data")
+                        }
+                    }
+                    catch {
+                        print("Problem writing " + jsonFileName + " JSON Serialization")
+                    }
+                }
+                else {
+                    print("Problem opening " + jsonFileName + " URL (httpResponse: " + String(statusCode) + ")")
+                }
+            }) 
+            task.resume()
+        }
+}
+
+    func refreshJobDeadlines() {
+        self.saveJSONFile("JobDeadlines", completion: nil)
+}
 }

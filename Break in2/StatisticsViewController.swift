@@ -633,8 +633,8 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, dataSetIndex: Int, highlight: Highlight) {
         self.pointerView1.alpha = 1.0
         self.pointerView2.alpha = 1.0
-        self.barChartText.text = "\(self.dateTests[0] = String(entry.x)) - \(round(entry.value))%"
-        self.lineChartText.text = "\(self.dateTests[0] = String(entry.x)) - \(round(entry.value))s"
+        self.barChartText.text = "\(self.dateTests[0] = String(entry.x)) - \(String(entry.x))"
+        self.lineChartText.text = "\(self.dateTests[0] = String(entry.x)) - \(String(entry.x))"
         self.pointerView1.moveLabelPointer((self.pointerView1.frame.width/6 * (CGFloat(entry.x))) * 1.0150 + self.pointerView1.labelPointerBaseWidth)
         self.pointerView2.moveLabelPointer((self.pointerView2.frame.width/6 * (CGFloat(entry.x))) * 1.100 + self.pointerView2.labelPointerBaseWidth/2)
     
@@ -1115,7 +1115,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         let chartData = BarChartData()
         self.chartObject.data = chartData
         
-        self.chartObject.highlightValue(Highlight(x: 5, dataSetIndex: 0))
+        self.chartObject.highlightValue(x: 5, dataSetIndex: 0)
         chartDataSet.setColor(UIColor(white: 0.5, alpha: 0.5))
         chartDataSet.highlightColor = colors[sender.tag]
         chartDataSet.highlightAlpha = 1.0
@@ -1132,7 +1132,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.chartObject.leftAxis.enabled = false
         self.chartObject.rightAxis.enabled = false
         self.chartObject.gridBackgroundColor = UIColor(white: 1.0, alpha: 0.0)
-        self.chartObject.drawHighlightArrowEnabled = false
+        //self.chartObject.drawHighlightArrowEnabled = false
         self.chartObject.drawValueAboveBarEnabled = true
         self.chartObject.dragEnabled = false
         
@@ -1169,7 +1169,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         chartData2.setValueTextColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0))
         chartData2.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
         chartDataSet2.valueFormatter = NumberFormatter() as! IValueFormatter
-        chartDataSet2.valueFormatter?.minimumFractionDigits = 0
+        //chartDataSet2.valueFormatter?.minimumFractionDigits = 0
         self.chartObject2.xAxis.enabled = false
         self.chartObject2.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
         self.chartObject2.legend.enabled = false
