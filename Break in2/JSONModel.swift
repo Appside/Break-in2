@@ -244,63 +244,40 @@ class JSONModel: NSObject, NSURLConnectionDelegate {
         return arrayOfQuestions
     }
     
-  func getjsonfile(_ jsonFileName:String) -> [[String:AnyObject]] {
-    
-    if jsonFileName == "JobDeadlines" {
-      let fileManager = FileManager.default
-      let directoryURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-      
-      if let directoryURL = directoryURLs.first {
-        
-        let fileURL = directoryURL.appendingPathComponent(jsonFileName + ".json")
-        
-          do {
+    func getjsonfile(_ jsonFileName:String) -> [[String:AnyObject]] {
+                
+                let fileURL = Bundle.main.url(forResource: jsonFileName, withExtension: "json")
+                
+                if let actualfileURL = fileURL {
+                    
+                    //if let actualJsonData = jsonData {
+                    //NSData exist so use NSJSONerialization to parse data
+                    do {
+                        
+                        let jsonData:Data? = try? Data(contentsOf: actualfileURL)
+                        
+                        //Data correctly parsed
+                        let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
+                        
+                        print(jsonFileName + " JSON file retrieved")
+                        print(arrayOfDictionaries)
+                        
+                        return arrayOfDictionaries
+                    }
+                    catch {
+                        //Error parsing JSON data
+                        print("Problem reading " + jsonFileName + " JSON Serialization")
+                    }
+
+                }else {
+                    print("Problem reading " + jsonFileName + " JSON file")
+                }
             
-            let JsonData:Data? = try Data(contentsOf: fileURL)
-            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: JsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
-            //print(jsonFileName + " JSON file retrieved")
-            return arrayOfDictionaries
-            
-          }catch{
-            //Error parsing JSON data
-            print("Problem reading " + jsonFileName + " JSON Serialization")
-          }
+            return [[String:AnyObject]]()
         
-    }else{
-      
-      let fileURL = Bundle.main.url(forResource: jsonFileName, withExtension: "json")
-      
-      if let actualfileURL = fileURL {
-        
-        //if let actualJsonData = jsonData {
-          //NSData exist so use NSJSONerialization to parse data
-          do {
-            
-            let jsonData:Data? = try? Data(contentsOf: actualfileURL)
-            //Data correctly parsed
-            let arrayOfDictionaries:[[String:AnyObject]] = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[String:AnyObject]]
-            //print(jsonFileName + " JSON file retrieved")
-            return arrayOfDictionaries
-          }
-          catch {
-            //Error parsing JSON data
-            print("Problem reading " + jsonFileName + " JSON Serialization")
-          }
-//        }
-//        else {
-//          //NSData does not exist
-//          print("Problem reading " + jsonFileName + " NSData")
-//        }
-      }else {
-        print("Problem reading " + jsonFileName + " JSON file")
-      }
-    }
-    
-    return [[String:AnyObject]]()
-  }
-    return [[String:AnyObject]]()
     }
   
+    
     func saveJSONFile(_ jsonFileName:String, completion:(() -> Void)?) {
         let fileManager = FileManager.default
         let directoryURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)

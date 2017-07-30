@@ -8,6 +8,57 @@
 
 import UIKit
 
+//------------------------------------------------------
+// FIREBASE
+//------------------------------------------------------
+
+let FBASE_URL                           = "https://breakin2-4e8fb.firebaseio.com/"
+
+/* User node in Firebase*/
+let FBASE_USER_NODE                     = "Users"                   //	String
+let FBASE_USER_USERID					= "uid"                     //	String
+let FBASE_USER_PROVIDER                 = "provider"                //  String
+let FBASE_USER_FACEBOOKID				= "facebookId"              //	String
+let FBASE_USER_USERNAME					= "username"                //	String
+let FBASE_USER_ACTIVE_UIDS              = "activeUids"              //	String
+let FBASE_USER_EMAIL					= "email"                   //	String
+let FBASE_USER_FREEMEMBERSHIP           = "freeMembership"          //  BOOL
+let FBASE_USER_PAIDMEMBERSHIP           = "paidMembership"          //  BOOL
+
+/* Preferences node in Firebase*/
+let FBASE_PREFERENCES_NODE        = "Preferences"             //	Class name
+let FBASE_PREFERENCES_USER              = "uid"                     //	Pointer to User Class
+let FBASE_PREFERENCES_ACCOUNTING        = "accounting"              //	BOOL
+let FBASE_PREFERENCES_ENGINEERING       = "engineering"             //	BOOL
+let FBASE_PREFERENCES_BANKING           = "banking"                 //	BOOL
+let FBASE_PREFERENCES_CONSULTING        = "consulting"              //	BOOL
+let FBASE_PREFERENCES_TECHNOLOGY        = "technology"              //	BOOL
+let FBASE_PREFERENCES_TRADING           = "trading"                 //	BOOL
+
+
+let FBASE_USER_PASSWORD					= "password"				//	String
+let FBASE_USER_EMAILCOPY				= "emailVerified"           //	String
+let FBASE_USER_FULLNAME					= "fullname"				//	String
+let FBASE_USER_FULLNAME_LOWER			= "fullname_lower"          //	String
+let FBASE_USER_PICTURE					= "picture"                 //	File
+let FBASE_USER_THUMBNAIL				= "thumbnail"               //	File
+let FBASE_USER_CAREERPREFS              = "careerPrefs"             //	Array
+let FBASE_USER_MEMBERSHIP               = "Membership"              //  String
+let FBASE_USER_NUMBER_LIVES             = "Lives"                   //  Number
+let FBASE_USER_FIRST_NAME               = "firstName"               //  String
+let FBASE_USER_SURNAME                  = "surname"                 //  String
+let FBASE_USER_PHONE                    = "phone"                   //  String
+let FBASE_USER_UNIVERSITY               = "university"              //  String
+let FBASE_USER_COURSE                   = "course"                  //  String
+let FBASE_USER_DEGREE                   = "degree"                  //  String
+let FBASE_USER_POSITION                 = "position"                //  String
+let FBASE_USER_SHARE_INFO_ALLOWED       = "shareInfoAllowed"        //  Bool
+let FBASE_USER_RECOMMENDED_BY           = "recommendedBy"           //  String
+
+//------------------------------------------------------
+// PARSE
+//------------------------------------------------------
+
 /* User class in Parse*/
 let PF_USER_CLASS_NAME					= "_User"                   //	Class name
 let PF_USER_OBJECTID					= "objectId"				//	String

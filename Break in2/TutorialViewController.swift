@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Parse
-import ParseUI
+import Firebase
+import FirebaseDatabase
 
 class TutorialViewController: UIViewController {
 
@@ -40,14 +40,16 @@ class TutorialViewController: UIViewController {
   var loginPageControllerViewHeight:CGFloat = 50
   
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-      let user = PFUser.current()
+      
+        let user = Auth.auth().currentUser
 
         // Do any additional setup after loading the view.
       
       // Download and save JSON files
       
-      self.tutorialViewModel.saveJSONFile("JobDeadlines", completion: nil)
+      //self.tutorialViewModel.saveJSONFile("JobDeadlines", completion: nil)
       
       // Add logoImageView and profilePictureImageView to HomeViewController view
       
@@ -87,7 +89,7 @@ class TutorialViewController: UIViewController {
       self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.GoToEditProfile(_:)), for: UIControlEvents.touchUpInside)
       self.tutorialNextButton.alpha = 0
       
-      let string:String = "Welcome \(user![PF_USER_FULLNAME])"
+      let string:String = "Welcome \(String(describing: user!.displayName))"
       self.descriptionLabelView.titleLabel.text = string.uppercased()
       self.descriptionLabelView.descriptionLabel.text = "BREAKIN2 is a simple app...\n\n...but we all need a little help from time to time, so we've provided a short introduction to get you started."
       self.descriptionLabelView.alpha = 0

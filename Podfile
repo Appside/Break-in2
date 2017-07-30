@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, ’10.3’
 use_frameworks!
 
 target 'Break in2' do
@@ -13,7 +13,10 @@ pod 'Alamofire', '~> 4.4’
 pod 'SCLAlertView'
 pod 'SwiftSpinner'
 pod 'Firebase'
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
 pod 'Firebase/AdMob'
+pod 'Firebase/Database’
 pod 'Google-Mobile-Ads-SDK'
 pod 'Eureka'
 

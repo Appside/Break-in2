@@ -25,7 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Start and setup Firebase
         FirebaseApp.configure()
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         GADMobileAds.configure(withApplicationID: "ca-app-pub-4854749430333488~4206166451");
+        
+        //-----------------------------------------------------
+        // PARSE START
+        //-----------------------------------------------------
         
         // [Optional] Parse also lets you store objects in a local datastore on the device itself
         Parse.enableLocalDatastore()
@@ -75,11 +80,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //return true
     }
-
+    
     //function to launch facebook app or safari
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+    
+        return handled
     }
+
+//    //old function to launch facebook app or safari
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+//    }
     
     //track app usage
     func applicationDidBecomeActive(_ application: UIApplication) {

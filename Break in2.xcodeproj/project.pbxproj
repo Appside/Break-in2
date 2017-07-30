@@ -173,7 +173,7 @@
 		6143164C1BEF843A0047A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6143164E1BEF843A0047A37D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		614316511BEF843A0047A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		614316531BEF843A0047A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		614316531BEF843A0047A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Break in2/Info.plist"; sourceTree = "<group>"; };
 		614316581BEF843A0047A37D /* Break in2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Break in2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6143165C1BEF843A0047A37D /* Break_in2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Break_in2Tests.swift; sourceTree = "<group>"; };
 		6143165E1BEF843A0047A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -367,6 +367,7 @@
 			children = (
 				61FF7B8C1C2FDF6C00CD4392 /* TODO.swift */,
 				494A9B661D52B0C1001DBE42 /* GoogleService-Info.plist */,
+				614316531BEF843A0047A37D /* Info.plist */,
 				614316461BEF843A0047A37D /* Break in2 */,
 				6143165B1BEF843A0047A37D /* Break in2Tests */,
 				614316661BEF843A0047A37D /* Break in2UITests */,
@@ -411,7 +412,6 @@
 				614316501BEF843A0047A37D /* LaunchScreen.storyboard */,
 				61FF7B8B1C2FDF3200CD4392 /* Core Data Stuff */,
 				617FC64E1BF89D6C0019AE9B /* Extensions */,
-				614316531BEF843A0047A37D /* Info.plist */,
 			);
 			path = "Break in2";
 			sourceTree = "<group>";
@@ -950,7 +950,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -990,7 +990,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

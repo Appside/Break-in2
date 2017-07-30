@@ -437,28 +437,6 @@ class EditProfileViewController : FormViewController {
                 section.header = header
             }
             
-//            <<< ActionSheetRow<String>("AllowSharing") {
-//                $0.title = "Share My Profile"
-//                $0.selectorTitle = "Would you like us to share your details?"
-//                $0.options = ["Yes","No"]
-//                
-//                if self.shareInfoAllowed == "" {
-//                    $0.value = "Yes"
-//                }
-//                
-//                $0.value = self.shareInfoAllowed
-//                }.cellSetup{ cell, row in
-//                    cell.textLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-//                    cell.backgroundColor = self.fieldsColor
-//                }.cellUpdate { cell, row in
-//                    cell.textLabel?.textColor = UIColor.white
-//                    cell.tintColor = UIColor.white
-//                    cell.detailTextLabel?.textColor = UIColor.white
-//                    cell.detailTextLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 15.0)
-//                }.onChange { row in
-//                    self.shareInfoAllowed = row.value!
-//            }
-            
             <<< SwitchRow("switchRowTag"){
                 $0.title = "Share My Profile"
                 
