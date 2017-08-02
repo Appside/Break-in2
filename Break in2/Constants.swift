@@ -26,7 +26,7 @@ let FBASE_USER_FREEMEMBERSHIP           = "freeMembership"          //  BOOL
 let FBASE_USER_PAIDMEMBERSHIP           = "paidMembership"          //  BOOL
 
 /* Preferences node in Firebase*/
-let FBASE_PREFERENCES_NODE        = "Preferences"             //	Class name
+let FBASE_PREFERENCES_NODE              = "Preferences"             //	Class name
 let FBASE_PREFERENCES_USER              = "uid"                     //	Pointer to User Class
 let FBASE_PREFERENCES_ACCOUNTING        = "accounting"              //	BOOL
 let FBASE_PREFERENCES_ENGINEERING       = "engineering"             //	BOOL
@@ -35,6 +35,8 @@ let FBASE_PREFERENCES_CONSULTING        = "consulting"              //	BOOL
 let FBASE_PREFERENCES_TECHNOLOGY        = "technology"              //	BOOL
 let FBASE_PREFERENCES_TRADING           = "trading"                 //	BOOL
 
+/* Recommendations node in Firebase*/
+let FBASE_RECOMMENDATIONS_NODE          = "Recommendations"         //	Class name
 
 let FBASE_USER_PASSWORD					= "password"				//	String
 let FBASE_USER_EMAILCOPY				= "emailVerified"           //	String

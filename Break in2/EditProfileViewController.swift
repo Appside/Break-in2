@@ -9,11 +9,18 @@
 import UIKit
 import SCLAlertView
 import SwiftSpinner
-import Parse
-import ParseUI
 import Eureka
+import Firebase
+import FirebaseDatabase
 
 class EditProfileViewController : FormViewController {
+    
+//---------------------------------------------------------------
+// STEP 0: GLOBAL VARIABLES
+//---------------------------------------------------------------
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
     
     var statusBarFrame:CGRect = CGRect()
     let majorMargin:CGFloat = 20
@@ -60,21 +67,8 @@ class EditProfileViewController : FormViewController {
         let textString4:String = "FIELDS MARKED AS (*) ARE MANDATORY"
         let textHeight4:CGFloat = self.view.heightForView(textString4, font: UIFont(name: "HelveticaNeue-Light", size: 12.0)!, width: self.view.frame.width-50)
         
-        let query = PFQuery(className:"Recommendations")
-        query.findObjectsInBackground {
-            (objects: [PFObject]?, error: Error?) -> Void in
-            if error == nil {
-                if let objects = objects {
-                    for object in objects {
-                        let name = object["IDName"] as! String
-                        self.sourceRecommendation.append(name)
-                    }
-                }
-            } else {
-                // Log details of the failure
-                print("error")
-            }
-        }
+        //check if user is logged in
+        checkIfUserIsLoggedIn()
         
         //Status Bar Background
         let NewView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 20.0))
@@ -629,75 +623,54 @@ class EditProfileViewController : FormViewController {
             
             SwiftSpinner.show("Saving changes")
             
-            let currentUser = PFUser.current()!
-            //let objID = currentUser.objectId
-            let username = currentUser.username
-            let query = PFQuery(className: PF_USER_CLASS_NAME)
-            query.whereKey(PF_USER_USERNAME, equalTo: username!)
-            //query.getObjectInBackgroundWithId(objID!)
-            query.getFirstObjectInBackground(block: { (user: PFObject?, error: NSError?) -> Void in
-                
-                if error == nil {
-                    
-                    user![PF_USER_EMAIL] = self.profileEmail
-                    user![PF_USER_FULLNAME_LOWER] = self.profileFirstName + " " + self.profileLastName
-                    user![PF_USER_FIRST_NAME] = self.profileFirstName
-                    user![PF_USER_SURNAME] = self.profileLastName
-                    user![PF_USER_PHONE] = self.profilePhone
-                    user![PF_USER_UNIVERSITY] = self.profileUniversity
-                    user![PF_USER_COURSE] = self.profileCourse
-                    user![PF_USER_DEGREE] = self.profileDegree
-                    user![PF_USER_POSITION] = self.profilePosition
-                    user![PF_USER_SHARE_INFO_ALLOWED] = self.shareInfoAllowed
-                    user![PF_USER_RECOMMENDED_BY] = self.recommendedBy
-                    
-                    user?.saveInBackground(block: ({ (succeeded: Bool, error: NSError?) -> Void in
-                        if error == nil {
-                            
-                            self.defaults.set(self.profileFirstName, forKey: "profileFirstName")
-                            self.defaults.set(self.profileLastName, forKey: "profileLastName")
-                            self.defaults.set(self.profileEmail, forKey: "profileEmail")
-                            self.defaults.set(self.profilePhone, forKey: "profilePhone")
-                            self.defaults.set(self.profileUniversity, forKey: "profileUniversity")
-                            self.defaults.set(self.profileCourse, forKey: "profileCourse")
-                            self.defaults.set(self.profileDegree, forKey: "profileDegree")
-                            self.defaults.set(self.profilePosition, forKey: "profilePosition")
-                            self.defaults.set(self.shareInfoAllowed, forKey: "shareInfoAllowed")
-                            self.defaults.set(self.recommendedBy, forKey: "recommendedBy")
-                            
-                            SwiftSpinner.show("Preferences Saved", animated: false).addTapHandler({
-                                
-                                SwiftSpinner.hide()
-                                self.goBackToSettings(sender)
-                                //self.hideSettingsMenuView(sender)
-                                
-                                }, subtitle: "Tap to return to settings")
-                            
-                        } else {
-                            
-                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                
-                                SwiftSpinner.hide()
-                                //self.hideSettingsMenuView(sender)
-                                
-                                }, subtitle: "Preferences unsaved, tap to return to settings")
-                            
-                        }
-                        
-                    } as! PFBooleanResultBlock))
-                    
-                }else{
-                    
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        //self.hideSettingsMenuView(sender)
-                        
-                        }, subtitle: "Preferences unsaved, to return to settings")
-                    
-                }
-            } as! (PFObject?, Error?) -> Void)
+            self.ref = Database.database().reference()
             
+            if let currentUser = Auth.auth().currentUser {
+            
+                self.ref.child(FBASE_USER_NODE).child(currentUser.uid).setValue(
+                    [FBASE_USER_EMAIL: self.profileEmail,
+                     FBASE_USER_FIRST_NAME: self.profileFirstName,
+                     FBASE_USER_SURNAME: self.profileLastName,
+                     FBASE_USER_PHONE: self.profilePhone,
+                     FBASE_USER_UNIVERSITY: self.profileUniversity,
+                     FBASE_USER_COURSE: self.profileCourse,
+                     FBASE_USER_DEGREE: self.profileDegree,
+                     FBASE_USER_POSITION: self.profilePosition,
+                     FBASE_USER_SHARE_INFO_ALLOWED: self.shareInfoAllowed,
+                     FBASE_USER_RECOMMENDED_BY: self.recommendedBy
+                    ])
+                
+                self.defaults.set(self.profileFirstName, forKey: "profileFirstName")
+                self.defaults.set(self.profileLastName, forKey: "profileLastName")
+                self.defaults.set(self.profileEmail, forKey: "profileEmail")
+                self.defaults.set(self.profilePhone, forKey: "profilePhone")
+                self.defaults.set(self.profileUniversity, forKey: "profileUniversity")
+                self.defaults.set(self.profileCourse, forKey: "profileCourse")
+                self.defaults.set(self.profileDegree, forKey: "profileDegree")
+                self.defaults.set(self.profilePosition, forKey: "profilePosition")
+                self.defaults.set(self.shareInfoAllowed, forKey: "shareInfoAllowed")
+                self.defaults.set(self.recommendedBy, forKey: "recommendedBy")
+                
+                SwiftSpinner.show("Preferences Saved", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    self.goBackToSettings(sender)
+                    //self.hideSettingsMenuView(sender)
+                    
+                }, subtitle: "Tap to return to settings")
+
+                
+            }else{
+                
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    //self.hideSettingsMenuView(sender)
+                    
+                }, subtitle: "Preferences unsaved, to return to settings")
+                
+            }
+        
             
             
             if self.firstTimeUser {
@@ -719,12 +692,12 @@ class EditProfileViewController : FormViewController {
     }
     
     func phoneNumberValidation(value: String) -> Bool {
-        let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
-        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
-        let result =  phoneTest.evaluate(with: value)
-        return result
+        if value.isPhoneNumber == true {
+            return true
+        }else {
+            return false
+        }
     }
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tutorialEnded" {
@@ -738,6 +711,42 @@ class EditProfileViewController : FormViewController {
      
         navigationController?.popViewController(animated: true)
         
+    }
+    
+    func checkIfUserIsLoggedIn() {
+        if Auth.auth().currentUser?.uid == nil {
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        } else {
+            
+            self.ref = Database.database().reference()
+            self.ref.child(FBASE_RECOMMENDATIONS_NODE).queryOrderedByKey().observe(.value, with: {
+                
+                (snapshot) in
+                
+                if snapshot.exists() {
+                    
+                    let enumerator = snapshot.children
+                    while let rest = enumerator.nextObject() as? DataSnapshot {
+                        self.sourceRecommendation.append(rest.value as! String)
+                    }
+                    
+                }
+                
+            })
+
+        }
+    }
+    
+    func handleLogout() {
+        
+        do {
+            try Auth.auth().signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        let loginController = LoginViewController()
+        present(loginController, animated: true, completion: nil)
     }
 
 }
