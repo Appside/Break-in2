@@ -13,21 +13,30 @@ import ParseUI
 import SCLAlertView
 import SwiftSpinner
 import GoogleMobileAds
+import Firebase
+import FirebaseDatabase
 
 class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
-  
-  var newSwitch:Bool = Bool()
-  var membershipCounter:Int = Int()
+
+//---------------------------------------------------------------
+// STEP 0: GLOBAL VARIABLES
+//---------------------------------------------------------------
     
-  // Declare and initialize types of careers
-  
-  var careerTypes:[String] = [String]()
-  var careerTypeImages:[String:String] = [String:String]()
-  var careersTestTypes:[String:[String]] = [String:[String]]()
-  var comingSoonTestTypes:[String:[String]] = [String:[String]]()
-  var careerColors:[String:UIColor] = [String:UIColor]()
-  var tutorialViews:[UIView] = [UIView]()
-  var tutorialDescriptions:[UIView:[String]] = [UIView:[String]]()
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
+    
+    var newSwitch:Bool = Bool()
+    var membershipCounter:Int = Int()
+
+    // Declare and initialize types of careers
+
+    var careerTypes:[String] = [String]()
+    var careerTypeImages:[String:String] = [String:String]()
+    var careersTestTypes:[String:[String]] = [String:[String]]()
+    var comingSoonTestTypes:[String:[String]] = [String:[String]]()
+    var careerColors:[String:UIColor] = [String:UIColor]()
+    var tutorialViews:[UIView] = [UIView]()
+    var tutorialDescriptions:[UIView:[String]] = [UIView:[String]]()
     
     //in app purchase initialisation
     
@@ -37,273 +46,277 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     var list = [SKProduct]()
     var p = SKProduct()
   
-  // Declare and initialize views and models
-  
-  let homeViewModel:JSONModel = JSONModel()
-  let defaults = UserDefaults.standard
-    
-  let logoImageView:UILabel = UILabel()
-  let profilePictureImageView:UIImageView = UIImageView()
-  let sloganImageView:UIImageView = UIImageView()
-  let calendarBackgroundView:UIView = UIView()
-  let calendarView:CalendarView = CalendarView()
-  let statsButton:UIButton = UIButton()
-  let settingsButton:UIButton = UIButton()
-  let logOutButton:UIButton = UIButton()
-  let careersBackgroundView:UIView = UIView()
-  let careersScrollView:UIScrollView = UIScrollView()
-  var careerButtons:[CareerButton] = [CareerButton]()
-  let scrollInfoLabel:UILabel = UILabel()
-  let tutorialView:UIView = UIView()
-  let tutorialNextButton:UIButton = UIButton()
-  var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
-  var tutorialFingerImageView:UIImageView = UIImageView()
-  let brainBreakerQuestionButton:UIButton = UIButton()
-  let brainBreakerNewLabel:UILabel = UILabel()
-  let membershipButton:UIButton = UIButton()
-    
-  var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
-  var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
-  var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
-  var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
-  var tutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
-  
-  // Declare and initialize design constants
-  
-  let screenFrame:CGRect = UIScreen.main.bounds
-  let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
-  
-  let majorMargin:CGFloat = 20
-  let minorMargin:CGFloat = 10
-  
-  var menuButtonHeight:CGFloat = 50
-  var backButtonHeight:CGFloat = UIScreen.main.bounds.width/12
-  var calendarBackgroundViewHeight:CGFloat = 300
-  var textSize:CGFloat = 15
+    // Declare and initialize views and models
 
-  var segueFromLoginView:Bool = true
-  var firstTimeUser:Bool = false
-  var tutorialPageNumber:Int = 0
+    let homeViewModel:JSONModel = JSONModel()
+    let defaults = UserDefaults.standard
+
+    let logoImageView:UILabel = UILabel()
+    let profilePictureImageView:UIImageView = UIImageView()
+    let sloganImageView:UIImageView = UIImageView()
+    let calendarBackgroundView:UIView = UIView()
+    let calendarView:CalendarView = CalendarView()
+    let statsButton:UIButton = UIButton()
+    let settingsButton:UIButton = UIButton()
+    let logOutButton:UIButton = UIButton()
+    let careersBackgroundView:UIView = UIView()
+    let careersScrollView:UIScrollView = UIScrollView()
+    var careerButtons:[CareerButton] = [CareerButton]()
+    let scrollInfoLabel:UILabel = UILabel()
+    let tutorialView:UIView = UIView()
+    let tutorialNextButton:UIButton = UIButton()
+    var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
+    var tutorialFingerImageView:UIImageView = UIImageView()
+    let brainBreakerQuestionButton:UIButton = UIButton()
+    let brainBreakerNewLabel:UILabel = UILabel()
+    let membershipButton:UIButton = UIButton()
+
+    var careersBackgroundViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
+    var logoImageViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint()
+    var profilePictureImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
+    var sloganImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint()
+    var tutorialViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
+
+    // Declare and initialize design constants
+
+    let screenFrame:CGRect = UIScreen.main.bounds
+    let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
+
+    let majorMargin:CGFloat = 20
+    let minorMargin:CGFloat = 10
+
+    var menuButtonHeight:CGFloat = 50
+    var backButtonHeight:CGFloat = UIScreen.main.bounds.width/12
+    var calendarBackgroundViewHeight:CGFloat = 300
+    var textSize:CGFloat = 15
+
+    var segueFromLoginView:Bool = true
+    var firstTimeUser:Bool = false
+    var tutorialPageNumber:Int = 0
     
     //Admob banner
     var bannerView:DFPBannerView = DFPBannerView()
     
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    self.userLoggedIn()
-    self.requestProductData()
-    
-    // Do any additional setup after loading the view.
-    
-    // Get app variables
-    
-    self.careerTypes = self.homeViewModel.getAppVariables("careerTypes") as! [String]
-    self.careerTypeImages = self.homeViewModel.getAppVariables("careerTypeImages") as! [String:String]
-    self.careersTestTypes = self.homeViewModel.getAppVariables("careersTestTypes") as! [String:[String]]
-    self.comingSoonTestTypes = self.homeViewModel.getAppVariables("comingSoonTestTypes") as! [String:[String]]
-    
-    let appColors:[UIColor] = self.homeViewModel.getAppColors()
-    for index:Int in 0  ..< self.careerTypes.count  {
-      self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
-    }
-    
-    self.textSize = self.view.getTextSize(15)
-    
-    // Add background image to HomeViewController's view
-    
-    self.view.addHomeBG()
-    
-    // Add logoImageView and profilePictureImageView to HomeViewController view
-    
-    self.view.addSubview(self.logoImageView)
-    self.view.addSubview(self.profilePictureImageView)
-    self.view.addSubview(self.sloganImageView)
-    self.view.addSubview(self.statsButton)
-    self.view.addSubview(self.settingsButton)
-    self.view.addSubview(self.careersBackgroundView)
-    self.view.addSubview(self.calendarBackgroundView)
-    self.calendarBackgroundView.addSubview(self.calendarView)
-    self.careersBackgroundView.addSubview(self.logOutButton)
-    self.careersBackgroundView.addSubview(self.careersScrollView)
-    self.careersBackgroundView.addSubview(self.scrollInfoLabel)
-    self.careersBackgroundView.addSubview(self.bannerView)
-    self.view.addSubview(self.tutorialView)
-    self.view.addSubview(self.tutorialNextButton)
-    self.view.addSubview(self.tutorialFingerImageView)
-    self.careersBackgroundView.addSubview(self.brainBreakerQuestionButton)
-    self.careersBackgroundView.addSubview(self.brainBreakerNewLabel)
-    self.careersBackgroundView.bringSubview(toFront: self.brainBreakerQuestionButton)
-    
-    // Create careerButtons for each careerType
-    
-    for index:Int in 0  ..< self.careerTypes.count  {
-      
-      let careerButtonAtIndex:CareerButton = CareerButton()
-      
-      // Set careerButton properties
-      
-      careerButtonAtIndex.careerTitle = self.careerTypes[index]
-      careerButtonAtIndex.careerImage = UIImage.init(named: self.careerTypeImages[self.careerTypes[index]]!)!
-      careerButtonAtIndex.careerColorView.backgroundColor = self.careerColors[self.careerTypes[index]]
-      
-      // Call method to display careerButton content
-      
-      careerButtonAtIndex.displayButton()
-      
-      // Store each button in the careerButtons array
-      
-      self.careerButtons.append(careerButtonAtIndex)
-      
-      // Make each button perform a segue to the TestSelectionViewController
-      
-      self.careerButtons[index].addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: UIControlEvents.touchUpInside)
-    }
-    
-    // Add careerButtons to careersScrollView
-    
-    for careerButtonAtIndex:CareerButton in self.careerButtons {
-      
-      self.careersScrollView.addSubview(careerButtonAtIndex)
-      
-    }
-    
-    // Customize and add content to imageViews
-    
-    let labelString:String = String("BREAKIN2")
-    let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
-    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
-    attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
-    attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
-    self.logoImageView.attributedText = attributedString
-    self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
-    self.logoImageView.clipsToBounds = true
-    
-    self.profilePictureImageView.contentMode = UIViewContentMode.scaleAspectFit
-    self.profilePictureImageView.image = UIImage.init(named: "planeLogo")!
-    
-    self.sloganImageView.contentMode = UIViewContentMode.scaleAspectFit
-    self.sloganImageView.image = UIImage.init(named: "asSlogan")
-    
-    self.statsButton.contentMode = UIViewContentMode.scaleAspectFit
-    self.statsButton.setImage(UIImage.init(named: "statistics"), for: UIControlState())
-    self.statsButton.alpha = 0
-    
-    self.settingsButton.contentMode = UIViewContentMode.scaleAspectFit
-    self.settingsButton.setImage(UIImage.init(named: "settings"), for: UIControlState())
-    self.settingsButton.alpha = 0
-    
-    self.logOutButton.backgroundColor = UIColor.turquoiseColor()
-    self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    self.logOutButton.setTitle("Log Out", for: UIControlState())
-    self.logOutButton.setTitleColor(UIColor.white, for: UIControlState())
-    
-    self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.scrollInfoLabel.textAlignment = NSTextAlignment.center
-    self.scrollInfoLabel.textColor = UIColor.lightGray
-    self.scrollInfoLabel.text = "Scroll For More Careers"
-    
-    self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
-    self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-      self.tutorialNextButton.setTitle("Next", for: UIControlState())
-    self.tutorialNextButton.setTitleColor(UIColor.white, for: UIControlState())
-    
-    self.descriptionLabelView.clipsToBounds = false
-    
-    self.brainBreakerQuestionButton.setImage(UIImage.init(named: "brainBreakerLogo"), for: UIControlState())
-    
-    self.brainBreakerNewLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
-    self.brainBreakerNewLabel.textAlignment = NSTextAlignment.right
-    self.brainBreakerNewLabel.textColor = UIColor.red
-    self.brainBreakerNewLabel.text = "New!"
-    
-    self.newSwitch = defaults.bool(forKey: "newSwitchBB")
-    
-    if self.newSwitch == true{
-    
-      self.brainBreakerNewLabel.alpha = 1
-      self.defaults.set(false, forKey: "brainBreakerAnsweredCorrectly")
-      
-    }else{
-      
-      self.brainBreakerNewLabel.alpha = 0
-      
-    }
-    
-    // Add actions to buttons
-    
-    self.logOutButton.addTarget(self, action: #selector(HomeViewController.logoutBtnPressed(_:)), for: .touchUpInside)
-    self.settingsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: .touchUpInside)
-    self.statsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: .touchUpInside)
-    self.tutorialNextButton.addTarget(self, action: #selector(HomeViewController.nextTutorialButtonClicked(_:)), for: UIControlEvents.touchUpInside)
+//---------------------------------------------------------------
+// STEP 1: VIEW DID LOAD
+//---------------------------------------------------------------
 
-    // Customize careersBackgroundView, deadlinesView and statsView
-    
-    self.careersBackgroundView.backgroundColor = UIColor.white
-    self.careersBackgroundView.layer.cornerRadius = self.minorMargin
-    if self.segueFromLoginView {
-      self.careersBackgroundView.alpha = 1
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.userLoggedIn()
+        self.requestProductData()
+        
+        // Do any additional setup after loading the view.
+        
+        // Get app variables
+        
+        self.careerTypes = self.homeViewModel.getAppVariables("careerTypes") as! [String]
+        self.careerTypeImages = self.homeViewModel.getAppVariables("careerTypeImages") as! [String:String]
+        self.careersTestTypes = self.homeViewModel.getAppVariables("careersTestTypes") as! [String:[String]]
+        self.comingSoonTestTypes = self.homeViewModel.getAppVariables("comingSoonTestTypes") as! [String:[String]]
+        
+        let appColors:[UIColor] = self.homeViewModel.getAppColors()
+        for index:Int in 0  ..< self.careerTypes.count  {
+            self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
+        }
+        
+        self.textSize = self.view.getTextSize(15)
+        
+        // Add background image to HomeViewController's view
+        
+        self.view.addHomeBG()
+        
+        // Add logoImageView and profilePictureImageView to HomeViewController view
+        
+        self.view.addSubview(self.logoImageView)
+        self.view.addSubview(self.profilePictureImageView)
+        self.view.addSubview(self.sloganImageView)
+        self.view.addSubview(self.statsButton)
+        self.view.addSubview(self.settingsButton)
+        self.view.addSubview(self.careersBackgroundView)
+        self.view.addSubview(self.calendarBackgroundView)
+        self.calendarBackgroundView.addSubview(self.calendarView)
+        self.careersBackgroundView.addSubview(self.logOutButton)
+        self.careersBackgroundView.addSubview(self.careersScrollView)
+        self.careersBackgroundView.addSubview(self.scrollInfoLabel)
+        self.careersBackgroundView.addSubview(self.bannerView)
+        self.view.addSubview(self.tutorialView)
+        self.view.addSubview(self.tutorialNextButton)
+        self.view.addSubview(self.tutorialFingerImageView)
+        self.careersBackgroundView.addSubview(self.brainBreakerQuestionButton)
+        self.careersBackgroundView.addSubview(self.brainBreakerNewLabel)
+        self.careersBackgroundView.bringSubview(toFront: self.brainBreakerQuestionButton)
+        
+        // Create careerButtons for each careerType
+        
+        for index:Int in 0  ..< self.careerTypes.count  {
+            
+            let careerButtonAtIndex:CareerButton = CareerButton()
+            
+            // Set careerButton properties
+            
+            careerButtonAtIndex.careerTitle = self.careerTypes[index]
+            careerButtonAtIndex.careerImage = UIImage.init(named: self.careerTypeImages[self.careerTypes[index]]!)!
+            careerButtonAtIndex.careerColorView.backgroundColor = self.careerColors[self.careerTypes[index]]
+            
+            // Call method to display careerButton content
+            
+            careerButtonAtIndex.displayButton()
+            
+            // Store each button in the careerButtons array
+            
+            self.careerButtons.append(careerButtonAtIndex)
+            
+            // Make each button perform a segue to the TestSelectionViewController
+            
+            self.careerButtons[index].addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: UIControlEvents.touchUpInside)
+        }
+        
+        // Add careerButtons to careersScrollView
+        
+        for careerButtonAtIndex:CareerButton in self.careerButtons {
+            
+            self.careersScrollView.addSubview(careerButtonAtIndex)
+            
+        }
+        
+        // Customize and add content to imageViews
+        
+        let labelString:String = String("BREAKIN2")
+        let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: self.view.getTextSize(26))!, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Medium", size: self.view.getTextSize(26))!, range: NSRange(location: 5, length: NSString(string: labelString).length-5))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
+        self.logoImageView.attributedText = attributedString
+        self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
+        self.logoImageView.clipsToBounds = true
+        
+        self.profilePictureImageView.contentMode = UIViewContentMode.scaleAspectFit
+        self.profilePictureImageView.image = UIImage.init(named: "planeLogo")!
+        
+        self.sloganImageView.contentMode = UIViewContentMode.scaleAspectFit
+        self.sloganImageView.image = UIImage.init(named: "asSlogan")
+        
+        self.statsButton.contentMode = UIViewContentMode.scaleAspectFit
+        self.statsButton.setImage(UIImage.init(named: "statistics"), for: UIControlState())
+        self.statsButton.alpha = 0
+        
+        self.settingsButton.contentMode = UIViewContentMode.scaleAspectFit
+        self.settingsButton.setImage(UIImage.init(named: "settings"), for: UIControlState())
+        self.settingsButton.alpha = 0
+        
+        self.logOutButton.backgroundColor = UIColor.turquoiseColor()
+        self.logOutButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
+        self.logOutButton.setTitle("Log Out", for: UIControlState())
+        self.logOutButton.setTitleColor(UIColor.white, for: UIControlState())
+        
+        self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
+        self.scrollInfoLabel.textAlignment = NSTextAlignment.center
+        self.scrollInfoLabel.textColor = UIColor.lightGray
+        self.scrollInfoLabel.text = "Scroll For More Careers"
+        
+        self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
+        self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
+        self.tutorialNextButton.setTitle("Next", for: UIControlState())
+        self.tutorialNextButton.setTitleColor(UIColor.white, for: UIControlState())
+        
+        self.descriptionLabelView.clipsToBounds = false
+        
+        self.brainBreakerQuestionButton.setImage(UIImage.init(named: "brainBreakerLogo"), for: UIControlState())
+        
+        self.brainBreakerNewLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
+        self.brainBreakerNewLabel.textAlignment = NSTextAlignment.right
+        self.brainBreakerNewLabel.textColor = UIColor.red
+        self.brainBreakerNewLabel.text = "New!"
+        
+        self.newSwitch = defaults.bool(forKey: "newSwitchBB")
+        
+        if self.newSwitch == true{
+            
+            self.brainBreakerNewLabel.alpha = 1
+            self.defaults.set(false, forKey: "brainBreakerAnsweredCorrectly")
+            
+        }else{
+            
+            self.brainBreakerNewLabel.alpha = 0
+            
+        }
+        
+        // Add actions to buttons
+        
+        self.logOutButton.addTarget(self, action: #selector(HomeViewController.logoutBtnPressed(_:)), for: .touchUpInside)
+        self.settingsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: .touchUpInside)
+        self.statsButton.addTarget(self, action: #selector(HomeViewController.hideCareersBackgroundView(_:)), for: .touchUpInside)
+        self.tutorialNextButton.addTarget(self, action: #selector(HomeViewController.nextTutorialButtonClicked(_:)), for: UIControlEvents.touchUpInside)
+        
+        // Customize careersBackgroundView, deadlinesView and statsView
+        
+        self.careersBackgroundView.backgroundColor = UIColor.white
+        self.careersBackgroundView.layer.cornerRadius = self.minorMargin
+        if self.segueFromLoginView {
+            self.careersBackgroundView.alpha = 1
+        }
+        else {
+            self.careersBackgroundView.alpha = 0
+        }
+        
+        self.calendarBackgroundView.backgroundColor = UIColor.white
+        self.calendarBackgroundView.layer.cornerRadius = self.minorMargin
+        self.calendarBackgroundView.alpha = 0
+        self.calendarBackgroundView.clipsToBounds = true
+        
+        self.calendarView.backgroundColor = UIColor.white
+        self.calendarView.layer.cornerRadius = self.minorMargin
+        self.calendarView.clipsToBounds = true
+        
+        self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
+        
+        // Set tutorialView and tutorialNextButton alpha values
+        
+        if self.firstTimeUser {
+            self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
+            self.tutorialNextButton.alpha = 1
+        }
+        else {
+            self.tutorialView.alpha = 0
+            self.tutorialNextButton.alpha = 0
+        }
+        
+        // Customize careersScrollView
+        
+        self.careersScrollView.showsVerticalScrollIndicator = false
+        
+        // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
+        
+        if self.screenFrame.height <= 738 {
+            self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
+            
+            let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
+            self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
+            
+        }
+        else {
+            self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 14)
+            
+            let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
+            self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
+        }
+        
+        // Set constraints
+        
+        self.setConstraints()
+        
+        // Display calendar
+        
+        if self.firstTimeUser && self.tutorialPageNumber == 0 {
+            self.calendarView.chosenCareers = self.homeViewModel.getAppVariables("careerTypes") as! [String]
+        }
+        self.calendarView.displayCalendar()
+        
+        // Check for new Brain Breaker question
+        
+        self.checkNewBrainBreaker()
     }
-    else {
-      self.careersBackgroundView.alpha = 0
-    }
-    
-    self.calendarBackgroundView.backgroundColor = UIColor.white
-    self.calendarBackgroundView.layer.cornerRadius = self.minorMargin
-    self.calendarBackgroundView.alpha = 0
-    self.calendarBackgroundView.clipsToBounds = true
-    
-    self.calendarView.backgroundColor = UIColor.white
-    self.calendarView.layer.cornerRadius = self.minorMargin
-    self.calendarView.clipsToBounds = true
-    
-    self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
-    
-    // Set tutorialView and tutorialNextButton alpha values
-    
-    if self.firstTimeUser {
-      self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
-      self.tutorialNextButton.alpha = 1
-    }
-    else {
-      self.tutorialView.alpha = 0
-      self.tutorialNextButton.alpha = 0
-    }
-    
-    // Customize careersScrollView
-    
-    self.careersScrollView.showsVerticalScrollIndicator = false
-    
-    // Set menuButtonHeight, backButtonHeight and calendarBackgroundViewHeight
-    
-    if self.screenFrame.height <= 738 {
-      self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 4)
-
-      let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
-      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 6) + 25))/4
-      
-    }
-    else {
-      self.calendarBackgroundViewHeight = self.screenFrame.width - (self.majorMargin * 14)
-      
-      let careerBackgroundViewHeight:CGFloat = self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
-      self.menuButtonHeight = (careerBackgroundViewHeight - ((self.minorMargin * 7) + 25))/5
-    }
-    
-    // Set constraints
-    
-    self.setConstraints()
-    
-    // Display calendar
-    
-    if self.firstTimeUser && self.tutorialPageNumber == 0 {
-      self.calendarView.chosenCareers = self.homeViewModel.getAppVariables("careerTypes") as! [String]
-    }
-    self.calendarView.displayCalendar()
-    
-    // Check for new Brain Breaker question
-    
-    self.checkNewBrainBreaker()
-  }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
@@ -668,10 +681,6 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         self.defaults.set(false, forKey: "newSwitchBB")
         
         let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
-        //let currentUser = PFUser.currentUser()!
-        //let username = currentUser.username
-        //query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
-        //query.limit = 6
         query.getFirstObjectInBackground(block: { (question: PFObject?, error: NSError?) -> Void in
             
             if error == nil {
@@ -735,35 +744,32 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   
     func checkNewBrainBreaker(){
         
-        let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
-        query.getFirstObjectInBackground(block: { (question: PFObject?, error: NSError?) -> Void in
+        self.ref = Database.database().reference()
+        self.ref.child(FBASE_BRAINBREAKER_Q_CLASS_NAME).child(FBASE_BRAINBREAKER_Q_Q_NUMBER).queryOrderedByKey().observe(.value, with: {
             
-            if error == nil {
+            (snapshot) in
+            
+            if snapshot.exists() {
                 
                 let numberCheckNew = self.defaults.integer(forKey: "BrainBreakerQuestionNumber")
-                let numberCheck2New = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
+                let numberCheck2New = snapshot.value as? Int ?? Int()
                 
                 if (numberCheck2New != numberCheckNew){
-                  
+                    
                     print("YES")
                     self.brainBreakerNewLabel.alpha = 1
                     self.defaults.set(true, forKey: "newSwitchBB")
                     self.defaults.set(false, forKey: "brainBreakerAnsweredCorrectly")
-                    //self.newSwitch = true
-                        
-                    }else{
-                  
+                    
+                }else{
+                    
                     print("NO")
-                  
-                    }
-              
-              //self.defaults.setInteger(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
-                
                     
                 }
+                
+            }
             
-        } as! (PFObject?, Error?) -> Void)
-
+        })
         
     }
     
@@ -774,13 +780,6 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
-    if (PFUser.current() != nil) {
-      self.loadUser(PFUser.current()!)
-    }
-    else {
-      self.view.loginUser(self)
-    }
     
     if self.segueFromLoginView {
       
@@ -836,13 +835,6 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
     }
     
-    if (PFUser.current() != nil) {
-        self.loadUser(PFUser.current()!)
-    }
-    else {
-        self.view.loginUser(self)
-    }
-    
     // Show tutorial to first time users
     
     if self.firstTimeUser {
@@ -857,12 +849,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     }
     
   }
-  
-    func loadUser(_ user: PFUser) {
     
-    //
-    
-  }
   
   func logoutBtnPressed(_ sender: UIButton!){
     
@@ -901,24 +888,36 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     func userLoggedIn(){
         
-        if PFUser.current() == nil {
+        if Auth.auth().currentUser == nil {
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        } else {
           
-            let navigationVC = self.storyboard!.instantiateViewController(withIdentifier: "navigationVC") as! LoginViewController
-            self.present(navigationVC, animated: false, completion: nil)
-            
-        }else{
+            //once user is confirmed as logged in...
             
         }
     }
-  
-  func settingsBtnPressed(_ sender: UIButton!){
     
+    func handleLogout() {
+        
+        do {
+            try Auth.auth().signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        let loginController = LoginViewController()
+        present(loginController, animated: true, completion: nil)
+    }
+    
+  
+    func settingsBtnPressed(_ sender: UIButton!){
+
     self.performSegue(withIdentifier: "settingsClicked", sender: nil)
-    
-  }
+
+    }
   
-  func showCareersBackgroundView() {
-    
+    func showCareersBackgroundView() {
+
     if self.segueFromLoginView {
       
       UIView.animate(withDuration: 1, delay: 0.5, options: UIViewAnimationOptions.curveEaseOut, animations: {
@@ -939,8 +938,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
           
       })
       
-    }
-    else {
+    }else {
       
       UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
         
@@ -953,10 +951,8 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         }, completion: nil)
       
     }
-    
-    
-    
-  }
+
+    }
   
   func hideCareersBackgroundView(_ sender: UIButton) {
     
@@ -1043,25 +1039,6 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
   }
   
   func hideTutorial() {
-    
-//    self.statsButton.imageView?.layer.removeAllAnimations()
-//    self.statsButton.alpha = 1.0
-//    self.membershipButton.removeFromSuperview()
-//    self.statsButton.userInteractionEnabled = true
-//    
-//    UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-//      
-//      self.tutorialView.alpha = 0
-//      self.tutorialNextButton.alpha = 0
-//      self.view.layoutIfNeeded()
-//      
-//      }, completion: {(Bool) in
-//        
-//        self.view.insertSubview(self.tutorialViews[self.tutorialPageNumber - 1], belowSubview: self.tutorialView)
-//        self.view.insertSubview(self.logoImageView, belowSubview: self.tutorialView)
-//        //self.tutorialViews[self.tutorialPageNumber - 1].userInteractionEnabled = true
-//        
-//    })
 
     let homeVC = storyboard?.instantiateViewController(withIdentifier: "homeVC") as! HomeViewController
     present(homeVC, animated: false, completion: nil)

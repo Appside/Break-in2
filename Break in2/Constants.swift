@@ -24,20 +24,6 @@ let FBASE_USER_ACTIVE_UIDS              = "activeUids"              //	String
 let FBASE_USER_EMAIL					= "email"                   //	String
 let FBASE_USER_FREEMEMBERSHIP           = "freeMembership"          //  BOOL
 let FBASE_USER_PAIDMEMBERSHIP           = "paidMembership"          //  BOOL
-
-/* Preferences node in Firebase*/
-let FBASE_PREFERENCES_NODE              = "Preferences"             //	Class name
-let FBASE_PREFERENCES_USER              = "uid"                     //	Pointer to User Class
-let FBASE_PREFERENCES_ACCOUNTING        = "accounting"              //	BOOL
-let FBASE_PREFERENCES_ENGINEERING       = "engineering"             //	BOOL
-let FBASE_PREFERENCES_BANKING           = "banking"                 //	BOOL
-let FBASE_PREFERENCES_CONSULTING        = "consulting"              //	BOOL
-let FBASE_PREFERENCES_TECHNOLOGY        = "technology"              //	BOOL
-let FBASE_PREFERENCES_TRADING           = "trading"                 //	BOOL
-
-/* Recommendations node in Firebase*/
-let FBASE_RECOMMENDATIONS_NODE          = "Recommendations"         //	Class name
-
 let FBASE_USER_PASSWORD					= "password"				//	String
 let FBASE_USER_EMAILCOPY				= "emailVerified"           //	String
 let FBASE_USER_FULLNAME					= "fullname"				//	String
@@ -56,6 +42,32 @@ let FBASE_USER_DEGREE                   = "degree"                  //  String
 let FBASE_USER_POSITION                 = "position"                //  String
 let FBASE_USER_SHARE_INFO_ALLOWED       = "shareInfoAllowed"        //  Bool
 let FBASE_USER_RECOMMENDED_BY           = "recommendedBy"           //  String
+
+/* Preferences node in Firebase*/
+let FBASE_PREFERENCES_NODE              = "Preferences"             //	Class name
+let FBASE_PREFERENCES_USER              = "uid"                     //	Pointer to User Class
+let FBASE_PREFERENCES_ACCOUNTING        = "accounting"              //	BOOL
+let FBASE_PREFERENCES_ENGINEERING       = "engineering"             //	BOOL
+let FBASE_PREFERENCES_BANKING           = "banking"                 //	BOOL
+let FBASE_PREFERENCES_CONSULTING        = "consulting"              //	BOOL
+let FBASE_PREFERENCES_TECHNOLOGY        = "technology"              //	BOOL
+let FBASE_PREFERENCES_TRADING           = "trading"                 //	BOOL
+
+/* Recommendations node in Firebase*/
+let FBASE_RECOMMENDATIONS_NODE          = "Recommendations"         //	Class name
+
+/* Brain Breaker Question class in Parse */
+let FBASE_BRAINBREAKER_Q_CLASS_NAME        = "Brain_Breaker"         //	Class name
+let FBASE_BRAINBREAKER_Q_QUESTION_TYPE     = "questionType"            //	String
+let FBASE_BRAINBREAKER_Q_QUESTION          = "question"                //	String
+let FBASE_BRAINBREAKER_Q_PASSAGE           = "passage"                 //	String
+let FBASE_BRAINBREAKER_Q_ANSWERS           = "answers"                 //  Array
+let FBASE_BRAINBREAKER_Q_CORRECT_ANSWER    = "correctAnswerIndex"      //  Number
+let FBASE_BRAINBREAKER_Q_EXPLANATION       = "explanation"             //  String
+let FBASE_BRAINBREAKER_Q_Q_NUMBER          = "questionNumber"          //  Number
+let FBASE_BRAINBREAKER_Q_EXPIRATION_DATE   = "expirationDate"          //  Date
+let FBASE_BRAINBREAKER_Q_TEST_PRIZE        = "testPrize"               //  String
+let FBASE_BRAINBREAKER_Q_TIME_REQUIRED     = "timeRequiredMinutes"     //  Number
 
 //------------------------------------------------------
 // PARSE

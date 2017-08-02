@@ -16,6 +16,8 @@ import SCLAlertView
 import CoreData
 import SwiftSpinner
 import MessageUI
+import Firebase
+import FirebaseDatabase
 
 /*
 DIRECTORY
@@ -29,9 +31,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
   let settingsModel:JSONModel = JSONModel()
   let defaults = UserDefaults.standard
     
-    //****************************************************************************************************
-    //NUMBER 1: VARIABLES
-    //****************************************************************************************************
+//**************************************************************************************
+//NUMBER 1: VARIABLES
+//**************************************************************************************
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
+    
     var showMembership:Bool = true
     let conduitView:UIView = UIView()
     let tutoView:UIView = UIView()
@@ -53,124 +59,128 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     var widthRatio:CGFloat = CGFloat()
     var heightRatio:CGFloat = CGFloat()
   
-  // Declare and initialize types of settings
-  
-  var settings:[String] = [String]()
-  var careerTypes:[String] = [String]()
-  var careerTypeImages:[String:String] = [String:String]()
-  var chosenCareers:[String] = [String]()
-  var careerColors:[String:UIColor] = [String:UIColor]()
-  var tutorialViews:[UIView] = [UIView]()
-  var tutorialDescriptions:[UIView:[String]] = [UIView:[String]]()
-  
-  // Declare and initialize views
-  
-  let logoImageView:UILabel = UILabel()
-  let backButton:UIButton = UIButton()
-  let settingsMenuView:UIView = UIView()
-  let chooseCareersView:UIView = UIView()
-  let facebookLogoutButton:FacebookButton = FacebookButton()
-  let scrollInfoLabel:UILabel = UILabel()
-  let settingsScrollView:UIScrollView = UIScrollView()
-  var settingsButtons:[UIButton] = [UIButton]()
-  let chooseCareersTitleView:ChooseCareerTitleView = ChooseCareerTitleView()
-  let currentCareerLabel:UILabel = UILabel()
-  let chooseCareersInfoLabel:UILabel = UILabel()
-  let chooseCareersScrollView:UIScrollView = UIScrollView()
-  var chooseCareerViews:[ChooseCareerView] = [ChooseCareerView]()
-  let tutorialView:UIView = UIView()
-  let tutorialNextButton:UIButton = UIButton()
-  var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
-  var tutorialFingerImageView:UIImageView = UIImageView()
-  let noDataLabel:UIView = UIView()
-  let noDataUILabel:UILabel = UILabel()
-  let saveCareersChoicesButton:UIButton = UIButton()
-  
-  var settingsMenuViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
-    
+    // Declare and initialize types of settings
+
+    var settings:[String] = [String]()
+    var careerTypes:[String] = [String]()
+    var careerTypeImages:[String:String] = [String:String]()
+    var chosenCareers:[String] = [String]()
+    var careerColors:[String:UIColor] = [String:UIColor]()
+    var tutorialViews:[UIView] = [UIView]()
+    var tutorialDescriptions:[UIView:[String]] = [UIView:[String]]()
+
+    // Declare and initialize views
+
+    let logoImageView:UILabel = UILabel()
+    let backButton:UIButton = UIButton()
+    let settingsMenuView:UIView = UIView()
+    let chooseCareersView:UIView = UIView()
+    let facebookLogoutButton:FacebookButton = FacebookButton()
+    let scrollInfoLabel:UILabel = UILabel()
+    let settingsScrollView:UIScrollView = UIScrollView()
+    var settingsButtons:[UIButton] = [UIButton]()
+    let chooseCareersTitleView:ChooseCareerTitleView = ChooseCareerTitleView()
+    let currentCareerLabel:UILabel = UILabel()
+    let chooseCareersInfoLabel:UILabel = UILabel()
+    let chooseCareersScrollView:UIScrollView = UIScrollView()
+    var chooseCareerViews:[ChooseCareerView] = [ChooseCareerView]()
+    let tutorialView:UIView = UIView()
+    let tutorialNextButton:UIButton = UIButton()
+    var descriptionLabelView:TutorialDescriptionView = TutorialDescriptionView()
+    var tutorialFingerImageView:UIImageView = UIImageView()
+    let noDataLabel:UIView = UIView()
+    let noDataUILabel:UILabel = UILabel()
+    let saveCareersChoicesButton:UIButton = UIButton()
+
+    var settingsMenuViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint()
+
     let moc = DataController().managedObjectContext
   
-  // Declare and initialize design constants
-  
-  let screenFrame:CGRect = UIScreen.main.bounds
-  let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
-  
-  let majorMargin:CGFloat = 20
-  let minorMargin:CGFloat = 10
-  
-  let borderWidth:CGFloat = 3
-  
-  var menuButtonHeight:CGFloat = 50
-  let backButtonHeight:CGFloat = UIScreen.main.bounds.width/12
-  var chooseCareersViewHeight:CGFloat = 300
-  var chooseCareersInfoLabelHeight:CGFloat = 50
-  var textSize:CGFloat = 15
-  
-  // Declare and initialize tracking variables
-  
-  var currentChooseCareersScrollViewPage:Int = 0
-  var firstTimeUser:Bool = false
-  var tutorialPageNumber:Int = 0
+    // Declare and initialize design constants
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    let screenFrame:CGRect = UIScreen.main.bounds
+    let statusBarFrame:CGRect = UIApplication.shared.statusBarFrame
+
+    let majorMargin:CGFloat = 20
+    let minorMargin:CGFloat = 10
+
+    let borderWidth:CGFloat = 3
+
+    var menuButtonHeight:CGFloat = 50
+    let backButtonHeight:CGFloat = UIScreen.main.bounds.width/12
+    var chooseCareersViewHeight:CGFloat = 300
+    var chooseCareersInfoLabelHeight:CGFloat = 50
+    var textSize:CGFloat = 15
+
+    // Declare and initialize tracking variables
+
+    var currentChooseCareersScrollViewPage:Int = 0
+    var firstTimeUser:Bool = false
+    var tutorialPageNumber:Int = 0
+
+//---------------------------------------------------------------
+// STEP 1: VIEW DID LOAD
+//---------------------------------------------------------------
     
+    override func viewDidLoad() {
+    super.viewDidLoad()
+
     self.view.addHomeBG()
     self.textSize = self.view.getTextSize(15)
-    
+
     self.careerTypes = self.settingsModel.getAppVariables("careerTypes") as! [String]
     self.careerTypeImages = self.settingsModel.getAppVariables("careerTypeImages") as! [String:String]
-    
+
     //Screen size and constraints
     self.widthRatio = screenFrame.size.width / 414
     self.heightRatio = screenFrame.size.height / 736
-    
+
     // Get app variables
-    
+
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
     //self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
     let appColors:[UIColor] = self.settingsModel.getAppColors()
     for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
     }
-    
+
     // Add subviews to the main view
-    
+
     self.view.addSubview(self.logoImageView)
     self.view.addSubview(self.backButton)
     self.view.addSubview(self.settingsMenuView)
     self.view.addSubview(self.chooseCareersView)
-    
+
     self.settingsMenuView.addSubview(self.scrollInfoLabel)
     self.settingsMenuView.addSubview(self.settingsScrollView)
     self.settingsMenuView.addSubview(self.saveCareersChoicesButton)
-    
+
     self.chooseCareersView.addSubview(self.chooseCareersTitleView)
     self.chooseCareersView.addSubview(self.currentCareerLabel)
     self.chooseCareersView.addSubview(self.chooseCareersInfoLabel)
     self.chooseCareersView.addSubview(self.chooseCareersScrollView)
-    
+
     self.view.addSubview(self.tutorialView)
     self.view.addSubview(self.tutorialNextButton)
-    
+
     // Adjust backButton appearance
-    
+
     self.backButton.setImage(UIImage.init(named: "back")!, for: UIControlState())
     self.backButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), for: UIControlEvents.touchUpInside)
     self.backButton.clipsToBounds = true
     self.backButton.alpha = 0
-    
+
     self.tutorialNextButton.backgroundColor = UIColor.turquoiseColor()
     self.tutorialNextButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.tutorialNextButton.setTitle("Save Preferences", for: UIControlState())
     self.tutorialNextButton.setTitleColor(UIColor.white, for: UIControlState())
     self.tutorialNextButton.alpha = 0
     self.tutorialNextButton.addTarget(self, action: #selector(SettingsViewController.nextTutorialButtonClicked(_:)), for: UIControlEvents.touchUpInside)
-    
+
     self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
-    
+
     // Set tutorialView and tutorialNextButton alpha values
-    
+
     if self.firstTimeUser {
       self.tutorialView.backgroundColor = UIColor.black.withAlphaComponent(1)
       self.tutorialNextButton.alpha = 1
@@ -181,7 +191,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     }
 
     // Customize and add content to imageViews
-    
+
     self.logoImageView.contentMode = UIViewContentMode.scaleAspectFit
     let labelString:String = String("BREAKIN2")
     let attributedString:NSMutableAttributedString = NSMutableAttributedString(string: labelString)
@@ -190,72 +200,65 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.white, range: NSRange(location: 0, length: NSString(string: labelString).length))
     self.logoImageView.attributedText = attributedString
     // Customize settingMenuView, chooseCareersView and tutorialView
-    
+
     self.settingsMenuView.backgroundColor = UIColor.white
     self.settingsMenuView.layer.cornerRadius = self.minorMargin
     self.settingsMenuView.alpha = 0
-    
+
     self.chooseCareersView.backgroundColor = UIColor.white
     self.chooseCareersView.layer.cornerRadius = self.minorMargin
     self.chooseCareersView.clipsToBounds = true
     self.chooseCareersView.alpha = 0
-    
+
     // Customize facebookLogoutButton and saveCareersChoicesButton
-    
+
     self.facebookLogoutButton.facebookButtonTitle = "Deactivate"
     self.facebookLogoutButton.displayButton()
     self.facebookLogoutButton.addTarget(self, action: #selector(SettingsViewController.deactivateFB(_:)), for: UIControlEvents.touchUpInside)
-    
+
     self.saveCareersChoicesButton.backgroundColor = UIColor.turquoiseColor()
     self.saveCareersChoicesButton.titleLabel!.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
     self.saveCareersChoicesButton.setTitle("Save Career Preferences", for: UIControlState())
     self.saveCareersChoicesButton.setTitleColor(UIColor.white, for: UIControlState())
     self.saveCareersChoicesButton.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), for: UIControlEvents.touchUpInside)
-    
+
     // Customize scrollInfoLabel and chooseCareersInfoLabel
-    
+
     self.scrollInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
     self.scrollInfoLabel.textAlignment = NSTextAlignment.center
     self.scrollInfoLabel.textColor = UIColor.lightGray
     self.scrollInfoLabel.text = "Scroll For More Settings"
-    
+
     self.chooseCareersInfoLabel.font = UIFont(name: "HelveticaNeue-LightItalic", size: self.textSize)
     self.chooseCareersInfoLabel.textAlignment = NSTextAlignment.center
     self.chooseCareersInfoLabel.textColor = UIColor.lightGray
     self.chooseCareersInfoLabel.numberOfLines = 0
     self.chooseCareersInfoLabel.text = "Select The Careers You Are Interested In"
-    
+
     // Customize settingsScrollView and chooseCareersScrollView
-    
+
     self.settingsScrollView.showsVerticalScrollIndicator = false
-    
+
     self.chooseCareersScrollView.isPagingEnabled = true
     self.chooseCareersScrollView.showsHorizontalScrollIndicator = false
     self.chooseCareersScrollView.delegate = self
-    
+
     //********************************************************************************
     // INITIATE THE CHOSEN CAREERS
     //********************************************************************************
-    
-    if (PFUser.current() != nil) {
-        self.loadUser()
-    }
-    else {
-        self.view.loginUser(self)
-    }
-    
+
     // Customize chooseCareersTitleView and currentCareerLabel
-    
+
     self.chooseCareersTitleView.careerSelectedLabel.text = self.careerTypes[0]
     self.chooseCareersTitleView.previousCareerButton.alpha = 0
-    
+
     self.currentCareerLabel.backgroundColor = UIColor.turquoiseColor()
     self.currentCareerLabel.textAlignment = NSTextAlignment.center
     self.currentCareerLabel.textColor = UIColor.white
     self.currentCareerLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
-    
+
     // Create settingsButtons for each setting
-    
+
     for index:Int in stride(from: 0, to: self.settings.count, by: 1) {
       
       let settingsButtonAtIndex:CareerButton = CareerButton()
@@ -278,10 +281,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       settingsButtonAtIndex.addTarget(self, action: #selector(SettingsViewController.hideSettingsMenuView(_:)), for: UIControlEvents.touchUpInside)
     }
-    
+
     self.settingsScrollView.addSubview(self.facebookLogoutButton)
     self.settingsButtons.append(self.facebookLogoutButton)
-    
+
     for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       
       // Create each chooseCareerView
@@ -308,10 +311,6 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       
       chooseCareerViewAtIndex.clipsToBounds = true
       
-      // Call method to display chooseCareerView
-      
-      //chooseCareerViewAtIndex.displayView()
-      
       // Add each chooseCareerView to chooseCareersScrollView
       
       self.chooseCareersScrollView.addSubview(chooseCareerViewAtIndex)
@@ -321,9 +320,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       self.chooseCareerViews.append(chooseCareerViewAtIndex)
       
     }
-    
+
     // Set menuButtonHeight, backButtonHeight and chooseCareersViewHeight
-    
+
     if self.screenFrame.height <= 738 {
       self.chooseCareersViewHeight = self.screenFrame.width - (self.majorMargin * 4)
       
@@ -339,15 +338,15 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     }
 
     // Set constraints
-    
+
     self.setConstraints()
-    
+
     // Display chosseCareersTitleView
-    
+
     self.chooseCareersTitleView.displayView()
-    
+
     // Do any additional setup after loading the view.
-  }
+    }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
@@ -362,10 +361,13 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Show tutorial to first time users
     
     if self.firstTimeUser {
+        
       self.tutorialViews.append(contentsOf: [self.chooseCareersView, self.backButton])
       self.tutorialDescriptions.updateValue(["CHOOSE CAREERS", "Select the careers that are most appropriate to you.\n\nHave a go now!\n\nYou can return to the Settings page at any time to change your choices."], forKey: self.chooseCareersView)
       self.showTutorial()
+        
     }
+    
   }
 
     //********************************************************************************
@@ -373,116 +375,37 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     //********************************************************************************
     
     
-  @IBAction func deleteFBTapped(_ sender: AnyObject) {
-    
+    @IBAction func deleteFBTapped(_ sender: AnyObject) {
+
     SwiftSpinner.show("Deactivating account", animated: true)
-    
-//    let facebookRequest: FBSDKGraphRequest! = FBSDKGraphRequest(graphPath: "/me/permissions", parameters: nil, httpMethod: "DELETE")
-//    
-//    facebookRequest.start (completionHandler: { connection, result, error in
-//      
-//      if(error == nil && result != nil){
-//        
-//        let user = PFUser.current()!
-//        ParseExtensions.deleteUserFB(user)
-//        
-//        //self.deleteFromCoreData()
-//        let date:Date = Date()
-//        self.saveToCoreData("", p: [], dP: [], aI: "", uI: "", ex: date, r: date)
-//        self.view.loginUser(self)
-//        SwiftSpinner.hide()
-//        
-//      } else {
-//        if let error: Error = error {
-//          if let errorString = error.userInfo["error"] as? String {
-//            self.noticeOnlyText("Please try again \(errorString)")
-//          }
-//        } else {
-//          self.noticeOnlyText("Please try again")
-//        }
-//      }
-//    })
-    
-  }
-    
-    func deleteFromCoreData() {
-    
-        let PersonFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Person")
-        PersonFetch.returnsObjectsAsFaults = false
+
+    let user = Auth.auth().currentUser
+
+    user?.delete { error in
         
-        do {
-            let details = try moc.fetch(PersonFetch)
-            
-            if details.count > 0 {
+        if let error = error {
+            // An error happened.
+            SwiftSpinner.show("Login Error 1: Failed to delete", animated: false).addTapHandler({
                 
-                for item in details as! [NSManagedObject] {
-                    
-                    let itemData:NSManagedObject = item 
-                    moc.delete(itemData)
-                    
-                }
+                SwiftSpinner.hide()
                 
-            }else{
-                //do nothing
-            }
+            })
             
-        }catch{
-            
-            let coreDataError = SCLAlertView()
-            coreDataError.showError("Local Save Error", subTitle: "Try Again")
-            
+        } else {
+            // Account deleted.
+            SwiftSpinner.show("Successfully deleted your account", animated: false).addTapHandler({
+                
+                self.userLoggedIn()
+                SwiftSpinner.hide()
+                
+            })
         }
-        
+    }
+
     }
     
-    func saveToCoreData(_ t: String, p: Any, dP: Any, aI:String, uI: String, ex: Date, r: Date) {
-        
-        let entity = NSEntityDescription.insertNewObject(forEntityName: "Person", into: moc) as! Person
-        entity.setValue(t, forKey: "token")
-        entity.setValue(p, forKey: "permissions")
-        entity.setValue(dP, forKey: "declinedPermissions")
-        entity.setValue(aI, forKey: "appID")
-        entity.setValue(uI, forKey: "userID")
-        entity.setValue(ex, forKey: "expirationDate")
-        entity.setValue(r, forKey: "refreshDate")
-        do {
-            try moc.save()
-        } catch {
-            fatalError("failed to save")
-        }
-        
-    }
-  
+    
     func loadUser() {
-        
-        //    let currentUser = PFUser.currentUser()!
-        //    let username = currentUser.username
-        //    let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
-        //    //query.whereKey(PF_PREFERENCES_USERNAME, equalTo: currentUser.username!)
-        //    query.includeKey()
-        //
-        //    query.findObjectsInBackgroundWithBlock{(objects:[PFObject]?, error:Error?) -> Void in
-        //
-        //        if error == nil {
-        //
-        ////            for singleObject in objects! {
-        ////                if let stringData = singleObject[PF_PREFERENCES_CAREERPREFS] as? String {
-        ////                    self.chosenCareers.append(stringData)
-        ////                }
-        ////            }
-        //
-        //            for singleObject in objects! {
-        //                if let stringData = singleObject["careerPrefs"]{
-        //                    self.chosenCareers = stringData as! [String]
-        //                    //parseObjecsArrary.append(stringData as! PFObject)
-        //                }
-        //            }
-        //        //self.chosenCareers = objects?[PF_USER_CAREERPREFS] //as! [String]
-        //
-        //        }
-        //
-        //
-        //    }
         
         self.chooseCareersView.addSubview(self.noDataLabel)
         
@@ -499,170 +422,128 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         //self.noDataLabel.alpha = 0
         self.noDataLabel.alpha = 1.0
         
-        let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
-        let currentUser = PFUser.current()!
-        let username = currentUser.username
-        //let usernameString = username as! String
-        query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
-        query.findObjectsInBackground {
-            (objects: [PFObject]?, error: Error?) -> Void in
+        //search preferences for chosen careers
+        
+        if Auth.auth().currentUser?.uid == nil {
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        } else {
             
-            if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) scores.")
-                self.noDataLabel.alpha = 0
-                self.noDataUILabel.alpha = 0
-                // Do something with the found objects
-                if let objects = objects {
-                    for object in objects {
-                        self.chosenCareers = object[PF_PREFERENCES_CAREERPREFS] as! [String]
-                        print(self.chosenCareers)
-                        for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
-                            
-                            if self.chosenCareers.contains(self.careerTypes[index]) {
-                                self.chooseCareerViews[index].careerChosen = true
-                            }
-                          
-                          self.chooseCareerViews[index].displayView()
-                          
+            self.ref = Database.database().reference()
+            self.ref.child(FBASE_PREFERENCES_NODE).child(FBASE_USER_USERID).queryOrderedByKey().observe(.value, with: {
+                
+                (snapshot) in
+                
+                if snapshot.exists() {
+                    
+                    self.noDataLabel.alpha = 0
+                    self.noDataUILabel.alpha = 0
+                    
+                    let enumerator = snapshot.children
+                    while let rest = enumerator.nextObject() as? DataSnapshot {
+                        self.chosenCareers.append(rest.value as! String)
+                    }
+                    
+                    print(self.chosenCareers)
+                    for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
+                        
+                        if self.chosenCareers.contains(self.careerTypes[index]) {
+                            self.chooseCareerViews[index].careerChosen = true
                         }
-                      
-                      if self.chosenCareers.contains(self.careerTypes[0]) {
-                        self.currentCareerLabel.text = "Career Selected"
-                      }
-                      else {
-                        self.currentCareerLabel.text = "Career Unselected"
-                      }
+                        
+                        self.chooseCareerViews[index].displayView()
                         
                     }
+                    
+                    if self.chosenCareers.contains(self.careerTypes[0]) {
+                        self.currentCareerLabel.text = "Career Selected"
+                    }
+                    else {
+                        self.currentCareerLabel.text = "Career Unselected"
+                    }
+
+                    
                 }
-            } else {
-                // Log details of the failure
-                self.noDataUILabel.text = "Connection Error"
-            }
-        }         
-        
+                
+            })
+            
+        }
         
     }
     
     func savePrefsToParse(_ sender:UIButton){
         
         SwiftSpinner.show("Saving career preferences")
-        let currentUser = PFUser.current()!
-        //let objID = currentUser.objectId
-        let username = currentUser.username
-        let query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
-        query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
-        //query.getObjectInBackgroundWithId(objID!)
-        query.getFirstObjectInBackground(block: { (user: PFObject?, error: Error?) -> Void in
+        
+        self.ref = Database.database().reference()
+        
+        if let currentUser = Auth.auth().currentUser {
             
-            if error == nil {
-                
-                user![PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
-                user?.saveInBackground(block: { (succeeded: Bool, error: Error?) -> Void in
-                    if error == nil {
-                        
-                        self.defaults.set(self.chosenCareers, forKey: "SavedCareerPreferences")
-                        let array = self.defaults.object(forKey: "SavedCareerPreferences") as? [String] ?? [String]()
-                        
-                        SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
-                            
-                        print(array)
-                        SwiftSpinner.hide()
-                        //self.hideSettingsMenuView(sender)
-                            
-                        }, subtitle: "Tap to return to settings")
-                        
-                    } else {
-                        
-                        SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                            
-                            SwiftSpinner.hide()
-                            //self.hideSettingsMenuView(sender)
-                            
-                            }, subtitle: "Preferences unsaved, tap to return to settings")
-                        
-                    }
-                    
-                } )
-                
-            }else{
-                
-                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                    
-                    SwiftSpinner.hide()
-                    //self.hideSettingsMenuView(sender)
-                    
-                    }, subtitle: "Preferences unsaved, to return to settings")
-                
+            if self.chosenCareers.contains("Investment Banking") {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_BANKING: true])
+            }else {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_BANKING: false])
             }
-        } )
-        
-//        SwiftSpinner.show("Saving career preferences")
-//        
-//        var query = PFQuery(className: PF_PREFERENCES_CLASS_NAME)
-//        let currentUser = PFUser.currentUser()!
-//        let username = currentUser.username
-//        //let usernameString = username as! String
-//        query.whereKey(PF_PREFERENCES_USERNAME, equalTo: username!)
-//        query.findObjectsInBackgroundWithBlock {
-//            (objects: [PFObject]?, error: Error?) -> Void in
-//            
-//            if error == nil {
-//                // The find succeeded.
-//                print("Successfully retrieved \(objects!.count) scores.")
-//                // Do something with the found objects
-//                if let objects = objects {
-//                    for object in objects {
-//                        
-//                        object[PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
-//                        //self.chosenCareers = object[PF_PREFERENCES_CAREERPREFS] as! [String]
-//                        print(self.chosenCareers)
-//                        SwiftSpinner.hide()
-//                        self.hideSettingsMenuView(sender)
-//    
-//                    }
-//                }
-//            } else {
-//                // Log details of the failure
-//                let saveError = SCLAlertView()
-//                saveError.showError("Error", subTitle: "Try again")
-//            }
-//        }
-
-        
-        
-    }
-    
-    func savePrefsToParse2(_ sender:UIButton){
-        
-        SwiftSpinner.show("Saving career preferences")
-        
-        let user = PFUser.current()
-        let careerPrefs = PFObject(className: PF_PREFERENCES_CLASS_NAME)
-        careerPrefs[PF_PREFERENCES_USER] = user!
-        careerPrefs[PF_PREFERENCES_CAREERPREFS] = self.chosenCareers
-        
-        careerPrefs.saveInBackground(block: { (succeeded, error: Error?) -> Void in
-            if error == nil {
+            
+            if self.chosenCareers.contains("Engineering") {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_ENGINEERING: true])
+            }else {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_ENGINEERING: false])
+            }
+            
+            if self.chosenCareers.contains("Trading") {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_TRADING: true])
+            }else {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_TRADING: false])
+            }
+            
+            if self.chosenCareers.contains("Technology") {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_TECHNOLOGY: true])
+            }else {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_TECHNOLOGY: false])
+            }
+            
+            if self.chosenCareers.contains("Accounting") {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_ACCOUNTING: true])
+            }else {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_ACCOUNTING: false])
+            }
+            
+            if self.chosenCareers.contains("Management Consulting") {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_CONSULTING: true])
+            }else {
+                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
+                    [FBASE_PREFERENCES_CONSULTING: false])
+            }
+            
+            self.defaults.set(self.chosenCareers, forKey: "SavedCareerPreferences")
+            let array = self.defaults.object(forKey: "SavedCareerPreferences") as? [String] ?? [String]()
+            
+            SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
                 
+                print(array)
                 SwiftSpinner.hide()
-                self.hideSettingsMenuView(sender)
                 
-            } else {
-                
-                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                    
-                    SwiftSpinner.hide()
-                    self.hideSettingsMenuView(sender)
-                    
-                    }, subtitle: "Preferences unsaved, tap to return home")
-                
-            }
-        })
+            }, subtitle: "Tap to return to settings")
+            
+        } else {
+            
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+            
+        }
+
         
     }
-
 
   
   func setConstraints() {
@@ -1565,6 +1446,29 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         self.tutoView.alpha = 0
         self.showMembership = false
         
+    }
+    
+    func userLoggedIn(){
+        
+        if Auth.auth().currentUser == nil {
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        } else {
+            
+            //once user is confirmed as logged in...
+            
+        }
+    }
+    
+    func handleLogout() {
+        
+        do {
+            try Auth.auth().signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        let loginController = LoginViewController()
+        present(loginController, animated: true, completion: nil)
     }
   
 }
