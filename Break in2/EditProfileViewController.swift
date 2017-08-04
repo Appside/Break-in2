@@ -627,7 +627,9 @@ class EditProfileViewController : FormViewController {
             
             if let currentUser = Auth.auth().currentUser {
             
-                self.ref.child(FBASE_USER_NODE).child(currentUser.uid).setValue(
+                let key = self.ref.child(FBASE_USER_NODE).child(currentUser.uid).key
+                
+                let post =
                     [FBASE_USER_EMAIL: self.profileEmail,
                      FBASE_USER_FIRST_NAME: self.profileFirstName,
                      FBASE_USER_SURNAME: self.profileLastName,
@@ -638,7 +640,10 @@ class EditProfileViewController : FormViewController {
                      FBASE_USER_POSITION: self.profilePosition,
                      FBASE_USER_SHARE_INFO_ALLOWED: self.shareInfoAllowed,
                      FBASE_USER_RECOMMENDED_BY: self.recommendedBy
-                    ])
+                    ] as [String : Any]
+                
+                let childUpdate = ["Users/\(key)": post]
+                self.ref.updateChildValues(childUpdate)
                 
                 self.defaults.set(self.profileFirstName, forKey: "profileFirstName")
                 self.defaults.set(self.profileLastName, forKey: "profileLastName")

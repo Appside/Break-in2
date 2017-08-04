@@ -89,7 +89,7 @@ class TutorialViewController: UIViewController {
       self.tutorialNextButton.addTarget(self, action: #selector(TutorialViewController.GoToEditProfile(_:)), for: UIControlEvents.touchUpInside)
       self.tutorialNextButton.alpha = 0
       
-      let string:String = "Welcome \(String(describing: user!.displayName))"
+      let string:String = "Welcome \(user!.displayName!)"
       self.descriptionLabelView.titleLabel.text = string.uppercased()
       self.descriptionLabelView.descriptionLabel.text = "BREAKIN2 is a simple app...\n\n...but we all need a little help from time to time, so we've provided a short introduction to get you started."
       self.descriptionLabelView.alpha = 0

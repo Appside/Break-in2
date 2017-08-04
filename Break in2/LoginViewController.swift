@@ -245,6 +245,11 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                  FBASE_USER_NUMBER_LIVES: self.setNumberOfLivesFree
                                 ])
                             
+                            //record user as already in database
+                            self.ref.child(FBASE_USER_ACTIVE_UIDS).setValue(
+                                [FBASE_USER_USERID: currentUser.uid]
+                            )
+                            
                             //create user preferences
                             self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
                                 [FBASE_PREFERENCES_ACCOUNTING: true,

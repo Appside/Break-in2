@@ -478,53 +478,63 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
         
         if let currentUser = Auth.auth().currentUser {
             
-            if self.chosenCareers.contains("Investment Banking") {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_BANKING: true])
+            let key = self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).key
+            
+            //set career prefs variables
+            var MCPost = Bool()
+            var IBPost = Bool()
+            var ENGPost = Bool()
+            var TRDPost = Bool()
+            var TECPost = Bool()
+            var ACTPost = Bool()
+            
+            //check users selections
+            if self.chosenCareers.contains("Management Consulting") {
+                MCPost = true
             }else {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_BANKING: false])
+                MCPost = false
+            }
+            
+            if self.chosenCareers.contains("Investment Banking") {
+                IBPost = true
+            }else {
+                IBPost = false
             }
             
             if self.chosenCareers.contains("Engineering") {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_ENGINEERING: true])
+                ENGPost = true
             }else {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_ENGINEERING: false])
+                ENGPost = false
             }
             
             if self.chosenCareers.contains("Trading") {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_TRADING: true])
+                TRDPost = true
             }else {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_TRADING: false])
+                TRDPost = false
             }
             
             if self.chosenCareers.contains("Technology") {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_TECHNOLOGY: true])
+                TECPost = true
             }else {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_TECHNOLOGY: false])
+                TECPost = false
             }
             
             if self.chosenCareers.contains("Accounting") {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_ACCOUNTING: true])
+                ACTPost = true
             }else {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_ACCOUNTING: false])
+                ACTPost = false
             }
             
-            if self.chosenCareers.contains("Management Consulting") {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_CONSULTING: true])
-            }else {
-                self.ref.child(FBASE_PREFERENCES_NODE).child(currentUser.uid).setValue(
-                    [FBASE_PREFERENCES_CONSULTING: false])
-            }
+            let post =
+                [FBASE_PREFERENCES_ACCOUNTING: ACTPost,
+                 FBASE_PREFERENCES_BANKING: IBPost,
+                 FBASE_PREFERENCES_TRADING: TRDPost,
+                 FBASE_PREFERENCES_CONSULTING: MCPost,
+                 FBASE_PREFERENCES_TECHNOLOGY: TECPost,
+                 FBASE_PREFERENCES_ENGINEERING: ENGPost]
+            
+            let IBchildUpdate = ["Preferences/\(key)": post]
+            self.ref.updateChildValues(IBchildUpdate)
             
             self.defaults.set(self.chosenCareers, forKey: "SavedCareerPreferences")
             let array = self.defaults.object(forKey: "SavedCareerPreferences") as? [String] ?? [String]()
