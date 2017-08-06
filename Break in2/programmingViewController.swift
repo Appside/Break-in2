@@ -9,12 +9,20 @@
 import UIKit
 import Charts
 import SCLAlertView
-import Parse
 import SwiftSpinner
 import GoogleMobileAds
+import FirebaseDatabase
+import Firebase
 
 
 class programmingViewController: QuestionViewController, UIScrollViewDelegate, GADInterstitialDelegate {
+    
+//**************************************************************************************
+//NUMBER 1: VARIABLES
+//**************************************************************************************
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
     
     //Ad variables
     var interstitialAd:GADInterstitial!
@@ -674,35 +682,40 @@ class programmingViewController: QuestionViewController, UIScrollViewDelegate, G
                             var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
                             timeTaken = timeTaken/Float(self.quizzArray.count)
                             
+//**************************************************************************************
+//CHECK: FIREBASE
+//**************************************************************************************
+                            
                             SwiftSpinner.show("Saving Results")
                             
-                            let user = PFUser.current()
-                            let analytics = PFObject(className: PF_PROG_CLASS_NAME)
-                            analytics[PF_PROG_USER] = user
-                            analytics[PF_PROG_SCORE] = self.scoreRatio
-                            analytics[PF_PROG_TIME] = timeTaken
-                            analytics[PF_PROG_USERNAME] = user![PF_USER_USERNAME]
+                            self.ref = Database.database().reference()
                             
-                            analytics.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
-                                if error == nil {
+                            if let currentUser = Auth.auth().currentUser {
+                                
+                                //create score record
+                                self.ref.child(FBASE_PROG_CLASS_NAME).child(currentUser.uid).childByAutoId().setValue(
+                                    [FBASE_PROG_SCORE: self.scoreRatio,
+                                     FBASE_PROG_TIME: timeTaken
+                                    ])
+                                
+                                SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
+                                    SwiftSpinner.hide()
+                                }, subtitle: "Tap to proceed to feedback screen")
+                                
+                                self.resultsUploaded = true
+                                self.feedbackScreen()
+                                
+                            }else{
+                                
+                                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                     
-                                    SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
-                                        SwiftSpinner.hide()
-                                        self.resultsUploaded = true
-                                        self.feedbackScreen()
-                                        }, subtitle: "Tap to proceed to feedback screen")
+                                    SwiftSpinner.hide()
                                     
-                                } else {
-                                    
-                                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                        
-                                        SwiftSpinner.hide()
-                                        self.feedbackScreen()
-                                        
-                                        }, subtitle: "Results unsaved, tap to proceed to feedback")
-                                    
-                                }
-                            } as! PFBooleanResultBlock)
+                                }, subtitle: "Results unsaved, tap to proceed to feedback")
+                                
+                                self.feedbackScreen()
+                                
+                            }
                         }
                     }
                     else {

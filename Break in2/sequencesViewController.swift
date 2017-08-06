@@ -9,12 +9,20 @@
 import UIKit
 import Charts
 import SCLAlertView
-import Parse
 import SwiftSpinner
 import GoogleMobileAds
+import FirebaseDatabase
+import Firebase
 
 
 class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GADInterstitialDelegate{
+    
+//**************************************************************************************
+//NUMBER 1: VARIABLES
+//**************************************************************************************
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
     
     //Ad variables
     var interstitialAd:GADInterstitial!
@@ -694,35 +702,40 @@ class sequencesViewController: QuestionViewController, UIScrollViewDelegate, GAD
                     var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
                     timeTaken = timeTaken/Float(self.selectedAnswers.count)
                     
-                    SwiftSpinner.show("Saving Results")
-                    
-                    let user = PFUser.current()
-                    let analytics = PFObject(className: PF_SEQUENCE_CLASS_NAME)
-                    analytics[PF_SEQUENCE_USER] = user
-                    analytics[PF_SEQUENCE_SCORE] = self.scoreRatio
-                    analytics[PF_SEQUENCE_TIME] = timeTaken
-                    analytics[PF_SEQUENCE_USERNAME] = user![PF_USER_USERNAME]
-                    
-                    analytics.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
-                        if error == nil {
+//**************************************************************************************
+//CHECK: FIREBASE
+//**************************************************************************************
+                        
+                        SwiftSpinner.show("Saving Results")
+                        
+                        self.ref = Database.database().reference()
+                        
+                        if let currentUser = Auth.auth().currentUser {
+                            
+                            //create score record
+                            self.ref.child(FBASE_SEQUENCE_CLASS_NAME).child(currentUser.uid).childByAutoId().setValue(
+                                [FBASE_SEQUENCE_SCORE: self.scoreRatio,
+                                 FBASE_SEQUENCE_TIME: timeTaken
+                                ])
                             
                             SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
                                 SwiftSpinner.hide()
-                                self.resultsUploaded = true
-                                self.feedbackScreen()
-                                }, subtitle: "Tap to proceed to feedback screen")
+                            }, subtitle: "Tap to proceed to feedback screen")
                             
-                        } else {
+                            self.resultsUploaded = true
+                            self.feedbackScreen()
+                            
+                        }else{
                             
                             SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                 
                                 SwiftSpinner.hide()
-                                self.feedbackScreen()
                                 
-                                }, subtitle: "Results unsaved, tap to proceed to feedback")
+                            }, subtitle: "Results unsaved, tap to proceed to feedback")
+
+                            self.feedbackScreen()
                             
                         }
-                    } as! PFBooleanResultBlock)
                 }
                 }
                 else {

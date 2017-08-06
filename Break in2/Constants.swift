@@ -77,7 +77,17 @@ let FBASE_BRAINBREAKER_Q_EXPIRATION_DATE   = "expirationDate"       //  Date
 let FBASE_BRAINBREAKER_Q_TEST_PRIZE        = "testPrize"            //  String
 let FBASE_BRAINBREAKER_Q_TIME_REQUIRED     = "timeRequiredMinutes"  //  Number
 
-/* Calendar class in Parse*/
+/* Brain Breaker Answer class in Parse */
+let FBASE_BRAINBREAKER_A_CLASS_NAME		= "Brain_Breaker_A"         //	Class name
+let FBASE_BRAINBREAKER_A_USER              = "user"					//	Pointer to User Class
+let FBASE_BRAINBREAKER_A_USERNAME			= "username"				//	String
+let FBASE_BRAINBREAKER_A_EMAIL				= "email"                   //	String
+let FBASE_BRAINBREAKER_A_FULLNAME			= "fullname"				//	String
+let FBASE_BRAINBREAKER_A_ANSWER_CORRECT    = "answerCorrect"           //  Number
+let FBASE_BRAINBREAKER_A_Q_NUMBER          = "questionNumber"            //  Number
+let FBASE_BRAINBREAKER_A_SOLVED            = "solved"                  //Bool
+
+/* Calendar class in Firebase*/
 let FBASE_CALENDAR_CLASS_NAME              = "Jobs"                  //	Class name
 let FBASE_CALENDAR_DEADLINEDAY             = "deadlineDay"           //	Number
 let FBASE_CALENDAR_DEADLINEMONTH           = "deadlineMonth"         //	Number
@@ -86,6 +96,110 @@ let FBASE_CALENDAR_CAREERTYPE              = "careerType"            //	String
 let FBASE_CALENDAR_COMPANY                 = "company"               //	String
 let FBASE_CALENDAR_JOBTITLE                = "position"              //	String
 let FBASE_CALENDAR_ONGOING                 = "Ongoing"               //	String
+
+/* Analytics class in Parse*/
+let FBASE_ANALYTICS_CLASS_NAME				= "Analytics"				//	Class name
+let FBASE_ANALYTICS_USER					= "user"					//	Pointer to User Class
+let FBASE_ANALYTICS_CREATED				= "createdAt"               //	Date
+let FBASE_ANALYTICS_TIME                   = "time"                    //	Number
+let FBASE_ANALYTICS_USERNAME				= "username"				//	String
+let FBASE_ANALYTICS_CAREER                 = "career"                  //	String
+let FBASE_ANALYTICS_TEST                   = "test"                    //	String
+let FBASE_ANALYTICS_SCORE                  = "score"                   //	Number
+
+/* Numerical Reasoning class in Parse*/
+let FBASE_NUMREAS_CLASS_NAME				= "Numerical_Reasoning"		//	Class name
+let FBASE_NUMREAS_USER                     = "user"					//	Pointer to User Class
+let FBASE_NUMREAS_CREATED                  = "createdAt"               //	Date
+let FBASE_NUMREAS_TIME                     = "time"                    //	Number
+let FBASE_NUMREAS_USERNAME                 = "username"				//	String
+let FBASE_NUMREAS_TEST                     = "test"                    //	String
+let FBASE_NUMREAS_SCORE                    = "score"                   //	Number
+
+/* Verbal Reasoning class in Parse*/
+let FBASE_VERBREAS_CLASS_NAME				= "Verbal_Reasoning"		//	Class name
+let FBASE_VERBREAS_USER                    = "user"					//	Pointer to User Class
+let FBASE_VERBREAS_CREATED                 = "createdAt"               //	Date
+let FBASE_VERBREAS_TIME                    = "time"                    //	Number
+let FBASE_VERBREAS_USERNAME                = "username"				//	String
+let FBASE_VERBREAS_TEST                    = "test"                    //	String
+let FBASE_VERBREAS_SCORE                   = "score"                   //	Number
+
+/* Arithmetic class in Parse*/
+let FBASE_ARITHMETIC_CLASS_NAME            = "Arithmetic"              //	Class name
+let FBASE_ARITHMETIC_USER                  = "user"					//	Pointer to User Class
+let FBASE_ARITHMETIC_CREATED               = "createdAt"               //	Date
+let FBASE_ARITHMETIC_TIME                  = "time"                    //	Number
+let FBASE_ARITHMETIC_USERNAME              = "username"				//	String
+let FBASE_ARITHMETIC_TEST                  = "test"                    //	String
+let FBASE_ARITHMETIC_SCORE                 = "score"                   //	Number
+
+/* Fractions class in Parse*/
+let FBASE_FRACTIONS_CLASS_NAME             = "Fractions"               //	Class name
+let FBASE_FRACTIONS_USER                   = "user"					//	Pointer to User Class
+let FBASE_FRACTIONS_CREATED                = "createdAt"               //	Date
+let FBASE_FRACTIONS_TIME                   = "time"                    //	Number
+let FBASE_FRACTIONS_USERNAME               = "username"				//	String
+let FBASE_FRACTIONS_TEST                   = "test"                    //	String
+let FBASE_FRACTIONS_SCORE                  = "score"                   //	Number
+
+/* Logical class in Parse*/
+let FBASE_LOGICAL_CLASS_NAME               = "Logical_Reasoning"       //	Class name
+let FBASE_LOGICAL_USER                     = "user"					//	Pointer to User Class
+let FBASE_LOGICAL_CREATED                  = "createdAt"               //	Date
+let FBASE_LOGICAL_TIME                     = "time"                    //	Number
+let FBASE_LOGICAL_USERNAME                 = "username"				//	String
+let FBASE_LOGICAL_TEST                     = "test"                    //	String
+let FBASE_LOGICAL_SCORE                    = "score"                   //	Number
+
+/* Sequences class in Parse*/
+let FBASE_SEQUENCE_CLASS_NAME              = "Sequences"               //	Class name
+let FBASE_SEQUENCE_USER                    = "user"					//	Pointer to User Class
+let FBASE_SEQUENCE_CREATED                 = "createdAt"               //	Date
+let FBASE_SEQUENCE_TIME                    = "time"                    //	Number
+let FBASE_SEQUENCE_USERNAME                = "username"				//	String
+let FBASE_SEQUENCE_TEST                    = "test"                    //	String
+let FBASE_SEQUENCE_SCORE                   = "score"                   //	Number
+
+/* Test voting class in Parse*/
+let FBASE_TESTVOTE_CLASS_NAME              = "New_Test_Vote"           //	Class name
+let FBASE_TESTVOTE_CREATED                 = "createdAt"               //	Date
+let FBASE_TESTVOTE_VOTES                   = "votes"                   //	Number
+let FBASE_TESTVOTE_CAREER                  = "career"                  //	String
+let FBASE_TESTVOTE_TEST                    = "test"                    //	String
+
+/* Programming class in Parse*/
+let FBASE_PROG_CLASS_NAME              = "Programming"               //	Class name
+let FBASE_PROG_USER                    = "user"					//	Pointer to User Class
+let FBASE_PROG_CREATED                 = "createdAt"               //	Date
+let FBASE_PROG_TIME                    = "time"                    //	Number
+let FBASE_PROG_USERNAME                = "username"				//	String
+let FBASE_PROG_TEST                    = "test"                    //	String
+let FBASE_PROG_SCORE                   = "score"                   //	Number
+
+/* Technology class in Parse*/
+let FBASE_TECH_CLASS_NAME              = "Technology"               //	Class name
+let FBASE_TECH_USER                    = "user"					//	Pointer to User Class
+let FBASE_TECH_CREATED                 = "createdAt"               //	Date
+let FBASE_TECH_TIME                    = "time"                    //	Number
+let FBASE_TECH_USERNAME                = "username"				//	String
+let FBASE_TECH_TEST                    = "test"                    //	String
+let FBASE_TECH_SCORE                   = "score"                   //	Number
+
+/* FIREBASE utilities here */
+let FBASE_TIMESTAMP                    = "timestamp"            //date since 1970
+
+/* Add AD IDs from FIREBASE here */
+let AD_ID_HOMEVIEW_BANNER           = "ca-app-pub-4854749430333488/2684866458"
+let AD_ID_NUMERICAL                 = "ca-app-pub-4854749430333488/4066565655"
+let AD_ID_LOGICAL                   = "ca-app-pub-4854749430333488/3190420452"
+let AD_ID_VERBAL                    = "ca-app-pub-4854749430333488/6283487655"
+let AD_ID_ARITHMETIC                = "ca-app-pub-4854749430333488/5067656052"
+let AD_ID_SEQUENCES                 = "ca-app-pub-4854749430333488/6143886856"
+let AD_ID_FRACTIONS                 = "ca-app-pub-4854749430333488/6544389258"
+let AD_ID_PROGRAMMING               = "ca-app-pub-4854749430333488/8021122454"
+let AD_ID_TECHNOLOGY                = "ca-app-pub-4854749430333488/9497855652"
+let AD_ID_BRAINBREAKER              = "ca-app-pub-4854749430333488/9236954050"
 
 //------------------------------------------------------
 // PARSE
@@ -249,15 +363,3 @@ let PF_CALENDAR_DEADLINEYEAR            = "deadlineYear"             //	Number
 let PF_CALENDAR_CAREERTYPE              = "careerType"				//	String
 let PF_CALENDAR_COMPANY                 = "company"                 //	String
 let PF_CALENDAR_JOBTITLE                = "position"                //	String
-
-/* Add AD IDs from FIREBASE here */
-let AD_ID_HOMEVIEW_BANNER           = "ca-app-pub-4854749430333488/2684866458"
-let AD_ID_NUMERICAL                 = "ca-app-pub-4854749430333488/4066565655"
-let AD_ID_LOGICAL                   = "ca-app-pub-4854749430333488/3190420452"
-let AD_ID_VERBAL                    = "ca-app-pub-4854749430333488/6283487655"
-let AD_ID_ARITHMETIC                = "ca-app-pub-4854749430333488/5067656052"
-let AD_ID_SEQUENCES                 = "ca-app-pub-4854749430333488/6143886856"
-let AD_ID_FRACTIONS                 = "ca-app-pub-4854749430333488/6544389258"
-let AD_ID_PROGRAMMING               = "ca-app-pub-4854749430333488/8021122454"
-let AD_ID_TECHNOLOGY                = "ca-app-pub-4854749430333488/9497855652"
-let AD_ID_BRAINBREAKER              = "ca-app-pub-4854749430333488/9236954050"

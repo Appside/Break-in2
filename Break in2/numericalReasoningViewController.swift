@@ -9,7 +9,6 @@
 import UIKit
 import Charts
 import SCLAlertView
-import Parse
 import SwiftSpinner
 import GoogleMobileAds
 import FirebaseDatabase
@@ -820,35 +819,41 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
                     var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
                     timeTaken = timeTaken/Float(self.selectedAnswers.count)
                     
+//**************************************************************************************
+//CHECK: FIREBASE
+//**************************************************************************************
+                        
                     SwiftSpinner.show("Saving Results")
                     
-                    let user = PFUser.current()
-                    let analytics = PFObject(className: PF_NUMREAS_CLASS_NAME)
-                    analytics[PF_NUMREAS_USER] = user
-                    analytics[PF_NUMREAS_SCORE] = self.scoreRatio
-                    analytics[PF_NUMREAS_TIME] = timeTaken
-                    analytics[PF_NUMREAS_USERNAME] = user![PF_USER_USERNAME]
+                    self.ref = Database.database().reference()
                     
-                    analytics.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
-                        if error == nil {
+                    if let currentUser = Auth.auth().currentUser {
+                        
+                        //create score record
+                        self.ref.child(FBASE_NUMREAS_CLASS_NAME).child(currentUser.uid).childByAutoId().setValue(
+                            [FBASE_NUMREAS_SCORE: self.scoreRatio,
+                             FBASE_NUMREAS_TIME: timeTaken
+                            ])
+                        
+                        SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        }, subtitle: "Tap to proceed to feedback screen")
+                        
+                        self.resultsUploaded = true
+                        self.feedbackScreen()
+                        
+                    }else{
+                        
+                        SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                             
-                            SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
-                                SwiftSpinner.hide()
-                                self.resultsUploaded = true
-                                self.feedbackScreen()
-                                }, subtitle: "Tap to proceed to feedback screen")
+                            SwiftSpinner.hide()
                             
-                        } else {
-                            
-                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                
-                                SwiftSpinner.hide()
-                                self.feedbackScreen()
-                                
-                                }, subtitle: "Results unsaved, tap to proceed to feedback")
-                            
+                        }, subtitle: "Results unsaved, tap to proceed to feedback")
+                        
+                        self.feedbackScreen()
+                        
                         }
-                    } as! PFBooleanResultBlock)
+                        
                 self.nextButton.text = "Return to Feedback Screen"
                 }
                 }

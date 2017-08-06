@@ -8,11 +8,19 @@
 
 import UIKit
 import SCLAlertView
-import Parse
 import GoogleMobileAds
 import SwiftSpinner
+import FirebaseDatabase
+import Firebase
 
 class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
+    
+//**************************************************************************************
+//NUMBER 1: VARIABLES
+//**************************************************************************************
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
     
     //Ad variables
     var interstitialAd:GADInterstitial!
@@ -1060,58 +1068,44 @@ class BrainBreakerViewController: UIViewController, GADInterstitialDelegate {
                         nbCorrectAnswers += 1
                         self.defaults.set(true, forKey: "brainBreakerAnsweredCorrectly")
                     }
+                    
+//**************************************************************************************
+//CHECK: FIREBASE
+//**************************************************************************************
+                    
                     SwiftSpinner.show("Saving Results")
-                    let currentUser = PFUser.current()!
-                    let query = PFQuery(className: PF_USER_CLASS_NAME)
-                    let username = currentUser.username
-                    query.whereKey(PF_USER_USERNAME, equalTo: username!)
-                    query.getFirstObjectInBackground(block: { (userBB: PFObject?, error: NSError?) -> Void in
+                    
+                    self.ref = Database.database().reference()
+                    
+                    if let currentUser = Auth.auth().currentUser {
                         
-                        if error == nil {
-                            
-                            let analytics = PFObject(className: PF_BRAINBREAKER_A_CLASS_NAME)
-                            analytics[PF_BRAINBREAKER_A_EMAIL] = userBB![PF_USER_EMAILCOPY]
-                            analytics[PF_BRAINBREAKER_A_FULLNAME] = userBB![PF_USER_FULLNAME]
-                            analytics[PF_BRAINBREAKER_A_Q_NUMBER] = self.questionNumber
-                            analytics[PF_BRAINBREAKER_A_ANSWER_CORRECT] = nbCorrectAnswers
-                            
-                            analytics.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
-                                if error == nil {
-                                    
-                                    SwiftSpinner.show("Answer Submitted", animated: false).addTapHandler({
-                                        SwiftSpinner.hide()
-                                        self.resultsUploaded = true
-                                        self.feedbackScreen()
-                                        }, subtitle: "Tap to proceed to feedback")
-                                    
-                                } else {
-                                    
-                                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                        
-                                        self.attemptsRemaining += 1
-                                        self.defaults.set(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
-                                        self.goBack()
-                                        SwiftSpinner.hide()
-                                        
-                                        }, subtitle: "You will not lose a life. Tap to return home.")
-                                    
-                                }
-                            } as! PFBooleanResultBlock)
-                            
-                        }else{
-                            
-                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                
-                                self.attemptsRemaining += 1
-                                self.defaults.set(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
-                                self.goBack()
-                                SwiftSpinner.hide()
-                                
-                                }, subtitle: "You will not lose a life. Tap to return home.")
-                            
-                        }
+                        //create score record
+                        self.ref.child(FBASE_BRAINBREAKER_A_CLASS_NAME).child(currentUser.uid).childByAutoId().setValue(
+                            [FBASE_BRAINBREAKER_A_EMAIL: currentUser.email,
+                             FBASE_BRAINBREAKER_A_USER: currentUser.uid,
+                             FBASE_BRAINBREAKER_A_FULLNAME: currentUser.displayName
+                            ])
                         
-                    } as! (PFObject?, Error?) -> Void)
+                        SwiftSpinner.show("Answer Submitted", animated: false).addTapHandler({
+                            SwiftSpinner.hide()
+                        }, subtitle: "Tap to proceed to feedback screen")
+                        
+                        self.resultsUploaded = true
+                        self.feedbackScreen()
+                        
+                    }else{
+                        
+                        SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                            
+                            SwiftSpinner.hide()
+                            
+                        }, subtitle: "You will not lose a life. Tap to return home.")
+                        
+                        self.attemptsRemaining += 1
+                        self.defaults.set(self.attemptsRemaining, forKey: "NoOfBrainBreakerLives")
+                        self.goBack()
+                        
+                    }
                     
                 }else {
                     self.feedbackScreen()

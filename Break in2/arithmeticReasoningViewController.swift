@@ -9,12 +9,20 @@
 import UIKit
 import Charts
 import SCLAlertView
-import Parse
 import SwiftSpinner
 import GoogleMobileAds
+import Firebase
+import FirebaseDatabase
 
 
 class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDelegate, GADInterstitialDelegate {
+    
+//**************************************************************************************
+//NUMBER 1: VARIABLES
+//**************************************************************************************
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
     
     //Ad variables
     var interstitialAd:GADInterstitial!
@@ -680,35 +688,40 @@ class arithmeticReasoningViewController: QuestionViewController, UIScrollViewDel
                     var timeTaken:Float = Float(60 * self.allowedMinutes + self.allowedSeconds) - Float(60 * self.countMinutes + self.countSeconds)
                     timeTaken = timeTaken/Float(self.selectedAnswers.count)
                     
-                    SwiftSpinner.show("Saving Results")
-                    
-                    let user = PFUser.current()
-                    let analytics = PFObject(className: PF_ARITHMETIC_CLASS_NAME)
-                    analytics[PF_ARITHMETIC_USER] = user
-                    analytics[PF_ARITHMETIC_SCORE] = self.scoreRatio
-                    analytics[PF_ARITHMETIC_TIME] = timeTaken
-                    analytics[PF_ARITHMETIC_USERNAME] = user![PF_USER_USERNAME]
-                    
-                    analytics.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
-                        if error == nil {
+//**************************************************************************************
+//CHECK: FIREBASE
+//**************************************************************************************
+                        
+                        SwiftSpinner.show("Saving Results")
+                        
+                        self.ref = Database.database().reference()
+                        
+                        if let currentUser = Auth.auth().currentUser {
+                            
+                            //create score record
+                            self.ref.child(FBASE_ARITHMETIC_CLASS_NAME).child(currentUser.uid).childByAutoId().setValue(
+                                [FBASE_ARITHMETIC_SCORE: self.scoreRatio,
+                                 FBASE_ARITHMETIC_TIME: timeTaken
+                                ])
                             
                             SwiftSpinner.show("Results Saved", animated: false).addTapHandler({
                                 SwiftSpinner.hide()
-                                self.resultsUploaded = true
-                                self.feedbackScreen()
-                                }, subtitle: "Tap to proceed to feedback screen")                            
+                            }, subtitle: "Tap to proceed to feedback screen")
                             
-                        } else {
+                            self.resultsUploaded = true
+                            self.feedbackScreen()
+                            
+                        }else{
                             
                             SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                                 
                                 SwiftSpinner.hide()
-                                self.feedbackScreen()
                                 
-                                }, subtitle: "Results unsaved, tap to proceed to feedback")
+                            }, subtitle: "Results unsaved, tap to proceed to feedback")
+                            
+                            self.feedbackScreen()
                             
                         }
-                    } as! PFBooleanResultBlock)
                 }
                 }
                 else {

@@ -12,30 +12,35 @@ import SCLAlertView
 import SwiftSpinner
 import Parse
 import ParseUI
+import Firebase
+import FirebaseDatabase
 
 class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollViewDelegate {
   
-  // Declare and initialize types of careers
-  
-  var testTypes:[String] = [String]()
-  var testColors:[String:UIColor] = [String:UIColor]()
-  var tutorialViews:[UIView] = [UIView]()
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
 
-  // Declare and initialize views and models
-  
-  let logoImageView:UILabel = UILabel()
-  let backButton:UIButton = UIButton()
-  let statisticsBackgroundView:UIView = UIView()
-  let statisticsView:UIView = UIView()
-  let statisticsTitleView:StatisticsTitleView = StatisticsTitleView()
-  let statisticsScrollView:UIScrollView = UIScrollView()
-  let testTypesBackgroundView:UIView = UIView()
-  let testTypesScrollView:UIScrollView = UIScrollView()
-  var testTypeButtons:[CareerButton] = [CareerButton]()
-  let scrollInfoLabel:UILabel = UILabel()
-  let clearStatsButton:UIButton = UIButton()
-  let tutorialView:UIView = UIView()
-  let tutorialNextButton:UIButton = UIButton()
+    // Declare and initialize types of careers
+
+    var testTypes:[String] = [String]()
+    var testColors:[String:UIColor] = [String:UIColor]()
+    var tutorialViews:[UIView] = [UIView]()
+
+    // Declare and initialize views and models
+
+    let logoImageView:UILabel = UILabel()
+    let backButton:UIButton = UIButton()
+    let statisticsBackgroundView:UIView = UIView()
+    let statisticsView:UIView = UIView()
+    let statisticsTitleView:StatisticsTitleView = StatisticsTitleView()
+    let statisticsScrollView:UIScrollView = UIScrollView()
+    let testTypesBackgroundView:UIView = UIView()
+    let testTypesScrollView:UIScrollView = UIScrollView()
+    var testTypeButtons:[CareerButton] = [CareerButton]()
+    let scrollInfoLabel:UILabel = UILabel()
+    let clearStatsButton:UIButton = UIButton()
+    let tutorialView:UIView = UIView()
+    let tutorialNextButton:UIButton = UIButton()
 
     var clearDataConfirmed:Bool = false
     let pointerView1:LabelPointerView = LabelPointerView()
@@ -698,377 +703,407 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         
         var yUnits:[Double] = []
         var yUnits2:[Double] = []
-        var dateTaken:[Date] = []
+        var dateTaken:[AnyObject] = []
         let formatter = DateFormatter()
         formatter.dateStyle = DateFormatter.Style.medium
         formatter.timeStyle = DateFormatter.Style.short
 
-        //parse
+        //firebase
         if (sender.currentTitle == "Numerical Reasoning"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_NUMREAS_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_NUMREAS_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            SwiftSpinner.show("Loading statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_NUMREAS_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_NUMREAS_SCORE] as! Double)
-                            yUnits2.append(object[PF_NUMREAS_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_NUMREAS_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_NUMREAS_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_NUMREAS_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
+                        
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }
                     
-                        }, subtitle: "Tap to dismiss")
-                }
+                })
+                
+            }else{
+                
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
+                
             }
-            
+
+        
         }else if (sender.currentTitle == "Verbal Reasoning"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_VERBREAS_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_VERBREAS_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_VERBREAS_SCORE] as! Double)
-                            yUnits2.append(object[PF_VERBREAS_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_VERBREAS_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_VERBREAS_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_VERBREAS_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
                         
-                        }, subtitle: "Tap to dismiss")
-                }
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    }
+                    
+                })
+                
+            }else{
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
             }
+
             
         }else if (sender.currentTitle == "Arithmetic Reasoning"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_ARITHMETIC_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_ARITHMETIC_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_ARITHMETIC_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_ARITHMETIC_SCORE] as! Double)
-                            yUnits2.append(object[PF_ARITHMETIC_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_ARITHMETIC_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_ARITHMETIC_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_ARITHMETIC_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
                         
-                        }, subtitle: "Tap to dismiss")
-                }
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    }
+                    
+                })
+                
+            }else{
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
             }
+
             
             
         }else if (sender.currentTitle == "Logical Reasoning"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_LOGICAL_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_LOGICAL_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_LOGICAL_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_LOGICAL_SCORE] as! Double)
-                            yUnits2.append(object[PF_LOGICAL_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_LOGICAL_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_LOGICAL_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_LOGICAL_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
                         
-                        }, subtitle: "Tap to dismiss")
-                }
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    }
+                    
+                })
+                
+            }else{
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
             }
+
             
         }else if (sender.currentTitle == "Fractions"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_FRACTIONS_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_FRACTIONS_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_FRACTIONS_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_FRACTIONS_SCORE] as! Double)
-                            yUnits2.append(object[PF_FRACTIONS_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_FRACTIONS_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_FRACTIONS_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_FRACTIONS_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
                         
-                        }, subtitle: "Tap to dismiss")
-                }
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    }
+                    
+                })
+                
+            }else{
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
             }
+
             
         }else if (sender.currentTitle == "Sequences"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_SEQUENCE_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_SEQUENCE_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_SEQUENCE_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_SEQUENCE_SCORE] as! Double)
-                            yUnits2.append(object[PF_SEQUENCE_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_SEQUENCE_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_SEQUENCE_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_SEQUENCE_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
                         
-                        }, subtitle: "Tap to dismiss")
-                }
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    }
+                    
+                })
+                
+            }else{
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
             }
+
 
 
         }else if (sender.currentTitle == "Programming"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_PROG_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_PROG_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_PROG_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_PROG_SCORE] as! Double)
-                            yUnits2.append(object[PF_PROG_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_PROG_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_PROG_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_PROG_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
                         
-                        }, subtitle: "Tap to dismiss")
-                }
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    }
+                    
+                })
+                
+            }else{
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
             }
             
             
         }else if (sender.currentTitle == "Technology"){
             
             SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_TECH_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_TECH_USERNAME, equalTo: username!)
-            query.limit = 6
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                self.ref.child(FBASE_TECH_CLASS_NAME).child(currentUser.uid).queryLimited(toLast: 6).queryOrdered(byChild: FBASE_TIMESTAMP).observe(.value, with: {
                     
-                    // The find succeeded.
-                    print("Successfully retrieved \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
+                    (snapshot) in
+                    
+                    if snapshot.exists(){
+                        
+                        let enumerator = snapshot.children
+                        
+                        while let rest = enumerator.nextObject() as? DataSnapshot {
                             
-                            yUnits.append(object[PF_TECH_SCORE] as! Double)
-                            yUnits2.append(object[PF_TECH_TIME] as! Double)
-                            dateTaken.append(object.createdAt as Date!)
-                            print(yUnits)
-                            print(yUnits2)
-                            print(dateTaken)
-                            
+                            let restValue = rest.value as? NSDictionary
+                            yUnits.append(restValue?[FBASE_TECH_SCORE] as! Double)
+                            yUnits2.append(restValue?[FBASE_TECH_TIME] as! Double)
+                            dateTaken.append(restValue?[FBASE_TECH_CREATED] as! String as AnyObject)
                         }
-                    }
-                    for element in dateTaken {
-                        self.dateTests.append(formatter.string(from: element))
-                    }
-                    SwiftSpinner.hide()
-                    self.noDataUILabel.text = ""
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                    
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
                         SwiftSpinner.hide()
+                        self.noDataUILabel.text = ""
                         
-                        }, subtitle: "Tap to dismiss")
-                }
+                        print(yUnits)
+                        print(yUnits2)
+                        print(dateTaken)
+                        
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                        
+                    }else{
+                        self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                    }
+                    
+                })
+                
+            }else{
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
+                    
+                    SwiftSpinner.hide()
+                    
+                }, subtitle: "Tap to dismiss")
             }
-            
+
+            //itwas here
             
         }
+        
     }
 
     func graphSetup(_ sender: UIButton, yUnits: [Double], yUnits2: [Double]) {
@@ -1077,7 +1112,10 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.pointerView1.alpha = 0.0
         self.pointerView2.alpha = 0.0
         
-        if (yUnits.count==0) {
+        print (yUnits)
+        print(yUnits2)
+        
+        if (yUnits.count == 0) {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.noDataUILabel.text = "No Score Available"
                 self.statisticsTitleView.alpha = 0.0
@@ -1168,7 +1206,7 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         self.chartObject2.descriptionText = ""
         chartData2.setValueTextColor(UIColor(red: 82/255, green: 107/255, blue: 123/255, alpha: 1.0))
         chartData2.setValueFont(UIFont(name: "HelveticaNeue", size: 13.0))
-        chartDataSet2.valueFormatter = NumberFormatter() as! IValueFormatter
+        //chartDataSet2.valueFormatter = NumberFormatter() as! IValueFormatter
         //chartDataSet2.valueFormatter?.minimumFractionDigits = 0
         self.chartObject2.xAxis.enabled = false
         self.chartObject2.animate(xAxisDuration: 1.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
@@ -1295,30 +1333,19 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
         if self.selectedTest == "Numerical Reasoning" {
             
             SwiftSpinner.show("Deleting selected statistics")
-            let query = PFQuery(className: PF_NUMREAS_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_NUMREAS_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
-                    
-                    print("About to delete \(objects!.count) \(self.selectedTest) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
-                    SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                } else {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_NUMREAS_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
                     // Log details of the failure
                     SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                         
@@ -1326,271 +1353,177 @@ class StatisticsViewController: UIViewController, ChartViewDelegate, UIScrollVie
                         
                         }, subtitle: "Tap to dismiss")
                 }
-            }
 
             
         }else if (self.selectedTest == "Verbal Reasoning"){
             
-            SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_VERBREAS_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_VERBREAS_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            SwiftSpinner.show("Deleting selected statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_VERBREAS_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
+                // Log details of the failure
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                    // The find succeeded.
-                    print("About to delete \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
                     SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Tap to dismiss")
-                }
+                }, subtitle: "Tap to dismiss")
             }
             
             
         }else if (self.selectedTest == "Arithmetic Reasoning"){
             
-            SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_ARITHMETIC_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_ARITHMETIC_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            SwiftSpinner.show("Deleting selected statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_ARITHMETIC_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
+                // Log details of the failure
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                    // The find succeeded.
-                    print("About to delete \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
                     SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Tap to dismiss")
-                }
+                    
+                }, subtitle: "Tap to dismiss")
             }
             
             
         }else if (self.selectedTest == "Logical Reasoning"){
             
-            SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_LOGICAL_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_LOGICAL_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            SwiftSpinner.show("Deleting selected statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_LOGICAL_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
+                // Log details of the failure
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                    // The find succeeded.
-                    print("About to delete \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
                     SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Tap to dismiss")
-                }
+                    
+                }, subtitle: "Tap to dismiss")
             }
             
         }else if (self.selectedTest == "Fractions"){
             
-            SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_FRACTIONS_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_FRACTIONS_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            SwiftSpinner.show("Deleting selected statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_FRACTIONS_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
+                // Log details of the failure
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                    // The find succeeded.
-                    print("About to delete \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
                     SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Tap to dismiss")
-                }
+                    
+                }, subtitle: "Tap to dismiss")
             }
             
         }else if (self.selectedTest == "Sequences"){
             
-            SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_SEQUENCE_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_SEQUENCE_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            SwiftSpinner.show("Deleting selected statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_SEQUENCE_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
+                // Log details of the failure
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                    // The find succeeded.
-                    print("About to delete \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
                     SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Tap to dismiss")
-                }
+                    
+                }, subtitle: "Tap to dismiss")
             }
+            
         }else if (self.selectedTest == "Programming"){
             
-            SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_PROG_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_PROG_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            SwiftSpinner.show("Deleting selected statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_PROG_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
+                // Log details of the failure
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                    // The find succeeded.
-                    print("About to delete \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
                     SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Tap to dismiss")
-                }
+                }, subtitle: "Tap to dismiss")
             }
             
             
         }else if (self.selectedTest == "Technology"){
             
-            SwiftSpinner.show("Loading statistics")
-            let query = PFQuery(className: PF_TECH_CLASS_NAME)
-            let currentUser = PFUser.current()!
-            let username = currentUser.username
-            query.whereKey(PF_TECH_USERNAME, equalTo: username!)
-            query.findObjectsInBackground {
-                (objects: [PFObject]?, error: Error?) -> Void in
+            SwiftSpinner.show("Deleting selected statistics")
+            
+            if let currentUser = Auth.auth().currentUser {
                 
-                if error == nil {
+                self.ref = Database.database().reference()
+                
+                ref.child(FBASE_TECH_CLASS_NAME).child(currentUser.uid).removeValue()
+                
+                let yUnits:[Double] = []
+                let yUnits2:[Double] = []
+                SwiftSpinner.hide()
+                self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
+                
+            }else {
+                // Log details of the failure
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                    // The find succeeded.
-                    print("About to delete \(objects!.count) scores.")
-                    // Do something with the found objects
-                    if let objects = objects {
-                        for object in objects {
-                            
-                            object.deleteInBackground()
-                            
-                        }
-                    }
-                    
-                    let yUnits:[Double] = []
-                    let yUnits2:[Double] = []
                     SwiftSpinner.hide()
-                    self.graphSetup(sender, yUnits: yUnits, yUnits2: yUnits2)
                     
-                } else {
-                    // Log details of the failure
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Tap to dismiss")
-                }
+                }, subtitle: "Tap to dismiss")
             }
             
             
