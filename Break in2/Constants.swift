@@ -43,6 +43,14 @@ let FBASE_USER_POSITION                 = "position"                //  String
 let FBASE_USER_SHARE_INFO_ALLOWED       = "shareInfoAllowed"        //  Bool
 let FBASE_USER_RECOMMENDED_BY           = "recommendedBy"           //  String
 
+/* Free membership node in Firebase*/
+let FBASE_FREEMEMBERSHIP_NODE           = "FreeMembership"          //	String
+let FBASE_FREEMEMBERSHIP_USERID			= "uid"                     //	String
+
+/* Paid membership node in Firebase*/
+let FBASE_PAIDMEMBERSHIP_NODE           = "PaidMembership"          //	String
+let FBASE_PAIDMEMBERSHIP_USERID			= "uid"                     //	String
+
 /* Preferences node in Firebase*/
 let FBASE_PREFERENCES_NODE              = "Preferences"             //	Class name
 let FBASE_PREFERENCES_USER              = "uid"                     //	Pointer to User Class
@@ -57,17 +65,27 @@ let FBASE_PREFERENCES_TRADING           = "trading"                 //	BOOL
 let FBASE_RECOMMENDATIONS_NODE          = "Recommendations"         //	Class name
 
 /* Brain Breaker Question class in Parse */
-let FBASE_BRAINBREAKER_Q_CLASS_NAME        = "Brain_Breaker"         //	Class name
-let FBASE_BRAINBREAKER_Q_QUESTION_TYPE     = "questionType"            //	String
-let FBASE_BRAINBREAKER_Q_QUESTION          = "question"                //	String
-let FBASE_BRAINBREAKER_Q_PASSAGE           = "passage"                 //	String
-let FBASE_BRAINBREAKER_Q_ANSWERS           = "answers"                 //  Array
-let FBASE_BRAINBREAKER_Q_CORRECT_ANSWER    = "correctAnswerIndex"      //  Number
-let FBASE_BRAINBREAKER_Q_EXPLANATION       = "explanation"             //  String
-let FBASE_BRAINBREAKER_Q_Q_NUMBER          = "questionNumber"          //  Number
-let FBASE_BRAINBREAKER_Q_EXPIRATION_DATE   = "expirationDate"          //  Date
-let FBASE_BRAINBREAKER_Q_TEST_PRIZE        = "testPrize"               //  String
-let FBASE_BRAINBREAKER_Q_TIME_REQUIRED     = "timeRequiredMinutes"     //  Number
+let FBASE_BRAINBREAKER_Q_CLASS_NAME        = "Brain_Breaker"        //	Class name
+let FBASE_BRAINBREAKER_Q_QUESTION_TYPE     = "questionType"         //	String
+let FBASE_BRAINBREAKER_Q_QUESTION          = "question"             //	String
+let FBASE_BRAINBREAKER_Q_PASSAGE           = "passage"              //	String
+let FBASE_BRAINBREAKER_Q_ANSWERS           = "answers"              //  Array
+let FBASE_BRAINBREAKER_Q_CORRECT_ANSWER    = "correctAnswerIndex"   //  Number
+let FBASE_BRAINBREAKER_Q_EXPLANATION       = "explanation"          //  String
+let FBASE_BRAINBREAKER_Q_Q_NUMBER          = "questionNumber"       //  Number
+let FBASE_BRAINBREAKER_Q_EXPIRATION_DATE   = "expirationDate"       //  Date
+let FBASE_BRAINBREAKER_Q_TEST_PRIZE        = "testPrize"            //  String
+let FBASE_BRAINBREAKER_Q_TIME_REQUIRED     = "timeRequiredMinutes"  //  Number
+
+/* Calendar class in Parse*/
+let FBASE_CALENDAR_CLASS_NAME              = "Jobs"                  //	Class name
+let FBASE_CALENDAR_DEADLINEDAY             = "deadlineDay"           //	Number
+let FBASE_CALENDAR_DEADLINEMONTH           = "deadlineMonth"         //	Number
+let FBASE_CALENDAR_DEADLINEYEAR            = "deadlineYear"          //	Number
+let FBASE_CALENDAR_CAREERTYPE              = "careerType"            //	String
+let FBASE_CALENDAR_COMPANY                 = "company"               //	String
+let FBASE_CALENDAR_JOBTITLE                = "position"              //	String
+let FBASE_CALENDAR_ONGOING                 = "Ongoing"               //	String
 
 //------------------------------------------------------
 // PARSE
@@ -223,7 +241,7 @@ let PF_TECH_USERNAME                = "username"				//	String
 let PF_TECH_TEST                    = "test"                    //	String
 let PF_TECH_SCORE                   = "score"                   //	Number
 
-/* Technology class in Parse*/
+/* Calendar class in Parse*/
 let PF_CALENDAR_CLASS_NAME              = "Jobs"                    //	Class name
 let PF_CALENDAR_DEADLINEDAY             = "deadlineDay"             //	Number
 let PF_CALENDAR_DEADLINEMONTH           = "deadlineMonth"             //	Number

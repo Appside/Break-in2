@@ -8,8 +8,6 @@
 
 import UIKit
 import QuartzCore
-import Parse
-import ParseUI
 import SCLAlertView
 import SwiftSpinner
 import GoogleMobileAds
@@ -318,6 +316,10 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         self.checkNewBrainBreaker()
     }
   
+//---------------------------------------------------------------
+// STEP 2: SET UP BUTTONS
+//---------------------------------------------------------------
+    
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
     if segue.identifier == "careerClicked" {
@@ -358,320 +360,9 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         //print("(date.year)-(date.month)-(date.day)")
     }
     
-  func setConstraints() {
-    
-    // Create and add constraints for logoImageView
-    
-    self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-    
-    if segueFromLoginView {
-      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
-    }
-    else {
-      self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12))
-    }
-    
-    let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
-    
-    let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
-    
-    self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
-    self.view.addConstraints([logoImageViewCenterXConstraint, self.logoImageViewBottomConstraint])
-    
-    // Create and add constraints for profilePictureImageView
-    
-    self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
-    
-    if self.segueFromLoginView {
-      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-    }
-    else {
-      self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1)
-    }
-    
-    let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
-    
-    let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: (self.screenFrame.height - (50 + self.menuButtonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
-    
-    let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
-    
-    self.profilePictureImageView.addConstraints([profilePictureImageViewWidthConstraint, profilePictureImageViewHeightConstraint])
-    self.view.addConstraints([self.profilePictureImageViewCenterXConstraint, profilePictureImageViewCenterYConstraint])
-    
-    // Create and add constraints for sloganImageView
-    
-    self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
-    
-    if self.segueFromLoginView {
-      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-    }
-    else {
-      self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: self.screenFrame.width + (self.logoImageView.frame.width/2))
-    }
-    
-    let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-    
-    let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
-    
-    let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
-    
-    self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
-    self.view.addConstraints([self.sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
-    
-    // Create and add constraints for calendarBackgroundView
-    
-    self.calendarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let calendarBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.settingsButton, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.majorMargin)
-    
-    let calendarBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
-    
-    let calendarBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
-    
-    let calendarBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.calendarBackgroundViewHeight)
-    
-    self.calendarBackgroundView.addConstraint(calendarBackgroundViewHeightConstraint)
-    self.view.addConstraints([calendarBackgroundViewTopConstraint, calendarBackgroundViewLeftConstraint, calendarBackgroundViewRightConstraint])
-
-    // Create and add constraints for calendarView
-    
-    self.calendarView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let calendarViewTopConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
-    
-    let calendarViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
-    
-    let calendarViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let calendarViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
-    
-    self.view.addConstraints([calendarViewTopConstraint, calendarViewLeftConstraint, calendarViewRightConstraint, calendarViewBottomConstraint])
-    
-    // Create and add constraints for settingsButton
-    
-    self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
-    
-    let settingsButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
-    
-    let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
-    
-    let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
-    
-    let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
-    
-    self.settingsButton.addConstraints([settingsButtonHeightConstraint, settingsButtonWidthConstraint])
-    self.view.addConstraints([settingsButtonLeftConstraint, settingsButtonTopConstraint])
-    
-    // Create and add constraints for statsButton
-    
-    self.statsButton.translatesAutoresizingMaskIntoConstraints = false
-    
-    let statsButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
-    
-    let statsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
-    
-    let statsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
-    
-    let statsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
-    
-    self.statsButton.addConstraints([statsButtonHeightConstraint, statsButtonWidthConstraint])
-    self.view.addConstraints([statsButtonRightConstraint, statsButtonTopConstraint])
-    
-    // Create and add constraints for membershipButton
-    
-    self.view.addSubview(self.membershipButton)
-    self.membershipButton.alpha = 0.0
-    self.membershipButton.translatesAutoresizingMaskIntoConstraints = false
-    self.membershipButton.clipsToBounds = true
-    self.membershipButton.layer.cornerRadius = self.screenFrame.width/24
-    self.membershipButton.layer.borderWidth = 2
-    self.membershipButton.layer.borderColor = UIColor.white.cgColor
-    self.membershipButton.setTitle("3", for: UIControlState())
-
-    
-    let membershipButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
-    
-    let membershipButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
-    
-    let membershipButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
-    
-    let membershipButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
-    
-    self.membershipButton.addConstraints([membershipButtonHeightConstraint, membershipButtonWidthConstraint])
-    self.view.addConstraints([membershipButtonRightConstraint, membershipButtonTopConstraint])
-    
-    // Create and add constraints for careersBackgroundView
-    
-    self.careersBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let careersBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin) + self.minorMargin)
-    
-    let careersBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
-    
-    let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
-    
-    if self.segueFromLoginView {
-      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.screenFrame.height)
-    }
-    else {
-      self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
-    }
-    
-    self.careersBackgroundView.addConstraint(careersBackgroundViewHeightConstraint)
-    self.view.addConstraints([careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, self.careersBackgroundViewTopConstraint])
-    
-    // Create and add constraints for logOutButton
-    
-    self.logOutButton.translatesAutoresizingMaskIntoConstraints = false
-    
-    let logOutButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let logOutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
-    
-    let logOutButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
-    
-    let logOutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
-    
-    self.logOutButton.addConstraint(logOutButtonHeightConstraint)
-    self.view.addConstraints([logOutButtonLeftConstraint, logOutButtonBottomConstraint, logOutButtonRightConstraint])
-    
-    // Create and add constraints for scrollInfoLabel
-    
-    self.scrollInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
-    
-    let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
-    
-    let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
-    
-    self.scrollInfoLabel.addConstraint(scrollInfoLabelHeightConstraint)
-    self.view.addConstraints([scrollInfoLabelLeftConstraint, scrollInfoLabelTopConstraint, scrollInfoLabelRightConstraint])
-    
-    // Create and add constraints for careersScrollView
-    
-    self.careersScrollView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let careersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let careersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
-    
-    let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
-    
-    self.view.addConstraints([careersScrollViewLeftConstraint, careersScrollViewBottomConstraint, careersScrollViewRightConstraint, careersScrollViewTopConstraint])
-    
-    // Create and add constraints for each careerButton and set content size for careersScrollView
-    
-    for index:Int in 0  ..< self.careerButtons.count  {
-      
-      self.careerButtons[index].translatesAutoresizingMaskIntoConstraints = false
-      
-      let careerButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
-      
-      let careerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
-      
-      let careerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
-      
-      if index == 0 {
-        
-        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
-        
-        self.view.addConstraint(careerButtonTopConstraint)
-        
-      }
-      else {
-        
-        let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careerButtons[index - 1], attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
-        
-        self.view.addConstraint(careerButtonTopConstraint)
-        
-      }
-      
-      self.careerButtons[index].addConstraints([careerButtonWidthConstraint, careerButtonHeightConstraint])
-      self.view.addConstraint(careerButtonLeftConstraint)
-      
-      if index == self.careerButtons.count - 1 {
-        
-        let careerButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-        
-        self.view.addConstraint(careerButtonBottomConstraint)
-        
-      }
-      
-    }
-    
-    // Create and add constraints for tutorialView
-    
-    self.tutorialView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
-    
-    self.tutorialViewTopConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
-    
-    let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height)
-    
-    let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width)
-    
-    self.tutorialView.addConstraints([tutorialViewHeightConstraint, tutorialViewWidthConstraint])
-    self.view.addConstraints([tutorialViewLeftConstraint, tutorialViewTopConstraint])
-    
-    // Create and add constraints for tutorialNextButton
-    
-    self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
-    
-    let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
-    
-    let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
-    
-    let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
-    
-    self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
-    self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
-    
-    // Create and add constraints for brainBreakerQuestionButton
-    
-    self.brainBreakerQuestionButton.translatesAutoresizingMaskIntoConstraints = false
-    
-    let brainBreakerQuestionButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
-    
-    let brainBreakerQuestionButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
-    
-    let brainBreakerQuestionButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
-    
-    let brainBreakerQuestionButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
-    
-    self.brainBreakerQuestionButton.addConstraints([brainBreakerQuestionButtonHeightConstraint, brainBreakerQuestionButtonWidthConstraint])
-    self.view.addConstraints([brainBreakerQuestionButtonRightConstraint, brainBreakerQuestionButtonTopConstraint])
-    
-    //Add tap Gesture to brainBreakerQuestionButton
-    let brainBreakerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.brainBreakerSegue(_:)))
-    self.brainBreakerQuestionButton.addGestureRecognizer(brainBreakerTapGesture)
-    
-    // Create and add constraints for brainBreakerNewLabel
-    
-    self.brainBreakerNewLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    let brainBreakerNewLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.left, multiplier: 1, constant: -5)
-    
-    let brainBreakerNewLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
-    
-    let brainBreakerNewLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
-    
-    let brainBreakerNewLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 80)
-    
-    self.brainBreakerNewLabel.addConstraints([brainBreakerNewLabelHeightConstraint, brainBreakerNewLabelWidthConstraint])
-    self.view.addConstraints([brainBreakerNewLabelRightConstraint, brainBreakerNewLabelTopConstraint])
-
-    
-  }
+//---------------------------------------------------------------
+// STEP 3: BRAINBREAKER
+//---------------------------------------------------------------
     
     func brainBreakerSegue(_ sender:UITapGestureRecognizer) {
         
@@ -680,24 +371,30 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         //self.newSwitch = false
         self.defaults.set(false, forKey: "newSwitchBB")
         
-        let query = PFQuery(className: PF_BRAINBREAKER_Q_CLASS_NAME)
-        query.getFirstObjectInBackground(block: { (question: PFObject?, error: NSError?) -> Void in
+        self.ref = Database.database().reference()
+        
+        self.ref.child(FBASE_BRAINBREAKER_Q_CLASS_NAME).queryOrderedByKey().observe(.value, with: {
             
-            if error == nil {
+            (snapshot) in
+            
+            if snapshot.exists(){
                 
-                self.isBrainBreakerDone()
-                self.defaults.set(question![PF_BRAINBREAKER_Q_QUESTION], forKey: "BrainBreakerQuestion")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_QUESTION_TYPE], forKey: "BrainBreakerQuestionType")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_PASSAGE], forKey: "BrainBreakerPassage")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_ANSWERS], forKey: "BrainBreakerAnswers")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_CORRECT_ANSWER], forKey: "BrainBreakerCorrectAnswerIndex")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_EXPLANATION], forKey: "BrainBreakerExplanation")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_EXPIRATION_DATE] as? Date ?? Date(), forKey: "BrainBreakerExpirationDate")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_TEST_PRIZE], forKey: "BrainBreakerTestPrize")
-                self.defaults.set(question![PF_BRAINBREAKER_Q_TIME_REQUIRED] as? Int ?? Int(), forKey: "MinutesToAnswerBrainBreaker")
+                print(snapshot)
+                let value = snapshot.value as? NSDictionary
+                
+                //self.isBrainBreakerDone()
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_QUESTION] as? String ?? "", forKey: "BrainBreakerQuestion")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_QUESTION_TYPE] as? String ?? "", forKey: "BrainBreakerQuestionType")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_PASSAGE] as? String ?? "", forKey: "BrainBreakerPassage")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_ANSWERS] as? [String] ?? "", forKey: "BrainBreakerAnswers")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_CORRECT_ANSWER] as? Int ?? Int(), forKey: "BrainBreakerCorrectAnswerIndex")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_EXPLANATION] as? String ?? "", forKey: "BrainBreakerExplanation")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_EXPIRATION_DATE] as? Date ?? Date(), forKey: "BrainBreakerExpirationDate")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_TEST_PRIZE] as? String ?? "", forKey: "BrainBreakerTestPrize")
+                self.defaults.set(value?[FBASE_BRAINBREAKER_Q_TIME_REQUIRED] as? Int ?? Int(), forKey: "MinutesToAnswerBrainBreaker")
                 
                 let numberCheck = self.defaults.integer(forKey: "BrainBreakerQuestionNumber")
-                let numberCheck2 = question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
+                let numberCheck2 = value?[FBASE_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int()
                 
                 print(numberCheck)
                 print(numberCheck2)
@@ -716,18 +413,16 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                         
                     }
                     
-                     self.defaults.set(question![PF_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
+                    self.defaults.set(value?[FBASE_BRAINBREAKER_Q_Q_NUMBER] as? Int ?? Int(), forKey: "BrainBreakerQuestionNumber")
                     
                 }
-                
-                //let array = self.defaults.objectForKey("SavedCareerPreferences") as? [String] ?? [String]()
                 
                 SwiftSpinner.show("Tap to Proceed", animated: false).addTapHandler({
                     
                     self.performSegue(withIdentifier: "BrainBreakerSegue", sender: nil)
                     SwiftSpinner.hide()
                     
-                    }, subtitle: "Good luck!")
+                }, subtitle: "Good luck!")
                 
             }else{
                 
@@ -735,12 +430,13 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
                     
                     SwiftSpinner.hide()
                     
-                    }, subtitle: "Tap to return to home screen")
+                }, subtitle: "Tap to return to home screen")
                 
             }
-        } as! (PFObject?, Error?) -> Void)
-        
+            
+        })
     }
+    
   
     func checkNewBrainBreaker(){
         
@@ -855,15 +551,7 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
     let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
     let alertView = SCLAlertView(appearance: appearance)
-    //        alertView.addButton("Ok", target:self, selector:Selector("logOut"))
-    //        alertView.addButton("Cancel") {
-    //            alertView.clearAllNotice()
-    //        }
-    //        alertView.showCloseButton = false
-    //        alertView.showViewController(<#T##vc: UIViewController##UIViewController#>, sender: <#T##AnyObject?#>)
-    //        alertView.showWarning("Logout", subTitle: "Are You Sure You Want To Exit?")
-    
-    alertView.addButton("Ok", target:self, selector:#selector(HomeViewController.logOut))
+    alertView.addButton("Ok", target:self, selector:#selector(handleLogout))
     alertView.addButton("Cancel", action: {
         alertView.clearAllNotice()
     })
@@ -879,13 +567,6 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
   }
   
-  func logOut(){
-    
-    PFUser.logOut()
-    self.hideCareersBackgroundView(self.logOutButton)
-    
-  }
-    
     func userLoggedIn(){
         
         if Auth.auth().currentUser == nil {
@@ -999,6 +680,10 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     
   }
   
+//---------------------------------------------------------------
+// STEP 4: TUTORIAL
+//---------------------------------------------------------------
+    
   func showTutorial() {
     
     self.view.insertSubview(self.logoImageView, aboveSubview: self.tutorialView)
@@ -1239,32 +924,30 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
         
         SwiftSpinner.show("Purchasing")
         
-        if let currentUser = PFUser.current(){
-            currentUser[PF_USER_MEMBERSHIP] = "Premium"
-            //set other fields the same way....
-            currentUser.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
-                if error == nil {
-                    
-                    self.defaults.set("Premium", forKey: "Membership")
-                    let membershipType = self.defaults.object(forKey: "Membership") as! String
-                    self.defaults.set(3, forKey: "NoOfBrainBreakerLives")
-                    print(membershipType)
-                    
-                    SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
-                        SwiftSpinner.hide()
-                        }, subtitle: "This means you can practice an unlimited number of tests! You also have 3 attempts at each Brain Breaker question, beginning from the next one!")
-                    
-                } else {
-                    
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        
-                        }, subtitle: "Payment error, tap to return home")
-                    
-                }
+        if let currentUser = Auth.auth().currentUser {
+            
+            self.ref.child(FBASE_PAIDMEMBERSHIP_NODE).setValue(
+                [FBASE_PAIDMEMBERSHIP_USERID: currentUser.uid
+                ])
+            self.ref.child(FBASE_USER_NODE).child(currentUser.uid).child(FBASE_USER_PAIDMEMBERSHIP).setValue(true)
+            
+            self.defaults.set("Premium", forKey: "Membership")
+            let membershipType = self.defaults.object(forKey: "Membership") as! String
+            self.defaults.set(3, forKey: "NoOfBrainBreakerLives")
+            print(membershipType)
+            
+            SwiftSpinner.show("You Are Now a Premium User", animated: false).addTapHandler({
+                SwiftSpinner.hide()
+            }, subtitle: "This means you can practice an unlimited number of tests! You also have 3 attempts at each Brain Breaker question, beginning from the next one!")
+            
+        }else{
+            
+            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                 
-            } as! PFBooleanResultBlock)
+                SwiftSpinner.hide()
+                
+            }, subtitle: "Payment error, tap to return home")
+            
         }
         
     }
@@ -1385,6 +1068,321 @@ class HomeViewController: UIViewController, GADBannerViewDelegate, SKProductsReq
     func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction])
     {
         print("remove trans");
+    }
+    
+    func setConstraints() {
+        
+        // Create and add constraints for logoImageView
+        
+        self.logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let logoImageViewCenterXConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+        
+        if segueFromLoginView {
+            self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
+        }
+        else {
+            self.logoImageViewBottomConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin + (self.screenFrame.width/12))
+        }
+        
+        let logoImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        
+        let logoImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logoImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+        
+        self.logoImageView.addConstraints([logoImageViewHeightConstraint, logoImageViewWidthConstraint])
+        self.view.addConstraints([logoImageViewCenterXConstraint, self.logoImageViewBottomConstraint])
+        
+        // Create and add constraints for profilePictureImageView
+        
+        self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if self.segueFromLoginView {
+            self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+        }
+        else {
+            self.profilePictureImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: (self.screenFrame.width + (self.logoImageView.frame.width/2)) * -1)
+        }
+        
+        let profilePictureImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+        
+        let profilePictureImageViewCenterYConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: (self.screenFrame.height - (50 + self.menuButtonHeight + (self.minorMargin * 3)) + self.statusBarFrame.height)/2)
+        
+        let profilePictureImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.profilePictureImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+        
+        self.profilePictureImageView.addConstraints([profilePictureImageViewWidthConstraint, profilePictureImageViewHeightConstraint])
+        self.view.addConstraints([self.profilePictureImageViewCenterXConstraint, profilePictureImageViewCenterYConstraint])
+        
+        // Create and add constraints for sloganImageView
+        
+        self.sloganImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if self.segueFromLoginView {
+            self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+        }
+        else {
+            self.sloganImageViewCenterXConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: self.screenFrame.width + (self.logoImageView.frame.width/2))
+        }
+        
+        let sloganImageViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.profilePictureImageView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+        
+        let sloganImageViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/12)
+        
+        let sloganImageViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.sloganImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width/3)
+        
+        self.sloganImageView.addConstraints([sloganImageViewHeightConstraint, sloganImageViewWidthConstraint])
+        self.view.addConstraints([self.sloganImageViewCenterXConstraint, sloganImageViewTopConstraint])
+        
+        // Create and add constraints for calendarBackgroundView
+        
+        self.calendarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let calendarBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.settingsButton, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.majorMargin)
+        
+        let calendarBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
+        
+        let calendarBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
+        
+        let calendarBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarBackgroundView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.calendarBackgroundViewHeight)
+        
+        self.calendarBackgroundView.addConstraint(calendarBackgroundViewHeightConstraint)
+        self.view.addConstraints([calendarBackgroundViewTopConstraint, calendarBackgroundViewLeftConstraint, calendarBackgroundViewRightConstraint])
+        
+        // Create and add constraints for calendarView
+        
+        self.calendarView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let calendarViewTopConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        
+        let calendarViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
+        
+        let calendarViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
+        
+        let calendarViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.calendarView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.calendarBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
+        
+        self.view.addConstraints([calendarViewTopConstraint, calendarViewLeftConstraint, calendarViewRightConstraint, calendarViewBottomConstraint])
+        
+        // Create and add constraints for settingsButton
+        
+        self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let settingsButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
+        
+        let settingsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+        
+        let settingsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        
+        let settingsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.settingsButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        
+        self.settingsButton.addConstraints([settingsButtonHeightConstraint, settingsButtonWidthConstraint])
+        self.view.addConstraints([settingsButtonLeftConstraint, settingsButtonTopConstraint])
+        
+        // Create and add constraints for statsButton
+        
+        self.statsButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let statsButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
+        
+        let statsButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+        
+        let statsButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        
+        let statsButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.statsButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        
+        self.statsButton.addConstraints([statsButtonHeightConstraint, statsButtonWidthConstraint])
+        self.view.addConstraints([statsButtonRightConstraint, statsButtonTopConstraint])
+        
+        // Create and add constraints for membershipButton
+        
+        self.view.addSubview(self.membershipButton)
+        self.membershipButton.alpha = 0.0
+        self.membershipButton.translatesAutoresizingMaskIntoConstraints = false
+        self.membershipButton.clipsToBounds = true
+        self.membershipButton.layer.cornerRadius = self.screenFrame.width/24
+        self.membershipButton.layer.borderWidth = 2
+        self.membershipButton.layer.borderColor = UIColor.white.cgColor
+        self.membershipButton.setTitle("3", for: UIControlState())
+        
+        
+        let membershipButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
+        
+        let membershipButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.minorMargin)
+        
+        let membershipButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        
+        let membershipButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.membershipButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.backButtonHeight)
+        
+        self.membershipButton.addConstraints([membershipButtonHeightConstraint, membershipButtonWidthConstraint])
+        self.view.addConstraints([membershipButtonRightConstraint, membershipButtonTopConstraint])
+        
+        // Create and add constraints for careersBackgroundView
+        
+        self.careersBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let careersBackgroundViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height - (self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin) + self.minorMargin)
+        
+        let careersBackgroundViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.majorMargin)
+        
+        let careersBackgroundViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.majorMargin * -1)
+        
+        if self.segueFromLoginView {
+            self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.screenFrame.height)
+        }
+        else {
+            self.careersBackgroundViewTopConstraint = NSLayoutConstraint.init(item: self.careersBackgroundView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.statusBarFrame.height + self.backButtonHeight + (self.majorMargin * 2) + self.calendarBackgroundViewHeight + self.minorMargin)
+        }
+        
+        self.careersBackgroundView.addConstraint(careersBackgroundViewHeightConstraint)
+        self.view.addConstraints([careersBackgroundViewRightConstraint, careersBackgroundViewLeftConstraint, self.careersBackgroundViewTopConstraint])
+        
+        // Create and add constraints for logOutButton
+        
+        self.logOutButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let logOutButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
+        
+        let logOutButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: (self.minorMargin * 2) * -1)
+        
+        let logOutButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
+        
+        let logOutButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.logOutButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+        
+        self.logOutButton.addConstraint(logOutButtonHeightConstraint)
+        self.view.addConstraints([logOutButtonLeftConstraint, logOutButtonBottomConstraint, logOutButtonRightConstraint])
+        
+        // Create and add constraints for scrollInfoLabel
+        
+        self.scrollInfoLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let scrollInfoLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
+        
+        let scrollInfoLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
+        
+        let scrollInfoLabelLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
+        
+        let scrollInfoLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.scrollInfoLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
+        
+        self.scrollInfoLabel.addConstraint(scrollInfoLabelHeightConstraint)
+        self.view.addConstraints([scrollInfoLabelLeftConstraint, scrollInfoLabelTopConstraint, scrollInfoLabelRightConstraint])
+        
+        // Create and add constraints for careersScrollView
+        
+        self.careersScrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let careersScrollViewRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
+        
+        let careersScrollViewBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.logOutButton, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin * -1)
+        
+        let careersScrollViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin)
+        
+        let careersScrollViewTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careersScrollView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.scrollInfoLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
+        
+        self.view.addConstraints([careersScrollViewLeftConstraint, careersScrollViewBottomConstraint, careersScrollViewRightConstraint, careersScrollViewTopConstraint])
+        
+        // Create and add constraints for each careerButton and set content size for careersScrollView
+        
+        for index:Int in 0  ..< self.careerButtons.count  {
+            
+            self.careerButtons[index].translatesAutoresizingMaskIntoConstraints = false
+            
+            let careerButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+            
+            let careerButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+            
+            let careerButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width - (2 * (self.majorMargin + self.minorMargin)))
+            
+            if index == 0 {
+                
+                let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+                
+                self.view.addConstraint(careerButtonTopConstraint)
+                
+            }
+            else {
+                
+                let careerButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careerButtons[index - 1], attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin)
+                
+                self.view.addConstraint(careerButtonTopConstraint)
+                
+            }
+            
+            self.careerButtons[index].addConstraints([careerButtonWidthConstraint, careerButtonHeightConstraint])
+            self.view.addConstraint(careerButtonLeftConstraint)
+            
+            if index == self.careerButtons.count - 1 {
+                
+                let careerButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.careerButtons[index], attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.careersScrollView, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+                
+                self.view.addConstraint(careerButtonBottomConstraint)
+                
+            }
+            
+        }
+        
+        // Create and add constraints for tutorialView
+        
+        self.tutorialView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tutorialViewLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
+        
+        self.tutorialViewTopConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        
+        let tutorialViewHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.height)
+        
+        let tutorialViewWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.screenFrame.width)
+        
+        self.tutorialView.addConstraints([tutorialViewHeightConstraint, tutorialViewWidthConstraint])
+        self.view.addConstraints([tutorialViewLeftConstraint, tutorialViewTopConstraint])
+        
+        // Create and add constraints for tutorialNextButton
+        
+        self.tutorialNextButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tutorialNextButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: (self.minorMargin + self.majorMargin) * -1)
+        
+        let tutorialNextButtonBottomConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: self.minorMargin * -1)
+        
+        let tutorialNextButtonLeftConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: self.minorMargin + self.majorMargin)
+        
+        let tutorialNextButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.tutorialNextButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.menuButtonHeight)
+        
+        self.tutorialNextButton.addConstraint(tutorialNextButtonHeightConstraint)
+        self.view.addConstraints([tutorialNextButtonLeftConstraint, tutorialNextButtonBottomConstraint, tutorialNextButtonRightConstraint])
+        
+        // Create and add constraints for brainBreakerQuestionButton
+        
+        self.brainBreakerQuestionButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let brainBreakerQuestionButtonRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.right, multiplier: 1, constant: self.minorMargin * -1)
+        
+        let brainBreakerQuestionButtonTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
+        
+        let brainBreakerQuestionButtonHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
+        
+        let brainBreakerQuestionButtonWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 20)
+        
+        self.brainBreakerQuestionButton.addConstraints([brainBreakerQuestionButtonHeightConstraint, brainBreakerQuestionButtonWidthConstraint])
+        self.view.addConstraints([brainBreakerQuestionButtonRightConstraint, brainBreakerQuestionButtonTopConstraint])
+        
+        //Add tap Gesture to brainBreakerQuestionButton
+        let brainBreakerTapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.brainBreakerSegue(_:)))
+        self.brainBreakerQuestionButton.addGestureRecognizer(brainBreakerTapGesture)
+        
+        // Create and add constraints for brainBreakerNewLabel
+        
+        self.brainBreakerNewLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let brainBreakerNewLabelRightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.brainBreakerQuestionButton, attribute: NSLayoutAttribute.left, multiplier: 1, constant: -5)
+        
+        let brainBreakerNewLabelTopConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.careersBackgroundView, attribute: NSLayoutAttribute.top, multiplier: 1, constant: self.minorMargin)
+        
+        let brainBreakerNewLabelHeightConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 25)
+        
+        let brainBreakerNewLabelWidthConstraint:NSLayoutConstraint = NSLayoutConstraint.init(item: self.brainBreakerNewLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 80)
+        
+        self.brainBreakerNewLabel.addConstraints([brainBreakerNewLabelHeightConstraint, brainBreakerNewLabelWidthConstraint])
+        self.view.addConstraints([brainBreakerNewLabelRightConstraint, brainBreakerNewLabelTopConstraint])
+        
+        
     }
 
     

@@ -9,11 +9,18 @@
 import UIKit
 import SCLAlertView
 import SwiftSpinner
-import Parse
-import ParseUI
 import Eureka
+import Firebase
+import FirebaseDatabase
 
 class ProfileViewController: UIViewController {
+    
+//---------------------------------------------------------------
+// STEP 0: GLOBAL VARIABLES
+//---------------------------------------------------------------
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
     
     // Declare and intialize views
     var backgroundImageView:UIImageView = UIImageView()
@@ -40,6 +47,10 @@ class ProfileViewController: UIViewController {
     var textSize:CGFloat = 15
     
     let defaults = UserDefaults.standard
+    
+//---------------------------------------------------------------
+// STEP 1: VIEW DID LOAD
+//---------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -189,8 +200,6 @@ class ProfileViewController: UIViewController {
         self.view.addSubview(self.ProfileForm.view)
         self.ProfileForm.didMove(toParentViewController: self)
         self.ProfileForm.view.setConstraintsToSuperview(Int(self.statusBarFrame.height + 6*self.minorMargin + self.backButtonHeight + 40), bottom: 3*Int(self.minorMargin)+Int(self.menuButtonHeight), left: Int(self.minorMargin*2), right: Int(self.minorMargin*2))
-     
-        
         
     }
     
@@ -280,69 +289,42 @@ class ProfileViewController: UIViewController {
             )
         } else{
             
-            //Save changes to Parse
-            // Name: entry1Value
-            // Surname: entry2Value
-            // Email address: entry3Value
-            
+            //Save changes to Firebase
             SwiftSpinner.show("Saving changes")
             
-            let currentUser = PFUser.current()!
-            //let objID = currentUser.objectId
-            let username = currentUser.username
-            let query = PFQuery(className: PF_USER_CLASS_NAME)
-            query.whereKey(PF_USER_USERNAME, equalTo: username!)
-            //query.getObjectInBackgroundWithId(objID!)
-            query.getFirstObjectInBackground(block: { (user: PFObject?, error: NSError?) -> Void in
+            self.ref = Database.database().reference()
+            
+            if let currentUser = Auth.auth().currentUser {
+                self.ref.child(FBASE_USER_NODE).child(currentUser.uid).child(FBASE_USER_EMAIL).setValue(entry3Value)
                 
-                if error == nil {
+                    self.ref.child(FBASE_USER_NODE).child(currentUser.uid).child(FBASE_USER_FULLNAME).setValue(entry1Value + " " + entry2Value)
+                
+                    self.ref.child(FBASE_USER_NODE).child(currentUser.uid).child(FBASE_USER_FIRST_NAME).setValue(entry1Value)
+                
+                    self.ref.child(FBASE_USER_NODE).child(currentUser.uid).child(FBASE_USER_SURNAME).setValue(entry2Value)
+                
+                self.defaults.set(entry1Value, forKey: "profileFirstName")
+                self.defaults.set(entry2Value, forKey: "profileLastName")
+                self.defaults.set(entry3Value, forKey: "profileEmail")
+                
+                SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
                     
-                    user![PF_USER_EMAIL] = entry3Value
-                    user![PF_USER_FULLNAME_LOWER] = entry1Value + " " + entry2Value
-                    user![PF_USER_FIRST_NAME] = entry1Value
-                    user![PF_USER_SURNAME] = entry2Value
+                    SwiftSpinner.hide()
+                    self.goBackToSettings(sender)
+                    //self.hideSettingsMenuView(sender)
                     
-                    user?.saveInBackground(block: { (succeeded: Bool, error: NSError?) -> Void in
-                        if error == nil {
-                            
-                            self.defaults.set(entry1Value, forKey: "profileFirstName")
-                            self.defaults.set(entry2Value, forKey: "profileLastName")
-                            self.defaults.set(entry3Value, forKey: "profileEmail")
-                            
-                            SwiftSpinner.show("Career Preferences Saved", animated: false).addTapHandler({
-                                
-                                SwiftSpinner.hide()
-                                self.goBackToSettings(sender)
-                                //self.hideSettingsMenuView(sender)
-                                
-                                }, subtitle: "Tap to return to settings")
-                            
-                        } else {
-                            
-                            SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                                
-                                SwiftSpinner.hide()
-                                //self.hideSettingsMenuView(sender)
-                                
-                                }, subtitle: "Preferences unsaved, tap to return to settings")
-                            
-                        }
-                        
-                    } as! PFBooleanResultBlock)
+                }, subtitle: "Tap to return to settings")
+                
+            }else{
+                
+                SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
                     
-                }else{
+                    SwiftSpinner.hide()
+                    //self.hideSettingsMenuView(sender)
                     
-                    SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-                        
-                        SwiftSpinner.hide()
-                        //self.hideSettingsMenuView(sender)
-                        
-                        }, subtitle: "Preferences unsaved, to return to settings")
-                    
-                }
-            } as! (PFObject?, Error?) -> Void)
-            
-            
+                }, subtitle: "Preferences unsaved, tap to return to settings")
+                
+            }
             
             if self.firstTimeUser {
                 self.performSegue(withIdentifier: "tutorialEnded", sender: sender)
@@ -350,8 +332,6 @@ class ProfileViewController: UIViewController {
             else {
                 // Segue back to Settings?
             }
-            
-            
             
             
         }

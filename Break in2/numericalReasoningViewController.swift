@@ -12,8 +12,17 @@ import SCLAlertView
 import Parse
 import SwiftSpinner
 import GoogleMobileAds
+import FirebaseDatabase
+import Firebase
 
 class numericalReasoningViewController: QuestionViewController, UIScrollViewDelegate, GADInterstitialDelegate {
+    
+//**************************************************************************************
+//NUMBER 1: VARIABLES
+//**************************************************************************************
+    
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
     
     //Ad variables
     var interstitialAd:GADInterstitial!

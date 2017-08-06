@@ -627,10 +627,32 @@ class EditProfileViewController : FormViewController {
             
             if let currentUser = Auth.auth().currentUser {
             
+                var membershipType:String = String()
+                var premiumSwitch:Bool = Bool()
+                var freeSwitch:Bool = Bool()
+                
+                membershipType = self.defaults.object(forKey: "Membership") as! String
+                
+                if membershipType == "Premium" {
+                    
+                    premiumSwitch = true
+                    freeSwitch = false
+                    
+                }else{
+                    
+                    premiumSwitch = false
+                    freeSwitch = true
+                    membershipType = "Free"
+                    
+                }
+                
+                
                 let key = self.ref.child(FBASE_USER_NODE).child(currentUser.uid).key
                 
                 let post =
-                    [FBASE_USER_EMAIL: self.profileEmail,
+                    [FBASE_USER_FULLNAME: currentUser.displayName,
+                     FBASE_USER_USERID: currentUser.uid,
+                     FBASE_USER_EMAIL: self.profileEmail,
                      FBASE_USER_FIRST_NAME: self.profileFirstName,
                      FBASE_USER_SURNAME: self.profileLastName,
                      FBASE_USER_PHONE: self.profilePhone,
@@ -639,7 +661,9 @@ class EditProfileViewController : FormViewController {
                      FBASE_USER_DEGREE: self.profileDegree,
                      FBASE_USER_POSITION: self.profilePosition,
                      FBASE_USER_SHARE_INFO_ALLOWED: self.shareInfoAllowed,
-                     FBASE_USER_RECOMMENDED_BY: self.recommendedBy
+                     FBASE_USER_RECOMMENDED_BY: self.recommendedBy,
+                     FBASE_USER_FREEMEMBERSHIP: freeSwitch,
+                     FBASE_USER_PAIDMEMBERSHIP: premiumSwitch,
                     ] as [String : Any]
                 
                 let childUpdate = ["Users/\(key)": post]

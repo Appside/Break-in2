@@ -229,6 +229,20 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                         if userIdSnap.exists(){
                             
                             self.firstTimeUser = false
+                            
+                            //check if the user is premium anywhere (maybe on another device)
+                            
+                            self.ref.child(FBASE_PAIDMEMBERSHIP_NODE).child(currentUser.uid).observe(.value, with: {(membershipSnap) in
+                                
+                                if membershipSnap.exists(){
+                                    
+                                    let membershipType:String = "Premium"
+                                    self.defaults.set(membershipType, forKey: "Membership")
+                                    
+                                }
+                                
+                            })
+                            
                             SwiftSpinner.hide()
                             self.userLoggedIn()
                             
@@ -236,12 +250,50 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                             
                             self.firstTimeUser = true
                             
+                            var membershipType:String = String()
+                            var premiumSwitch:Bool = Bool()
+                            var freeSwitch:Bool = Bool()
+                            
+                            self.ref.child(FBASE_PAIDMEMBERSHIP_NODE).child(currentUser.uid).observe(.value, with: {(membershipSnap) in
+                                
+                                if membershipSnap.exists(){
+                                    
+                                    membershipType = "Premium"
+                                    self.defaults.set(membershipType, forKey: "Membership")
+                                    
+                                }
+                                
+                            })
+                            
+                            membershipType = self.defaults.object(forKey: "Membership") as! String
+                            
+                            if membershipType == "Premium" {
+                                
+                                premiumSwitch = true
+                                freeSwitch = false
+                                
+                                self.ref.child(FBASE_PAIDMEMBERSHIP_NODE).setValue(
+                                    [FBASE_PAIDMEMBERSHIP_USERID: currentUser.uid
+                                    ])
+                                
+                            }else{
+                                
+                                premiumSwitch = false
+                                freeSwitch = true
+                                membershipType = "Free"
+                                
+                                self.ref.child(FBASE_FREEMEMBERSHIP_NODE).setValue(
+                                    [FBASE_FREEMEMBERSHIP_USERID: currentUser.uid
+                                    ])
+                            }
+                            
                             //create user profile
                             self.ref.child(FBASE_USER_NODE).child(currentUser.uid).setValue(
                                 [FBASE_USER_FULLNAME: currentUser.displayName,
                                  FBASE_USER_EMAIL: currentUser.email,
                                  FBASE_USER_USERID: currentUser.uid,
-                                 FBASE_USER_FREEMEMBERSHIP: true,
+                                 FBASE_USER_FREEMEMBERSHIP: freeSwitch,
+                                 FBASE_USER_PAIDMEMBERSHIP: premiumSwitch,
                                  FBASE_USER_NUMBER_LIVES: self.setNumberOfLivesFree
                                 ])
                             
@@ -260,7 +312,7 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                  FBASE_PREFERENCES_ENGINEERING: true
                                 ])
                             
-                            self.defaults.set("Free", forKey: "Membership")
+                            self.defaults.set(membershipType, forKey: "Membership")
                             self.defaults.set(self.setNumberOfLivesFree, forKey: "Lives")
                             SwiftSpinner.hide()
                             self.userLoggedIn()

@@ -10,6 +10,9 @@ import UIKit
 import SwiftSpinner
 import Parse
 import ParseUI
+import Firebase
+import FirebaseDatabase
+
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -26,35 +29,42 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
   
-  // Declare and initialize jobDeadlines
-  
-  var jobDeadlines:[[String:AnyObject]] = [[String:AnyObject]]()
-  var chosenCareers:[String] = [String]()
+//**************************************************************************************
+//NUMBER 1: GLOBAL VARIABLES
+//**************************************************************************************
     
-  // Sort appended jobs bug
-  var flushCounter:Int = Int()
-  
-  // Declare and initialize views and models
-  
-  let calendarModel:JSONModel = JSONModel()
-  let defaults = UserDefaults.standard
-  
-  let monthTitleButton:UIButton = UIButton()
-  let updateDeadlinesButton:UIButton = UIButton()
-  let nextMonthButton:UIButton = UIButton()
-  let previousMonthButton:UIButton = UIButton()
-  let monthScrollView:UIScrollView = UIScrollView()
-  var monthViews:[CalendarMonthView] = [CalendarMonthView]()
-  let deadlinesView:UIView = UIView()
-  var careerTypes:[String] = [String]()
-  var careerColors:[String:UIColor] = [String:UIColor]()
-  
-  let todaysDate:Date = Date()
-  let userCalendar:Calendar = Calendar.current
-  let dateFormatter:DateFormatter = DateFormatter()
-  var currentYear = 0
-  var currentMonth:Int = 0
-  
+    // Set up Firebase for read / write access
+    var ref: DatabaseReference!
+
+    // Declare and initialize jobDeadlines
+
+    var jobDeadlines:[[String:AnyObject]] = [[String:AnyObject]]()
+    var chosenCareers:[String] = [String]()
+
+    // Sort appended jobs bug
+    var flushCounter:Int = Int()
+
+    // Declare and initialize views and models
+
+    let calendarModel:JSONModel = JSONModel()
+    let defaults = UserDefaults.standard
+
+    let monthTitleButton:UIButton = UIButton()
+    let updateDeadlinesButton:UIButton = UIButton()
+    let nextMonthButton:UIButton = UIButton()
+    let previousMonthButton:UIButton = UIButton()
+    let monthScrollView:UIScrollView = UIScrollView()
+    var monthViews:[CalendarMonthView] = [CalendarMonthView]()
+    let deadlinesView:UIView = UIView()
+    var careerTypes:[String] = [String]()
+    var careerColors:[String:UIColor] = [String:UIColor]()
+
+    let todaysDate:Date = Date()
+    let userCalendar:Calendar = Calendar.current
+    let dateFormatter:DateFormatter = DateFormatter()
+    var currentYear = 0
+    var currentMonth:Int = 0
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -624,6 +634,85 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
     SwiftSpinner.show("Loading")
     var deadlinesTemp:[[String:AnyObject]] = [[String:AnyObject]]()
     deadlinesTemp.removeAll()
+    let testArray:[String] = ["Accounting","Engineering","Investment Banking","Management Consulting","Technology","Trading"]
+    
+    //self.chosenCareers
+    for object in testArray {
+        
+        self.ref = Database.database().reference()
+        
+        print("\(self.currentYear)-\(self.currentMonth)")
+        
+        self.ref.child(FBASE_CALENDAR_CLASS_NAME).child("\(object)").child("\(self.currentYear)-\(self.currentMonth)").queryOrderedByKey().observe(.value, with: {
+            
+            (snapshot) in
+            
+            if snapshot.exists(){
+                
+                var deadlinesIndividual:[String:AnyObject] = [:]
+
+                print(snapshot)
+                
+                let enumerator = snapshot.children
+                
+                while let rest = enumerator.nextObject() as? DataSnapshot {
+
+                    let restValue = rest.value as? NSDictionary
+                    
+                    deadlinesIndividual.updateValue(restValue?[FBASE_CALENDAR_DEADLINEYEAR] as AnyObject, forKey: "year")
+                    deadlinesIndividual.updateValue(restValue?[FBASE_CALENDAR_DEADLINEMONTH] as AnyObject, forKey: "month")
+                    deadlinesIndividual.updateValue(restValue?[FBASE_CALENDAR_DEADLINEDAY] as AnyObject, forKey: "day")
+                    deadlinesIndividual.updateValue(restValue?[FBASE_CALENDAR_COMPANY] as! String as AnyObject, forKey: "company")
+                    deadlinesIndividual.updateValue(object as! String as AnyObject, forKey: "career")
+                    deadlinesIndividual.updateValue(restValue?[FBASE_CALENDAR_JOBTITLE] as! String as AnyObject, forKey: "position")
+                    
+                    deadlinesTemp.append(deadlinesIndividual)
+                    
+                    print(deadlinesTemp)
+                    
+                }
+                
+            }
+            
+        })
+        
+        self.ref.child(FBASE_CALENDAR_CLASS_NAME).child("\(object)").child(FBASE_CALENDAR_ONGOING).queryOrderedByKey().observe(.value, with: {
+            
+            (snapshot) in
+            
+            if snapshot.exists(){
+                
+                var deadlinesIndividual:[String:AnyObject] = [:]
+                
+                print(snapshot)
+                
+                let enumerator = snapshot.children
+                
+                while let rest = enumerator.nextObject() as? DataSnapshot {
+                    
+                    let restValue = rest.value as? NSDictionary
+                    
+                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.year, from: self.todaysDate) as AnyObject, forKey: "year")
+                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.month, from: self.todaysDate) as AnyObject, forKey: "month")
+                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.day, from: self.todaysDate) as AnyObject, forKey: "day")
+                    deadlinesIndividual.updateValue(restValue?[FBASE_CALENDAR_COMPANY] as! String as AnyObject, forKey: "company")
+                    deadlinesIndividual.updateValue(object as! String as AnyObject, forKey: "career")
+                    deadlinesIndividual.updateValue(restValue?[FBASE_CALENDAR_JOBTITLE] as! String as AnyObject, forKey: "position")
+                    
+                    deadlinesTemp.append(deadlinesIndividual)
+                    
+                    print(deadlinesTemp)
+                    
+                }
+                
+            }
+            
+        })
+
+        
+    }
+    
+    //only works when timing delay is intoduced by parse
     
     let query1 = PFQuery(className: PF_CALENDAR_CLASS_NAME)
     let query2 = PFQuery(className: PF_CALENDAR_CLASS_NAME)
@@ -640,61 +729,6 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
         
         // The find succeeded.
         print("Successfully retrieved \(objects!.count) job deadlines.")
-        
-        // Do something with the found objects
-        if let objects = objects {
-          
-          let todaysMonth:Int = (self.userCalendar as NSCalendar).component(NSCalendar.Unit.month, from: self.todaysDate)
-          
-          for object in objects {
-            
-            if objects.count >= 0 {
-              
-              var deadlinesIndividual:[String:AnyObject] = [:]
-              
-              print(object[PF_CALENDAR_CAREERTYPE] as! String)
-              print(self.chosenCareers)
-              
-              if self.chosenCareers.contains(object[PF_CALENDAR_CAREERTYPE] as! String) {
-                
-                if object[PF_CALENDAR_DEADLINEYEAR] as! Int == 2000 {
-                  if self.currentMonth == todaysMonth {
-                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.year, from: self.todaysDate) as AnyObject, forKey: "year")
-                    deadlinesIndividual.updateValue(todaysMonth as AnyObject, forKey: "month")
-                    deadlinesIndividual.updateValue((self.userCalendar as NSCalendar).component(NSCalendar.Unit.day, from: self.todaysDate) as AnyObject, forKey: "day")
-                    deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String as AnyObject, forKey: "company")
-                    deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String as AnyObject, forKey: "career")
-                    deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String as AnyObject, forKey: "position")
-                    
-                    deadlinesTemp.append(deadlinesIndividual)
-                  }
-                }
-                else {
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEYEAR] as! Int as AnyObject, forKey: "year")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEMONTH] as! Int as AnyObject, forKey: "month")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_DEADLINEDAY] as! Int as AnyObject, forKey: "day")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_COMPANY] as! String as AnyObject, forKey: "company")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_CAREERTYPE] as! String as AnyObject, forKey: "career")
-                  deadlinesIndividual.updateValue(object[PF_CALENDAR_JOBTITLE] as! String as AnyObject, forKey: "position")
-                  
-                  deadlinesTemp.append(deadlinesIndividual)
-                }
-                
-                //self.monthViews[1].deadlines.append(deadlinesIndividual)
-                
-              }else{
-                print("career not selected by user")
-              }
-            }else{
-              print("no jobs available this month")
-            }
-          }//for loop ends
-          
-        }else{
-          //if objects ends
-        }
-        
-        //print(self.monthViews[1].deadlines)
         
         self.monthViews[1].deadlines.removeAll()
         self.monthViews[1].deadlines = deadlinesTemp.sorted {
@@ -723,14 +757,11 @@ class CalendarView: UIView, UIScrollViewDelegate, CalendarMonthViewDelegate {
             }, subtitle: "Tap to dismiss")
         
       } else {
-        // Log details of the failure
-        SwiftSpinner.show("Connection Error", animated: false).addTapHandler({
-          
-          SwiftSpinner.hide()
-          
-          }, subtitle: "Tap to dismiss")
+
       }
+        
     }
+    
     }
   
 }
