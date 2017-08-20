@@ -261,11 +261,16 @@ class LoginViewController: UIViewController, UIScrollViewDelegate {
                                     membershipType = "Premium"
                                     self.defaults.set(membershipType, forKey: "Membership")
                                     
+                                }else{
+                                    
+                                    membershipType = "Free"
+                                    self.defaults.set(membershipType, forKey: "Membership")
+                                    
                                 }
                                 
                             })
                             
-                            membershipType = self.defaults.object(forKey: "Membership") as! String
+                            //membershipType = self.defaults.object(forKey: "Membership") as! String
                             
                             if membershipType == "Premium" {
                                 

@@ -17,6 +17,7 @@ pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/AdMob'
 pod 'Firebase/Database’
+pod ‘Firebase/Messaging’
 pod 'Google-Mobile-Ads-SDK'
 pod 'Eureka'
 

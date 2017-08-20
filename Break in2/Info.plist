@@ -47,9 +47,9 @@
 		<string>fbapi20150629</string>
 		<string>fbauth</string>
 		<string>fbauth2</string>
-        <string>fb-messenger-api</string>
+		<string>fb-messenger-api</string>
 		<string>fb-messenger-api20140430</string>
-        <string>fbshareextension</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -89,6 +89,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
