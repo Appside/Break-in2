@@ -138,7 +138,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Get app variables
 
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
-    self.chosenCareers = ["Accounting"]/*self.settingsModel.getAppVariables("chosenCareers") as! [String]*/
+        
+    //self.chosenCareers = self.settingsModel.getAppVariables("careerTypes") as! [String]
+        self.loadUser()
+        
     let appColors:[UIColor] = self.settingsModel.getAppColors()
     for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
@@ -438,6 +441,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
             
+            self.noDataLabel.alpha = 0
             self.ref = Database.database().reference()
             self.ref.child(FBASE_PREFERENCES_NODE).child(FBASE_USER_USERID).queryOrderedByKey().observe(.value, with: {
                 
@@ -471,6 +475,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                         self.currentCareerLabel.text = "Career Unselected"
                     }
 
+                    
+                }else{
+                    
+                    self.chosenCareers = self.settingsModel.getAppVariables("careerTypes") as! [String]
                     
                 }
                 
