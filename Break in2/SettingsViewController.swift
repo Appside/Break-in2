@@ -138,7 +138,7 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     // Get app variables
 
     self.settings = self.settingsModel.getAppVariables("settings") as! [String]
-    //self.chosenCareers = self.settingsModel.getAppVariables("chosenCareers") as! [String]
+    self.chosenCareers = ["Accounting"]/*self.settingsModel.getAppVariables("chosenCareers") as! [String]*/
     let appColors:[UIColor] = self.settingsModel.getAppColors()
     for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
       self.careerColors.updateValue(appColors[index], forKey: self.careerTypes[index])
@@ -256,6 +256,12 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
     self.currentCareerLabel.textAlignment = NSTextAlignment.center
     self.currentCareerLabel.textColor = UIColor.white
     self.currentCareerLabel.font = UIFont(name: "HelveticaNeue-Medium", size: self.textSize)
+    if self.chosenCareers.contains(self.careerTypes[self.currentChooseCareersScrollViewPage]) {
+        self.currentCareerLabel.text = "Career Selected"
+    }
+    else {
+        self.currentCareerLabel.text = "Career Unselected"
+    }
 
     // Create settingsButtons for each setting
 
@@ -314,6 +320,10 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
       // Add each chooseCareerView to chooseCareersScrollView
       
       self.chooseCareersScrollView.addSubview(chooseCareerViewAtIndex)
+      
+      // Display each chooseCareerView
+      
+      chooseCareerViewAtIndex.displayView()
       
       // Store each chooseCareerView into the chooseCareerViews array
       
