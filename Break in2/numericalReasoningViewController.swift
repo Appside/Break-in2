@@ -1039,14 +1039,12 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         var y:Int = 0
         var chartDataSets:[BarChartDataSet] = [BarChartDataSet]()
         
-      for y:Int in stride(from: 0, to: values.count, by: 1) {
+      for y:Int in stride(from: 0, to: setLegendNames.count, by: 1) {
             for i in 0..<dataPoints.count {
-                let dataEntry = BarChartDataEntry(x: Double(i), y: values[y][i])
+                let dataEntry = BarChartDataEntry(x: Double(i*setLegendNames.count+y), y: values[y][i])
                 dataEntries.append(dataEntry)
             }
             let chartDataSet = BarChartDataSet(values: dataEntries, label: setLegendNames[y])
-            //let ll = ChartLimitLine(limit: 10.0, label: "Target")
-            //chartView.rightAxis.addLimitLine(ll)
             chartDataSet.setColor(colorsChart[y])
             chartDataSets.append(chartDataSet)
             dataEntries.removeAll()
@@ -1057,6 +1055,9 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         chartData.setValueTextColor(UIColor.white)
         chartData.setValueFont(UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13)))
         chartView.autoScaleMinMaxEnabled = true
+        
+        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints)
+        chartView.xAxis.granularity = 1
         
         return chartView
         
@@ -1109,7 +1110,7 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         
         for y:Int in stride(from: 0, to: values.count, by: 1) {
             for i in 0..<dataPoints.count {
-                let dataEntry = ChartDataEntry(x: values[y][i], y: Double(i))
+                let dataEntry = ChartDataEntry(x: Double(i), y: values[y][i])
                 dataEntries.append(dataEntry)
             }
             let lineChartDataSet = LineChartDataSet(values: dataEntries, label: setLegendNames[y])
@@ -1121,12 +1122,14 @@ class numericalReasoningViewController: QuestionViewController, UIScrollViewDele
         }
         
         let lineChartData = LineChartData(dataSets: lineChartDataSets)
-        
         chartView.data = lineChartData
         lineChartData.setValueTextColor(UIColor.white)
         lineChartData.setValueFont(UIFont(name: "HelveticaNeue", size: self.view.getTextSize(13)))
         chartView.data?.highlightEnabled = true
         chartView.autoScaleMinMaxEnabled = true
+        
+        chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints)
+        chartView.xAxis.granularity = 1
         
         return chartView
     }
