@@ -441,9 +441,9 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
             
-            self.noDataLabel.alpha = 0
+            //self.noDataLabel.alpha = 0
             self.ref = Database.database().reference()
-            self.ref.child(FBASE_PREFERENCES_NODE).child(FBASE_USER_USERID).queryOrderedByKey().observe(.value, with: {
+            self.ref.child(FBASE_PREFERENCES_NODE).child(Auth.auth().currentUser!.uid).queryOrderedByKey().observe(.value, with: {
                 
                 (snapshot) in
                 
@@ -452,12 +452,57 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                     self.noDataLabel.alpha = 0
                     self.noDataUILabel.alpha = 0
                     
+                    var careerFromFirebase:[String] = [String]()
+                    
                     let enumerator = snapshot.children
                     while let rest = enumerator.nextObject() as? DataSnapshot {
-                        self.chosenCareers.append(rest.value as! String)
+                        if (rest.value as! Bool) == true {
+                            careerFromFirebase.append(rest.key)
+                        }else{
+                            
+                        }
                     }
                     
-                    print(self.chosenCareers)
+                    print(careerFromFirebase)
+                    
+                    //check users selections
+                    if careerFromFirebase.contains("consulting") {
+                        self.chosenCareers.append("Management Consulting")
+                    }else {
+                        
+                    }
+                    
+                    if careerFromFirebase.contains("banking") {
+                        self.chosenCareers.append("Investment Banking")
+                    }else {
+                        
+                    }
+                    
+                    if careerFromFirebase.contains("engineering") {
+                        self.chosenCareers.append("Engineering")
+                    }else {
+                        
+                    }
+                    
+                    if careerFromFirebase.contains("trading") {
+                        self.chosenCareers.append("Trading")
+                    }else {
+                        
+                    }
+                    
+                    if careerFromFirebase.contains("technology") {
+                        self.chosenCareers.append("Technology")
+                    }else {
+                        
+                    }
+                    
+                    if careerFromFirebase.contains("accounting") {
+                        self.chosenCareers.append("Accounting")
+                    }else {
+                        
+                    }
+                    
+                    
                     for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
                         
                         if self.chosenCareers.contains(self.careerTypes[index]) {
@@ -479,6 +524,23 @@ class SettingsViewController: UIViewController, UIScrollViewDelegate, ChooseCare
                 }else{
                     
                     self.chosenCareers = self.settingsModel.getAppVariables("careerTypes") as! [String]
+                    
+                    for index:Int in stride(from: 0, to: self.careerTypes.count, by: 1) {
+                        
+                        if self.chosenCareers.contains(self.careerTypes[index]) {
+                            self.chooseCareerViews[index].careerChosen = true
+                        }
+                        
+                        self.chooseCareerViews[index].displayView()
+                        
+                    }
+                    
+                    if self.chosenCareers.contains(self.careerTypes[0]) {
+                        self.currentCareerLabel.text = "Career Selected"
+                    }
+                    else {
+                        self.currentCareerLabel.text = "Career Unselected"
+                    }
                     
                 }
                 
